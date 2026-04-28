@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the contents of the log scrubbing rules. </summary>
     public partial class ProfileScrubbingRules
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProfileScrubbingRules"/>. </summary>
         /// <param name="matchVariable"> The variable to be scrubbed from the logs. </param>
@@ -59,30 +31,28 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </param>
         /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to. </param>
         /// <param name="state"> Defines the state of a log scrubbing rule. Default value is enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileScrubbingRules(ScrubbingRuleEntryMatchVariable matchVariable, ScrubbingRuleEntryMatchOperator selectorMatchOperator, string selector, ScrubbingRuleEntryState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProfileScrubbingRules(ScrubbingRuleEntryMatchVariable matchVariable, ScrubbingRuleEntryMatchOperator selectorMatchOperator, string selector, ScrubbingRuleEntryState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
             Selector = selector;
             State = state;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProfileScrubbingRules"/> for deserialization. </summary>
-        internal ProfileScrubbingRules()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The variable to be scrubbed from the logs. </summary>
         [WirePath("matchVariable")]
         public ScrubbingRuleEntryMatchVariable MatchVariable { get; set; }
+
         /// <summary> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </summary>
         [WirePath("selectorMatchOperator")]
         public ScrubbingRuleEntryMatchOperator SelectorMatchOperator { get; set; }
+
         /// <summary> When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to. </summary>
         [WirePath("selector")]
         public string Selector { get; set; }
+
         /// <summary> Defines the state of a log scrubbing rule. Default value is enabled. </summary>
         [WirePath("state")]
         public ScrubbingRuleEntryState? State { get; set; }

@@ -1157,7 +1157,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                controlPlaneProfile is null && agentPoolProfiles is null ? default : new ManagedClusterUpgradeProfileProperties(controlPlaneProfile, (agentPoolProfiles ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfile>()).ToList(), null));
+                new ManagedClusterUpgradeProfileProperties(controlPlaneProfile, (agentPoolProfiles ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfile>()).ToList(), null));
         }
 
         /// <summary> The list of available upgrade versions. </summary>
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="recentlyUsedVersions"> List of historical good versions for rollback operations. </param>
         /// <param name="latestNodeImageVersion"> The latest AKS supported node image version. </param>
         /// <returns> A new <see cref="ContainerService.AgentPoolUpgradeProfileData"/> instance for mocking. </returns>
-        public static AgentPoolUpgradeProfileData AgentPoolUpgradeProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kubernetesVersion = default, ContainerServiceOSType? osType = default, IEnumerable<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default, IEnumerable<KubernetesVersionComponents> componentsByReleases = default, IEnumerable<AgentPoolRecentlyUsedVersion> recentlyUsedVersions = default, string latestNodeImageVersion = default)
+        public static AgentPoolUpgradeProfileData AgentPoolUpgradeProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kubernetesVersion = default, ContainerServiceOSType osType = default, IEnumerable<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default, IEnumerable<KubernetesVersionComponents> componentsByReleases = default, IEnumerable<AgentPoolRecentlyUsedVersion> recentlyUsedVersions = default, string latestNodeImageVersion = default)
         {
             return new AgentPoolUpgradeProfileData(
                 id,
@@ -1436,9 +1436,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                kubernetesVersion is null && osType is null && upgrades is null && componentsByReleases is null && recentlyUsedVersions is null && latestNodeImageVersion is null ? default : new AgentPoolUpgradeProfileProperties(
+                new AgentPoolUpgradeProfileProperties(
                     kubernetesVersion,
-                    osType.Value,
+                    osType,
                     (upgrades ?? new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(),
                     (componentsByReleases ?? new ChangeTrackingList<KubernetesVersionComponents>()).ToList(),
                     (recentlyUsedVersions ?? new ChangeTrackingList<AgentPoolRecentlyUsedVersion>()).ToList(),
@@ -1699,7 +1699,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && sourceResourceId is null && roles is null ? default : new TrustedAccessRoleBindingProperties(provisioningState, sourceResourceId, (roles ?? new ChangeTrackingList<string>()).ToList(), null));
+                new TrustedAccessRoleBindingProperties(provisioningState, sourceResourceId, (roles ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1853,7 +1853,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             extra ??= new ChangeTrackingList<ManagedClusterJwtAuthenticatorExtraClaimMappingExpression>();
 
-            return new ManagedClusterJwtAuthenticatorClaimMappings(usernameExpression is null ? default : new JWTAuthenticatorClaimMappingExpression(usernameExpression, null), groupsExpression is null ? default : new JWTAuthenticatorClaimMappingExpression(groupsExpression, null), uidExpression is null ? default : new JWTAuthenticatorClaimMappingExpression(uidExpression, null), extra.ToList(), additionalBinaryDataProperties: null);
+            return new ManagedClusterJwtAuthenticatorClaimMappings(new JWTAuthenticatorClaimMappingExpression(usernameExpression, null), groupsExpression is null ? default : new JWTAuthenticatorClaimMappingExpression(groupsExpression, null), uidExpression is null ? default : new JWTAuthenticatorClaimMappingExpression(uidExpression, null), extra.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

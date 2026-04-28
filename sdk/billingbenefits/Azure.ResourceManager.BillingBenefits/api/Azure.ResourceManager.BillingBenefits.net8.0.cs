@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.BillingBenefits
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BillingBenefits.FreeServicesResource>> GetFreeServicesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string freeServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.FreeServicesResource> GetFreeServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.FreeServicesResource GetFreeServicesResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.BillingBenefits.ConditionalCreditContributorResource> GetFromApplicableConditionalCredit(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string systemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.ConditionalCreditContributorResource> GetFromApplicableConditionalCreditAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string systemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.BillingBenefits.ContributorResource> GetFromApplicableMacc(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string systemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.ContributorResource> GetFromApplicableMaccAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string systemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.BillingBenefits.ConditionalCreditContributorResource> GetFromApplicableConditionalCredit(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.ConditionalCreditContributorResource> GetFromApplicableConditionalCreditAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.BillingBenefits.ContributorResource> GetFromApplicableMacc(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.ContributorResource> GetFromApplicableMaccAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.BillingBenefits.MaccResource> GetMacc(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string maccName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BillingBenefits.MaccResource>> GetMaccAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string maccName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.MaccResource GetMaccResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -464,8 +464,10 @@ namespace Azure.ResourceManager.BillingBenefits
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment Commitment { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use MaccEntityType instead.")]
         public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType EntityType { get { throw null; } }
         public bool? IsAllowContributors { get { throw null; } }
+        public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType? MaccEntityType { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.MaccMilestone> Milestones { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryBillingAccountResourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryResourceId { get { throw null; } }
@@ -806,11 +808,13 @@ namespace Azure.ResourceManager.BillingBenefits
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment Commitment { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use MaccEntityType instead.")]
         public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType EntityType { get { throw null; } set { } }
         public string ETag { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAllowContributors { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType? MaccEntityType { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.MaccMilestone> Milestones { get { throw null; } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPlan Plan { get { throw null; } set { } }
@@ -893,10 +897,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.DiscountResource> GetDiscountByScopeAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.BillingBenefits.DiscountResource GetDiscountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.BillingBenefits.FreeServicesResource GetFreeServicesResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.BillingBenefits.ConditionalCreditContributorResource> GetFromApplicableConditionalCredit(Azure.Core.ResourceIdentifier scope, string systemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.ConditionalCreditContributorResource> GetFromApplicableConditionalCreditAsync(Azure.Core.ResourceIdentifier scope, string systemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.BillingBenefits.ContributorResource> GetFromApplicableMacc(Azure.Core.ResourceIdentifier scope, string systemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.ContributorResource> GetFromApplicableMaccAsync(Azure.Core.ResourceIdentifier scope, string systemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.BillingBenefits.ConditionalCreditContributorResource> GetFromApplicableConditionalCredit(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.ConditionalCreditContributorResource> GetFromApplicableConditionalCreditAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.BillingBenefits.ContributorResource> GetFromApplicableMacc(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.ContributorResource> GetFromApplicableMaccAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.BillingBenefits.MaccResource GetMaccResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableBillingBenefitsResourceGroupResource : Azure.ResourceManager.ArmResource
@@ -963,8 +967,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment Commitment { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use MaccEntityType instead.")]
         public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType EntityType { get { throw null; } }
         public bool? IsAllowContributors { get { throw null; } }
+        public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType? MaccEntityType { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.MaccMilestone> Milestones { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryBillingAccountResourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryResourceId { get { throw null; } }
@@ -1012,6 +1018,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static Azure.ResourceManager.BillingBenefits.Models.BenefitValidateResponseProperty BenefitValidateResponseProperty(bool? isValid = default(bool?), string reasonCode = null, string reason = null, Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsConditionalCreditProperties BillingBenefitsConditionalCreditProperties(string entityType = null, string displayName = null, Azure.Core.ResourceIdentifier billingAccountResourceId = null, Azure.ResourceManager.BillingBenefits.Models.ConditionalCreditsProvisioningState? provisioningState = default(Azure.ResourceManager.BillingBenefits.Models.ConditionalCreditsProvisioningState?), Azure.ResourceManager.BillingBenefits.Models.ConditionalCreditStatus? status = default(Azure.ResourceManager.BillingBenefits.Models.ConditionalCreditStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string productCode = null, Azure.Core.ResourceIdentifier benefitResourceId = null, Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsDiscountProperties BillingBenefitsDiscountProperties(string entityType = null, string productCode = null, System.DateTimeOffset startOn = default(System.DateTimeOffset), string systemId = null, Azure.ResourceManager.BillingBenefits.Models.DiscountProvisioningState? provisioningState = default(Azure.ResourceManager.BillingBenefits.Models.DiscountProvisioningState?), Azure.Core.ResourceIdentifier billingAccountResourceId = null, Azure.Core.ResourceIdentifier billingProfileResourceId = null, Azure.Core.ResourceIdentifier customerResourceId = null, string displayName = null, Azure.ResourceManager.BillingBenefits.Models.DiscountStatus? status = default(Azure.ResourceManager.BillingBenefits.Models.DiscountStatus?), Azure.Core.ResourceIdentifier benefitResourceId = null, Azure.ResourceManager.BillingBenefits.Models.DiscountAppliedScopeType? appliedScopeType = default(Azure.ResourceManager.BillingBenefits.Models.DiscountAppliedScopeType?)) { throw null; }
+        public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo BillingBenefitsExtendedStatusInfo(string statusCode = null, string message = null) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsManagedServiceIdentity BillingBenefitsManagedServiceIdentity(string principalId = null, string tenantId = null, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsManagedServiceIdentityType type = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsManagedServiceIdentityType), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent BillingBenefitsReservationOrderAliasCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string skuName = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string displayName = null, Azure.Core.ResourceIdentifier billingScopeId = null, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm? term = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm?), Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsBillingPlan? billingPlan = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsBillingPlan?), Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeType? appliedScopeType = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeType?), Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeProperties appliedScopeProperties = null, int? quantity = default(int?), bool? isRenewed = default(bool?), Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservedResourceType? reservedResourceType = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservedResourceType?), System.DateTimeOffset? reviewOn = default(System.DateTimeOffset?), Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility? reservedResourceInstanceFlexibility = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility?)) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData BillingBenefitsReservationOrderAliasData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, Azure.Core.ResourceIdentifier reservationOrderId = null, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsProvisioningState? provisioningState = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsProvisioningState?), Azure.Core.ResourceIdentifier billingScopeId = null, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm? term = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm?), Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsBillingPlan? billingPlan = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsBillingPlan?), Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeType? appliedScopeType = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeType?), Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeProperties appliedScopeProperties = null, int? quantity = default(int?), bool? isRenewed = default(bool?), Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservedResourceType? reservedResourceType = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservedResourceType?), System.DateTimeOffset? reviewOn = default(System.DateTimeOffset?), Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility? reservedResourceInstanceFlexibility = default(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility?), string skuName = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
@@ -1282,9 +1289,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     }
     public partial class BillingBenefitsExtendedStatusInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo>
     {
-        public BillingBenefitsExtendedStatusInfo() { }
-        public string Message { get { throw null; } set { } }
-        public string StatusCode { get { throw null; } set { } }
+        internal BillingBenefitsExtendedStatusInfo() { }
+        public string Message { get { throw null; } }
+        public string StatusCode { get { throw null; } }
         protected virtual Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1565,7 +1572,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     }
     public partial class BillingBenefitsSavingsPlanUtilization : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilization>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilization>
     {
-        public BillingBenefitsSavingsPlanUtilization() { }
+        internal BillingBenefitsSavingsPlanUtilization() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilizationAggregate> Aggregates { get { throw null; } }
         public string Trend { get { throw null; } }
         protected virtual Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilization JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1580,7 +1587,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     }
     public partial class BillingBenefitsSavingsPlanUtilizationAggregate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilizationAggregate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilizationAggregate>
     {
-        public BillingBenefitsSavingsPlanUtilizationAggregate() { }
+        internal BillingBenefitsSavingsPlanUtilizationAggregate() { }
         public float? Grain { get { throw null; } }
         public string GrainUnit { get { throw null; } }
         public float? Value { get { throw null; } }
@@ -2010,7 +2017,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPlan Plan { get { throw null; } set { } }
@@ -2019,7 +2026,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.BillingBenefits.Models.CreditReason Reason { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-        public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.BillingBenefits.Models.CreditStatus? Status { get { throw null; } set { } }
@@ -2462,8 +2469,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment Commitment { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use MaccEntityType instead.")]
         public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType EntityType { get { throw null; } set { } }
         public bool? IsAllowContributors { get { throw null; } set { } }
+        public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType? MaccEntityType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.MaccMilestone> Milestones { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryBillingAccountResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrimaryResourceId { get { throw null; } set { } }

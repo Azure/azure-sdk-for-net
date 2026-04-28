@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Support
                 {
                     Properties = new SupportTicketDetailsProperties();
                 }
-                Properties.Require24X7Response = value.Value;
+                Properties.Require24X7Response = value;
             }
         }
 
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Support
                 {
                     Properties = new SupportTicketDetailsProperties();
                 }
-                Properties.ProblemStartOn = value.Value;
+                Properties.ProblemStartOn = value;
             }
         }
 

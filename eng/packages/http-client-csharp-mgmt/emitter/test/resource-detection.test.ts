@@ -165,9 +165,9 @@ interface Employees2 {
       getMethod.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(getMethod.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(getMethod.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      getMethod.resourceScopeIdPattern?.path,
+      getMethod.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -178,9 +178,9 @@ interface Employees2 {
       createEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(createEntry.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(createEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      createEntry.resourceScopeIdPattern?.path,
+      createEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -191,9 +191,9 @@ interface Employees2 {
       updateEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(updateEntry.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(updateEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      updateEntry.resourceScopeIdPattern?.path,
+      updateEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -204,9 +204,9 @@ interface Employees2 {
       deleteEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(deleteEntry.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(deleteEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      deleteEntry.resourceScopeIdPattern?.path,
+      deleteEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -221,16 +221,16 @@ interface Employees2 {
       listByRgEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
-    strictEqual(listByRgEntry.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(listByRgEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      listByRgEntry.resourceScopeIdPattern?.path,
+      listByRgEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
 
     // Validate ListBySubscription
     const listBySubEntry = metadata.methods.find(
       (m: any) =>
-        m.kind === "List" && m.operationScope === ResourceScopeKind.Subscription
+        m.kind === "List" && m.scope.kind === ResourceScopeKind.Subscription
     );
     ok(listBySubEntry);
     strictEqual(listBySubEntry.kind, "List");
@@ -238,8 +238,11 @@ interface Employees2 {
       listBySubEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
-    strictEqual(listBySubEntry.operationScope, ResourceScopeKind.Subscription);
-    strictEqual(listBySubEntry.resourceScopeIdPattern, undefined);
+    strictEqual(listBySubEntry.scope.kind, ResourceScopeKind.Subscription);
+    strictEqual(
+      listBySubEntry.scope.scopeIdPattern?.path,
+      "/subscriptions/{subscriptionId}"
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -982,7 +985,7 @@ interface Employees {
     const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethodEntry);
     strictEqual(getMethodEntry.kind, "Read");
-    strictEqual(getMethodEntry.operationScope, ResourceScopeKind.Subscription);
+    strictEqual(getMethodEntry.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1237,7 +1240,7 @@ interface ScheduledActionExtension {
       methodEntry,
       "getAssociatedScheduledActions should be in non-resource methods"
     );
-    strictEqual(methodEntry.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(methodEntry.scope.kind, ResourceScopeKind.ResourceGroup);
 
     // Verify getPostgresVersions is also a non-resource method
     const getPostgresVersionsEntry = nonResourceMethods.find((m: any) =>
@@ -1248,7 +1251,7 @@ interface ScheduledActionExtension {
       "getPostgresVersions should be in non-resource methods"
     );
     strictEqual(
-      getPostgresVersionsEntry.operationScope,
+      getPostgresVersionsEntry.scope.kind,
       ResourceScopeKind.ResourceGroup
     );
 
@@ -1849,8 +1852,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
         (resource.metadata as { scope: { kind: unknown } }).scope.kind =
           "<normalized>";
         for (const method of resource.metadata.methods) {
-          (method as { operationScope: unknown }).operationScope =
-            "<normalized>";
+          (method as { scope: { kind: unknown } }).scope.kind = "<normalized>";
         }
       }
     };
@@ -2825,7 +2827,7 @@ interface TenantTranscripts {
     );
     ok(tenantTranscriptList, "Tenant transcript should have a List method");
     strictEqual(
-      tenantTranscriptList.resourceScopeIdPattern?.path,
+      tenantTranscriptList.scope.scopeIdPattern?.path,
       tenantTicket.metadata.resourceIdPattern.path,
       "Tenant transcript list should scope to tenant ticket"
     );
@@ -3228,7 +3230,6 @@ model WidgetProperties {
 }
 
 /** A Widget resource with RBAC roles */
-#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
 model Widget is TrackedResource<WidgetProperties> {
   ...ResourceNameParameter<Widget>;
 }
@@ -3241,6 +3242,7 @@ interface Widgets {
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
 }
 
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
 @@clientOption(Widget, "resource-rbac-roles", #{
   WidgetContributor: "00000000-0000-0000-0000-000000000001",
   WidgetReader: "00000000-0000-0000-0000-000000000002",
@@ -3319,6 +3321,188 @@ interface Gadgets {
     const resolvedResource = resolvedSchema.resources[0];
     ok(resolvedResource);
     deepStrictEqual(resolvedResource.metadata.rbacRoles, []);
+  });
+
+  it("name constraint overrides from clientOption decorator - all fields", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget properties */
+model WidgetProperties {
+  /** Color of widget */
+  color?: string;
+}
+
+/** A Widget resource with name constraint overrides */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Name constraints"
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+@@clientOption(Widget, "resource-name-constraint", #{
+  minLength: 3,
+  maxLength: 24,
+  pattern: "^[a-zA-Z][a-zA-Z0-9-]+[a-zA-Z0-9]$",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const widgetResource = armProviderSchema.resources[0];
+    ok(widgetResource);
+    const constraints = widgetResource.metadata.nameConstraints;
+    strictEqual(constraints.minLength, 3);
+    strictEqual(constraints.maxLength, 24);
+    strictEqual(constraints.pattern, "^[a-zA-Z][a-zA-Z0-9-]+[a-zA-Z0-9]$");
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("name constraint overrides from clientOption decorator - partial override", async () => {
+    // Resource has existing constraints from decorators; clientOption overrides only some fields
+    const program = await typeSpecCompile(
+      `
+/** Gadget properties */
+model GadgetProperties {
+  /** Size of gadget */
+  size?: int32;
+}
+
+/** A Gadget resource with existing name decorators and partial override */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Name constraints"
+model Gadget is TrackedResource<GadgetProperties> {
+  @doc("The gadget name.")
+  @key("gadgetName")
+  @segment("gadgets")
+  @path
+  @minLength(1)
+  @maxLength(50)
+  @pattern("^[a-z]+$")
+  name: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Gadgets {
+  get is ArmResourceRead<Gadget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Gadget>;
+}
+
+// Only override maxLength — minLength and pattern should keep the original values
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+@@clientOption(Gadget, "resource-name-constraint", #{
+  maxLength: 128,
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const gadgetResource = armProviderSchema.resources[0];
+    ok(gadgetResource);
+    const constraints = gadgetResource.metadata.nameConstraints;
+    // minLength and pattern should keep the original decorator values
+    strictEqual(constraints.minLength, 1);
+    strictEqual(constraints.pattern, "^[a-z]+$");
+    // maxLength should be overridden by clientOption
+    strictEqual(constraints.maxLength, 128);
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("name constraint overrides from clientOption decorator - no existing constraints", async () => {
+    // Resource has no name decorators; clientOption provides all constraints
+    const program = await typeSpecCompile(
+      `
+/** Item properties */
+model ItemProperties {
+  /** Description */
+  description?: string;
+}
+
+/** An Item resource with no name decorators */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Name constraints"
+model Item is TrackedResource<ItemProperties> {
+  @doc("The item name.")
+  @key("itemName")
+  @segment("items")
+  @path
+  name: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Items {
+  get is ArmResourceRead<Item>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Item>;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+@@clientOption(Item, "resource-name-constraint", #{
+  minLength: 5,
+  maxLength: 64,
+  pattern: "^[a-zA-Z0-9_]+$",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const itemResource = armProviderSchema.resources[0];
+    ok(itemResource);
+    const constraints = itemResource.metadata.nameConstraints;
+    strictEqual(constraints.minLength, 5);
+    strictEqual(constraints.maxLength, 64);
+    strictEqual(constraints.pattern, "^[a-zA-Z0-9_]+$");
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
   });
 
   it("action on parent singleton that lists child resources should be reassigned to child resource", async () => {

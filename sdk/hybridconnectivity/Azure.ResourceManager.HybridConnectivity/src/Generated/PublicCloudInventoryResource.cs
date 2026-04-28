@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudInventoryData> response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudInventoryData> response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
                 if (response.Value == null)

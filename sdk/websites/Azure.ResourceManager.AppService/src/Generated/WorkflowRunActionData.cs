@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the WorkflowRunAction data model.
     /// The workflow run action.
+    /// Serialized Name: WorkflowRunAction
     /// </summary>
     public partial class WorkflowRunActionData : ResourceData
     {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionData"/>. </summary>
-        internal WorkflowRunActionData()
+        public WorkflowRunActionData()
         {
             RetryHistory = new ChangeTrackingList<WebAppRetryHistory>();
         }
@@ -62,17 +63,50 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
-        /// <param name="status"> Gets the status. </param>
-        /// <param name="code"> Gets the code. </param>
-        /// <param name="error"> Gets the error. </param>
-        /// <param name="trackingId"> Gets the tracking id. </param>
-        /// <param name="correlation"> The correlation properties. </param>
-        /// <param name="inputsLink"> Gets the link to inputs. </param>
-        /// <param name="outputsLink"> Gets the link to outputs. </param>
-        /// <param name="trackedProperties"> Gets the tracked properties. </param>
-        /// <param name="retryHistory"> Gets the retry histories. </param>
+        /// <param name="startOn">
+        /// Gets the start time.
+        /// Serialized Name: WorkflowRunAction.properties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// Gets the end time.
+        /// Serialized Name: WorkflowRunAction.properties.endTime
+        /// </param>
+        /// <param name="status">
+        /// Gets the status.
+        /// Serialized Name: WorkflowRunAction.properties.status
+        /// </param>
+        /// <param name="code">
+        /// Gets the code.
+        /// Serialized Name: WorkflowRunAction.properties.code
+        /// </param>
+        /// <param name="error">
+        /// Gets the error.
+        /// Serialized Name: WorkflowRunAction.properties.error
+        /// </param>
+        /// <param name="trackingId">
+        /// Gets the tracking id.
+        /// Serialized Name: WorkflowRunAction.properties.trackingId
+        /// </param>
+        /// <param name="correlation">
+        /// The correlation properties.
+        /// Serialized Name: WorkflowRunAction.properties.correlation
+        /// </param>
+        /// <param name="inputsLink">
+        /// Gets the link to inputs.
+        /// Serialized Name: WorkflowRunAction.properties.inputsLink
+        /// </param>
+        /// <param name="outputsLink">
+        /// Gets the link to outputs.
+        /// Serialized Name: WorkflowRunAction.properties.outputsLink
+        /// </param>
+        /// <param name="trackedProperties">
+        /// Gets the tracked properties.
+        /// Serialized Name: WorkflowRunAction.properties.trackedProperties
+        /// </param>
+        /// <param name="retryHistory">
+        /// Gets the retry histories.
+        /// Serialized Name: WorkflowRunAction.properties.retryHistory
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRunActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, WebAppRunActionCorrelation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, BinaryData trackedProperties, IReadOnlyList<WebAppRetryHistory> retryHistory, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -90,20 +124,33 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the start time. </summary>
+        /// <summary>
+        /// Gets the start time.
+        /// Serialized Name: WorkflowRunAction.properties.startTime
+        /// </summary>
         [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary> Gets the end time. </summary>
+        /// <summary>
+        /// Gets the end time.
+        /// Serialized Name: WorkflowRunAction.properties.endTime
+        /// </summary>
         [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary> Gets the status. </summary>
+        /// <summary>
+        /// Gets the status.
+        /// Serialized Name: WorkflowRunAction.properties.status
+        /// </summary>
         [WirePath("properties.status")]
         public WorkflowStatus? Status { get; }
-        /// <summary> Gets the code. </summary>
+        /// <summary>
+        /// Gets the code.
+        /// Serialized Name: WorkflowRunAction.properties.code
+        /// </summary>
         [WirePath("properties.code")]
         public string Code { get; }
         /// <summary>
         /// Gets the error.
+        /// Serialized Name: WorkflowRunAction.properties.error
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -134,20 +181,33 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.error")]
         public BinaryData Error { get; }
-        /// <summary> Gets the tracking id. </summary>
+        /// <summary>
+        /// Gets the tracking id.
+        /// Serialized Name: WorkflowRunAction.properties.trackingId
+        /// </summary>
         [WirePath("properties.trackingId")]
         public string TrackingId { get; }
-        /// <summary> The correlation properties. </summary>
+        /// <summary>
+        /// The correlation properties.
+        /// Serialized Name: WorkflowRunAction.properties.correlation
+        /// </summary>
         [WirePath("properties.correlation")]
-        public WebAppRunActionCorrelation Correlation { get; }
-        /// <summary> Gets the link to inputs. </summary>
+        public WebAppRunActionCorrelation Correlation { get; set; }
+        /// <summary>
+        /// Gets the link to inputs.
+        /// Serialized Name: WorkflowRunAction.properties.inputsLink
+        /// </summary>
         [WirePath("properties.inputsLink")]
         public WebAppContentLink InputsLink { get; }
-        /// <summary> Gets the link to outputs. </summary>
+        /// <summary>
+        /// Gets the link to outputs.
+        /// Serialized Name: WorkflowRunAction.properties.outputsLink
+        /// </summary>
         [WirePath("properties.outputsLink")]
         public WebAppContentLink OutputsLink { get; }
         /// <summary>
         /// Gets the tracked properties.
+        /// Serialized Name: WorkflowRunAction.properties.trackedProperties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -178,8 +238,5 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.trackedProperties")]
         public BinaryData TrackedProperties { get; }
-        /// <summary> Gets the retry histories. </summary>
-        [WirePath("properties.retryHistory")]
-        public IReadOnlyList<WebAppRetryHistory> RetryHistory { get; }
     }
 }

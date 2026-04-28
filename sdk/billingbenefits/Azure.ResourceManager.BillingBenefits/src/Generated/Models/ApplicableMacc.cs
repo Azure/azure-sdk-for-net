@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> Represents type of the object being operated on. Possible values are primary or contributor. </summary>
-        public MaccEntityType EntityType
+        public MaccEntityType? MaccEntityType
         {
             get
             {
-                return Properties is null ? default : Properties.EntityType;
+                return Properties is null ? default : Properties.MaccEntityType;
             }
         }
 

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the AppServiceDetector data model.
     /// Class representing Response from Detector
+    /// Serialized Name: DetectorResponse
     /// </summary>
     public partial class AppServiceDetectorData : ResourceData
     {
@@ -63,41 +64,77 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadata"> metadata for the detector. </param>
-        /// <param name="dataset"> Data Set. </param>
-        /// <param name="status"> Indicates status of the most severe insight. </param>
-        /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
-        /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: DetectorResponse.kind
+        /// </param>
+        /// <param name="metadata">
+        /// metadata for the detector
+        /// Serialized Name: DetectorResponse.properties.metadata
+        /// </param>
+        /// <param name="dataset">
+        /// Data Set
+        /// Serialized Name: DetectorResponse.properties.dataset
+        /// </param>
+        /// <param name="status">
+        /// Indicates status of the most severe insight.
+        /// Serialized Name: DetectorResponse.properties.status
+        /// </param>
+        /// <param name="dataProvidersMetadata">
+        /// Additional configuration for different data providers to be used by the UI
+        /// Serialized Name: DetectorResponse.properties.dataProvidersMetadata
+        /// </param>
+        /// <param name="suggestedUtterances">
+        /// Suggested utterances where the detector can be applicable.
+        /// Serialized Name: DetectorResponse.properties.suggestedUtterances
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorInfo metadata, IList<DiagnosticDataset> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, DetectorInfo metadata, IList<DiagnosticDataset> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Metadata = metadata;
             Dataset = dataset;
             Status = status;
             DataProvidersMetadata = dataProvidersMetadata;
             SuggestedUtterances = suggestedUtterances;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> metadata for the detector. </summary>
-        [WirePath("properties.metadata")]
-        public DetectorInfo Metadata { get; set; }
-        /// <summary> Data Set. </summary>
-        [WirePath("properties.dataset")]
-        public IList<DiagnosticDataset> Dataset { get; }
-        /// <summary> Indicates status of the most severe insight. </summary>
-        [WirePath("properties.status")]
-        public AppServiceStatusInfo Status { get; set; }
-        /// <summary> Additional configuration for different data providers to be used by the UI. </summary>
-        [WirePath("properties.dataProvidersMetadata")]
-        public IList<DataProviderMetadata> DataProvidersMetadata { get; }
-        /// <summary> Suggested utterances where the detector can be applicable. </summary>
-        [WirePath("properties.suggestedUtterances")]
-        public QueryUtterancesResults SuggestedUtterances { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: DetectorResponse.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// metadata for the detector
+        /// Serialized Name: DetectorResponse.properties.metadata
+        /// </summary>
+        [WirePath("properties.metadata")]
+        public DetectorInfo Metadata { get; set; }
+        /// <summary>
+        /// Data Set
+        /// Serialized Name: DetectorResponse.properties.dataset
+        /// </summary>
+        [WirePath("properties.dataset")]
+        public IList<DiagnosticDataset> Dataset { get; }
+        /// <summary>
+        /// Indicates status of the most severe insight.
+        /// Serialized Name: DetectorResponse.properties.status
+        /// </summary>
+        [WirePath("properties.status")]
+        public AppServiceStatusInfo Status { get; set; }
+        /// <summary>
+        /// Additional configuration for different data providers to be used by the UI
+        /// Serialized Name: DetectorResponse.properties.dataProvidersMetadata
+        /// </summary>
+        [WirePath("properties.dataProvidersMetadata")]
+        public IList<DataProviderMetadata> DataProvidersMetadata { get; }
+        /// <summary>
+        /// Suggested utterances where the detector can be applicable.
+        /// Serialized Name: DetectorResponse.properties.suggestedUtterances
+        /// </summary>
+        [WirePath("properties.suggestedUtterances")]
+        public QueryUtterancesResults SuggestedUtterances { get; set; }
     }
 }

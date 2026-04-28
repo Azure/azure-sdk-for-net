@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the ResourceHealthMetadata data model.
     /// Used for getting ResourceHealthCheck settings.
+    /// Serialized Name: ResourceHealthMetadata
     /// </summary>
     public partial class ResourceHealthMetadataData : ResourceData
     {
@@ -60,26 +61,44 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="category"> The category that the resource matches in the RHC Policy File. </param>
-        /// <param name="isSignalAvailable"> Is there a health signal for the resource. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ResourceHealthMetadata.kind
+        /// </param>
+        /// <param name="category">
+        /// The category that the resource matches in the RHC Policy File
+        /// Serialized Name: ResourceHealthMetadata.properties.category
+        /// </param>
+        /// <param name="isSignalAvailable">
+        /// Is there a health signal for the resource
+        /// Serialized Name: ResourceHealthMetadata.properties.signalAvailability
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string category, bool? isSignalAvailable, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string category, bool? isSignalAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Category = category;
             IsSignalAvailable = isSignalAvailable;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The category that the resource matches in the RHC Policy File. </summary>
-        [WirePath("properties.category")]
-        public string Category { get; set; }
-        /// <summary> Is there a health signal for the resource. </summary>
-        [WirePath("properties.signalAvailability")]
-        public bool? IsSignalAvailable { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ResourceHealthMetadata.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// The category that the resource matches in the RHC Policy File
+        /// Serialized Name: ResourceHealthMetadata.properties.category
+        /// </summary>
+        [WirePath("properties.category")]
+        public string Category { get; set; }
+        /// <summary>
+        /// Is there a health signal for the resource
+        /// Serialized Name: ResourceHealthMetadata.properties.signalAvailability
+        /// </summary>
+        [WirePath("properties.signalAvailability")]
+        public bool? IsSignalAvailable { get; set; }
     }
 }

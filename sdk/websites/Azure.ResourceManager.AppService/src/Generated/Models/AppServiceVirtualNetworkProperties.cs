@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Virtual Network information contract. </summary>
+    /// <summary>
+    /// Virtual Network information contract.
+    /// Serialized Name: VnetInfo
+    /// </summary>
     public partial class AppServiceVirtualNetworkProperties
     {
         /// <summary>
@@ -53,16 +56,34 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkProperties"/>. </summary>
-        /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
-        /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
-        /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
-        /// Point-To-Site VPN connection.
+        /// <param name="vnetResourceId">
+        /// The Virtual Network's resource ID.
+        /// Serialized Name: VnetInfo.vnetResourceId
         /// </param>
-        /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
-        /// <param name="isResyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
-        /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
+        /// <param name="certThumbprintString">
+        /// The client certificate thumbprint.
+        /// Serialized Name: VnetInfo.certThumbprint
+        /// </param>
+        /// <param name="certBlob">
+        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection.
+        /// Serialized Name: VnetInfo.certBlob
+        /// </param>
+        /// <param name="routes">
+        /// The routes that this Virtual Network connection uses.
+        /// Serialized Name: VnetInfo.routes
+        /// </param>
+        /// <param name="isResyncRequired">
+        /// &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: VnetInfo.resyncRequired
+        /// </param>
+        /// <param name="dnsServers">
+        /// DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses.
+        /// Serialized Name: VnetInfo.dnsServers
+        /// </param>
+        /// <param name="isSwift">
+        /// Flag that is used to denote if this is VNET injection
+        /// Serialized Name: VnetInfo.isSwift
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceVirtualNetworkProperties(ResourceIdentifier vnetResourceId, string certThumbprintString, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,28 +97,46 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Virtual Network's resource ID. </summary>
+        /// <summary>
+        /// The Virtual Network's resource ID.
+        /// Serialized Name: VnetInfo.vnetResourceId
+        /// </summary>
         [WirePath("vnetResourceId")]
         public ResourceIdentifier VnetResourceId { get; }
-        /// <summary> The client certificate thumbprint. </summary>
+        /// <summary>
+        /// The client certificate thumbprint.
+        /// Serialized Name: VnetInfo.certThumbprint
+        /// </summary>
         [WirePath("certThumbprint")]
         public string CertThumbprintString { get; }
         /// <summary>
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
-        /// Point-To-Site VPN connection.
+        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection.
+        /// Serialized Name: VnetInfo.certBlob
         /// </summary>
         [WirePath("certBlob")]
         public string CertBlob { get; }
-        /// <summary> The routes that this Virtual Network connection uses. </summary>
+        /// <summary>
+        /// The routes that this Virtual Network connection uses.
+        /// Serialized Name: VnetInfo.routes
+        /// </summary>
         [WirePath("routes")]
         public IReadOnlyList<AppServiceVirtualNetworkRoute> Routes { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: VnetInfo.resyncRequired
+        /// </summary>
         [WirePath("resyncRequired")]
         public bool? IsResyncRequired { get; }
-        /// <summary> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </summary>
+        /// <summary>
+        /// DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses.
+        /// Serialized Name: VnetInfo.dnsServers
+        /// </summary>
         [WirePath("dnsServers")]
         public string DnsServers { get; }
-        /// <summary> Flag that is used to denote if this is VNET injection. </summary>
+        /// <summary>
+        /// Flag that is used to denote if this is VNET injection
+        /// Serialized Name: VnetInfo.isSwift
+        /// </summary>
         [WirePath("isSwift")]
         public bool? IsSwift { get; }
     }

@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Status of certificate order. </summary>
+    /// <summary>
+    /// Provisioning state of the App Service Plan.
+    /// Serialized Name: ProvisioningState
+    /// </summary>
     public enum ProvisioningState
     {
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ProvisioningState.Succeeded
+        /// </summary>
         Succeeded,
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProvisioningState.Failed
+        /// </summary>
         Failed,
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ProvisioningState.Canceled
+        /// </summary>
         Canceled,
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: ProvisioningState.InProgress
+        /// </summary>
         InProgress,
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProvisioningState.Deleting
+        /// </summary>
         Deleting
     }
 }

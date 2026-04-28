@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Push settings for the App. </summary>
+    /// <summary>
+    /// Push settings for the App.
+    /// Serialized Name: PushSettings
+    /// </summary>
     public partial class WebAppPushSettings : ResourceData
     {
         /// <summary>
@@ -57,16 +60,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isPushEnabled"> Gets or sets a flag indicating whether the Push endpoint is enabled. </param>
-        /// <param name="tagWhitelistJson"> Gets or sets a JSON string containing a list of tags that are whitelisted for use by the push registration endpoint. </param>
+        /// <param name="isPushEnabled">
+        /// Gets or sets a flag indicating whether the Push endpoint is enabled.
+        /// Serialized Name: PushSettings.properties.isPushEnabled
+        /// </param>
+        /// <param name="tagWhitelistJson">
+        /// Gets or sets a JSON string containing a list of tags that are whitelisted for use by the push registration endpoint.
+        /// Serialized Name: PushSettings.properties.tagWhitelistJson
+        /// </param>
         /// <param name="tagsRequiringAuth">
         /// Gets or sets a JSON string containing a list of tags that require user authentication to be used in the push registration endpoint.
         /// Tags can consist of alphanumeric characters and the following:
         /// '_', '@', '#', '.', ':', '-'.
         /// Validation should be performed at the PushRequestHandler.
+        /// Serialized Name: PushSettings.properties.tagsRequiringAuth
         /// </param>
-        /// <param name="dynamicTagsJson"> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="dynamicTagsJson">
+        /// Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint.
+        /// Serialized Name: PushSettings.properties.dynamicTagsJson
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppPushSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isPushEnabled, string tagWhitelistJson, string tagsRequiringAuth, string dynamicTagsJson, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -78,10 +94,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets a flag indicating whether the Push endpoint is enabled. </summary>
+        /// <summary>
+        /// Gets or sets a flag indicating whether the Push endpoint is enabled.
+        /// Serialized Name: PushSettings.properties.isPushEnabled
+        /// </summary>
         [WirePath("properties.isPushEnabled")]
         public bool? IsPushEnabled { get; set; }
-        /// <summary> Gets or sets a JSON string containing a list of tags that are whitelisted for use by the push registration endpoint. </summary>
+        /// <summary>
+        /// Gets or sets a JSON string containing a list of tags that are whitelisted for use by the push registration endpoint.
+        /// Serialized Name: PushSettings.properties.tagWhitelistJson
+        /// </summary>
         [WirePath("properties.tagWhitelistJson")]
         public string TagWhitelistJson { get; set; }
         /// <summary>
@@ -89,13 +111,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// Tags can consist of alphanumeric characters and the following:
         /// '_', '@', '#', '.', ':', '-'.
         /// Validation should be performed at the PushRequestHandler.
+        /// Serialized Name: PushSettings.properties.tagsRequiringAuth
         /// </summary>
         [WirePath("properties.tagsRequiringAuth")]
         public string TagsRequiringAuth { get; set; }
-        /// <summary> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </summary>
+        /// <summary>
+        /// Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint.
+        /// Serialized Name: PushSettings.properties.dynamicTagsJson
+        /// </summary>
         [WirePath("properties.dynamicTagsJson")]
         public string DynamicTagsJson { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

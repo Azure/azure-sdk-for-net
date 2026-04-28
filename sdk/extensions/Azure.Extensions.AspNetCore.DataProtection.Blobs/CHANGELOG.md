@@ -1,14 +1,10 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.5.2 (2026-04-28)
 
 ### Other Changes
+
+- Updated `Microsoft.AspNetCore.DataProtection` dependency to 10.0.7 to mitigate [GHSA-37gx-xxp4-5rgx](https://github.com/advisories/GHSA-37gx-xxp4-5rgx) and [GHSA-w3x6-4m5h-cxqf](https://github.com/advisories/GHSA-w3x6-4m5h-cxqf).
 
 ## 1.5.1 (2025-06-23)
 

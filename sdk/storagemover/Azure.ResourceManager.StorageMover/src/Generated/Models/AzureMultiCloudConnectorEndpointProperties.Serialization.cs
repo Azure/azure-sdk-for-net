@@ -114,6 +114,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
             EndpointType endpointType = default;
             string description = default;
+            StorageMoverEndpointKind? endpointKind = default;
             StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier multiCloudConnectorId = default;
@@ -128,6 +129,15 @@ namespace Azure.ResourceManager.StorageMover.Models
                 if (prop.NameEquals("description"u8))
                 {
                     description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("endpointKind"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointKind = new StorageMoverEndpointKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -157,6 +167,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new AzureMultiCloudConnectorEndpointProperties(
                 endpointType,
                 description,
+                endpointKind,
                 provisioningState,
                 additionalBinaryDataProperties,
                 multiCloudConnectorId,

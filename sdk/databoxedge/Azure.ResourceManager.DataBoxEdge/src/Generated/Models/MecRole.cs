@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     Properties = new MECRoleProperties();
                 }
-                Properties.RoleStatus = value.Value;
+                Properties.RoleStatus = value;
             }
         }
     }

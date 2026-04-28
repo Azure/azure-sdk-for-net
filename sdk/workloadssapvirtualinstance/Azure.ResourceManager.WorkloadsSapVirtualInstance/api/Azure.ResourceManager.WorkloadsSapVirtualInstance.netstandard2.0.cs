@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     {
         public SapVirtualInstanceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapConfiguration Configuration { get { throw null; } set { } }
-        public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapEnvironmentType Environment { get { throw null; } set { } }
+        public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapEnvironmentType? Environment { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapHealthState? Health { get { throw null; } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualInstanceIdentity Identity { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.ManagedResourcesNetworkAccessType? ManagedResourcesNetworkAccessType { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapProductType SapProduct { get { throw null; } set { } }
+        public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapProductType? SapProduct { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualInstanceState? State { get { throw null; } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -13,58 +13,54 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Bulk collections action properties. </summary>
     public partial class BulkCollectionsActionContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionContent"/>. </summary>
         public BulkCollectionsActionContent()
         {
-            CollectionIds = new ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionContent"/>. </summary>
-        /// <param name="collectionIds"> collection ids list that the action is performed on. </param>
-        /// <param name="action"> Action to perform (For example: EnableCollections, DisableCollections). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCollectionsActionContent(IList<Guid> collectionIds, string action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> bulk collections properties details. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BulkCollectionsActionContent(BulkCollectionsDetails properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CollectionIds = collectionIds;
-            Action = action;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> bulk collections properties details. </summary>
+        internal BulkCollectionsDetails Properties { get; set; }
+
         /// <summary> collection ids list that the action is performed on. </summary>
-        public IList<Guid> CollectionIds { get; }
+        public IList<Guid> CollectionIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BulkCollectionsDetails();
+                }
+                return Properties.CollectionIds;
+            }
+        }
+
         /// <summary> Action to perform (For example: EnableCollections, DisableCollections). </summary>
-        public string Action { get; set; }
+        public string Action
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Action;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BulkCollectionsDetails();
+                }
+                Properties.Action = value;
+            }
+        }
     }
 }

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridIdentityMetadataRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                HttpMessage message = _hybridIdentityMetadataRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmHybridIdentityMetadataData> response = Response.FromValue(HciVmHybridIdentityMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridIdentityMetadataRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                HttpMessage message = _hybridIdentityMetadataRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmHybridIdentityMetadataData> response = Response.FromValue(HciVmHybridIdentityMetadataData.FromResponse(result), result);
                 if (response.Value == null)

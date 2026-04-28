@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,44 +15,75 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct OverrideActionType : IEquatable<OverrideActionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="OverrideActionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OverrideActionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllowValue = "Allow";
         private const string BlockValue = "Block";
         private const string LogValue = "Log";
         private const string RedirectValue = "Redirect";
+        private const string AnomalyScoringValue = "AnomalyScoring";
+        private const string JSChallengeValue = "JSChallenge";
+        private const string CAPTCHAValue = "CAPTCHA";
 
-        /// <summary> Allow. </summary>
+        /// <summary> Initializes a new instance of <see cref="OverrideActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public OverrideActionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Allow. </summary>
         public static OverrideActionType Allow { get; } = new OverrideActionType(AllowValue);
-        /// <summary> Block. </summary>
+
+        /// <summary> Gets the Block. </summary>
         public static OverrideActionType Block { get; } = new OverrideActionType(BlockValue);
-        /// <summary> Log. </summary>
+
+        /// <summary> Gets the Log. </summary>
         public static OverrideActionType Log { get; } = new OverrideActionType(LogValue);
-        /// <summary> Redirect. </summary>
+
+        /// <summary> Gets the Redirect. </summary>
         public static OverrideActionType Redirect { get; } = new OverrideActionType(RedirectValue);
+
+        /// <summary> Gets the AnomalyScoring. </summary>
+        public static OverrideActionType AnomalyScoring { get; } = new OverrideActionType(AnomalyScoringValue);
+
+        /// <summary> Gets the JSChallenge. </summary>
+        public static OverrideActionType JSChallenge { get; } = new OverrideActionType(JSChallengeValue);
+
+        /// <summary> Gets the CAPTCHA. </summary>
+        public static OverrideActionType CAPTCHA { get; } = new OverrideActionType(CAPTCHAValue);
+
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OverrideActionType left, OverrideActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OverrideActionType left, OverrideActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OverrideActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OverrideActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OverrideActionType(string value) => new OverrideActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OverrideActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OverrideActionType?(string value) => value == null ? null : new OverrideActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OverrideActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OverrideActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 {
                     Properties = new DomainPatchResourceProperties();
                 }
-                Properties.IsDomainPrivacyEnabled = value.Value;
+                Properties.IsDomainPrivacyEnabled = value;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 {
                     Properties = new DomainPatchResourceProperties();
                 }
-                Properties.IsAutoRenew = value.Value;
+                Properties.IsAutoRenew = value;
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 {
                     Properties = new DomainPatchResourceProperties();
                 }
-                Properties.DnsType = value.Value;
+                Properties.DnsType = value;
             }
         }
 
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 {
                     Properties = new DomainPatchResourceProperties();
                 }
-                Properties.TargetDnsType = value.Value;
+                Properties.TargetDnsType = value;
             }
         }
 

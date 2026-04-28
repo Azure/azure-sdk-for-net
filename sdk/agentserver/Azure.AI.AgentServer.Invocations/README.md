@@ -43,6 +43,14 @@ public class EchoHandler : InvocationHandler
 }
 ```
 
+Alternatively, use `AgentHost.CreateBuilder()` for more control over service registration and middleware:
+
+```C# Snippet:Invocations_ReadMe_ManualSetup
+var builder = AgentHost.CreateBuilder();
+builder.AddInvocations<EchoHandler>();
+builder.Build().Run();
+```
+
 For more control over the host (adding services, configuring middleware, composing multiple protocols), see [Customizing the host](#customizing-the-host) below.
 
 ## Key concepts
@@ -53,15 +61,15 @@ The abstract base class you subclass. Only `HandleAsync` is abstract — the rem
 
 ### InvocationContext
 
-Provides request metadata to the handler, including the resolved session ID and forwarded client headers.
+Provides request metadata to the handler. All properties are read-only and resolved before `HandleAsync` is called.
 
-### Session resolution
-
-The library automatically extracts a session identifier from incoming requests, enabling multi-turn invocation tracking. The resolved session ID is available on `InvocationContext.SessionId`.
-
-### Client header forwarding
-
-Headers prefixed with `x-client-*` are automatically captured from the incoming request and made available via `InvocationContext.ClientHeaders`, allowing end-to-end tracing context and client metadata to flow through the server.
+| Property | Type | Description |
+|----------|------|-------------|
+| `InvocationId` | `string` | Unique identifier for this invocation. Passed as the first argument to `GetAsync` and `CancelAsync`. Use as a key when storing per-invocation state. |
+| `SessionId` | `string` | Resolved multi-turn session identifier. For `POST /invocations`, resolved from the `agent_session_id` query parameter, `FOUNDRY_AGENT_SESSION_ID` env var, or a generated UUID — in that order. For `GET` and `Cancel`, the query parameter is not used; the value comes from the env var or a generated UUID. |
+| `ClientHeaders` | `IReadOnlyDictionary<string, string>` | Forwarded `x-client-*` headers from the original request — useful for propagating tracing context and client metadata. |
+| `QueryParameters` | `IReadOnlyDictionary<string, StringValues>` | All query parameters from the incoming request. Per the invocation protocol spec, all query parameters are forwarded unchanged. |
+| `Isolation` | `IsolationContext` | Isolation context extracted from `x-agent-user-isolation-key` and `x-agent-chat-isolation-key` headers. Useful for multi-tenant scenarios where per-user or per-chat data must be isolated. `IsolationContext.Empty` indicates no isolation headers were present. |
 
 ### Customizing the host
 
@@ -69,6 +77,8 @@ When you need to add services, configure middleware, or compose multiple protoco
 - [Tier 1 hosting customization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample5_Tier1HostingCustomize.md)
 - [Tier 2 builder](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample6_Tier2HostingBuilder.md)
 - [Tier 3 self-hosting](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md)
+
+`InvocationsServerOptions` can be configured via the `AddInvocationsServer(options => { ... })` delegate on any tier. See the [Tier 3 self-hosting](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md) sample for a complete example.
 
 ### Handler lifetime
 

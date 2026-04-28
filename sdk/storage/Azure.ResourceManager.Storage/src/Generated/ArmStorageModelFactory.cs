@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
         /// <param name="blobRestoreStatus"> Blob restore status. </param>
         /// <param name="allowBlobPublicAccess"> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </param>
-        /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </param>
+        /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. Minimum TLS version 1.3 version is not supported. </param>
         /// <param name="allowSharedKeyAccess"> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </param>
         /// <param name="isNfsV3Enabled"> NFS 3.0 protocol support enabled if set to true. </param>
         /// <param name="allowCrossTenantReplication"> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Storage.Models
                     createdOn,
                     customDomain,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.Value, null),
+                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), null),
                     keyCreationTime,
                     secondaryEndpoints,
                     encryption,
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="largeFileSharesState"> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </param>
         /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
         /// <param name="allowBlobPublicAccess"> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </param>
-        /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </param>
+        /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. Minimum TLS version 1.3 version is not supported. </param>
         /// <param name="allowSharedKeyAccess"> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </param>
         /// <param name="allowCrossTenantReplication"> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </param>
         /// <param name="isDefaultToOAuthAuthentication"> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </param>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Storage.Models
                     customDomain,
                     encryption,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.Value, null),
+                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), null),
                     accessTier,
                     azureFilesIdentityBasedAuthentication,
                     enableHttpsTrafficOnly,
@@ -688,28 +688,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static GetServiceSasResult GetServiceSasResult(string serviceSasToken = default)
         {
             return new GetServiceSasResult(serviceSasToken, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="targetSkuName"> Target sku name for the account. </param>
-        /// <param name="migrationStatus"> Current status of migration. </param>
-        /// <param name="migrationFailedReason"> Error code for migration failure. </param>
-        /// <param name="migrationFailedDetailedReason"> Reason for migration failure. </param>
-        /// <param name="name0"> The name of the Storage Account Migration. It should always be 'default'. </param>
-        /// <returns> A new <see cref="Storage.StorageAccountMigrationData"/> instance for mocking. </returns>
-        public static StorageAccountMigrationData StorageAccountMigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageSkuName? targetSkuName = default, StorageAccountMigrationStatus? migrationStatus = default, string migrationFailedReason = default, string migrationFailedDetailedReason = default, string name0 = default)
-        {
-            return new StorageAccountMigrationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                targetSkuName is null && migrationStatus is null && migrationFailedReason is null && migrationFailedDetailedReason is null ? default : new StorageAccountMigrationProperties(targetSkuName.Value, migrationStatus, migrationFailedReason, migrationFailedDetailedReason, null),
-                name);
         }
 
         /// <summary> The deleted share to be restored. </summary>

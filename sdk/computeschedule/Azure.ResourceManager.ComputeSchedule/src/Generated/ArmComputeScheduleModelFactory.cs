@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.SubmitDeallocateContent"/> instance for mocking. </returns>
         public static SubmitDeallocateContent SubmitDeallocateContent(UserRequestSchedule schedule = default, ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new SubmitDeallocateContent(schedule, executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new SubmitDeallocateContent(schedule, executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The schedule details for the user request. </summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.SubmitHibernateContent"/> instance for mocking. </returns>
         public static SubmitHibernateContent SubmitHibernateContent(UserRequestSchedule schedule = default, ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new SubmitHibernateContent(schedule, executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new SubmitHibernateContent(schedule, executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response from a Hibernate request. </summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.SubmitStartContent"/> instance for mocking. </returns>
         public static SubmitStartContent SubmitStartContent(UserRequestSchedule schedule = default, ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new SubmitStartContent(schedule, executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new SubmitStartContent(schedule, executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response from a start request. </summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
         public static ExecuteDeallocateContent ExecuteDeallocateContent(ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new ExecuteDeallocateContent(executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new ExecuteDeallocateContent(executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
         public static ExecuteHibernateContent ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new ExecuteHibernateContent(executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new ExecuteHibernateContent(executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
         public static ExecuteStartContent ExecuteStartContent(ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new ExecuteStartContent(executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new ExecuteStartContent(executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ExecuteCreateFlexRequest request for executeCreateFlex operations. </summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
         public static ExecuteDeleteContent ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default, bool? isForceDeletion = default)
         {
-            return new ExecuteDeleteContent(executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, isForceDeletion, additionalBinaryDataProperties: null);
+            return new ExecuteDeleteContent(executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, isForceDeletion, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response from a delete request. </summary>

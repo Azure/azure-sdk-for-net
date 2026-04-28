@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
@@ -56,13 +56,14 @@ namespace Azure.Generator.Mgmt.Tests
 
             // Create the model provider (this runs PreVisit* visitors only).
             var model = plugin.Object.TypeFactory.CreateModel(parentModel);
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
 
             // Verify the Output-only nested model has no public constructor (precondition).
             var nestedModel = plugin.Object.TypeFactory.CreateModel(propertiesModel);
-            Assert.IsNotNull(nestedModel);
-            Assert.IsFalse(
+            Assert.That(nestedModel, Is.Not.Null);
+            Assert.That(
                 nestedModel!.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)),
+                Is.False,
                 "Precondition: Output-only nested model should have no public constructor");
 
             // Now run the VisitType visitors on the parent model.
@@ -74,7 +75,7 @@ namespace Azure.Generator.Mgmt.Tests
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
 
             Assert.DoesNotThrow(() =>
             {
@@ -110,7 +111,7 @@ namespace Azure.Generator.Mgmt.Tests
                 null,
                 []);
             var primaryMethod = new MethodProvider(primarySignature, MethodBodyStatement.Empty, enclosingType);
-            Assert.IsFalse(FlattenPropertyVisitor.IsBackwardCompatMethod(primaryMethod));
+            Assert.That(FlattenPropertyVisitor.IsBackwardCompatMethod(primaryMethod), Is.False);
 
             // Create a method WITH the EditorBrowsable(Never) attribute
             var backCompatSignature = new MethodSignature(
@@ -122,7 +123,7 @@ namespace Azure.Generator.Mgmt.Tests
                 [],
                 Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
             var backCompatMethod = new MethodProvider(backCompatSignature, MethodBodyStatement.Empty, enclosingType);
-            Assert.IsTrue(FlattenPropertyVisitor.IsBackwardCompatMethod(backCompatMethod));
+            Assert.That(FlattenPropertyVisitor.IsBackwardCompatMethod(backCompatMethod), Is.True);
         }
 
         [Test]
@@ -146,12 +147,12 @@ namespace Azure.Generator.Mgmt.Tests
                 inputModels: () => [resultModel, dataModel]);
 
             var model = plugin.Object.TypeFactory.CreateModel(resultModel);
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
 
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
 
             foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
             {
@@ -160,7 +161,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             var rendered = new TypeProviderWriter(model!).Write().Content;
             Assert.That(rendered, Does.Match(@"(?:this\.)?Data is null"));
-            StringAssert.Contains("Data.Errors", rendered);
+            Assert.That(rendered, Does.Contain("Data.Errors"));
             Assert.That(rendered, Does.Not.Match(@"\breturn\s+(?:this\.)?Data\.Errors;"));
         }
 
@@ -237,21 +238,21 @@ namespace Azure.Generator.Mgmt.Tests
 
             // Assert: The backward-compat overload's body should now have arguments
             // in the PRIMARY method's current parameter order
-            Assert.IsNotNull(backCompatMethod.BodyStatements);
+            Assert.That(backCompatMethod.BodyStatements, Is.Not.Null);
             var statements = backCompatMethod.BodyStatements!.ToArray();
-            Assert.AreEqual(1, statements.Length);
+            Assert.That(statements.Length, Is.EqualTo(1));
 
             var returnStatement = statements[0] as ExpressionStatement;
-            Assert.IsNotNull(returnStatement);
+            Assert.That(returnStatement, Is.Not.Null);
             var keywordExpr = returnStatement!.Expression as KeywordExpression;
-            Assert.IsNotNull(keywordExpr);
+            Assert.That(keywordExpr, Is.Not.Null);
             var newInvoke = keywordExpr!.Expression as InvokeMethodExpression;
-            Assert.IsNotNull(newInvoke);
+            Assert.That(newInvoke, Is.Not.Null);
 
             // The arguments should now be in the PRIMARY method's order:
             // (id, name, displayName, provisioningState, etag)
             var args = newInvoke!.Arguments;
-            Assert.AreEqual(5, args.Count);
+            Assert.That(args.Count, Is.EqualTo(5));
             AssertArgIsParameter(args[0], "id", "position 0");
             AssertArgIsParameter(args[1], "name", "position 1");
             AssertArgIsParameter(args[2], "displayName", "position 2");
@@ -262,7 +263,7 @@ namespace Azure.Generator.Mgmt.Tests
         private static void AssertArgIsParameter(ValueExpression arg, string expectedName, string context)
         {
             string? actualName = arg is VariableExpression v ? v.Declaration.RequestedName : null;
-            Assert.AreEqual(expectedName, actualName, $"Expected parameter '{expectedName}' at {context}, but got '{actualName ?? arg.GetType().Name}'");
+            Assert.That(actualName, Is.EqualTo(expectedName), $"Expected parameter '{expectedName}' at {context}, but got '{actualName ?? arg.GetType().Name}'");
         }
 
         private static void ApplyFlattenDecorator(InputModelProperty property)
@@ -273,7 +274,7 @@ namespace Azure.Generator.Mgmt.Tests
             var decoratorsProperty = typeof(InputModelProperty).GetProperty(
                 nameof(InputModelProperty.Decorators),
                 BindingFlags.Public | BindingFlags.Instance);
-            Assert.IsNotNull(decoratorsProperty, "Could not find InputModelProperty.Decorators property");
+            Assert.That(decoratorsProperty, Is.Not.Null, "Could not find InputModelProperty.Decorators property");
             decoratorsProperty!.SetValue(property, new[] { decorator });
         }
 
@@ -310,18 +311,19 @@ namespace Azure.Generator.Mgmt.Tests
 
             // Create the model provider.
             var model = plugin.Object.TypeFactory.CreateModel(parentModel);
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
 
             // Verify precondition: before visitors run, there IS a public constructor.
-            Assert.IsTrue(
+            Assert.That(
                 model!.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)),
+                Is.True,
                 "Precondition: model should have a public constructor before visitors run");
 
             // Run the VisitType visitors (which triggers FlattenPropertyVisitor).
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
 
             foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
             {
@@ -331,8 +333,8 @@ namespace Azure.Generator.Mgmt.Tests
             // After visitors run, the public constructor should still exist (parameterless).
             var publicCtor = model.Constructors.SingleOrDefault(
                 c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsNotNull(publicCtor, "Public constructor should be kept (as parameterless) when all flattened properties are optional");
-            Assert.AreEqual(0, publicCtor!.Signature.Parameters.Count,
+            Assert.That(publicCtor, Is.Not.Null, "Public constructor should be kept (as parameterless) when all flattened properties are optional");
+            Assert.That(publicCtor!.Signature.Parameters.Count, Is.EqualTo(0),
                 "Public constructor should be parameterless since all flattened properties are optional");
 
             // The serialization type should NOT have an internal parameterless constructor
@@ -341,7 +343,7 @@ namespace Azure.Generator.Mgmt.Tests
             {
                 var serializationParameterlessCtor = serializationType.Constructors
                     .SingleOrDefault(c => !c.Signature.Parameters.Any());
-                Assert.IsNull(serializationParameterlessCtor,
+                Assert.That(serializationParameterlessCtor, Is.Null,
                     "Serialization type should not have a parameterless constructor when the model already has one");
             }
         }
@@ -375,13 +377,13 @@ namespace Azure.Generator.Mgmt.Tests
                 inputModels: () => [parentModel, propertiesModel]);
 
             var model = plugin.Object.TypeFactory.CreateModel(parentModel);
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
 
             // Run the VisitType visitors.
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore);
+            Assert.That(visitTypeCore, Is.Not.Null);
 
             foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
             {
@@ -391,10 +393,10 @@ namespace Azure.Generator.Mgmt.Tests
             // The public constructor should exist with only the required property as parameter.
             var publicCtorMixed = model!.Constructors.SingleOrDefault(
                 c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsNotNull(publicCtorMixed, "Public constructor should exist");
+            Assert.That(publicCtorMixed, Is.Not.Null, "Public constructor should exist");
             Assert.That(publicCtorMixed!.Signature.Parameters, Has.Count.EqualTo(1),
                 "Public constructor should have exactly 1 parameter (the required property)");
-            Assert.AreEqual("name", publicCtorMixed.Signature.Parameters[0].Name,
+            Assert.That(publicCtorMixed.Signature.Parameters[0].Name, Is.EqualTo("name"),
                 "The constructor parameter should be the required 'name' property");
         }
 
@@ -438,16 +440,16 @@ namespace Azure.Generator.Mgmt.Tests
 
             // Create model providers.
             var parentModelProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
-            Assert.IsNotNull(parentModelProvider);
+            Assert.That(parentModelProvider, Is.Not.Null);
 
             var discriminatorModelProvider = plugin.Object.TypeFactory.CreateModel(discriminatorBaseModel);
-            Assert.IsNotNull(discriminatorModelProvider);
+            Assert.That(discriminatorModelProvider, Is.Not.Null);
 
             // Run all visitors on the parent model.
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
 
             foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
             {
@@ -456,9 +458,10 @@ namespace Azure.Generator.Mgmt.Tests
 
             // The backupPolicy property should NOT have been flattened — it should remain public.
             var backupPolicyProp = parentModelProvider!.Properties.FirstOrDefault(p => p.Name == "BackupPolicy");
-            Assert.IsNotNull(backupPolicyProp, "BackupPolicy property should still exist on the parent model");
-            Assert.IsTrue(
+            Assert.That(backupPolicyProp, Is.Not.Null, "BackupPolicy property should still exist on the parent model");
+            Assert.That(
                 backupPolicyProp!.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                Is.True,
                 "BackupPolicy property should remain public (not flattened to internal)");
         }
 
@@ -493,10 +496,10 @@ namespace Azure.Generator.Mgmt.Tests
 
             // Create the model providers.
             var parentModelProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
-            Assert.IsNotNull(parentModelProvider);
+            Assert.That(parentModelProvider, Is.Not.Null);
 
             var stepModelProvider = plugin.Object.TypeFactory.CreateModel(stepModel);
-            Assert.IsNotNull(stepModelProvider);
+            Assert.That(stepModelProvider, Is.Not.Null);
 
             // Set up a custom code view on the Step model that has an [Obsolete] property.
             var customCodeView = new ObsoletePropertyCustomCodeView(stepModelProvider!);
@@ -506,7 +509,7 @@ namespace Azure.Generator.Mgmt.Tests
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
 
             foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
             {
@@ -519,10 +522,10 @@ namespace Azure.Generator.Mgmt.Tests
             // It should NOT have a flattened "OldPropertyName" (the obsolete property from custom code).
 
             var flattenedStartTimeUtc = parentModelProvider!.Properties.FirstOrDefault(p => p.Name == "StartTimeUtc");
-            Assert.IsNotNull(flattenedStartTimeUtc, "Non-obsolete property 'StartTimeUtc' should be flattened onto the parent model");
+            Assert.That(flattenedStartTimeUtc, Is.Not.Null, "Non-obsolete property 'StartTimeUtc' should be flattened onto the parent model");
 
             var flattenedObsolete = parentModelProvider.Properties.FirstOrDefault(p => p.Name == "OldPropertyName");
-            Assert.IsNull(flattenedObsolete, "Obsolete property 'OldPropertyName' should NOT be flattened onto the parent model");
+            Assert.That(flattenedObsolete, Is.Null, "Obsolete property 'OldPropertyName' should NOT be flattened onto the parent model");
         }
 
         /// <summary>
@@ -558,10 +561,10 @@ namespace Azure.Generator.Mgmt.Tests
 
             // Create the model providers.
             var parentModelProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
-            Assert.IsNotNull(parentModelProvider);
+            Assert.That(parentModelProvider, Is.Not.Null);
 
             var stepModelProvider = plugin.Object.TypeFactory.CreateModel(stepModel);
-            Assert.IsNotNull(stepModelProvider);
+            Assert.That(stepModelProvider, Is.Not.Null);
 
             // Set up a custom code view on the Step model that has an [Obsolete] property.
             var customCodeView = new ObsoletePropertyCustomCodeView(stepModelProvider!);
@@ -571,7 +574,7 @@ namespace Azure.Generator.Mgmt.Tests
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
 
             foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
             {
@@ -584,13 +587,13 @@ namespace Azure.Generator.Mgmt.Tests
             // It should NOT have a flattened "OldPropertyName" (the obsolete property from custom code).
 
             var flattenedStartTimeUtc = parentModelProvider!.Properties.FirstOrDefault(p => p.Name == "StartTimeUtc");
-            Assert.IsNotNull(flattenedStartTimeUtc, "Non-obsolete property 'StartTimeUtc' should be flattened onto the parent model");
+            Assert.That(flattenedStartTimeUtc, Is.Not.Null, "Non-obsolete property 'StartTimeUtc' should be flattened onto the parent model");
 
             var flattenedEndTimeUtc = parentModelProvider.Properties.FirstOrDefault(p => p.Name == "EndTimeUtc");
-            Assert.IsNotNull(flattenedEndTimeUtc, "Non-obsolete property 'EndTimeUtc' should be flattened onto the parent model");
+            Assert.That(flattenedEndTimeUtc, Is.Not.Null, "Non-obsolete property 'EndTimeUtc' should be flattened onto the parent model");
 
             var flattenedObsolete = parentModelProvider.Properties.FirstOrDefault(p => p.Name == "OldPropertyName");
-            Assert.IsNull(flattenedObsolete, "Obsolete property 'OldPropertyName' should NOT be flattened onto the parent model");
+            Assert.That(flattenedObsolete, Is.Null, "Obsolete property 'OldPropertyName' should NOT be flattened onto the parent model");
         }
 
         /// <summary>
@@ -640,15 +643,16 @@ namespace Azure.Generator.Mgmt.Tests
 
             var baseModelProvider = plugin.Object.TypeFactory.CreateModel(baseModel)!;
             var derivedModelProvider = plugin.Object.TypeFactory.CreateModel(derivedModel)!;
-            Assert.IsNotNull(baseModelProvider);
-            Assert.IsNotNull(derivedModelProvider);
+            Assert.That(baseModelProvider, Is.Not.Null);
+            Assert.That(derivedModelProvider, Is.Not.Null);
 
             // Precondition: before visitors, DerivedModel public ctor has WrapperModel param.
             var preVisitPublicCtor = derivedModelProvider.Constructors
                 .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsNotNull(preVisitPublicCtor, "DerivedModel should have a public ctor before visitors");
-            Assert.IsTrue(
+            Assert.That(preVisitPublicCtor, Is.Not.Null, "DerivedModel should have a public ctor before visitors");
+            Assert.That(
                 preVisitPublicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
+                Is.True,
                 "Precondition: DerivedModel ctor should have WrapperModel param before flatten");
 
             // Run only the FlattenPropertyVisitor on both models (base must be processed first to populate the flatten map).
@@ -656,7 +660,7 @@ namespace Azure.Generator.Mgmt.Tests
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore);
+            Assert.That(visitTypeCore, Is.Not.Null);
 
             visitTypeCore!.Invoke(visitor, [derivedModelProvider]);
             visitTypeCore!.Invoke(visitor, [baseModelProvider]);
@@ -664,19 +668,21 @@ namespace Azure.Generator.Mgmt.Tests
             // After visitors: DerivedModel public ctor should use the flattened type (string), not WrapperModel.
             var publicCtor = derivedModelProvider.Constructors
                 .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsNotNull(publicCtor, "DerivedModel should still have a public ctor after flatten");
+            Assert.That(publicCtor, Is.Not.Null, "DerivedModel should still have a public ctor after flatten");
 
-            Assert.IsFalse(
+            Assert.That(
                 publicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
+                Is.False,
                 "DerivedModel public ctor should NOT have WrapperModel param after safe-flatten");
-            Assert.IsTrue(
+            Assert.That(
                 publicCtor.Signature.Parameters.Any(p => p.Name == "wrapperValue"),
+                Is.True,
                 "DerivedModel public ctor should have the flattened 'wrapperValue' (string) param");
 
             // The base initializer must exist and be a base (not this) call.
             var initializer = publicCtor.Signature.Initializer;
-            Assert.IsNotNull(initializer, "DerivedModel public ctor should have a base initializer");
-            Assert.IsTrue(initializer!.IsBase, "Initializer should be a base call");
+            Assert.That(initializer, Is.Not.Null, "DerivedModel public ctor should have a base initializer");
+            Assert.That(initializer!.IsBase, Is.True, "Initializer should be a base call");
 
             // None of the base initializer arguments should reference the old WrapperModel param.
             var initializerArgNames = initializer.Arguments
@@ -684,12 +690,140 @@ namespace Azure.Generator.Mgmt.Tests
                 .Select(v => v.Declaration.RequestedName)
                 .ToList();
 
-            Assert.IsFalse(
+            Assert.That(
                 initializerArgNames.Contains("wrapper"),
+                Is.False,
                 $"Base initializer should NOT pass 'wrapper' (WrapperModel). Args: [{string.Join(", ", initializerArgNames)}]");
-            Assert.IsTrue(
+            Assert.That(
                 initializerArgNames.Contains("wrapperValue"),
+                Is.True,
                 $"Base initializer should pass the flattened 'wrapperValue'. Args: [{string.Join(", ", initializerArgNames)}]");
+        }
+
+        /// <summary>
+        /// Verifies that <see cref="FlattenPropertyVisitor.FilterAttributesForFlatten"/> drops any
+        /// WirePath attribute attached to the inner property while preserving other attributes.
+        /// When a property is flattened, its wire path changes (e.g., "left" -> "properties.left"),
+        /// so any WirePath attribute copied from the inner property is stale and must be omitted;
+        /// WirePathVisitor will later emit the correct combined wire-path attribute on the
+        /// flattened property.
+        /// </summary>
+        [Test]
+        public void TestFilterAttributesForFlattenDropsWirePath()
+        {
+            // LoadMockPlugin is required so ManagementClientGenerator.Instance is initialized,
+            // which in turn is needed to resolve WirePathAttributeType inside the visitor.
+            var dummyModel = InputFactory.Model(
+                "Dummy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("name", InputPrimitiveType.String, serializedName: "name")]);
+            ManagementMockHelpers.LoadMockPlugin(inputModels: () => [dummyModel]);
+
+            var wirePathType = ManagementClientGenerator.Instance.OutputLibrary.WirePathAttributeDefinition.Type;
+
+            var wirePathAttribute = new AttributeStatement(wirePathType, Literal("left"));
+            var obsoleteAttribute = new AttributeStatement(typeof(ObsoleteAttribute), Literal("use something else"));
+
+            var filtered = FlattenPropertyVisitor.FilterAttributesForFlatten([wirePathAttribute, obsoleteAttribute]);
+
+            Assert.That(filtered.Count, Is.EqualTo(1), "WirePath attribute should be filtered out");
+            Assert.That(filtered[0], Is.SameAs(obsoleteAttribute), "Non-WirePath attributes should be preserved");
+            Assert.That(
+                filtered.Any(a => FlattenPropertyVisitor.IsWirePathAttribute(a, wirePathType)),
+                Is.False,
+                "Filtered list should contain no WirePath attribute");
+        }
+
+        /// <summary>
+        /// Verifies the fix for https://github.com/microsoft/typespec/issues/7380.
+        ///
+        /// When SafeFlatten chains across 3+ levels of single-property models the immediate
+        /// `innerProperty` on a parent is itself a <see cref="FlattenedPropertyProvider"/>.
+        /// Previously the generator emitted `internalProperty = new InnerModel(value)` for the
+        /// flattened setter, but the value's type does not match any constructor on InnerModel
+        /// (its only ctor takes the deeper inner model). The fix detects the chained case and
+        /// emits the safe `if (internal == null) internal = new InnerModel(); internal.X = value;`
+        /// pattern instead, delegating through the inner flattened setter.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenChainedThreeLevelsEmitsSafeSetter()
+        {
+            // Level 3: leaf model with a single required string property.
+            var valueProp = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var levelThreeModel = InputFactory.Model(
+                "LevelThreeModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProp]);
+
+            // Level 2: single required property of LevelThreeModel — triggers SafeFlatten.
+            // Required ensures LevelTwoModel has no public parameterless constructor.
+            var levelThreeProp = InputFactory.Property("levelThree", levelThreeModel, isRequired: true, serializedName: "levelThree");
+            var levelTwoModel = InputFactory.Model(
+                "LevelTwoModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [levelThreeProp]);
+
+            // Level 1: single required property of LevelTwoModel — triggers SafeFlatten again.
+            // After Level 2 is flattened, its single public property is itself a
+            // FlattenedPropertyProvider (Value), so flattening Level 1 hits the chained case.
+            var levelTwoProp = InputFactory.Property("levelTwo", levelTwoModel, isRequired: true, serializedName: "levelTwo");
+            var levelOneModel = InputFactory.Model(
+                "LevelOneModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [levelTwoProp]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [levelOneModel, levelTwoModel, levelThreeModel]);
+
+            var levelOne = plugin.Object.TypeFactory.CreateModel(levelOneModel);
+            var levelTwo = plugin.Object.TypeFactory.CreateModel(levelTwoModel);
+            var levelThree = plugin.Object.TypeFactory.CreateModel(levelThreeModel);
+            Assert.That(levelOne, Is.Not.Null);
+            Assert.That(levelTwo, Is.Not.Null);
+            Assert.That(levelThree, Is.Not.Null);
+
+            // Precondition: LevelTwoModel has no public parameterless ctor (required prop).
+            Assert.That(
+                levelTwo!.Constructors.Any(c =>
+                    c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                    !c.Signature.Parameters.Any()),
+                Is.False,
+                "Precondition: LevelTwoModel should have no public parameterless constructor");
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            // Visit child models first so SafeFlatten on LevelOneModel sees the already-flattened
+            // FlattenedPropertyProvider as the inner property.
+            foreach (var model in new[] { levelThree, levelTwo, levelOne })
+            {
+                foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+                {
+                    visitTypeCore!.Invoke(visitor, [model!]);
+                }
+            }
+
+            var rendered = new TypeProviderWriter(levelOne!).Write().Content;
+
+            // The buggy form would be: `LevelTwo = new LevelTwoModel(value);` — which doesn't
+            // compile because LevelTwoModel only has a (LevelThreeModel) constructor.
+            Assert.That(
+                rendered,
+                Does.Not.Match(@"LevelTwo\s*=\s*new\s+[\w\.:]*LevelTwoModel\s*\(\s*value\s*\)"),
+                "Chained safe-flatten setter must not call a non-existent `new LevelTwoModel(value)` constructor");
+
+            // The fixed form delegates through the flattened inner setter, with a parameterless
+            // construction of the intermediate model.
+            Assert.That(
+                rendered,
+                Does.Match(@"LevelTwo\s*=\s*new\s+[\w\.:]*LevelTwoModel\s*\(\s*\)"),
+                "Chained safe-flatten setter should construct the intermediate model with the parameterless ctor");
+            Assert.That(
+                rendered,
+                Does.Match(@"LevelTwo\.LevelThreeValue\s*=\s*value"),
+                "Chained safe-flatten setter should delegate assignment through the inner flattened property");
         }
 
         private class ObsoletePropertyCustomCodeView : TypeProvider
@@ -718,6 +852,53 @@ namespace Azure.Generator.Mgmt.Tests
                         attributes: [new AttributeStatement(typeof(ObsoleteAttribute), Literal("Use StartTimeUtc instead."))])
                 ];
             }
+        }
+
+        /// <summary>
+        /// Verifies that when a required value-type inner property is flattened from an optional
+        /// "properties?:" parent, the generated flattened property is wrapped in Nullable&lt;T&gt;.
+        /// Regression test for issue #58288: the public getter returns the inner value unguarded,
+        /// but the backing "Properties" reference can be null at runtime (e.g. output-only models
+        /// deserialized without a properties bag). Exposing it as non-nullable masks the NRE risk
+        /// and diverges from the corresponding ModelFactory parameter shape.
+        /// </summary>
+        [Test]
+        public void TestFlattenMakesRequiredValueTypeNullable()
+        {
+            var requiredIntProp = InputFactory.Property("count", InputPrimitiveType.Int32, isRequired: true, serializedName: "count");
+            var propertiesModel = InputFactory.Model(
+                "TestValueTypeProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [requiredIntProp]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+
+            var parentModel = InputFactory.Model(
+                "TestResourceWithValueType",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.That(model, Is.Not.Null);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            var flattened = model!.Properties.SingleOrDefault(p => p.Name == "Count");
+            Assert.That(flattened, Is.Not.Null, "Expected flattened 'Count' property on parent model");
+            Assert.That(flattened!.Type.IsNullable, Is.True,
+                "Required value-type property flattened from an optional parent should be exposed as Nullable<T>");
         }
     }
 }

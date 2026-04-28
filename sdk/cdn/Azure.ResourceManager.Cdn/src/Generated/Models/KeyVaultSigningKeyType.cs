@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The KeyVaultSigningKeyType. </summary>
+    /// <summary></summary>
     public readonly partial struct KeyVaultSigningKeyType : IEquatable<KeyVaultSigningKeyType>
     {
         private readonly string _value;
+        private const string KeyVaultSigningKeyValue = "KeyVaultSigningKeyParameters";
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultSigningKeyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string KeyVaultSigningKeyValue = "KeyVaultSigningKeyParameters";
-
-        /// <summary> KeyVaultSigningKeyParameters. </summary>
+        /// <summary> Gets the KeyVaultSigningKey. </summary>
         public static KeyVaultSigningKeyType KeyVaultSigningKey { get; } = new KeyVaultSigningKeyType(KeyVaultSigningKeyValue);
+
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KeyVaultSigningKeyType left, KeyVaultSigningKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KeyVaultSigningKeyType left, KeyVaultSigningKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultSigningKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KeyVaultSigningKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KeyVaultSigningKeyType(string value) => new KeyVaultSigningKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KeyVaultSigningKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KeyVaultSigningKeyType?(string value) => value == null ? null : new KeyVaultSigningKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyVaultSigningKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KeyVaultSigningKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

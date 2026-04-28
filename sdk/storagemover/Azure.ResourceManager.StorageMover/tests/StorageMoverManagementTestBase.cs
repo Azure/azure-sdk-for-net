@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StorageMover.Tests
         protected readonly string StorageMoverName = "testsm1";
         protected readonly string ProjectName = "testp1";
         protected readonly string AgentName = "testagent1";
-        protected readonly string StorageAccountName = "testsomoveraccount";
+        protected readonly string StorageAccountName = "testsmstore24";
         protected readonly string ContainerName = "testsmcontainer";
         protected readonly string NfsEndpointName = "testnfsendpoint";
         protected readonly string ContainerEndpointName = "testsmcontainerendpoint";
@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.StorageMover.Tests
         protected readonly string ResourceGroupNamePrefix = "testsmrg-";
         protected readonly string StorageMoverPrefix = "testsm-";
         protected readonly string JobName = "6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13";
+        protected readonly string MultiCloudConnectorId = "/subscriptions/b6b34ad8-ca89-4f85-beb7-c2ec13702dac/resourceGroups/E2E-Management-RGsyn/providers/Microsoft.HybridConnectivity/publicCloudConnectors/e2e-sm-rp-connector";
+        protected readonly string AwsS3BucketId = "/subscriptions/b6b34ad8-ca89-4f85-beb7-c2ec13702dac/resourceGroups/aws_640698235822/providers/Microsoft.AWSConnector/s3Buckets/e2e-sm-rp-bucket";
         protected AzureLocation TestLocation = new("eastus");
 
         [SetUp]

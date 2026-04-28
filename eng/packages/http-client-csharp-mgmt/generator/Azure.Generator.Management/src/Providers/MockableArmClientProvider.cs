@@ -6,6 +6,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -61,9 +62,24 @@ namespace Azure.Generator.Management.Providers
             // Build methods for non-resource extension operations
             foreach (var method in _nonResourceMethods)
             {
-                // Process both async and sync method variants
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
+                // For extension-scoped non-resource methods, create a synthetic scope parameter (ResourceIdentifier).
+                // Pass an explicit WireInformation with an empty SerializedName so this synthetic parameter does not
+                // collide with a real wire parameter named "scope" (e.g. an @query("scope")) when
+                // ParameterContextRegistry.PopulateArguments matches arguments by WireInfo.SerializedName.
+                // Note: the ParameterProvider constructor defaults WireInfo to one whose SerializedName equals the
+                // parameter Name when wireInfo is null, so we must pass a non-null sentinel here. See issue #58484.
+                var scopeParameter = new ParameterProvider(
+                    "scope",
+                    $"The scope that the resource will apply against.",
+                    typeof(ResourceIdentifier),
+                    wireInfo: new WireInformation(SerializationFormat.Default, string.Empty),
+                    validation: ParameterValidationType.AssertNotNull);
+                var scopeContext = OperationContext.Create(method.Scope.ScopeIdPattern);
+
+                // Process both async and sync method variants, passing the scope parameter
+                // so that PopulateArguments uses it instead of Id
+                methods.Add(BuildServiceMethodWithContext(method.InputMethod, method.InputClient, scopeContext, true, scopeParameter: scopeParameter));
+                methods.Add(BuildServiceMethodWithContext(method.InputMethod, method.InputClient, scopeContext, false, scopeParameter: scopeParameter));
             }
 
             return [.. methods];

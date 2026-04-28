@@ -1,5 +1,66 @@
 # Release History
 
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.4 (2026-04-22)
+
+### Features Added
+
+- Foundry storage logging now includes the `traceparent` header (W3C distributed trace ID) in all
+  log messages, enabling correlation between SDK log entries and backend distributed traces.
+- All endpoints now return the `x-request-id` response header for request correlation (via Core
+  `RequestIdMiddleware`). Value is resolved from OTEL trace ID → incoming `x-request-id` header → GUID.
+- Error responses (`ApiErrorResponse`) are automatically enriched with `error.additionalInfo.request_id`
+  matching the `x-request-id` response header value, enabling client-side error correlation.
+- Persistence failure resilience — when storage operations fail, responses now complete gracefully
+  with `status: "failed"` and `error.code: "storage_error"` instead of crashing or leaving responses
+  permanently stuck at `in_progress`. Covers all execution modes (streaming, background+streaming,
+  background+non-streaming, synchronous). For streaming responses, terminal SSE events are buffered,
+  persistence is attempted, and on failure the terminal event is replaced with `response.failed`
+  carrying `error_code="storage_error"`. Synchronous persistence failures return HTTP 500 with the
+  storage error details.
+
+### Bugs Fixed
+
+- Fixed `InvalidOperationException: Response was not set` crash in `FoundryStorageLoggingPolicy` when
+  a transport-level failure (DNS resolution, connection refused, timeout) occurs before any HTTP
+  response is received. These failures are now logged at `Error` level without triggering the
+  logging crash, and the original transport exception continues to propagate.
+- Fixed `GetInputExpanded` not normalizing string content shorthand on `ItemMessage`. When
+  `content` is a plain JSON string (e.g., `"Hello"`), it is now auto-expanded to the canonical
+  array form (`[{"type":"input_text","text":"Hello"}]`) so that `ItemMessage.Content` BinaryData
+  is always consistent regardless of input format.
+
+### Other Changes
+
+- Removed `x-ms-request-id` from Foundry storage logging (unused service header).
+- Migrated header name constants to use `PlatformHeaders` from Core package instead of
+  local `private const` declarations.
+
+## 1.0.0-beta.3 (2026-04-20)
+
+### Features Added
+
+- `previous_response_id` and `conversation.id` are now validated against the provider before
+  the handler is invoked. Invalid references return HTTP 404/400 immediately instead of being
+  silently ignored. The resolved history item IDs are cached — handlers calling
+  `GetHistoryAsync()` reuse the prefetched result without a second storage lookup.
+
+### Bugs Fixed
+
+- Foundry storage error responses now preserve the full error body (`code`, `message`, `param`, `type`)
+  when returned to the client. Previously only the `message` field was forwarded; `param` was lost.
+- Non-400/404/409 error status codes from Foundry storage are no longer proxied as-is; they are
+  normalized to HTTP 500 to avoid leaking upstream infrastructure details.
+
 ## 1.0.0-beta.2 (2026-04-17)
 
 ### Features Added
@@ -8,6 +69,9 @@
   `x-agent-chat-isolation-key`, all subsequent GET, Cancel, DELETE, and InputItems calls must
   include the same key. Mismatched or missing keys return 404 (indistinguishable from not-found)
   to ensure tenant isolation.
+- Added `x-agent-session-id` response header on all protocol endpoints (POST, GET, Cancel,
+  Delete, InputItems). The resolved session ID is echoed as a response header per spec §8,
+  with fallback to the `FOUNDRY_AGENT_SESSION_ID` environment variable for error responses.
 - Added validation for malformed response IDs in both the `response_id` path parameter and the
   `previous_response_id` request body field. IDs that do not match the expected format (prefix
   and length) are rejected with 400 and a descriptive error message.
@@ -24,6 +88,26 @@
 - Added structured `Information`-level logging to all Responses API endpoints (GET, Cancel, Delete,
   InputItems) with response ID context. The POST `/responses` creation log now includes response ID,
   conversation ID, previous response ID, and store flag for full request traceability.
+- Added isolation key presence logging (`HasUserIsolationKey`, `HasChatIsolationKey`) to all
+  endpoint handler logs and outbound Foundry storage request logs. Key values are never logged.
+- Added startup configuration logging: storage provider type, default model, fetch history count,
+  and event stream TTL are logged at `Information` level when the host starts.
+- Added server version `User-Agent` header on all outbound Foundry storage API requests. The
+  composed identity from `ServerVersionRegistry` (including developer-registered segments) is
+  prepended to the standard Azure.Core user-agent, read lazily per-request.
+- Added Foundry storage URL masking in diagnostic logs: everything before `/storage` is redacted
+  and query parameters are stripped (except `api-version`) to prevent leaking account and project
+  information.
+- Added inbound request logging for Tier 1 and Tier 2 setups (via `ResponsesServer.Run()` or
+  `AgentHost.CreateBuilder()`). All incoming HTTP requests are logged with method, path, status
+  code, duration, and correlation headers (`x-request-id`, `x-ms-client-request-id`).
+
+### Breaking Changes
+
+- Made `ResponsesActivitySource` internal. The activity source is managed by
+  the framework; handlers do not need to create tracing activities directly.
+- Made `ResponsesTracingConstants` internal. The tracing tag, baggage, and log scope
+  constants are implementation details not needed by handler authors.
 
 ### Bugs Fixed
 
@@ -60,7 +144,7 @@
 - Built-in in-memory response provider and execution tracking.
 - Support for default, streaming, background, and streaming+background response modes.
 - `AgentHostBuilder` convenience methods for zero-config server startup via `ResponsesServer.Run<T>()`.
-- Protocol identity registration with `ServerUserAgentRegistry` during route mapping.
+- Protocol identity registration with `ServerVersionRegistry` during route mapping.
 - `x-agent-response-id` header validation matching the Responses API specification.
 - Conversation ID round-trip support in both synchronous and SSE streaming modes.
 - OpenTelemetry distributed tracing via `Azure.AI.AgentServer.Responses` activity source.

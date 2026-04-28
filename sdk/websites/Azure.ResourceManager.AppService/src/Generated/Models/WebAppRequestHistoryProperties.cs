@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The request history. </summary>
+    /// <summary>
+    /// The request history.
+    /// Serialized Name: RequestHistoryProperties
+    /// </summary>
     public partial class WebAppRequestHistoryProperties
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppRequestHistoryProperties"/>. </summary>
-        /// <param name="startOn"> The time the request started. </param>
-        /// <param name="endOn"> The time the request ended. </param>
-        /// <param name="request"> The request. </param>
-        /// <param name="response"> The response. </param>
+        /// <param name="startOn">
+        /// The time the request started.
+        /// Serialized Name: RequestHistoryProperties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// The time the request ended.
+        /// Serialized Name: RequestHistoryProperties.endTime
+        /// </param>
+        /// <param name="request">
+        /// The request.
+        /// Serialized Name: RequestHistoryProperties.request
+        /// </param>
+        /// <param name="response">
+        /// The response.
+        /// Serialized Name: RequestHistoryProperties.response
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppRequestHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRequest request, WebAppResponse response, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +80,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The time the request started. </summary>
+        /// <summary>
+        /// The time the request started.
+        /// Serialized Name: RequestHistoryProperties.startTime
+        /// </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> The time the request ended. </summary>
+        /// <summary>
+        /// The time the request ended.
+        /// Serialized Name: RequestHistoryProperties.endTime
+        /// </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> The request. </summary>
+        /// <summary>
+        /// The request.
+        /// Serialized Name: RequestHistoryProperties.request
+        /// </summary>
         [WirePath("request")]
         public WebAppRequest Request { get; set; }
-        /// <summary> The response. </summary>
+        /// <summary>
+        /// The response.
+        /// Serialized Name: RequestHistoryProperties.response
+        /// </summary>
         [WirePath("response")]
         public WebAppResponse Response { get; set; }
     }
