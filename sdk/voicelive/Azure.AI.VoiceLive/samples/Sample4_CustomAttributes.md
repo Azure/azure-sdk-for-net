@@ -48,5 +48,5 @@ dotnet add package OpenTelemetry.Exporter.Console
 
 ## See also
 
-- [Sample2_ConsoleTracing.md](Sample2_ConsoleTracing.md) — basic console tracing setup
-- [Sample5_ContentRecording.md](Sample5_ContentRecording.md) — capture message payloads in spans
+- [Sample2_ConsoleTracing.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample2_ConsoleTracing.md) — basic console tracing setup
+- [Sample5_ContentRecording.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample5_ContentRecording.md) — capture message payloads in spans

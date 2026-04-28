@@ -151,11 +151,11 @@ connect (parent — open for the entire session lifetime)
 
 | Sample | Description |
 |---|---|
-| [Sample1_HelloWorld.md](Sample1_HelloWorld.md) | Minimum setup to add tracing to an existing app |
-| [Sample2_ConsoleTracing.md](Sample2_ConsoleTracing.md) | Console exporter — spans print to stdout |
-| [Sample3_AzureMonitorTracing.md](Sample3_AzureMonitorTracing.md) | Azure Monitor / Application Insights exporter |
-| [Sample4_CustomAttributes.md](Sample4_CustomAttributes.md) | Custom `BaseProcessor<Activity>` to inject app-specific tags |
-| [Sample5_ContentRecording.md](Sample5_ContentRecording.md) | Enable message content recording via `VoiceLiveClientOptions` |
+| [Sample1_HelloWorld.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample1_HelloWorld.md) | Minimum setup to add tracing to an existing app |
+| [Sample2_ConsoleTracing.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample2_ConsoleTracing.md) | Console exporter — spans print to stdout |
+| [Sample3_AzureMonitorTracing.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample3_AzureMonitorTracing.md) | Azure Monitor / Application Insights exporter |
+| [Sample4_CustomAttributes.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample4_CustomAttributes.md) | Custom `BaseProcessor<Activity>` to inject app-specific tags |
+| [Sample5_ContentRecording.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample5_ContentRecording.md) | Enable message content recording via `VoiceLiveClientOptions` |
 
 ### Console exporter (development)
 

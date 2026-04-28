@@ -34,5 +34,5 @@ dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 
 ## See also
 
-- [Sample2_ConsoleTracing.md](Sample2_ConsoleTracing.md) — console exporter for local development
-- [Sample4_CustomAttributes.md](Sample4_CustomAttributes.md) — attach custom tags to every span
+- [Sample2_ConsoleTracing.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample2_ConsoleTracing.md) — console exporter for local development
+- [Sample4_CustomAttributes.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample4_CustomAttributes.md) — attach custom tags to every span
