@@ -27,7 +27,7 @@ public class Sample_EvaluationRules : SamplesBase
     {
         string error = "";
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         string code = default;
         string message = default;
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
@@ -62,7 +62,7 @@ public class Sample_EvaluationRules : SamplesBase
     {
         Dictionary<string, string> results = [];
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
         {
             foreach (string key in expectedProperties)
@@ -100,7 +100,7 @@ public class Sample_EvaluationRules : SamplesBase
         {
             ClientResult resultList = await client.GetEvaluationRunsAsync(evaluationId: evaluationId, limit: 10, order: "desc", after: lastId, evaluationRunStatus: evaluationRunStatus, options: new System.ClientModel.Primitives.RequestOptions());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
             {
@@ -163,7 +163,7 @@ public class Sample_EvaluationRules : SamplesBase
         {
             ClientResult resultList = client.GetEvaluationRuns(evaluationId: evaluationId, limit: 10, order: "desc", after: lastId, evaluationRunStatus: evaluationRunStatus, options: new System.ClientModel.Primitives.RequestOptions());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
             {

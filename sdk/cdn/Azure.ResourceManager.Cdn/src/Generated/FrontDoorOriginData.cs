@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new FrontDoorOriginProperties();
                 }
-                Properties.HttpPort = value.Value;
+                Properties.HttpPort = value;
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new FrontDoorOriginProperties();
                 }
-                Properties.HttpsPort = value.Value;
+                Properties.HttpsPort = value;
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new FrontDoorOriginProperties();
                 }
-                Properties.Priority = value.Value;
+                Properties.Priority = value;
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new FrontDoorOriginProperties();
                 }
-                Properties.Weight = value.Value;
+                Properties.Weight = value;
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new FrontDoorOriginProperties();
                 }
-                Properties.EnabledState = value.Value;
+                Properties.EnabledState = value;
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new FrontDoorOriginProperties();
                 }
-                Properties.EnforceCertificateNameCheck = value.Value;
+                Properties.EnforceCertificateNameCheck = value;
             }
         }
 

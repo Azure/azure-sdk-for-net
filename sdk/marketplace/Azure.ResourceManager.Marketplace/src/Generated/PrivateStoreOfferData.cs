@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreOfferResult();
                 }
-                Properties.ETag = value.Value;
+                Properties.ETag = value;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreOfferResult();
                 }
-                Properties.IsUpdateSuppressedDueToIdempotence = value.Value;
+                Properties.IsUpdateSuppressedDueToIdempotence = value;
             }
         }
 

@@ -97,7 +97,8 @@ We strongly encourage moving to `Azure.Compute.Batch`. It is important to be awa
 Developing a batch workflow against `Azure.Compute.Batch` differs from developing a batch workflow against `Microsoft.Azure.Batch` in a couple of key ways.
 
 - **Name Changes**: Many of the objects and operations names have changed in `Azure.Compute.Batch`. This guide below should highlight these but expect such differences as object names changing from `CloudPool` to `BatchPool` and operations such as `batchClient.JobOperations.ListTasks()` to `batchClient.GetTasks()`
-- **API location**: In `Microsoft.Azure.Batch` all operations are grouped into operation classes whereas in `Azure.Compute.Batch` all operations are under the BatchClient. For example, in `Microsoft.Azure.Batch` all pool operations are under a PoolOperations class, Job operations are under a JobOperations class, and so on. For example, in `Microsoft.Azure.Batch` the method to create a pool would be under PoolOperations `batchClient.PoolOperations.CreatePool()` whereas in `Azure.Compute.Batch` the operation is under the client `batchClient.CreatePool()`. In addition, `Microsoft.Azure.Batch` allowed operations off of objects such as the case below where the user would retrieve a CloudPool object, modify it, then issue a `.Commit()` to update it.
+- **API location**: In `Microsoft.Azure.Batch` all operations are grouped into operation classes whereas in `Azure.Compute.Batch` all operations are under the BatchClient. For example, in `Microsoft.Azure.Batch` all pool operations are under a PoolOperations class, Job operations are under a JobOperations class, and so on. For example, in `Microsoft.Azure.Batch` the method to create a pool would be under PoolOperations `batchClient.PoolOperations.CreatePool()` whereas in `Azure.Compute.Batch` the operation is under the client `batchClient.CreatePool()`.
+- **Object operations**: `Microsoft.Azure.Batch` allowed operations off of objects such as the case below where the user would retrieve a CloudPool object, modify it, then issue a `.Commit()` to update it.
 
 ``` C#
 CloudPool boundPool = batchClient.PoolOperations.GetPool("poolId");
@@ -210,7 +211,7 @@ public static async Task<string> GetTokenUsingAuthorizationCode(string authoriza
 
 ### Authenticate with Shared Key Credentials
 
-In `Azure.Compute.Batch` you can use AzureNamedKeyCredential with your Batch account access keys to authenticate Azure commands for the Batch service.  You can find your batch account shared keys in the portal under the "keys" section or you can run the following [CLI command](https://learn.microsoft.com/cli/azure/batch/account/keys?view=azure-cli-latest) 
+In `Azure.Compute.Batch` you can use `AzureNamedKeyCredential` with your Batch account access keys to authenticate Azure commands for the Batch service. You can find your batch account shared keys in the portal under the "keys" section or you can run the following [CLI command](https://learn.microsoft.com/cli/azure/batch/account/keys?view=azure-cli-latest).
 
 ```bash
 az batch account keys list --name <your-batch-account> --resource-group <your-resource-group-name>
@@ -233,7 +234,7 @@ using BatchClient batchClient = BatchClient.Open(cred);
 
 ## Error Handling
 
-In `Azure.Compute.Batch` when a command fails due to an error on the server side an exception of type RequestFailedException will be thrown.  Inside that exception will an "ErrorCode" property which is a string representation of the error, a "Status" property which represents the HTTP status code, a "Message" which provides a summary of the error, and in some cases their will be additional information in the "Data" Dictionary.  
+In `Azure.Compute.Batch` when a command fails due to an error on the server side an exception of type RequestFailedException will be thrown. Inside that exception will be an "ErrorCode" property which is a string representation of the error, a "Status" property which represents the HTTP status code, a "Message" which provides a summary of the error, and in some cases there will be additional information in the "Data" Dictionary.
 
 ```C# Snippet:Batch_Migration_Exception
 try
@@ -272,15 +273,15 @@ catch (BatchException e)
    // Swallow the specific error code PoolExists since that is expected if the pool already exists
    if (e.RequestInformation?.BatchError?.Code == BatchErrorCodeStrings.PoolExists)
    {
-       // do somethingh
+       // do something
    }
-   
+
 }
 
 ```
 ## Operations Examples
 
-> Note: Both `Microsoft.Azure.Batch` and `Azure.Compute.Batch` support async and sync batch operations, all the examples below will show the sync versions. 
+> Note: Both `Microsoft.Azure.Batch` and `Azure.Compute.Batch` support async and sync batch operations, all the examples below will show the sync versions.
 
 ### Pool Operations
 
@@ -305,7 +306,7 @@ CloudPool unboundPool =
 unboundPool.Commit();
 ```
 
-Going forward there are two options. Azure batch has two sdk, [`Azure.Compute.Batch`](https://learn.microsoft.com/dotnet/api/azure.compute.batch?view=azure-dotnet-preview&viewFallbackFrom=azure-dotnet) which interacts directly the azure batch service, and [`Azure.ResourceManager.Batch`](https://learn.microsoft.com/dotnet/api/overview/azure/resourcemanager.batch-readme?view=azure-dotnet) which interacts with the Azure Resource Manager.  Both of these SDK's support batch pool operations such as create/get/update/list etc but only the `Azure.ResourceManager.Batch` sdk can create a pool with managed identities and for that reason its the recommend way to create a pool.  
+Going forward, there are two options. Azure Batch has two SDKs: [`Azure.Compute.Batch`](https://learn.microsoft.com/dotnet/api/azure.compute.batch?view=azure-dotnet-preview&viewFallbackFrom=azure-dotnet), which interacts directly with the Azure Batch service, and [`Azure.ResourceManager.Batch`](https://learn.microsoft.com/dotnet/api/overview/azure/resourcemanager.batch-readme?view=azure-dotnet), which interacts with Azure Resource Manager. Both of these SDKs support Batch pool operations such as create, get, update, and list; however, only the `Azure.ResourceManager.Batch` SDK can create a pool with managed identities, and for that reason it's the recommended way to create a pool.
 
 `Azure.ResourceManager.Batch` [pool create](https://learn.microsoft.com/dotnet/api/azure.resourcemanager.batch.batchaccountpoolcollection.createorupdate?view=azure-dotnet) with managed identity.  You create a pool by getting a reference to the batch account then issuing a `CreateOrUpdate` call from the GetBatchAccountPools() collection.
 ``` C#
@@ -395,9 +396,9 @@ Previously in `Microsoft.Azure.Batch` to get a pool you could call the `GetPool`
 ``` C#
 CloudPool pool = batchClient.PoolOperations.GetPool("poolId");
 ```
-Additionally you could refresh an existing clould pool object to issue a get pool command in the background and get a updaed version of it. 
+Additionally you could refresh an existing cloud pool object to issue a get pool command in the background and get an updated version of it.
 ``` C#
-pool.Refresh()
+pool.Refresh();
 ```
 
 
@@ -413,7 +414,7 @@ Console.WriteLine(batchPool.Id);
 Console.WriteLine(batchPool.Uri);
 Console.WriteLine(batchPool.AllocationState);
 ```
-#### ListPools 
+#### ListPools
 Previously in `Microsoft.Azure.Batch` to get a list of pools you could call the `ListPools` method from the PoolOperations object.
 
 ``` C#
@@ -544,7 +545,7 @@ BatchPoolResizeOptions resizeOptions = new BatchPoolResizeOptions()
 
 batchClient.ResizePool(WaitUntil.Started, "poolID", resizeOptions);
 ```
-                    
+
 #### StopResizePool
 
 Previously in `Microsoft.Azure.Batch` to stop resizing a pool you could call the `StopResize` method from the PoolOperations object.
@@ -751,7 +752,7 @@ Previously in `Microsoft.Azure.Batch` to get a list of jobs you could call the `
 
 ``` C#
 List<CloudJob> jobs = new List<CloudJob>(batchClient.JobOperations.ListJobs());
- 
+
 foreach (CloudJob curJob in jobs)
 {
     // do something
@@ -778,7 +779,7 @@ Previously in `Microsoft.Azure.Batch` to delete a job you could call the `Delete
 batchClient.JobOperations.DeleteJob("jobID");
 ```
 
-With `Azure.Compute.Batch` call `DeleteJob`. 
+With `Azure.Compute.Batch` call `DeleteJob`.
 
 ```C# Snippet:Batch_Migration_DeleteJob
 BatchClient batchClient = new BatchClient(
@@ -850,7 +851,7 @@ CloudJob updatedJob = batchClient.JobOperations.GetJob("jobID");
 updatedJob.Disable(DisableJobOption.Terminate);
 ```
 
-With `Azure.Compute.Batch` call `DisableJob` with a parameter of type `BatchJobDisableOptions`. 
+With `Azure.Compute.Batch` call `DisableJob` with a parameter of type `BatchJobDisableOptions`.
 
 ```C# Snippet:Batch_Migration_DisableJob
 BatchClient batchClient = new BatchClient(
@@ -876,12 +877,12 @@ operation.WaitForCompletion();
 
 Previously in `Microsoft.Azure.Batch` to enable a job you could call the `Enable` method directly from the CloudJob object.
 
-``` C# 
+``` C#
 CloudJob updatedJob = batchClient.JobOperations.GetJob("jobID");
 updatedJob.Enable();
 ```
 
-With `Azure.Compute.Batch` call `EnableJob`. 
+With `Azure.Compute.Batch` call `EnableJob`.
 
 ```C# Snippet:Batch_Migration_EnableJob
 BatchClient batchClient = new BatchClient(
@@ -907,11 +908,11 @@ Previously in `Microsoft.Azure.Batch` to get a list of job preparation and relea
 
 ``` C#
 List<JobPreparationAndReleaseTaskExecutionInformation> jobPrepStatus = new List<JobPreparationAndReleaseTaskExecutionInformation>(batchClient.JobOperations.ListJobPreparationAndReleaseTaskStatus("jobID"));
- 
+
 foreach (JobPreparationAndReleaseTaskExecutionInformation item in jobPrepStatus)
 {
     // do something
-}        
+}
 ```
 
 With `Azure.Compute.Batch` call `GetJobPreparationAndReleaseTaskStatuses`.
@@ -948,11 +949,11 @@ BatchTaskCountsResult batchTaskCountsResult = batchClient.GetJobTaskCounts("jobI
 Previously in `Microsoft.Azure.Batch` to terminate a job you could call the `Terminate` method from the JobOperations object.
 
 ``` C#
-CloudJob job = batchClient.JobOperations.GetJob("jobID");       
+CloudJob job = batchClient.JobOperations.GetJob("jobID");
 job.Terminate("need some reason");
 ```
 
-With `Azure.Compute.Batch` call `TerminateJob`. 
+With `Azure.Compute.Batch` call `TerminateJob`.
 
 ```C# Snippet:Batch_Migration_TerminateJob
 BatchClient batchClient = new BatchClient(
@@ -1044,11 +1045,11 @@ Previously in `Microsoft.Azure.Batch` to get a list of job schedule you could ca
 
 ``` C#
 List<CloudJobSchedule> jobSchedules = new List<CloudJobSchedule>(batchClient.JobScheduleOperations.ListJobSchedules());
- 
+
 foreach (CloudJobSchedule item in jobSchedules)
 {
     // do something
-}     
+}
 
 ```
 
@@ -1072,7 +1073,7 @@ Previously in `Microsoft.Azure.Batch` to delete a job schedule you could call th
 batchClient.JobScheduleOperations.DeleteJobSchedule("jobScheduleId");
 ```
 
-With `Azure.Compute.Batch` call `DeleteJobSchedule`. 
+With `Azure.Compute.Batch` call `DeleteJobSchedule`.
 
 ```C# Snippet:Batch_Migration_DeleteJobSchedule
 BatchClient batchClient = new BatchClient(
@@ -1193,7 +1194,7 @@ Previously in `Microsoft.Azure.Batch` to termainate a job schedule you could cal
 batchClient.JobScheduleOperations.TerminateJobSchedule("jobScheduleId");
 ```
 
-With `Azure.Compute.Batch` call `TerminateJobSchedule`. 
+With `Azure.Compute.Batch` call `TerminateJobSchedule`.
 
 ```C# Snippet:Batch_Migration_TerminateJobSchedule
 BatchClient batchClient = new BatchClient(
@@ -1233,7 +1234,7 @@ CloudTask unboundTask = new CloudTask("taskId", "echo test")
 batchClient.JobOperations.AddTask("jobId", unboundTask);
 ```
 
-or you could call the `AddTask` method with a collection of `CloudTask`.  Note this method is a utility method that would break up the list 
+or you could call the `AddTask` method with a collection of `CloudTask`.  Note this method is a utility method that would break up the list
 of tasks passed in and repeatly call the /jobs/{jobId}/addtaskcollection api with 100 tasks at a time.  This utility method allowed the user
 to select the number of parallel calls to /addtaskcollection.
 
@@ -1311,12 +1312,12 @@ Console.WriteLine(batchTask.State);
 
 Previously in `Microsoft.Azure.Batch` to get a list of tasks in a job you could call the `ListTasks` method directly from the `CloudJob` object.
 
-``` C# 
+``` C#
 CloudJob boundJob = batchCli.JobOperations.GetJob("jobId");
 foreach (CloudTask curTask in boundJob.ListTasks())
 {
     // do something
-}    
+}
 ```
 
 With `Azure.Compute.Batch` call `GetTasks`.
@@ -1418,7 +1419,7 @@ batchClient.TerminateTask("jobID", "taskID");
 
 ### Node Operations
 
-#### GetComputeNode 
+#### GetComputeNode
 
 Previously in `Microsoft.Azure.Batch` to get a node you could call the `GetComputeNode` method from PoolOperations which would retun a`ComputeNode`.
 
@@ -1438,7 +1439,7 @@ Console.WriteLine(batchNode.Uri);
 Console.WriteLine(batchNode.State);
 ```
 
-#### ListComputeNodes 
+#### ListComputeNodes
 
 Previously in `Microsoft.Azure.Batch` to get a list of nodes you could call the `ListComputeNodes` method directly from a `CloudPool` object.
 
@@ -1472,7 +1473,7 @@ ComputeNode computeNode = batchClient.PoolOperations.GetComputeNode("poolId", "c
 computeNode.Reboot();
 ```
 
-With `Azure.Compute.Batch` call `RebootNode`. 
+With `Azure.Compute.Batch` call `RebootNode`.
 
 ```C# Snippet:Batch_Migration_RebootNode
 BatchClient batchClient = new BatchClient(
@@ -1668,11 +1669,11 @@ Previously in `Microsoft.Azure.Batch` to get a list of applications you could ca
 
 ``` C#
 List<ApplicationSummary> jobPrepStatus = new List<ApplicationSummary>(batchClient.ApplicationOperations.ListApplicationSummaries());
- 
+
 foreach (ApplicationSummary item in jobPrepStatus)
 {
     // do something
-} 
+}
 ```
 
 With `Azure.Compute.Batch` call `GetApplications`.

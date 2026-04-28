@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new OriginGroupProperties();
                 }
-                Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = value.Value;
+                Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = value;
             }
         }
 

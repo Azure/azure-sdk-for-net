@@ -18,7 +18,7 @@ namespace Azure.Compute.Batch
         private readonly BatchClient _client;
         private readonly TimeSpan? _timeout;
         private readonly DateTimeOffset? _requestDate;
-        private readonly int? _maxresults;
+        private readonly int? _maxResults;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -30,18 +30,18 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetApplicationsCollectionResultOfT(BatchClient client, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetApplicationsCollectionResultOfT(BatchClient client, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _timeout = timeout;
             _requestDate = requestDate;
-            _maxresults = maxresults;
+            _maxResults = maxResults;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -75,7 +75,7 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetApplicationsRequest(nextLink, _timeout, _requestDate, _maxresults, _context) : _client.CreateGetApplicationsRequest(_timeout, _requestDate, _maxresults, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetApplicationsRequest(nextLink, _timeout, _requestDate, _maxResults, _context) : _client.CreateGetApplicationsRequest(_timeout, _requestDate, _maxResults, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

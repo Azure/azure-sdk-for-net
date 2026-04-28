@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new AdminRequestApprovalProperties();
                 }
-                Properties.AdminAction = value.Value;
+                Properties.AdminAction = value;
             }
         }
 

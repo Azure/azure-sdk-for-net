@@ -141,7 +141,7 @@
     <PackageVersion Include="Azure.ResourceManager.IotHub" Version="1.1.1" />
     <PackageVersion Include="Azure.ResourceManager.KeyVault" Version="1.4.0" />
     <PackageVersion Include="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.5" />
-    <PackageVersion Include="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0" />
+    <PackageVersion Include="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.1" />
     <PackageVersion Include="Azure.ResourceManager.Kusto" Version="1.6.2" />
     <PackageVersion Include="Azure.ResourceManager.Logic" Version="1.1.0" />
     <PackageVersion Include="Azure.ResourceManager.ManagedServiceIdentities" Version="1.4.0" />
