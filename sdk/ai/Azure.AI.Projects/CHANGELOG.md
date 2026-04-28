@@ -14,6 +14,7 @@
 ### Sample Updates
 - Added evaluation cluster insight sample and documentation.
 - Added evaluation comparison insight sample and documentation.
+- Added AI-assisted evaluators sample demonstrating Similarity, ROUGE, METEOR, GLEU, F1, and BLEU score evaluations.
 
 ## 2.1.0-beta.1 (2026-04-21)
 
