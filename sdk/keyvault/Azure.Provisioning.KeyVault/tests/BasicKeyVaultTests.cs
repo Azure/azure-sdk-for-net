@@ -123,7 +123,7 @@ public class BasicKeyVaultTests
             var tenantId = subscription().tenantId
 
             resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
-              name: take('kv${uniqueString(resourceGroup().id)}', 24)
+              name: take('kv-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
                 tenantId: tenantId
