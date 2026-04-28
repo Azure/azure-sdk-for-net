@@ -28,6 +28,8 @@ Renamed Properties:
 - `SecurityProfile.EncryptionAtHost` renamed to `SecurityProfile.IsEncryptedAtHost`
 - `VMExtension.AutoUpgradeMinorVersion` renamed to `VMExtension.ShouldAutoUpgradeMinorVersion`
 - `VMExtension.EnableAutomaticUpgrade` renamed to `VMExtension.IsAutomaticUpgradeEnabled`
+- `BatchFileProperties.FileUrl` (type `string`) renamed to `BatchFileProperties.FileUri` (type `Uri`).
+- `DiskCustomerManagedKey.KeyUrl` renamed to `DiskCustomerManagedKey.KeyUri`.
 
 Renamed Types:
 - `NameValuePair` renamed to `BatchNameValuePair`
