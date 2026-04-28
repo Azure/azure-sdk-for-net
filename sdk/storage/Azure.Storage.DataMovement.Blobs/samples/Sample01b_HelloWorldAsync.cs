@@ -1224,7 +1224,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempPath();
             string connectionString = ConnectionString;
             string containerName = Randomize("sample-container");
-            TokenCredential tokenCredential = new DefaultAzureCredential();
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
@@ -1341,7 +1340,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempPath();
             string connectionString = ConnectionString;
             string containerName = Randomize("sample-container");
-            TokenCredential tokenCredential = new DefaultAzureCredential();
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
