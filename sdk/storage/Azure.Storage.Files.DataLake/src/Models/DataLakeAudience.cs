@@ -30,8 +30,6 @@ namespace Azure.Storage.Files.DataLake.Models
             _value = value;
         }
 
-        private const string _defaultAudience = "https://storage.azure.com";
-
         /// <summary>
         /// Default Audience. Use to acquire a token for authorizing requests to any Azure Storage account
         ///
@@ -39,7 +37,7 @@ namespace Azure.Storage.Files.DataLake.Models
         ///
         /// If no audience is specified, this is the default value.
         /// </summary>
-        public static DataLakeAudience DefaultAudience { get; } = new(_defaultAudience);
+        public static DataLakeAudience DefaultAudience { get; } = new(Constants.DefaultAudience);
 
         /// <summary>
         /// The service endpoint for a given storage account.
@@ -76,11 +74,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <returns></returns>
         internal string CreateDefaultScope()
         {
-            if (_value.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return $"{(_value)}{Constants.DefaultScope}";
-            }
-            return $"{(_value)}/{Constants.DefaultScope}";
+            return $"{_value.TrimEnd('/')}{Constants.DefaultScope}";
         }
     }
 }

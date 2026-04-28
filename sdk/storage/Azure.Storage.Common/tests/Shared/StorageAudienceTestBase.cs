@@ -7,9 +7,8 @@ using NUnit.Framework;
 namespace Azure.Storage.Tests.Shared
 {
     /// <summary>
-    /// Abstract base for testing storage audience types.
-    /// Each derived class must supply the concrete audience values,
-    /// ensuring no audience type is accidentally left untested.
+    /// Abstract base class that provides shared assertions for storage audience tests.
+    /// Derived classes supply the concrete audience values used by these common tests.
     /// </summary>
     public abstract class StorageAudienceTestBase
     {
@@ -23,12 +22,11 @@ namespace Azure.Storage.Tests.Shared
         protected abstract string CreateDefaultScope(string audienceValue);
 
         [Test]
-        public void DefaultAudience_DoesNotHaveTrailingSlash()
+        public void ServiceAudience_MatchesDefaultAudience()
         {
             string value = GetDefaultAudienceValue();
-            Assert.IsFalse(
-                value.EndsWith("/"),
-                $"Default audience should not end with a trailing slash. Actual: '{value}'");
+            Assert.AreEqual(Constants.DefaultAudience, value,
+                $"Service default audience should match Constants.DefaultAudience. Actual: '{value}'");
         }
 
         [Test]

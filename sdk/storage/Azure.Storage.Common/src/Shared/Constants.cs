@@ -133,7 +133,8 @@ namespace Azure.Storage
         public const string UseLegacyDefaultConcurrencySwitchName = "Azure.Storage.UseLegacyDefaultConcurrency";
         public const string UseLegacyDefaultConcurrencyEnvVar = "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY";
 
-        public const string DefaultScope = ".default";
+        public const string DefaultScope = "/.default";
+        public const string DefaultAudience = "https://storage.azure.com";
 
         /// <summary>
         /// Error string constant values.
