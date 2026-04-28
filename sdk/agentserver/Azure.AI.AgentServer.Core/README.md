@@ -56,6 +56,16 @@ Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on t
 
 The built application. Call `Run()` to start listening. Wraps `WebApplication` with server-specific configuration applied.
 
+### InboundRequestLoggingMiddleware
+
+Auto-registered middleware that logs every inbound HTTP request at the `Information` level and every 4xx/5xx response at the `Warning` level. Each log entry includes:
+
+- HTTP method and path (query strings are deliberately excluded to avoid logging sensitive data)
+- Response status code and duration in milliseconds
+- Correlation headers: `x-request-id`, `x-ms-client-request-id`, and the OpenTelemetry trace ID
+
+The middleware is added automatically when you call `UseAgentServerCore()` (Tier 1 and Tier 2 setups do this for you). Logs are emitted under the `Azure.AI.AgentServer.Core.Internal.InboundRequestLoggingMiddleware` category.
+
 ### FoundryEnvironment
 
 Reads Azure AI Foundry platform variables (`FOUNDRY_*`, `PORT`, `SSE_KEEPALIVE_INTERVAL`) to resolve agent identity, listening port, and connection strings. Also detects `OTEL_EXPORTER_OTLP_ENDPOINT` and `APPLICATIONINSIGHTS_CONNECTION_STRING` for telemetry configuration. Useful when your agent server runs as a hosted agent in AI Foundry.
@@ -81,7 +91,31 @@ You can familiarise yourself with different APIs using [Samples](https://github.
 
 ### Logging
 
-The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations` activity sources. Inbound request logging is enabled automatically for Tier 1 and Tier 2 setups; for Tier 3, call `AddAgentServerCore()` and `UseAgentServerCore()` to enable it. Enable ASP.NET Core logging in your application configuration to diagnose startup issues.
+The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations` activity sources.
+
+**`InboundRequestLoggingMiddleware`** is registered automatically (Tier 1 and Tier 2 setups include it; for Tier 3 call `AddAgentServerCore()` and `UseAgentServerCore()`). It produces structured logs for every inbound HTTP request:
+
+| Event | Level | Key fields |
+|---|---|---|
+| Request started | `Information` | method, path, `x-request-id`, `x-ms-client-request-id`, trace ID |
+| 2xx/3xx completed | `Information` | method, path, status code, duration (ms), correlation headers |
+| 4xx/5xx completed | `Warning` | method, path, status code, duration (ms), correlation headers |
+
+Logs are written under the `Azure.AI.AgentServer.Core.Internal.InboundRequestLoggingMiddleware` category. Query strings are never included to avoid leaking sensitive data.
+
+To surface these logs, configure the minimum log level in `appsettings.json`:
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Azure.AI.AgentServer": "Information"
+    }
+  }
+}
+```
+
+Enable ASP.NET Core logging in your application configuration to diagnose startup issues.
 
 ## Next steps
 

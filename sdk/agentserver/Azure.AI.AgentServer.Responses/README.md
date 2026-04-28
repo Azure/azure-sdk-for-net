@@ -176,6 +176,16 @@ For detailed handler implementation guidance, see [docs/handler-implementation-g
 
 All service instances registered via `AddResponsesServer()` are thread-safe. Handler instances are scoped per-request.
 
+### agent_session_id derivation
+
+The library automatically derives a stable `agent_session_id` for every request so that all responses within the same conversation are grouped under the same session:
+
+1. **Explicit value** — if the request payload or the `FOUNDRY_SESSION_ID` environment variable already contains a session ID, it is used as-is.
+2. **Deterministic derivation** — when a `conversation_id` or `previous_response_id` is present, the session ID is computed by SHA-256-hashing the UTF-8 string `{agent_name}:{agent_version}:{partition_hint}` (no surrounding quotes; colons are the literal separators) and taking the first 63 lowercase hex characters (one less than the full 64-char SHA-256 digest, matching the cross-language contract). The partition hint is extracted from the conversation/response ID when it is a valid platform-format ID, or used verbatim otherwise.
+3. **Random fallback** — when no conversational context is available (one-shot request), a random 63-character lowercase hex string is generated for that response.
+
+This derivation is deterministic across all SDK languages: any language given the same `agent_name`, `agent_version`, and `partition_hint` will produce the same session ID.
+
 ## Examples
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples).
@@ -191,7 +201,33 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 ### Logging
 
-The library emits OpenTelemetry traces via `Azure.AI.AgentServer.Responses` activity source. Enable logging in your ASP.NET Core application to diagnose issues.
+The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` activity source.
+
+**Handler-level structured logs** are produced by every Responses API endpoint at the `Information` level:
+
+| Endpoint | Key logged fields |
+|---|---|
+| `POST /responses` | `ResponseId`, `IsStreaming`, `IsBackground`, `Store`, `Model`, `ConversationId`, `PreviousResponseId`, isolation key presence |
+| `GET /responses/{id}` | `ResponseId`, isolation key presence (SSE-replay and polling paths) |
+| `POST /responses/{id}/cancel` | `ResponseId`, isolation key presence; completion logs `Status` |
+| `DELETE /responses/{id}` | `ResponseId`, isolation key presence |
+| `GET /responses/{id}/input_items` | `ResponseId`, isolation key presence |
+
+Logs are emitted under the `Azure.AI.AgentServer.Responses.Internal.ResponseEndpointHandler` category.
+
+**`FoundryStorageLoggingPolicy`** logs every outbound call to the Foundry storage back-end (reading/writing stored responses) with method, masked URL (scheme, host, and project path are redacted; only `/storage/…` and `api-version` are preserved), status code, duration, and correlation headers (`x-ms-client-request-id`, `traceparent`, `x-request-id`, `apim-request-id`). Successful calls log at `Information`; failed calls log at `Warning`. Logs appear under the `Azure.AI.AgentServer.Responses.Internal.FoundryStorageLoggingPolicy` category.
+
+To surface these logs, configure the minimum log level in `appsettings.json`:
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Azure.AI.AgentServer": "Information"
+    }
+  }
+}
+```
 
 ## Next steps
 
