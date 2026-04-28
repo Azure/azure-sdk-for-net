@@ -31,5 +31,26 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineScaleSetResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken)
             => Update(waitUntil, patch, default, cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<VirtualMachineScaleSetResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await UpdateAsync(waitUntil, patch, BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<VirtualMachineScaleSetResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => Update(waitUntil, patch, BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
+
+        private static MatchConditions BuildMatchConditions(string ifMatch, string ifNoneMatch)
+        {
+            if (ifMatch == null && ifNoneMatch == null)
+            {
+                return null;
+            }
+            return new MatchConditions
+            {
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : default(ETag?),
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : default(ETag?),
+            };
+        }
     }
 }
