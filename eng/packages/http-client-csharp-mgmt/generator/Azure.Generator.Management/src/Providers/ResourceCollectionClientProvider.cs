@@ -36,9 +36,6 @@ namespace Azure.Generator.Management.Providers
         // All List-kind methods that should produce a GetAll overload. Ordered so the canonical (broadest-scope)
         // entry comes first; that entry drives the collection's secondary contextual path / extra ctor parameters.
         private readonly IReadOnlyList<ResourceMethod> _getAlls;
-        // The canonical GetAll - the entry from _getAlls with the fewest extra variable path segments beyond the
-        // collection's contextual path. May be null when the resource has no list operations.
-        private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
         private readonly ResourceMethod? _get;
 
@@ -65,36 +62,37 @@ namespace Azure.Generator.Management.Providers
 
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
-            _getAlls = InitializeMethods(resourceMethods, out _get, out _create, resourceMetadata);
-            _getAll = _getAlls.Count > 0 ? _getAlls[0] : null;
-            _operationContext = InitializeContext(this, resourceMetadata, _getAll);
+            // contextualPath is the request path pattern of the parent resource - it determines this collection's
+            // scope and is also used by InitializeMethods to rank list operations from broadest to narrowest scope.
+            var contextualPath = GetContextualPath(resourceMetadata);
+            (_get, _create, _getAlls) = InitializeMethods(resourceMethods, contextualPath);
+            _operationContext = InitializeContext(this, contextualPath, _getAlls.Count > 0 ? _getAlls[0] : null);
 
-            // this depends on _getAll being initialized
+            // this depends on _getAlls being initialized
             (_extraCtorParameters, _extraFields) = BuildExtraConstructorParametersAndFields();
         }
 
-        private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, ArmResourceMetadata resourceMetadata, ResourceMethod? getAll)
+        private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, RequestPathPattern contextualPath, ResourceMethod? canonicalGetAll)
         {
-            var contextualPath = GetContextualPath(resourceMetadata);
-            if (getAll is not null)
-            {
-                var secondaryContextualPath = getAll.OperationPath;
-                // validate the contextualPath should be an ancestor of the secondaryContextualPath, otherwise report diagnostic.
-                if (!contextualPath.IsAncestorOf(secondaryContextualPath))
-                {
-                    // Report diagnostic
-                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                        code: "malformed-resource-detected",
-                        message: $"The contextual path '{contextualPath}' is not an ancestor of the secondary contextual path '{secondaryContextualPath}'.",
-                        targetCrossLanguageDefinitionId: getAll.InputMethod.CrossLanguageDefinitionId
-                    );
-                }
-                return OperationContext.Create(contextualPath, secondaryContextualPath, enclosingType.FindField);
-            }
-            else
+            if (canonicalGetAll is null)
             {
                 return OperationContext.Create(contextualPath);
             }
+
+            // The canonical GetAll - the entry with the fewest extra variable path segments beyond the
+            // collection's contextual path - drives the secondary contextual path and extra ctor parameters.
+            var secondaryContextualPath = canonicalGetAll.OperationPath;
+            // validate the contextualPath should be an ancestor of the secondaryContextualPath, otherwise report diagnostic.
+            if (!contextualPath.IsAncestorOf(secondaryContextualPath))
+            {
+                // Report diagnostic
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    code: "malformed-resource-detected",
+                    message: $"The contextual path '{contextualPath}' is not an ancestor of the secondary contextual path '{secondaryContextualPath}'.",
+                    targetCrossLanguageDefinitionId: canonicalGetAll.InputMethod.CrossLanguageDefinitionId
+                );
+            }
+            return OperationContext.Create(contextualPath, secondaryContextualPath, enclosingType.FindField);
         }
 
         private FieldProvider FindField(string variableName)
@@ -134,7 +132,9 @@ namespace Azure.Generator.Management.Providers
                 var parameter = new ParameterProvider(
                     contextualParameter.VariableName,
                     $"The {contextualParameter.VariableName} for the resource.",
-                    ResourceHelpers.GetRequestPathParameterType(contextualParameter.VariableName, _getAll!.InputMethod));
+                    // _getAlls is non-empty here because _operationContext.SecondaryContextualPathParameters is only
+                    // populated when InitializeContext received a canonical GetAll from a non-empty _getAlls list.
+                    ResourceHelpers.GetRequestPathParameterType(contextualParameter.VariableName, _getAlls[0].InputMethod));
                 var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, parameter.Type, $"_{contextualParameter.VariableName}", this, description: $"The {contextualParameter.VariableName}.");
                 parameter.Field = field;
                 extraParameters.Add(parameter);
@@ -143,14 +143,12 @@ namespace Azure.Generator.Management.Providers
             return (extraParameters, extraFields);
         }
 
-        private static IReadOnlyList<ResourceMethod> InitializeMethods(
+        private static (ResourceMethod? Get, ResourceMethod? Create, IReadOnlyList<ResourceMethod> GetAlls) InitializeMethods(
             IReadOnlyList<ResourceMethod> resourceMethods,
-            out ResourceMethod? getMethod,
-            out ResourceMethod? createMethod,
-            ArmResourceMetadata resourceMetadata)
+            RequestPathPattern contextualPath)
         {
-            getMethod = null;
-            createMethod = null;
+            ResourceMethod? getMethod = null;
+            ResourceMethod? createMethod = null;
             var listMethods = new List<ResourceMethod>();
 
             foreach (var method in resourceMethods)
@@ -171,7 +169,7 @@ namespace Azure.Generator.Management.Providers
                 }
             }
 
-            return SortGetAllMethodsByScopeBreadth(listMethods, resourceMetadata);
+            return (getMethod, createMethod, SortGetAllMethodsByScopeBreadth(listMethods, contextualPath));
         }
 
         /// <summary>
@@ -181,14 +179,13 @@ namespace Azure.Generator.Management.Providers
         /// </summary>
         private static IReadOnlyList<ResourceMethod> SortGetAllMethodsByScopeBreadth(
             IReadOnlyList<ResourceMethod> listMethods,
-            ArmResourceMetadata resourceMetadata)
+            RequestPathPattern contextualPath)
         {
             if (listMethods.Count <= 1)
             {
                 return listMethods;
             }
 
-            var contextualPath = GetContextualPath(resourceMetadata);
             return [.. listMethods
                 .OrderBy(m => CountExtraVariableSegments(contextualPath, m.OperationPath))
                 .ThenBy(m => m.OperationPath.Count)];
@@ -397,13 +394,15 @@ namespace Azure.Generator.Management.Providers
 
             var methods = new List<MethodProvider>(_getAlls.Count * 2);
             var seenSignatures = new HashSet<string>(StringComparer.Ordinal);
-            foreach (var listMethod in _getAlls)
+            for (int i = 0; i < _getAlls.Count; i++)
             {
+                var listMethod = _getAlls[i];
                 var sync = BuildGetAllMethod(listMethod, false);
                 var async = BuildGetAllMethod(listMethod, true);
 
-                // Cache the canonical sync provider (the broadest-scope GetAll) for enumerator decisions.
-                if (ReferenceEquals(listMethod, _getAll))
+                // Cache the canonical sync provider (the broadest-scope GetAll, always at index 0)
+                // for enumerator decisions.
+                if (i == 0)
                 {
                     _getAllSyncMethodProvider = sync;
                 }
