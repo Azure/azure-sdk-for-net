@@ -39,6 +39,8 @@ jobs:
     APIReview_AutoCreate_Configurations: 93
 
   steps:
+    - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+
     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
       parameters:
         Repositories:
@@ -52,7 +54,7 @@ jobs:
           - '!sdk/**/SessionRecords/*'
           - '!sdk/**/session-records/*'
         ${{ if endsWith(parameters.Repository, '-pr') }}:
-          TokenToUseForAuth: $(azuresdk-github-pat)
+          TokenToUseForAuth: $(GH_TOKEN)
 
     - template: /eng/common/pipelines/templates/steps/install-pipeline-generation.yml
     - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
