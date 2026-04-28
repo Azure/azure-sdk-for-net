@@ -50,6 +50,7 @@ namespace Azure.Storage.Files.Shares.Models
             var items = new List<ShareFileItem>();
             items.AddRange(response.Value.Segment.DirectoryItems.Select(d => d.ToShareFileItem()));
             items.AddRange(response.Value.Segment.FileItems.Select(f => f.ToShareFileItem()));
+            items.AddRange(response.Value.Segment.SymLinkItems.Select(n => n.ToShareFileItem()));
             return Page<ShareFileItem>.FromValues(
                 items.ToArray(),
                 response.Value.NextMarker,

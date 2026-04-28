@@ -999,7 +999,8 @@ namespace Azure.Storage.Files.Shares
                 permissionKey: directoryItem.PermissionKey,
                 fileSize: null,
                 linkCount: directoryItem.LinkCount,
-                fileType: null);
+                fileType: NfsFileType.Directory,
+                linkText: null);
         }
 
         internal static ShareFileItem ToShareFileItem(this FileItem fileItem)
@@ -1018,7 +1019,28 @@ namespace Azure.Storage.Files.Shares
                 permissionKey: fileItem.PermissionKey,
                 fileSize: fileItem.Properties.ContentLength,
                 linkCount: fileItem.LinkCount,
-                fileType: fileItem.FileType);
+                fileType: fileItem.FileType,
+                linkText: null);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this SymLinkItem fileItem)
+        {
+            if (fileItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: fileItem.Name.Encoded == true ? Uri.UnescapeDataString(fileItem.Name.Content) : fileItem.Name.Content,
+                id: fileItem.FileId,
+                properties: fileItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: fileItem.Properties.ContentLength,
+                linkCount: fileItem.LinkCount,
+                fileType: NfsFileType.SymLink,
+                linkText: fileItem.LinkText);
         }
 
         internal static ShareFileItemProperties ToShareFileItemProperties(this FileProperty fileProperty)

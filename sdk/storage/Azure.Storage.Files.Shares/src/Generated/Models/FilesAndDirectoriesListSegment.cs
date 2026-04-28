@@ -26,20 +26,25 @@ namespace Azure.Storage.Files.Shares.Models
 
             DirectoryItems = directoryItems.ToList();
             FileItems = fileItems.ToList();
+            SymLinkItems = new ChangeTrackingList<SymLinkItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
         /// <param name="directoryItems"></param>
         /// <param name="fileItems"></param>
-        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems)
+        /// <param name="symLinkItems"></param>
+        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems, IReadOnlyList<SymLinkItem> symLinkItems)
         {
             DirectoryItems = directoryItems;
             FileItems = fileItems;
+            SymLinkItems = symLinkItems;
         }
 
         /// <summary> Gets the directory items. </summary>
         public IReadOnlyList<DirectoryItem> DirectoryItems { get; }
         /// <summary> Gets the file items. </summary>
         public IReadOnlyList<FileItem> FileItems { get; }
+        /// <summary> Gets the sym link items. </summary>
+        public IReadOnlyList<SymLinkItem> SymLinkItems { get; }
     }
 }

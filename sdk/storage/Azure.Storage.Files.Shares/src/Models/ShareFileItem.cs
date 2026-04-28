@@ -61,6 +61,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public NfsFileType? FileType { get; }
 
+        /// <summary>
+        /// Gets the link text for this item.
+        /// Only applicable to symbolic link items in NFS shares.
+        /// </summary>
+        public string LinkText { get; }
+
         internal ShareFileItem(
             bool isDirectory,
             string name,
@@ -70,7 +76,8 @@ namespace Azure.Storage.Files.Shares.Models
             string permissionKey,
             long? fileSize,
             long? linkCount,
-            NfsFileType? fileType)
+            NfsFileType? fileType,
+            string linkText)
         {
             IsDirectory = isDirectory;
             Name = name;
@@ -79,9 +86,9 @@ namespace Azure.Storage.Files.Shares.Models
             FileAttributes = fileAttributes;
             PermissionKey = permissionKey;
             FileSize = fileSize;
-
             LinkCount = linkCount;
             FileType = fileType;
+            LinkText = linkText;
         }
     }
 
@@ -102,7 +109,8 @@ namespace Azure.Storage.Files.Shares.Models
             NtfsFileAttributes? fileAttributes = default,
             string permissionKey = default,
             long? linkCount = default,
-            NfsFileType? fileType = default) =>
+            NfsFileType? fileType = default,
+            string linkText = default) =>
             new ShareFileItem(
                 isDirectory: isDirectory,
                 name: name,
@@ -112,7 +120,8 @@ namespace Azure.Storage.Files.Shares.Models
                 permissionKey: permissionKey,
                 fileSize: fileSize,
                 linkCount: linkCount,
-                fileType: fileType);
+                fileType: fileType,
+                linkText: linkText);
 
         /// <summary>
         /// Creates a new ShareFileItem instance for mocking.
@@ -135,7 +144,8 @@ namespace Azure.Storage.Files.Shares.Models
                 permissionKey: permissionKey,
                 fileSize: fileSize,
                 linkCount: null,
-                fileType: null);
+                fileType: null,
+                linkText: null);
 
         /// <summary>
         /// Creates a new StorageFileItem instance for mocking.
@@ -154,6 +164,7 @@ namespace Azure.Storage.Files.Shares.Models
                 permissionKey: null,
                 fileSize: fileSize,
                 linkCount: null,
-                fileType: null);
+                fileType: null,
+                linkText: null);
     }
 }
