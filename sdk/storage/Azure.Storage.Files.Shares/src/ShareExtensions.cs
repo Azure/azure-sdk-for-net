@@ -1037,7 +1037,7 @@ namespace Azure.Storage.Files.Shares
                 properties: fileItem.Properties.ToShareFileItemProperties(),
                 fileAttributes: null,
                 permissionKey: null,
-                fileSize: fileItem.Properties.ContentLength,
+                fileSize: null,
                 linkCount: fileItem.LinkCount,
                 fileType: NfsFileType.SymLink,
                 linkText: fileItem.LinkText);
