@@ -248,7 +248,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 {
                     HotelId = "2",
                     HotelName = "Roach Motel",
-                    Description = "Cheapest hotel in town. Infact, a motel.",
+                    Description = "Cheapest hotel in town. In fact, a motel.",
 #if !SNIPPET
                     DescriptionImageVector = VectorSearchEmbeddings.Hotel2VectorizeDescription,
 #else

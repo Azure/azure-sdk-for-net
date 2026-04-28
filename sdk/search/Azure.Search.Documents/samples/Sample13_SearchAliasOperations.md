@@ -2,7 +2,7 @@
 
 This sample demonstrates CRUD (Create, Read, Update, Delete) operations for search aliases in Azure AI Search. A **search alias** provides a stable, alternative name for an index. You can point an alias at any index, and later redirect it to a different index — allowing zero-downtime index swaps and simplified client configuration.
 
-For more information, see the [alias documentation](https://learn.microsoft.com/azure/search/search-synonyms).
+For more information, see the [alias documentation](https://learn.microsoft.com/azure/search/search-aliases).
 
 ## Required Namespaces
 
