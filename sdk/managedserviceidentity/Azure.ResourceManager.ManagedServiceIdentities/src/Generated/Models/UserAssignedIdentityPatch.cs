@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 {
                     Properties = new UserAssignedIdentityProperties();
                 }
-                Properties.IsolationScope = value.Value;
+                Properties.IsolationScope = value;
             }
         }
 

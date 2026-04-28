@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 else
                 {
                     UserAssignedIdentityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch();
+                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 else
                 {
                     UserAssignedIdentityData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch();
+                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 else
                 {
                     UserAssignedIdentityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch();
+                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<UserAssignedIdentityResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 else
                 {
                     UserAssignedIdentityData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch();
+                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<UserAssignedIdentityResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 else
                 {
                     UserAssignedIdentityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch();
+                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 else
                 {
                     UserAssignedIdentityData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch();
+                    UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
