@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new KnowledgeSourcePropertiesUpdateParameters();
                 }
-                Properties.UpdateFrequency = value.Value;
+                Properties.UpdateFrequency = value;
             }
         }
     }

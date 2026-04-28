@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new OriginProperties();
                 }
-                Properties.HttpPort = value.Value;
+                Properties.HttpPort = value;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new OriginProperties();
                 }
-                Properties.HttpsPort = value.Value;
+                Properties.HttpsPort = value;
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new OriginProperties();
                 }
-                Properties.Priority = value.Value;
+                Properties.Priority = value;
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new OriginProperties();
                 }
-                Properties.Weight = value.Value;
+                Properties.Weight = value;
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new OriginProperties();
                 }
-                Properties.Enabled = value.Value;
+                Properties.Enabled = value;
             }
         }
 

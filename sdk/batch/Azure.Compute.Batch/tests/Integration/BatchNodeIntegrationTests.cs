@@ -229,7 +229,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 VMExtension vMExtension = new VMExtension("CustomExtension", "Microsoft.Azure.Geneva", "GenevaMonitoring")
                 {
                     TypeHandlerVersion = "2.16",
-                    ShouldAutoUpgradeMinorVersion = true,
+                    IsMinorVersionAutoUpgradeEnabled = true,
                     IsAutomaticUpgradeEnabled = true,
                     ProtectedSettings = { },
                     Settings = { },

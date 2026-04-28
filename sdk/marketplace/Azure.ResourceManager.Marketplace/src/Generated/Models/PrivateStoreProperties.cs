@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     NotificationsSettings = new NotificationsSettingsProperties();
                 }
-                NotificationsSettings.SendToAllMarketplaceAdmins = value.Value;
+                NotificationsSettings.SendToAllMarketplaceAdmins = value;
             }
         }
     }
