@@ -2,9 +2,9 @@
 
 ## 1.0.0 (2026-03-01)
 
-### Other Changes
+### Features Added
 
-GA release, see migration guide if migrating from Microsoft.Azure.Batch
+- First stable (GA) release of `Azure.Compute.Batch`, the next-generation Azure Batch client library for .NET. This package replaces `Microsoft.Azure.Batch`; see the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/batch/Azure.Compute.Batch/MigrationGuide.md) for migration guidance.
 
 ### Breaking Changes
 
@@ -28,8 +28,8 @@ Renamed Properties:
 - `SecurityProfile.EncryptionAtHost` renamed to `SecurityProfile.IsEncryptedAtHost`
 - `VMExtension.AutoUpgradeMinorVersion` renamed to `VMExtension.ShouldAutoUpgradeMinorVersion`
 - `VMExtension.EnableAutomaticUpgrade` renamed to `VMExtension.IsAutomaticUpgradeEnabled`
-- `BatchFileProperties.FileUrl` (type `string`) renamed to `BatchFileProperties.FileUri` (type `Uri`).
-- `DiskCustomerManagedKey.KeyUrl` renamed to `DiskCustomerManagedKey.KeyUri`.
+- `BatchFileProperties.FileUrl` (type `string`) renamed to `BatchFileProperties.FileUri` (type `Uri`)
+- `DiskCustomerManagedKey.KeyUrl` renamed to `DiskCustomerManagedKey.KeyUri`
 
 Renamed Types:
 - `NameValuePair` renamed to `BatchNameValuePair`
