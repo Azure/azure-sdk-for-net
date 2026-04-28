@@ -17,6 +17,7 @@ namespace Azure.Storage.Files.Shares.Models
             IReadOnlyList<DirectoryItem> directoryItems = default;
             IReadOnlyList<FileItem> fileItems = default;
             IReadOnlyList<SymLinkItem> symLinkItems = default;
+            IReadOnlyList<BlockDeviceItem> blockDeviceItems = default;
             var array = new List<DirectoryItem>();
             foreach (var e in element.Elements("Directory"))
             {
@@ -35,7 +36,13 @@ namespace Azure.Storage.Files.Shares.Models
                 array1.Add(SymLinkItem.DeserializeSymLinkItem(e));
             }
             symLinkItems = array1;
-            return new FilesAndDirectoriesListSegment(directoryItems, fileItems, symLinkItems);
+            var array2 = new List<BlockDeviceItem>();
+            foreach (var e in element.Elements("BlockDevice"))
+            {
+                array2.Add(BlockDeviceItem.DeserializeBlockDeviceItem(e));
+            }
+            blockDeviceItems = array2;
+            return new FilesAndDirectoriesListSegment(directoryItems, fileItems, symLinkItems, blockDeviceItems);
         }
     }
 }

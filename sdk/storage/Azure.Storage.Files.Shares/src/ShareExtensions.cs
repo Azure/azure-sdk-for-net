@@ -1000,7 +1000,9 @@ namespace Azure.Storage.Files.Shares
                 fileSize: null,
                 linkCount: directoryItem.LinkCount,
                 fileType: NfsFileType.Directory,
-                linkText: null);
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
         }
 
         internal static ShareFileItem ToShareFileItem(this FileItem fileItem)
@@ -1020,7 +1022,9 @@ namespace Azure.Storage.Files.Shares
                 fileSize: fileItem.Properties.ContentLength,
                 linkCount: fileItem.LinkCount,
                 fileType: fileItem.FileType,
-                linkText: null);
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
         }
 
         internal static ShareFileItem ToShareFileItem(this SymLinkItem fileItem)
@@ -1040,7 +1044,31 @@ namespace Azure.Storage.Files.Shares
                 fileSize: null,
                 linkCount: fileItem.LinkCount,
                 fileType: NfsFileType.SymLink,
-                linkText: fileItem.LinkText);
+                linkText: fileItem.LinkText,
+                deviceMajor: null,
+                deviceMinor: null);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this BlockDeviceItem blockDeviceItem)
+        {
+            if (blockDeviceItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: blockDeviceItem.Name.Encoded == true ? Uri.UnescapeDataString(blockDeviceItem.Name.Content) : blockDeviceItem.Name.Content,
+                id: blockDeviceItem.FileId,
+                properties: blockDeviceItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: blockDeviceItem.LinkCount,
+                fileType: NfsFileType.BlockDevice,
+                linkText: null,
+                deviceMajor: blockDeviceItem.DeviceMajor,
+                deviceMinor: blockDeviceItem.DeviceMinor);
         }
 
         internal static ShareFileItemProperties ToShareFileItemProperties(this FileProperty fileProperty)

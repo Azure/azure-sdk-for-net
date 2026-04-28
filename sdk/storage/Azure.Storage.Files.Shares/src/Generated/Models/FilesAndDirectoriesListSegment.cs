@@ -27,17 +27,20 @@ namespace Azure.Storage.Files.Shares.Models
             DirectoryItems = directoryItems.ToList();
             FileItems = fileItems.ToList();
             SymLinkItems = new ChangeTrackingList<SymLinkItem>();
+            BlockDeviceItems = new ChangeTrackingList<BlockDeviceItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
         /// <param name="directoryItems"></param>
         /// <param name="fileItems"></param>
         /// <param name="symLinkItems"></param>
-        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems, IReadOnlyList<SymLinkItem> symLinkItems)
+        /// <param name="blockDeviceItems"></param>
+        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems, IReadOnlyList<SymLinkItem> symLinkItems, IReadOnlyList<BlockDeviceItem> blockDeviceItems)
         {
             DirectoryItems = directoryItems;
             FileItems = fileItems;
             SymLinkItems = symLinkItems;
+            BlockDeviceItems = blockDeviceItems;
         }
 
         /// <summary> Gets the directory items. </summary>
@@ -46,5 +49,7 @@ namespace Azure.Storage.Files.Shares.Models
         public IReadOnlyList<FileItem> FileItems { get; }
         /// <summary> Gets the sym link items. </summary>
         public IReadOnlyList<SymLinkItem> SymLinkItems { get; }
+        /// <summary> Gets the block device items. </summary>
+        public IReadOnlyList<BlockDeviceItem> BlockDeviceItems { get; }
     }
 }

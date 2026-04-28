@@ -67,6 +67,18 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public string LinkText { get; }
 
+        /// <summary>
+        /// Gets the major device number for this item.
+        /// Only applicable to block devices in NFS shares.
+        /// </summary>
+        public long? DeviceMajor { get; }
+
+        /// <summary>
+        /// Gets the minor device number for this item.
+        /// Only applicable to block devices in NFS shares.
+        /// </summary>
+        public long? DeviceMinor { get; }
+
         internal ShareFileItem(
             bool isDirectory,
             string name,
@@ -77,7 +89,9 @@ namespace Azure.Storage.Files.Shares.Models
             long? fileSize,
             long? linkCount,
             NfsFileType? fileType,
-            string linkText)
+            string linkText,
+            long? deviceMajor,
+            long? deviceMinor)
         {
             IsDirectory = isDirectory;
             Name = name;
@@ -89,6 +103,9 @@ namespace Azure.Storage.Files.Shares.Models
             LinkCount = linkCount;
             FileType = fileType;
             LinkText = linkText;
+
+            DeviceMajor = deviceMajor;
+            DeviceMinor = deviceMinor;
         }
     }
 
@@ -110,7 +127,9 @@ namespace Azure.Storage.Files.Shares.Models
             string permissionKey = default,
             long? linkCount = default,
             NfsFileType? fileType = default,
-            string linkText = default) =>
+            string linkText = default,
+            long? deviceMajor = default,
+            long? deviceMinor = default) =>
             new ShareFileItem(
                 isDirectory: isDirectory,
                 name: name,
@@ -121,7 +140,9 @@ namespace Azure.Storage.Files.Shares.Models
                 fileSize: fileSize,
                 linkCount: linkCount,
                 fileType: fileType,
-                linkText: linkText);
+                linkText: linkText,
+                deviceMajor: deviceMajor,
+                deviceMinor: deviceMinor);
 
         /// <summary>
         /// Creates a new ShareFileItem instance for mocking.
@@ -145,7 +166,9 @@ namespace Azure.Storage.Files.Shares.Models
                 fileSize: fileSize,
                 linkCount: null,
                 fileType: null,
-                linkText: null);
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
 
         /// <summary>
         /// Creates a new StorageFileItem instance for mocking.
@@ -165,6 +188,8 @@ namespace Azure.Storage.Files.Shares.Models
                 fileSize: fileSize,
                 linkCount: null,
                 fileType: null,
-                linkText: null);
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
     }
 }
