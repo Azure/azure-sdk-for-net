@@ -317,6 +317,7 @@ When regeneration deletes a model that existed in a prior GA version:
 - `QueryLanguage.cs`, `QuerySpellerType.cs`, `QueryRewritesType.cs`
 - `SemanticQueryRewritesResultType.cs`, `KnowledgeRetrievalOutputMode.cs`
 - `QueryRewritesDebugInfo.cs`, `QueryRewritesValuesDebugInfo.cs`
+- `KnowledgeSourceIngestionPermissionOption.cs` (removed from 2026-04-01 patch spec; 12.0.0 had it)
 
 ---
 

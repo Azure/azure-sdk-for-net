@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 using Azure.Search.Documents.Utilities;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -17,6 +18,14 @@ namespace Azure.Search.Documents.Models
     /// </summary>
     [CodeGenType("DocumentsModelFactory")]
     [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
+    [CodeGenSuppress("KnowledgeSourceIngestionParameters",
+        typeof(SearchIndexerDataIdentity),
+        typeof(KnowledgeSourceVectorizer),
+        typeof(KnowledgeBaseModel),
+        typeof(bool?),
+        typeof(IndexingSchedule),
+        typeof(KnowledgeSourceContentExtractionMode?),
+        typeof(AIServices))]
     public static partial class SearchModelFactory
     {
         /// <summary> Initializes a new instance of AnalyzedTokenInfo. </summary>
@@ -605,6 +614,39 @@ namespace Azure.Search.Documents.Models
         public static QueryAnswerResult QueryAnswerResult(double? score = null, string key = null, string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             return new QueryAnswerResult(score, key, text, highlights, (IDictionary<string, object>)additionalProperties);
+        }
+
+        /// <summary> Consolidates all general ingestion settings for knowledge sources. </summary>
+        /// <param name="identity"> An explicit identity to use for this knowledge source. </param>
+        /// <param name="embeddingModel"> Optional vectorizer configuration for vectorizing content. </param>
+        /// <param name="chatCompletionModel"> Optional chat completion model for image verbalization or context extraction. </param>
+        /// <param name="disableImageVerbalization"> Indicates whether image verbalization should be disabled. Default is false. </param>
+        /// <param name="ingestionSchedule"> Optional schedule for data ingestion. </param>
+        /// <param name="ingestionPermissionOptions"> Optional list of permission types to ingest together with document content. This parameter is no longer supported by the service and is retained for backward compatibility only; it will be ignored. </param>
+        /// <param name="contentExtractionMode"> Optional content extraction mode. Default is 'minimal'. </param>
+        /// <param name="aiServices"> Optional AI Services configuration for content processing. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceIngestionParameters"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("The ingestionPermissionOptions parameter is no longer supported. Use the overload without ingestionPermissionOptions instead.")]
+        public static KnowledgeBases.Models.KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity = default, KnowledgeSourceVectorizer embeddingModel = default, KnowledgeBaseModel chatCompletionModel = default, bool? disableImageVerbalization = default, IndexingSchedule ingestionSchedule = default, IEnumerable<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default, KnowledgeSourceContentExtractionMode? contentExtractionMode = default, AIServices aiServices = default)
+        {
+            var result = new KnowledgeBases.Models.KnowledgeSourceIngestionParameters
+            {
+                Identity = identity,
+                EmbeddingModel = embeddingModel,
+                ChatCompletionModel = chatCompletionModel,
+                DisableImageVerbalization = disableImageVerbalization,
+                IngestionSchedule = ingestionSchedule,
+                ContentExtractionMode = contentExtractionMode,
+                AiServices = aiServices,
+            };
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (ingestionPermissionOptions != null)
+            {
+                result.IngestionPermissionOptions = ingestionPermissionOptions.ToList();
+            }
+#pragma warning restore CS0618
+            return result;
         }
     }
 }
