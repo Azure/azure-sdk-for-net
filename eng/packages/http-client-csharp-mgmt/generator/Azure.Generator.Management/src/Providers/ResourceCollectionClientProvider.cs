@@ -33,6 +33,11 @@ namespace Azure.Generator.Management.Providers
         private readonly IReadOnlyList<ParameterProvider> _extraCtorParameters;
         private readonly IReadOnlyList<FieldProvider> _extraFields;
         private readonly ResourceClientProvider _resource;
+        // All List-kind methods that should produce a GetAll overload. Ordered so the canonical (broadest-scope)
+        // entry comes first; that entry drives the collection's secondary contextual path / extra ctor parameters.
+        private readonly IReadOnlyList<ResourceMethod> _getAlls;
+        // The canonical GetAll - the entry from _getAlls with the fewest extra variable path segments beyond the
+        // collection's contextual path. May be null when the resource has no list operations.
         private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
         private readonly ResourceMethod? _get;
@@ -60,7 +65,8 @@ namespace Azure.Generator.Management.Providers
 
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
-            InitializeMethods(resourceMethods, ref _get, ref _create, ref _getAll);
+            _getAlls = InitializeMethods(resourceMethods, out _get, out _create, resourceMetadata);
+            _getAll = _getAlls.Count > 0 ? _getAlls[0] : null;
             _operationContext = InitializeContext(this, resourceMetadata, _getAll);
 
             // this depends on _getAll being initialized
@@ -137,32 +143,76 @@ namespace Azure.Generator.Management.Providers
             return (extraParameters, extraFields);
         }
 
-        private static void InitializeMethods(
+        private static IReadOnlyList<ResourceMethod> InitializeMethods(
             IReadOnlyList<ResourceMethod> resourceMethods,
-            ref ResourceMethod? getMethod,
-            ref ResourceMethod? createMethod,
-            ref ResourceMethod? getAllMethod)
+            out ResourceMethod? getMethod,
+            out ResourceMethod? createMethod,
+            ArmResourceMetadata resourceMetadata)
         {
+            getMethod = null;
+            createMethod = null;
+            var listMethods = new List<ResourceMethod>();
+
             foreach (var method in resourceMethods)
             {
-                if (getAllMethod is not null && createMethod is not null && getMethod is not null)
-                {
-                    break; // we already have all methods we need
-                }
-
                 switch (method.Kind)
                 {
                     case ResourceOperationKind.Read:
-                        getMethod = method;
+                        getMethod ??= method;
                         break;
                     case ResourceOperationKind.List:
-                        getAllMethod = method;
+                        // collect all list operations - tuple resources may have multiple list operations
+                        // at different parent scopes, each producing a distinct GetAll overload.
+                        listMethods.Add(method);
                         break;
                     case ResourceOperationKind.Create:
-                        createMethod = method;
+                        createMethod ??= method;
                         break;
                 }
             }
+
+            return SortGetAllMethodsByScopeBreadth(listMethods, resourceMetadata);
+        }
+
+        /// <summary>
+        /// Orders list methods so the broadest-scope (canonical) entry is first. The canonical entry has the
+        /// fewest extra variable path segments beyond the collection's contextual path; it drives the
+        /// collection's secondary contextual path, extra ctor parameters, and the parameterless GetAll() overload.
+        /// </summary>
+        private static IReadOnlyList<ResourceMethod> SortGetAllMethodsByScopeBreadth(
+            IReadOnlyList<ResourceMethod> listMethods,
+            ArmResourceMetadata resourceMetadata)
+        {
+            if (listMethods.Count <= 1)
+            {
+                return listMethods;
+            }
+
+            var contextualPath = GetContextualPath(resourceMetadata);
+            return [.. listMethods
+                .OrderBy(m => CountExtraVariableSegments(contextualPath, m.OperationPath))
+                .ThenBy(m => m.OperationPath.Count)];
+        }
+
+        private static int CountExtraVariableSegments(RequestPathPattern contextualPath, RequestPathPattern operationPath)
+        {
+            // If the operation path is not on the same branch as the contextual path, deprioritize it so
+            // a same-branch list still wins canonical selection.
+            if (!contextualPath.IsAncestorOf(operationPath))
+            {
+                return int.MaxValue;
+            }
+
+            var extra = contextualPath.TrimAncestorFrom(operationPath);
+            int count = 0;
+            foreach (var segment in extra)
+            {
+                if (!segment.IsConstant)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
         public ResourceClientProvider Resource => _resource;
@@ -340,16 +390,35 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider[] BuildGetAllMethods()
         {
-            if (_getAll is null)
+            if (_getAlls.Count == 0)
             {
                 return [];
             }
 
-            // implement paging method GetAll
-            _getAllSyncMethodProvider = BuildGetAllMethod(_getAll, false);
-            var getAllAsync = BuildGetAllMethod(_getAll, true);
+            var methods = new List<MethodProvider>(_getAlls.Count * 2);
+            var seenSignatures = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var listMethod in _getAlls)
+            {
+                var sync = BuildGetAllMethod(listMethod, false);
+                var async = BuildGetAllMethod(listMethod, true);
 
-            return [getAllAsync, _getAllSyncMethodProvider];
+                // Cache the canonical sync provider (the broadest-scope GetAll) for enumerator decisions.
+                if (ReferenceEquals(listMethod, _getAll))
+                {
+                    _getAllSyncMethodProvider = sync;
+                }
+
+                // De-dup by sync signature to avoid emitting two GetAll overloads with identical C# signatures.
+                var key = string.Join(",", sync.Signature.Parameters.Select(p => p.Type.ToString()));
+                if (!seenSignatures.Add(key))
+                {
+                    continue;
+                }
+                methods.Add(async);
+                methods.Add(sync);
+            }
+
+            return [.. methods];
         }
 
         private MethodProvider[] BuildEnumeratorMethods()
