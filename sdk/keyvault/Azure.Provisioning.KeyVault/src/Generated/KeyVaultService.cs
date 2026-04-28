@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Authorization;
@@ -138,6 +139,11 @@ namespace Azure.Provisioning.KeyVault
 
         /// <summary> Define additional provisionable properties for KeyVaultService that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
+
+        /// <summary> Get the requirements for naming this resource. </summary>
+        /// <returns> Naming requirements. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(3, 24, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
         /// <summary> Creates a role assignment for a user-assigned identity that grants access to this KeyVaultService. </summary>
         /// <param name="role"> The role to grant. </param>
