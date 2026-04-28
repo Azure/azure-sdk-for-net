@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.AdhocBackupRules"/> instance for mocking. </returns>
         public static AdhocBackupRules AdhocBackupRules(string ruleName = default, string backupTriggerRetentionTagOverride = default)
         {
-            return new AdhocBackupRules(ruleName, backupTriggerRetentionTagOverride is null ? default : new AdhocBackupTriggerSetting(backupTriggerRetentionTagOverride, null), additionalBinaryDataProperties: null);
+            return new AdhocBackupRules(ruleName, new AdhocBackupTriggerSetting(backupTriggerRetentionTagOverride, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Validate for modify backup request. </summary>

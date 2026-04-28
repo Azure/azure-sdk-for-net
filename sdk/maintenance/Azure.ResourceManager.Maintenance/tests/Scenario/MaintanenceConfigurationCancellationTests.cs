@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
                "Maintenance-RG-",
                Location);
 
-            _configCollection = _resourceGroup.GetMaintenanceApplyUpdates();
+            _configCollection = Client.GetMaintenanceApplyUpdates(_resourceGroup.Id);
         }
 
         [TearDown]

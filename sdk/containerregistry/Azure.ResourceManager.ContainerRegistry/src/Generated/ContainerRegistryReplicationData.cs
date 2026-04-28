@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new ReplicationProperties();
                 }
-                Properties.IsRegionEndpointEnabled = value.Value;
+                Properties.IsRegionEndpointEnabled = value;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new ReplicationProperties();
                 }
-                Properties.ZoneRedundancy = value.Value;
+                Properties.ZoneRedundancy = value;
             }
         }
     }

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new SchemaGroupProperties();
                 }
-                Properties.SchemaCompatibility = value.Value;
+                Properties.SchemaCompatibility = value;
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new SchemaGroupProperties();
                 }
-                Properties.SchemaType = value.Value;
+                Properties.SchemaType = value;
             }
         }
     }

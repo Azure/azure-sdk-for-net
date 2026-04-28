@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Details about app recovery operation. </summary>
+    /// <summary>
+    /// Details about app recovery operation.
+    /// Serialized Name: SnapshotRestoreRequest
+    /// </summary>
     public partial class SnapshotRestoreRequest : ResourceData
     {
         /// <summary>
@@ -57,19 +60,36 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="snapshotTime"> Point in time in which the app restore should be done, formatted as a DateTime string. </param>
+        /// <param name="snapshotTime">
+        /// Point in time in which the app restore should be done, formatted as a DateTime string.
+        /// Serialized Name: SnapshotRestoreRequest.properties.snapshotTime
+        /// </param>
         /// <param name="recoverySource">
         /// Optional. Specifies the web app that snapshot contents will be retrieved from.
         /// If empty, the targeted web app will be used as the source.
+        /// Serialized Name: SnapshotRestoreRequest.properties.recoverySource
         /// </param>
-        /// <param name="canOverwrite"> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="recoverConfiguration"> If true, site configuration, in addition to content, will be reverted. </param>
+        /// <param name="canOverwrite">
+        /// If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: SnapshotRestoreRequest.properties.overwrite
+        /// </param>
+        /// <param name="recoverConfiguration">
+        /// If true, site configuration, in addition to content, will be reverted.
+        /// Serialized Name: SnapshotRestoreRequest.properties.recoverConfiguration
+        /// </param>
         /// <param name="ignoreConflictingHostNames">
         /// If true, custom hostname conflicts will be ignored when recovering to a target web app.
         /// This setting is only necessary when RecoverConfiguration is enabled.
+        /// Serialized Name: SnapshotRestoreRequest.properties.ignoreConflictingHostNames
         /// </param>
-        /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="useDRSecondary">
+        /// If true, the snapshot is retrieved from DRSecondary endpoint.
+        /// Serialized Name: SnapshotRestoreRequest.properties.useDRSecondary
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SnapshotRestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotTime, SnapshotRecoverySource recoverySource, bool? canOverwrite, bool? recoverConfiguration, bool? ignoreConflictingHostNames, bool? useDRSecondary, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -83,31 +103,48 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Point in time in which the app restore should be done, formatted as a DateTime string. </summary>
+        /// <summary>
+        /// Point in time in which the app restore should be done, formatted as a DateTime string.
+        /// Serialized Name: SnapshotRestoreRequest.properties.snapshotTime
+        /// </summary>
         [WirePath("properties.snapshotTime")]
         public string SnapshotTime { get; set; }
         /// <summary>
         /// Optional. Specifies the web app that snapshot contents will be retrieved from.
         /// If empty, the targeted web app will be used as the source.
+        /// Serialized Name: SnapshotRestoreRequest.properties.recoverySource
         /// </summary>
         [WirePath("properties.recoverySource")]
         public SnapshotRecoverySource RecoverySource { get; set; }
-        /// <summary> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: SnapshotRestoreRequest.properties.overwrite
+        /// </summary>
         [WirePath("properties.overwrite")]
         public bool? CanOverwrite { get; set; }
-        /// <summary> If true, site configuration, in addition to content, will be reverted. </summary>
+        /// <summary>
+        /// If true, site configuration, in addition to content, will be reverted.
+        /// Serialized Name: SnapshotRestoreRequest.properties.recoverConfiguration
+        /// </summary>
         [WirePath("properties.recoverConfiguration")]
         public bool? RecoverConfiguration { get; set; }
         /// <summary>
         /// If true, custom hostname conflicts will be ignored when recovering to a target web app.
         /// This setting is only necessary when RecoverConfiguration is enabled.
+        /// Serialized Name: SnapshotRestoreRequest.properties.ignoreConflictingHostNames
         /// </summary>
         [WirePath("properties.ignoreConflictingHostNames")]
         public bool? IgnoreConflictingHostNames { get; set; }
-        /// <summary> If true, the snapshot is retrieved from DRSecondary endpoint. </summary>
+        /// <summary>
+        /// If true, the snapshot is retrieved from DRSecondary endpoint.
+        /// Serialized Name: SnapshotRestoreRequest.properties.useDRSecondary
+        /// </summary>
         [WirePath("properties.useDRSecondary")]
         public bool? UseDRSecondary { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

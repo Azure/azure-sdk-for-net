@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccPatchRequestProperties();
                 }
-                Properties.EndOn = value.Value;
+                Properties.EndOn = value;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccPatchRequestProperties();
                 }
-                Properties.IsAllowContributors = value.Value;
+                Properties.IsAllowContributors = value;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccPatchRequestProperties();
                 }
-                Properties.AutomaticShortfall = value.Value;
+                Properties.AutomaticShortfall = value;
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccPatchRequestProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 

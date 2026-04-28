@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CanMigrateDefaultSku : IEquatable<CanMigrateDefaultSku>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CanMigrateDefaultSku"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CanMigrateDefaultSku(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StandardAzureFrontDoorValue = "Standard_AzureFrontDoor";
         private const string PremiumAzureFrontDoorValue = "Premium_AzureFrontDoor";
 
-        /// <summary> Standard_AzureFrontDoor. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanMigrateDefaultSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CanMigrateDefaultSku(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the StandardAzureFrontDoor. </summary>
         public static CanMigrateDefaultSku StandardAzureFrontDoor { get; } = new CanMigrateDefaultSku(StandardAzureFrontDoorValue);
-        /// <summary> Premium_AzureFrontDoor. </summary>
+
+        /// <summary> Gets the PremiumAzureFrontDoor. </summary>
         public static CanMigrateDefaultSku PremiumAzureFrontDoor { get; } = new CanMigrateDefaultSku(PremiumAzureFrontDoorValue);
+
         /// <summary> Determines if two <see cref="CanMigrateDefaultSku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CanMigrateDefaultSku left, CanMigrateDefaultSku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CanMigrateDefaultSku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CanMigrateDefaultSku left, CanMigrateDefaultSku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CanMigrateDefaultSku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CanMigrateDefaultSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CanMigrateDefaultSku(string value) => new CanMigrateDefaultSku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CanMigrateDefaultSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CanMigrateDefaultSku?(string value) => value == null ? null : new CanMigrateDefaultSku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CanMigrateDefaultSku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CanMigrateDefaultSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the DetectorDefinitionResource data model.
     /// ARM resource for a detector definition
+    /// Serialized Name: DetectorDefinitionResource
     /// </summary>
     public partial class DetectorDefinitionResourceData : ResourceData
     {
@@ -60,36 +61,66 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Display name of the detector. </param>
-        /// <param name="description"> Description of the detector. </param>
-        /// <param name="rank"> Detector Rank. </param>
-        /// <param name="isEnabled"> Flag representing whether detector is enabled or not. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: DetectorDefinitionResource.kind
+        /// </param>
+        /// <param name="displayName">
+        /// Display name of the detector
+        /// Serialized Name: DetectorDefinitionResource.properties.displayName
+        /// </param>
+        /// <param name="description">
+        /// Description of the detector
+        /// Serialized Name: DetectorDefinitionResource.properties.description
+        /// </param>
+        /// <param name="rank">
+        /// Detector Rank
+        /// Serialized Name: DetectorDefinitionResource.properties.rank
+        /// </param>
+        /// <param name="isEnabled">
+        /// Flag representing whether detector is enabled or not.
+        /// Serialized Name: DetectorDefinitionResource.properties.isEnabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorDefinitionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, double? rank, bool? isEnabled, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DetectorDefinitionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string displayName, string description, double? rank, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             DisplayName = displayName;
             Description = description;
             Rank = rank;
             IsEnabled = isEnabled;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display name of the detector. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; }
-        /// <summary> Description of the detector. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; }
-        /// <summary> Detector Rank. </summary>
-        [WirePath("properties.rank")]
-        public double? Rank { get; }
-        /// <summary> Flag representing whether detector is enabled or not. </summary>
-        [WirePath("properties.isEnabled")]
-        public bool? IsEnabled { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: DetectorDefinitionResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// Display name of the detector
+        /// Serialized Name: DetectorDefinitionResource.properties.displayName
+        /// </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName { get; }
+        /// <summary>
+        /// Description of the detector
+        /// Serialized Name: DetectorDefinitionResource.properties.description
+        /// </summary>
+        [WirePath("properties.description")]
+        public string Description { get; }
+        /// <summary>
+        /// Detector Rank
+        /// Serialized Name: DetectorDefinitionResource.properties.rank
+        /// </summary>
+        [WirePath("properties.rank")]
+        public double? Rank { get; }
+        /// <summary>
+        /// Flag representing whether detector is enabled or not.
+        /// Serialized Name: DetectorDefinitionResource.properties.isEnabled
+        /// </summary>
+        [WirePath("properties.isEnabled")]
+        public bool? IsEnabled { get; }
     }
 }

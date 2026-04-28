@@ -41,7 +41,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateGetTranslationsStatusRequest(int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
+        internal HttpMessage CreateGetTranslationsStatusRequest(int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -79,9 +79,9 @@ namespace Azure.AI.Translation.Document
             {
                 uri.AppendQuery("createdDateTimeUtcEnd", TypeFormatters.ConvertToString(createdDateTimeUtcEnd, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (@orderby != null && !(@orderby is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQueryDelimited("orderby", @orderby, ",", escape: true);
+                uri.AppendQueryDelimited("orderby", orderBy, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -91,7 +91,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateNextGetTranslationsStatusRequest(Uri nextPage, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
+        internal HttpMessage CreateNextGetTranslationsStatusRequest(Uri nextPage, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

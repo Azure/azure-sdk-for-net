@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Rules that can be defined for auto-heal. </summary>
+    /// <summary>
+    /// Rules that can be defined for auto-heal.
+    /// Serialized Name: AutoHealRules
+    /// </summary>
     public partial class AutoHealRules
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoHealRules"/>. </summary>
-        /// <param name="triggers"> Conditions that describe when to execute the auto-heal actions. </param>
-        /// <param name="actions"> Actions to be executed when a rule is triggered. </param>
+        /// <param name="triggers">
+        /// Conditions that describe when to execute the auto-heal actions.
+        /// Serialized Name: AutoHealRules.triggers
+        /// </param>
+        /// <param name="actions">
+        /// Actions to be executed when a rule is triggered.
+        /// Serialized Name: AutoHealRules.actions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutoHealRules(AutoHealTriggers triggers, AutoHealActions actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Conditions that describe when to execute the auto-heal actions. </summary>
+        /// <summary>
+        /// Conditions that describe when to execute the auto-heal actions.
+        /// Serialized Name: AutoHealRules.triggers
+        /// </summary>
         [WirePath("triggers")]
         public AutoHealTriggers Triggers { get; set; }
-        /// <summary> Actions to be executed when a rule is triggered. </summary>
+        /// <summary>
+        /// Actions to be executed when a rule is triggered.
+        /// Serialized Name: AutoHealRules.actions
+        /// </summary>
         [WirePath("actions")]
         public AutoHealActions Actions { get; set; }
     }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A setting difference between two deployment slots of an app. </summary>
+    /// <summary>
+    /// A setting difference between two deployment slots of an app.
+    /// Serialized Name: SlotDifference
+    /// </summary>
     public partial class SlotDifference : ResourceData
     {
         /// <summary>
@@ -57,14 +60,38 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="level"> Level of the difference: Information, Warning or Error. </param>
-        /// <param name="settingType"> The type of the setting: General, AppSetting or ConnectionString. </param>
-        /// <param name="diffRule"> Rule that describes how to process the setting difference during a slot swap. </param>
-        /// <param name="settingName"> Name of the setting. </param>
-        /// <param name="valueInCurrentSlot"> Value of the setting in the current slot. </param>
-        /// <param name="valueInTargetSlot"> Value of the setting in the target slot. </param>
-        /// <param name="description"> Description of the setting difference. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="level">
+        /// Level of the difference: Information, Warning or Error.
+        /// Serialized Name: SlotDifference.properties.level
+        /// </param>
+        /// <param name="settingType">
+        /// The type of the setting: General, AppSetting or ConnectionString.
+        /// Serialized Name: SlotDifference.properties.settingType
+        /// </param>
+        /// <param name="diffRule">
+        /// Rule that describes how to process the setting difference during a slot swap.
+        /// Serialized Name: SlotDifference.properties.diffRule
+        /// </param>
+        /// <param name="settingName">
+        /// Name of the setting.
+        /// Serialized Name: SlotDifference.properties.settingName
+        /// </param>
+        /// <param name="valueInCurrentSlot">
+        /// Value of the setting in the current slot.
+        /// Serialized Name: SlotDifference.properties.valueInCurrentSlot
+        /// </param>
+        /// <param name="valueInTargetSlot">
+        /// Value of the setting in the target slot.
+        /// Serialized Name: SlotDifference.properties.valueInTargetSlot
+        /// </param>
+        /// <param name="description">
+        /// Description of the setting difference.
+        /// Serialized Name: SlotDifference.properties.description
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SlotDifference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -79,28 +106,52 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Level of the difference: Information, Warning or Error. </summary>
+        /// <summary>
+        /// Level of the difference: Information, Warning or Error.
+        /// Serialized Name: SlotDifference.properties.level
+        /// </summary>
         [WirePath("properties.level")]
         public string Level { get; }
-        /// <summary> The type of the setting: General, AppSetting or ConnectionString. </summary>
+        /// <summary>
+        /// The type of the setting: General, AppSetting or ConnectionString.
+        /// Serialized Name: SlotDifference.properties.settingType
+        /// </summary>
         [WirePath("properties.settingType")]
         public string SettingType { get; }
-        /// <summary> Rule that describes how to process the setting difference during a slot swap. </summary>
+        /// <summary>
+        /// Rule that describes how to process the setting difference during a slot swap.
+        /// Serialized Name: SlotDifference.properties.diffRule
+        /// </summary>
         [WirePath("properties.diffRule")]
         public string DiffRule { get; }
-        /// <summary> Name of the setting. </summary>
+        /// <summary>
+        /// Name of the setting.
+        /// Serialized Name: SlotDifference.properties.settingName
+        /// </summary>
         [WirePath("properties.settingName")]
         public string SettingName { get; }
-        /// <summary> Value of the setting in the current slot. </summary>
+        /// <summary>
+        /// Value of the setting in the current slot.
+        /// Serialized Name: SlotDifference.properties.valueInCurrentSlot
+        /// </summary>
         [WirePath("properties.valueInCurrentSlot")]
         public string ValueInCurrentSlot { get; }
-        /// <summary> Value of the setting in the target slot. </summary>
+        /// <summary>
+        /// Value of the setting in the target slot.
+        /// Serialized Name: SlotDifference.properties.valueInTargetSlot
+        /// </summary>
         [WirePath("properties.valueInTargetSlot")]
         public string ValueInTargetSlot { get; }
-        /// <summary> Description of the setting difference. </summary>
+        /// <summary>
+        /// Description of the setting difference.
+        /// Serialized Name: SlotDifference.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

@@ -7,40 +7,57 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The AfdCustomizedCipherSuiteForTls13. </summary>
+    /// <summary></summary>
     public readonly partial struct AfdCustomizedCipherSuiteForTls13 : IEquatable<AfdCustomizedCipherSuiteForTls13>
     {
         private readonly string _value;
+        private const string TLSAES128GCMSHA256Value = "TLS_AES_128_GCM_SHA256";
+        private const string TLSAES256GCMSHA384Value = "TLS_AES_256_GCM_SHA384";
 
         /// <summary> Initializes a new instance of <see cref="AfdCustomizedCipherSuiteForTls13"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AfdCustomizedCipherSuiteForTls13(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string Tls_Aes_128_Gcm_Sha256Value = "TLS_AES_128_GCM_SHA256";
-        private const string Tls_Aes_256_Gcm_Sha384Value = "TLS_AES_256_GCM_SHA384";
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls13"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AfdCustomizedCipherSuiteForTls13 left, AfdCustomizedCipherSuiteForTls13 right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls13"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AfdCustomizedCipherSuiteForTls13 left, AfdCustomizedCipherSuiteForTls13 right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AfdCustomizedCipherSuiteForTls13"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AfdCustomizedCipherSuiteForTls13"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AfdCustomizedCipherSuiteForTls13(string value) => new AfdCustomizedCipherSuiteForTls13(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AfdCustomizedCipherSuiteForTls13"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AfdCustomizedCipherSuiteForTls13?(string value) => value == null ? null : new AfdCustomizedCipherSuiteForTls13(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AfdCustomizedCipherSuiteForTls13 other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AfdCustomizedCipherSuiteForTls13 other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

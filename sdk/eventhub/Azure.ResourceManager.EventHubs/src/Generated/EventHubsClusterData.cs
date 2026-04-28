@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.SupportsScaling = value.Value;
+                Properties.SupportsScaling = value;
             }
         }
     }

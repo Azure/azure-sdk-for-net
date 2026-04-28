@@ -3,10 +3,18 @@
 
 #nullable disable
 
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+using System;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    // Customization: This file uses CodeGenMember to rename enum members to maintain the naming convention from the previous SDK.
+    // Reason: The TypeSpec generator removes separators from TLS version numbers to produce member names (e.g., TLS10, TLS12, TLS13),
+    // but the old SDK used underscore-separated readable names (e.g., Tls1_0, Tls1_2, Tls1_3).
+    // CodeGenMember attributes map the generated names to the old names to preserve public API naming compatibility.
+
     /// <summary> TLS protocol version that will be used for Https. </summary>
     public enum FrontDoorMinimumTlsVersion
     {
