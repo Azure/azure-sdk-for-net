@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CosmosDB
             GraphResourceGetProperties properties = default;
             IDictionary<string, string> tags = default;
             string location = default;
-            Models.ManagedServiceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         continue;
                     }
-                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerCosmosDBContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

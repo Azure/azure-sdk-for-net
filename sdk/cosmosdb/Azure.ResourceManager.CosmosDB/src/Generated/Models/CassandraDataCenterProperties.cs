@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="provisionError"> Error related to resource provisioning. </param>
         /// <param name="privateEndpointIpAddress"> Ip of the VPN Endpoint for this data center. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, string dataCenterLocation, string delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, string managedDiskCustomerKeyUri, string backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, AuthenticationMethodLdapProperties authenticationMethodLdapProperties, bool? deallocated, CassandraError provisionError, string privateEndpointIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, string dataCenterLocation, string delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, AuthenticationMethodLdapProperties authenticationMethodLdapProperties, bool? deallocated, CassandraError provisionError, string privateEndpointIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DataCenterLocation = dataCenterLocation;
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Base64EncodedCassandraYamlFragment { get; set; }
 
         /// <summary> Key uri to use for encryption of managed disks. Ensure the system assigned identity of the cluster has been assigned appropriate permissions(key get/wrap/unwrap permissions) on the key. </summary>
-        public string ManagedDiskCustomerKeyUri { get; set; }
+        public Uri ManagedDiskCustomerKeyUri { get; set; }
 
         /// <summary> Indicates the Key Uri of the customer key to use for encryption of the backup storage account. </summary>
-        public string BackupStorageCustomerKeyUri { get; set; }
+        public Uri BackupStorageCustomerKeyUri { get; set; }
 
         /// <summary> Virtual Machine SKU used for data centers. Default value is Standard_DS14_v2. </summary>
         public string Sku { get; set; }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.CosmosDB;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CassandraViewCreateUpdateParameters"/>. </summary>
         /// <param name="resource"> The standard JSON format of a Cassandra view. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public CassandraViewCreateUpdateParameters(CassandraViewResource resource)
+        public CassandraViewCreateUpdateParameters(CassandraViewResourceInfo resource)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CassandraViewCreateUpdateProperties Properties { get; }
 
         /// <summary> The standard JSON format of a Cassandra view. </summary>
-        public CassandraViewResource Resource
+        public CassandraViewResourceInfo Resource
         {
             get
             {

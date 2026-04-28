@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ManagedDiskCustomerKeyUri))
             {
                 writer.WritePropertyName("managedDiskCustomerKeyUri"u8);
-                writer.WriteStringValue(ManagedDiskCustomerKeyUri);
+                writer.WriteStringValue(ManagedDiskCustomerKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BackupStorageCustomerKeyUri))
             {
                 writer.WritePropertyName("backupStorageCustomerKeyUri"u8);
-                writer.WriteStringValue(BackupStorageCustomerKeyUri);
+                writer.WriteStringValue(BackupStorageCustomerKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             int? nodeCount = default;
             IReadOnlyList<CassandraDataCenterSeedNode> seedNodes = default;
             string base64EncodedCassandraYamlFragment = default;
-            string managedDiskCustomerKeyUri = default;
-            string backupStorageCustomerKeyUri = default;
+            Uri managedDiskCustomerKeyUri = default;
+            Uri backupStorageCustomerKeyUri = default;
             string sku = default;
             string diskSku = default;
             int? diskCapacity = default;
@@ -269,12 +269,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("managedDiskCustomerKeyUri"u8))
                 {
-                    managedDiskCustomerKeyUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedDiskCustomerKeyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("backupStorageCustomerKeyUri"u8))
                 {
-                    backupStorageCustomerKeyUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupStorageCustomerKeyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

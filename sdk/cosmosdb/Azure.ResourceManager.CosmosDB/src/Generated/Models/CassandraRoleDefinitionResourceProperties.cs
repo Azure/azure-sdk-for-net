@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CassandraRoleDefinitionResourceProperties"/>. </summary>
-        /// <param name="id"> The path id for the Role Definition. </param>
+        /// <param name="roleDefinitionId"> The path id for the Role Definition. </param>
         /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
         /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
         /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Cassandra Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
         /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraRoleDefinitionResourceProperties(string id, string roleName, CosmosDBSqlRoleDefinitionType? @type, IList<string> assignableScopes, IList<CosmosDBSqlRolePermission> permissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraRoleDefinitionResourceProperties(string roleDefinitionId, string roleName, CosmosDBSqlRoleDefinitionType? @type, IList<string> assignableScopes, IList<CosmosDBSqlRolePermission> permissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            RoleDefinitionId = roleDefinitionId;
             RoleName = roleName;
             Type = @type;
             AssignableScopes = assignableScopes;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The path id for the Role Definition. </summary>
-        public string Id { get; set; }
+        public string RoleDefinitionId { get; set; }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>
         public string RoleName { get; set; }

@@ -324,8 +324,9 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendPath("/commands/", false);
+            uri.AppendPath("/", false);
             uri.AppendPath(commandId, true);
+            uri.AppendPath("/commands", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -394,8 +395,9 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendPath("/backups/", false);
+            uri.AppendPath("/", false);
             uri.AppendPath(backupId, true);
+            uri.AppendPath("/backups", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

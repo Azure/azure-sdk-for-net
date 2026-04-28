@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CassandraViewGetPropertiesResource. </summary>
-    public partial class CassandraViewGetPropertiesResource : CassandraViewResource
+    public partial class CassandraViewGetPropertiesResource : CassandraViewResourceInfo
     {
         /// <summary> Initializes a new instance of <see cref="CassandraViewGetPropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB Cassandra view. </param>

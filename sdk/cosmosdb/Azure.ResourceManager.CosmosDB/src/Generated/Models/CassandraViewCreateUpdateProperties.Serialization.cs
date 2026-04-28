@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            CassandraViewResource resource = default;
+            CassandraViewResourceInfo resource = default;
             CosmosDBCreateUpdateConfig options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resource"u8))
                 {
-                    resource = CassandraViewResource.DeserializeCassandraViewResource(prop.Value, options);
+                    resource = CassandraViewResourceInfo.DeserializeCassandraViewResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("options"u8))

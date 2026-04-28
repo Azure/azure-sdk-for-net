@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal CassandraClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CassandraClusterProperties properties, IDictionary<string, string> tags, string location, ManagedCassandraManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal CassandraClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CassandraClusterProperties properties, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.CosmosDB
         public string Location { get; set; }
 
         /// <summary> Identity for the resource. </summary>
-        public ManagedCassandraManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

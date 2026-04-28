@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.CosmosDB
         internal GremlinRoleDefinitionResourceProperties Properties { get; set; }
 
         /// <summary> The path id for the Role Definition. </summary>
-        public string Id
+        public string RoleDefinitionId
         {
             get
             {
-                return Properties is null ? default : Properties.Id;
+                return Properties is null ? default : Properties.RoleDefinitionId;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     Properties = new GremlinRoleDefinitionResourceProperties();
                 }
-                Properties.Id = value;
+                Properties.RoleDefinitionId = value;
             }
         }
 

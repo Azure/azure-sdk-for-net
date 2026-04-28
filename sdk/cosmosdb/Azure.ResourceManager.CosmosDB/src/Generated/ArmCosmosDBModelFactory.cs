@@ -287,28 +287,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new DatabaseAccountKeysMetadata(primaryMasterKeyGeneratedOn is null ? default : new AccountKeyMetadata(primaryMasterKeyGeneratedOn, null), secondaryMasterKeyGeneratedOn is null ? default : new AccountKeyMetadata(secondaryMasterKeyGeneratedOn, null), primaryReadonlyMasterKeyGeneratedOn is null ? default : new AccountKeyMetadata(primaryReadonlyMasterKeyGeneratedOn, null), secondaryReadonlyMasterKeyGeneratedOn is null ? default : new AccountKeyMetadata(secondaryReadonlyMasterKeyGeneratedOn, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Identity for the resource. </summary>
-        /// <param name="principalId"> The principal id of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of identity used for the resource. The type 'SystemAssigned,UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the service. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
-        public static ManagedServiceIdentity ManagedServiceIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, ManagedServiceIdentityUserAssignedIdentities> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, ManagedServiceIdentityUserAssignedIdentities>();
-
-            return new ManagedServiceIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ManagedServiceIdentityUserAssignedIdentities. </summary>
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceIdentityUserAssignedIdentities"/> instance for mocking. </returns>
-        public static ManagedServiceIdentityUserAssignedIdentities ManagedServiceIdentityUserAssignedIdentities(string principalId = default, string clientId = default)
-        {
-            return new ManagedServiceIdentityUserAssignedIdentities(principalId, clientId, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> The unique resource identifier of the ARM resource. </param>
         /// <param name="name"> The name of the ARM resource. </param>
         /// <param name="type"> The type of Azure resource. </param>
@@ -2437,7 +2415,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"> The standard JSON format of a Cassandra view. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
         /// <returns> A new <see cref="Models.CassandraViewCreateUpdateParameters"/> instance for mocking. </returns>
-        public static CassandraViewCreateUpdateParameters CassandraViewCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, CassandraViewResource resource = default, CosmosDBCreateUpdateConfig options = default)
+        public static CassandraViewCreateUpdateParameters CassandraViewCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, CassandraViewResourceInfo resource = default, CosmosDBCreateUpdateConfig options = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2456,13 +2434,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="id0"> The path id for the Role Definition. </param>
+        /// <param name="roleDefinitionId"> The path id for the Role Definition. </param>
         /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
         /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
         /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Cassandra Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
         /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
         /// <returns> A new <see cref="CosmosDB.CassandraRoleDefinitionData"/> instance for mocking. </returns>
-        public static CassandraRoleDefinitionData CassandraRoleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string id0 = default, string roleName = default, CosmosDBSqlRoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<CosmosDBSqlRolePermission> permissions = default)
+        public static CassandraRoleDefinitionData CassandraRoleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleDefinitionId = default, string roleName = default, CosmosDBSqlRoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<CosmosDBSqlRolePermission> permissions = default)
         {
             return new CassandraRoleDefinitionData(
                 id,
@@ -2470,8 +2448,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                id0 is null && roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new CassandraRoleDefinitionResourceProperties(
-                    id0,
+                roleDefinitionId is null && roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new CassandraRoleDefinitionResourceProperties(
+                    roleDefinitionId,
                     roleName,
                     @type,
                     (assignableScopes ?? new ChangeTrackingList<string>()).ToList(),
@@ -2669,13 +2647,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="id0"> The path id for the Role Definition. </param>
+        /// <param name="roleDefinitionId"> The path id for the Role Definition. </param>
         /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
         /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
         /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Gremlin Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
         /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
         /// <returns> A new <see cref="CosmosDB.GremlinRoleDefinitionData"/> instance for mocking. </returns>
-        public static GremlinRoleDefinitionData GremlinRoleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string id0 = default, string roleName = default, CosmosDBSqlRoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<CosmosDBSqlRolePermission> permissions = default)
+        public static GremlinRoleDefinitionData GremlinRoleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleDefinitionId = default, string roleName = default, CosmosDBSqlRoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<CosmosDBSqlRolePermission> permissions = default)
         {
             return new GremlinRoleDefinitionData(
                 id,
@@ -2683,8 +2661,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                id0 is null && roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new GremlinRoleDefinitionResourceProperties(
-                    id0,
+                roleDefinitionId is null && roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new GremlinRoleDefinitionResourceProperties(
+                    roleDefinitionId,
                     roleName,
                     @type,
                     (assignableScopes ?? new ChangeTrackingList<string>()).ToList(),
@@ -3282,7 +3260,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CassandraClusterData"/> instance for mocking. </returns>
-        public static CassandraClusterData CassandraClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CassandraClusterProperties properties = default, IDictionary<string, string> tags = default, string location = default, ManagedCassandraManagedServiceIdentity identity = default)
+        public static CassandraClusterData CassandraClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CassandraClusterProperties properties = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3605,7 +3583,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="provisionError"> Error related to resource provisioning. </param>
         /// <param name="privateEndpointIpAddress"> Ip of the VPN Endpoint for this data center. </param>
         /// <returns> A new <see cref="Models.CassandraDataCenterProperties"/> instance for mocking. </returns>
-        public static CassandraDataCenterProperties CassandraDataCenterProperties(CassandraProvisioningState? provisioningState = default, string dataCenterLocation = default, string delegatedSubnetId = default, int? nodeCount = default, IEnumerable<CassandraDataCenterSeedNode> seedNodes = default, string base64EncodedCassandraYamlFragment = default, string managedDiskCustomerKeyUri = default, string backupStorageCustomerKeyUri = default, string sku = default, string diskSku = default, int? diskCapacity = default, bool? doesSupportAvailabilityZone = default, AuthenticationMethodLdapProperties authenticationMethodLdapProperties = default, bool? deallocated = default, CassandraError provisionError = default, string privateEndpointIpAddress = default)
+        public static CassandraDataCenterProperties CassandraDataCenterProperties(CassandraProvisioningState? provisioningState = default, string dataCenterLocation = default, string delegatedSubnetId = default, int? nodeCount = default, IEnumerable<CassandraDataCenterSeedNode> seedNodes = default, string base64EncodedCassandraYamlFragment = default, Uri managedDiskCustomerKeyUri = default, Uri backupStorageCustomerKeyUri = default, string sku = default, string diskSku = default, int? diskCapacity = default, bool? doesSupportAvailabilityZone = default, AuthenticationMethodLdapProperties authenticationMethodLdapProperties = default, bool? deallocated = default, CassandraError provisionError = default, string privateEndpointIpAddress = default)
         {
             seedNodes ??= new ChangeTrackingList<CassandraDataCenterSeedNode>();
 
@@ -4309,13 +4287,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="id0"> The path id for the Role Definition. </param>
+        /// <param name="roleDefinitionId"> The path id for the Role Definition. </param>
         /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
         /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
         /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which MongoMI Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
         /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
         /// <returns> A new <see cref="CosmosDB.MongoMIRoleDefinitionData"/> instance for mocking. </returns>
-        public static MongoMIRoleDefinitionData MongoMIRoleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string id0 = default, string roleName = default, CosmosDBSqlRoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<CosmosDBSqlRolePermission> permissions = default)
+        public static MongoMIRoleDefinitionData MongoMIRoleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleDefinitionId = default, string roleName = default, CosmosDBSqlRoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<CosmosDBSqlRolePermission> permissions = default)
         {
             return new MongoMIRoleDefinitionData(
                 id,
@@ -4323,8 +4301,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                id0 is null && roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new MongoMIRoleDefinitionResourceProperties(
-                    id0,
+                roleDefinitionId is null && roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new MongoMIRoleDefinitionResourceProperties(
+                    roleDefinitionId,
                     roleName,
                     @type,
                     (assignableScopes ?? new ChangeTrackingList<string>()).ToList(),
@@ -4497,7 +4475,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBAccountData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBAccountData CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ResourceManager.Models.ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, CosmosDBAccountOfferType? databaseAccountOfferType, IEnumerable<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IEnumerable<CosmosDBAccountCapability> capabilities, IEnumerable<CosmosDBAccountLocation> writeLocations, IEnumerable<CosmosDBAccountLocation> readLocations, IEnumerable<CosmosDBAccountLocation> locations, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, CosmosDBServerVersion? apiServerVersion, bool? isAnalyticalStorageEnabled, AnalyticalStorageSchemaType? analyticalStorageSchemaType, Guid? instanceId, CosmosDBAccountCreateMode? createMode, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountBackupPolicy backupPolicy, IEnumerable<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, int? capacityTotalThroughputLimit, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, CosmosDBMinimalTlsVersion? minimalTlsVersion, bool? enableBurstCapacity, string customerManagedKeyStatus, bool? enablePerRegionPerPartitionAutoscale, string keyVaultKeyUriVersion, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel)
+        public static CosmosDBAccountData CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, CosmosDBAccountOfferType? databaseAccountOfferType, IEnumerable<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IEnumerable<CosmosDBAccountCapability> capabilities, IEnumerable<CosmosDBAccountLocation> writeLocations, IEnumerable<CosmosDBAccountLocation> readLocations, IEnumerable<CosmosDBAccountLocation> locations, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, CosmosDBServerVersion? apiServerVersion, bool? isAnalyticalStorageEnabled, AnalyticalStorageSchemaType? analyticalStorageSchemaType, Guid? instanceId, CosmosDBAccountCreateMode? createMode, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountBackupPolicy backupPolicy, IEnumerable<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, int? capacityTotalThroughputLimit, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, CosmosDBMinimalTlsVersion? minimalTlsVersion, bool? enableBurstCapacity, string customerManagedKeyStatus, bool? enablePerRegionPerPartitionAutoscale, string keyVaultKeyUriVersion, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             ipRules ??= new ChangeTrackingList<CosmosDBIPAddressOrRange>();
@@ -4588,7 +4566,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
         /// <returns> A new <see cref="Models.CosmosDBAccountPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBAccountPatch CosmosDBAccountPatch(IDictionary<string, string> tags, AzureLocation? location, ResourceManager.Models.ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IEnumerable<CosmosDBAccountLocation> locations, IEnumerable<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IEnumerable<CosmosDBAccountCapability> capabilities, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, CosmosDBServerVersion? apiServerVersion, bool? isAnalyticalStorageEnabled, AnalyticalStorageSchemaType? analyticalStorageSchemaType, CosmosDBAccountBackupPolicy backupPolicy, IEnumerable<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, int? capacityTotalThroughputLimit, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, CosmosDBMinimalTlsVersion? minimalTlsVersion, bool? enableBurstCapacity, string customerManagedKeyStatus, bool? enablePerRegionPerPartitionAutoscale, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel)
+        public static CosmosDBAccountPatch CosmosDBAccountPatch(IDictionary<string, string> tags, AzureLocation? location, ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IEnumerable<CosmosDBAccountLocation> locations, IEnumerable<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IEnumerable<CosmosDBAccountCapability> capabilities, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, CosmosDBServerVersion? apiServerVersion, bool? isAnalyticalStorageEnabled, AnalyticalStorageSchemaType? analyticalStorageSchemaType, CosmosDBAccountBackupPolicy backupPolicy, IEnumerable<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, int? capacityTotalThroughputLimit, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, CosmosDBMinimalTlsVersion? minimalTlsVersion, bool? enableBurstCapacity, string customerManagedKeyStatus, bool? enablePerRegionPerPartitionAutoscale, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             locations ??= new ChangeTrackingList<CosmosDBAccountLocation>();
@@ -5074,7 +5052,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
         /// <returns> A new <see cref="CosmosDB.CassandraClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CassandraClusterData CassandraClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraClusterProperties properties, ResourceManager.Models.ManagedServiceIdentity identity)
+        public static CassandraClusterData CassandraClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraClusterProperties properties, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

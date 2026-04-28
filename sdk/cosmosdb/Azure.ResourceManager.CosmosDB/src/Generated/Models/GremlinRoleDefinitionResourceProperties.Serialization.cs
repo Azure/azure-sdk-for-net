@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 throw new FormatException($"The model {nameof(GremlinRoleDefinitionResourceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(RoleDefinitionId);
             }
             if (Optional.IsDefined(RoleName))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            string id = default;
+            string roleDefinitionId = default;
             string roleName = default;
             CosmosDBSqlRoleDefinitionType? @type = default;
             IList<string> assignableScopes = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    roleDefinitionId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("roleName"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             return new GremlinRoleDefinitionResourceProperties(
-                id,
+                roleDefinitionId,
                 roleName,
                 @type,
                 assignableScopes ?? new ChangeTrackingList<string>(),

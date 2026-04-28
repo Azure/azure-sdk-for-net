@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
-        internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDBAccountProperties properties, IDictionary<string, string> tags, string location, Models.ManagedServiceIdentity identity, CosmosDBAccountKind? kind) : base(id, name, resourceType, systemData)
+        internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDBAccountProperties properties, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity, CosmosDBAccountKind? kind) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB
         public string Location { get; }
 
         /// <summary> Identity for the resource. </summary>
-        public Models.ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
         public CosmosDBAccountKind? Kind { get; }

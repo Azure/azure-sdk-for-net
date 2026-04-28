@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CassandraViewCreateUpdateProperties"/>. </summary>
         /// <param name="resource"> The standard JSON format of a Cassandra view. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public CassandraViewCreateUpdateProperties(CassandraViewResource resource)
+        public CassandraViewCreateUpdateProperties(CassandraViewResourceInfo resource)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"> The standard JSON format of a Cassandra view. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraViewCreateUpdateProperties(CassandraViewResource resource, CosmosDBCreateUpdateConfig options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraViewCreateUpdateProperties(CassandraViewResourceInfo resource, CosmosDBCreateUpdateConfig options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             Options = options;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a Cassandra view. </summary>
-        public CassandraViewResource Resource { get; }
+        public CassandraViewResourceInfo Resource { get; }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
         public CosmosDBCreateUpdateConfig Options { get; set; }

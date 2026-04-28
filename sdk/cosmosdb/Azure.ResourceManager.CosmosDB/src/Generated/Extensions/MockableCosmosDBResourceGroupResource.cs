@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> An object representing collection of CassandraClusters and their operations over a CassandraClusterResource. </returns>
         public virtual CassandraClusterCollection GetCassandraClusters()
         {
-            return this.GetCachedClient(client => new CassandraClusterCollection(client, Id));
+            return GetCachedClient(client => new CassandraClusterCollection(client, Id));
         }
 
         /// <summary>

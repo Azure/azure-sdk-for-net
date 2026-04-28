@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal CosmosDBGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GraphResourceGetProperties properties, IDictionary<string, string> tags, string location, Models.ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal CosmosDBGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GraphResourceGetProperties properties, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
         public string Location { get; }
 
         /// <summary> Identity for the resource. </summary>
-        public Models.ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; }
 
         /// <summary> Gets the Options. </summary>
         public GraphResourceGetPropertiesOptions Options
