@@ -50,6 +50,7 @@ For deep reference, see:
 **When to use:**
 - Updating to a new spec commit / API version
 - Picking up spec bug fixes without a version bump
+- Avoid Calling this often - as it takes makes more than 2 minutes to regenerate the code tree.
 
 **How to invoke:**
 ```
@@ -402,8 +403,9 @@ Use this when picking up a spec bug fix on the same API version.
 1. Update `commit` in `tsp-location.yaml` to the new SHA
 2. Run `azsdk_package_generate_code`
 3. Run `azsdk_package_build_code` and fix any errors
-4. Run `Export-API.ps1 search` and check for unintended API surface changes
-5. Run `dotnet test --filter "TestCategory!=Live"`
+4. Update handwritten (non-generated) files as needed to reflect any changes in the generated code.
+5. Run `Export-API.ps1 search` and check for unintended API surface changes
+6. Run `dotnet test --filter "TestCategory!=Live"`
 
 ---
 
@@ -412,6 +414,7 @@ Use this when picking up a spec bug fix on the same API version.
 1. Identify the generated type in `src/Generated/` (do not edit it)
 2. Create or update the corresponding custom partial file in `src/` (see [architecture.md](./references/architecture.md) for the file mapping)
 3. Apply the appropriate attribute (`[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSuppress]`)
+4. Run `azsdk_package_generate_code` to catch new generatetd tpye customizations.
 4. Run `azsdk_package_build_code` to verify
 5. If a public API changed: run `Export-API.ps1 search`
 
