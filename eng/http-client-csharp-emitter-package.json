@@ -5,7 +5,7 @@
     "@typespec/http-client-csharp": "1.0.0-alpha.20260428.2"
   },
   "devDependencies": {
-    "@azure-tools/typespec-client-generator-core": "0.67.3",
+    "@azure-tools/typespec-client-generator-core": "0.67.2",
     "@typespec/compiler": "1.11.0",
     "@typespec/http": "1.11.0",
     "@typespec/openapi": "1.11.0",
