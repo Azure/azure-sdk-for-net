@@ -271,6 +271,17 @@ The SDK is **multi-version**: it targets the latest API version by default but s
 - The type must be **restored manually** from git as a non-generated custom file, so older API version callers continue to compile, ONLY if ApiCompat (during compile-time) checks fail for the particular model/property.
 - Restored files are placed in `src/`, not `src/Generated` but are no longer auto-generated on future runs.
 
+### Known Retained Types / Properties (2026-04-01 patch)
+
+The following were public in 12.0.0 but removed in the 2026-04-01 patch spec. Retained as `[Obsolete]` for backward compat:
+
+| Item | Location | Notes |
+|---|---|---|
+| `KnowledgeSourceIngestionPermissionOption` | `src/Generated/Models/KnowledgeSourceIngestionPermissionOption.cs` | Restored from git; type remains in `Generated/` but is no longer auto-generated |
+| `KnowledgeSourceIngestionParameters.IngestionPermissionOptions` | `src/KnowledgeBases/KnowledgeSourceIngestionParameters.cs` | Custom partial adds `[Obsolete]` property; not serialized to JSON |
+| `AzureMachineLearningVectorizer.AMLParameters` | `src/Indexes/Models/AzureMachineLearningVectorizer.cs` | Renamed to `AmlParameters` in spec; custom partial retains old name as `[Obsolete]` |
+| `SearchModelFactory.KnowledgeSourceIngestionParameters(…, ingestionPermissionOptions, …)` | `src/Models/SearchModelFactory.cs` | Suppressed generated 7-param overload via `[CodeGenSuppress]`; custom file provides `[Obsolete]` 8-param overload |
+
 ---
 
 ## Model Factory (`SearchModelFactory`)

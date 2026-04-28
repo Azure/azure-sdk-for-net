@@ -622,7 +622,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="chatCompletionModel"> Optional chat completion model for image verbalization or context extraction. </param>
         /// <param name="disableImageVerbalization"> Indicates whether image verbalization should be disabled. Default is false. </param>
         /// <param name="ingestionSchedule"> Optional schedule for data ingestion. </param>
-        /// <param name="ingestionPermissionOptions"> Optional list of permission types to ingest together with document content. This parameter is no longer supported and is ignored. </param>
+        /// <param name="ingestionPermissionOptions"> Optional list of permission types to ingest together with document content. This parameter is no longer supported by the service and is retained for backward compatibility only; it will be ignored. </param>
         /// <param name="contentExtractionMode"> Optional content extraction mode. Default is 'minimal'. </param>
         /// <param name="aiServices"> Optional AI Services configuration for content processing. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceIngestionParameters"/> instance for mocking. </returns>
