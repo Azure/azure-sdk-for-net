@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     Properties = new AvailabilityGroupListenerProperties();
                 }
-                Properties.CreateDefaultAvailabilityGroupIfNotExist = value.Value;
+                Properties.CreateDefaultAvailabilityGroupIfNotExist = value;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     Properties = new AvailabilityGroupListenerProperties();
                 }
-                Properties.Port = value.Value;
+                Properties.Port = value;
             }
         }
 

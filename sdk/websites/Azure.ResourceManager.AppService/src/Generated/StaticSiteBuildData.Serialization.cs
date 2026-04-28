@@ -294,6 +294,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 buildId,
                 sourceBranch,
                 pullRequestTitle,
@@ -304,7 +305,6 @@ namespace Azure.ResourceManager.AppService
                 userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
                 linkedBackends ?? new ChangeTrackingList<StaticSiteLinkedBackendInfo>(),
                 databaseConnections ?? new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

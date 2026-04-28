@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.CertificateRegistration
     {
         public AppServiceCertificateOrderData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CertificateRegistration.Models.AppServiceCertificateNotRenewableReason> AppServiceCertificateNotRenewableReasons { get { throw null; } }
+        public Azure.ResourceManager.CertificateRegistration.Models.CertificateProductType? CertificateProductType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CertificateRegistration.Models.AppServiceCertificateProperties> Certificates { get { throw null; } }
         public Azure.ResourceManager.CertificateRegistration.Models.CertificateOrderContact Contact { get { throw null; } }
         public string Csr { get { throw null; } set { } }
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastCertificateIssuedOn { get { throw null; } }
         public System.DateTimeOffset? NextAutoRenewOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use CertificateProductType instead.")]
         public Azure.ResourceManager.CertificateRegistration.Models.CertificateProductType ProductType { get { throw null; } set { } }
         public Azure.ResourceManager.CertificateRegistration.Models.CertificateRegistrationProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.CertificateRegistration.Models.AppServiceCertificateDetails Root { get { throw null; } }
@@ -300,6 +302,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
     {
         public AppServiceCertificateOrderPatch() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CertificateRegistration.Models.AppServiceCertificateNotRenewableReason> AppServiceCertificateNotRenewableReasons { get { throw null; } }
+        public Azure.ResourceManager.CertificateRegistration.Models.CertificateProductType? CertificateProductType { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CertificateRegistration.Models.AppServiceCertificateProperties> Certificates { get { throw null; } }
         public Azure.ResourceManager.CertificateRegistration.Models.CertificateOrderContact Contact { get { throw null; } }
         public string Csr { get { throw null; } set { } }
@@ -312,6 +315,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         public int? KeySize { get { throw null; } set { } }
         public System.DateTimeOffset? LastCertificateIssuedOn { get { throw null; } }
         public System.DateTimeOffset? NextAutoRenewOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use CertificateProductType instead.")]
         public Azure.ResourceManager.CertificateRegistration.Models.CertificateProductType ProductType { get { throw null; } }
         public Azure.ResourceManager.CertificateRegistration.Models.CertificateRegistrationProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.CertificateRegistration.Models.AppServiceCertificateDetails Root { get { throw null; } }

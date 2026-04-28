@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct RequestSchemeOperator : IEquatable<RequestSchemeOperator>
     {
         private readonly string _value;
+        private const string EqualValue = "Equal";
 
         /// <summary> Initializes a new instance of <see cref="RequestSchemeOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RequestSchemeOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EqualValue = "Equal";
-
-        /// <summary> Equal. </summary>
+        /// <summary> Gets the Equal. </summary>
         public static RequestSchemeOperator Equal { get; } = new RequestSchemeOperator(EqualValue);
+
         /// <summary> Determines if two <see cref="RequestSchemeOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RequestSchemeOperator left, RequestSchemeOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RequestSchemeOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RequestSchemeOperator left, RequestSchemeOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestSchemeOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RequestSchemeOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RequestSchemeOperator(string value) => new RequestSchemeOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RequestSchemeOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RequestSchemeOperator?(string value) => value == null ? null : new RequestSchemeOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RequestSchemeOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RequestSchemeOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

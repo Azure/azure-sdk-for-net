@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     BlobServiceProperties = new BlobServicePropertiesProperties();
                 }
-                BlobServiceProperties.IsVersioningEnabled = value.Value;
+                BlobServiceProperties.IsVersioningEnabled = value;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     BlobServiceProperties = new BlobServicePropertiesProperties();
                 }
-                BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled = value.Value;
+                BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled = value;
             }
         }
 

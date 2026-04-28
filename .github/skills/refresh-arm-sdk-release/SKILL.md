@@ -59,7 +59,7 @@ When skipping a package, log it clearly as **SKIPPED** with the reason, and move
 - Under Other Changes, add:
   - Upgraded dependent Azure.Core to 1.X.X.
   - Upgraded dependent Azure.ResourceManager to 1.X.X.
-- Resolve these versions from eng/centralpackagemanagement/Directory.Packages.props.
+- **Always** resolve these exact versions from `eng/centralpackagemanagement/Directory.Packages.props` at the time of refresh — do not hardcode or cache version numbers, as they may change between batches.
 
 ### Step 6: Update Project Version for Stable Flow Only
 - If stable flow, set Version in src/Azure.ResourceManager.XXX.csproj to the new stable version matching the changelog entry.

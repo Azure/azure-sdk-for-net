@@ -46,8 +46,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zonalPlatformFaultDomainAlignMode"> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </param>
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
         /// <param name="highSpeedInterconnectPlacement"> Specifies the high speed interconnect placement for the virtual machine scale set. </param>
+        /// <param name="lifecycleHooksProfile"> Specifies the lifecycle hooks profile for the virtual machine scale set. </param>
+        /// <param name="externalHealthPolicy"> Specifies the external health policy for the virtual machine scale set. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, IDictionary<string, BinaryData> additionalProperties)
+        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalProperties)
         {
             UpgradePolicy = upgradePolicy;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -73,6 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             ZonalPlatformFaultDomainAlignMode = zonalPlatformFaultDomainAlignMode;
             SkuProfile = skuProfile;
             HighSpeedInterconnectPlacement = highSpeedInterconnectPlacement;
+            LifecycleHooksProfile = lifecycleHooksProfile;
+            ExternalHealthPolicy = externalHealthPolicy;
             AdditionalProperties = additionalProperties;
         }
 
@@ -148,6 +152,21 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputeSkuProfile SkuProfile { get; set; }
         /// <summary> Specifies the high speed interconnect placement for the virtual machine scale set. </summary>
         public HighSpeedInterconnectPlacement? HighSpeedInterconnectPlacement { get; set; }
+        /// <summary> Specifies the lifecycle hooks profile for the virtual machine scale set. </summary>
+        internal LifecycleHooksProfile LifecycleHooksProfile { get; set; }
+        /// <summary> Specifies the lifecycle hooks configured for the virtual machine scale set. </summary>
+        public IList<LifecycleHook> LifecycleHooks
+        {
+            get
+            {
+                if (LifecycleHooksProfile is null)
+                    LifecycleHooksProfile = new LifecycleHooksProfile();
+                return LifecycleHooksProfile.LifecycleHooks;
+            }
+        }
+
+        /// <summary> Specifies the external health policy for the virtual machine scale set. </summary>
+        public ExternalHealthPolicy ExternalHealthPolicy { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

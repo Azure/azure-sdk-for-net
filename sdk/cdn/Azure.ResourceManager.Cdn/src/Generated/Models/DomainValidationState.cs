@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct DomainValidationState : IEquatable<DomainValidationState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DomainValidationState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DomainValidationState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string SubmittingValue = "Submitting";
         private const string PendingValue = "Pending";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RefreshingValidationTokenValue = "RefreshingValidationToken";
         private const string InternalErrorValue = "InternalError";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DomainValidationState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static DomainValidationState Unknown { get; } = new DomainValidationState(UnknownValue);
-        /// <summary> Submitting. </summary>
+
+        /// <summary> Gets the Submitting. </summary>
         public static DomainValidationState Submitting { get; } = new DomainValidationState(SubmittingValue);
-        /// <summary> Pending. </summary>
+
+        /// <summary> Gets the Pending. </summary>
         public static DomainValidationState Pending { get; } = new DomainValidationState(PendingValue);
-        /// <summary> Rejected. </summary>
+
+        /// <summary> Gets the Rejected. </summary>
         public static DomainValidationState Rejected { get; } = new DomainValidationState(RejectedValue);
-        /// <summary> TimedOut. </summary>
+
+        /// <summary> Gets the TimedOut. </summary>
         public static DomainValidationState TimedOut { get; } = new DomainValidationState(TimedOutValue);
-        /// <summary> PendingRevalidation. </summary>
+
+        /// <summary> Gets the PendingRevalidation. </summary>
         public static DomainValidationState PendingRevalidation { get; } = new DomainValidationState(PendingRevalidationValue);
-        /// <summary> Approved. </summary>
+
+        /// <summary> Gets the Approved. </summary>
         public static DomainValidationState Approved { get; } = new DomainValidationState(ApprovedValue);
-        /// <summary> RefreshingValidationToken. </summary>
+
+        /// <summary> Gets the RefreshingValidationToken. </summary>
         public static DomainValidationState RefreshingValidationToken { get; } = new DomainValidationState(RefreshingValidationTokenValue);
-        /// <summary> InternalError. </summary>
+
+        /// <summary> Gets the InternalError. </summary>
         public static DomainValidationState InternalError { get; } = new DomainValidationState(InternalErrorValue);
+
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DomainValidationState left, DomainValidationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DomainValidationState left, DomainValidationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainValidationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DomainValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DomainValidationState(string value) => new DomainValidationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DomainValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DomainValidationState?(string value) => value == null ? null : new DomainValidationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DomainValidationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DomainValidationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

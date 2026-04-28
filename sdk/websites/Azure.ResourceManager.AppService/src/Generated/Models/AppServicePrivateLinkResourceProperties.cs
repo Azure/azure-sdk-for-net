@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Properties of a private link resource. </summary>
+    /// <summary>
+    /// Properties of a private link resource
+    /// Serialized Name: PrivateLinkResourceProperties
+    /// </summary>
     public partial class AppServicePrivateLinkResourceProperties
     {
         /// <summary>
@@ -53,9 +56,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServicePrivateLinkResourceProperties"/>. </summary>
-        /// <param name="groupId"> GroupId of a private link resource. </param>
-        /// <param name="requiredMembers"> RequiredMembers of a private link resource. </param>
-        /// <param name="requiredZoneNames"> RequiredZoneNames of a private link resource. </param>
+        /// <param name="groupId">
+        /// GroupId of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.groupId
+        /// </param>
+        /// <param name="requiredMembers">
+        /// RequiredMembers of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.requiredMembers
+        /// </param>
+        /// <param name="requiredZoneNames">
+        /// RequiredZoneNames of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.requiredZoneNames
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServicePrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +77,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> GroupId of a private link resource. </summary>
+        /// <summary>
+        /// GroupId of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.groupId
+        /// </summary>
         [WirePath("groupId")]
         public string GroupId { get; }
-        /// <summary> RequiredMembers of a private link resource. </summary>
+        /// <summary>
+        /// RequiredMembers of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.requiredMembers
+        /// </summary>
         [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> RequiredZoneNames of a private link resource. </summary>
+        /// <summary>
+        /// RequiredZoneNames of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.requiredZoneNames
+        /// </summary>
         [WirePath("requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames { get; }
     }
