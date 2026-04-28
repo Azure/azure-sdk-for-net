@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class KeyVaultCertificateSource : IUtf8JsonSerializable, IJsonModel<KeyVaultCertificateSource>
+    /// <summary> Describes the parameters for using a user's KeyVault certificate for securing custom domain. </summary>
+    public partial class KeyVaultCertificateSource : CertificateSourceProperties, IJsonModel<KeyVaultCertificateSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultCertificateSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateSource"/> for deserialization. </summary>
+        internal KeyVaultCertificateSource()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CertificateSourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKeyVaultCertificateSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KeyVaultCertificateSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeyVaultCertificateSource IPersistableModel<KeyVaultCertificateSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (KeyVaultCertificateSource)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KeyVaultCertificateSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeyVaultCertificateSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
@@ -55,26 +99,33 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(DeleteRule.ToString());
         }
 
-        KeyVaultCertificateSource IJsonModel<KeyVaultCertificateSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeyVaultCertificateSource IJsonModel<KeyVaultCertificateSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KeyVaultCertificateSource)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CertificateSourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKeyVaultCertificateSource(document.RootElement, options);
         }
 
-        internal static KeyVaultCertificateSource DeserializeKeyVaultCertificateSource(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KeyVaultCertificateSource DeserializeKeyVaultCertificateSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            CertificateSourceParametersType typeName = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string subscriptionId = default;
             string resourceGroupName = default;
             string vaultName = default;
@@ -82,60 +133,56 @@ namespace Azure.ResourceManager.Cdn.Models
             string secretVersion = default;
             CertificateUpdateAction updateRule = default;
             CertificateDeleteAction deleteRule = default;
-            CertificateSourceParametersType typeName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"u8))
+                if (prop.NameEquals("typeName"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    typeName = new CertificateSourceParametersType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceGroupName"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    resourceGroupName = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vaultName"u8))
+                if (prop.NameEquals("resourceGroupName"u8))
                 {
-                    vaultName = property.Value.GetString();
+                    resourceGroupName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretName"u8))
+                if (prop.NameEquals("vaultName"u8))
                 {
-                    secretName = property.Value.GetString();
+                    vaultName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretVersion"u8))
+                if (prop.NameEquals("secretName"u8))
                 {
-                    secretVersion = property.Value.GetString();
+                    secretName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("updateRule"u8))
+                if (prop.NameEquals("secretVersion"u8))
                 {
-                    updateRule = new CertificateUpdateAction(property.Value.GetString());
+                    secretVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deleteRule"u8))
+                if (prop.NameEquals("updateRule"u8))
                 {
-                    deleteRule = new CertificateDeleteAction(property.Value.GetString());
+                    updateRule = new CertificateUpdateAction(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("typeName"u8))
+                if (prop.NameEquals("deleteRule"u8))
                 {
-                    typeName = new CertificateSourceParametersType(property.Value.GetString());
+                    deleteRule = new CertificateDeleteAction(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KeyVaultCertificateSource(
                 typeName,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 subscriptionId,
                 resourceGroupName,
                 vaultName,
@@ -144,204 +191,5 @@ namespace Azure.ResourceManager.Cdn.Models
                 updateRule,
                 deleteRule);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subscriptionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubscriptionId))
-                {
-                    builder.Append("  subscriptionId: ");
-                    if (SubscriptionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SubscriptionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SubscriptionId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroupName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resourceGroupName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceGroupName))
-                {
-                    builder.Append("  resourceGroupName: ");
-                    if (ResourceGroupName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceGroupName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceGroupName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VaultName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vaultName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VaultName))
-                {
-                    builder.Append("  vaultName: ");
-                    if (VaultName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{VaultName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{VaultName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secretName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecretName))
-                {
-                    builder.Append("  secretName: ");
-                    if (SecretName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecretName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecretName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secretVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecretVersion))
-                {
-                    builder.Append("  secretVersion: ");
-                    if (SecretVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecretVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecretVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdateRule), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  updateRule: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  updateRule: ");
-                builder.AppendLine($"'{UpdateRule.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeleteRule), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  deleteRule: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  deleteRule: ");
-                builder.AppendLine($"'{DeleteRule.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypeName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  typeName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  typeName: ");
-                builder.AppendLine($"'{TypeName.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<KeyVaultCertificateSource>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KeyVaultCertificateSource IPersistableModel<KeyVaultCertificateSource>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKeyVaultCertificateSource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KeyVaultCertificateSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

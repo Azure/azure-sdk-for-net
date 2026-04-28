@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.ProvisioningState = value.Value;
+                Properties.ProvisioningState = value;
             }
         }
 

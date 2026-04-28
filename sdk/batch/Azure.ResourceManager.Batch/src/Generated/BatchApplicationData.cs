@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     Properties = new ApplicationProperties();
                 }
-                Properties.AllowUpdates = value.Value;
+                Properties.AllowUpdates = value;
             }
         }
 

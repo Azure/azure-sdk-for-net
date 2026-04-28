@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct AccessPolicyAssignmentProvisioningState : IEquatable<AccessPolicyAssignmentProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The access policy assignments are being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The access policy assignments were successfully updated. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The access policy assignments are being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The access policy assignments are considered deleted, meaning no custom access policies are applied. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> The operation was canceled. Access policy assignments may be in a partially updated state. Update them again to have a well-defined state. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The operation failed. Access policy assignments may be in a partially updated state. Update them again to have a well-defined state. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AccessPolicyAssignmentProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string UpdatingValue = "Updating";
-        private const string SucceededValue = "Succeeded";
-        private const string DeletingValue = "Deleting";
-        private const string DeletedValue = "Deleted";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Updating. </summary>
+        /// <summary> The access policy assignments are being updated. </summary>
         public static AccessPolicyAssignmentProvisioningState Updating { get; } = new AccessPolicyAssignmentProvisioningState(UpdatingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> The access policy assignments were successfully updated. </summary>
         public static AccessPolicyAssignmentProvisioningState Succeeded { get; } = new AccessPolicyAssignmentProvisioningState(SucceededValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> The access policy assignments are being deleted. </summary>
         public static AccessPolicyAssignmentProvisioningState Deleting { get; } = new AccessPolicyAssignmentProvisioningState(DeletingValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> The access policy assignments are considered deleted, meaning no custom access policies are applied. </summary>
         public static AccessPolicyAssignmentProvisioningState Deleted { get; } = new AccessPolicyAssignmentProvisioningState(DeletedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The operation was canceled. Access policy assignments may be in a partially updated state. Update them again to have a well-defined state. </summary>
         public static AccessPolicyAssignmentProvisioningState Canceled { get; } = new AccessPolicyAssignmentProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The operation failed. Access policy assignments may be in a partially updated state. Update them again to have a well-defined state. </summary>
         public static AccessPolicyAssignmentProvisioningState Failed { get; } = new AccessPolicyAssignmentProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="AccessPolicyAssignmentProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AccessPolicyAssignmentProvisioningState left, AccessPolicyAssignmentProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AccessPolicyAssignmentProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AccessPolicyAssignmentProvisioningState left, AccessPolicyAssignmentProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessPolicyAssignmentProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AccessPolicyAssignmentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AccessPolicyAssignmentProvisioningState(string value) => new AccessPolicyAssignmentProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AccessPolicyAssignmentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AccessPolicyAssignmentProvisioningState?(string value) => value == null ? null : new AccessPolicyAssignmentProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AccessPolicyAssignmentProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AccessPolicyAssignmentProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

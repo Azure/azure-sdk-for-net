@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 additionalBinaryDataProperties: null,
                 provisioningState is null && mode is null && version is null && connectionState is null && lastActivityOn is null && parent is null && clientTokenIds is null && loginServer is null && logging is null && statusDetails is null && notificationsList is null && garbageCollection is null && registrySyncResult is null && activationStatus is null ? default : new ConnectedRegistryProperties(
                     provisioningState,
-                    mode.Value,
+                    mode.GetValueOrDefault(),
                     version,
                     connectionState,
                     lastActivityOn,
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                source is null && options is null && provisioningState is null && sourceTriggerStatus is null ? default : new ImportPipelineProperties(source, new PipelineTriggerProperties(new PipelineSourceTriggerProperties(sourceTriggerStatus.Value, null), null), (options ?? new ChangeTrackingList<PipelineOption>()).ToList(), provisioningState, null),
+                source is null && options is null && provisioningState is null && sourceTriggerStatus is null ? default : new ImportPipelineProperties(source, new PipelineTriggerProperties(new PipelineSourceTriggerProperties(sourceTriggerStatus.GetValueOrDefault(), null), null), (options ?? new ChangeTrackingList<PipelineOption>()).ToList(), provisioningState, null),
                 location,
                 identity);
         }

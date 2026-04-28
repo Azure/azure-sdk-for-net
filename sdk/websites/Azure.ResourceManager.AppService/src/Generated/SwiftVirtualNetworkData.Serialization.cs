@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 subnetResourceId,
                 swiftSupported,
-                kind,
                 serializedAdditionalRawData);
         }
 

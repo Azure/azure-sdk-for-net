@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ApplicationPatchProperties();
                 }
-                Properties.CommandLineSetting = value.Value;
+                Properties.CommandLineSetting = value;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ApplicationPatchProperties();
                 }
-                Properties.ShowInPortal = value.Value;
+                Properties.ShowInPortal = value;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ApplicationPatchProperties();
                 }
-                Properties.IconIndex = value.Value;
+                Properties.IconIndex = value;
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ApplicationPatchProperties();
                 }
-                Properties.ApplicationType = value.Value;
+                Properties.ApplicationType = value;
             }
         }
     }

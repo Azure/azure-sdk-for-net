@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the HostNameBinding data model.
     /// A hostname binding object.
+    /// Serialized Name: HostNameBinding
     /// </summary>
     public partial class HostNameBindingData : ResourceData
     {
@@ -61,19 +62,50 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="siteName"> App Service app name. </param>
-        /// <param name="domainId"> Fully qualified ARM domain resource URI. </param>
-        /// <param name="azureResourceName"> Azure resource name. </param>
-        /// <param name="azureResourceType"> Azure resource type. </param>
-        /// <param name="customHostNameDnsRecordType"> Custom DNS record type. </param>
-        /// <param name="hostNameType"> Hostname type. </param>
-        /// <param name="sslState"> SSL type. </param>
-        /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
-        /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: HostNameBinding.kind
+        /// </param>
+        /// <param name="siteName">
+        /// App Service app name.
+        /// Serialized Name: HostNameBinding.properties.siteName
+        /// </param>
+        /// <param name="domainId">
+        /// Fully qualified ARM domain resource URI.
+        /// Serialized Name: HostNameBinding.properties.domainId
+        /// </param>
+        /// <param name="azureResourceName">
+        /// Azure resource name.
+        /// Serialized Name: HostNameBinding.properties.azureResourceName
+        /// </param>
+        /// <param name="azureResourceType">
+        /// Azure resource type.
+        /// Serialized Name: HostNameBinding.properties.azureResourceType
+        /// </param>
+        /// <param name="customHostNameDnsRecordType">
+        /// Custom DNS record type.
+        /// Serialized Name: HostNameBinding.properties.customHostNameDnsRecordType
+        /// </param>
+        /// <param name="hostNameType">
+        /// Hostname type.
+        /// Serialized Name: HostNameBinding.properties.hostNameType
+        /// </param>
+        /// <param name="sslState">
+        /// SSL type
+        /// Serialized Name: HostNameBinding.properties.sslState
+        /// </param>
+        /// <param name="thumbprintString">
+        /// SSL certificate thumbprint
+        /// Serialized Name: HostNameBinding.properties.thumbprint
+        /// </param>
+        /// <param name="virtualIP">
+        /// Virtual IP address assigned to the hostname if IP based SSL is enabled.
+        /// Serialized Name: HostNameBinding.properties.virtualIP
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             SiteName = siteName;
             DomainId = domainId;
             AzureResourceName = azureResourceName;
@@ -83,39 +115,68 @@ namespace Azure.ResourceManager.AppService
             SslState = sslState;
             ThumbprintString = thumbprintString;
             VirtualIP = virtualIP;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> App Service app name. </summary>
-        [WirePath("properties.siteName")]
-        public string SiteName { get; set; }
-        /// <summary> Fully qualified ARM domain resource URI. </summary>
-        [WirePath("properties.domainId")]
-        public string DomainId { get; set; }
-        /// <summary> Azure resource name. </summary>
-        [WirePath("properties.azureResourceName")]
-        public string AzureResourceName { get; set; }
-        /// <summary> Azure resource type. </summary>
-        [WirePath("properties.azureResourceType")]
-        public AppServiceResourceType? AzureResourceType { get; set; }
-        /// <summary> Custom DNS record type. </summary>
-        [WirePath("properties.customHostNameDnsRecordType")]
-        public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; set; }
-        /// <summary> Hostname type. </summary>
-        [WirePath("properties.hostNameType")]
-        public AppServiceHostNameType? HostNameType { get; set; }
-        /// <summary> SSL type. </summary>
-        [WirePath("properties.sslState")]
-        public HostNameBindingSslState? SslState { get; set; }
-        /// <summary> SSL certificate thumbprint. </summary>
-        [WirePath("properties.thumbprint")]
-        public string ThumbprintString { get; set; }
-        /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
-        [WirePath("properties.virtualIP")]
-        public string VirtualIP { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: HostNameBinding.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// App Service app name.
+        /// Serialized Name: HostNameBinding.properties.siteName
+        /// </summary>
+        [WirePath("properties.siteName")]
+        public string SiteName { get; set; }
+        /// <summary>
+        /// Fully qualified ARM domain resource URI.
+        /// Serialized Name: HostNameBinding.properties.domainId
+        /// </summary>
+        [WirePath("properties.domainId")]
+        public string DomainId { get; set; }
+        /// <summary>
+        /// Azure resource name.
+        /// Serialized Name: HostNameBinding.properties.azureResourceName
+        /// </summary>
+        [WirePath("properties.azureResourceName")]
+        public string AzureResourceName { get; set; }
+        /// <summary>
+        /// Azure resource type.
+        /// Serialized Name: HostNameBinding.properties.azureResourceType
+        /// </summary>
+        [WirePath("properties.azureResourceType")]
+        public AppServiceResourceType? AzureResourceType { get; set; }
+        /// <summary>
+        /// Custom DNS record type.
+        /// Serialized Name: HostNameBinding.properties.customHostNameDnsRecordType
+        /// </summary>
+        [WirePath("properties.customHostNameDnsRecordType")]
+        public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; set; }
+        /// <summary>
+        /// Hostname type.
+        /// Serialized Name: HostNameBinding.properties.hostNameType
+        /// </summary>
+        [WirePath("properties.hostNameType")]
+        public AppServiceHostNameType? HostNameType { get; set; }
+        /// <summary>
+        /// SSL type
+        /// Serialized Name: HostNameBinding.properties.sslState
+        /// </summary>
+        [WirePath("properties.sslState")]
+        public HostNameBindingSslState? SslState { get; set; }
+        /// <summary>
+        /// SSL certificate thumbprint
+        /// Serialized Name: HostNameBinding.properties.thumbprint
+        /// </summary>
+        [WirePath("properties.thumbprint")]
+        public string ThumbprintString { get; set; }
+        /// <summary>
+        /// Virtual IP address assigned to the hostname if IP based SSL is enabled.
+        /// Serialized Name: HostNameBinding.properties.virtualIP
+        /// </summary>
+        [WirePath("properties.virtualIP")]
+        public string VirtualIP { get; }
     }
 }

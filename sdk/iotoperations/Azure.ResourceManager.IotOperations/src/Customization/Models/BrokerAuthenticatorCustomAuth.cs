@@ -8,6 +8,11 @@ using System;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Custom Authentication properties. </summary>
+    // TODO: Remove this customization once the fix for
+    // https://github.com/microsoft/typespec/issues/7380 is merged and IotOperations is
+    // regenerated. The chained safe-flatten setter for AuthX509SecretRef will then construct
+    // BrokerAuthenticatorCustomAuth via its parameterless ctor + delegated assignment, and this
+    // hand-added (string secretRef) constructor will no longer be required.
     public partial class BrokerAuthenticatorCustomAuth
     {
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/>. </summary>

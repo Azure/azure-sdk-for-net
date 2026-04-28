@@ -18,17 +18,22 @@ extends:
     Artifacts:
     - name: Microsoft.Extensions.Azure
       safeName: MicrosoftExtensionsAzure
+      skipCodeownersVerification: true
     - name: Azure.Extensions.AspNetCore.DataProtection.Blobs
       safeName: AzureExtensionsAspNetCoreDataProtectionBlobs
+      skipCodeownersVerification: true
       triggeringPaths:
       - sdk/storage/Azure.Storage.Blobs/
     - name: Azure.Extensions.AspNetCore.DataProtection.Keys
       safeName: AzureExtensionsAspNetCoreDataProtectionKeys
+      skipCodeownersVerification: true
       triggeringPaths:
       - sdk/keyvault/Azure.Security.KeyVault.Keys/
     - name: Azure.Extensions.AspNetCore.Configuration.Secrets
       safeName: AzureExtensionsAspNetCoreConfigurationSecrets
+      skipCodeownersVerification: true
       triggeringPaths:
       - sdk/keyvault/Azure.Security.KeyVault.Secrets/
     - name: Microsoft.Azure.WebJobs.Extensions.Clients
       safeName: MicrosoftAzureWebJobsExtensionsClients
+      skipCodeownersVerification: true

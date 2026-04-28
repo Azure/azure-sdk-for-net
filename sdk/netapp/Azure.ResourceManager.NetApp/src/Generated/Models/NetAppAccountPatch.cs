@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity used for the resource. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="activeDirectories"> Active Directories. </param>
-        /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
         /// <param name="encryption"> Encryption settings. </param>
+        /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
         /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
-        /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppEntraIdConfigPatch entraIdConfig, NetAppAccountEncryption encryption, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, NetAppLdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
+            ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;
-            EntraIdConfig = entraIdConfig;
             Encryption = encryption;
+            DisableShowmount = disableShowmount;
             NfsV4IdDomain = nfsV4IdDomain;
             MultiAdStatus = multiAdStatus;
-            LdapConfiguration = ldapConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -90,15 +90,11 @@ namespace Azure.ResourceManager.NetApp.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Active Directories. </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
-        /// <summary> Entra ID configuration for the account. </summary>
-        public NetAppEntraIdConfigPatch EntraIdConfig { get; set; }
         /// <summary> Encryption settings. </summary>
         public NetAppAccountEncryption Encryption { get; set; }
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
         public string NfsV4IdDomain { get; set; }
         /// <summary> MultiAD Status for the account. </summary>
-        public MultiAdStatus? MultiAdStatus { get; set; }
-        /// <summary> LDAP Configuration for the account. </summary>
-        public NetAppLdapConfigurationPatch LdapConfiguration { get; set; }
+        public MultiAdStatus? MultiAdStatus { get; }
     }
 }

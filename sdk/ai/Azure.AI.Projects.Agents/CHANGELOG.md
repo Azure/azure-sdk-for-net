@@ -3,6 +3,7 @@
 ## 2.1.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added `FabricIQPreviewTool`.
 
 ### Breaking Changes
 
