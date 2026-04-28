@@ -28,6 +28,7 @@ namespace Azure.Storage.Files.Shares.Models
             FileItems = fileItems.ToList();
             SymLinkItems = new ChangeTrackingList<SymLinkItem>();
             BlockDeviceItems = new ChangeTrackingList<BlockDeviceItem>();
+            CharDeviceItems = new ChangeTrackingList<CharDeviceItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
@@ -35,12 +36,14 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="fileItems"></param>
         /// <param name="symLinkItems"></param>
         /// <param name="blockDeviceItems"></param>
-        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems, IReadOnlyList<SymLinkItem> symLinkItems, IReadOnlyList<BlockDeviceItem> blockDeviceItems)
+        /// <param name="charDeviceItems"></param>
+        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems, IReadOnlyList<SymLinkItem> symLinkItems, IReadOnlyList<BlockDeviceItem> blockDeviceItems, IReadOnlyList<CharDeviceItem> charDeviceItems)
         {
             DirectoryItems = directoryItems;
             FileItems = fileItems;
             SymLinkItems = symLinkItems;
             BlockDeviceItems = blockDeviceItems;
+            CharDeviceItems = charDeviceItems;
         }
 
         /// <summary> Gets the directory items. </summary>
@@ -51,5 +54,7 @@ namespace Azure.Storage.Files.Shares.Models
         public IReadOnlyList<SymLinkItem> SymLinkItems { get; }
         /// <summary> Gets the block device items. </summary>
         public IReadOnlyList<BlockDeviceItem> BlockDeviceItems { get; }
+        /// <summary> Gets the char device items. </summary>
+        public IReadOnlyList<CharDeviceItem> CharDeviceItems { get; }
     }
 }

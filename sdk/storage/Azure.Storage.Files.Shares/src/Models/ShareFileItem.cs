@@ -69,13 +69,13 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary>
         /// Gets the major device number for this item.
-        /// Only applicable to block devices in NFS shares.
+        /// Only applicable to block and character devices in NFS shares.
         /// </summary>
         public long? DeviceMajor { get; }
 
         /// <summary>
         /// Gets the minor device number for this item.
-        /// Only applicable to block devices in NFS shares.
+        /// Only applicable to block and character devices in NFS shares.
         /// </summary>
         public long? DeviceMinor { get; }
 
