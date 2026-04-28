@@ -6,7 +6,7 @@ This sample demonstrates how to enable recording of message content (prompts, co
 
 Pass `EnableContentRecording = true` through `VoiceLiveClientOptions` to capture message payloads for a specific client instance:
 
-```C# Snippet:VoiceLiveContentRecording
+```csharp
 // Option B: enable content recording per-client via VoiceLiveClientOptions.
 // To use option A instead, set OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
 // in the environment before starting the process (the env var is read once, lazily).

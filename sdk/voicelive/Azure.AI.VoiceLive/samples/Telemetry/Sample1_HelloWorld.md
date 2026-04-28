@@ -4,7 +4,7 @@ This sample shows the minimum code needed to enable OpenTelemetry tracing for an
 
 ## Enable tracing with minimal setup
 
-```C# Snippet:VoiceLiveTelemetryEnablement
+```csharp
 // Subscribe to the "Azure.AI.VoiceLive" ActivitySource.
 // Tracing activates automatically — no separate instrumentor is needed.
 using var tracerProvider = Sdk.CreateTracerProviderBuilder()

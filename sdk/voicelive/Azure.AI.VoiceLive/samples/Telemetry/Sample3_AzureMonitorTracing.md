@@ -6,7 +6,7 @@ This sample demonstrates how to export VoiceLive spans to Azure Monitor (Applica
 
 Supply your Application Insights connection string and replace the console exporter with `AddAzureMonitorTraceExporter`:
 
-```C# Snippet:VoiceLiveAzureMonitorTracing
+```csharp
 using var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("voicelive-sample"))
     .AddSource("Azure.AI.VoiceLive")

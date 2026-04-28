@@ -6,7 +6,7 @@ This sample demonstrates how to enable OpenTelemetry console tracing for the Azu
 
 Tracing activates automatically when you subscribe to the `"Azure.AI.VoiceLive"` ActivitySource with `AddSource(...)`. No separate instrumentation class is needed.
 
-```C# Snippet:VoiceLiveConsoleTracing
+```csharp
 using var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("voicelive-sample"))
     .AddSource("Azure.AI.VoiceLive")
@@ -33,6 +33,6 @@ dotnet add package OpenTelemetry.Exporter.Console
 
 ## See also
 
-- [Sample2_AzureMonitorTracing.md](Sample2_AzureMonitorTracing.md) — send spans to Azure Monitor
-- [Sample3_CustomAttributes.md](Sample3_CustomAttributes.md) — attach custom tags to every span
-- [Sample4_ContentRecording.md](Sample4_ContentRecording.md) — capture message payloads in spans
+- [Sample3_AzureMonitorTracing.md](Sample3_AzureMonitorTracing.md) — send spans to Azure Monitor
+- [Sample4_CustomAttributes.md](Sample4_CustomAttributes.md) — attach custom tags to every span
+- [Sample5_ContentRecording.md](Sample5_ContentRecording.md) — capture message payloads in spans
