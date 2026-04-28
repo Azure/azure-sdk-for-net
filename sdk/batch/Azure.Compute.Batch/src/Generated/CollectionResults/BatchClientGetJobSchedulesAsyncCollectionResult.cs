@@ -20,7 +20,7 @@ namespace Azure.Compute.Batch
         private readonly BatchClient _client;
         private readonly TimeSpan? _timeout;
         private readonly DateTimeOffset? _requestDate;
-        private readonly int? _maxresults;
+        private readonly int? _maxResults;
         private readonly string _filter;
         private readonly IEnumerable<string> _select;
         private readonly IEnumerable<string> _expand;
@@ -35,7 +35,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -47,12 +47,12 @@ namespace Azure.Compute.Batch
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetJobSchedulesAsyncCollectionResult(BatchClient client, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetJobSchedulesAsyncCollectionResult(BatchClient client, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _timeout = timeout;
             _requestDate = requestDate;
-            _maxresults = maxresults;
+            _maxResults = maxResults;
             _filter = filter;
             _select = @select;
             _expand = expand;
@@ -94,7 +94,7 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetJobSchedulesRequest(nextLink, _timeout, _requestDate, _maxresults, _filter, _select, _expand, _context) : _client.CreateGetJobSchedulesRequest(_timeout, _requestDate, _maxresults, _filter, _select, _expand, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetJobSchedulesRequest(nextLink, _timeout, _requestDate, _maxResults, _filter, _select, _expand, _context) : _client.CreateGetJobSchedulesRequest(_timeout, _requestDate, _maxResults, _filter, _select, _expand, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

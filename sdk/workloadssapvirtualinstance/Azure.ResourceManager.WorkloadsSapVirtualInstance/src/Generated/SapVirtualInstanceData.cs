@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         public SapVirtualInstanceIdentity Identity { get; set; }
 
         /// <summary> Defines the environment type - Production/Non Production. </summary>
-        public SapEnvironmentType Environment
+        public SapEnvironmentType? Environment
         {
             get
             {
@@ -57,16 +57,19 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new SapVirtualInstanceProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new SapVirtualInstanceProperties();
+                    }
+                    Properties.Environment = value.Value;
                 }
-                Properties.Environment = value;
             }
         }
 
         /// <summary> Defines the SAP Product type. </summary>
-        public SapProductType SapProduct
+        public SapProductType? SapProduct
         {
             get
             {
@@ -74,11 +77,14 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new SapVirtualInstanceProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new SapVirtualInstanceProperties();
+                    }
+                    Properties.SapProduct = value.Value;
                 }
-                Properties.SapProduct = value;
             }
         }
 
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     Properties = new SapVirtualInstanceProperties();
                 }
-                Properties.ManagedResourcesNetworkAccessType = value.Value;
+                Properties.ManagedResourcesNetworkAccessType = value;
             }
         }
 

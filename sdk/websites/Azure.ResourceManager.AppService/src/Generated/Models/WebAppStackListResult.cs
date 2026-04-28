@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of Web app Stacks. </summary>
+    /// <summary>
+    /// Collection of Web app Stacks
+    /// Serialized Name: WebAppStackCollection
+    /// </summary>
     internal partial class WebAppStackListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WebAppStackListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// The WebAppStack items on this page
+        /// Serialized Name: WebAppStackCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WebAppStackListResult(IEnumerable<WebAppStack> value)
         {
@@ -57,10 +63,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppStackListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// The WebAppStack items on this page
+        /// Serialized Name: WebAppStackCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: WebAppStackCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppStackListResult(IReadOnlyList<WebAppStack> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebAppStackListResult(IReadOnlyList<WebAppStack> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// The WebAppStack items on this page
+        /// Serialized Name: WebAppStackCollection.value
+        /// </summary>
         public IReadOnlyList<WebAppStack> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: WebAppStackCollection.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

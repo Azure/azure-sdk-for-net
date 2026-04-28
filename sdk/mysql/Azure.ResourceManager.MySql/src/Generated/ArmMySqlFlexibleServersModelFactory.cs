@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                startIPAddress is null && endIPAddress is null ? default : new FirewallRuleProperties(startIPAddress, endIPAddress, null));
+                new FirewallRuleProperties(startIPAddress, endIPAddress, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                maintenanceType is null && maintenanceState is null && maintenanceStartOn is null && maintenanceEndOn is null && maintenanceExecutionStartOn is null && maintenanceExecutionEndOn is null && maintenanceAvailableScheduleMinOn is null && maintenanceAvailableScheduleMaxOn is null && maintenanceTitle is null && maintenanceDescription is null && provisioningState is null ? default : new MaintenanceProperties(
+                new MaintenanceProperties(
                     maintenanceType,
                     maintenanceState,
                     maintenanceStartOn,

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> MSDeploy log. </summary>
+    /// <summary>
+    /// MSDeploy log
+    /// Serialized Name: MSDeployLog
+    /// </summary>
     public partial class WebAppMSDeployLog : ResourceData
     {
         /// <summary>
@@ -58,8 +61,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="entries"> List of log entry messages. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="entries">
+        /// List of log entry messages
+        /// Serialized Name: MSDeployLog.properties.entries
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppMSDeployLog(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<WebAppMSDeployLogEntry> entries, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -68,10 +77,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of log entry messages. </summary>
+        /// <summary>
+        /// List of log entry messages
+        /// Serialized Name: MSDeployLog.properties.entries
+        /// </summary>
         [WirePath("properties.entries")]
         public IReadOnlyList<WebAppMSDeployLogEntry> Entries { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

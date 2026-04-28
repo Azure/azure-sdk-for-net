@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct RedisPublicNetworkAccess : IEquatable<RedisPublicNetworkAccess>
     {
         private readonly string _value;
+        /// <summary> Public internet access to the cache, via its public IP address, is enabled. Connections may use any network path. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Public internet access to the cache, via its public IP address, is disabled. Connections must use be made via private endpoints. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="RedisPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisPublicNetworkAccess(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Public internet access to the cache, via its public IP address, is enabled. Connections may use any network path. </summary>
         public static RedisPublicNetworkAccess Enabled { get; } = new RedisPublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Public internet access to the cache, via its public IP address, is disabled. Connections must use be made via private endpoints. </summary>
         public static RedisPublicNetworkAccess Disabled { get; } = new RedisPublicNetworkAccess(DisabledValue);
+
         /// <summary> Determines if two <see cref="RedisPublicNetworkAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisPublicNetworkAccess left, RedisPublicNetworkAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisPublicNetworkAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisPublicNetworkAccess left, RedisPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisPublicNetworkAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisPublicNetworkAccess(string value) => new RedisPublicNetworkAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisPublicNetworkAccess?(string value) => value == null ? null : new RedisPublicNetworkAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisPublicNetworkAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

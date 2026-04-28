@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 tags,
                 location,
                 identity,
-                provisioningState is null && steps is null && selectors is null ? default : new ExperimentProperties(provisioningState, (steps ?? new ChangeTrackingList<ChaosExperimentStep>()).ToList(), (selectors ?? new ChangeTrackingList<ChaosTargetSelector>()).ToList(), null));
+                new ExperimentProperties(provisioningState, (steps ?? new ChangeTrackingList<ChaosExperimentStep>()).ToList(), (selectors ?? new ChangeTrackingList<ChaosTargetSelector>()).ToList(), null));
         }
 
         /// <summary> Model that represents a step in the Experiment resource. </summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && description is null && propertiesSchema is null && resourceTypes is null ? default : new TargetTypeProperties(displayName, description, propertiesSchema, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), null));
+                new TargetTypeProperties(displayName, description, propertiesSchema, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionDetails"/>. </summary>
