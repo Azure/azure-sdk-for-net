@@ -362,24 +362,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </summary>
-        [WirePath("properties.enableNamespaceResources")]
-        public bool? IsNamespaceResourcesEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsNamespaceResourcesEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.IsNamespaceResourcesEnabled = value;
-            }
-        }
-
         /// <summary> The network configuration profile. </summary>
         [WirePath("properties.networkProfile")]
         public ContainerServiceNetworkProfile NetworkProfile
@@ -724,13 +706,13 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> Health monitor profile for the managed cluster. </summary>
-        [WirePath("properties.healthMonitorProfile")]
-        public ManagedClusterHealthMonitorProfile HealthMonitorProfile
+        /// <summary> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </summary>
+        [WirePath("properties.hostedSystemProfile")]
+        public ManagedClusterHostedSystemProfile HostedSystemProfile
         {
             get
             {
-                return Properties is null ? default : Properties.HealthMonitorProfile;
+                return Properties is null ? default : Properties.HostedSystemProfile;
             }
             set
             {
@@ -738,7 +720,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.HealthMonitorProfile = value;
+                Properties.HostedSystemProfile = value;
             }
         }
 
@@ -749,24 +731,6 @@ namespace Azure.ResourceManager.ContainerService
             get
             {
                 return Properties is null ? default : Properties.PowerStateCode;
-            }
-        }
-
-        /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
-        [WirePath("properties.creationData.sourceResourceId")]
-        public ResourceIdentifier CreationDataSourceResourceId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CreationDataSourceResourceId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.CreationDataSourceResourceId = value;
             }
         }
 
@@ -839,42 +803,6 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.IsAIToolchainOperatorEnabled = value;
-            }
-        }
-
-        /// <summary> The config customization mode for this scheduler instance. </summary>
-        [WirePath("properties.schedulerProfile.schedulerInstanceProfiles.upstream.schedulerConfigMode")]
-        public SchedulerConfigMode? UpstreamSchedulerConfigMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpstreamSchedulerConfigMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.UpstreamSchedulerConfigMode = value;
-            }
-        }
-
-        /// <summary> Whether to enable hosted system addons for the cluster. </summary>
-        [WirePath("properties.hostedSystemProfile.enabled")]
-        public bool? IsHostedSystemAddonsEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsHostedSystemAddonsEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.IsHostedSystemAddonsEnabled = value;
             }
         }
 
