@@ -1659,11 +1659,11 @@
         {
           "name": "Azure.ClientGenerator.Core.@clientOption",
           "arguments": {
-            "name": "resource-name-constraint",
+            "name": "resource-rbac-roles",
             "value": {
-              "minLength": 5,
-              "maxLength": 50,
-              "pattern": "^[a-zA-Z0-9_-]+$"
+              "ConfigStoreContributor": "00000000-0000-0000-0000-000000000001",
+              "ConfigStoreReader": "00000000-0000-0000-0000-000000000002",
+              "ConfigStoreDataOperator": "00000000-0000-0000-0000-000000000003"
             },
             "scope": "csharp"
           }
@@ -4377,9 +4377,7 @@
                 },
                 "resourceName": "ConfigurationStore",
                 "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9_-]+$",
-                  "minLength": 5,
-                  "maxLength": 50
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
                 "apiVersions": [
                   "2024-01-01-preview",
