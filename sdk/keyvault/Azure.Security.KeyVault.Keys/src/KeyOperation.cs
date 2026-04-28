@@ -35,15 +35,24 @@ namespace Azure.Security.KeyVault.Keys
         public static KeyOperation Decrypt { get; } = new KeyOperation("decrypt");
 
         /// <summary>
-        /// Gets a value that indicates the key can be used to sign with the <see cref="CryptographyClient.SignAsync"/> or <see cref="CryptographyClient.Sign"/> methods.
+        /// Gets a value that indicates the key can be used to sign with the
+        /// <see cref="CryptographyClient.SignAsync(SignatureAlgorithm, byte[], CancellationToken)"/> or
+        /// <see cref="CryptographyClient.Sign(SignatureAlgorithm, byte[], CancellationToken)"/> methods.
+        /// For Algorithm Key Pair (AKP) keys, such as ML-DSA, the algorithm is determined by the key itself; use the
+        /// <see cref="CryptographyClient.SignAsync(byte[], CancellationToken)"/> or
+        /// <see cref="CryptographyClient.Sign(byte[], CancellationToken)"/> overloads instead.
         /// </summary>
         public static KeyOperation Sign { get; } = new KeyOperation("sign");
 
         /// <summary>
-        /// Gets a value that indicates the key can be used to verify with the <see cref="CryptographyClient.VerifyAsync"/> or <see cref="CryptographyClient.Verify"/> methods.
+        /// Gets a value that indicates the key can be used to verify with the
+        /// <see cref="CryptographyClient.VerifyAsync(SignatureAlgorithm, byte[], byte[], CancellationToken)"/> or
+        /// <see cref="CryptographyClient.Verify(SignatureAlgorithm, byte[], byte[], CancellationToken)"/> methods.
+        /// For Algorithm Key Pair (AKP) keys, such as ML-DSA, the algorithm is determined by the key itself; use the
+        /// <see cref="CryptographyClient.VerifyAsync(byte[], byte[], CancellationToken)"/> or
+        /// <see cref="CryptographyClient.Verify(byte[], byte[], CancellationToken)"/> overloads instead.
         /// </summary>
         public static KeyOperation Verify { get; } = new KeyOperation("verify");
-
         /// <summary>
         /// Gets a value that indicates the key can be used to wrap another key with the <see cref="CryptographyClient.WrapKeyAsync"/> or <see cref="CryptographyClient.WrapKey"/> methods.
         /// </summary>
