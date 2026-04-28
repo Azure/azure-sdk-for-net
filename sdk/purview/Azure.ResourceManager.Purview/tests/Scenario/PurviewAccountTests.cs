@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
 
             // Exist
             var flag = await _purviewAccountCollection.ExistsAsync(purviewAccountName);
-            Assert.That(flag, Is.True);
+            Assert.That(flag.Value, Is.True);
 
             // Get
             var getPurviewAccount = await _purviewAccountCollection.GetAsync(purviewAccountName);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
             // Delete
             await purviewAccount.DeleteAsync(WaitUntil.Completed);
             flag = await _purviewAccountCollection.ExistsAsync(purviewAccountName);
-            Assert.That(flag, Is.False);
+            Assert.That(flag.Value, Is.False);
         }
 
         // The current api-version 2022-09 does donot support use GetTagResource().CreateOrUpdate()
