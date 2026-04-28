@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.3 (2026-04-28)
 
 ### Features Added
 
@@ -13,9 +13,10 @@
 - Renamed the body parameter on `PrivateStoreCollectionInfoCollection.CreateOrUpdate`/`Update` (and their async counterparts) from `info` to `data` to align with the TypeSpec-based generator naming convention. Positional callers are unaffected; callers using the named argument `info:` must switch to `data:`.
 - Renamed the `eTag` parameter to `etag` on regenerated `ArmMarketplaceModelFactory` overloads to align with the TypeSpec-based generator naming convention. The original overloads with `eTag` are preserved as backward-compatibility shims emitted by the generator.
 
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.1.2 (2025-03-11)
 

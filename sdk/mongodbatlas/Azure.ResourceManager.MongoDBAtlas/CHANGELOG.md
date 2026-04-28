@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.1 (2026-04-28)
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.0.0 (2025-07-03)
 
@@ -27,7 +24,6 @@ This package is a GA version.
 To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-
 
 ## 1.0.0-beta.1 (2025-05-29)
 

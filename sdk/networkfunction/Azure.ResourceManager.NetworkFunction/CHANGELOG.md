@@ -1,14 +1,17 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0 (2026-04-28)
+
+This is the first stable release of this library.
 
 ### Features Added
 
 - Migrated from AutoRest/Swagger to TypeSpec-based generation.
 
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.0.0-beta.5 (2025-03-11)
 
