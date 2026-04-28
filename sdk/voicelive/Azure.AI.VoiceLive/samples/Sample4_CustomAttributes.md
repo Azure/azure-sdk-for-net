@@ -6,7 +6,7 @@ This sample demonstrates how to attach application-specific attributes to every 
 
 Create a class that derives from `BaseProcessor<Activity>` and override `OnStart` to set tags before the span is exported:
 
-```csharp
+```C# Snippet:VoiceLiveCustomAttributeProcessor
 private sealed class CustomAttributeProcessor : BaseProcessor<Activity>
 {
     public override void OnStart(Activity activity)
@@ -21,7 +21,7 @@ private sealed class CustomAttributeProcessor : BaseProcessor<Activity>
 
 Pass the processor to `AddProcessor` when building the `TracerProvider`:
 
-```csharp
+```C# Snippet:VoiceLiveCustomAttributes
 using var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("voicelive-sample"))
     .AddSource("Azure.AI.VoiceLive")

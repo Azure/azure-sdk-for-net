@@ -6,7 +6,7 @@ This sample demonstrates how to enable OpenTelemetry console tracing for the Azu
 
 Tracing activates automatically when you subscribe to the `"Azure.AI.VoiceLive"` ActivitySource with `AddSource(...)`. No separate instrumentation class is needed.
 
-```csharp
+```C# Snippet:VoiceLiveConsoleTracing
 using var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("voicelive-sample"))
     .AddSource("Azure.AI.VoiceLive")
