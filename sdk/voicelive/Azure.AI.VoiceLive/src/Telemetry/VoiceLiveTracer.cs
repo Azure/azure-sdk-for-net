@@ -558,7 +558,7 @@ namespace Azure.AI.VoiceLive.Telemetry
                 // Agent ID and thread ID are only present for agent sessions (Agent v2 / MCP).
                 if (session.TryGetProperty("agent", out var agent))
                 {
-                    if (agent.TryGetProperty("agent_id", out var agentId) && agentId.ValueKind == JsonValueKind.String)
+                    if (agent.TryGetProperty("id", out var agentId) && agentId.ValueKind == JsonValueKind.String)
                         connectActivity.SetTag(Keys.GenAiAgentId, agentId.GetString());
 
                     if (agent.TryGetProperty("thread_id", out var threadId) && threadId.ValueKind == JsonValueKind.String)
@@ -751,27 +751,6 @@ namespace Azure.AI.VoiceLive.Telemetry
             activity.AddEvent(new ActivityEvent(Keys.VoiceRateLimitsEventName, tags: tags));
         }
 
-        /// <summary>Enriches an activity with item ID / output index from item-bearing events.</summary>
-        public void EnrichWithItemIds(Activity activity, JsonElement root)
-        {
-            if (activity?.IsAllDataRequested != true)
-                return;
-
-            // item ID may appear as root.item.id or root.item_id
-            if (root.TryGetProperty("item", out var item))
-            {
-                if (item.TryGetProperty("id", out var itemId) && itemId.ValueKind == JsonValueKind.String)
-                    activity.SetTag(Keys.GenAiVoiceItemId, itemId.GetString());
-            }
-            else if (root.TryGetProperty("item_id", out var itemIdDirect) && itemIdDirect.ValueKind == JsonValueKind.String)
-            {
-                activity.SetTag(Keys.GenAiVoiceItemId, itemIdDirect.GetString());
-            }
-
-            if (root.TryGetProperty("output_index", out var outputIndex) && outputIndex.ValueKind == JsonValueKind.Number)
-                activity.SetTag(Keys.GenAiVoiceOutputIndex, outputIndex.GetInt32());
-        }
-
         private static readonly System.Collections.Generic.HashSet<string> s_itemBearingEvents =
             new System.Collections.Generic.HashSet<string>(System.StringComparer.Ordinal)
             {
@@ -779,9 +758,6 @@ namespace Azure.AI.VoiceLive.Telemetry
                 "conversation.item.retrieved",
                 "response.output_item.added",
                 "response.output_item.done",
-                "response.content_part.added",
-                "response.content_part.done",
-                "response.text.delta",
             };
 
         /// <summary>
@@ -820,11 +796,16 @@ namespace Azure.AI.VoiceLive.Telemetry
                 }
             }
 
-            // Nested item fields — only for item-bearing events
+            // Top-level item_id — generic extraction for all events that carry it
+            if (root.TryGetProperty("item_id", out var topItemId) && topItemId.ValueKind == JsonValueKind.String)
+                activity.SetTag(Keys.GenAiVoiceItemId, topItemId.GetString());
+
+            // Nested item fields — only for item-bearing events (forward-compat guard per spec)
             if (s_itemBearingEvents.Contains(eventType))
             {
                 if (root.TryGetProperty("item", out var item))
                 {
+                    // Nested item.id overrides any top-level item_id set above
                     if (item.TryGetProperty("id", out var itemId) && itemId.ValueKind == JsonValueKind.String)
                         activity.SetTag(Keys.GenAiVoiceItemId, itemId.GetString());
 
@@ -842,10 +823,6 @@ namespace Azure.AI.VoiceLive.Telemetry
 
                     if (item.TryGetProperty("approve", out var approve))
                         activity.SetTag(Keys.GenAiVoiceMcpApprove, approve.ValueKind == JsonValueKind.True);
-                }
-                else if (root.TryGetProperty("item_id", out var itemIdDirect) && itemIdDirect.ValueKind == JsonValueKind.String)
-                {
-                    activity.SetTag(Keys.GenAiVoiceItemId, itemIdDirect.GetString());
                 }
             }
         }
