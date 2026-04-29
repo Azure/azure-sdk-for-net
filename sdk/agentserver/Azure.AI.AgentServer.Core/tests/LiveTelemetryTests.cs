@@ -4,42 +4,39 @@
 #if NET8_0_OR_GREATER
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Invocations;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Logs;
 using Azure.Monitor.Query.Logs.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests
 {
     /// <summary>
-    /// Live E2E tests that boot a real <see cref="AgentHost"/> with the Core
-    /// telemetry pipeline (<c>AddAgentHostTelemetry</c>), send HTTP requests,
-    /// and query Application Insights via Log Analytics to verify that spans
-    /// are exported with correct parent-child hierarchy.
-    /// </summary>
-    /// <remarks>
-    /// These tests require:
-    /// - APPLICATIONINSIGHTS_CONNECTION_STRING (for trace export via Microsoft OpenTelemetry distro)
+    /// Live E2E test that runs a real Invocations server — identical to the
+    /// HelloWorld BYO sample — sends a real HTTP request, stops the server,
+    /// then queries Application Insights to verify traces arrived with
+    /// correct parent-child hierarchy.
+    ///
+    /// Required environment variables (provisioned by test-resources.bicep):
+    /// - APPLICATIONINSIGHTS_CONNECTION_STRING
     /// - WORKSPACE_ID (Log Analytics workspace for querying)
     /// - Azure credentials (DefaultAzureCredential via test framework)
     ///
-    /// Provisioned by test-resources.bicep. Excluded from normal CI via [Category("Live")].
-    /// </remarks>
+    /// Excluded from normal CI via [Category("Live")].
+    /// </summary>
     [Category("Live")]
     public class LiveTelemetryTests : RecordedTestBase<AgentServerTestEnvironment>
     {
-        // ActivitySource used inside test handlers to simulate framework child spans
-        private static readonly ActivitySource s_frameworkSource = new("Experimental.Microsoft.Agents.AI.Test");
-
         // App Insights ingestion can take 2-5 minutes
         private static readonly TimeSpan s_maxIngestionWait = TimeSpan.FromMinutes(6);
         private static readonly TimeSpan s_pollInterval = TimeSpan.FromSeconds(30);
@@ -49,307 +46,174 @@ namespace Azure.AI.AgentServer.Core.Tests
         }
 
         /// <summary>
-        /// Boots an <see cref="AgentHost"/> with the real telemetry pipeline, sends an
-        /// HTTP request whose handler creates a child span (simulating framework work),
-        /// and verifies the ASP.NET Core request span -> framework child span hierarchy
-        /// appears in Application Insights.
+        /// Runs InvocationsServer.Run exactly like the HelloWorld BYO sample,
+        /// sends a real HTTP request, then verifies traces in App Insights.
         /// </summary>
         [RecordedTest]
-        public async Task TracesShowCorrectParentChildHierarchy()
+        public async Task TracesAppearInAppInsightsWithCorrectHierarchy()
         {
             string uniqueMarker = Guid.NewGuid().ToString("N");
-            string? capturedTraceId = null;
+            TelemetryTestHandler.UniqueMarker = uniqueMarker;
+            TelemetryTestHandler.CapturedTraceId = null;
 
-            // Boot AgentHost with APPLICATIONINSIGHTS_CONNECTION_STRING set so the
-            // Microsoft OpenTelemetry distro exports to the real App Insights resource.
-            var builder = AgentHost.CreateBuilder();
-            builder.WebApplicationBuilder.WebHost.UseTestServer();
-
-            // Inject the connection string so the distro auto-exports to App Insights
-            builder.WebApplicationBuilder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
-            {
-                ["APPLICATIONINSIGHTS_CONNECTION_STRING"] = TestEnvironment.ApplicationInsightsConnectionString
-            });
-
-            // Register a custom ActivitySource so we can create framework child spans
-            builder.ConfigureTracing(tracing =>
-            {
-                tracing.AddSource(s_frameworkSource.Name);
-            });
-
-            // Register a protocol endpoint that creates a child span
-            builder.RegisterProtocol("TestProtocol", endpoints =>
-            {
-                endpoints.MapGet("/test-trace", async (HttpContext ctx) =>
-                {
-                    // Capture the ASP.NET Core trace ID (parent span is auto-created by ASP.NET)
-                    capturedTraceId = Activity.Current?.TraceId.ToHexString();
-                    Activity.Current?.SetTag("test.marker", uniqueMarker);
-
-                    // Create child span simulating agent framework work
-                    using var frameworkSpan = s_frameworkSource.StartActivity(
-                        "AgentFramework.ExecuteTool",
-                        ActivityKind.Internal,
-                        Activity.Current!.Context);
-
-                    frameworkSpan?.SetTag("test.marker", uniqueMarker);
-                    frameworkSpan?.SetTag("gen_ai.operation.name", "execute_tool");
-
-                    await Task.Delay(50); // Simulate work
-                    return Results.Ok("done");
-                });
-            });
-
-            var app = builder.Build();
-            await app.App.StartAsync();
+            // ── Environment setup (same as a real deployed container) ──
+            Environment.SetEnvironmentVariable("PORT", "8088");
+            Environment.SetEnvironmentVariable(
+                "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                TestEnvironment.ApplicationInsightsConnectionString);
 
             try
             {
-                // Send request - this triggers the ASP.NET Core span + our child span
-                var client = app.App.GetTestClient();
-                var response = await client.GetAsync("/test-trace");
-                Assert.That(response.IsSuccessStatusCode, Is.True, "Test endpoint should return 200");
-                Assert.That(capturedTraceId, Is.Not.Null, "Should have captured a trace ID");
+                // Start the server on a background thread — exactly as a user would
+                // run `dotnet run` which calls InvocationsServer.Run<T>().
+                // InvocationsServer.Run blocks forever, so we run it on a thread.
+                var serverThread = new Thread(() =>
+                {
+                    InvocationsServer.Run<TelemetryTestHandler>();
+                })
+                {
+                    IsBackground = true,
+                    Name = "InvocationsServer"
+                };
+                serverThread.Start();
+
+                // Wait for server to start listening on port 8088
+                await Task.Delay(TimeSpan.FromSeconds(5));
+
+                // ── Send a real HTTP request ──
+                // curl -X POST http://localhost:8088/invocations \
+                //   -H "Content-Type: application/json" \
+                //   -d '{"message": "Hello from test"}'
+                using var httpClient = new HttpClient();
+                var requestBody = new StringContent(
+                    JsonSerializer.Serialize(new { message = "Hello from test" }),
+                    Encoding.UTF8,
+                    "application/json");
+
+                var response = await httpClient.PostAsync(
+                    "http://localhost:8088/invocations", requestBody);
+
+                Assert.That((int)response.StatusCode, Is.LessThan(500),
+                    "Invocation endpoint should not return a server error");
+                Assert.That(TelemetryTestHandler.CapturedTraceId, Is.Not.Null,
+                    "Handler should have captured a trace ID");
             }
             finally
             {
-                // Stop the host to flush the telemetry pipeline
-                await app.App.StopAsync();
+                Environment.SetEnvironmentVariable("PORT", null);
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
             }
 
-            // Wait briefly for flush to complete before querying
+            // Allow exporter flush
             await Task.Delay(TimeSpan.FromSeconds(5));
 
-            // Query App Insights to verify the spans arrived with correct hierarchy
-            var logsClient = new LogsQueryClient(
-                TestEnvironment.LogsEndpoint,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new LogsQueryClientOptions()));
+            // ── Query Application Insights ──
+            var logsClient = new LogsQueryClient(TestEnvironment.Credential);
+            var traceId = TelemetryTestHandler.CapturedTraceId!;
 
             string kql = $@"
                 union requests, dependencies
-                | where operation_Id == '{capturedTraceId}'
-                | where customDimensions['test.marker'] == '{uniqueMarker}'
-                | project operation_Id, id, operation_ParentId, name, timestamp
-                | order by timestamp asc";
+                | where operation_Id == '{traceId}'
+                | project name, id, operation_ParentId, customDimensions
+                | order by name asc";
 
-            LogsQueryResult? queryResult = null;
-            var stopwatch = Stopwatch.StartNew();
-            bool dataFound = false;
+            var deadline = DateTimeOffset.UtcNow + s_maxIngestionWait;
 
-            while (stopwatch.Elapsed < s_maxIngestionWait)
+            while (DateTimeOffset.UtcNow < deadline)
             {
-                try
-                {
-                    var queryResponse = await logsClient.QueryWorkspaceAsync(
-                        TestEnvironment.WorkspaceId,
-                        kql,
-                        new LogsQueryTimeRange(TimeSpan.FromMinutes(30)),
-                        new LogsQueryOptions { AllowPartialErrors = true });
-
-                    queryResult = queryResponse.Value;
-
-                    if (queryResult.Table.Rows.Count >= 2)
-                    {
-                        dataFound = true;
-                        break;
-                    }
-                }
-                catch (RequestFailedException)
-                {
-                    // Transient query failures, retry
-                }
-
                 await Task.Delay(s_pollInterval);
+
+                var batch = new LogsBatchQuery();
+                var queryId = batch.AddWorkspaceQuery(
+                    TestEnvironment.WorkspaceId,
+                    kql,
+                    new LogsQueryTimeRange(TimeSpan.FromMinutes(30)));
+
+                var batchResult = await logsClient.QueryBatchAsync(batch);
+                var table = batchResult.Value.GetResult(queryId);
+
+                var logsTable = table.Table;
+                if (logsTable.Rows.Count >= 2)
+                {
+                    var rows = logsTable.Rows;
+                    var columns = logsTable.Columns;
+
+                    int nameIdx = columns.ToList().FindIndex(c => c.Name == "name");
+                    int idIdx = columns.ToList().FindIndex(c => c.Name == "id");
+                    int parentIdx = columns.ToList().FindIndex(c => c.Name == "operation_ParentId");
+
+                    // ASP.NET Core request span (POST /invocations)
+                    var requestRow = rows.FirstOrDefault(r =>
+                        r[nameIdx]?.ToString()?.Contains("/invocations") == true ||
+                        r[nameIdx]?.ToString()?.StartsWith("POST") == true);
+
+                    Assert.That(requestRow, Is.Not.Null,
+                        "POST /invocations request span not found in App Insights");
+
+                    // Handler child span
+                    var handlerRow = rows.FirstOrDefault(r =>
+                        r[nameIdx]?.ToString() == "HandleInvocation");
+
+                    if (handlerRow != null)
+                    {
+                        Assert.That(handlerRow[parentIdx]?.ToString(),
+                            Is.EqualTo(requestRow![idIdx]?.ToString()),
+                            "Handler span should be child of the request span");
+                    }
+
+                    return;
+                }
             }
 
-            Assert.That(dataFound, Is.True,
-                $"Expected at least 2 trace entries within {s_maxIngestionWait.TotalMinutes} minutes. TraceId: {capturedTraceId}");
-
-            var rows = queryResult!.Table.Rows;
-            var columns = queryResult.Table.Columns;
-
-            int idIndex = GetColumnIndex(columns, "id");
-            int parentIdIndex = GetColumnIndex(columns, "operation_ParentId");
-            int nameIndex = GetColumnIndex(columns, "name");
-
-            // Find the ASP.NET Core request span (GET /test-trace)
-            var requestRow = rows.FirstOrDefault(r =>
-                r[nameIndex]?.ToString()?.Contains("/test-trace") == true ||
-                r[nameIndex]?.ToString()?.StartsWith("GET") == true);
-            Assert.That(requestRow, Is.Not.Null,
-                "ASP.NET Core request span for '/test-trace' not found in App Insights");
-
-            // Find child span (AgentFramework.ExecuteTool)
-            var childRow = rows.FirstOrDefault(r =>
-                r[nameIndex]?.ToString() == "AgentFramework.ExecuteTool");
-            Assert.That(childRow, Is.Not.Null,
-                "Child span 'AgentFramework.ExecuteTool' not found in App Insights");
-
-            // Verify parent-child relationship: child's parentId == request span's id
-            string actualChildParentId = childRow![parentIdIndex]?.ToString() ?? "";
-            string actualParentId = requestRow![idIndex]?.ToString() ?? "";
-
-            Assert.That(actualChildParentId, Is.EqualTo(actualParentId),
-                "Framework child span's operation_ParentId should equal ASP.NET request span's id");
-
-            // Verify they share the same operation_Id (trace ID)
-            int operationIdIndex = GetColumnIndex(columns, "operation_Id");
-            Assert.That(childRow[operationIdIndex]?.ToString(),
-                Is.EqualTo(requestRow[operationIdIndex]?.ToString()),
-                "Both spans should share the same operation_Id (trace ID)");
+            Assert.Fail($"Traces for operation_Id '{traceId}' did not appear in " +
+                        $"App Insights within {s_maxIngestionWait.TotalMinutes} minutes.");
         }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // Test handler — same structure as HelloWorldHandler from the sample
+        // ═══════════════════════════════════════════════════════════════════════
 
         /// <summary>
-        /// Boots an <see cref="AgentHost"/>, sends an HTTP request whose handler creates
-        /// a 3-level span hierarchy (ASP.NET -> Framework -> Tool), and verifies all three
-        /// levels appear correctly in Application Insights.
+        /// Minimal handler that captures the trace ID and returns a simple SSE response.
+        /// Same structure as HelloWorldHandler but without a real model call.
         /// </summary>
-        [RecordedTest]
-        public async Task MultiLevelHierarchyPreservedInAppInsights()
+        public sealed class TelemetryTestHandler(ILogger<TelemetryTestHandler> logger) : InvocationHandler
         {
-            string uniqueMarker = Guid.NewGuid().ToString("N");
-            string? capturedTraceId = null;
+            internal static string? UniqueMarker { get; set; }
+            internal static string? CapturedTraceId { get; set; }
 
-            var builder = AgentHost.CreateBuilder();
-            builder.WebApplicationBuilder.WebHost.UseTestServer();
+            private static readonly ActivitySource s_activitySource = new("AgentServer.Test.Handler");
 
-            builder.WebApplicationBuilder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+            public override async Task HandleAsync(
+                HttpRequest request,
+                HttpResponse response,
+                InvocationContext context,
+                CancellationToken cancellationToken)
             {
-                ["APPLICATIONINSIGHTS_CONNECTION_STRING"] = TestEnvironment.ApplicationInsightsConnectionString
-            });
+                CapturedTraceId = Activity.Current?.TraceId.ToString();
 
-            builder.ConfigureTracing(tracing =>
-            {
-                tracing.AddSource(s_frameworkSource.Name);
-            });
+                logger.LogInformation(
+                    "Processing invocation {InvocationId} (session {SessionId}), marker={Marker}",
+                    context.InvocationId, context.SessionId, UniqueMarker);
 
-            builder.RegisterProtocol("TestProtocol", endpoints =>
-            {
-                endpoints.MapGet("/test-multi-level", async (HttpContext ctx) =>
+                // Simulate agent work — child span like a model call
+                using var activity = s_activitySource.StartActivity("HandleInvocation");
+                activity?.SetTag("test.marker", UniqueMarker);
+
+                // Return SSE response — same format as HelloWorldHandler
+                response.ContentType = "text/event-stream";
+                response.Headers.CacheControl = "no-cache";
+
+                var doneEvent = JsonSerializer.Serialize(new
                 {
-                    capturedTraceId = Activity.Current?.TraceId.ToHexString();
-                    Activity.Current?.SetTag("test.marker", uniqueMarker);
-
-                    // Level 2: Framework span (child of ASP.NET request span)
-                    using var frameworkSpan = s_frameworkSource.StartActivity(
-                        "Framework.Process",
-                        ActivityKind.Internal,
-                        Activity.Current!.Context);
-
-                    frameworkSpan?.SetTag("test.marker", uniqueMarker);
-
-                    // Level 3: Tool span (child of framework span)
-                    using var toolSpan = s_frameworkSource.StartActivity(
-                        "Tool.Execute",
-                        ActivityKind.Internal,
-                        frameworkSpan!.Context);
-
-                    toolSpan?.SetTag("test.marker", uniqueMarker);
-
-                    await Task.Delay(50); // Simulate work
-                    return Results.Ok("done");
+                    type = "done",
+                    invocation_id = context.InvocationId,
+                    session_id = context.SessionId,
+                    full_text = "Hello from test handler!",
                 });
-            });
-
-            var app = builder.Build();
-            await app.App.StartAsync();
-
-            try
-            {
-                var client = app.App.GetTestClient();
-                var response = await client.GetAsync("/test-multi-level");
-                Assert.That(response.IsSuccessStatusCode, Is.True);
-                Assert.That(capturedTraceId, Is.Not.Null);
+                await response.WriteAsync($"data: {doneEvent}\n\n", cancellationToken);
+                await response.Body.FlushAsync(cancellationToken);
             }
-            finally
-            {
-                await app.App.StopAsync();
-            }
-
-            await Task.Delay(TimeSpan.FromSeconds(5));
-
-            // Query and verify 3-level hierarchy
-            var logsClient = new LogsQueryClient(
-                TestEnvironment.LogsEndpoint,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new LogsQueryClientOptions()));
-
-            string kql = $@"
-                union requests, dependencies
-                | where operation_Id == '{capturedTraceId}'
-                | where customDimensions['test.marker'] == '{uniqueMarker}'
-                | project operation_Id, id, operation_ParentId, name, timestamp
-                | order by timestamp asc";
-
-            LogsQueryResult? queryResult = null;
-            var stopwatch = Stopwatch.StartNew();
-            bool dataFound = false;
-
-            while (stopwatch.Elapsed < s_maxIngestionWait)
-            {
-                try
-                {
-                    var queryResponse = await logsClient.QueryWorkspaceAsync(
-                        TestEnvironment.WorkspaceId,
-                        kql,
-                        new LogsQueryTimeRange(TimeSpan.FromMinutes(30)),
-                        new LogsQueryOptions { AllowPartialErrors = true });
-
-                    queryResult = queryResponse.Value;
-
-                    if (queryResult.Table.Rows.Count >= 3)
-                    {
-                        dataFound = true;
-                        break;
-                    }
-                }
-                catch (RequestFailedException)
-                {
-                    // Transient, retry
-                }
-
-                await Task.Delay(s_pollInterval);
-            }
-
-            Assert.That(dataFound, Is.True,
-                $"Expected 3 trace entries within {s_maxIngestionWait.TotalMinutes} minutes. TraceId: {capturedTraceId}");
-
-            var rows = queryResult!.Table.Rows;
-            var columns = queryResult.Table.Columns;
-
-            int idIndex = GetColumnIndex(columns, "id");
-            int parentIdIndex = GetColumnIndex(columns, "operation_ParentId");
-            int nameIndex = GetColumnIndex(columns, "name");
-
-            // Find all 3 levels
-            var requestRow = rows.FirstOrDefault(r =>
-                r[nameIndex]?.ToString()?.Contains("/test-multi-level") == true ||
-                r[nameIndex]?.ToString()?.StartsWith("GET") == true);
-            var frameworkRow = rows.First(r => r[nameIndex]?.ToString() == "Framework.Process");
-            var toolRow = rows.First(r => r[nameIndex]?.ToString() == "Tool.Execute");
-
-            Assert.That(requestRow, Is.Not.Null, "ASP.NET request span not found");
-
-            // Verify: Framework.Process parent = ASP.NET request span
-            Assert.That(frameworkRow[parentIdIndex]?.ToString(),
-                Is.EqualTo(requestRow![idIndex]?.ToString()),
-                "Framework span should be child of ASP.NET request span");
-
-            // Verify: Tool.Execute parent = Framework.Process
-            Assert.That(toolRow[parentIdIndex]?.ToString(),
-                Is.EqualTo(frameworkRow[idIndex]?.ToString()),
-                "Tool span should be child of Framework span");
-        }
-
-        private static int GetColumnIndex(IReadOnlyList<LogsTableColumn> columns, string name)
-        {
-            for (int i = 0; i < columns.Count; i++)
-            {
-                if (columns[i].Name == name)
-                    return i;
-            }
-            throw new InvalidOperationException($"Column '{name}' not found in query result");
         }
     }
 }
