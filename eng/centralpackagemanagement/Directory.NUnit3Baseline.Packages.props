@@ -50,7 +50,6 @@
         $(MSBuildProjectName) == 'Azure.Core.TestFramework.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests.Public' or
-        $(MSBuildProjectName) == 'Azure.Developer.DevCenter.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.LoadTesting.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.Playwright.MSTest.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.Playwright.NUnit.Tests' or
@@ -163,7 +162,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.Dell.Storage.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DependencyMap.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DesktopVirtualization.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.DevCenter.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DeviceProvisioningServices.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DeviceRegistry.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DeviceUpdate.Tests' or
