@@ -12,9 +12,9 @@ This package is automatically included in all Azure SDK libraries in this reposi
 
 | Rule | Description | Fix |
 |------|-------------|-----|
-| [**AZC0012**](docs/AZC0012.md) | Avoid single word type names | ✅ |
-| [**AZC0020**](docs/AZC0020.md) | Propagate CancellationToken to RequestContext | — |
-| [**AZC0101**](docs/AZC0101.md) | Do not use `ConfigureAwait(true)` | ✅ |
+| [**AZC0012**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/AZC0012.md) | Avoid single word type names | ✅ |
+| [**AZC0020**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/AZC0020.md) | Propagate CancellationToken to RequestContext | — |
+| [**AZC0101**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/AZC0101.md) | Do not use `ConfigureAwait(true)` | ✅ |
 
 ## For Library Authors
 
