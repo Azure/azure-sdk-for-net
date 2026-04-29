@@ -36,9 +36,6 @@
 - Deprecated `EntityRecognitionSkill.IncludeTypelessEntities` is now obsolete. Use V3 instead. 
 - Deprecated `SentimentSkill.SkillVersion.V1` is now obsolete. Use V3 instead. 
 
-### Bug Fixes
-- Renamed `KnowledgeBaseModelWebSummarizationActivityRecord.InputTokens` to `InputTokensCount` and `OutputTokens` to `OutputTokensCount` to align with the updated API spec.
-
 ## 11.8.0-beta.1 (2025-11-13)
 
 ### Features Added
