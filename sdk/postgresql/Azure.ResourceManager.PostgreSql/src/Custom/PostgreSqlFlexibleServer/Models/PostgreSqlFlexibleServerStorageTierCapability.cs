@@ -4,8 +4,6 @@
 #nullable disable
 
 using System.ComponentModel;
-using Azure.ResourceManager.PostgreSql.FlexibleServers;
-
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Represents capability of a storage tier. </summary>

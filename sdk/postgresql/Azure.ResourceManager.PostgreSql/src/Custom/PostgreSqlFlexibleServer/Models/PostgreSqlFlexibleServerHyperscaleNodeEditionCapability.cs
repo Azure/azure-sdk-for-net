@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql.FlexibleServers;
-
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Hyperscale node edition capabilities. </summary>

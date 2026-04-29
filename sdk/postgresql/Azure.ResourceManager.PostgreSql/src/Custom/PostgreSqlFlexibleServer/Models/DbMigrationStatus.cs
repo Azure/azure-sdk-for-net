@@ -4,8 +4,6 @@
 #nullable disable
 
 using System.ComponentModel;
-using Azure.ResourceManager.PostgreSql.FlexibleServers;
-
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Migration status of an individual database. </summary>

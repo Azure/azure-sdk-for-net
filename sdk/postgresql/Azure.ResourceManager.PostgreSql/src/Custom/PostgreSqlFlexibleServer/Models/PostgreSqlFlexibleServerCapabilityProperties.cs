@@ -5,8 +5,6 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.ResourceManager.PostgreSql.FlexibleServers;
-
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Capability for the PostgreSQL server. </summary>
