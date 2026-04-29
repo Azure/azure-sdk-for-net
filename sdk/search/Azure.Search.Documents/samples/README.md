@@ -19,3 +19,6 @@ description: Samples for the Azure.Search.Documents client library
 - Use your own Key Vault key to [encrypt your data source connections, skillsets, indexers, and index](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample06_EncryptedIndex.md).
 - Learn how to [index vector fields and perform vector search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
 - Learn how to [perform semantic search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
+- Learn how to [set up and retrieve from a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample10_KnowledgeBaseRetrieval.md) using agentic retrieval.
+- Learn how to perform [knowledge source CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample11_KnowledgeSourceOperations.md).
+- Learn how to perform [knowledge base CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample12_KnowledgeBaseOperations.md).

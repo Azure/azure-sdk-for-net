@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ContainerRegistryPackageSourceType : IEquatable<ContainerRegistryPackageSourceType>
     {
         private readonly string _value;
+        private const string RemoteValue = "remote";
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPackageSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerRegistryPackageSourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string RemoteValue = "remote";
-
-        /// <summary> remote. </summary>
+        /// <summary> Gets the Remote. </summary>
         public static ContainerRegistryPackageSourceType Remote { get; } = new ContainerRegistryPackageSourceType(RemoteValue);
+
         /// <summary> Determines if two <see cref="ContainerRegistryPackageSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryPackageSourceType left, ContainerRegistryPackageSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerRegistryPackageSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryPackageSourceType left, ContainerRegistryPackageSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryPackageSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerRegistryPackageSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerRegistryPackageSourceType(string value) => new ContainerRegistryPackageSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerRegistryPackageSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerRegistryPackageSourceType?(string value) => value == null ? null : new ContainerRegistryPackageSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryPackageSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerRegistryPackageSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The workflow provisioning state. </summary>
+    /// <summary>
+    /// The workflow provisioning state.
+    /// Serialized Name: WorkflowProvisioningState
+    /// </summary>
     public readonly partial struct WorkflowProvisioningState : IEquatable<WorkflowProvisioningState>
     {
         private readonly string _value;
@@ -45,49 +48,115 @@ namespace Azure.ResourceManager.AppService.Models
         private const string WaitingValue = "Waiting";
         private const string InProgressValue = "InProgress";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: WorkflowProvisioningState.NotSpecified
+        /// </summary>
         public static WorkflowProvisioningState NotSpecified { get; } = new WorkflowProvisioningState(NotSpecifiedValue);
-        /// <summary> Accepted. </summary>
+        /// <summary>
+        /// Accepted
+        /// Serialized Name: WorkflowProvisioningState.Accepted
+        /// </summary>
         public static WorkflowProvisioningState Accepted { get; } = new WorkflowProvisioningState(AcceptedValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: WorkflowProvisioningState.Running
+        /// </summary>
         public static WorkflowProvisioningState Running { get; } = new WorkflowProvisioningState(RunningValue);
-        /// <summary> Ready. </summary>
+        /// <summary>
+        /// Ready
+        /// Serialized Name: WorkflowProvisioningState.Ready
+        /// </summary>
         public static WorkflowProvisioningState Ready { get; } = new WorkflowProvisioningState(ReadyValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: WorkflowProvisioningState.Creating
+        /// </summary>
         public static WorkflowProvisioningState Creating { get; } = new WorkflowProvisioningState(CreatingValue);
-        /// <summary> Created. </summary>
+        /// <summary>
+        /// Created
+        /// Serialized Name: WorkflowProvisioningState.Created
+        /// </summary>
         public static WorkflowProvisioningState Created { get; } = new WorkflowProvisioningState(CreatedValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: WorkflowProvisioningState.Deleting
+        /// </summary>
         public static WorkflowProvisioningState Deleting { get; } = new WorkflowProvisioningState(DeletingValue);
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: WorkflowProvisioningState.Deleted
+        /// </summary>
         public static WorkflowProvisioningState Deleted { get; } = new WorkflowProvisioningState(DeletedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: WorkflowProvisioningState.Canceled
+        /// </summary>
         public static WorkflowProvisioningState Canceled { get; } = new WorkflowProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: WorkflowProvisioningState.Failed
+        /// </summary>
         public static WorkflowProvisioningState Failed { get; } = new WorkflowProvisioningState(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: WorkflowProvisioningState.Succeeded
+        /// </summary>
         public static WorkflowProvisioningState Succeeded { get; } = new WorkflowProvisioningState(SucceededValue);
-        /// <summary> Moving. </summary>
+        /// <summary>
+        /// Moving
+        /// Serialized Name: WorkflowProvisioningState.Moving
+        /// </summary>
         public static WorkflowProvisioningState Moving { get; } = new WorkflowProvisioningState(MovingValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: WorkflowProvisioningState.Updating
+        /// </summary>
         public static WorkflowProvisioningState Updating { get; } = new WorkflowProvisioningState(UpdatingValue);
-        /// <summary> Registering. </summary>
+        /// <summary>
+        /// Registering
+        /// Serialized Name: WorkflowProvisioningState.Registering
+        /// </summary>
         public static WorkflowProvisioningState Registering { get; } = new WorkflowProvisioningState(RegisteringValue);
-        /// <summary> Registered. </summary>
+        /// <summary>
+        /// Registered
+        /// Serialized Name: WorkflowProvisioningState.Registered
+        /// </summary>
         public static WorkflowProvisioningState Registered { get; } = new WorkflowProvisioningState(RegisteredValue);
-        /// <summary> Unregistering. </summary>
+        /// <summary>
+        /// Unregistering
+        /// Serialized Name: WorkflowProvisioningState.Unregistering
+        /// </summary>
         public static WorkflowProvisioningState Unregistering { get; } = new WorkflowProvisioningState(UnregisteringValue);
-        /// <summary> Unregistered. </summary>
+        /// <summary>
+        /// Unregistered
+        /// Serialized Name: WorkflowProvisioningState.Unregistered
+        /// </summary>
         public static WorkflowProvisioningState Unregistered { get; } = new WorkflowProvisioningState(UnregisteredValue);
-        /// <summary> Completed. </summary>
+        /// <summary>
+        /// Completed
+        /// Serialized Name: WorkflowProvisioningState.Completed
+        /// </summary>
         public static WorkflowProvisioningState Completed { get; } = new WorkflowProvisioningState(CompletedValue);
-        /// <summary> Renewing. </summary>
+        /// <summary>
+        /// Renewing
+        /// Serialized Name: WorkflowProvisioningState.Renewing
+        /// </summary>
         public static WorkflowProvisioningState Renewing { get; } = new WorkflowProvisioningState(RenewingValue);
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: WorkflowProvisioningState.Pending
+        /// </summary>
         public static WorkflowProvisioningState Pending { get; } = new WorkflowProvisioningState(PendingValue);
-        /// <summary> Waiting. </summary>
+        /// <summary>
+        /// Waiting
+        /// Serialized Name: WorkflowProvisioningState.Waiting
+        /// </summary>
         public static WorkflowProvisioningState Waiting { get; } = new WorkflowProvisioningState(WaitingValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: WorkflowProvisioningState.InProgress
+        /// </summary>
         public static WorkflowProvisioningState InProgress { get; } = new WorkflowProvisioningState(InProgressValue);
         /// <summary> Determines if two <see cref="WorkflowProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkflowProvisioningState left, WorkflowProvisioningState right) => left.Equals(right);

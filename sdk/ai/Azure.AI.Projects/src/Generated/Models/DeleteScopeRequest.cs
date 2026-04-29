@@ -5,9 +5,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
-    /// <summary> The DeleteScopeRequest. </summary>
     internal partial class DeleteScopeRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

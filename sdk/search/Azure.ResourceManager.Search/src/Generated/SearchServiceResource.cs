@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Search
         {
             TryGetApiVersion(ResourceType, out string searchServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2025-05-01");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
             _adminKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", ResourceType.Namespace, Diagnostics);
-            _adminKeysRestClient = new AdminKeys(_adminKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2025-05-01");
+            _adminKeysRestClient = new AdminKeys(_adminKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
             _queryKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", ResourceType.Namespace, Diagnostics);
-            _queryKeysRestClient = new QueryKeys(_queryKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2025-05-01");
+            _queryKeysRestClient = new QueryKeys(_queryKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2025-05-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Search
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -311,6 +311,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Deletes a search service in the given resource group, along with its associated resources.
+        /// Returns 200 (OK) on successful deletion, or 204 (No Content) if the service is not found.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -363,6 +364,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Deletes a search service in the given resource group, along with its associated resources.
+        /// Returns 200 (OK) on successful deletion, or 204 (No Content) if the service is not found.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -374,7 +376,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -426,7 +428,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -475,7 +477,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -524,7 +526,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -578,7 +580,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -632,7 +634,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -655,7 +657,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetQueryKeysBySearchService");
         }
 
         /// <summary>
@@ -671,7 +674,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -694,7 +697,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetQueryKeysBySearchService");
         }
 
         /// <summary>
@@ -710,7 +714,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -733,7 +737,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetSupportedPrivateLinkResources");
         }
 
         /// <summary>
@@ -749,7 +754,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -772,11 +777,14 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetSupportedPrivateLinkResources");
         }
 
         /// <summary>
         /// Deletes the specified query key. Unlike admin keys, query keys are not regenerated. The process for regenerating a query key is to delete and then recreate it.
+        /// Returns 200 (OK) on successful deletion, 204 (No Content) if the service exists but the query keys not found, or 404 (Not Found) if the service is not found.
+        /// NOTE: The behavior of returning 404 is inconsistent with ARM guidelines. Clients should expect a 204 response in future versions and avoid new dependencies on the 404 response.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -788,7 +796,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -826,6 +834,8 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Deletes the specified query key. Unlike admin keys, query keys are not regenerated. The process for regenerating a query key is to delete and then recreate it.
+        /// Returns 200 (OK) on successful deletion, 204 (No Content) if the service exists but the query keys not found, or 404 (Not Found) if the service is not found.
+        /// NOTE: The behavior of returning 404 is inconsistent with ARM guidelines. Clients should expect a 204 response in future versions and avoid new dependencies on the 404 response.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -837,7 +847,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -886,7 +896,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -936,7 +946,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -986,7 +996,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1041,7 +1051,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1114,7 +1124,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1162,7 +1172,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1209,7 +1219,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<SearchServiceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1252,7 +1262,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<SearchServiceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1294,7 +1304,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1340,7 +1350,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

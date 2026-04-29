@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Template Options for the static site. </summary>
+    /// <summary>
+    /// Template Options for the static site.
+    /// Serialized Name: StaticSiteTemplateOptions
+    /// </summary>
     public partial class StaticSiteTemplate
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteTemplate"/>. </summary>
-        /// <param name="templateRepositoryUri"> URL of the template repository. The newly generated repository will be based on this one. </param>
-        /// <param name="owner"> Owner of the newly generated repository. </param>
-        /// <param name="repositoryName"> Name of the newly generated repository. </param>
-        /// <param name="description"> Description of the newly generated repository. </param>
-        /// <param name="isPrivate"> Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public). </param>
+        /// <param name="templateRepositoryUri">
+        /// URL of the template repository. The newly generated repository will be based on this one.
+        /// Serialized Name: StaticSiteTemplateOptions.templateRepositoryUrl
+        /// </param>
+        /// <param name="owner">
+        /// Owner of the newly generated repository.
+        /// Serialized Name: StaticSiteTemplateOptions.owner
+        /// </param>
+        /// <param name="repositoryName">
+        /// Name of the newly generated repository.
+        /// Serialized Name: StaticSiteTemplateOptions.repositoryName
+        /// </param>
+        /// <param name="description">
+        /// Description of the newly generated repository.
+        /// Serialized Name: StaticSiteTemplateOptions.description
+        /// </param>
+        /// <param name="isPrivate">
+        /// Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public).
+        /// Serialized Name: StaticSiteTemplateOptions.isPrivate
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteTemplate(Uri templateRepositoryUri, string owner, string repositoryName, string description, bool? isPrivate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,19 +85,34 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> URL of the template repository. The newly generated repository will be based on this one. </summary>
+        /// <summary>
+        /// URL of the template repository. The newly generated repository will be based on this one.
+        /// Serialized Name: StaticSiteTemplateOptions.templateRepositoryUrl
+        /// </summary>
         [WirePath("templateRepositoryUrl")]
         public Uri TemplateRepositoryUri { get; set; }
-        /// <summary> Owner of the newly generated repository. </summary>
+        /// <summary>
+        /// Owner of the newly generated repository.
+        /// Serialized Name: StaticSiteTemplateOptions.owner
+        /// </summary>
         [WirePath("owner")]
         public string Owner { get; set; }
-        /// <summary> Name of the newly generated repository. </summary>
+        /// <summary>
+        /// Name of the newly generated repository.
+        /// Serialized Name: StaticSiteTemplateOptions.repositoryName
+        /// </summary>
         [WirePath("repositoryName")]
         public string RepositoryName { get; set; }
-        /// <summary> Description of the newly generated repository. </summary>
+        /// <summary>
+        /// Description of the newly generated repository.
+        /// Serialized Name: StaticSiteTemplateOptions.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary> Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public). </summary>
+        /// <summary>
+        /// Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public).
+        /// Serialized Name: StaticSiteTemplateOptions.isPrivate
+        /// </summary>
         [WirePath("isPrivate")]
         public bool? IsPrivate { get; set; }
     }

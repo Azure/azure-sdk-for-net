@@ -131,6 +131,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachineResourceId))
+            {
+                writer.WritePropertyName("virtualMachineResourceId"u8);
+                writer.WriteStringValue(VirtualMachineResourceId);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -184,6 +189,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default;
             string userData = default;
             DateTimeOffset? timeCreated = default;
+            ResourceIdentifier virtualMachineResourceId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,6 +345,15 @@ namespace Azure.ResourceManager.Compute.Models
                     timeCreated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("virtualMachineResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualMachineResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
@@ -362,6 +377,7 @@ namespace Azure.ResourceManager.Compute.Models
                 protectionPolicy,
                 userData,
                 timeCreated,
+                virtualMachineResourceId,
                 additionalProperties);
         }
 

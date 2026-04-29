@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CacheBehaviorSetting : IEquatable<CacheBehaviorSetting>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CacheBehaviorSetting"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CacheBehaviorSetting(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BypassCacheValue = "BypassCache";
         private const string OverrideValue = "Override";
         private const string SetIfMissingValue = "SetIfMissing";
 
-        /// <summary> BypassCache. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheBehaviorSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CacheBehaviorSetting(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the BypassCache. </summary>
         public static CacheBehaviorSetting BypassCache { get; } = new CacheBehaviorSetting(BypassCacheValue);
-        /// <summary> Override. </summary>
+
+        /// <summary> Gets the Override. </summary>
         public static CacheBehaviorSetting Override { get; } = new CacheBehaviorSetting(OverrideValue);
-        /// <summary> SetIfMissing. </summary>
+
+        /// <summary> Gets the SetIfMissing. </summary>
         public static CacheBehaviorSetting SetIfMissing { get; } = new CacheBehaviorSetting(SetIfMissingValue);
+
         /// <summary> Determines if two <see cref="CacheBehaviorSetting"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CacheBehaviorSetting left, CacheBehaviorSetting right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CacheBehaviorSetting"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CacheBehaviorSetting left, CacheBehaviorSetting right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CacheBehaviorSetting"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CacheBehaviorSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CacheBehaviorSetting(string value) => new CacheBehaviorSetting(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CacheBehaviorSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CacheBehaviorSetting?(string value) => value == null ? null : new CacheBehaviorSetting(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CacheBehaviorSetting other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CacheBehaviorSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the StaticSiteBasicAuthProperty data model.
     /// Static site basic auth properties ARM resource.
+    /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource
     /// </summary>
     public partial class StaticSiteBasicAuthPropertyData : ResourceData
     {
@@ -61,41 +62,77 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="password"> The password for basic auth. </param>
-        /// <param name="secretUri"> Url to the secret in Key Vault. </param>
-        /// <param name="applicableEnvironmentsMode"> State indicating if basic auth is enabled and for what environments it is active. </param>
-        /// <param name="environments"> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </param>
-        /// <param name="secretState"> State indicating if basic auth has a secret and what type it is. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.kind
+        /// </param>
+        /// <param name="password">
+        /// The password for basic auth.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.password
+        /// </param>
+        /// <param name="secretUri">
+        /// Url to the secret in Key Vault.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretUrl
+        /// </param>
+        /// <param name="applicableEnvironmentsMode">
+        /// State indicating if basic auth is enabled and for what environments it is active.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.applicableEnvironmentsMode
+        /// </param>
+        /// <param name="environments">
+        /// The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.environments
+        /// </param>
+        /// <param name="secretState">
+        /// State indicating if basic auth has a secret and what type it is.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteBasicAuthPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, Uri secretUri, string applicableEnvironmentsMode, IList<string> environments, string secretState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteBasicAuthPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string password, Uri secretUri, string applicableEnvironmentsMode, IList<string> environments, string secretState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Password = password;
             SecretUri = secretUri;
             ApplicableEnvironmentsMode = applicableEnvironmentsMode;
             Environments = environments;
             SecretState = secretState;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The password for basic auth. </summary>
-        [WirePath("properties.password")]
-        public string Password { get; set; }
-        /// <summary> Url to the secret in Key Vault. </summary>
-        [WirePath("properties.secretUrl")]
-        public Uri SecretUri { get; set; }
-        /// <summary> State indicating if basic auth is enabled and for what environments it is active. </summary>
-        [WirePath("properties.applicableEnvironmentsMode")]
-        public string ApplicableEnvironmentsMode { get; set; }
-        /// <summary> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </summary>
-        [WirePath("properties.environments")]
-        public IList<string> Environments { get; }
-        /// <summary> State indicating if basic auth has a secret and what type it is. </summary>
-        [WirePath("properties.secretState")]
-        public string SecretState { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// The password for basic auth.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.password
+        /// </summary>
+        [WirePath("properties.password")]
+        public string Password { get; set; }
+        /// <summary>
+        /// Url to the secret in Key Vault.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretUrl
+        /// </summary>
+        [WirePath("properties.secretUrl")]
+        public Uri SecretUri { get; set; }
+        /// <summary>
+        /// State indicating if basic auth is enabled and for what environments it is active.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.applicableEnvironmentsMode
+        /// </summary>
+        [WirePath("properties.applicableEnvironmentsMode")]
+        public string ApplicableEnvironmentsMode { get; set; }
+        /// <summary>
+        /// The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.environments
+        /// </summary>
+        [WirePath("properties.environments")]
+        public IList<string> Environments { get; }
+        /// <summary>
+        /// State indicating if basic auth has a secret and what type it is.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretState
+        /// </summary>
+        [WirePath("properties.secretState")]
+        public string SecretState { get; }
     }
 }

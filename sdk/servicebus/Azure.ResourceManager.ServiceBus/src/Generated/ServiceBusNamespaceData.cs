@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBNamespaceProperties();
                 }
-                Properties.MinimumTlsVersion = value.Value;
+                Properties.MinimumTlsVersion = value;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBNamespaceProperties();
                 }
-                Properties.IsZoneRedundant = value.Value;
+                Properties.IsZoneRedundant = value;
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBNamespaceProperties();
                 }
-                Properties.DisableLocalAuth = value.Value;
+                Properties.DisableLocalAuth = value;
             }
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBNamespaceProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBNamespaceProperties();
                 }
-                Properties.PremiumMessagingPartitions = value.Value;
+                Properties.PremiumMessagingPartitions = value;
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBNamespaceProperties();
                 }
-                Properties.PlatformCapabilitiesConfidentialComputeMode = value.Value;
+                Properties.PlatformCapabilitiesConfidentialComputeMode = value;
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Cannot re-record: Azure CDN classic (StandardMicrosoft) no longer supports new profile creation")]
         public async Task CheckNameAvailability()
         {
             await foreach (var tenant in Client.GetTenants().GetAllAsync())
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Cannot re-record: Azure CDN classic (StandardMicrosoft) no longer supports new profile creation")]
         public async Task CheckNameAvailabilityWithSub()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();

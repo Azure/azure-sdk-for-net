@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 vnetName,
                 vpnPackageUri,
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly ActiveSessionHostConfigurations _activeSessionHostConfigurationsRestClient;
         private readonly ClientDiagnostics _appAttachPackageInfoClientDiagnostics;
         private readonly AppAttachPackageInfo _appAttachPackageInfoRestClient;
-        private readonly ClientDiagnostics _msixImagesClientDiagnostics;
-        private readonly MSIXImages _msixImagesRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
         private readonly ClientDiagnostics _scalingPlansClientDiagnostics;
         private readonly ScalingPlans _scalingPlansRestClient;
         private readonly ClientDiagnostics _userSessionsClientDiagnostics;
         private readonly UserSessions _userSessionsRestClient;
+        private readonly ClientDiagnostics _msixImagesClientDiagnostics;
+        private readonly MSIXImages _msixImagesRestClient;
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of HostPoolCollection for mocking. </summary>
         protected HostPoolCollection()
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _activeSessionHostConfigurationsRestClient = new ActiveSessionHostConfigurations(_activeSessionHostConfigurationsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _appAttachPackageInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
             _appAttachPackageInfoRestClient = new AppAttachPackageInfo(_appAttachPackageInfoClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
-            _msixImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
-            _msixImagesRestClient = new MSIXImages(_msixImagesClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _scalingPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
             _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _userSessionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
             _userSessionsRestClient = new UserSessions(_userSessionsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            _msixImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
+            _msixImagesRestClient = new MSIXImages(_msixImagesClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -322,7 +322,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new HostPoolResource(Client, data));
+                context,
+                "HostPoolCollection.GetAll"), data => new HostPoolResource(Client, data));
         }
 
         /// <summary>
@@ -360,7 +361,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new HostPoolResource(Client, data));
+                context,
+                "HostPoolCollection.GetAll"), data => new HostPoolResource(Client, data));
         }
 
         /// <summary>

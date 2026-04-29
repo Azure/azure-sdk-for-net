@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetBySubscriptionAsyncCollectionResultOfT(GeoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlanetaryComputerGeoCatalogResource(Client, data));
+            return new AsyncPageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetBySubscriptionAsyncCollectionResultOfT(GeoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs"), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetBySubscriptionCollectionResultOfT(GeoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlanetaryComputerGeoCatalogResource(Client, data));
+            return new PageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetBySubscriptionCollectionResultOfT(GeoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs"), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
     }
 }

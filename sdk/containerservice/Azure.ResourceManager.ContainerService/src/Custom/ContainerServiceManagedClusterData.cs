@@ -90,12 +90,14 @@ namespace Azure.ResourceManager.ContainerService
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ManagedClusterMonitorProfileMetrics AzureMonitorMetrics
         {
-            get => AzureMonitorProfile is null ? default : AzureMonitorProfile.Metrics;
+            get => Properties?.AzureMonitorProfile is null ? default : Properties.AzureMonitorProfile.Metrics;
             set
             {
-                if (AzureMonitorProfile is null)
-                    AzureMonitorProfile = new ManagedClusterAzureMonitorProfile();
-                AzureMonitorProfile.Metrics = value;
+                if (Properties is null)
+                    Properties = new ManagedClusterProperties();
+                if (Properties.AzureMonitorProfile is null)
+                    Properties.AzureMonitorProfile = new ManagedClusterAzureMonitorProfile();
+                Properties.AzureMonitorProfile.Metrics = value;
             }
         }
 
@@ -104,12 +106,14 @@ namespace Azure.ResourceManager.ContainerService
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting
         {
-            get => IngressProfile is null ? default : IngressProfile.WebAppRouting;
+            get => Properties?.IngressProfile is null ? default : Properties.IngressProfile.WebAppRouting;
             set
             {
-                if (IngressProfile is null)
-                    IngressProfile = new ManagedClusterIngressProfile();
-                IngressProfile.WebAppRouting = value;
+                if (Properties is null)
+                    Properties = new ManagedClusterProperties();
+                if (Properties.IngressProfile is null)
+                    Properties.IngressProfile = new ManagedClusterIngressProfile();
+                Properties.IngressProfile.WebAppRouting = value;
             }
         }
 

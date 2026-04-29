@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Risk category for the attack objective. </summary>
     public readonly partial struct RiskCategory : IEquatable<RiskCategory>

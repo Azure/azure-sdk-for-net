@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The hosted agent definition. </summary>
-    public partial class HostedAgentDefinition : AgentDefinition, IJsonModel<HostedAgentDefinition>
+    public partial class HostedAgentDefinition : ProjectsAgentDefinition, IJsonModel<HostedAgentDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="HostedAgentDefinition"/> for deserialization. </summary>
         internal HostedAgentDefinition()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -80,19 +80,22 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (AgentTool item in Tools)
+                foreach (ProjectsAgentTool item in Tools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("container_protocol_versions"u8);
-            writer.WriteStartArray();
-            foreach (ProtocolVersionRecord item in Versions)
+            if (Optional.IsCollectionDefined(Versions))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("container_protocol_versions"u8);
+                writer.WriteStartArray();
+                foreach (ProtocolVersionRecord item in Versions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WritePropertyName("cpu"u8);
             writer.WriteStringValue(Cpu);
             writer.WritePropertyName("memory"u8);
@@ -118,6 +121,31 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
+            if (Optional.IsDefined(ContainerConfiguration))
+            {
+                writer.WritePropertyName("container_configuration"u8);
+                writer.WriteObjectValue(ContainerConfiguration, options);
+            }
+            if (Optional.IsCollectionDefined(ProtocolVersions))
+            {
+                writer.WritePropertyName("protocol_versions"u8);
+                writer.WriteStartArray();
+                foreach (ProtocolVersionRecord item in ProtocolVersions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CodeConfiguration))
+            {
+                writer.WritePropertyName("code_configuration"u8);
+                writer.WriteObjectValue(CodeConfiguration, options);
+            }
+            if (Optional.IsDefined(TelemetryConfig))
+            {
+                writer.WritePropertyName("telemetry_config"u8);
+                writer.WriteObjectValue(TelemetryConfig, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -126,7 +154,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -145,20 +173,24 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            AgentKind kind = default;
+            ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<AgentTool> tools = default;
+            IList<ProjectsAgentTool> tools = default;
             IList<ProtocolVersionRecord> versions = default;
             string cpu = default;
             string memory = default;
             IDictionary<string, string> environmentVariables = default;
             string image = default;
+            ContainerConfiguration containerConfiguration = default;
+            IList<ProtocolVersionRecord> protocolVersions = default;
+            CodeConfiguration codeConfiguration = default;
+            TelemetryConfig telemetryConfig = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new AgentKind(prop.Value.GetString());
+                    kind = new ProjectsAgentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rai_config"u8))
@@ -176,16 +208,20 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<AgentTool> array = new List<AgentTool>();
+                    List<ProjectsAgentTool> array = new List<ProjectsAgentTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentTool.DeserializeAgentTool(item, options));
+                        array.Add(ProjectsAgentTool.DeserializeProjectsAgentTool(item, options));
                     }
                     tools = array;
                     continue;
                 }
                 if (prop.NameEquals("container_protocol_versions"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<ProtocolVersionRecord> array = new List<ProtocolVersionRecord>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -230,6 +266,47 @@ namespace Azure.AI.Projects.Agents
                     image = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("container_configuration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    containerConfiguration = ContainerConfiguration.DeserializeContainerConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("protocol_versions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ProtocolVersionRecord> array = new List<ProtocolVersionRecord>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ProtocolVersionRecord.DeserializeProtocolVersionRecord(item, options));
+                    }
+                    protocolVersions = array;
+                    continue;
+                }
+                if (prop.NameEquals("code_configuration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("telemetry_config"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    telemetryConfig = TelemetryConfig.DeserializeTelemetryConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -239,12 +316,16 @@ namespace Azure.AI.Projects.Agents
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
-                tools ?? new ChangeTrackingList<AgentTool>(),
-                versions,
+                tools ?? new ChangeTrackingList<ProjectsAgentTool>(),
+                versions ?? new ChangeTrackingList<ProtocolVersionRecord>(),
                 cpu,
                 memory,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                image);
+                image,
+                containerConfiguration,
+                protocolVersions ?? new ChangeTrackingList<ProtocolVersionRecord>(),
+                codeConfiguration,
+                telemetryConfig);
         }
     }
 }

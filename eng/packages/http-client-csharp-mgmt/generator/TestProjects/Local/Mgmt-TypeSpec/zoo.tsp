@@ -18,7 +18,53 @@ model Zoo is TrackedResource<ZooProperties> {
 model ZooProperties {
   /** something */
   something?: string;
+
+  /** Required value-type property. Used to validate that required value types
+      flattened from an optional ``properties?:`` parent (default-optional
+      `properties?`) surface as Nullable<T> on the public property while
+      remaining non-nullable T on the inner model and the model factory body. */
+  requiredInt: int32;
+
+  /** Required fixed (closed) enum. */
+  requiredFixedEnum: ZooFixedMode;
+
+  /** Required extensible enum (union). */
+  requiredExtensibleEnum: ZooProvisioningState;
+
+  /** Required reference-type property. Used to validate that required reference
+      types flattened from an optional ``properties?:`` parent surface as nullable
+      on the public property under the unified wrapper-optionality rule. */
+  requiredString: string;
 }
+
+/** Fixed (closed) mode enum for Zoo. */
+enum ZooFixedMode {
+  Normal,
+  Strict,
+  Relaxed,
+}
+
+/** Extensible (open) provisioning state union for Zoo. */
+union ZooProvisioningState {
+  string,
+
+  /** The resource is being provisioned. */
+  Provisioning: "Provisioning",
+
+  /** The resource has been successfully provisioned. */
+  Succeeded: "Succeeded",
+
+  /** Provisioning failed. */
+  Failed: "Failed",
+
+  /** Provisioning was canceled. */
+  Canceled: "Canceled",
+}
+
+// Force the optional `properties?:` field to be flattened so we can validate the
+// "optional wrapper + required inner value-type → public Nullable<T>" code path.
+#suppress "deprecated"
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(Zoo.properties);
 
 @armResourceOperations
 interface Zoos {

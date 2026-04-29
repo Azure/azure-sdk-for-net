@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionDeletedBackupVaultData, DataProtectionDeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationAsyncCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new DataProtectionDeletedBackupVaultResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionDeletedBackupVaultData, DataProtectionDeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationAsyncCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "DataProtectionDeletedBackupVaultCollection.GetAll"), data => new DataProtectionDeletedBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionDeletedBackupVaultData, DataProtectionDeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new DataProtectionDeletedBackupVaultResource(Client, data));
+            return new PageableWrapper<DataProtectionDeletedBackupVaultData, DataProtectionDeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "DataProtectionDeletedBackupVaultCollection.GetAll"), data => new DataProtectionDeletedBackupVaultResource(Client, data));
         }
 
         /// <summary>

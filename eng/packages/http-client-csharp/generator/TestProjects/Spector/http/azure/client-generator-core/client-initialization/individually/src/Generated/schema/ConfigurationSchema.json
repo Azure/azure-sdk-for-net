@@ -1,0 +1,146 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "IndividuallyNestedWithPathClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithPathClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
+            }
+          }
+        },
+        "IndividuallyNestedWithQueryClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithQueryClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
+            }
+          }
+        },
+        "IndividuallyNestedWithHeaderClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithHeaderClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
+            }
+          }
+        },
+        "IndividuallyNestedWithMultipleClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithMultipleClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Region": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
+            }
+          }
+        },
+        "IndividuallyNestedWithMixedClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithMixedClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
+            }
+          }
+        },
+        "IndividuallyNestedWithParamAliasClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithParamAliasClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "specsAzureTcgcClientInitIndividuallyClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}

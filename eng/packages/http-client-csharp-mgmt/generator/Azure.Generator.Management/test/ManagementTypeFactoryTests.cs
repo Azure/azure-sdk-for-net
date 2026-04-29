@@ -7,6 +7,7 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -42,8 +43,8 @@ namespace Azure.Generator.Mgmt.Tests
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
             var result = plugin.Object.TypeFactory.CreateCSharpType(enumType);
-            Assert.IsNotNull(result);
-            Assert.AreEqual(expectedType, result!.FrameworkType);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.FrameworkType, Is.EqualTo(expectedType));
         }
 
         [TestCase("Azure.ResourceManager.CommonTypes.ExtendedLocationType")]
@@ -65,7 +66,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
             var result = plugin.Object.TypeFactory.CreateEnum(enumType, null);
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [TestCase]
@@ -91,7 +92,7 @@ namespace Azure.Generator.Mgmt.Tests
             enumValues.Add(InputFactory.EnumMember.String("SystemAssignedUserAssigned", "SystemAssigned,UserAssigned", enumType));
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
-            Assert.IsTrue(plugin.Object.TypeFactory.UseManagedServiceIdentityV3);
+            Assert.That(plugin.Object.TypeFactory.UseManagedServiceIdentityV3, Is.True);
         }
 
         [TestCase]
@@ -117,7 +118,7 @@ namespace Azure.Generator.Mgmt.Tests
             enumValues.Add(InputFactory.EnumMember.String("SystemAssignedUserAssigned", "SystemAssigned, UserAssigned", enumType));
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
-            Assert.IsFalse(plugin.Object.TypeFactory.UseManagedServiceIdentityV3);
+            Assert.That(plugin.Object.TypeFactory.UseManagedServiceIdentityV3, Is.False);
         }
 
         [TestCase]
@@ -125,7 +126,7 @@ namespace Azure.Generator.Mgmt.Tests
         {
             // No ManagedServiceIdentityType enum at all
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => []);
-            Assert.IsFalse(plugin.Object.TypeFactory.UseManagedServiceIdentityV3);
+            Assert.That(plugin.Object.TypeFactory.UseManagedServiceIdentityV3, Is.False);
         }
     }
 }

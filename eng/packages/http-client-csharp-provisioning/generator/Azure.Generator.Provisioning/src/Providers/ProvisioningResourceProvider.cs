@@ -40,10 +40,10 @@ namespace Azure.Generator.Provisioning.Providers
             "id", "systemData", "type"
         };
 
-        // System properties that should always be required
+        // System properties that should always be required, even when marked readOnly (path parameters)
         private static readonly HashSet<string> RequiredInputProperties = new(StringComparer.OrdinalIgnoreCase)
         {
-            "name", "location"
+            "name"
         };
 
         // Properties to skip entirely (type is implied by the resource type)
@@ -61,6 +61,11 @@ namespace Azure.Generator.Provisioning.Providers
         /// Used to build the C# Properties, Fields, and DefineProvisionableProperties() method.
         /// </summary>
         private readonly List<ResourcePropertyInfo> _allProperties;
+        /// <summary>
+        /// Lookup from InputModelProperty to ResourcePropertyInfo for O(1) access in
+        /// <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
+        /// </summary>
+        private readonly Dictionary<InputModelProperty, ResourcePropertyInfo> _propertyLookup;
         /// <summary>
         /// Serialized property names that are writable in the create/update request body model.
         /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
@@ -90,14 +95,15 @@ namespace Azure.Generator.Provisioning.Providers
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty inputProp)
         {
-            var propInfo = _allProperties.FirstOrDefault(p => p.Property == inputProp);
-            if (propInfo == null) return null;
+            if (!_propertyLookup.TryGetValue(inputProp, out var propInfo))
+                return null;
             return new ProvisioningPropertyInfo(
                 propInfo.PropertyName,
                 propInfo.IsOutput,
                 propInfo.IsRequired,
                 propInfo.BicepPath,
-                propInfo.DefaultValue);
+                propInfo.DefaultValue,
+                propInfo.TypeOverride);
         }
 
         /// <summary>
@@ -113,6 +119,7 @@ namespace Azure.Generator.Provisioning.Providers
                 : null;
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
+            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
         /// <summary>
@@ -126,6 +133,7 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = null;
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
+            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
         public override void Reset()
@@ -138,6 +146,14 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
+
+        protected override string BuildName()
+        {
+            // When the same input model is shared by multiple resources (e.g. parent +
+            // child views like ContainerGroupProfile + ContainerGroupProfileRevision),
+            // fall back to the metadata's ResourceName to avoid file/type collisions.
+            return _resourceMetadata?.ResourceName ?? base.BuildName();
+        }
 
         protected override string BuildRelativeFilePath()
             => Path.Combine("src", "Generated", $"{Name}.cs");
@@ -309,6 +325,16 @@ namespace Azure.Generator.Provisioning.Providers
             if (apiVersions == null || apiVersions.Count == 0)
                 return [];
 
+            // When the current (default) API version is GA, exclude preview versions.
+            // Preview versions are only included when the current version is itself a preview.
+            if (!IsPreviewApiVersion(apiVersions[^1]))
+            {
+                var gaVersions = apiVersions.Where(v => !IsPreviewApiVersion(v)).ToList();
+                if (gaVersions.Count == 0)
+                    return [];
+                apiVersions = gaVersions;
+            }
+
             // ResourceVersions nested class
             return [new ResourceVersionsProvider(this, apiVersions)];
         }
@@ -371,14 +397,22 @@ namespace Azure.Generator.Provisioning.Providers
             var result = new List<ResourcePropertyInfo>();
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            // Collect from the resource model and its base chain
-            CollectPropertiesFromModel(_inputModel, result, seen, basePath: null);
-
+            // Collect from the base chain first (top-most ancestor → immediate base),
+            // then from the resource model itself. This ensures inherited ARM common
+            // properties (name, location, tags) appear before leaf-defined properties
+            // (e.g., the "properties" bag), which controls the Bicep emission order.
+            var chain = new Stack<InputModelType>();
+            chain.Push(_inputModel);
             var baseModel = _inputModel.BaseModel;
             while (baseModel != null)
             {
-                CollectPropertiesFromModel(baseModel, result, seen, basePath: null);
+                chain.Push(baseModel);
                 baseModel = baseModel.BaseModel;
+            }
+
+            foreach (var model in chain)
+            {
+                CollectPropertiesFromModel(model, result, seen, basePath: null);
             }
 
             return result;
@@ -420,7 +454,17 @@ namespace Azure.Generator.Provisioning.Providers
                     defaultValue = _resourceMetadata.SingletonResourceName;
                     isOutput = true;
                 }
-                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue));
+                // Ensure "location" at the resource level always uses AzureLocation,
+                // even when the TypeSpec defines it as plain string.
+                // TODO - this is currently a workaround until we have a more reliable way to detect such violations from the spec level.
+                CSharpType? typeOverride = null;
+                if (basePath is null
+                    && string.Equals(serializedName, "location", StringComparison.OrdinalIgnoreCase))
+                {
+                    typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
+                }
+
+                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue, typeOverride));
             }
         }
 
@@ -834,7 +878,8 @@ namespace Azure.Generator.Provisioning.Providers
             string[] BicepPath,
             bool IsOutput,
             bool IsRequired,
-            string? DefaultValue = null);
+            string? DefaultValue = null,
+            CSharpType? TypeOverride = null);
 
         // ── ResourceVersions nested class ────────────────────────────
 
@@ -869,7 +914,7 @@ namespace Azure.Generator.Provisioning.Providers
                     var fieldName = "V" + version.Replace('.', '_').Replace('-', '_').ToUpperInvariant();
 
                     // Preview API versions are marked with [Experimental] to signal they may change or be removed.
-                    var isPreview = version.Contains("preview", StringComparison.OrdinalIgnoreCase);
+                    var isPreview = IsPreviewApiVersion(version);
                     var attributes = isPreview
                         ? [new AttributeStatement(typeof(ExperimentalAttribute), [Literal("AZPROVISION001")])]
                         : Array.Empty<AttributeStatement>();
@@ -887,5 +932,8 @@ namespace Azure.Generator.Provisioning.Providers
                 return [.. fields];
             }
         }
+
+        internal static bool IsPreviewApiVersion(string version)
+            => version.Contains("preview", StringComparison.OrdinalIgnoreCase);
     }
 }

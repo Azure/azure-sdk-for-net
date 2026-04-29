@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal ItemFieldReasoningItem(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<InternalSummaryTextObject> summary, IList<ReasoningTextContent> content, OutputItemReasoningItemStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldReasoningItem(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<InternalSummaryTextObject> summary, IList<ReasoningTextContent> content, InputItemReasoningItemStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             EncryptedContent = encryptedContent;
@@ -57,6 +57,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public OutputItemReasoningItemStatus? Status { get; }
+        public InputItemReasoningItemStatus? Status { get; }
     }
 }

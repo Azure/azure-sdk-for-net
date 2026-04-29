@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
         {
             get
             {
-                return PolicyAssignmentProperties.PolicyInitiativeAssignmentId;
+                return PolicyAssignmentProperties is null ? default : PolicyAssignmentProperties.PolicyInitiativeAssignmentId;
             }
         }
     }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> GitHub Actions Web App stack settings. </summary>
+    /// <summary>
+    /// GitHub Actions Web App stack settings.
+    /// Serialized Name: GitHubActionWebAppStackSettings
+    /// </summary>
     public partial class GitHubActionWebAppStackSettings
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GitHubActionWebAppStackSettings"/>. </summary>
-        /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if GitHub Actions is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="supportedVersion"> The minor version that is supported for GitHub Actions. </param>
+        /// <param name="isSupported">
+        /// &lt;code&gt;true&lt;/code&gt; if GitHub Actions is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: GitHubActionWebAppStackSettings.isSupported
+        /// </param>
+        /// <param name="supportedVersion">
+        /// The minor version that is supported for GitHub Actions.
+        /// Serialized Name: GitHubActionWebAppStackSettings.supportedVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GitHubActionWebAppStackSettings(bool? isSupported, string supportedVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if GitHub Actions is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if GitHub Actions is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: GitHubActionWebAppStackSettings.isSupported
+        /// </summary>
         [WirePath("isSupported")]
         public bool? IsSupported { get; }
-        /// <summary> The minor version that is supported for GitHub Actions. </summary>
+        /// <summary>
+        /// The minor version that is supported for GitHub Actions.
+        /// Serialized Name: GitHubActionWebAppStackSettings.supportedVersion
+        /// </summary>
         [WirePath("supportedVersion")]
         public string SupportedVersion { get; }
     }

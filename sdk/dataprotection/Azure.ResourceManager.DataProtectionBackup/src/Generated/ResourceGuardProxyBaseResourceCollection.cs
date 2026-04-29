@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             if (id.ResourceType != DataProtectionBackupVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGuardProxyBaseResourceData, ResourceGuardProxyBaseResource>(new ResourceGuardProxyBaseResourcesGetAllAsyncCollectionResultOfT(_resourceGuardProxyBaseResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ResourceGuardProxyBaseResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGuardProxyBaseResourceData, ResourceGuardProxyBaseResource>(new ResourceGuardProxyBaseResourcesGetAllAsyncCollectionResultOfT(
+                _resourceGuardProxyBaseResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ResourceGuardProxyBaseResourceCollection.GetAll"), data => new ResourceGuardProxyBaseResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGuardProxyBaseResourceData, ResourceGuardProxyBaseResource>(new ResourceGuardProxyBaseResourcesGetAllCollectionResultOfT(_resourceGuardProxyBaseResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ResourceGuardProxyBaseResource(Client, data));
+            return new PageableWrapper<ResourceGuardProxyBaseResourceData, ResourceGuardProxyBaseResource>(new ResourceGuardProxyBaseResourcesGetAllCollectionResultOfT(
+                _resourceGuardProxyBaseResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ResourceGuardProxyBaseResourceCollection.GetAll"), data => new ResourceGuardProxyBaseResource(Client, data));
         }
 
         /// <summary>

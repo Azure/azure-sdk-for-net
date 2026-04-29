@@ -87,7 +87,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
-                foreach (NameValuePair item in ErrorDetails)
+                foreach (BatchNameValuePair item in ErrorDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -137,7 +137,7 @@ namespace Azure.Compute.Batch
             }
             string code = default;
             string message = default;
-            IList<NameValuePair> errorDetails = default;
+            IList<BatchNameValuePair> errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,10 +157,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<NameValuePair> array = new List<NameValuePair>();
+                    List<BatchNameValuePair> array = new List<BatchNameValuePair>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NameValuePair.DeserializeNameValuePair(item, options));
+                        array.Add(BatchNameValuePair.DeserializeBatchNameValuePair(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchNodeError(code, message, errorDetails ?? new ChangeTrackingList<NameValuePair>(), additionalBinaryDataProperties);
+            return new BatchNodeError(code, message, errorDetails ?? new ChangeTrackingList<BatchNameValuePair>(), additionalBinaryDataProperties);
         }
     }
 }

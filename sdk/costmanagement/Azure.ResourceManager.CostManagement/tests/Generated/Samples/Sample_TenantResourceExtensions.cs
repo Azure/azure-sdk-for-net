@@ -640,13 +640,12 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
             // invoke the operation
             string billingAccountName = "7c05a543-80ff-571e-9f98-1063b3b53cf2:99ad03ad-2d1b-4889-a452-090ad407d25f_2019-05-31";
             string billingProfileName = "2USN-TPCD-BG7-TGB";
-            ArmOperation<DownloadURL> lro = await tenantResource.DownloadByBillingProfilePriceSheetAsync(WaitUntil.Completed, billingAccountName, billingProfileName);
-            DownloadURL result = lro.Value;
+            ResourceIdentifier scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}");
+            ArmOperation<PriceSheetDownloadProperties> lro = await client.DownloadByBillingProfilePriceSheetAsync(WaitUntil.Completed, scope);
+            PriceSheetDownloadProperties result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

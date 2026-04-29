@@ -6,12 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The prompt agent definition. </summary>
-    public partial class DeclarativeAgentDefinition : AgentDefinition, IJsonModel<DeclarativeAgentDefinition>
+    public partial class DeclarativeAgentDefinition : ProjectsAgentDefinition, IJsonModel<DeclarativeAgentDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/> for deserialization. </summary>
         internal DeclarativeAgentDefinition()
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -97,15 +97,15 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(ReasoningOptions))
             {
                 writer.WritePropertyName("reasoning"u8);
-                writer.WriteObjectValue<OpenAI.Responses.ResponseReasoningOptions>(ReasoningOptions, options);
+                writer.WriteObjectValue(ReasoningOptions, options);
             }
             if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (OpenAI.Responses.ResponseTool item in Tools)
+                foreach (ResponseTool item in Tools)
                 {
-                    writer.WriteObjectValue<OpenAI.Responses.ResponseTool>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(TextOptions))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue<OpenAI.Responses.ResponseTextOptions>(TextOptions, options);
+                writer.WriteObjectValue(TextOptions, options);
             }
             if (Optional.IsCollectionDefined(StructuredInputs))
             {
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -164,23 +164,23 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            AgentKind kind = default;
+            ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string model = default;
             string instructions = default;
             float? temperature = default;
             float? topP = default;
-            OpenAI.Responses.ResponseReasoningOptions reasoningOptions = default;
-            IList<OpenAI.Responses.ResponseTool> tools = default;
+            ResponseReasoningOptions reasoningOptions = default;
+            IList<ResponseTool> tools = default;
             BinaryData toolChoice = default;
-            OpenAI.Responses.ResponseTextOptions textOptions = default;
+            ResponseTextOptions textOptions = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new AgentKind(prop.Value.GetString());
+                    kind = new ProjectsAgentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rai_config"u8))
@@ -279,7 +279,7 @@ namespace Azure.AI.Projects.Agents
                 temperature,
                 topP,
                 reasoningOptions,
-                tools ?? new ChangeTrackingList<OpenAI.Responses.ResponseTool>(),
+                tools ?? new ChangeTrackingList<ResponseTool>(),
                 toolChoice,
                 textOptions,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>());
