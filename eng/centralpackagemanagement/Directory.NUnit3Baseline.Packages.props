@@ -50,7 +50,6 @@
         $(MSBuildProjectName) == 'Azure.Core.TestFramework.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests.Public' or
-        $(MSBuildProjectName) == 'Azure.DigitalTwins.Core.Tests' or
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.Configuration.Secrets.Tests' or
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests' or
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Keys.Tests' or
@@ -164,7 +163,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.DevOpsInfrastructure.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DevSpaces.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DevTestLabs.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.DigitalTwins.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DisconnectedOperations.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Dns.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.DnsResolver.Tests' or
