@@ -8,6 +8,7 @@ parameters:
   ScriptDirectory: eng/common/scripts
   NpmConfigUserConfig: ''
   NpmConfigRegistry: ''
+  AuthToken: $(azuresdk-github-pat)
 
 steps:
 - task: PowerShell@2
@@ -24,7 +25,7 @@ steps:
     pwsh: true
   timeoutInMinutes: 5
   env:
-    GH_TOKEN: $(azuresdk-github-pat)
+    GH_TOKEN: ${{ parameters.AuthToken }}
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     ${{ if ne(parameters.NpmConfigUserConfig, '') }}:
       npm_config_userconfig: ${{ parameters.NpmConfigUserConfig }}

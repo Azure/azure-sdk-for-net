@@ -8,6 +8,7 @@ parameters:
   WorkingDirectory: $(System.DefaultWorkingDirectory)'
   ScriptDirectory: eng/common/scripts
   SkipCheckingForChanges: false
+  AuthToken: $(azuresdk-github-pat)
 
 steps:
 - task: PowerShell@2
@@ -31,7 +32,7 @@ steps:
 - template: /eng/common/pipelines/templates/steps/emit-rate-limit-metrics.yml
   parameters:
     GitHubUser: azure-sdk
-    GitHubToken: $(azuresdk-github-pat)
+    GitHubToken: ${{ parameters.AuthToken }}
 
 - task: PowerShell@2
   displayName: Push changes
@@ -43,6 +44,6 @@ steps:
     arguments: >
       -PRBranchName "${{ parameters.BaseRepoBranch }}"
       -CommitMsg "${{ parameters.CommitMsg }}"
-      -GitUrl "https://$(azuresdk-github-pat)@github.com/${{ parameters.BaseRepoOwner }}/$(RepoNameWithoutOwner).git"
+      -GitUrl "https://x-access-token:${{ parameters.AuthToken }}@github.com/${{ parameters.BaseRepoOwner }}/$(RepoNameWithoutOwner).git"
       -PushArgs "${{ parameters.PushArgs }}"
       -SkipCommit $${{ parameters.SkipCheckingForChanges }}
