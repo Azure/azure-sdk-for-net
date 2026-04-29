@@ -1,16 +1,12 @@
 # Release History
 
-## 1.2.0-beta.7 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.2.0-beta.7 (2026-04-29)
 
 ### Other Changes
 
 - Remove VersionOverrides for IotHub and Logic in SecurityCenter tests
+- Upgraded dependent `Azure.Core` to `1.54.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.2.0-beta.6 (2025-03-11)
 
