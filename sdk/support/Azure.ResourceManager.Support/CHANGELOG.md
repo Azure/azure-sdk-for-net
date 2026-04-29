@@ -9,7 +9,6 @@
 
 ### Other Changes
 
-- Upgraded Azure.ResourceManager dependency
 - Upgraded dependent `Azure.Core` to `1.54.0`.
 - Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
