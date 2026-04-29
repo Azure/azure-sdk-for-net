@@ -50,7 +50,6 @@
         $(MSBuildProjectName) == 'Azure.Core.TestFramework.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests.Public' or
-        $(MSBuildProjectName) == 'Azure.Data.Tables.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.DevCenter.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.LoadTesting.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.Playwright.MSTest.Tests' or
@@ -378,7 +377,6 @@
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests' or
-        $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.Tables.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebPubSub.AspNetCore.Tests' or
