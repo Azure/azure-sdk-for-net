@@ -197,8 +197,7 @@ namespace Azure.ResourceManager.NetApp
         [Obsolete("This method is no longer account-scoped. Use SubscriptionResource.GetNetAppSubscriptionQuotaItemAsync(AzureLocation, string) instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-#pragma warning disable CS1998 // intentional throw-only async to match v1.15 signature
-        public virtual async Task<Response<NetAppSubscriptionQuotaItemResource>> GetNetAppSubscriptionQuotaItemAsync(string quotaLimitName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<NetAppSubscriptionQuotaItemResource>> GetNetAppSubscriptionQuotaItemAsync(string quotaLimitName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("NetAppSubscriptionQuotaItem is no longer scoped under NetAppAccountResource. Use SubscriptionResource.GetNetAppSubscriptionQuotaItemAsync(AzureLocation, string) instead.");
         }
@@ -230,10 +229,9 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Get account quota limit (v1.15 surface). </summary>
         [Obsolete("Use GetNetAppResourceQuotaLimitsAccountResource(name).GetAsync() instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppResourceQuotaLimitsAccountAsync(string quotaLimitName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppResourceQuotaLimitsAccountAsync(string quotaLimitName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This POCO-returning overload is no longer supported. Use GetNetAppResourceQuotaLimitsAccountResource(name).GetAsync() instead.");
         }
-#pragma warning restore CS1998
     }
 }
