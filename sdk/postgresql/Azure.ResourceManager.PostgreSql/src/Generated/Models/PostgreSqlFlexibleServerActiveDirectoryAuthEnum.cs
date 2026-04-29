@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerActiveDirectoryAuthEnum : IEquatable<PostgreSqlFlexibleServerActiveDirectoryAuthEnum>
     {
         private readonly string _value;
+        /// <summary> Server supports Microsoft Entra authentication. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Server does not support Microsoft Entra authentication. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAuthEnum"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Server supports Microsoft Entra authentication. </summary>
         public static PostgreSqlFlexibleServerActiveDirectoryAuthEnum Enabled { get; } = new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Server does not support Microsoft Entra authentication. </summary>
         public static PostgreSqlFlexibleServerActiveDirectoryAuthEnum Disabled { get; } = new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerActiveDirectoryAuthEnum"/> values are the same. </summary>

@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Modes of high availability supported for this compute. </summary>
+    /// <summary> Mode of high availability supported for this compute. </summary>
     public readonly partial struct PostgreSqlFlexibleServerHAMode : IEquatable<PostgreSqlFlexibleServerHAMode>
     {
         private readonly string _value;
+        /// <summary> High availability is supported for this compute, with standby server in a different availability zone than that of the primary. </summary>
         private const string ZoneRedundantValue = "ZoneRedundant";
+        /// <summary> High availability is supported for this compute, with standby server in the same availability zone as the primary. </summary>
         private const string SameZoneValue = "SameZone";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHAMode"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the ZoneRedundant. </summary>
+        /// <summary> High availability is supported for this compute, with standby server in a different availability zone than that of the primary. </summary>
         public static PostgreSqlFlexibleServerHAMode ZoneRedundant { get; } = new PostgreSqlFlexibleServerHAMode(ZoneRedundantValue);
 
-        /// <summary> Gets the SameZone. </summary>
+        /// <summary> High availability is supported for this compute, with standby server in the same availability zone as the primary. </summary>
         public static PostgreSqlFlexibleServerHAMode SameZone { get; } = new PostgreSqlFlexibleServerHAMode(SameZoneValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAMode"/> values are the same. </summary>

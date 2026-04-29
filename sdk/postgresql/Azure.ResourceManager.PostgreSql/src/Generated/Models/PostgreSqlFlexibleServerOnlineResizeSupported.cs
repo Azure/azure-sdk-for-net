@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if resizing the storage, without interrupting the operation of the database engine, is supported in this location for the given subscription. 'Enabled' means resizing the storage without interrupting the operation of the database engine is supported. 'Disabled' means resizing the storage without interrupting the operation of the database engine is not supported. Will be deprecated in the future. Look to Supported Features for 'OnlineResize'. </summary>
+    /// <summary> Indicates if resizing the storage, without interrupting the operation of the database engine, is supported in this location for the given subscription. Will be deprecated in the future. Look to Supported Features for 'OnlineResize'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerOnlineResizeSupported : IEquatable<PostgreSqlFlexibleServerOnlineResizeSupported>
     {
         private readonly string _value;
+        /// <summary> Resizing the storage without interrupting the operation of the database engine is supported. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Resizing the storage without interrupting the operation of the database engine is not supported. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerOnlineResizeSupported"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Resizing the storage without interrupting the operation of the database engine is supported. </summary>
         public static PostgreSqlFlexibleServerOnlineResizeSupported Enabled { get; } = new PostgreSqlFlexibleServerOnlineResizeSupported(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Resizing the storage without interrupting the operation of the database engine is not supported. </summary>
         public static PostgreSqlFlexibleServerOnlineResizeSupported Disabled { get; } = new PostgreSqlFlexibleServerOnlineResizeSupported(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerOnlineResizeSupported"/> values are the same. </summary>

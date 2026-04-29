@@ -15,12 +15,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerHAState : IEquatable<PostgreSqlFlexibleServerHAState>
     {
         private readonly string _value;
+        /// <summary> High availability is not enabled for the server. </summary>
         private const string NotEnabledValue = "NotEnabled";
+        /// <summary> Standby server is being created. </summary>
         private const string CreatingStandbyValue = "CreatingStandby";
+        /// <summary> Data is being replicated to the standby server. </summary>
         private const string ReplicatingDataValue = "ReplicatingData";
+        /// <summary> Failover operation to the standby server is in progress. </summary>
         private const string FailingOverValue = "FailingOver";
+        /// <summary> Standby server is healthy and ready to take over in case of a failover. </summary>
         private const string HealthyValue = "Healthy";
+        /// <summary> Standby server is being removed. </summary>
         private const string RemovingStandbyValue = "RemovingStandby";
+        /// <summary> Standby server is being recreated. </summary>
+        private const string RecreatingStandbyValue = "RecreatingStandby";
+        /// <summary> Compute is being updated due to a failover. </summary>
+        private const string ComputeUpdatingByFailoverValue = "ComputeUpdatingByFailover";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHAState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,23 +42,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the NotEnabled. </summary>
+        /// <summary> High availability is not enabled for the server. </summary>
         public static PostgreSqlFlexibleServerHAState NotEnabled { get; } = new PostgreSqlFlexibleServerHAState(NotEnabledValue);
 
-        /// <summary> Gets the CreatingStandby. </summary>
+        /// <summary> Standby server is being created. </summary>
         public static PostgreSqlFlexibleServerHAState CreatingStandby { get; } = new PostgreSqlFlexibleServerHAState(CreatingStandbyValue);
 
-        /// <summary> Gets the ReplicatingData. </summary>
+        /// <summary> Data is being replicated to the standby server. </summary>
         public static PostgreSqlFlexibleServerHAState ReplicatingData { get; } = new PostgreSqlFlexibleServerHAState(ReplicatingDataValue);
 
-        /// <summary> Gets the FailingOver. </summary>
+        /// <summary> Failover operation to the standby server is in progress. </summary>
         public static PostgreSqlFlexibleServerHAState FailingOver { get; } = new PostgreSqlFlexibleServerHAState(FailingOverValue);
 
-        /// <summary> Gets the Healthy. </summary>
+        /// <summary> Standby server is healthy and ready to take over in case of a failover. </summary>
         public static PostgreSqlFlexibleServerHAState Healthy { get; } = new PostgreSqlFlexibleServerHAState(HealthyValue);
 
-        /// <summary> Gets the RemovingStandby. </summary>
+        /// <summary> Standby server is being removed. </summary>
         public static PostgreSqlFlexibleServerHAState RemovingStandby { get; } = new PostgreSqlFlexibleServerHAState(RemovingStandbyValue);
+
+        /// <summary> Standby server is being recreated. </summary>
+        public static PostgreSqlFlexibleServerHAState RecreatingStandby { get; } = new PostgreSqlFlexibleServerHAState(RecreatingStandbyValue);
+
+        /// <summary> Compute is being updated due to a failover. </summary>
+        public static PostgreSqlFlexibleServerHAState ComputeUpdatingByFailover { get; } = new PostgreSqlFlexibleServerHAState(ComputeUpdatingByFailoverValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

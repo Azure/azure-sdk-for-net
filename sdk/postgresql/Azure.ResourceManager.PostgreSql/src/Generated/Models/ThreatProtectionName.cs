@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct ThreatProtectionName : IEquatable<ThreatProtectionName>
     {
         private readonly string _value;
+        /// <summary> Default advanced threat protection settings. </summary>
         private const string DefaultValue = "Default";
 
         /// <summary> Initializes a new instance of <see cref="ThreatProtectionName"/>. </summary>
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Default. </summary>
+        /// <summary> Default advanced threat protection settings. </summary>
         public static ThreatProtectionName Default { get; } = new ThreatProtectionName(DefaultValue);
 
         /// <summary> Determines if two <see cref="ThreatProtectionName"/> values are the same. </summary>

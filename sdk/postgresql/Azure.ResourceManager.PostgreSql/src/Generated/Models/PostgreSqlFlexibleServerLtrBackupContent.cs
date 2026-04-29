@@ -11,7 +11,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The request that is made for a long term retention backup. </summary>
+    /// <summary> Request made for a long term retention backup. </summary>
     public partial class PostgreSqlFlexibleServerLtrBackupContent : PostgreSqlBackupContent
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>

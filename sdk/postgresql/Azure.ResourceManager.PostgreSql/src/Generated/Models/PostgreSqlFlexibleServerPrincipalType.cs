@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerPrincipalType : IEquatable<PostgreSqlFlexibleServerPrincipalType>
     {
         private readonly string _value;
-        /// <summary> The principal type is not known or not specified. </summary>
+        /// <summary> Principal type is not known or not specified. </summary>
         private const string UnknownValue = "Unknown";
         /// <summary> A Microsoft Entra user. </summary>
         private const string UserValue = "User";
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> The principal type is not known or not specified. </summary>
+        /// <summary> Principal type is not known or not specified. </summary>
         public static PostgreSqlFlexibleServerPrincipalType Unknown { get; } = new PostgreSqlFlexibleServerPrincipalType(UnknownValue);
 
         /// <summary> A Microsoft Entra user. </summary>

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        /// <summary> PercentageCompleted. </summary>
+        /// <summary> Percentage completed. </summary>
         [WirePath("properties.percentComplete")]
         public double? PercentComplete
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        /// <summary> The error code. </summary>
+        /// <summary> Error code. </summary>
         [WirePath("properties.errorCode")]
         public string ErrorCode
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        /// <summary> The error message. </summary>
+        /// <summary> Error message. </summary>
         [WirePath("properties.errorMessage")]
         public string ErrorMessage
         {

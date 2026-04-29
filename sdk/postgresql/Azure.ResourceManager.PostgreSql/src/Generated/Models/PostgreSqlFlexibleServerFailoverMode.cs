@@ -15,9 +15,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerFailoverMode : IEquatable<PostgreSqlFlexibleServerFailoverMode>
     {
         private readonly string _value;
+        /// <summary> Trigger a failover from primary to standby without killing the primary database process first. This is a graceful failover that attempts to preserve data consistency. </summary>
         private const string PlannedFailoverValue = "PlannedFailover";
+        /// <summary> Terminate the primary database process first, then triggers the failover. This is more aggressive and used when the primary is unresponsive or in an unhealthy state. </summary>
         private const string ForcedFailoverValue = "ForcedFailover";
+        /// <summary> Similar to 'PlannedFailover' but prefers a switch over operation where roles are swapped between primary and standby. </summary>
         private const string PlannedSwitchoverValue = "PlannedSwitchover";
+        /// <summary> Terminate the primary database process first, and then triggers a switch over with role swapping. </summary>
         private const string ForcedSwitchoverValue = "ForcedSwitchover";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFailoverMode"/>. </summary>
@@ -30,16 +34,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the PlannedFailover. </summary>
+        /// <summary> Trigger a failover from primary to standby without killing the primary database process first. This is a graceful failover that attempts to preserve data consistency. </summary>
         public static PostgreSqlFlexibleServerFailoverMode PlannedFailover { get; } = new PostgreSqlFlexibleServerFailoverMode(PlannedFailoverValue);
 
-        /// <summary> Gets the ForcedFailover. </summary>
+        /// <summary> Terminate the primary database process first, then triggers the failover. This is more aggressive and used when the primary is unresponsive or in an unhealthy state. </summary>
         public static PostgreSqlFlexibleServerFailoverMode ForcedFailover { get; } = new PostgreSqlFlexibleServerFailoverMode(ForcedFailoverValue);
 
-        /// <summary> Gets the PlannedSwitchover. </summary>
+        /// <summary> Similar to 'PlannedFailover' but prefers a switch over operation where roles are swapped between primary and standby. </summary>
         public static PostgreSqlFlexibleServerFailoverMode PlannedSwitchover { get; } = new PostgreSqlFlexibleServerFailoverMode(PlannedSwitchoverValue);
 
-        /// <summary> Gets the ForcedSwitchover. </summary>
+        /// <summary> Terminate the primary database process first, and then triggers a switch over with role swapping. </summary>
         public static PostgreSqlFlexibleServerFailoverMode ForcedSwitchover { get; } = new PostgreSqlFlexibleServerFailoverMode(ForcedSwitchoverValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFailoverMode"/> values are the same. </summary>

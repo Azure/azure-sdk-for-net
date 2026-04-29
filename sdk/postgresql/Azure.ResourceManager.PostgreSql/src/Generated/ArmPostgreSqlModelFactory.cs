@@ -377,11 +377,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 groupIds is null && privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null));
         }
 
-        /// <summary> The status of a network migration operation. </summary>
-        /// <param name="subscriptionId"> The ID of the subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="state"> The state of the network migration operation. </param>
+        /// <summary> Status of a network migration operation. </summary>
+        /// <param name="subscriptionId"> Identifier of the subscription. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="serverName"> Name of the server. </param>
+        /// <param name="state"> State of the network migration operation. </param>
         /// <returns> A new <see cref="Models.DbMigrateNetworkStatus"/> instance for mocking. </returns>
         public static DbMigrateNetworkStatus DbMigrateNetworkStatus(Guid? subscriptionId = default, string resourceGroupName = default, string serverName = default, DbNetworkMigrationState? state = default)
         {
@@ -522,8 +522,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Capability for the Azure Database for PostgreSQL flexible server. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
         /// <param name="name"> Name of flexible servers capabilities. </param>
         /// <param name="supportedServerEditions"> List of supported compute tiers. </param>
         /// <param name="supportedServerVersions"> List of supported major versions of PostgreSQL database engine. </param>
@@ -563,8 +563,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Capabilities in terms of compute tier. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
         /// <param name="name"> Name of compute tier. </param>
         /// <param name="defaultSkuName"> Default compute name (SKU) for this computer tier. </param>
         /// <param name="supportedStorageEditions"> List of storage editions supported by this compute tier and compute name. </param>
@@ -586,8 +586,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Capabilities in terms of storage tier. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
         /// <param name="name"> Name of storage tier. </param>
         /// <param name="defaultStorageSizeMb"> Default storage size (in MB) for this storage tier. </param>
         /// <param name="supportedStorageCapabilities"> Configurations of storage supported for this storage tier. </param>
@@ -606,8 +606,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Storage size (in MB) capability. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
         /// <param name="supportedIops"> Minimum IOPS supported by the storage size. </param>
         /// <param name="supportedMaximumIops"> Maximum IOPS supported by the storage size. </param>
         /// <param name="storageSizeInMB"> Minimum supported size (in MB) of storage. </param>
@@ -636,8 +636,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Capability of a storage tier. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
         /// <param name="name"> Name of the storage tier. </param>
         /// <param name="iops"> Supported IOPS for the storage tier. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/> instance for mocking. </returns>
@@ -647,8 +647,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Base object for representing capability. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.PostgreSqlBaseCapability"/> instance for mocking. </returns>
         public static PostgreSqlBaseCapability PostgreSqlBaseCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = default, string reason = default)
         {
@@ -656,8 +656,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Capabilities in terms of compute. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
         /// <param name="name"> Name of the compute (SKU). </param>
         /// <param name="vCores"> vCores available for this compute. </param>
         /// <param name="supportedIops"> Maximum IOPS supported by this compute. </param>
@@ -697,8 +697,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Capabilities in terms of major versions of PostgreSQL database engine. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
         /// <param name="name"> Major version of PostgreSQL database engine. </param>
         /// <param name="supportedVersionsToUpgrade"> Major versions of PostgreSQL database engine to which this version can be automatically upgraded. </param>
         /// <param name="supportedFeatures"> Features supported. </param>
@@ -718,8 +718,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Capability of a fast provisioning compute tier. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
         /// <param name="supportedTier"> Compute tier supporting fast provisioning. </param>
         /// <param name="supportedSku"> Compute name (SKU) supporting fast provisioning. </param>
         /// <param name="supportedStorageGb"> Storage size (in GB) supporting fast provisioning. </param>
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlBackupContent(new PostgreSqlFlexibleServerBackupSettings(backupName, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The settings for the long term backup. </summary>
+        /// <summary> Settings for the long term backup. </summary>
         /// <param name="backupName"> Backup Name for the current backup. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupSettings"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerBackupSettings PostgreSqlFlexibleServerBackupSettings(string backupName = default)
@@ -812,9 +812,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="status"> Service-set extensible enum indicating the status of operation. </param>
         /// <param name="startOn"> Start time of the operation. </param>
         /// <param name="endOn"> End time of the operation. </param>
-        /// <param name="percentComplete"> PercentageCompleted. </param>
-        /// <param name="errorCode"> The error code. </param>
-        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="percentComplete"> Percentage completed. </param>
+        /// <param name="errorCode"> Error code. </param>
+        /// <param name="errorMessage"> Error message. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrBackupResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrBackupResult PostgreSqlFlexibleServerLtrBackupResult(long? datasourceSizeInBytes = default, long? dataTransferredInBytes = default, string backupName = default, string backupMetadata = default, PostgreSqlExecutionStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, double? percentComplete = default, string errorCode = default, string errorMessage = default)
         {
@@ -843,9 +843,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="status"> Service-set extensible enum indicating the status of operation. </param>
         /// <param name="startOn"> Start time of the operation. </param>
         /// <param name="endOn"> End time of the operation. </param>
-        /// <param name="percentComplete"> PercentageCompleted. </param>
-        /// <param name="errorCode"> The error code. </param>
-        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="percentComplete"> Percentage completed. </param>
+        /// <param name="errorCode"> Error code. </param>
+        /// <param name="errorMessage"> Error message. </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationData"/> instance for mocking. </returns>
         public static PostgreSqlLtrServerBackupOperationData PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, long? datasourceSizeInBytes = default, long? dataTransferredInBytes = default, string backupName = default, string backupMetadata = default, PostgreSqlExecutionStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, double? percentComplete = default, string errorCode = default, string errorMessage = default)
         {

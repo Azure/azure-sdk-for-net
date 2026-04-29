@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct MigrateRolesEnum : IEquatable<MigrateRolesEnum>
     {
         private readonly string _value;
+        /// <summary> Roles and permissions will be migrated. </summary>
         private const string TrueValue = "True";
+        /// <summary> Roles and permissions will not be migrated. </summary>
         private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="MigrateRolesEnum"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the True. </summary>
+        /// <summary> Roles and permissions will be migrated. </summary>
         public static MigrateRolesEnum True { get; } = new MigrateRolesEnum(TrueValue);
 
-        /// <summary> Gets the False. </summary>
+        /// <summary> Roles and permissions will not be migrated. </summary>
         public static MigrateRolesEnum False { get; } = new MigrateRolesEnum(FalseValue);
 
         /// <summary> Determines if two <see cref="MigrateRolesEnum"/> values are the same. </summary>

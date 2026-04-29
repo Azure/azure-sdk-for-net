@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
+    /// <summary> Indicates if databases on the target server can be overwritten when already present. </summary>
     public readonly partial struct PostgreSqlMigrationOverwriteDbsInTarget : IEquatable<PostgreSqlMigrationOverwriteDbsInTarget>
     {
         private readonly string _value;
+        /// <summary> Databases on the target server can be overwritten when already present. </summary>
         private const string TrueValue = "True";
+        /// <summary> Databases on the target server cannot be overwritten when already present. When the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
         private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationOverwriteDbsInTarget"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the True. </summary>
+        /// <summary> Databases on the target server can be overwritten when already present. </summary>
         public static PostgreSqlMigrationOverwriteDbsInTarget True { get; } = new PostgreSqlMigrationOverwriteDbsInTarget(TrueValue);
 
-        /// <summary> Gets the False. </summary>
+        /// <summary> Databases on the target server cannot be overwritten when already present. When the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
         public static PostgreSqlMigrationOverwriteDbsInTarget False { get; } = new PostgreSqlMigrationOverwriteDbsInTarget(FalseValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlMigrationOverwriteDbsInTarget"/> values are the same. </summary>

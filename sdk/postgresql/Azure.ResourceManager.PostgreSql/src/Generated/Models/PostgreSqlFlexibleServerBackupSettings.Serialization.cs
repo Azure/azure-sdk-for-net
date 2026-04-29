@@ -14,7 +14,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The settings for the long term backup. </summary>
+    /// <summary> Settings for the long term backup. </summary>
     public partial class PostgreSqlFlexibleServerBackupSettings : IJsonModel<PostgreSqlFlexibleServerBackupSettings>
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupSettings"/> for deserialization. </summary>

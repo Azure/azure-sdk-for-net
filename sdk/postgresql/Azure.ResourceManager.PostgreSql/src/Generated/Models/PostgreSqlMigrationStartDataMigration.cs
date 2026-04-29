@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationStartDataMigration : IEquatable<PostgreSqlMigrationStartDataMigration>
     {
         private readonly string _value;
+        /// <summary> Data migration must start right away. </summary>
         private const string TrueValue = "True";
+        /// <summary> Data migration must not start right away. </summary>
         private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationStartDataMigration"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the True. </summary>
+        /// <summary> Data migration must start right away. </summary>
         public static PostgreSqlMigrationStartDataMigration True { get; } = new PostgreSqlMigrationStartDataMigration(TrueValue);
 
-        /// <summary> Gets the False. </summary>
+        /// <summary> Data migration must not start right away. </summary>
         public static PostgreSqlMigrationStartDataMigration False { get; } = new PostgreSqlMigrationStartDataMigration(FalseValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlMigrationStartDataMigration"/> values are the same. </summary>

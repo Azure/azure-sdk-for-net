@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerKeyType : IEquatable<PostgreSqlFlexibleServerKeyType>
     {
         private readonly string _value;
+        /// <summary> Encryption managed by Azure using platform managed keys for simplicity and compliance. </summary>
         private const string SystemManagedValue = "SystemManaged";
+        /// <summary> Encryption using customer managed keys stored in Azure Key Vault for enhanced control and security. </summary>
         private const string AzureKeyVaultValue = "AzureKeyVault";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerKeyType"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the SystemManaged. </summary>
+        /// <summary> Encryption managed by Azure using platform managed keys for simplicity and compliance. </summary>
         public static PostgreSqlFlexibleServerKeyType SystemManaged { get; } = new PostgreSqlFlexibleServerKeyType(SystemManagedValue);
 
-        /// <summary> Gets the AzureKeyVault. </summary>
+        /// <summary> Encryption using customer managed keys stored in Azure Key Vault for enhanced control and security. </summary>
         public static PostgreSqlFlexibleServerKeyType AzureKeyVault { get; } = new PostgreSqlFlexibleServerKeyType(AzureKeyVaultValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerKeyType"/> values are the same. </summary>

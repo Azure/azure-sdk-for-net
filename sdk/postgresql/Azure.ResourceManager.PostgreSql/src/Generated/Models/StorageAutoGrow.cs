@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Flag to enable or disable the automatic growth of storage size of a server when available space is nearing zero and conditions allow for automatically growing storage size. </summary>
+    /// <summary> Indicates if the server is configured to automatically grow storage size when available space is nearing zero and conditions allow for automatic growing storage size. </summary>
     public readonly partial struct StorageAutoGrow : IEquatable<StorageAutoGrow>
     {
         private readonly string _value;
+        /// <summary> Server should automatically grow storage size when available space is nearing zero and conditions allow for automatically growing storage size. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Server should not automatically grow storage size when available space is nearing zero. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="StorageAutoGrow"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Server should automatically grow storage size when available space is nearing zero and conditions allow for automatically growing storage size. </summary>
         public static StorageAutoGrow Enabled { get; } = new StorageAutoGrow(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Server should not automatically grow storage size when available space is nearing zero. </summary>
         public static StorageAutoGrow Disabled { get; } = new StorageAutoGrow(DisabledValue);
 
         /// <summary> Determines if two <see cref="StorageAutoGrow"/> values are the same. </summary>

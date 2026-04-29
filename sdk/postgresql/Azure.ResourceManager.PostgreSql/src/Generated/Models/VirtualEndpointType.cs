@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct VirtualEndpointType : IEquatable<VirtualEndpointType>
     {
         private readonly string _value;
+        /// <summary> Read-write endpoint. </summary>
         private const string ReadWriteValue = "ReadWrite";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEndpointType"/>. </summary>
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the ReadWrite. </summary>
+        /// <summary> Read-write endpoint. </summary>
         public static VirtualEndpointType ReadWrite { get; } = new VirtualEndpointType(ReadWriteValue);
 
         /// <summary> Determines if two <see cref="VirtualEndpointType"/> values are the same. </summary>

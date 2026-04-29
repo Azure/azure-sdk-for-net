@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerFeatureStatus : IEquatable<PostgreSqlFlexibleServerFeatureStatus>
     {
         private readonly string _value;
+        /// <summary> Feature is enabled. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Feature is disabled. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFeatureStatus"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Feature is enabled. </summary>
         public static PostgreSqlFlexibleServerFeatureStatus Enabled { get; } = new PostgreSqlFlexibleServerFeatureStatus(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Feature is disabled. </summary>
         public static PostgreSqlFlexibleServerFeatureStatus Disabled { get; } = new PostgreSqlFlexibleServerFeatureStatus(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFeatureStatus"/> values are the same. </summary>

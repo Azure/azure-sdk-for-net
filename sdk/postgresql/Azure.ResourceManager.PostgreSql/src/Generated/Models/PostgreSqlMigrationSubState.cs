@@ -15,17 +15,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationSubState : IEquatable<PostgreSqlMigrationSubState>
     {
         private readonly string _value;
+        /// <summary> Performing pre-requisite steps for migration. </summary>
         private const string PerformingPreRequisiteStepsValue = "PerformingPreRequisiteSteps";
+        /// <summary> Waiting for logical replication setup request on source database. </summary>
         private const string WaitingForLogicalReplicationSetupRequestOnSourceDBValue = "WaitingForLogicalReplicationSetupRequestOnSourceDB";
+        /// <summary> Waiting for databases to migrate specification. </summary>
         private const string WaitingForDBsToMigrateSpecificationValue = "WaitingForDBsToMigrateSpecification";
+        /// <summary> Waiting for target database overwrite confirmation. </summary>
         private const string WaitingForTargetDBOverwriteConfirmationValue = "WaitingForTargetDBOverwriteConfirmation";
+        /// <summary> Waiting for data migration scheduling. </summary>
         private const string WaitingForDataMigrationSchedulingValue = "WaitingForDataMigrationScheduling";
+        /// <summary> Waiting for data migration window. </summary>
         private const string WaitingForDataMigrationWindowValue = "WaitingForDataMigrationWindow";
+        /// <summary> Migrating data. </summary>
         private const string MigratingDataValue = "MigratingData";
+        /// <summary> Waiting for cutover trigger. </summary>
         private const string WaitingForCutoverTriggerValue = "WaitingForCutoverTrigger";
+        /// <summary> Completing migration. </summary>
         private const string CompletingMigrationValue = "CompletingMigration";
+        /// <summary> Migration completed. </summary>
         private const string CompletedValue = "Completed";
+        /// <summary> Canceling requested database migrations. </summary>
         private const string CancelingRequestedDBMigrationsValue = "CancelingRequestedDBMigrations";
+        /// <summary> Validation in progress. </summary>
         private const string ValidationInProgressValue = "ValidationInProgress";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubState"/>. </summary>
@@ -38,40 +50,40 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the PerformingPreRequisiteSteps. </summary>
+        /// <summary> Performing pre-requisite steps for migration. </summary>
         public static PostgreSqlMigrationSubState PerformingPreRequisiteSteps { get; } = new PostgreSqlMigrationSubState(PerformingPreRequisiteStepsValue);
 
-        /// <summary> Gets the WaitingForLogicalReplicationSetupRequestOnSourceDB. </summary>
+        /// <summary> Waiting for logical replication setup request on source database. </summary>
         public static PostgreSqlMigrationSubState WaitingForLogicalReplicationSetupRequestOnSourceDB { get; } = new PostgreSqlMigrationSubState(WaitingForLogicalReplicationSetupRequestOnSourceDBValue);
 
-        /// <summary> Gets the WaitingForDBsToMigrateSpecification. </summary>
+        /// <summary> Waiting for databases to migrate specification. </summary>
         public static PostgreSqlMigrationSubState WaitingForDBsToMigrateSpecification { get; } = new PostgreSqlMigrationSubState(WaitingForDBsToMigrateSpecificationValue);
 
-        /// <summary> Gets the WaitingForTargetDBOverwriteConfirmation. </summary>
+        /// <summary> Waiting for target database overwrite confirmation. </summary>
         public static PostgreSqlMigrationSubState WaitingForTargetDBOverwriteConfirmation { get; } = new PostgreSqlMigrationSubState(WaitingForTargetDBOverwriteConfirmationValue);
 
-        /// <summary> Gets the WaitingForDataMigrationScheduling. </summary>
+        /// <summary> Waiting for data migration scheduling. </summary>
         public static PostgreSqlMigrationSubState WaitingForDataMigrationScheduling { get; } = new PostgreSqlMigrationSubState(WaitingForDataMigrationSchedulingValue);
 
-        /// <summary> Gets the WaitingForDataMigrationWindow. </summary>
+        /// <summary> Waiting for data migration window. </summary>
         public static PostgreSqlMigrationSubState WaitingForDataMigrationWindow { get; } = new PostgreSqlMigrationSubState(WaitingForDataMigrationWindowValue);
 
-        /// <summary> Gets the MigratingData. </summary>
+        /// <summary> Migrating data. </summary>
         public static PostgreSqlMigrationSubState MigratingData { get; } = new PostgreSqlMigrationSubState(MigratingDataValue);
 
-        /// <summary> Gets the WaitingForCutoverTrigger. </summary>
+        /// <summary> Waiting for cutover trigger. </summary>
         public static PostgreSqlMigrationSubState WaitingForCutoverTrigger { get; } = new PostgreSqlMigrationSubState(WaitingForCutoverTriggerValue);
 
-        /// <summary> Gets the CompletingMigration. </summary>
+        /// <summary> Completing migration. </summary>
         public static PostgreSqlMigrationSubState CompletingMigration { get; } = new PostgreSqlMigrationSubState(CompletingMigrationValue);
 
-        /// <summary> Gets the Completed. </summary>
+        /// <summary> Migration completed. </summary>
         public static PostgreSqlMigrationSubState Completed { get; } = new PostgreSqlMigrationSubState(CompletedValue);
 
-        /// <summary> Gets the CancelingRequestedDBMigrations. </summary>
+        /// <summary> Canceling requested database migrations. </summary>
         public static PostgreSqlMigrationSubState CancelingRequestedDBMigrations { get; } = new PostgreSqlMigrationSubState(CancelingRequestedDBMigrationsValue);
 
-        /// <summary> Gets the ValidationInProgress. </summary>
+        /// <summary> Validation in progress. </summary>
         public static PostgreSqlMigrationSubState ValidationInProgress { get; } = new PostgreSqlMigrationSubState(ValidationInProgressValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlMigrationSubState"/> values are the same. </summary>

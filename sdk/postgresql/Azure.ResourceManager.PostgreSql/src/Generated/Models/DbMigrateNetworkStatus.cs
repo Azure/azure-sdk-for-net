@@ -11,7 +11,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The status of a network migration operation. </summary>
+    /// <summary> Status of a network migration operation. </summary>
     public partial class DbMigrateNetworkStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DbMigrateNetworkStatus"/>. </summary>
-        /// <param name="subscriptionId"> The ID of the subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="state"> The state of the network migration operation. </param>
+        /// <param name="subscriptionId"> Identifier of the subscription. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="serverName"> Name of the server. </param>
+        /// <param name="state"> State of the network migration operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DbMigrateNetworkStatus(Guid? subscriptionId, string resourceGroupName, string serverName, DbNetworkMigrationState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The ID of the subscription. </summary>
+        /// <summary> Identifier of the subscription. </summary>
         [WirePath("subscriptionId")]
         public Guid? SubscriptionId { get; }
 
-        /// <summary> The name of the resource group. </summary>
+        /// <summary> Name of the resource group. </summary>
         [WirePath("resourceGroupName")]
         public string ResourceGroupName { get; }
 
-        /// <summary> The name of the server. </summary>
+        /// <summary> Name of the server. </summary>
         [WirePath("serverName")]
         public string ServerName { get; }
 
-        /// <summary> The state of the network migration operation. </summary>
+        /// <summary> State of the network migration operation. </summary>
         [WirePath("state")]
         public DbNetworkMigrationState? State { get; }
     }

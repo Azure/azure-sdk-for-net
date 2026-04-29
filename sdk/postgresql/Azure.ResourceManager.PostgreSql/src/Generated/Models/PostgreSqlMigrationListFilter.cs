@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary></summary>
+    /// <summary> Indicates the filter to apply when listing migrations. </summary>
     public readonly partial struct PostgreSqlMigrationListFilter : IEquatable<PostgreSqlMigrationListFilter>
     {
         private readonly string _value;
+        /// <summary> Only active (in-progress) migrations. </summary>
         private const string ActiveValue = "Active";
+        /// <summary> All migrations. </summary>
         private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationListFilter"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Active. </summary>
+        /// <summary> Only active (in-progress) migrations. </summary>
         public static PostgreSqlMigrationListFilter Active { get; } = new PostgreSqlMigrationListFilter(ActiveValue);
 
-        /// <summary> Gets the All. </summary>
+        /// <summary> All migrations. </summary>
         public static PostgreSqlMigrationListFilter All { get; } = new PostgreSqlMigrationListFilter(AllValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlMigrationListFilter"/> values are the same. </summary>

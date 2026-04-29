@@ -15,10 +15,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerRecommendationType : IEquatable<PostgreSqlFlexibleServerRecommendationType>
     {
         private readonly string _value;
+        /// <summary> Recommendation to create an index to improve query performance. </summary>
         private const string CreateIndexValue = "CreateIndex";
+        /// <summary> Recommendation to drop an existing index because it's duplicate or unused. </summary>
         private const string DropIndexValue = "DropIndex";
+        /// <summary> Recommendation to reindex an existing invalid index. </summary>
         private const string ReIndexValue = "ReIndex";
+        /// <summary> Recommendation to analyze a table to update statistics for the query optimizer. </summary>
         private const string AnalyzeTableValue = "AnalyzeTable";
+        /// <summary> Recommendation to vacuum a table to reclaim storage and optimize performance. </summary>
         private const string VacuumTableValue = "VacuumTable";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerRecommendationType"/>. </summary>
@@ -31,19 +36,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the CreateIndex. </summary>
+        /// <summary> Recommendation to create an index to improve query performance. </summary>
         public static PostgreSqlFlexibleServerRecommendationType CreateIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(CreateIndexValue);
 
-        /// <summary> Gets the DropIndex. </summary>
+        /// <summary> Recommendation to drop an existing index because it's duplicate or unused. </summary>
         public static PostgreSqlFlexibleServerRecommendationType DropIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(DropIndexValue);
 
-        /// <summary> Gets the ReIndex. </summary>
+        /// <summary> Recommendation to reindex an existing invalid index. </summary>
         public static PostgreSqlFlexibleServerRecommendationType ReIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(ReIndexValue);
 
-        /// <summary> Gets the AnalyzeTable. </summary>
+        /// <summary> Recommendation to analyze a table to update statistics for the query optimizer. </summary>
         public static PostgreSqlFlexibleServerRecommendationType AnalyzeTable { get; } = new PostgreSqlFlexibleServerRecommendationType(AnalyzeTableValue);
 
-        /// <summary> Gets the VacuumTable. </summary>
+        /// <summary> Recommendation to vacuum a table to reclaim storage and optimize performance. </summary>
         public static PostgreSqlFlexibleServerRecommendationType VacuumTable { get; } = new PostgreSqlFlexibleServerRecommendationType(VacuumTableValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerRecommendationType"/> values are the same. </summary>

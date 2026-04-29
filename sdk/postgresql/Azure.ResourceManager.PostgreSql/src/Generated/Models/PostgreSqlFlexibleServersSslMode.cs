@@ -15,9 +15,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServersSslMode : IEquatable<PostgreSqlFlexibleServersSslMode>
     {
         private readonly string _value;
+        /// <summary> Prefer SSL connection. If the server does not support SSL, the connection will be established without SSL. </summary>
         private const string PreferValue = "Prefer";
+        /// <summary> Require SSL connection. If the server does not support SSL, the connection will fail. </summary>
         private const string RequireValue = "Require";
+        /// <summary> Require SSL connection and verify the server certificate against the CA certificate. </summary>
         private const string VerifyCAValue = "VerifyCA";
+        /// <summary> Require SSL connection, verify the server certificate against the CA certificate, and verify that the server hostname matches the certificate. </summary>
         private const string VerifyFullValue = "VerifyFull";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersSslMode"/>. </summary>
@@ -30,16 +34,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Prefer. </summary>
+        /// <summary> Prefer SSL connection. If the server does not support SSL, the connection will be established without SSL. </summary>
         public static PostgreSqlFlexibleServersSslMode Prefer { get; } = new PostgreSqlFlexibleServersSslMode(PreferValue);
 
-        /// <summary> Gets the Require. </summary>
+        /// <summary> Require SSL connection. If the server does not support SSL, the connection will fail. </summary>
         public static PostgreSqlFlexibleServersSslMode Require { get; } = new PostgreSqlFlexibleServersSslMode(RequireValue);
 
-        /// <summary> Gets the VerifyCA. </summary>
+        /// <summary> Require SSL connection and verify the server certificate against the CA certificate. </summary>
         public static PostgreSqlFlexibleServersSslMode VerifyCA { get; } = new PostgreSqlFlexibleServersSslMode(VerifyCAValue);
 
-        /// <summary> Gets the VerifyFull. </summary>
+        /// <summary> Require SSL connection, verify the server certificate against the CA certificate, and verify that the server hostname matches the certificate. </summary>
         public static PostgreSqlFlexibleServersSslMode VerifyFull { get; } = new PostgreSqlFlexibleServersSslMode(VerifyFullValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersSslMode"/> values are the same. </summary>

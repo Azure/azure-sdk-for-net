@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerGeoRedundantBackupEnum : IEquatable<PostgreSqlFlexibleServerGeoRedundantBackupEnum>
     {
         private readonly string _value;
+        /// <summary> Server is configured to create geographically redundant backups. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Server is not configured to create geographically redundant backups. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerGeoRedundantBackupEnum"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Server is configured to create geographically redundant backups. </summary>
         public static PostgreSqlFlexibleServerGeoRedundantBackupEnum Enabled { get; } = new PostgreSqlFlexibleServerGeoRedundantBackupEnum(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Server is not configured to create geographically redundant backups. </summary>
         public static PostgreSqlFlexibleServerGeoRedundantBackupEnum Disabled { get; } = new PostgreSqlFlexibleServerGeoRedundantBackupEnum(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerGeoRedundantBackupEnum"/> values are the same. </summary>

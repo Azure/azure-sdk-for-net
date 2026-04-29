@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerNameAvailabilityContent PostgreSqlFlexibleServerNameAvailabilityContent(string name = null, ResourceType? resourceType = null)
         {
             var result = new PostgreSqlFlexibleServerNameAvailabilityContent() { Name = name };
-            result.TypeInternal = resourceType?.ToString();
+            result.ResourceType = resourceType;
             return result;
         }
 

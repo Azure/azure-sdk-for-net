@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Migrates the network configuration of a PostgreSQL flexible server from customer owned VNET to Microsoft owned VNET with support for private endpoints, or from Microsoft owned VNET with no support for private endpoints to Microsoft owned VNET with support for private endpoints.
+        /// Migrates an Azure Database for PostgreSQL server from VNet integration to a Private Link network model.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Migrates the network configuration of a PostgreSQL flexible server from customer owned VNET to Microsoft owned VNET with support for private endpoints, or from Microsoft owned VNET with no support for private endpoints to Microsoft owned VNET with support for private endpoints.
+        /// Migrates an Azure Database for PostgreSQL server from VNet integration to a Private Link network model.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

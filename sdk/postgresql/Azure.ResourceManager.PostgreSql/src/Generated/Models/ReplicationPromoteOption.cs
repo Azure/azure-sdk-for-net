@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct ReplicationPromoteOption : IEquatable<ReplicationPromoteOption>
     {
         private readonly string _value;
-        /// <summary> The operation will wait for data in the read replica to be fully synchronized with its source server, before it initiates the operation. </summary>
+        /// <summary> Wait for data in the read replica to be fully synchronized with its source server before it initiates the operation. </summary>
         private const string PlannedValue = "Planned";
-        /// <summary> The operation will not wait for data in the read replica to be synchronized with its source server, before it initiates the operation. </summary>
+        /// <summary> Initiate the operation immediately, without waiting for data in the read replica to be synchronized with its source server. </summary>
         private const string ForcedValue = "Forced";
 
         /// <summary> Initializes a new instance of <see cref="ReplicationPromoteOption"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> The operation will wait for data in the read replica to be fully synchronized with its source server, before it initiates the operation. </summary>
+        /// <summary> Wait for data in the read replica to be fully synchronized with its source server before it initiates the operation. </summary>
         public static ReplicationPromoteOption Planned { get; } = new ReplicationPromoteOption(PlannedValue);
 
-        /// <summary> The operation will not wait for data in the read replica to be synchronized with its source server, before it initiates the operation. </summary>
+        /// <summary> Initiate the operation immediately, without waiting for data in the read replica to be synchronized with its source server. </summary>
         public static ReplicationPromoteOption Forced { get; } = new ReplicationPromoteOption(ForcedValue);
 
         /// <summary> Determines if two <see cref="ReplicationPromoteOption"/> values are the same. </summary>

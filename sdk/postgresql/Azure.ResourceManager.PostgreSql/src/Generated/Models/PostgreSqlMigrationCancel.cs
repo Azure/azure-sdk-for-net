@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationCancel : IEquatable<PostgreSqlMigrationCancel>
     {
         private readonly string _value;
+        /// <summary> Cancel must be triggered for the entire migration. </summary>
         private const string TrueValue = "True";
+        /// <summary> Cancel must not be triggered for the entire migration. </summary>
         private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationCancel"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the True. </summary>
+        /// <summary> Cancel must be triggered for the entire migration. </summary>
         public static PostgreSqlMigrationCancel True { get; } = new PostgreSqlMigrationCancel(TrueValue);
 
-        /// <summary> Gets the False. </summary>
+        /// <summary> Cancel must not be triggered for the entire migration. </summary>
         public static PostgreSqlMigrationCancel False { get; } = new PostgreSqlMigrationCancel(FalseValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlMigrationCancel"/> values are the same. </summary>

@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerFastProvisioningSupported : IEquatable<PostgreSqlFlexibleServerFastProvisioningSupported>
     {
         private readonly string _value;
+        /// <summary> Fast provisioning is supported. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Fast provisioning is not supported. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFastProvisioningSupported"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Fast provisioning is supported. </summary>
         public static PostgreSqlFlexibleServerFastProvisioningSupported Enabled { get; } = new PostgreSqlFlexibleServerFastProvisioningSupported(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Fast provisioning is not supported. </summary>
         public static PostgreSqlFlexibleServerFastProvisioningSupported Disabled { get; } = new PostgreSqlFlexibleServerFastProvisioningSupported(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFastProvisioningSupported"/> values are the same. </summary>

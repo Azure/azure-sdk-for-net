@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerPasswordAuthEnum : IEquatable<PostgreSqlFlexibleServerPasswordAuthEnum>
     {
         private readonly string _value;
+        /// <summary> Server supports password based authentication. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Server does not support password based authentication. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Server supports password based authentication. </summary>
         public static PostgreSqlFlexibleServerPasswordAuthEnum Enabled { get; } = new PostgreSqlFlexibleServerPasswordAuthEnum(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Server does not support password based authentication. </summary>
         public static PostgreSqlFlexibleServerPasswordAuthEnum Disabled { get; } = new PostgreSqlFlexibleServerPasswordAuthEnum(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/> values are the same. </summary>

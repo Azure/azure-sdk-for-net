@@ -15,7 +15,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The status of a network migration operation. </summary>
+    /// <summary> Status of a network migration operation. </summary>
     public partial class DbMigrateNetworkStatus : IJsonModel<DbMigrateNetworkStatus>
     {
         /// <param name="data"> The data to parse. </param>

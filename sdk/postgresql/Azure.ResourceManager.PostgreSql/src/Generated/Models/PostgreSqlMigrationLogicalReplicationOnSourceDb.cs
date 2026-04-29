@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationLogicalReplicationOnSourceDb : IEquatable<PostgreSqlMigrationLogicalReplicationOnSourceDb>
     {
         private readonly string _value;
+        /// <summary> Logical replication will be set up on the source server. </summary>
         private const string TrueValue = "True";
+        /// <summary> Logical replication will not be set up on the source server. </summary>
         private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationLogicalReplicationOnSourceDb"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the True. </summary>
+        /// <summary> Logical replication will be set up on the source server. </summary>
         public static PostgreSqlMigrationLogicalReplicationOnSourceDb True { get; } = new PostgreSqlMigrationLogicalReplicationOnSourceDb(TrueValue);
 
-        /// <summary> Gets the False. </summary>
+        /// <summary> Logical replication will not be set up on the source server. </summary>
         public static PostgreSqlMigrationLogicalReplicationOnSourceDb False { get; } = new PostgreSqlMigrationLogicalReplicationOnSourceDb(FalseValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlMigrationLogicalReplicationOnSourceDb"/> values are the same. </summary>

@@ -11,21 +11,21 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates the replication state of a read replica. This property is returned only when the target server is a read replica. Possible  values are Active, Broken, Catchup, Provisioning, Reconfiguring, and Updating. </summary>
+    /// <summary> Indicates the replication state of a read replica. This property is returned only when the target server is a read replica. </summary>
     public readonly partial struct PostgreSqlFlexibleServersReplicationState : IEquatable<PostgreSqlFlexibleServersReplicationState>
     {
         private readonly string _value;
-        /// <summary> The read replica server is fully synchronized and actively replicating data from the primary server. </summary>
+        /// <summary> Read replica server is fully synchronized and actively replicating data from the primary server. </summary>
         private const string ActiveValue = "Active";
-        /// <summary> The read replica server is behind the primary server and is currently catching up with pending changes. </summary>
+        /// <summary> Read replica server is behind the primary server and is currently catching up with pending changes. </summary>
         private const string CatchupValue = "Catchup";
-        /// <summary> The read replica server is being created and is in process of getting initialized. </summary>
+        /// <summary> Read replica server is being created and is in process of getting initialized. </summary>
         private const string ProvisioningValue = "Provisioning";
-        /// <summary> The read replica server is undergoing some changes it can be changing compute size of promoting it to primary server. </summary>
+        /// <summary> Read replica server is undergoing some changes it can be changing compute size of promoting it to primary server. </summary>
         private const string UpdatingValue = "Updating";
         /// <summary> Replication has failed or been interrupted. </summary>
         private const string BrokenValue = "Broken";
-        /// <summary> The read replica server is being reconfigured, possibly due to changes in source or settings. </summary>
+        /// <summary> Read replica server is being reconfigured, possibly due to changes in source or settings. </summary>
         private const string ReconfiguringValue = "Reconfiguring";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersReplicationState"/>. </summary>
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> The read replica server is fully synchronized and actively replicating data from the primary server. </summary>
+        /// <summary> Read replica server is fully synchronized and actively replicating data from the primary server. </summary>
         public static PostgreSqlFlexibleServersReplicationState Active { get; } = new PostgreSqlFlexibleServersReplicationState(ActiveValue);
 
-        /// <summary> The read replica server is behind the primary server and is currently catching up with pending changes. </summary>
+        /// <summary> Read replica server is behind the primary server and is currently catching up with pending changes. </summary>
         public static PostgreSqlFlexibleServersReplicationState Catchup { get; } = new PostgreSqlFlexibleServersReplicationState(CatchupValue);
 
-        /// <summary> The read replica server is being created and is in process of getting initialized. </summary>
+        /// <summary> Read replica server is being created and is in process of getting initialized. </summary>
         public static PostgreSqlFlexibleServersReplicationState Provisioning { get; } = new PostgreSqlFlexibleServersReplicationState(ProvisioningValue);
 
-        /// <summary> The read replica server is undergoing some changes it can be changing compute size of promoting it to primary server. </summary>
+        /// <summary> Read replica server is undergoing some changes it can be changing compute size of promoting it to primary server. </summary>
         public static PostgreSqlFlexibleServersReplicationState Updating { get; } = new PostgreSqlFlexibleServersReplicationState(UpdatingValue);
 
         /// <summary> Replication has failed or been interrupted. </summary>
         public static PostgreSqlFlexibleServersReplicationState Broken { get; } = new PostgreSqlFlexibleServersReplicationState(BrokenValue);
 
-        /// <summary> The read replica server is being reconfigured, possibly due to changes in source or settings. </summary>
+        /// <summary> Read replica server is being reconfigured, possibly due to changes in source or settings. </summary>
         public static PostgreSqlFlexibleServersReplicationState Reconfiguring { get; } = new PostgreSqlFlexibleServersReplicationState(ReconfiguringValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersReplicationState"/> values are the same. </summary>

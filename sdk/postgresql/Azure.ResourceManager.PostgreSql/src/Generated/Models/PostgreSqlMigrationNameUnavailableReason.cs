@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationNameUnavailableReason : IEquatable<PostgreSqlMigrationNameUnavailableReason>
     {
         private readonly string _value;
+        /// <summary> Migration name is invalid. </summary>
         private const string InvalidValue = "Invalid";
+        /// <summary> Migration name already exists. </summary>
         private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationNameUnavailableReason"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Migration name is invalid. </summary>
         public static PostgreSqlMigrationNameUnavailableReason Invalid { get; } = new PostgreSqlMigrationNameUnavailableReason(InvalidValue);
 
-        /// <summary> Gets the AlreadyExists. </summary>
+        /// <summary> Migration name already exists. </summary>
         public static PostgreSqlMigrationNameUnavailableReason AlreadyExists { get; } = new PostgreSqlMigrationNameUnavailableReason(AlreadyExistsValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlMigrationNameUnavailableReason"/> values are the same. </summary>

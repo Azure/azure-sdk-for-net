@@ -15,8 +15,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct MigrationOption : IEquatable<MigrationOption>
     {
         private readonly string _value;
+        /// <summary> Validate the migration without performing it. </summary>
         private const string ValidateValue = "Validate";
+        /// <summary> Perform the migration. </summary>
         private const string MigrateValue = "Migrate";
+        /// <summary> Validate and perform the migration. </summary>
         private const string ValidateAndMigrateValue = "ValidateAndMigrate";
 
         /// <summary> Initializes a new instance of <see cref="MigrationOption"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Validate. </summary>
+        /// <summary> Validate the migration without performing it. </summary>
         public static MigrationOption Validate { get; } = new MigrationOption(ValidateValue);
 
-        /// <summary> Gets the Migrate. </summary>
+        /// <summary> Perform the migration. </summary>
         public static MigrationOption Migrate { get; } = new MigrationOption(MigrateValue);
 
-        /// <summary> Gets the ValidateAndMigrate. </summary>
+        /// <summary> Validate and perform the migration. </summary>
         public static MigrationOption ValidateAndMigrate { get; } = new MigrationOption(ValidateAndMigrateValue);
 
         /// <summary> Determines if two <see cref="MigrationOption"/> values are the same. </summary>

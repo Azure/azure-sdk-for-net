@@ -15,19 +15,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlManagedDiskPerformanceTier : IEquatable<PostgreSqlManagedDiskPerformanceTier>
     {
         private readonly string _value;
+        /// <summary> Entry-level SSD for minimal IOPS, ideal for light development or testing workloads. </summary>
         private const string P1Value = "P1";
+        /// <summary> Slightly higher IOPS for small-scale applications needing consistent low latency. </summary>
         private const string P2Value = "P2";
+        /// <summary> Balanced performance for basic production workloads with moderate throughput. </summary>
         private const string P3Value = "P3";
+        /// <summary> Enhanced IOPS for growing apps with predictable performance needs. </summary>
         private const string P4Value = "P4";
+        /// <summary> Mid-tier SSD for steady workloads requiring reliable throughput and latency. </summary>
         private const string P6Value = "P6";
+        /// <summary> Popular choice for general-purpose production workloads with scalable performance. </summary>
         private const string P10Value = "P10";
+        /// <summary> High IOPS tier for demanding apps with frequent read/write operations. </summary>
         private const string P15Value = "P15";
+        /// <summary> Entry point for high-performance Solid State Disks (SSDs), suitable for small-scale I/O-intensive workloads. </summary>
         private const string P20Value = "P20";
+        /// <summary> Balanced tier for moderate throughput and latency-sensitive applications. </summary>
         private const string P30Value = "P30";
+        /// <summary> Enhanced performance for growing production workloads with consistent IOPS demands. </summary>
         private const string P40Value = "P40";
+        /// <summary> Optimized for enterprise-grade applications needing sustained high throughput. </summary>
         private const string P50Value = "P50";
+        /// <summary> High-capacity tier for large databases and analytics workloads with elevated IOPS. </summary>
         private const string P60Value = "P60";
+        /// <summary> Designed for mission-critical systems requiring ultra-low latency and high concurrency. </summary>
         private const string P70Value = "P70";
+        /// <summary> Top-tier SSD for maximum IOPS and throughput, ideal for the most demanding workloads. </summary>
         private const string P80Value = "P80";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlManagedDiskPerformanceTier"/>. </summary>
@@ -40,46 +54,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the P1. </summary>
+        /// <summary> Entry-level SSD for minimal IOPS, ideal for light development or testing workloads. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P1 { get; } = new PostgreSqlManagedDiskPerformanceTier(P1Value);
 
-        /// <summary> Gets the P2. </summary>
+        /// <summary> Slightly higher IOPS for small-scale applications needing consistent low latency. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P2 { get; } = new PostgreSqlManagedDiskPerformanceTier(P2Value);
 
-        /// <summary> Gets the P3. </summary>
+        /// <summary> Balanced performance for basic production workloads with moderate throughput. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P3 { get; } = new PostgreSqlManagedDiskPerformanceTier(P3Value);
 
-        /// <summary> Gets the P4. </summary>
+        /// <summary> Enhanced IOPS for growing apps with predictable performance needs. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P4 { get; } = new PostgreSqlManagedDiskPerformanceTier(P4Value);
 
-        /// <summary> Gets the P6. </summary>
+        /// <summary> Mid-tier SSD for steady workloads requiring reliable throughput and latency. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P6 { get; } = new PostgreSqlManagedDiskPerformanceTier(P6Value);
 
-        /// <summary> Gets the P10. </summary>
+        /// <summary> Popular choice for general-purpose production workloads with scalable performance. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P10 { get; } = new PostgreSqlManagedDiskPerformanceTier(P10Value);
 
-        /// <summary> Gets the P15. </summary>
+        /// <summary> High IOPS tier for demanding apps with frequent read/write operations. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P15 { get; } = new PostgreSqlManagedDiskPerformanceTier(P15Value);
 
-        /// <summary> Gets the P20. </summary>
+        /// <summary> Entry point for high-performance Solid State Disks (SSDs), suitable for small-scale I/O-intensive workloads. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P20 { get; } = new PostgreSqlManagedDiskPerformanceTier(P20Value);
 
-        /// <summary> Gets the P30. </summary>
+        /// <summary> Balanced tier for moderate throughput and latency-sensitive applications. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P30 { get; } = new PostgreSqlManagedDiskPerformanceTier(P30Value);
 
-        /// <summary> Gets the P40. </summary>
+        /// <summary> Enhanced performance for growing production workloads with consistent IOPS demands. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P40 { get; } = new PostgreSqlManagedDiskPerformanceTier(P40Value);
 
-        /// <summary> Gets the P50. </summary>
+        /// <summary> Optimized for enterprise-grade applications needing sustained high throughput. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P50 { get; } = new PostgreSqlManagedDiskPerformanceTier(P50Value);
 
-        /// <summary> Gets the P60. </summary>
+        /// <summary> High-capacity tier for large databases and analytics workloads with elevated IOPS. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P60 { get; } = new PostgreSqlManagedDiskPerformanceTier(P60Value);
 
-        /// <summary> Gets the P70. </summary>
+        /// <summary> Designed for mission-critical systems requiring ultra-low latency and high concurrency. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P70 { get; } = new PostgreSqlManagedDiskPerformanceTier(P70Value);
 
-        /// <summary> Gets the P80. </summary>
+        /// <summary> Top-tier SSD for maximum IOPS and throughput, ideal for the most demanding workloads. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P80 { get; } = new PostgreSqlManagedDiskPerformanceTier(P80Value);
 
         /// <summary> Determines if two <see cref="PostgreSqlManagedDiskPerformanceTier"/> values are the same. </summary>

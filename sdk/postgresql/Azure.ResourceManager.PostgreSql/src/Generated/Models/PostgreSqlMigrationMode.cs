@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Mode used to perform the migration: Online or Offline. </summary>
+    /// <summary> Mode used to perform the migration. </summary>
     public readonly partial struct PostgreSqlMigrationMode : IEquatable<PostgreSqlMigrationMode>
     {
         private readonly string _value;
+        /// <summary> Offline migration mode. </summary>
         private const string OfflineValue = "Offline";
+        /// <summary> Online migration mode. </summary>
         private const string OnlineValue = "Online";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationMode"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Offline. </summary>
+        /// <summary> Offline migration mode. </summary>
         public static PostgreSqlMigrationMode Offline { get; } = new PostgreSqlMigrationMode(OfflineValue);
 
-        /// <summary> Gets the Online. </summary>
+        /// <summary> Online migration mode. </summary>
         public static PostgreSqlMigrationMode Online { get; } = new PostgreSqlMigrationMode(OnlineValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlMigrationMode"/> values are the same. </summary>

@@ -15,11 +15,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct MigrationDbState : IEquatable<MigrationDbState>
     {
         private readonly string _value;
+        /// <summary> Migration is in progress for the database. </summary>
         private const string InProgressValue = "InProgress";
+        /// <summary> Migration is waiting for cutover trigger for the database. </summary>
         private const string WaitingForCutoverTriggerValue = "WaitingForCutoverTrigger";
+        /// <summary> Migration has failed for the database. </summary>
         private const string FailedValue = "Failed";
+        /// <summary> Migration has been canceled for the database. </summary>
         private const string CanceledValue = "Canceled";
+        /// <summary> Migration has succeeded for the database. </summary>
         private const string SucceededValue = "Succeeded";
+        /// <summary> Migration is being canceled for the database. </summary>
         private const string CancelingValue = "Canceling";
 
         /// <summary> Initializes a new instance of <see cref="MigrationDbState"/>. </summary>
@@ -32,22 +38,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the InProgress. </summary>
+        /// <summary> Migration is in progress for the database. </summary>
         public static MigrationDbState InProgress { get; } = new MigrationDbState(InProgressValue);
 
-        /// <summary> Gets the WaitingForCutoverTrigger. </summary>
+        /// <summary> Migration is waiting for cutover trigger for the database. </summary>
         public static MigrationDbState WaitingForCutoverTrigger { get; } = new MigrationDbState(WaitingForCutoverTriggerValue);
 
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Migration has failed for the database. </summary>
         public static MigrationDbState Failed { get; } = new MigrationDbState(FailedValue);
 
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Migration has been canceled for the database. </summary>
         public static MigrationDbState Canceled { get; } = new MigrationDbState(CanceledValue);
 
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Migration has succeeded for the database. </summary>
         public static MigrationDbState Succeeded { get; } = new MigrationDbState(SucceededValue);
 
-        /// <summary> Gets the Canceling. </summary>
+        /// <summary> Migration is being canceled for the database. </summary>
         public static MigrationDbState Canceling { get; } = new MigrationDbState(CancelingValue);
 
         /// <summary> Determines if two <see cref="MigrationDbState"/> values are the same. </summary>

@@ -15,8 +15,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerSkuTier : IEquatable<PostgreSqlFlexibleServerSkuTier>
     {
         private readonly string _value;
+        /// <summary> Cost-effective tier for infrequent CPU usage, ideal for development and testing workloads with low performance requirements. </summary>
         private const string BurstableValue = "Burstable";
+        /// <summary> Balanced compute and memory for most workloads, offering scalable performance and I/O throughput. </summary>
         private const string GeneralPurposeValue = "GeneralPurpose";
+        /// <summary> High memory-to-core ratio for demanding workloads needing fast in-memory processing and high concurrency. </summary>
         private const string MemoryOptimizedValue = "MemoryOptimized";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSkuTier"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Burstable. </summary>
+        /// <summary> Cost-effective tier for infrequent CPU usage, ideal for development and testing workloads with low performance requirements. </summary>
         public static PostgreSqlFlexibleServerSkuTier Burstable { get; } = new PostgreSqlFlexibleServerSkuTier(BurstableValue);
 
-        /// <summary> Gets the GeneralPurpose. </summary>
+        /// <summary> Balanced compute and memory for most workloads, offering scalable performance and I/O throughput. </summary>
         public static PostgreSqlFlexibleServerSkuTier GeneralPurpose { get; } = new PostgreSqlFlexibleServerSkuTier(GeneralPurposeValue);
 
-        /// <summary> Gets the MemoryOptimized. </summary>
+        /// <summary> High memory-to-core ratio for demanding workloads needing fast in-memory processing and high concurrency. </summary>
         public static PostgreSqlFlexibleServerSkuTier MemoryOptimized { get; } = new PostgreSqlFlexibleServerSkuTier(MemoryOptimizedValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerSkuTier"/> values are the same. </summary>

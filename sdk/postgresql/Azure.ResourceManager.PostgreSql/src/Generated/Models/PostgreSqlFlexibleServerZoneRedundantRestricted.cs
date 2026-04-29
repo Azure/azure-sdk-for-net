@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if this location is restricted. 'Enabled' means location is restricted. 'Disabled' stands for location is not restricted. Will be deprecated in the future. Look to Supported Features for 'Restricted'. </summary>
+    /// <summary> Indicates if this location is restricted. Will be deprecated in the future. Look to Supported Features for 'Restricted'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantRestricted : IEquatable<PostgreSqlFlexibleServerZoneRedundantRestricted>
     {
         private readonly string _value;
+        /// <summary> Location is restricted. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Location is not restricted. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Location is restricted. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantRestricted Enabled { get; } = new PostgreSqlFlexibleServerZoneRedundantRestricted(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Location is not restricted. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantRestricted Disabled { get; } = new PostgreSqlFlexibleServerZoneRedundantRestricted(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/> values are the same. </summary>

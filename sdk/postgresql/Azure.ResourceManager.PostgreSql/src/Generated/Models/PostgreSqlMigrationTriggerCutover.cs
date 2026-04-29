@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationTriggerCutover : IEquatable<PostgreSqlMigrationTriggerCutover>
     {
         private readonly string _value;
+        /// <summary> Cutover must be triggered for the entire migration. </summary>
         private const string TrueValue = "True";
+        /// <summary> Cutover must not be triggered for the entire migration. </summary>
         private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationTriggerCutover"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the True. </summary>
+        /// <summary> Cutover must be triggered for the entire migration. </summary>
         public static PostgreSqlMigrationTriggerCutover True { get; } = new PostgreSqlMigrationTriggerCutover(TrueValue);
 
-        /// <summary> Gets the False. </summary>
+        /// <summary> Cutover must not be triggered for the entire migration. </summary>
         public static PostgreSqlMigrationTriggerCutover False { get; } = new PostgreSqlMigrationTriggerCutover(FalseValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlMigrationTriggerCutover"/> values are the same. </summary>

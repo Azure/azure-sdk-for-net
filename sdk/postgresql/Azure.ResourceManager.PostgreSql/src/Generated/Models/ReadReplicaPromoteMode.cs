@@ -11,11 +11,11 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Type of operation to apply on the read replica. This property is write only. Standalone means that the read replica will be promoted to a standalone server, and will become a completely independent entity from the replication set. Switchover means that the read replica will roles with the primary server. </summary>
+    /// <summary> Type of operation to apply on the read replica. This property is write only. </summary>
     public readonly partial struct ReadReplicaPromoteMode : IEquatable<ReadReplicaPromoteMode>
     {
         private readonly string _value;
-        /// <summary> Read replica will become an independent server. </summary>
+        /// <summary> Read replica will become an independent server, and a completely independent entity from the replication set. </summary>
         private const string StandaloneValue = "Standalone";
         /// <summary> Read replica will swap roles with primary server. </summary>
         private const string SwitchoverValue = "Switchover";
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Read replica will become an independent server. </summary>
+        /// <summary> Read replica will become an independent server, and a completely independent entity from the replication set. </summary>
         public static ReadReplicaPromoteMode Standalone { get; } = new ReadReplicaPromoteMode(StandaloneValue);
 
         /// <summary> Read replica will swap roles with primary server. </summary>

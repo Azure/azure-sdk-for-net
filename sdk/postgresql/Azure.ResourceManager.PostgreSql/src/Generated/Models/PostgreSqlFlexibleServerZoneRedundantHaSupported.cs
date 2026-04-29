@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if high availability with zone redundancy is supported in this location. 'Enabled' means high availability with zone redundancy is supported. 'Disabled' stands for high availability with zone redundancy is not supported. Will be deprecated in the future. Look to Supported Features for  'ZoneRedundantHa'. </summary>
+    /// <summary> Indicates if high availability with zone redundancy is supported in this location. Will be deprecated in the future. Look to Supported Features for  'ZoneRedundantHa'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantHaSupported : IEquatable<PostgreSqlFlexibleServerZoneRedundantHaSupported>
     {
         private readonly string _value;
+        /// <summary> High availability with zone redundancy is supported. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> High availability with zone redundancy is not supported. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerZoneRedundantHaSupported"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> High availability with zone redundancy is supported. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantHaSupported Enabled { get; } = new PostgreSqlFlexibleServerZoneRedundantHaSupported(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> High availability with zone redundancy is not supported. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantHaSupported Disabled { get; } = new PostgreSqlFlexibleServerZoneRedundantHaSupported(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantHaSupported"/> values are the same. </summary>

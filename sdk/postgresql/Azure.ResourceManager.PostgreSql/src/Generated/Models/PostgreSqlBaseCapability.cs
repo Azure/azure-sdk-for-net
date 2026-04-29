@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlBaseCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlBaseCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The status of the capability. </summary>
+        /// <summary> Status of the capability. </summary>
         [WirePath("status")]
         public PostgreSqlFlexbileServerCapabilityStatus? CapabilityStatus { get; }
 
-        /// <summary> The reason for the capability not being available. </summary>
+        /// <summary> Reason for the capability not being available. </summary>
         [WirePath("reason")]
         public string Reason { get; }
     }

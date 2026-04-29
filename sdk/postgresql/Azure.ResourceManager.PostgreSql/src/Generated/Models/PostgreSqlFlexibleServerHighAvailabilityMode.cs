@@ -11,12 +11,15 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Modes of high availability supported for this compute. </summary>
+    /// <summary> Mode of high availability supported for this compute. </summary>
     public readonly partial struct PostgreSqlFlexibleServerHighAvailabilityMode : IEquatable<PostgreSqlFlexibleServerHighAvailabilityMode>
     {
         private readonly string _value;
+        /// <summary> High availability is disabled for the server. </summary>
         private const string DisabledValue = "Disabled";
+        /// <summary> High availability is enabled for the server, with standby server in a different availability zone than that of the primary. </summary>
         private const string ZoneRedundantValue = "ZoneRedundant";
+        /// <summary> High availability is enabled for the server, with standby server in the same availability zone as the primary. </summary>
         private const string SameZoneValue = "SameZone";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> High availability is disabled for the server. </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode Disabled { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(DisabledValue);
 
-        /// <summary> Gets the ZoneRedundant. </summary>
+        /// <summary> High availability is enabled for the server, with standby server in a different availability zone than that of the primary. </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode ZoneRedundant { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(ZoneRedundantValue);
 
-        /// <summary> Gets the SameZone. </summary>
+        /// <summary> High availability is enabled for the server, with standby server in the same availability zone as the primary. </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode SameZone { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(SameZoneValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/> values are the same. </summary>

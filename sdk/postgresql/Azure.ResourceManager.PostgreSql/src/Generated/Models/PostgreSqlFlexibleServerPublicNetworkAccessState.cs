@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerPublicNetworkAccessState : IEquatable<PostgreSqlFlexibleServerPublicNetworkAccessState>
     {
         private readonly string _value;
+        /// <summary> Public network access is enabled. This allows the server to be accessed from the public internet, provided the necessary firewall rule that allows incoming traffic originating from the connecting client is in place. This is compatible with the use of private endpoints to connect to this server. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Public network access is disabled. This means the server cannot be accessed from the public internet, but only via private endpoints. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Public network access is enabled. This allows the server to be accessed from the public internet, provided the necessary firewall rule that allows incoming traffic originating from the connecting client is in place. This is compatible with the use of private endpoints to connect to this server. </summary>
         public static PostgreSqlFlexibleServerPublicNetworkAccessState Enabled { get; } = new PostgreSqlFlexibleServerPublicNetworkAccessState(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Public network access is disabled. This means the server cannot be accessed from the public internet, but only via private endpoints. </summary>
         public static PostgreSqlFlexibleServerPublicNetworkAccessState Disabled { get; } = new PostgreSqlFlexibleServerPublicNetworkAccessState(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/> values are the same. </summary>

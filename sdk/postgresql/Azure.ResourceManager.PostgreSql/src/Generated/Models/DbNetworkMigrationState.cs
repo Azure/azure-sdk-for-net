@@ -11,21 +11,21 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The state of the network migration operation. </summary>
+    /// <summary> State of the network migration operation. </summary>
     public readonly partial struct DbNetworkMigrationState : IEquatable<DbNetworkMigrationState>
     {
         private readonly string _value;
-        /// <summary> The network migration is pending. </summary>
+        /// <summary> Network migration is pending. </summary>
         private const string PendingValue = "Pending";
-        /// <summary> The network migration is in progress. </summary>
+        /// <summary> Network migration is in progress. </summary>
         private const string InProgressValue = "InProgress";
-        /// <summary> The network migration succeeded. </summary>
+        /// <summary> Network migration succeeded. </summary>
         private const string SucceededValue = "Succeeded";
-        /// <summary> The network migration failed. </summary>
+        /// <summary> Network migration failed. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> The network migration cancellation is in progress. </summary>
+        /// <summary> Network migration cancellation is in progress. </summary>
         private const string CancelInProgressValue = "CancelInProgress";
-        /// <summary> The network migration was cancelled. </summary>
+        /// <summary> Network migration was cancelled. </summary>
         private const string CancelledValue = "Cancelled";
 
         /// <summary> Initializes a new instance of <see cref="DbNetworkMigrationState"/>. </summary>
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> The network migration is pending. </summary>
+        /// <summary> Network migration is pending. </summary>
         public static DbNetworkMigrationState Pending { get; } = new DbNetworkMigrationState(PendingValue);
 
-        /// <summary> The network migration is in progress. </summary>
+        /// <summary> Network migration is in progress. </summary>
         public static DbNetworkMigrationState InProgress { get; } = new DbNetworkMigrationState(InProgressValue);
 
-        /// <summary> The network migration succeeded. </summary>
+        /// <summary> Network migration succeeded. </summary>
         public static DbNetworkMigrationState Succeeded { get; } = new DbNetworkMigrationState(SucceededValue);
 
-        /// <summary> The network migration failed. </summary>
+        /// <summary> Network migration failed. </summary>
         public static DbNetworkMigrationState Failed { get; } = new DbNetworkMigrationState(FailedValue);
 
-        /// <summary> The network migration cancellation is in progress. </summary>
+        /// <summary> Network migration cancellation is in progress. </summary>
         public static DbNetworkMigrationState CancelInProgress { get; } = new DbNetworkMigrationState(CancelInProgressValue);
 
-        /// <summary> The network migration was cancelled. </summary>
+        /// <summary> Network migration was cancelled. </summary>
         public static DbNetworkMigrationState Cancelled { get; } = new DbNetworkMigrationState(CancelledValue);
 
         /// <summary> Determines if two <see cref="DbNetworkMigrationState"/> values are the same. </summary>

@@ -11,12 +11,15 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Validation status for migration. </summary>
+    /// <summary> Validation state for migration. </summary>
     public readonly partial struct PostgreSqlFlexibleServersValidationState : IEquatable<PostgreSqlFlexibleServersValidationState>
     {
         private readonly string _value;
+        /// <summary> Validation has failed. </summary>
         private const string FailedValue = "Failed";
+        /// <summary> Validation has succeeded. </summary>
         private const string SucceededValue = "Succeeded";
+        /// <summary> Validation has succeeded with warnings. </summary>
         private const string WarningValue = "Warning";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationState"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Validation has failed. </summary>
         public static PostgreSqlFlexibleServersValidationState Failed { get; } = new PostgreSqlFlexibleServersValidationState(FailedValue);
 
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Validation has succeeded. </summary>
         public static PostgreSqlFlexibleServersValidationState Succeeded { get; } = new PostgreSqlFlexibleServersValidationState(SucceededValue);
 
-        /// <summary> Gets the Warning. </summary>
+        /// <summary> Validation has succeeded with warnings. </summary>
         public static PostgreSqlFlexibleServersValidationState Warning { get; } = new PostgreSqlFlexibleServersValidationState(WarningValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersValidationState"/> values are the same. </summary>

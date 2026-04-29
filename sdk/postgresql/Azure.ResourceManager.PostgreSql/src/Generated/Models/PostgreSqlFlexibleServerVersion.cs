@@ -15,13 +15,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerVersion : IEquatable<PostgreSqlFlexibleServerVersion>
     {
         private readonly string _value;
+        /// <summary> PostgreSQL 18. </summary>
         private const string EighteenValue = "18";
+        /// <summary> PostgreSQL 17. </summary>
         private const string SeventeenValue = "17";
+        /// <summary> PostgreSQL 16. </summary>
         private const string SixteenValue = "16";
+        /// <summary> PostgreSQL 15. </summary>
         private const string _15Value = "15";
+        /// <summary> PostgreSQL 14. </summary>
         private const string _14Value = "14";
+        /// <summary> PostgreSQL 13. </summary>
         private const string _13Value = "13";
+        /// <summary> PostgreSQL 12. </summary>
         private const string _12Value = "12";
+        /// <summary> PostgreSQL 11. </summary>
         private const string _11Value = "11";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVersion"/>. </summary>
@@ -34,13 +42,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Eighteen. </summary>
+        /// <summary> PostgreSQL 18. </summary>
         public static PostgreSqlFlexibleServerVersion Eighteen { get; } = new PostgreSqlFlexibleServerVersion(EighteenValue);
 
-        /// <summary> Gets the Seventeen. </summary>
+        /// <summary> PostgreSQL 17. </summary>
         public static PostgreSqlFlexibleServerVersion Seventeen { get; } = new PostgreSqlFlexibleServerVersion(SeventeenValue);
 
-        /// <summary> Gets the Sixteen. </summary>
+        /// <summary> PostgreSQL 16. </summary>
         public static PostgreSqlFlexibleServerVersion Sixteen { get; } = new PostgreSqlFlexibleServerVersion(SixteenValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerVersion"/> values are the same. </summary>

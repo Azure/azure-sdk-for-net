@@ -11,13 +11,17 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Service-set extensible enum indicating the status of operation. </summary>
+    /// <summary> Service-set extensible enumeration indicating the status of operation. </summary>
     public readonly partial struct PostgreSqlExecutionStatus : IEquatable<PostgreSqlExecutionStatus>
     {
         private readonly string _value;
+        /// <summary> Operation is currently running. </summary>
         private const string RunningValue = "Running";
+        /// <summary> Operation has been cancelled. </summary>
         private const string CancelledValue = "Cancelled";
+        /// <summary> Operation has failed. </summary>
         private const string FailedValue = "Failed";
+        /// <summary> Operation has succeeded. </summary>
         private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlExecutionStatus"/>. </summary>
@@ -30,16 +34,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Running. </summary>
+        /// <summary> Operation is currently running. </summary>
         public static PostgreSqlExecutionStatus Running { get; } = new PostgreSqlExecutionStatus(RunningValue);
 
-        /// <summary> Gets the Cancelled. </summary>
+        /// <summary> Operation has been cancelled. </summary>
         public static PostgreSqlExecutionStatus Cancelled { get; } = new PostgreSqlExecutionStatus(CancelledValue);
 
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Operation has failed. </summary>
         public static PostgreSqlExecutionStatus Failed { get; } = new PostgreSqlExecutionStatus(FailedValue);
 
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Operation has succeeded. </summary>
         public static PostgreSqlExecutionStatus Succeeded { get; } = new PostgreSqlExecutionStatus(SucceededValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlExecutionStatus"/> values are the same. </summary>

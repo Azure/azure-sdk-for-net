@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="status"> Service-set extensible enum indicating the status of operation. </param>
         /// <param name="startOn"> Start time of the operation. </param>
         /// <param name="endOn"> End time of the operation. </param>
-        /// <param name="percentComplete"> PercentageCompleted. </param>
-        /// <param name="errorCode"> The error code. </param>
-        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="percentComplete"> Percentage completed. </param>
+        /// <param name="errorCode"> Error code. </param>
+        /// <param name="errorMessage"> Error message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LtrBackupOperationResponseProperties(long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus status, DateTimeOffset startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
 
-        /// <summary> PercentageCompleted. </summary>
+        /// <summary> Percentage completed. </summary>
         [WirePath("percentComplete")]
         public double? PercentComplete { get; set; }
 
-        /// <summary> The error code. </summary>
+        /// <summary> Error code. </summary>
         [WirePath("errorCode")]
         public string ErrorCode { get; }
 
-        /// <summary> The error message. </summary>
+        /// <summary> Error message. </summary>
         [WirePath("errorMessage")]
         public string ErrorMessage { get; }
     }

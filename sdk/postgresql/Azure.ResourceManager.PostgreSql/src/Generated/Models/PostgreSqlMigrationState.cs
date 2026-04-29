@@ -15,12 +15,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationState : IEquatable<PostgreSqlMigrationState>
     {
         private readonly string _value;
+        /// <summary> Migration is in progress. </summary>
         private const string InProgressValue = "InProgress";
+        /// <summary> Migration is waiting for user action. </summary>
         private const string WaitingForUserActionValue = "WaitingForUserAction";
+        /// <summary> Migration has been canceled. </summary>
         private const string CanceledValue = "Canceled";
+        /// <summary> Migration has failed. </summary>
         private const string FailedValue = "Failed";
+        /// <summary> Migration has succeeded. </summary>
         private const string SucceededValue = "Succeeded";
+        /// <summary> Validation for migration has failed. </summary>
         private const string ValidationFailedValue = "ValidationFailed";
+        /// <summary> Migration is cleaning up resources. </summary>
         private const string CleaningUpValue = "CleaningUp";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationState"/>. </summary>
@@ -33,25 +40,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the InProgress. </summary>
+        /// <summary> Migration is in progress. </summary>
         public static PostgreSqlMigrationState InProgress { get; } = new PostgreSqlMigrationState(InProgressValue);
 
-        /// <summary> Gets the WaitingForUserAction. </summary>
+        /// <summary> Migration is waiting for user action. </summary>
         public static PostgreSqlMigrationState WaitingForUserAction { get; } = new PostgreSqlMigrationState(WaitingForUserActionValue);
 
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Migration has been canceled. </summary>
         public static PostgreSqlMigrationState Canceled { get; } = new PostgreSqlMigrationState(CanceledValue);
 
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Migration has failed. </summary>
         public static PostgreSqlMigrationState Failed { get; } = new PostgreSqlMigrationState(FailedValue);
 
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Migration has succeeded. </summary>
         public static PostgreSqlMigrationState Succeeded { get; } = new PostgreSqlMigrationState(SucceededValue);
 
-        /// <summary> Gets the ValidationFailed. </summary>
+        /// <summary> Validation for migration has failed. </summary>
         public static PostgreSqlMigrationState ValidationFailed { get; } = new PostgreSqlMigrationState(ValidationFailedValue);
 
-        /// <summary> Gets the CleaningUp. </summary>
+        /// <summary> Migration is cleaning up resources. </summary>
         public static PostgreSqlMigrationState CleaningUp { get; } = new PostgreSqlMigrationState(CleaningUpValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlMigrationState"/> values are the same. </summary>

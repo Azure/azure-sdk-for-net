@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if geographically redundant backups are supported in this location. 'Enabled' means geographically redundant backups are supported. 'Disabled' stands for geographically redundant backup is not supported. Will be deprecated in the future. Look to Supported Features for 'GeoBackup'. </summary>
+    /// <summary> Indicates if geographically redundant backups are supported in this location. Will be deprecated in the future. Look to Supported Features for 'GeoBackup'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerGeoBackupSupported : IEquatable<PostgreSqlFlexibleServerGeoBackupSupported>
     {
         private readonly string _value;
+        /// <summary> Geographically redundant backups are supported in this location. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Geographically redundant backups are not supported in this location. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerGeoBackupSupported"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Geographically redundant backups are supported in this location. </summary>
         public static PostgreSqlFlexibleServerGeoBackupSupported Enabled { get; } = new PostgreSqlFlexibleServerGeoBackupSupported(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Geographically redundant backups are not supported in this location. </summary>
         public static PostgreSqlFlexibleServerGeoBackupSupported Disabled { get; } = new PostgreSqlFlexibleServerGeoBackupSupported(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerGeoBackupSupported"/> values are the same. </summary>

@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The name of the tuning option. </summary>
+    /// <summary> Name of the tuning option. </summary>
     public readonly partial struct PostgreSqlFlexibleServerTuningOptionType : IEquatable<PostgreSqlFlexibleServerTuningOptionType>
     {
         private readonly string _value;
+        /// <summary> Index related recommendations. </summary>
         private const string IndexValue = "index";
+        /// <summary> Table related recommendations. </summary>
         private const string TableValue = "table";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerTuningOptionType"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Index. </summary>
+        /// <summary> Index related recommendations. </summary>
         public static PostgreSqlFlexibleServerTuningOptionType Index { get; } = new PostgreSqlFlexibleServerTuningOptionType(IndexValue);
 
-        /// <summary> Gets the Table. </summary>
+        /// <summary> Table related recommendations. </summary>
         public static PostgreSqlFlexibleServerTuningOptionType Table { get; } = new PostgreSqlFlexibleServerTuningOptionType(TableValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerTuningOptionType"/> values are the same. </summary>

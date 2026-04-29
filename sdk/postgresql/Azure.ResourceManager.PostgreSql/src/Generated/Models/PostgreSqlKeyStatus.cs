@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlKeyStatus : IEquatable<PostgreSqlKeyStatus>
     {
         private readonly string _value;
+        /// <summary> Key is valid and can be used for encryption. </summary>
         private const string ValidValue = "Valid";
+        /// <summary> Key is invalid and cannot be used for encryption. Possible causes include key deletion, permission changes, key being disabled, key type not supported, or current date being outside of validity period associated to the key. </summary>
         private const string InvalidValue = "Invalid";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlKeyStatus"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Valid. </summary>
+        /// <summary> Key is valid and can be used for encryption. </summary>
         public static PostgreSqlKeyStatus Valid { get; } = new PostgreSqlKeyStatus(ValidValue);
 
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Key is invalid and cannot be used for encryption. Possible causes include key deletion, permission changes, key being disabled, key type not supported, or current date being outside of validity period associated to the key. </summary>
         public static PostgreSqlKeyStatus Invalid { get; } = new PostgreSqlKeyStatus(InvalidValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlKeyStatus"/> values are the same. </summary>

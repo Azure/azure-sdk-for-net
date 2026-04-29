@@ -11,11 +11,13 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if storage autogrow is supported in this location. 'Enabled' means storage autogrow is supported. 'Disabled' stands for storage autogrow is not supported. Will be deprecated in the future. Look to Supported Features for 'StorageAutoGrowth'. </summary>
+    /// <summary> Indicates if storage autogrow is supported in this location. Will be deprecated in the future. Look to Supported Features for 'StorageAutoGrowth'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerStorageAutoGrowthSupported : IEquatable<PostgreSqlFlexibleServerStorageAutoGrowthSupported>
     {
         private readonly string _value;
+        /// <summary> Storage autogrow is supported. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Storage autogrow is not supported. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageAutoGrowthSupported"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Storage autogrow is supported. </summary>
         public static PostgreSqlFlexibleServerStorageAutoGrowthSupported Enabled { get; } = new PostgreSqlFlexibleServerStorageAutoGrowthSupported(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Storage autogrow is not supported. </summary>
         public static PostgreSqlFlexibleServerStorageAutoGrowthSupported Disabled { get; } = new PostgreSqlFlexibleServerStorageAutoGrowthSupported(DisabledValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerStorageAutoGrowthSupported"/> values are the same. </summary>

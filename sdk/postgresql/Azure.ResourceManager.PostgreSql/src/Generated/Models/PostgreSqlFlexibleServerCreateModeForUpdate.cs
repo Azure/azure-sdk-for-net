@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerCreateModeForUpdate : IEquatable<PostgreSqlFlexibleServerCreateModeForUpdate>
     {
         private readonly string _value;
+        /// <summary> It's equivalent to 'Update'. </summary>
         private const string DefaultValue = "Default";
+        /// <summary> Operation updates an existing server. </summary>
         private const string UpdateValue = "Update";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerCreateModeForUpdate"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the Default. </summary>
+        /// <summary> It's equivalent to 'Update'. </summary>
         public static PostgreSqlFlexibleServerCreateModeForUpdate Default { get; } = new PostgreSqlFlexibleServerCreateModeForUpdate(DefaultValue);
 
-        /// <summary> Gets the Update. </summary>
+        /// <summary> Operation updates an existing server. </summary>
         public static PostgreSqlFlexibleServerCreateModeForUpdate Update { get; } = new PostgreSqlFlexibleServerCreateModeForUpdate(UpdateValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateModeForUpdate"/> values are the same. </summary>

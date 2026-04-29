@@ -15,8 +15,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerIdentityType : IEquatable<PostgreSqlFlexibleServerIdentityType>
     {
         private readonly string _value;
+        /// <summary> No managed identity is assigned to the server. </summary>
         private const string NoneValue = "None";
+        /// <summary> One or more managed identities provided by the user are assigned to the server. </summary>
         private const string UserAssignedValue = "UserAssigned";
+        /// <summary> Both system-assigned and user-assigned identities are assigned to the server. </summary>
         private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerIdentityType"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the None. </summary>
+        /// <summary> No managed identity is assigned to the server. </summary>
         public static PostgreSqlFlexibleServerIdentityType None { get; } = new PostgreSqlFlexibleServerIdentityType(NoneValue);
 
-        /// <summary> Gets the UserAssigned. </summary>
+        /// <summary> One or more managed identities provided by the user are assigned to the server. </summary>
         public static PostgreSqlFlexibleServerIdentityType UserAssigned { get; } = new PostgreSqlFlexibleServerIdentityType(UserAssignedValue);
 
-        /// <summary> Gets the SystemAssignedUserAssigned. </summary>
+        /// <summary> Both system-assigned and user-assigned identities are assigned to the server. </summary>
         public static PostgreSqlFlexibleServerIdentityType SystemAssignedUserAssigned { get; } = new PostgreSqlFlexibleServerIdentityType(SystemAssignedUserAssignedValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerIdentityType"/> values are the same. </summary>

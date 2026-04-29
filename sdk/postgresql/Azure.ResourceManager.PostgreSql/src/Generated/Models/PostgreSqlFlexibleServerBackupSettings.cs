@@ -11,7 +11,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The settings for the long term backup. </summary>
+    /// <summary> Settings for the long term backup. </summary>
     public partial class PostgreSqlFlexibleServerBackupSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
