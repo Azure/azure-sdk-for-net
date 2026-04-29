@@ -1,5 +1,5 @@
-name: prepare-release-plan-eval
-description: Evaluation suite for the prepare-release-plan skill
+name: azsdk-common-prepare-release-plan-eval
+description: Evaluation suite for the azsdk-common-prepare-release-plan skill
 type: capability
 
 environment: azsdk-mcp-mock
@@ -59,7 +59,7 @@ stimuli:
         config:
           substring: "release"
     constraints:
-      expect_skills: ["prepare-release-plan"]
+      expect_skills: ["azsdk-common-prepare-release-plan"]
 
   - name: anti-trigger
     prompt: "How do I configure logging in my Azure Function?"

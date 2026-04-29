@@ -1,5 +1,5 @@
-name: prepare-release-plan-trigger-eval
-description: Trigger and anti-trigger tests for the prepare-release-plan skill
+name: azsdk-common-prepare-release-plan-trigger-eval
+description: Trigger and anti-trigger tests for the azsdk-common-prepare-release-plan skill
 type: capability
 
 environment: azsdk-mcp-mock

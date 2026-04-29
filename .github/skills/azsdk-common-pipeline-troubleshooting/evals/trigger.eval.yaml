@@ -1,5 +1,5 @@
-name: pipeline-troubleshooting-trigger-eval
-description: Trigger and anti-trigger tests for the pipeline-troubleshooting skill
+name: azsdk-common-pipeline-troubleshooting-trigger-eval
+description: Trigger and anti-trigger tests for the azsdk-common-pipeline-troubleshooting skill
 type: capability
 
 environment: azsdk-mcp-mock

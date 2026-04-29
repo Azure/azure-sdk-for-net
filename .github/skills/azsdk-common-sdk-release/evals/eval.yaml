@@ -1,5 +1,5 @@
-name: sdk-release-eval
-description: Evaluation suite for the sdk-release skill
+name: azsdk-common-sdk-release-eval
+description: Evaluation suite for the azsdk-common-sdk-release skill
 type: capability
 
 environment: azsdk-mcp
@@ -66,7 +66,7 @@ stimuli:
         config:
           substring: "release"
     constraints:
-      expect_skills: ["sdk-release"]
+      expect_skills: ["azsdk-common-sdk-release"]
 
   - name: anti-trigger
     prompt: "How do I write unit tests for my Azure SDK client?"

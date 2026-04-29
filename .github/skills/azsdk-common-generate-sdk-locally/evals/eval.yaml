@@ -1,5 +1,5 @@
-name: generate-sdk-locally-eval
-description: Evaluation suite for the generate-sdk-locally skill
+name: azsdk-common-generate-sdk-locally-eval
+description: Evaluation suite for the azsdk-common-generate-sdk-locally skill
 type: capability
 
 environment: azsdk-mcp-mock

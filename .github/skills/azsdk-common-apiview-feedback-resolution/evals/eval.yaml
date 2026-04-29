@@ -1,5 +1,5 @@
-name: apiview-feedback-resolution-eval
-description: Evaluation suite for the apiview-feedback-resolution skill
+name: azsdk-common-apiview-feedback-resolution-eval
+description: Evaluation suite for the azsdk-common-apiview-feedback-resolution skill
 type: capability
 
 environment: azsdk-mcp-mock
@@ -64,7 +64,7 @@ stimuli:
         config:
           substring: "APIView"
     constraints:
-      expect_skills: ["apiview-feedback-resolution"]
+      expect_skills: ["azsdk-common-apiview-feedback-resolution"]
 
   - name: anti-trigger
     prompt: "How do I set up a new Azure Storage account?"
@@ -89,4 +89,4 @@ stimuli:
         config:
           substring: "apiview"
     constraints:
-      expect_skills: ["apiview-feedback-resolution"]
+      expect_skills: ["azsdk-common-apiview-feedback-resolution"]

@@ -1,5 +1,5 @@
-name: apiview-feedback-resolution-trigger-eval
-description: Trigger and anti-trigger tests for the apiview-feedback-resolution skill
+name: azsdk-common-apiview-feedback-resolution-trigger-eval
+description: Trigger and anti-trigger tests for the azsdk-common-apiview-feedback-resolution skill
 type: capability
 
 environment: azsdk-mcp-mock

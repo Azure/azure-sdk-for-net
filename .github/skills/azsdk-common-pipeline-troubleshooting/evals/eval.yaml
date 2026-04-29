@@ -1,5 +1,5 @@
-name: pipeline-troubleshooting-eval
-description: Evaluation suite for the pipeline-troubleshooting skill
+name: azsdk-common-pipeline-troubleshooting-eval
+description: Evaluation suite for the azsdk-common-pipeline-troubleshooting skill
 type: capability
 
 environment: azsdk-mcp-mock
@@ -70,7 +70,7 @@ stimuli:
         config:
           substring: "pipeline"
     constraints:
-      expect_skills: ["pipeline-troubleshooting"]
+      expect_skills: ["azsdk-common-pipeline-troubleshooting"]
 
   - name: anti-trigger
     prompt: "How do I write a TypeSpec definition for a new Azure service?"
