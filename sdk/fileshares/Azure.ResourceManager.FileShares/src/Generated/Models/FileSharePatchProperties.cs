@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FileSharePatchProperties"/>. </summary>
-        /// <param name="provisionedStorageInGiB"> The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage. </param>
+        /// <param name="provisionedStorageGiB"> The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage. </param>
         /// <param name="provisionedIOPerSec"> The provisioned IO / sec of the share. </param>
         /// <param name="provisionedThroughputMiBPerSec"> The provisioned throughput / sec of the share. </param>
         /// <param name="nfsProtocolProperties"> Protocol settings specific NFS. </param>
         /// <param name="publicAccessProperties"> The set of properties for control public access. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to azure managed file share. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSharePatchProperties(int? provisionedStorageInGiB, int? provisionedIOPerSec, int? provisionedThroughputMiBPerSec, NfsProtocolProperties nfsProtocolProperties, PublicAccessProperties publicAccessProperties, FileSharePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSharePatchProperties(int? provisionedStorageGiB, int? provisionedIOPerSec, int? provisionedThroughputMiBPerSec, NfsProtocolProperties nfsProtocolProperties, PublicAccessProperties publicAccessProperties, FileSharePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProvisionedStorageInGiB = provisionedStorageInGiB;
+            ProvisionedStorageGiB = provisionedStorageGiB;
             ProvisionedIOPerSec = provisionedIOPerSec;
             ProvisionedThroughputMiBPerSec = provisionedThroughputMiBPerSec;
             NfsProtocolProperties = nfsProtocolProperties;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage. </summary>
-        public int? ProvisionedStorageInGiB { get; set; }
+        public int? ProvisionedStorageGiB { get; set; }
 
         /// <summary> The provisioned IO / sec of the share. </summary>
         public int? ProvisionedIOPerSec { get; set; }
@@ -50,30 +50,13 @@ namespace Azure.ResourceManager.FileShares.Models
         public int? ProvisionedThroughputMiBPerSec { get; set; }
 
         /// <summary> Protocol settings specific NFS. </summary>
-        internal NfsProtocolProperties NfsProtocolProperties { get; set; }
+        public NfsProtocolProperties NfsProtocolProperties { get; set; }
 
         /// <summary> The set of properties for control public access. </summary>
         internal PublicAccessProperties PublicAccessProperties { get; set; }
 
         /// <summary> Gets or sets allow or disallow public network access to azure managed file share. </summary>
         public FileSharePublicNetworkAccess? PublicNetworkAccess { get; set; }
-
-        /// <summary> Root squash defines how root users on clients are mapped to the NFS share. </summary>
-        public ShareRootSquash? NfsProtocolRootSquash
-        {
-            get
-            {
-                return NfsProtocolProperties is null ? default : NfsProtocolProperties.RootSquash;
-            }
-            set
-            {
-                if (NfsProtocolProperties is null)
-                {
-                    NfsProtocolProperties = new NfsProtocolProperties();
-                }
-                NfsProtocolProperties.RootSquash = value;
-            }
-        }
 
         /// <summary> The allowed set of subnets when access is restricted. </summary>
         public IList<string> PublicAccessAllowedSubnets

@@ -1,11 +1,19 @@
 # Release History
 
-## 1.0.0-beta.2 (2026-02-05)
+## 1.0.0-beta.3 (2026-04-28)
 
 ### Features Added
 
-- Upgraded API version to `2025-09-01-preview`
-- Updated to latest API specification commit
+- Upgraded API version to `2026-06-01`
+- Added new type `NfsProtocolProperties` with `RootSquash` and `EncryptionInTransitRequired` properties
+- Added new extensible enum `EncryptionInTransitRequired` with values `Enabled` and `Disabled`
+- `FileShareSnapshotProperties.InitiatorId` is now settable
+
+### Breaking Changes
+
+- `FileShareProperties.NfsProtocolRootSquash` has been replaced by `FileShareProperties.NfsProtocolProperties`
+- `FileSharePatchProperties.NfsProtocolRootSquash` has been replaced by `FileSharePatchProperties.NfsProtocolProperties`
+- `FileSharePatchProperties.ProvisionedStorageInGiB` has been renamed to `FileSharePatchProperties.ProvisionedStorageGiB`
 
 ## 1.0.0-beta.1 (2026-01-06)
 

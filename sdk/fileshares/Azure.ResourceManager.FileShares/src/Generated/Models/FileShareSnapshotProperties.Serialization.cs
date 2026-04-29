@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(InitiatorId))
+            if (Optional.IsDefined(InitiatorId))
             {
                 writer.WritePropertyName("initiatorId"u8);
                 writer.WriteStringValue(InitiatorId);
