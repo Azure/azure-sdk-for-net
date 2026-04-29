@@ -416,7 +416,7 @@ namespace Azure.AI.VoiceLive.Tests
         }
 
         [Test]
-        public void EnrichWithItemIds_SetsItemIdAndOutputIndex()
+        public void ExtractRecvIds_SetsItemIdAndOutputIndex()
         {
             using var capturer = new ActivityCapturer();
             var tracer = CreateTracer();
@@ -425,7 +425,7 @@ namespace Azure.AI.VoiceLive.Tests
             var recvActivity = tracer.StartRecvActivity("response.output_item.added");
             using var doc = JsonDocument.Parse(
                 @"{""type"":""response.output_item.added"",""item"":{""id"":""item_123""},""output_index"":2}");
-            tracer.EnrichWithItemIds(recvActivity, doc.RootElement);
+            tracer.ExtractRecvIds(recvActivity, doc.RootElement, "response.output_item.added");
             recvActivity?.Stop();
             tracer.EndConnectActivity();
 
