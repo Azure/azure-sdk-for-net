@@ -495,7 +495,7 @@ namespace Azure.Core.Tests
             message.BufferResponse = true;
 
             var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await ExecuteRequest(message, httpPipeline));
-            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 00:00:00.5000000. " +
                             "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
 
             testDoneTcs.Cancel();
@@ -530,7 +530,7 @@ namespace Azure.Core.Tests
             message.BufferResponse = true;
 
             var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await ExecuteRequest(message, httpPipeline));
-            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 00:00:00.5000000. " +
                             "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
 
             testDoneTcs.Cancel();

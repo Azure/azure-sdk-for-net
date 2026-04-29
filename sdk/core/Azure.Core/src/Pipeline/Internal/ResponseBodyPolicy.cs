@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -174,7 +175,7 @@ namespace Azure.Core.Pipeline
                 throw CancellationHelper.CreateOperationCanceledException(
                     inner,
                     timeoutToken,
-                    $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. " +
+                    $"The operation was cancelled because it exceeded the configured timeout of {timeout.ToString("c", CultureInfo.InvariantCulture)}. " +
                     $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.");
             }
         }
