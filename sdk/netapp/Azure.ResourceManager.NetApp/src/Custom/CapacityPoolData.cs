@@ -45,18 +45,5 @@ namespace Azure.ResourceManager.NetApp
                 Properties.CustomThroughputMibps = value;
             }
         }
-
-        /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsCoolAccessEnabled
-        {
-            get => Properties?.IsCoolAccessEnabled;
-            set
-            {
-                if (Properties is null)
-                    Properties = new PoolProperties();
-                Properties.IsCoolAccessEnabled = value;
-            }
-        }
     }
 }

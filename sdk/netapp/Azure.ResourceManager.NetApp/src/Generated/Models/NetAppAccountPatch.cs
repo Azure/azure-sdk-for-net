@@ -94,6 +94,23 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
+        /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
+        public string NfsV4IdDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NfsV4IdDomain;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountPropertiesPatch();
+                }
+                Properties.NfsV4IdDomain = value;
+            }
+        }
+
         /// <summary> MultiAD Status for the account. </summary>
         public MultiAdStatus? MultiAdStatus
         {
