@@ -7,12 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> An Azure Cosmos DB Gremlin database event. </summary>
-    public partial class RestorableGremlinDatabase
+    /// <summary> The RestorableGremlinDatabase. </summary>
+    public partial class RestorableGremlinDatabase : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,35 +25,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableGremlinDatabase"/>. </summary>
-        /// <param name="properties"> The properties of a Gremlin database event. </param>
-        /// <param name="id"> The unique resource Identifier of the ARM resource. </param>
-        /// <param name="name"> The name of the ARM resource. </param>
-        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableGremlinDatabase(RestorableGremlinDatabaseProperties properties, string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="properties"> The properties of a Gremlin database event. </param>
+        internal RestorableGremlinDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorableGremlinDatabaseProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
-            Id = id;
-            Name = name;
-            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> The properties of a Gremlin database event. </summary>
         [WirePath("properties")]
         internal RestorableGremlinDatabaseProperties Properties { get; }
-
-        /// <summary> The unique resource Identifier of the ARM resource. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
-        /// <summary> The name of the ARM resource. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The type of Azure resource. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The resource of an Azure Cosmos DB Gremlin database event. </summary>
         [WirePath("properties.resource")]

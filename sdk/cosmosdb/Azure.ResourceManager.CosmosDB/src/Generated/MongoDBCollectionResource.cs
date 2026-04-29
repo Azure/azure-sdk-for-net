@@ -641,11 +641,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="CosmosDBMongoDBCollectionThroughputSettingResource"/> along with the instance operations that can be performed on it in the <see cref="MongoDBCollectionResource"/>. </summary>
-        /// <returns> Returns a <see cref="CosmosDBMongoDBCollectionThroughputSettingResource"/> object. </returns>
-        public virtual CosmosDBMongoDBCollectionThroughputSettingResource GetCosmosDBMongoDBCollectionThroughputSetting()
+        /// <summary> Gets an object representing a <see cref="MongoDBResource"/> along with the instance operations that can be performed on it in the <see cref="MongoDBCollectionResource"/>. </summary>
+        /// <returns> Returns a <see cref="MongoDBResource"/> object. </returns>
+        public virtual MongoDBResource GetMongoDBResource()
         {
-            return new CosmosDBMongoDBCollectionThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
+            return new MongoDBResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
     }
 }

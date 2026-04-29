@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="partitionId"> The partition id (GUID identifier) of the metric values. </param>
         /// <param name="partitionKeyRangeId"> The partition key range id (integer identifier) of the metric values. </param>
-        internal PartitionMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues, IDictionary<string, BinaryData> additionalBinaryDataProperties, string partitionId, string partitionKeyRangeId) : base(startOn, endOn, timeGrain, unit, name, metricValues, additionalBinaryDataProperties)
+        internal PartitionMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues, IDictionary<string, BinaryData> additionalBinaryDataProperties, Guid? partitionId, string partitionKeyRangeId) : base(startOn, endOn, timeGrain, unit, name, metricValues, additionalBinaryDataProperties)
         {
             PartitionId = partitionId;
             PartitionKeyRangeId = partitionKeyRangeId;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The partition id (GUID identifier) of the metric values. </summary>
         [WirePath("partitionId")]
-        public string PartitionId { get; }
+        public Guid? PartitionId { get; }
 
         /// <summary> The partition key range id (integer identifier) of the metric values. </summary>
         [WirePath("partitionKeyRangeId")]

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="partitionId"> The partition id (GUID identifier) of the usages. </param>
         /// <param name="partitionKeyRangeId"> The partition key range id (integer identifier) of the usages. </param>
-        internal PartitionUsage(CosmosDBMetricUnitType? unit, CosmosDBMetricName name, string quotaPeriod, long? limit, long? currentValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, string partitionId, string partitionKeyRangeId) : base(unit, name, quotaPeriod, limit, currentValue, additionalBinaryDataProperties)
+        internal PartitionUsage(CosmosDBMetricUnitType? unit, CosmosDBMetricName name, string quotaPeriod, long? limit, long? currentValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, Guid? partitionId, string partitionKeyRangeId) : base(unit, name, quotaPeriod, limit, currentValue, additionalBinaryDataProperties)
         {
             PartitionId = partitionId;
             PartitionKeyRangeId = partitionKeyRangeId;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The partition id (GUID identifier) of the usages. </summary>
         [WirePath("partitionId")]
-        public string PartitionId { get; }
+        public Guid? PartitionId { get; }
 
         /// <summary> The partition key range id (integer identifier) of the usages. </summary>
         [WirePath("partitionKeyRangeId")]

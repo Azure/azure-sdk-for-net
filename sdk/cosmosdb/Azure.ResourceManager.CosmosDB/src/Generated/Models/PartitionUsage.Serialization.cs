@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(PartitionId))
             {
                 writer.WritePropertyName("partitionId"u8);
-                writer.WriteStringValue(PartitionId);
+                writer.WriteStringValue(PartitionId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(PartitionKeyRangeId))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             long? limit = default;
             long? currentValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string partitionId = default;
+            Guid? partitionId = default;
             string partitionKeyRangeId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,7 +165,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("partitionId"u8))
                 {
-                    partitionId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partitionId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("partitionKeyRangeId"u8))

@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="CosmosDBCassandraKeyspaceThroughputSettingResource"/> along with the instance operations that can be performed on it in the <see cref="CassandraKeyspaceResource"/>. </summary>
-        /// <returns> Returns a <see cref="CosmosDBCassandraKeyspaceThroughputSettingResource"/> object. </returns>
-        public virtual CosmosDBCassandraKeyspaceThroughputSettingResource GetCosmosDBCassandraKeyspaceThroughputSetting()
+        /// <summary> Gets an object representing a <see cref="CassandraResource"/> along with the instance operations that can be performed on it in the <see cref="CassandraKeyspaceResource"/>. </summary>
+        /// <returns> Returns a <see cref="CassandraResource"/> object. </returns>
+        public virtual CassandraResource GetCassandraResource()
         {
-            return new CosmosDBCassandraKeyspaceThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
+            return new CassandraResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
 
         /// <summary> Gets a collection of CassandraTables in the <see cref="CassandraKeyspaceResource"/>. </summary>

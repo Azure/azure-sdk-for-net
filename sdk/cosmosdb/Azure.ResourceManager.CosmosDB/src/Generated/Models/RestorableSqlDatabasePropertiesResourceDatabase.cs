@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
         /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>
         /// <param name="self"> A system generated property that specifies the addressable path of the database resource. </param>
-        internal RestorableSqlDatabasePropertiesResourceDatabase(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, string eTag, string colls, string users, string self) : base(databaseName, restoreParameters, createMode, additionalBinaryDataProperties)
+        internal RestorableSqlDatabasePropertiesResourceDatabase(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, ETag? eTag, string colls, string users, string self) : base(databaseName, restoreParameters, createMode, additionalBinaryDataProperties)
         {
             Rid = rid;
             Timestamp = timestamp;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         [WirePath("_etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> A system generated property that specified the addressable path of the collections resource. </summary>
         [WirePath("_colls")]

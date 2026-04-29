@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    internal partial class CosmosDBCassandraKeyspaceThroughputSettingOperationSource : IOperationSource<CosmosDBCassandraKeyspaceThroughputSettingResource>
+    internal partial class CassandraResourceOperationSource : IOperationSource<CassandraResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal CosmosDBCassandraKeyspaceThroughputSettingOperationSource(ArmClient client)
+        internal CassandraResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        CosmosDBCassandraKeyspaceThroughputSettingResource IOperationSource<CosmosDBCassandraKeyspaceThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CassandraResource IOperationSource<CassandraResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             ThroughputSettingsData data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CosmosDBCassandraKeyspaceThroughputSettingResource(_client, data);
+            return new CassandraResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<CosmosDBCassandraKeyspaceThroughputSettingResource> IOperationSource<CosmosDBCassandraKeyspaceThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CassandraResource> IOperationSource<CassandraResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             ThroughputSettingsData data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CosmosDBCassandraKeyspaceThroughputSettingResource(_client, data);
+            return new CassandraResource(_client, data);
         }
     }
 }

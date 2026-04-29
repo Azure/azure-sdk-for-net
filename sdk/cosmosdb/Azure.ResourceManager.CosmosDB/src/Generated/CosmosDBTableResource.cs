@@ -522,11 +522,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="CosmosDBTableThroughputSettingResource"/> along with the instance operations that can be performed on it in the <see cref="CosmosDBTableResource"/>. </summary>
-        /// <returns> Returns a <see cref="CosmosDBTableThroughputSettingResource"/> object. </returns>
-        public virtual CosmosDBTableThroughputSettingResource GetCosmosDBTableThroughputSetting()
+        /// <summary> Gets an object representing a <see cref="TableResource"/> along with the instance operations that can be performed on it in the <see cref="CosmosDBTableResource"/>. </summary>
+        /// <returns> Returns a <see cref="TableResource"/> object. </returns>
+        public virtual TableResource GetTableResource()
         {
-            return new CosmosDBTableThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
+            return new TableResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
     }
 }

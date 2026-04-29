@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="CosmosDBGremlinDatabaseThroughputSettingResource"/> along with the instance operations that can be performed on it in the <see cref="GremlinDatabaseResource"/>. </summary>
-        /// <returns> Returns a <see cref="CosmosDBGremlinDatabaseThroughputSettingResource"/> object. </returns>
-        public virtual CosmosDBGremlinDatabaseThroughputSettingResource GetCosmosDBGremlinDatabaseThroughputSetting()
+        /// <summary> Gets an object representing a <see cref="GremlinResource"/> along with the instance operations that can be performed on it in the <see cref="GremlinDatabaseResource"/>. </summary>
+        /// <returns> Returns a <see cref="GremlinResource"/> object. </returns>
+        public virtual GremlinResource GetGremlinResource()
         {
-            return new CosmosDBGremlinDatabaseThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
+            return new GremlinResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
 
         /// <summary> Gets a collection of GremlinGraphs in the <see cref="GremlinDatabaseResource"/>. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,15 +15,16 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a CosmosDBTableThroughputSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBTableThroughputSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBTableResource"/> using the GetCosmosDBTableThroughputSetting method.
+    /// A class representing a TableResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TableResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBTableResource"/> using the GetTableResource method.
     /// </summary>
-    public partial class CosmosDBTableThroughputSettingResource : ArmResource
+    public partial class TableResource : ArmResource
     {
         private readonly ClientDiagnostics _tableResourcesClientDiagnostics;
         private readonly TableResources _tableResourcesRestClient;
@@ -30,28 +32,28 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings";
 
-        /// <summary> Initializes a new instance of CosmosDBTableThroughputSettingResource for mocking. </summary>
-        protected CosmosDBTableThroughputSettingResource()
+        /// <summary> Initializes a new instance of TableResource for mocking. </summary>
+        protected TableResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBTableThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CosmosDBTableThroughputSettingResource(ArmClient client, ThroughputSettingsData data) : this(client, data.Id)
+        internal TableResource(ArmClient client, ThroughputSettingsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBTableThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CosmosDBTableThroughputSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TableResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string cosmosDBTableThroughputSettingApiVersion);
+            TryGetApiVersion(ResourceType, out string tableResourceApiVersion);
             _tableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _tableResourcesRestClient = new TableResources(_tableResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBTableThroughputSettingApiVersion ?? "2025-11-01-preview");
+            _tableResourcesRestClient = new TableResources(_tableResourcesClientDiagnostics, Pipeline, Endpoint, tableResourceApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBTableThroughputSettingResource"/>. </description>
+        /// <description> <see cref="TableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,11 +119,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The parameters to provide for the RUs per second of the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CosmosDBTableThroughputSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableThroughputSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -131,8 +133,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _tableResourcesRestClient.CreateUpdateTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<CosmosDBTableThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBTableThroughputSettingResource>(
-                    new CosmosDBTableThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
+                    new TableResourceOperationSource(Client),
                     _tableResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -168,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBTableThroughputSettingResource"/>. </description>
+        /// <description> <see cref="TableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,11 +178,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The parameters to provide for the RUs per second of the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CosmosDBTableThroughputSettingResource> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TableResource> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableThroughputSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -190,8 +192,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _tableResourcesRestClient.CreateUpdateTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<CosmosDBTableThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBTableThroughputSettingResource>(
-                    new CosmosDBTableThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
+                    new TableResourceOperationSource(Client),
                     _tableResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -227,14 +229,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBTableThroughputSettingResource"/>. </description>
+        /// <description> <see cref="TableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CosmosDBTableThroughputSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TableResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableThroughputSettingResource.Get");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.Get");
             scope.Start();
             try
             {
@@ -249,7 +251,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CosmosDBTableThroughputSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -275,14 +277,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBTableThroughputSettingResource"/>. </description>
+        /// <description> <see cref="TableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CosmosDBTableThroughputSettingResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<TableResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableThroughputSettingResource.Get");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.Get");
             scope.Start();
             try
             {
@@ -297,7 +299,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CosmosDBTableThroughputSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -323,15 +325,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBTableThroughputSettingResource"/>. </description>
+        /// <description> <see cref="TableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CosmosDBTableThroughputSettingResource>> MigrateTableToAutoscaleAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TableResource>> MigrateTableToAutoscaleAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableThroughputSettingResource.MigrateTableToAutoscale");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.MigrateTableToAutoscale");
             scope.Start();
             try
             {
@@ -341,8 +343,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _tableResourcesRestClient.CreateMigrateTableToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<CosmosDBTableThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBTableThroughputSettingResource>(
-                    new CosmosDBTableThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
+                    new TableResourceOperationSource(Client),
                     _tableResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -378,15 +380,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBTableThroughputSettingResource"/>. </description>
+        /// <description> <see cref="TableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CosmosDBTableThroughputSettingResource> MigrateTableToAutoscale(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TableResource> MigrateTableToAutoscale(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableThroughputSettingResource.MigrateTableToAutoscale");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.MigrateTableToAutoscale");
             scope.Start();
             try
             {
@@ -396,8 +398,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _tableResourcesRestClient.CreateMigrateTableToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<CosmosDBTableThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBTableThroughputSettingResource>(
-                    new CosmosDBTableThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
+                    new TableResourceOperationSource(Client),
                     _tableResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -433,15 +435,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBTableThroughputSettingResource"/>. </description>
+        /// <description> <see cref="TableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CosmosDBTableThroughputSettingResource>> MigrateTableToManualThroughputAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TableResource>> MigrateTableToManualThroughputAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableThroughputSettingResource.MigrateTableToManualThroughput");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.MigrateTableToManualThroughput");
             scope.Start();
             try
             {
@@ -451,8 +453,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _tableResourcesRestClient.CreateMigrateTableToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<CosmosDBTableThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBTableThroughputSettingResource>(
-                    new CosmosDBTableThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
+                    new TableResourceOperationSource(Client),
                     _tableResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -488,15 +490,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBTableThroughputSettingResource"/>. </description>
+        /// <description> <see cref="TableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CosmosDBTableThroughputSettingResource> MigrateTableToManualThroughput(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TableResource> MigrateTableToManualThroughput(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableThroughputSettingResource.MigrateTableToManualThroughput");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.MigrateTableToManualThroughput");
             scope.Start();
             try
             {
@@ -506,8 +508,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _tableResourcesRestClient.CreateMigrateTableToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<CosmosDBTableThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBTableThroughputSettingResource>(
-                    new CosmosDBTableThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
+                    new TableResourceOperationSource(Client),
                     _tableResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -518,6 +520,258 @@ namespace Azure.ResourceManager.CosmosDB
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<TableResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.AddTag");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<TableResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<TableResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.AddTag");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<TableResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<TableResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.SetTags");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<TableResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<TableResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.SetTags");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<TableResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<TableResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<TableResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<TableResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<TableResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

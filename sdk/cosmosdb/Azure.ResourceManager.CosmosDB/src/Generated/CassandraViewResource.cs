@@ -405,11 +405,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="CosmosDBCassandraViewThroughputSettingResource"/> along with the instance operations that can be performed on it in the <see cref="CassandraViewResource"/>. </summary>
-        /// <returns> Returns a <see cref="CosmosDBCassandraViewThroughputSettingResource"/> object. </returns>
-        public virtual CosmosDBCassandraViewThroughputSettingResource GetCosmosDBCassandraViewThroughputSetting()
+        /// <summary> Gets an object representing a <see cref="CassandraResource"/> along with the instance operations that can be performed on it in the <see cref="CassandraViewResource"/>. </summary>
+        /// <returns> Returns a <see cref="CassandraResource"/> object. </returns>
+        public virtual CassandraResource GetCassandraResource()
         {
-            return new CosmosDBCassandraViewThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
+            return new CassandraResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
     }
 }

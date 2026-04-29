@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    public partial class CosmosDBCassandraTableThroughputSettingResource : IJsonModel<ThroughputSettingsData>
+    public partial class MongoDBResource : IJsonModel<ThroughputSettingsData>
     {
         private static IJsonModel<ThroughputSettingsData> s_dataDeserializationInstance;
 

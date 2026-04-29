@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedGremlinDatabaseResourceInfo(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, string eTag) : base(databaseName, restoreParameters, createMode, additionalBinaryDataProperties)
+        internal ExtendedGremlinDatabaseResourceInfo(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, ETag? eTag) : base(databaseName, restoreParameters, createMode, additionalBinaryDataProperties)
         {
             Rid = rid;
             Timestamp = timestamp;
@@ -45,6 +46,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         [WirePath("_etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
     }
 }

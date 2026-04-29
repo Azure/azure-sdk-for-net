@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <param name="self"> A system generated property that specifies the addressable path of the container resource. </param>
-        internal RestorableSqlContainerPropertiesResourceContainer(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, MaterializedViewDefinition materializedViewDefinition, IList<MaterializedViewDetails> materializedViews, MaterializedViewsProperties materializedViewsProperties, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, FullTextPolicy fullTextPolicy, DataMaskingPolicy dataMaskingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, string eTag, string self) : base(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, clientEncryptionPolicy, analyticalStorageTtl, restoreParameters, createMode, materializedViewDefinition, materializedViews, materializedViewsProperties, computedProperties, vectorEmbeddingPolicy, fullTextPolicy, dataMaskingPolicy, additionalBinaryDataProperties)
+        internal RestorableSqlContainerPropertiesResourceContainer(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, MaterializedViewDefinition materializedViewDefinition, IList<MaterializedViewDetails> materializedViews, MaterializedViewsProperties materializedViewsProperties, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, FullTextPolicy fullTextPolicy, DataMaskingPolicy dataMaskingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, ETag? eTag, string self) : base(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, clientEncryptionPolicy, analyticalStorageTtl, restoreParameters, createMode, materializedViewDefinition, materializedViews, materializedViewsProperties, computedProperties, vectorEmbeddingPolicy, fullTextPolicy, dataMaskingPolicy, additionalBinaryDataProperties)
         {
             Rid = rid;
             Timestamp = timestamp;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         [WirePath("_etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> A system generated property that specifies the addressable path of the container resource. </summary>
         [WirePath("_self")]

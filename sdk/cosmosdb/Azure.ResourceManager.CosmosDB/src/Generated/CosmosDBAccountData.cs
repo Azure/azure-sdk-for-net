@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties for the database account. </param>
-        /// <param name="tags"></param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
         internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, CosmosDBAccountProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity, CosmosDBAccountKind? kind) : base(id, name, resourceType, systemData, tags, location)

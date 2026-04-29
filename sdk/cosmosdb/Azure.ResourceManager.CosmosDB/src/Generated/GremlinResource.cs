@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,15 +15,16 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a CosmosDBGremlinGraphThroughputSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBGremlinGraphThroughputSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GremlinGraphResource"/> using the GetCosmosDBGremlinGraphThroughputSetting method.
+    /// A class representing a GremlinResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GremlinResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GremlinGraphResource"/> using the GetGremlinResource method.
     /// </summary>
-    public partial class CosmosDBGremlinGraphThroughputSettingResource : ArmResource
+    public partial class GremlinResource : ArmResource
     {
         private readonly ClientDiagnostics _gremlinResourcesClientDiagnostics;
         private readonly GremlinResources _gremlinResourcesRestClient;
@@ -30,29 +32,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs/throughputSettings";
 
-        /// <summary> Initializes a new instance of CosmosDBGremlinGraphThroughputSettingResource for mocking. </summary>
-        protected CosmosDBGremlinGraphThroughputSettingResource()
+        /// <summary> Initializes a new instance of GremlinResource for mocking. </summary>
+        protected GremlinResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBGremlinGraphThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CosmosDBGremlinGraphThroughputSettingResource(ArmClient client, ThroughputSettingsData data) : this(client, data.Id)
+        internal GremlinResource(ArmClient client, ThroughputSettingsData data) : this(client, data.Id)
         {
-            HasData = true;
+            this.HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBGremlinGraphThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CosmosDBGremlinGraphThroughputSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal GremlinResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string cosmosDBGremlinGraphThroughputSettingApiVersion);
+            this.TryGetApiVersion(ResourceType, out string gremlinResourceApiVersion);
             _gremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBGremlinGraphThroughputSettingApiVersion ?? "2025-11-01-preview");
-            ValidateResourceId(id);
+            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Endpoint, gremlinResourceApiVersion ?? "2025-11-01-preview");
+            GremlinResource.ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -110,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBGremlinGraphThroughputSettingResource"/>. </description>
+        /// <description> <see cref="GremlinResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,11 +120,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The RUs per second of the parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CosmosDBGremlinGraphThroughputSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GremlinResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("CosmosDBGremlinGraphThroughputSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -132,8 +134,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _gremlinResourcesRestClient.CreateUpdateGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource>(
-                    new CosmosDBGremlinGraphThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<GremlinResource> operation = new CosmosDBArmOperation<GremlinResource>(
+                    new GremlinResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -169,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBGremlinGraphThroughputSettingResource"/>. </description>
+        /// <description> <see cref="GremlinResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,11 +179,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The RUs per second of the parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CosmosDBGremlinGraphThroughputSettingResource> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GremlinResource> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("CosmosDBGremlinGraphThroughputSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -191,8 +193,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _gremlinResourcesRestClient.CreateUpdateGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource>(
-                    new CosmosDBGremlinGraphThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<GremlinResource> operation = new CosmosDBArmOperation<GremlinResource>(
+                    new GremlinResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -228,14 +230,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBGremlinGraphThroughputSettingResource"/>. </description>
+        /// <description> <see cref="GremlinResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CosmosDBGremlinGraphThroughputSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GremlinResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("CosmosDBGremlinGraphThroughputSettingResource.Get");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.Get");
             scope.Start();
             try
             {
@@ -250,7 +252,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CosmosDBGremlinGraphThroughputSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -276,14 +278,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBGremlinGraphThroughputSettingResource"/>. </description>
+        /// <description> <see cref="GremlinResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CosmosDBGremlinGraphThroughputSettingResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<GremlinResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("CosmosDBGremlinGraphThroughputSettingResource.Get");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.Get");
             scope.Start();
             try
             {
@@ -298,7 +300,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CosmosDBGremlinGraphThroughputSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -324,15 +326,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBGremlinGraphThroughputSettingResource"/>. </description>
+        /// <description> <see cref="GremlinResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CosmosDBGremlinGraphThroughputSettingResource>> MigrateGremlinGraphToAutoscaleAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GremlinResource>> MigrateGremlinGraphToAutoscaleAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("CosmosDBGremlinGraphThroughputSettingResource.MigrateGremlinGraphToAutoscale");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.MigrateGremlinGraphToAutoscale");
             scope.Start();
             try
             {
@@ -342,8 +344,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinGraphToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource>(
-                    new CosmosDBGremlinGraphThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<GremlinResource> operation = new CosmosDBArmOperation<GremlinResource>(
+                    new GremlinResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -379,15 +381,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBGremlinGraphThroughputSettingResource"/>. </description>
+        /// <description> <see cref="GremlinResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CosmosDBGremlinGraphThroughputSettingResource> MigrateGremlinGraphToAutoscale(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GremlinResource> MigrateGremlinGraphToAutoscale(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("CosmosDBGremlinGraphThroughputSettingResource.MigrateGremlinGraphToAutoscale");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.MigrateGremlinGraphToAutoscale");
             scope.Start();
             try
             {
@@ -397,8 +399,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinGraphToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource>(
-                    new CosmosDBGremlinGraphThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<GremlinResource> operation = new CosmosDBArmOperation<GremlinResource>(
+                    new GremlinResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -434,15 +436,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBGremlinGraphThroughputSettingResource"/>. </description>
+        /// <description> <see cref="GremlinResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CosmosDBGremlinGraphThroughputSettingResource>> MigrateGremlinGraphToManualThroughputAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GremlinResource>> MigrateGremlinGraphToManualThroughputAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("CosmosDBGremlinGraphThroughputSettingResource.MigrateGremlinGraphToManualThroughput");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.MigrateGremlinGraphToManualThroughput");
             scope.Start();
             try
             {
@@ -452,8 +454,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinGraphToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource>(
-                    new CosmosDBGremlinGraphThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<GremlinResource> operation = new CosmosDBArmOperation<GremlinResource>(
+                    new GremlinResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -489,15 +491,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBGremlinGraphThroughputSettingResource"/>. </description>
+        /// <description> <see cref="GremlinResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CosmosDBGremlinGraphThroughputSettingResource> MigrateGremlinGraphToManualThroughput(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GremlinResource> MigrateGremlinGraphToManualThroughput(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("CosmosDBGremlinGraphThroughputSettingResource.MigrateGremlinGraphToManualThroughput");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.MigrateGremlinGraphToManualThroughput");
             scope.Start();
             try
             {
@@ -507,8 +509,8 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinGraphToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBGremlinGraphThroughputSettingResource>(
-                    new CosmosDBGremlinGraphThroughputSettingOperationSource(Client),
+                CosmosDBArmOperation<GremlinResource> operation = new CosmosDBArmOperation<GremlinResource>(
+                    new GremlinResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -519,6 +521,258 @@ namespace Azure.ResourceManager.CosmosDB
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<GremlinResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.AddTag");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<GremlinResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<GremlinResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.AddTag");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<GremlinResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<GremlinResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.SetTags");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<GremlinResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<GremlinResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.SetTags");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<GremlinResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<GremlinResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<GremlinResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<GremlinResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    ThroughputSettingsData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<GremlinResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

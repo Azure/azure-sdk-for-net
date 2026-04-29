@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    internal partial class CosmosDBMongoDBCollectionThroughputSettingOperationSource : IOperationSource<CosmosDBMongoDBCollectionThroughputSettingResource>
+    internal partial class SqlResourceOperationSource : IOperationSource<SqlResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal CosmosDBMongoDBCollectionThroughputSettingOperationSource(ArmClient client)
+        internal SqlResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        CosmosDBMongoDBCollectionThroughputSettingResource IOperationSource<CosmosDBMongoDBCollectionThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlResource IOperationSource<SqlResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             ThroughputSettingsData data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CosmosDBMongoDBCollectionThroughputSettingResource(_client, data);
+            return new SqlResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<CosmosDBMongoDBCollectionThroughputSettingResource> IOperationSource<CosmosDBMongoDBCollectionThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlResource> IOperationSource<SqlResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             ThroughputSettingsData data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CosmosDBMongoDBCollectionThroughputSettingResource(_client, data);
+            return new SqlResource(_client, data);
         }
     }
 }

@@ -522,11 +522,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="CosmosDBSqlDatabaseThroughputSettingResource"/> along with the instance operations that can be performed on it in the <see cref="CosmosDBSqlDatabaseResource"/>. </summary>
-        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource"/> object. </returns>
-        public virtual CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSetting()
+        /// <summary> Gets an object representing a <see cref="SqlResource"/> along with the instance operations that can be performed on it in the <see cref="CosmosDBSqlDatabaseResource"/>. </summary>
+        /// <returns> Returns a <see cref="SqlResource"/> object. </returns>
+        public virtual SqlResource GetSqlResource()
         {
-            return new CosmosDBSqlDatabaseThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
+            return new SqlResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
 
         /// <summary> Gets a collection of CosmosDBSqlClientEncryptionKeys in the <see cref="CosmosDBSqlDatabaseResource"/>. </summary>
