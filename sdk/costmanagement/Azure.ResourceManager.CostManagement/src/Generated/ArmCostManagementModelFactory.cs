@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="category">
+        /// <param name="budgetCategory">
         /// The category of the budget.
         /// <list type="bullet"><item><description>'Cost' defines a Budget.</description></item><item><description>'ReservationUtilization' defines a Reservation Utilization Alert Rule.</description></item></list>
         /// </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// Supported for CategoryType(s): Cost.
         /// Required for CategoryType(s): Cost.
         /// </param>
-        /// <param name="timeGrain">
+        /// <param name="budgetTimeGrain">
         /// The time covered by a budget. Tracking of the amount will be reset based on the time grain.
         /// Supported for CategoryType(s): Cost, ReservationUtilization.
         /// Supported timeGrainTypes for <b>CategoryType: Cost</b>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.BudgetData"/> instance for mocking. </returns>
-        public static BudgetData BudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? category = default, float? amount = default, TimeGrainType? timeGrain = default, BudgetTimePeriod timePeriod = default, BudgetFilter filter = default, CurrentSpend currentSpend = default, IDictionary<string, BudgetNotification> notifications = default, ForecastSpend forecastSpend = default, ETag? etag = default)
+        public static BudgetData BudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? budgetCategory = default, float? amount = default, TimeGrainType? budgetTimeGrain = default, BudgetTimePeriod timePeriod = default, BudgetFilter filter = default, CurrentSpend currentSpend = default, IDictionary<string, BudgetNotification> notifications = default, ForecastSpend forecastSpend = default, ETag? etag = default)
         {
             return new BudgetData(
                 id,
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                category is null && amount is null && timeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
-                    category.Value,
+                budgetCategory is null && amount is null && budgetTimeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
+                    budgetCategory.GetValueOrDefault(),
                     amount,
-                    timeGrain.Value,
+                    budgetTimeGrain.GetValueOrDefault(),
                     timePeriod,
                     filter,
                     currentSpend,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             return new ExportProperties(
                 format,
-                deliveryInfoDestination is null ? default : new ExportDeliveryInfo(deliveryInfoDestination, null),
+                new ExportDeliveryInfo(deliveryInfoDestination, null),
                 definition,
                 runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), null),
                 partitionData,
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             return new CommonExportProperties(
                 format,
-                deliveryInfoDestination is null ? default : new ExportDeliveryInfo(deliveryInfoDestination, null),
+                new ExportDeliveryInfo(deliveryInfoDestination, null),
                 definition,
                 runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), null),
                 partitionData,
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 SettingsKind.Taginheritance,
-                preferContainerTags is null ? default : new TagInheritanceProperties(preferContainerTags.Value, null));
+                preferContainerTags is null ? default : new TagInheritanceProperties(preferContainerTags.GetValueOrDefault(), null));
         }
 
         /// <param name="id"> The id of the long running operation. </param>

@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 - Fixed `NullReferenceException` thrown by `Operation.RehydrateAsync` / `ArmOperation.RehydrateAsync` (and the resulting operation's `UpdateStatusAsync` / `Value`) when the rehydrated long-running operation has completed with a failure. `OperationState.Failure` and `OperationState<T>.Failure` now honor their documented contract and materialize a default `RequestFailedException` from the raw response when the caller passes `null`, matching the behavior of the non-rehydration polling path.
+- Fixed `AzureDeveloperCliCredential` to correctly parse error messages from Azure Developer CLI v1.23.7 and later, which previously caused raw JSON to surface in `AuthenticationFailedException` instead of the underlying error text.
 
 ### Other Changes
 

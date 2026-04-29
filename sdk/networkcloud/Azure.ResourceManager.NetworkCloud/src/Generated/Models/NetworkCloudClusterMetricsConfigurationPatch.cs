@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new ClusterMetricsConfigurationPatchProperties();
                 }
-                Properties.CollectionInterval = value.Value;
+                Properties.CollectionInterval = value;
             }
         }
 

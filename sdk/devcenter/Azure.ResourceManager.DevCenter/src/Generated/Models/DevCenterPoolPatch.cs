@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     Properties = new PoolUpdateProperties();
                 }
-                Properties.DevBoxDefinitionType = value.Value;
+                Properties.DevBoxDefinitionType = value;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     Properties = new PoolUpdateProperties();
                 }
-                Properties.LicenseType = value.Value;
+                Properties.LicenseType = value;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     Properties = new PoolUpdateProperties();
                 }
-                Properties.LocalAdministrator = value.Value;
+                Properties.LocalAdministrator = value;
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     Properties = new PoolUpdateProperties();
                 }
-                Properties.SingleSignOnStatus = value.Value;
+                Properties.SingleSignOnStatus = value;
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     Properties = new PoolUpdateProperties();
                 }
-                Properties.VirtualNetworkType = value.Value;
+                Properties.VirtualNetworkType = value;
             }
         }
 
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     Properties = new PoolUpdateProperties();
                 }
-                Properties.DevBoxTunnelEnableStatus = value.Value;
+                Properties.DevBoxTunnelEnableStatus = value;
             }
         }
     }

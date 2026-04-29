@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new WorkspacePatchProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
     }

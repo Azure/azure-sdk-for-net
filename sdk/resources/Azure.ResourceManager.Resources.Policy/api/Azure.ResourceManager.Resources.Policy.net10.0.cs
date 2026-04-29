@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Resources.Policy
         public Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation? AssignmentScopeValidation { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory ExemptionCategory { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory? ExemptionCategory { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
         public string PolicyAssignmentId { get { throw null; } set { } }

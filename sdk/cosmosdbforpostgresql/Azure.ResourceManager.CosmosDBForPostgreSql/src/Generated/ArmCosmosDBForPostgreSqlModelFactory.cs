@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                startIPAddress is null && endIPAddress is null && provisioningState is null ? default : new FirewallRuleProperties(startIPAddress, endIPAddress, provisioningState, null));
+                new FirewallRuleProperties(startIPAddress, endIPAddress, provisioningState, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                roleType is null && password is null && provisioningState is null && objectId is null && principalType is null && tenantId is null ? default : new RoleProperties(roleType, password, new RolePropertiesExternalIdentity(objectId, principalType.Value, tenantId, null), provisioningState, null));
+                new RoleProperties(roleType, password, new RolePropertiesExternalIdentity(objectId, principalType.GetValueOrDefault(), tenantId, null), provisioningState, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

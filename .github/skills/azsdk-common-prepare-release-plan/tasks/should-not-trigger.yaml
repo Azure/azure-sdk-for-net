@@ -1,0 +1,14 @@
+id: release-plan-negative-001
+name: Should Not Trigger - Package Release Request
+description: |
+  Test that the skill does NOT activate when user wants to release a package
+  rather than create/manage a release plan.
+tags:
+  - negative-test
+  - anti-trigger
+inputs:
+  prompt: "Release the azure-mgmt-compute Python package to PyPI now."
+expected:
+  output_not_contains:
+    - "azsdk_create_release_plan"
+    - "Service Tree ID"

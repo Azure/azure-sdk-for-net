@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     Properties = new DefenderForAISettingProperties();
                 }
-                Properties.State = value.Value;
+                Properties.State = value;
             }
         }
     }
