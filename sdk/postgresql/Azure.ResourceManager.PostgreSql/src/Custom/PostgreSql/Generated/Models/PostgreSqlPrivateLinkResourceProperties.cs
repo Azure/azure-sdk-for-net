@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Storage Profile properties of a server. </summary>
-    public partial class PostgreSqlStorageProfile
+    /// <summary> Properties of a private link resource. </summary>
+    public partial class PostgreSqlPrivateLinkResourceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,28 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlStorageProfile"/>. </summary>
-        public PostgreSqlStorageProfile()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkResourceProperties"/>. </summary>
+        internal PostgreSqlPrivateLinkResourceProperties()
         {
+            RequiredMembers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlStorageProfile"/>. </summary>
-        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
-        /// <param name="geoRedundantBackup"> Enable Geo-redundant or not for server backup. </param>
-        /// <param name="storageInMB"> Max storage allowed for a server. </param>
-        /// <param name="storageAutogrow"> Enable Storage Auto Grow. </param>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkResourceProperties"/>. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlStorageProfile(int? backupRetentionDays, PostgreSqlGeoRedundantBackup? geoRedundantBackup, int? storageInMB, PostgreSqlStorageAutogrow? storageAutogrow, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            BackupRetentionDays = backupRetentionDays;
-            GeoRedundantBackup = geoRedundantBackup;
-            StorageInMB = storageInMB;
-            StorageAutogrow = storageAutogrow;
+            GroupId = groupId;
+            RequiredMembers = requiredMembers;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Backup retention days for the server. </summary>
-        [WirePath("backupRetentionDays")]
-        public int? BackupRetentionDays { get; set; }
-        /// <summary> Enable Geo-redundant or not for server backup. </summary>
-        [WirePath("geoRedundantBackup")]
-        public PostgreSqlGeoRedundantBackup? GeoRedundantBackup { get; set; }
-        /// <summary> Max storage allowed for a server. </summary>
-        [WirePath("storageMB")]
-        public int? StorageInMB { get; set; }
-        /// <summary> Enable Storage Auto Grow. </summary>
-        [WirePath("storageAutogrow")]
-        public PostgreSqlStorageAutogrow? StorageAutogrow { get; set; }
+        /// <summary> The private link resource group id. </summary>
+        [WirePath("groupId")]
+        public string GroupId { get; }
+        /// <summary> The private link resource required member names. </summary>
+        [WirePath("requiredMembers")]
+        public IReadOnlyList<string> RequiredMembers { get; }
     }
 }
