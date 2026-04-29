@@ -8,6 +8,12 @@
 
 ### Bugs Fixed
 
+- Implemented `GetResourceNameRequirements` for `CdnProfile`,
+  `FrontDoorEndpoint`, `FrontDoorOriginGroup`, `FrontDoorOrigin`, and
+  `FrontDoorRoute` so generated Bicep names use each resource's actual
+  Azure length limit instead of the default 24-character cap
+  ([#58181](https://github.com/Azure/azure-sdk-for-net/issues/58181)).
+
 ### Other Changes
 
 ## 1.0.0-beta.1 (2026-03-13)
