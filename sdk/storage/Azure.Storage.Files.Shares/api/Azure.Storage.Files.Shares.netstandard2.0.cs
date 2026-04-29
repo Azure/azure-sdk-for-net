@@ -1077,6 +1077,9 @@ namespace Azure.Storage.Files.Shares.Models
         ETag = 2,
         Attributes = 4,
         PermissionKey = 8,
+        Permissions = 16,
+        LinkCount = 32,
+        NfsAttributes = 64,
     }
     public partial class ShareFileUploadInfo
     {

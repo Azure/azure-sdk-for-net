@@ -77,6 +77,11 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
+            if (traits == ShareFileTraits.All)
+            {
+                return new[] { ListFilesIncludeType.All };
+            }
+
             // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
             // TODO: Remove this requirement by pushing it closer to header generation.
             List<ListFilesIncludeType> items = new List<ListFilesIncludeType>();
@@ -88,9 +93,21 @@ namespace Azure.Storage.Files.Shares
             {
                 items.Add(ListFilesIncludeType.Etag);
             }
+            if ((traits & ShareFileTraits.LinkCount) == ShareFileTraits.LinkCount)
+            {
+                items.Add(ListFilesIncludeType.LinkCount);
+            }
+            if ((traits & ShareFileTraits.NfsAttributes) == ShareFileTraits.NfsAttributes)
+            {
+                items.Add(ListFilesIncludeType.NfsAttributes);
+            }
             if ((traits & ShareFileTraits.PermissionKey) == ShareFileTraits.PermissionKey)
             {
                 items.Add(ListFilesIncludeType.PermissionKey);
+            }
+            if ((traits & ShareFileTraits.Permissions) == ShareFileTraits.Permissions)
+            {
+                items.Add(ListFilesIncludeType.Permissions);
             }
             if ((traits & ShareFileTraits.Timestamps) == ShareFileTraits.Timestamps)
             {
