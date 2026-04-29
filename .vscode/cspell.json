@@ -373,16 +373,6 @@
       ]
     },
     {
-      "filename": "**/sdk/computeschedule/**/*.cs",
-      "words": [
-        "dscp",
-        "nvme",
-        "ssdlrs",
-        "ssdzrs",
-        "unattend"
-      ]
-    },
-    {
       "filename": "**/sdk/confidentialledger/**/*.cs",
       "words": [
         "cbor",
