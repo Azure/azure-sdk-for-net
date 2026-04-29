@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Details of migration substate. </summary>
         /// <param name="currentSubState"> Substate of migration. </param>
-        /// <param name="dbDetailsInternal"></param>
+        /// <param name="dbDetails"></param>
         /// <param name="validationDetails"></param>
         /// <returns> A new <see cref="Models.PostgreSqlMigrationSubStateDetails"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = default, IDictionary<string, DbMigrationStatus> dbDetailsInternal = default, PostgreSqlFlexibleServersValidationDetails validationDetails = default)
+        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = default, IDictionary<string, DbMigrationStatus> dbDetails = default, PostgreSqlFlexibleServersValidationDetails validationDetails = default)
         {
-            dbDetailsInternal ??= new ChangeTrackingDictionary<string, DbMigrationStatus>();
+            dbDetails ??= new ChangeTrackingDictionary<string, DbMigrationStatus>();
 
-            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetailsInternal, validationDetails, additionalBinaryDataProperties: null);
+            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetails, validationDetails, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Migration state of a database. </summary>
@@ -159,33 +159,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="status"> Validation status for migration. </param>
         /// <param name="validationStartTimeInUtc"> Start time (UTC) for validation. </param>
         /// <param name="validationEndTimeInUtc"> End time (UTC) for validation. </param>
-        /// <param name="serverLevelValidationDetailsInternal"> Details of server level validations. </param>
-        /// <param name="dbLevelValidationDetailsInternal"> Details of server level validations. </param>
+        /// <param name="serverLevelValidationDetails"> Details of server level validations. </param>
+        /// <param name="dbLevelValidationDetails"> Details of server level validations. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersValidationDetails"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServersValidationDetails PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status = default, DateTimeOffset? validationStartTimeInUtc = default, DateTimeOffset? validationEndTimeInUtc = default, IEnumerable<ValidationSummaryItem> serverLevelValidationDetailsInternal = default, IEnumerable<DbLevelValidationStatus> dbLevelValidationDetailsInternal = default)
+        public static PostgreSqlFlexibleServersValidationDetails PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status = default, DateTimeOffset? validationStartTimeInUtc = default, DateTimeOffset? validationEndTimeInUtc = default, IEnumerable<ValidationSummaryItem> serverLevelValidationDetails = default, IEnumerable<DbLevelValidationStatus> dbLevelValidationDetails = default)
         {
-            serverLevelValidationDetailsInternal ??= new ChangeTrackingList<ValidationSummaryItem>();
-            dbLevelValidationDetailsInternal ??= new ChangeTrackingList<DbLevelValidationStatus>();
+            serverLevelValidationDetails ??= new ChangeTrackingList<ValidationSummaryItem>();
+            dbLevelValidationDetails ??= new ChangeTrackingList<DbLevelValidationStatus>();
 
             return new PostgreSqlFlexibleServersValidationDetails(
                 status,
                 validationStartTimeInUtc,
                 validationEndTimeInUtc,
-                serverLevelValidationDetailsInternal.ToList(),
-                dbLevelValidationDetailsInternal.ToList(),
+                serverLevelValidationDetails.ToList(),
+                dbLevelValidationDetails.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> Validation summary object. </summary>
         /// <param name="validationSummaryItemType"> Validation type. </param>
         /// <param name="state"> Validation status for migration. </param>
-        /// <param name="messagesInternal"> Validation messages. </param>
+        /// <param name="messages"> Validation messages. </param>
         /// <returns> A new <see cref="Models.ValidationSummaryItem"/> instance for mocking. </returns>
-        public static ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = default, PostgreSqlFlexibleServersValidationState? state = default, IEnumerable<PostgreSqlFlexibleServersValidationMessage> messagesInternal = default)
+        public static ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = default, PostgreSqlFlexibleServersValidationState? state = default, IEnumerable<PostgreSqlFlexibleServersValidationMessage> messages = default)
         {
-            messagesInternal ??= new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>();
+            messages ??= new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>();
 
-            return new ValidationSummaryItem(validationSummaryItemType, state, messagesInternal.ToList(), additionalBinaryDataProperties: null);
+            return new ValidationSummaryItem(validationSummaryItemType, state, messages.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Validation message object. </summary>
@@ -201,13 +201,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="databaseName"> Name of database. </param>
         /// <param name="startedOn"> Start time of a database level validation. </param>
         /// <param name="endedOn"> End time of a database level validation. </param>
-        /// <param name="summaryInternal"> Summary of database level validations. </param>
+        /// <param name="summary"> Summary of database level validations. </param>
         /// <returns> A new <see cref="Models.DbLevelValidationStatus"/> instance for mocking. </returns>
-        public static DbLevelValidationStatus DbLevelValidationStatus(string databaseName = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, IEnumerable<ValidationSummaryItem> summaryInternal = default)
+        public static DbLevelValidationStatus DbLevelValidationStatus(string databaseName = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, IEnumerable<ValidationSummaryItem> summary = default)
         {
-            summaryInternal ??= new ChangeTrackingList<ValidationSummaryItem>();
+            summary ??= new ChangeTrackingList<ValidationSummaryItem>();
 
-            return new DbLevelValidationStatus(databaseName, startedOn, endedOn, summaryInternal.ToList(), additionalBinaryDataProperties: null);
+            return new DbLevelValidationStatus(databaseName, startedOn, endedOn, summary.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Database server metadata. </summary>
@@ -981,13 +981,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="table"> Table name. </param>
         /// <param name="indexType"> Index type. </param>
         /// <param name="indexName"> Index name. </param>
-        /// <param name="indexColumnsInternal"> Index columns. </param>
-        /// <param name="includedColumnsInternal"> Index included columns. </param>
+        /// <param name="indexColumns"> Index columns. </param>
+        /// <param name="includedColumns"> Index included columns. </param>
         /// <returns> A new <see cref="Models.ObjectRecommendationDetails"/> instance for mocking. </returns>
-        public static ObjectRecommendationDetails ObjectRecommendationDetails(string databaseName = default, string schema = default, string table = default, string indexType = default, string indexName = default, IEnumerable<string> indexColumnsInternal = default, IEnumerable<string> includedColumnsInternal = default)
+        public static ObjectRecommendationDetails ObjectRecommendationDetails(string databaseName = default, string schema = default, string table = default, string indexType = default, string indexName = default, IEnumerable<string> indexColumns = default, IEnumerable<string> includedColumns = default)
         {
-            indexColumnsInternal ??= new ChangeTrackingList<string>();
-            includedColumnsInternal ??= new ChangeTrackingList<string>();
+            indexColumns ??= new ChangeTrackingList<string>();
+            includedColumns ??= new ChangeTrackingList<string>();
 
             return new ObjectRecommendationDetails(
                 databaseName,
@@ -995,8 +995,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 table,
                 indexType,
                 indexName,
-                indexColumnsInternal.ToList(),
-                includedColumnsInternal.ToList(),
+                indexColumns.ToList(),
+                includedColumns.ToList(),
                 additionalBinaryDataProperties: null);
         }
 

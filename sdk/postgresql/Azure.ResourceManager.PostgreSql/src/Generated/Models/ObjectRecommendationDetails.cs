@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationDetails"/>. </summary>
         internal ObjectRecommendationDetails()
         {
-            IndexColumnsInternal = new ChangeTrackingList<string>();
-            IncludedColumnsInternal = new ChangeTrackingList<string>();
+            IndexColumns = new ChangeTrackingList<string>();
+            IncludedColumns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationDetails"/>. </summary>
@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="table"> Table name. </param>
         /// <param name="indexType"> Index type. </param>
         /// <param name="indexName"> Index name. </param>
-        /// <param name="indexColumnsInternal"> Index columns. </param>
-        /// <param name="includedColumnsInternal"> Index included columns. </param>
+        /// <param name="indexColumns"> Index columns. </param>
+        /// <param name="includedColumns"> Index included columns. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectRecommendationDetails(string databaseName, string schema, string table, string indexType, string indexName, IList<string> indexColumnsInternal, IList<string> includedColumnsInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectRecommendationDetails(string databaseName, string schema, string table, string indexType, string indexName, IList<string> indexColumns, IList<string> includedColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             Schema = schema;
             Table = table;
             IndexType = indexType;
             IndexName = indexName;
-            IndexColumnsInternal = indexColumnsInternal;
-            IncludedColumnsInternal = includedColumnsInternal;
+            IndexColumns = indexColumns;
+            IncludedColumns = includedColumns;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,5 +64,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Index name. </summary>
         [WirePath("indexName")]
         public string IndexName { get; }
+
+        /// <summary> Index columns. </summary>
+        [WirePath("indexColumns")]
+        public IList<string> IndexColumns { get; }
+
+        /// <summary> Index included columns. </summary>
+        [WirePath("includedColumns")]
+        public IList<string> IncludedColumns { get; }
     }
 }

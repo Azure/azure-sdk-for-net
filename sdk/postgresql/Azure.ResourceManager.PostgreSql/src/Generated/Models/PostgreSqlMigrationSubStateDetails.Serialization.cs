@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("currentSubState"u8);
                 writer.WriteStringValue(CurrentSubState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DbDetailsInternal))
+            if (Optional.IsCollectionDefined(DbDetails))
             {
                 writer.WritePropertyName("dbDetails"u8);
                 writer.WriteStartObject();
-                foreach (var item in DbDetailsInternal)
+                foreach (var item in DbDetails)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value, options);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             PostgreSqlMigrationSubState? currentSubState = default;
-            IDictionary<string, DbMigrationStatus> dbDetailsInternal = default;
+            IDictionary<string, DbMigrationStatus> dbDetails = default;
             PostgreSqlFlexibleServersValidationDetails validationDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         dictionary.Add(prop0.Name, DbMigrationStatus.DeserializeDbMigrationStatus(prop0.Value, options));
                     }
-                    dbDetailsInternal = dictionary;
+                    dbDetails = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("validationDetails"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetailsInternal ?? new ChangeTrackingDictionary<string, DbMigrationStatus>(), validationDetails, additionalBinaryDataProperties);
+            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetails ?? new ChangeTrackingDictionary<string, DbMigrationStatus>(), validationDetails, additionalBinaryDataProperties);
         }
     }
 }

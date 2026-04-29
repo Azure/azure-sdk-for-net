@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(MessagesInternal))
+            if (Optional.IsCollectionDefined(Messages))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
-                foreach (PostgreSqlFlexibleServersValidationMessage item in MessagesInternal)
+                foreach (PostgreSqlFlexibleServersValidationMessage item in Messages)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string validationSummaryItemType = default;
             PostgreSqlFlexibleServersValidationState? state = default;
-            IList<PostgreSqlFlexibleServersValidationMessage> messagesInternal = default;
+            IList<PostgreSqlFlexibleServersValidationMessage> messages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         array.Add(PostgreSqlFlexibleServersValidationMessage.DeserializePostgreSqlFlexibleServersValidationMessage(item, options));
                     }
-                    messagesInternal = array;
+                    messages = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ValidationSummaryItem(validationSummaryItemType, state, messagesInternal ?? new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>(), additionalBinaryDataProperties);
+            return new ValidationSummaryItem(validationSummaryItemType, state, messages ?? new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>(), additionalBinaryDataProperties);
         }
     }
 }

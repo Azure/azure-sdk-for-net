@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="Models.DbLevelValidationStatus"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DbLevelValidationStatus DbLevelValidationStatus(string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, IEnumerable<ValidationSummaryItem> summary = null)
-            => ArmPostgreSqlModelFactory.DbLevelValidationStatus(databaseName: databaseName, startedOn: startedOn, endedOn: endedOn, summaryInternal: summary);
+            => ArmPostgreSqlModelFactory.DbLevelValidationStatus(databaseName: databaseName, startedOn: startedOn, endedOn: endedOn, summary: summary);
 
         /// <summary> Initializes a new instance of <see cref="Models.DbMigrationStatus"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="Models.ObjectRecommendationDetails"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectRecommendationDetails ObjectRecommendationDetails(string databaseName = null, string schema = null, string table = null, string indexType = null, string indexName = null, IEnumerable<string> indexColumns = null, IEnumerable<string> includedColumns = null)
-            => ArmPostgreSqlModelFactory.ObjectRecommendationDetails(databaseName: databaseName, schema: schema, table: table, indexType: indexType, indexName: indexName, indexColumnsInternal: indexColumns, includedColumnsInternal: includedColumns);
+            => ArmPostgreSqlModelFactory.ObjectRecommendationDetails(databaseName: databaseName, schema: schema, table: table, indexType: indexType, indexName: indexName, indexColumns: indexColumns, includedColumns: includedColumns);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlBaseCapability"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersValidationDetails"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServersValidationDetails PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status = null, DateTimeOffset? validationStartTimeInUtc = null, DateTimeOffset? validationEndTimeInUtc = null, IEnumerable<ValidationSummaryItem> serverLevelValidationDetails = null, IEnumerable<DbLevelValidationStatus> dbLevelValidationDetails = null)
-            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServersValidationDetails(status: status, validationStartTimeInUtc: validationStartTimeInUtc, validationEndTimeInUtc: validationEndTimeInUtc, serverLevelValidationDetailsInternal: serverLevelValidationDetails, dbLevelValidationDetailsInternal: dbLevelValidationDetails);
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServersValidationDetails(status: status, validationStartTimeInUtc: validationStartTimeInUtc, validationEndTimeInUtc: validationEndTimeInUtc, serverLevelValidationDetails: serverLevelValidationDetails, dbLevelValidationDetails: dbLevelValidationDetails);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersValidationMessage"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlMigrationSubStateDetails"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = null, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = null, PostgreSqlFlexibleServersValidationDetails validationDetails = null)
-            => ArmPostgreSqlModelFactory.PostgreSqlMigrationSubStateDetails(currentSubState: currentSubState, dbDetailsInternal: dbDetails?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), validationDetails: validationDetails);
+            => ArmPostgreSqlModelFactory.PostgreSqlMigrationSubStateDetails(currentSubState: currentSubState, dbDetails: dbDetails?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), validationDetails: validationDetails);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerMetadata"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="Models.ValidationSummaryItem"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = null, PostgreSqlFlexibleServersValidationState? state = null, IEnumerable<PostgreSqlFlexibleServersValidationMessage> messages = null)
-            => ArmPostgreSqlModelFactory.ValidationSummaryItem(validationSummaryItemType: validationSummaryItemType, state: state, messagesInternal: messages);
+            => ArmPostgreSqlModelFactory.ValidationSummaryItem(validationSummaryItemType: validationSummaryItemType, state: state, messages: messages);
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.VirtualEndpointResourceData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

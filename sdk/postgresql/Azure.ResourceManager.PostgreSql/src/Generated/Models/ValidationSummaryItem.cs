@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="ValidationSummaryItem"/>. </summary>
         internal ValidationSummaryItem()
         {
-            MessagesInternal = new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>();
+            Messages = new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidationSummaryItem"/>. </summary>
         /// <param name="validationSummaryItemType"> Validation type. </param>
         /// <param name="state"> Validation status for migration. </param>
-        /// <param name="messagesInternal"> Validation messages. </param>
+        /// <param name="messages"> Validation messages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationSummaryItem(string validationSummaryItemType, PostgreSqlFlexibleServersValidationState? state, IList<PostgreSqlFlexibleServersValidationMessage> messagesInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidationSummaryItem(string validationSummaryItemType, PostgreSqlFlexibleServersValidationState? state, IList<PostgreSqlFlexibleServersValidationMessage> messages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidationSummaryItemType = validationSummaryItemType;
             State = state;
-            MessagesInternal = messagesInternal;
+            Messages = messages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,5 +43,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Validation status for migration. </summary>
         [WirePath("state")]
         public PostgreSqlFlexibleServersValidationState? State { get; }
+
+        /// <summary> Validation messages. </summary>
+        [WirePath("messages")]
+        public IList<PostgreSqlFlexibleServersValidationMessage> Messages { get; }
     }
 }

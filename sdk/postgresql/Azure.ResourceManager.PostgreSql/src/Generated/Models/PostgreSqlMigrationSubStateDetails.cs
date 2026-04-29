@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
         internal PostgreSqlMigrationSubStateDetails()
         {
-            DbDetailsInternal = new ChangeTrackingDictionary<string, DbMigrationStatus>();
+            DbDetails = new ChangeTrackingDictionary<string, DbMigrationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
         /// <param name="currentSubState"> Substate of migration. </param>
-        /// <param name="dbDetailsInternal"></param>
+        /// <param name="dbDetails"></param>
         /// <param name="validationDetails"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IDictionary<string, DbMigrationStatus> dbDetailsInternal, PostgreSqlFlexibleServersValidationDetails validationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IDictionary<string, DbMigrationStatus> dbDetails, PostgreSqlFlexibleServersValidationDetails validationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentSubState = currentSubState;
-            DbDetailsInternal = dbDetailsInternal;
+            DbDetails = dbDetails;
             ValidationDetails = validationDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Substate of migration. </summary>
         [WirePath("currentSubState")]
         public PostgreSqlMigrationSubState? CurrentSubState { get; }
+
+        /// <summary> Gets the DbDetails. </summary>
+        [WirePath("dbDetails")]
+        public IDictionary<string, DbMigrationStatus> DbDetails { get; }
 
         /// <summary> Gets the ValidationDetails. </summary>
         [WirePath("validationDetails")]

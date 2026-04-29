@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationDetails"/>. </summary>
         internal PostgreSqlFlexibleServersValidationDetails()
         {
-            ServerLevelValidationDetailsInternal = new ChangeTrackingList<ValidationSummaryItem>();
-            DbLevelValidationDetailsInternal = new ChangeTrackingList<DbLevelValidationStatus>();
+            ServerLevelValidationDetails = new ChangeTrackingList<ValidationSummaryItem>();
+            DbLevelValidationDetails = new ChangeTrackingList<DbLevelValidationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationDetails"/>. </summary>
         /// <param name="status"> Validation status for migration. </param>
         /// <param name="validationStartTimeInUtc"> Start time (UTC) for validation. </param>
         /// <param name="validationEndTimeInUtc"> End time (UTC) for validation. </param>
-        /// <param name="serverLevelValidationDetailsInternal"> Details of server level validations. </param>
-        /// <param name="dbLevelValidationDetailsInternal"> Details of server level validations. </param>
+        /// <param name="serverLevelValidationDetails"> Details of server level validations. </param>
+        /// <param name="dbLevelValidationDetails"> Details of server level validations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status, DateTimeOffset? validationStartTimeInUtc, DateTimeOffset? validationEndTimeInUtc, IList<ValidationSummaryItem> serverLevelValidationDetailsInternal, IList<DbLevelValidationStatus> dbLevelValidationDetailsInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status, DateTimeOffset? validationStartTimeInUtc, DateTimeOffset? validationEndTimeInUtc, IList<ValidationSummaryItem> serverLevelValidationDetails, IList<DbLevelValidationStatus> dbLevelValidationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ValidationStartTimeInUtc = validationStartTimeInUtc;
             ValidationEndTimeInUtc = validationEndTimeInUtc;
-            ServerLevelValidationDetailsInternal = serverLevelValidationDetailsInternal;
-            DbLevelValidationDetailsInternal = dbLevelValidationDetailsInternal;
+            ServerLevelValidationDetails = serverLevelValidationDetails;
+            DbLevelValidationDetails = dbLevelValidationDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,5 +52,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> End time (UTC) for validation. </summary>
         [WirePath("validationEndTimeInUtc")]
         public DateTimeOffset? ValidationEndTimeInUtc { get; }
+
+        /// <summary> Details of server level validations. </summary>
+        [WirePath("serverLevelValidationDetails")]
+        public IList<ValidationSummaryItem> ServerLevelValidationDetails { get; }
+
+        /// <summary> Details of server level validations. </summary>
+        [WirePath("dbLevelValidationDetails")]
+        public IList<DbLevelValidationStatus> DbLevelValidationDetails { get; }
     }
 }

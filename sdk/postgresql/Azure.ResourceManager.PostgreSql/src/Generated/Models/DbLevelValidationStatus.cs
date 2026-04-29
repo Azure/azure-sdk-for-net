@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="DbLevelValidationStatus"/>. </summary>
         internal DbLevelValidationStatus()
         {
-            SummaryInternal = new ChangeTrackingList<ValidationSummaryItem>();
+            Summary = new ChangeTrackingList<ValidationSummaryItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DbLevelValidationStatus"/>. </summary>
         /// <param name="databaseName"> Name of database. </param>
         /// <param name="startedOn"> Start time of a database level validation. </param>
         /// <param name="endedOn"> End time of a database level validation. </param>
-        /// <param name="summaryInternal"> Summary of database level validations. </param>
+        /// <param name="summary"> Summary of database level validations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DbLevelValidationStatus(string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, IList<ValidationSummaryItem> summaryInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DbLevelValidationStatus(string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, IList<ValidationSummaryItem> summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;
             EndedOn = endedOn;
-            SummaryInternal = summaryInternal;
+            Summary = summary;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,5 +49,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> End time of a database level validation. </summary>
         [WirePath("endedOn")]
         public DateTimeOffset? EndedOn { get; }
+
+        /// <summary> Summary of database level validations. </summary>
+        [WirePath("summary")]
+        public IList<ValidationSummaryItem> Summary { get; }
     }
 }
