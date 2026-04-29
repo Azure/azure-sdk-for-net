@@ -50,7 +50,6 @@
         $(MSBuildProjectName) == 'Azure.Core.TestFramework.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests.Public' or
-        $(MSBuildProjectName) == 'Azure.Data.AppConfiguration.Tests' or
         $(MSBuildProjectName) == 'Azure.Data.SchemaRegistry.Tests' or
         $(MSBuildProjectName) == 'Azure.Data.Tables.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.DevCenter.Tests' or
@@ -107,7 +106,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.ApiCenter.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.ApiManagement.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AppComplianceAutomation.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.AppConfiguration.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AppContainers.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.ApplicationInsights.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AppNetwork.Tests' or
