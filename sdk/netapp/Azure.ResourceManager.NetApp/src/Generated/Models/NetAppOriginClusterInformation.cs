@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppOriginClusterInformation"/>. </summary>
-        /// <param name="peerClusterName"> ONTAP cluster name of external cluster hosting the origin volume. </param>
+        /// <param name="peerClusterName"> ONTAP cluster name of external cluster hosting the origin volume. Must match the exact cluster name. </param>
         /// <param name="peerAddresses"> ONTAP Intercluster LIF IP addresses. One IP address per cluster node is required. </param>
         /// <param name="peerVserverName"> External Vserver (SVM) name  name of the SVM hosting the origin volume. </param>
         /// <param name="peerVolumeName"> External origin volume name associated to this cache. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppOriginClusterInformation"/>. </summary>
-        /// <param name="peerClusterName"> ONTAP cluster name of external cluster hosting the origin volume. </param>
+        /// <param name="peerClusterName"> ONTAP cluster name of external cluster hosting the origin volume. Must match the exact cluster name. </param>
         /// <param name="peerAddresses"> ONTAP Intercluster LIF IP addresses. One IP address per cluster node is required. </param>
         /// <param name="peerVserverName"> External Vserver (SVM) name  name of the SVM hosting the origin volume. </param>
         /// <param name="peerVolumeName"> External origin volume name associated to this cache. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> ONTAP cluster name of external cluster hosting the origin volume. </summary>
+        /// <summary> ONTAP cluster name of external cluster hosting the origin volume. Must match the exact cluster name. </summary>
         public string PeerClusterName { get; set; }
         /// <summary> ONTAP Intercluster LIF IP addresses. One IP address per cluster node is required. </summary>
         public IList<string> PeerAddresses { get; }

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 marketplace,
                 user,
                 provisioningState,
-                partnerDescription is null ? default : new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, null),
+                new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, null),
                 singleSignOnProperties,
                 additionalBinaryDataProperties: null);
         }

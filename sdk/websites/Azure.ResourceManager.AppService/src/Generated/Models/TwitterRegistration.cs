@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
+    /// <summary>
+    /// The configuration settings of the app registration for the Twitter provider.
+    /// Serialized Name: TwitterRegistration
+    /// </summary>
     public partial class TwitterRegistration
     {
         /// <summary>
@@ -55,10 +58,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// The OAuth 1.0a consumer key of the Twitter application used for sign-in.
         /// This setting is required for enabling Twitter Sign-In.
         /// Twitter Sign-In documentation: https://dev.twitter.com/web/sign-in
+        /// Serialized Name: TwitterRegistration.consumerKey
         /// </param>
         /// <param name="consumerSecretSettingName">
         /// The app setting name that contains the OAuth 1.0a consumer secret of the Twitter
         /// application used for sign-in.
+        /// Serialized Name: TwitterRegistration.consumerSecretSettingName
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TwitterRegistration(string consumerKey, string consumerSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -72,12 +77,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// The OAuth 1.0a consumer key of the Twitter application used for sign-in.
         /// This setting is required for enabling Twitter Sign-In.
         /// Twitter Sign-In documentation: https://dev.twitter.com/web/sign-in
+        /// Serialized Name: TwitterRegistration.consumerKey
         /// </summary>
         [WirePath("consumerKey")]
         public string ConsumerKey { get; set; }
         /// <summary>
         /// The app setting name that contains the OAuth 1.0a consumer secret of the Twitter
         /// application used for sign-in.
+        /// Serialized Name: TwitterRegistration.consumerSecretSettingName
         /// </summary>
         [WirePath("consumerSecretSettingName")]
         public string ConsumerSecretSettingName { get; set; }

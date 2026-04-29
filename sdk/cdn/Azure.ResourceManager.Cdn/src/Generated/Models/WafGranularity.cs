@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafGranularity. </summary>
+    /// <summary></summary>
     public readonly partial struct WafGranularity : IEquatable<WafGranularity>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WafGranularity"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WafGranularity(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PT5MValue = "PT5M";
         private const string PT1HValue = "PT1H";
         private const string P1DValue = "P1D";
 
-        /// <summary> PT5M. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafGranularity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WafGranularity(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the PT5M. </summary>
         public static WafGranularity PT5M { get; } = new WafGranularity(PT5MValue);
-        /// <summary> PT1H. </summary>
+
+        /// <summary> Gets the PT1H. </summary>
         public static WafGranularity PT1H { get; } = new WafGranularity(PT1HValue);
-        /// <summary> P1D. </summary>
+
+        /// <summary> Gets the P1D. </summary>
         public static WafGranularity P1D { get; } = new WafGranularity(P1DValue);
+
         /// <summary> Determines if two <see cref="WafGranularity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WafGranularity left, WafGranularity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WafGranularity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WafGranularity left, WafGranularity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WafGranularity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WafGranularity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WafGranularity(string value) => new WafGranularity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WafGranularity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WafGranularity?(string value) => value == null ? null : new WafGranularity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WafGranularity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WafGranularity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

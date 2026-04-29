@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     UpdateStateProperties = new UpdateStateProperties();
                 }
-                UpdateStateProperties.ProgressPercentage = value.Value;
+                UpdateStateProperties.ProgressPercentage = value;
             }
         }
 

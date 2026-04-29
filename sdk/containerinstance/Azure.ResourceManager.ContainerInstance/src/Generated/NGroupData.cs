@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new NGroupProperties();
                 }
-                Properties.PlacementFaultDomainCount = value.Value;
+                Properties.PlacementFaultDomainCount = value;
             }
         }
     }

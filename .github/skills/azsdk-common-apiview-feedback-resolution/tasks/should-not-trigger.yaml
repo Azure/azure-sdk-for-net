@@ -1,0 +1,14 @@
+id: apiview-negative-001
+name: Should Not Trigger - Create TypeSpec Project
+description: |
+  Test that the skill does NOT activate when user wants to create
+  a TypeSpec project from scratch.
+tags:
+  - negative-test
+  - anti-trigger
+inputs:
+  prompt: "I need to create a new TypeSpec project for my Azure Storage service."
+expected:
+  output_not_contains:
+    - "azsdk_apiview_get_comments"
+    - "APIView"

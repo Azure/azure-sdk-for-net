@@ -117,7 +117,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A tool that can be used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, and <see cref="Agents.MemorySearchPreviewTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.FabricIQPreviewTool"/>, and <see cref="Agents.MemorySearchPreviewTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ProjectsAgentTool"/> instance for mocking. </returns>
@@ -517,6 +517,25 @@ namespace Azure.AI.Projects.Agents
             return new WorkIQPreviewToolParameters(projectConnectionId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The FabricIQPreviewTool. </summary>
+        /// <param name="fabricIqPreview"> The FabricIQ tool parameters. </param>
+        /// <returns> A new <see cref="Agents.FabricIQPreviewTool"/> instance for mocking. </returns>
+        public static FabricIQPreviewTool FabricIQPreviewTool(FabricIQPreviewToolParameters fabricIqPreview = default)
+        {
+            return new FabricIQPreviewTool(ToolType.FabricIqPreview, additionalBinaryDataProperties: null, fabricIqPreview);
+        }
+
+        /// <summary> The FabricIQPreviewToolParameters. </summary>
+        /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
+        /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
+        /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
+        /// <returns> A new <see cref="Agents.FabricIQPreviewToolParameters"/> instance for mocking. </returns>
+        public static FabricIQPreviewToolParameters FabricIQPreviewToolParameters(string projectConnectionId = default, string serverLabel = default, Uri serverUrl = default, BinaryData requireApproval = default)
+        {
+            return new FabricIQPreviewToolParameters(projectConnectionId, serverLabel, serverUrl, requireApproval, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A tool for integrating memories into the agent. </summary>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>
         /// <param name="scope">
@@ -575,12 +594,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Code-based deployment configuration for a hosted agent. </summary>
         /// <param name="runtime"> The runtime identifier for code execution (e.g., 'python_3_11', 'python_3_12', 'python_3_13'). </param>
         /// <param name="entryPoint"> The entry point command and arguments for the code execution. </param>
+        /// <param name="contentHash"> The SHA-256 hex digest of the uploaded code zip. Set by the service from the `x-ms-code-zip-sha256` request header; read-only in responses and never accepted in request payloads. </param>
         /// <returns> A new <see cref="Agents.CodeConfiguration"/> instance for mocking. </returns>
-        public static CodeConfiguration CodeConfiguration(string runtime = default, IEnumerable<string> entryPoint = default)
+        public static CodeConfiguration CodeConfiguration(string runtime = default, IEnumerable<string> entryPoint = default, string contentHash = default)
         {
             entryPoint ??= new ChangeTrackingList<string>();
 
-            return new CodeConfiguration(runtime, entryPoint.ToList(), additionalBinaryDataProperties: null);
+            return new CodeConfiguration(runtime, entryPoint.ToList(), contentHash, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
@@ -827,12 +847,10 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The HeaderIsolationKeySource. </summary>
-        /// <param name="userIsolationKey"> The user isolation key header value. </param>
-        /// <param name="chatIsolationKey"> The chat isolation key header value. </param>
         /// <returns> A new <see cref="Agents.HeaderIsolationKeySource"/> instance for mocking. </returns>
-        public static HeaderIsolationKeySource HeaderIsolationKeySource(string userIsolationKey = default, string chatIsolationKey = default)
+        public static HeaderIsolationKeySource HeaderIsolationKeySource()
         {
-            return new HeaderIsolationKeySource(IsolationKeySourceKind.Header, additionalBinaryDataProperties: null, userIsolationKey, chatIsolationKey);
+            return new HeaderIsolationKeySource(IsolationKeySourceKind.Header, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The BotServiceAuthorizationScheme. </summary>

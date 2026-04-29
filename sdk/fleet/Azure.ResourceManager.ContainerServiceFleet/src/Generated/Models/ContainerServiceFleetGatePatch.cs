@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGatePatch"/>. </summary>
         /// <param name="gatePatchState"> The state of the Gate. </param>
-        public ContainerServiceFleetGatePatch(ContainerServiceFleetGateState? gatePatchState)
+        public ContainerServiceFleetGatePatch(ContainerServiceFleetGateState gatePatchState)
         {
 
-            Properties = gatePatchState is null ? default : new GatePatchProperties(gatePatchState.Value);
+            Properties = new GatePatchProperties(gatePatchState);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGatePatch"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         internal GatePatchProperties Properties { get; }
 
         /// <summary> The state of the Gate. </summary>
-        public ContainerServiceFleetGateState? GatePatchState
+        public ContainerServiceFleetGateState GatePatchState
         {
             get
             {

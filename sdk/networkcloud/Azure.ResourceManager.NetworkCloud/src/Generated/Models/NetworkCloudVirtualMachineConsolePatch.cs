@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new ConsolePatchProperties();
                 }
-                Properties.Enabled = value.Value;
+                Properties.Enabled = value;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new ConsolePatchProperties();
                 }
-                Properties.ExpireOn = value.Value;
+                Properties.ExpireOn = value;
             }
         }
 

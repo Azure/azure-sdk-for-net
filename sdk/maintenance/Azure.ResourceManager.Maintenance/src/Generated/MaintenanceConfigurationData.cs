@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new MaintenanceConfigurationProperties();
                 }
-                Properties.MaintenanceScope = value.Value;
+                Properties.MaintenanceScope = value;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new MaintenanceConfigurationProperties();
                 }
-                Properties.Visibility = value.Value;
+                Properties.Visibility = value;
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new MaintenanceConfigurationProperties();
                 }
-                Properties.StartOn = value.Value;
+                Properties.StartOn = value;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new MaintenanceConfigurationProperties();
                 }
-                Properties.ExpireOn = value.Value;
+                Properties.ExpireOn = value;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new MaintenanceConfigurationProperties();
                 }
-                Properties.Duration = value.Value;
+                Properties.Duration = value;
             }
         }
 

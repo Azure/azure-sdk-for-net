@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new RoutingRuleProperties();
                 }
-                Properties.EnabledState = value.Value;
+                Properties.EnabledState = value;
             }
         }
 

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ContainerAppsConfiguration. </summary>
+    /// <summary>
+    /// The ContainerAppsConfiguration.
+    /// Serialized Name: ContainerAppsConfiguration
+    /// </summary>
     public partial class ContainerAppsConfiguration
     {
         /// <summary>
@@ -51,12 +54,30 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppsConfiguration"/>. </summary>
-        /// <param name="daprAIInstrumentationKey"> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </param>
-        /// <param name="platformReservedCidr"> IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. It must not overlap with any other Subnet IP ranges. </param>
-        /// <param name="platformReservedDnsIP"> An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server. </param>
-        /// <param name="controlPlaneSubnetResourceId"> Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined. </param>
-        /// <param name="appSubnetResourceId"> Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined. </param>
-        /// <param name="dockerBridgeCidr"> CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the IP range defined in platformReservedCidr, if defined. </param>
+        /// <param name="daprAIInstrumentationKey">
+        /// Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry
+        /// Serialized Name: ContainerAppsConfiguration.daprAIInstrumentationKey
+        /// </param>
+        /// <param name="platformReservedCidr">
+        /// IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. It must not overlap with any other Subnet IP ranges.
+        /// Serialized Name: ContainerAppsConfiguration.platformReservedCidr
+        /// </param>
+        /// <param name="platformReservedDnsIP">
+        /// An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server
+        /// Serialized Name: ContainerAppsConfiguration.platformReservedDnsIP
+        /// </param>
+        /// <param name="controlPlaneSubnetResourceId">
+        /// Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined.
+        /// Serialized Name: ContainerAppsConfiguration.controlPlaneSubnetResourceId
+        /// </param>
+        /// <param name="appSubnetResourceId">
+        /// Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined.
+        /// Serialized Name: ContainerAppsConfiguration.appSubnetResourceId
+        /// </param>
+        /// <param name="dockerBridgeCidr">
+        /// CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the IP range defined in platformReservedCidr, if defined.
+        /// Serialized Name: ContainerAppsConfiguration.dockerBridgeCidr
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerAppsConfiguration(string daprAIInstrumentationKey, string platformReservedCidr, string platformReservedDnsIP, string controlPlaneSubnetResourceId, string appSubnetResourceId, string dockerBridgeCidr, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,22 +90,40 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </summary>
+        /// <summary>
+        /// Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry
+        /// Serialized Name: ContainerAppsConfiguration.daprAIInstrumentationKey
+        /// </summary>
         [WirePath("daprAIInstrumentationKey")]
         public string DaprAIInstrumentationKey { get; set; }
-        /// <summary> IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. It must not overlap with any other Subnet IP ranges. </summary>
+        /// <summary>
+        /// IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. It must not overlap with any other Subnet IP ranges.
+        /// Serialized Name: ContainerAppsConfiguration.platformReservedCidr
+        /// </summary>
         [WirePath("platformReservedCidr")]
         public string PlatformReservedCidr { get; set; }
-        /// <summary> An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server. </summary>
+        /// <summary>
+        /// An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server
+        /// Serialized Name: ContainerAppsConfiguration.platformReservedDnsIP
+        /// </summary>
         [WirePath("platformReservedDnsIP")]
         public string PlatformReservedDnsIP { get; set; }
-        /// <summary> Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined. </summary>
+        /// <summary>
+        /// Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined.
+        /// Serialized Name: ContainerAppsConfiguration.controlPlaneSubnetResourceId
+        /// </summary>
         [WirePath("controlPlaneSubnetResourceId")]
         public string ControlPlaneSubnetResourceId { get; set; }
-        /// <summary> Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined. </summary>
+        /// <summary>
+        /// Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined.
+        /// Serialized Name: ContainerAppsConfiguration.appSubnetResourceId
+        /// </summary>
         [WirePath("appSubnetResourceId")]
         public string AppSubnetResourceId { get; set; }
-        /// <summary> CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the IP range defined in platformReservedCidr, if defined. </summary>
+        /// <summary>
+        /// CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the IP range defined in platformReservedCidr, if defined.
+        /// Serialized Name: ContainerAppsConfiguration.dockerBridgeCidr
+        /// </summary>
         [WirePath("dockerBridgeCidr")]
         public string DockerBridgeCidr { get; set; }
     }

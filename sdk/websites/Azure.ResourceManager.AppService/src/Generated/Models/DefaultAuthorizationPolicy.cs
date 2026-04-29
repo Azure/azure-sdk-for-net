@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the Azure Active Directory default authorization policy. </summary>
+    /// <summary>
+    /// The configuration settings of the Azure Active Directory default authorization policy.
+    /// Serialized Name: DefaultAuthorizationPolicy
+    /// </summary>
     public partial class DefaultAuthorizationPolicy
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefaultAuthorizationPolicy"/>. </summary>
-        /// <param name="allowedPrincipals"> The configuration settings of the Azure Active Directory allowed principals. </param>
-        /// <param name="allowedApplications"> The configuration settings of the Azure Active Directory allowed applications. </param>
+        /// <param name="allowedPrincipals">
+        /// The configuration settings of the Azure Active Directory allowed principals.
+        /// Serialized Name: DefaultAuthorizationPolicy.allowedPrincipals
+        /// </param>
+        /// <param name="allowedApplications">
+        /// The configuration settings of the Azure Active Directory allowed applications.
+        /// Serialized Name: DefaultAuthorizationPolicy.allowedApplications
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefaultAuthorizationPolicy(AppServiceAadAllowedPrincipals allowedPrincipals, IList<string> allowedApplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +71,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The configuration settings of the Azure Active Directory allowed principals. </summary>
+        /// <summary>
+        /// The configuration settings of the Azure Active Directory allowed principals.
+        /// Serialized Name: DefaultAuthorizationPolicy.allowedPrincipals
+        /// </summary>
         [WirePath("allowedPrincipals")]
         public AppServiceAadAllowedPrincipals AllowedPrincipals { get; set; }
-        /// <summary> The configuration settings of the Azure Active Directory allowed applications. </summary>
+        /// <summary>
+        /// The configuration settings of the Azure Active Directory allowed applications.
+        /// Serialized Name: DefaultAuthorizationPolicy.allowedApplications
+        /// </summary>
         [WirePath("allowedApplications")]
         public IList<string> AllowedApplications { get; }
     }

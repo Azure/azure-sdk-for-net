@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct PolicyResourceState : IEquatable<PolicyResourceState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PolicyResourceState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PolicyResourceState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string EnablingValue = "Enabling";
         private const string EnabledValue = "Enabled";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DisabledValue = "Disabled";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PolicyResourceState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static PolicyResourceState Creating { get; } = new PolicyResourceState(CreatingValue);
-        /// <summary> Enabling. </summary>
+
+        /// <summary> Gets the Enabling. </summary>
         public static PolicyResourceState Enabling { get; } = new PolicyResourceState(EnablingValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static PolicyResourceState Enabled { get; } = new PolicyResourceState(EnabledValue);
-        /// <summary> Disabling. </summary>
+
+        /// <summary> Gets the Disabling. </summary>
         public static PolicyResourceState Disabling { get; } = new PolicyResourceState(DisablingValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static PolicyResourceState Disabled { get; } = new PolicyResourceState(DisabledValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static PolicyResourceState Deleting { get; } = new PolicyResourceState(DeletingValue);
+
         /// <summary> Determines if two <see cref="PolicyResourceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicyResourceState left, PolicyResourceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolicyResourceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicyResourceState left, PolicyResourceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyResourceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolicyResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolicyResourceState(string value) => new PolicyResourceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PolicyResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PolicyResourceState?(string value) => value == null ? null : new PolicyResourceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolicyResourceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolicyResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

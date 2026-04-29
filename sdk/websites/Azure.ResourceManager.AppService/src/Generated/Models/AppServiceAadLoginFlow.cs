@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the Azure Active Directory login flow. </summary>
+    /// <summary>
+    /// The configuration settings of the Azure Active Directory login flow.
+    /// Serialized Name: AzureActiveDirectoryLogin
+    /// </summary>
     public partial class AppServiceAadLoginFlow
     {
         /// <summary>
@@ -55,8 +58,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="loginParameters">
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form "key=value".
+        /// Serialized Name: AzureActiveDirectoryLogin.loginParameters
         /// </param>
-        /// <param name="isWwwAuthenticateDisabled"> &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isWwwAuthenticateDisabled">
+        /// &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AzureActiveDirectoryLogin.disableWWWAuthenticate
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceAadLoginFlow(IList<string> loginParameters, bool? isWwwAuthenticateDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,10 +75,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form "key=value".
+        /// Serialized Name: AzureActiveDirectoryLogin.loginParameters
         /// </summary>
         [WirePath("loginParameters")]
         public IList<string> LoginParameters { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AzureActiveDirectoryLogin.disableWWWAuthenticate
+        /// </summary>
         [WirePath("disableWWWAuthenticate")]
         public bool? IsWwwAuthenticateDisabled { get; set; }
     }

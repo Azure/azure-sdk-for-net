@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The workflow parameters. </summary>
+    /// <summary>
+    /// The workflow parameters.
+    /// Serialized Name: WorkflowParameter
+    /// </summary>
     public partial class WorkflowContent
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowContent"/>. </summary>
-        /// <param name="webAppParameterType"> The type. </param>
-        /// <param name="value"> The value. </param>
-        /// <param name="metadata"> The metadata. </param>
-        /// <param name="description"> The description. </param>
+        /// <param name="webAppParameterType">
+        /// The type.
+        /// Serialized Name: WorkflowParameter.type
+        /// </param>
+        /// <param name="value">
+        /// The value.
+        /// Serialized Name: WorkflowParameter.value
+        /// </param>
+        /// <param name="metadata">
+        /// The metadata.
+        /// Serialized Name: WorkflowParameter.metadata
+        /// </param>
+        /// <param name="description">
+        /// The description.
+        /// Serialized Name: WorkflowParameter.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowContent(WebAppParameterType? webAppParameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,11 +80,15 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type. </summary>
+        /// <summary>
+        /// The type.
+        /// Serialized Name: WorkflowParameter.type
+        /// </summary>
         [WirePath("type")]
         public WebAppParameterType? WebAppParameterType { get; set; }
         /// <summary>
         /// The value.
+        /// Serialized Name: WorkflowParameter.value
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -102,6 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
         public BinaryData Value { get; set; }
         /// <summary>
         /// The metadata.
+        /// Serialized Name: WorkflowParameter.metadata
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -132,7 +152,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("metadata")]
         public BinaryData Metadata { get; set; }
-        /// <summary> The description. </summary>
+        /// <summary>
+        /// The description.
+        /// Serialized Name: WorkflowParameter.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; set; }
     }
