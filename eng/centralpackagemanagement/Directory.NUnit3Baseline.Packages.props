@@ -50,9 +50,6 @@
         $(MSBuildProjectName) == 'Azure.Core.TestFramework.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests.Public' or
-        $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.Configuration.Secrets.Tests' or
-        $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests' or
-        $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Keys.Tests' or
         $(MSBuildProjectName) == 'Azure.Generator.Tests' or
         $(MSBuildProjectName) == 'Azure.Generator.Tests.Common' or
         $(MSBuildProjectName) == 'Azure.GeneratorAgent.Tests' or
@@ -357,7 +354,6 @@
         $(MSBuildProjectName) == 'Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.PostgreSQL.Auth.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests' or
-        $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.Clients.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests' or
@@ -371,7 +367,6 @@
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebPubSub.AspNetCore.Tests' or
-        $(MSBuildProjectName) == 'Microsoft.Extensions.Azure.Tests' or
         $(MSBuildProjectName) == 'OpenAI.TestFramework' or
         $(MSBuildProjectName) == 'OpenAI.TestFramework.Tests' or
         $(MSBuildProjectName) == 'System.ClientModel.SourceGeneration.Tests' or
