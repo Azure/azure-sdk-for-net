@@ -22,8 +22,6 @@ namespace Azure.ResourceManager.Resources.Mocking
     {
         private ClientDiagnostics _deploymentsOperationGroupClientDiagnostics;
         private DeploymentsOperationGroup _deploymentsOperationGroupRestClient;
-        private ClientDiagnostics _deploymentOperationsOperationGroupClientDiagnostics;
-        private DeploymentOperationsOperationGroup _deploymentOperationsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of MockableResourcesTenantResource for mocking. </summary>
         protected MockableResourcesTenantResource()
@@ -41,10 +39,6 @@ namespace Azure.ResourceManager.Resources.Mocking
 
         private DeploymentsOperationGroup DeploymentsOperationGroupRestClient => _deploymentsOperationGroupRestClient ??= new DeploymentsOperationGroup(DeploymentsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-04-01");
 
-        private ClientDiagnostics DeploymentOperationsOperationGroupClientDiagnostics => _deploymentOperationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private DeploymentOperationsOperationGroup DeploymentOperationsOperationGroupRestClient => _deploymentOperationsOperationGroupRestClient ??= new DeploymentOperationsOperationGroup(DeploymentOperationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-04-01");
-
         /// <summary>
         /// Calculate the hash of the given template.
         /// <list type="bullet">
@@ -65,11 +59,11 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <param name="template"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public virtual async Task<Response<TemplateHashResult>> CalculateTemplateHashAsync(BinaryData template, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TemplateHashResult>> CalculateDeploymentTemplateHashAsync(BinaryData template, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(template, nameof(template));
 
-            using DiagnosticScope scope = DeploymentsOperationGroupClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateTemplateHash");
+            using DiagnosticScope scope = DeploymentsOperationGroupClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateDeploymentTemplateHash");
             scope.Start();
             try
             {
@@ -77,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = DeploymentsOperationGroupRestClient.CreateCalculateTemplateHashRequest(RequestContent.Create(template), context);
+                Core.HttpMessage message = DeploymentsOperationGroupRestClient.CreateCalculateDeploymentTemplateHashRequest(RequestContent.Create(template), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TemplateHashResult> response = Response.FromValue(TemplateHashResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -113,11 +107,11 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <param name="template"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public virtual Response<TemplateHashResult> CalculateTemplateHash(BinaryData template, CancellationToken cancellationToken = default)
+        public virtual Response<TemplateHashResult> CalculateDeploymentTemplateHash(BinaryData template, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(template, nameof(template));
 
-            using DiagnosticScope scope = DeploymentsOperationGroupClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateTemplateHash");
+            using DiagnosticScope scope = DeploymentsOperationGroupClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateDeploymentTemplateHash");
             scope.Start();
             try
             {
@@ -125,7 +119,7 @@ namespace Azure.ResourceManager.Resources.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = DeploymentsOperationGroupRestClient.CreateCalculateTemplateHashRequest(RequestContent.Create(template), context);
+                Core.HttpMessage message = DeploymentsOperationGroupRestClient.CreateCalculateDeploymentTemplateHashRequest(RequestContent.Create(template), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TemplateHashResult> response = Response.FromValue(TemplateHashResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -139,206 +133,6 @@ namespace Azure.ResourceManager.Resources.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets a deployments operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/operations/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentOperationsOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="operationId"> The ID of the operation to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, <paramref name="operationId"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, <paramref name="operationId"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ArmDeploymentOperation>> GetAsync(string resourceGroupName, string deploymentName, string operationId, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using DiagnosticScope scope = DeploymentOperationsOperationGroupClientDiagnostics.CreateScope("MockableResourcesTenantResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                Core.HttpMessage message = DeploymentOperationsOperationGroupRestClient.CreateGetRequest(resourceGroupName, deploymentName, operationId, subscriptionId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ArmDeploymentOperation> response = Response.FromValue(ArmDeploymentOperation.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a deployments operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/operations/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentOperationsOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="operationId"> The ID of the operation to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, <paramref name="operationId"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, <paramref name="operationId"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ArmDeploymentOperation> Get(string resourceGroupName, string deploymentName, string operationId, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using DiagnosticScope scope = DeploymentOperationsOperationGroupClientDiagnostics.CreateScope("MockableResourcesTenantResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                Core.HttpMessage message = DeploymentOperationsOperationGroupRestClient.CreateGetRequest(resourceGroupName, deploymentName, operationId, subscriptionId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ArmDeploymentOperation> response = Response.FromValue(ArmDeploymentOperation.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets all deployments operations for a deployment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/operations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentOperationsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ArmDeploymentOperation> GetAllAsync(string resourceGroupName, string deploymentName, string subscriptionId, int? top = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new DeploymentOperationsOperationGroupGetAllAsyncCollectionResultOfT(
-                DeploymentOperationsOperationGroupRestClient,
-                subscriptionId,
-                resourceGroupName,
-                deploymentName,
-                top,
-                context,
-                "MockableResourcesTenantResource.GetAll");
-        }
-
-        /// <summary>
-        /// Gets all deployments operations for a deployment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/operations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentOperationsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ArmDeploymentOperation> GetAll(string resourceGroupName, string deploymentName, string subscriptionId, int? top = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new DeploymentOperationsOperationGroupGetAllCollectionResultOfT(
-                DeploymentOperationsOperationGroupRestClient,
-                subscriptionId,
-                resourceGroupName,
-                deploymentName,
-                top,
-                context,
-                "MockableResourcesTenantResource.GetAll");
         }
     }
 }

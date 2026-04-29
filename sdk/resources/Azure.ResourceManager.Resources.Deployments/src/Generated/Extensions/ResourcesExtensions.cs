@@ -117,122 +117,36 @@ namespace Azure.ResourceManager.Resources
         /// Calculate the hash of the given template.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesTenantResource.CalculateTemplateHashAsync(BinaryData, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesTenantResource.CalculateDeploymentTemplateHashAsync(BinaryData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="template"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<TemplateHashResult>> CalculateTemplateHashAsync(this TenantResource tenantResource, BinaryData template, CancellationToken cancellationToken = default)
+        public static async Task<Response<TemplateHashResult>> CalculateDeploymentTemplateHashAsync(this TenantResource tenantResource, BinaryData template, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableResourcesTenantResource(tenantResource).CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesTenantResource(tenantResource).CalculateDeploymentTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Calculate the hash of the given template.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesTenantResource.CalculateTemplateHash(BinaryData, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesTenantResource.CalculateDeploymentTemplateHash(BinaryData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="template"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<TemplateHashResult> CalculateTemplateHash(this TenantResource tenantResource, BinaryData template, CancellationToken cancellationToken = default)
+        public static Response<TemplateHashResult> CalculateDeploymentTemplateHash(this TenantResource tenantResource, BinaryData template, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableResourcesTenantResource(tenantResource).CalculateTemplateHash(template, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a deployments operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesTenantResource.GetAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="operationId"> The ID of the operation to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<ArmDeploymentOperation>> GetAsync(this TenantResource tenantResource, string resourceGroupName, string deploymentName, string operationId, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableResourcesTenantResource(tenantResource).GetAsync(resourceGroupName, deploymentName, operationId, subscriptionId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a deployments operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesTenantResource.Get(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="operationId"> The ID of the operation to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<ArmDeploymentOperation> Get(this TenantResource tenantResource, string resourceGroupName, string deploymentName, string operationId, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableResourcesTenantResource(tenantResource).Get(resourceGroupName, deploymentName, operationId, subscriptionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all deployments operations for a deployment.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesTenantResource.GetAllAsync(string, string, string, int?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ArmDeploymentOperation> GetAllAsync(this TenantResource tenantResource, string resourceGroupName, string deploymentName, string subscriptionId, int? top = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableResourcesTenantResource(tenantResource).GetAllAsync(resourceGroupName, deploymentName, subscriptionId, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all deployments operations for a deployment.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesTenantResource.GetAll(string, string, string, int?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ArmDeploymentOperation> GetAll(this TenantResource tenantResource, string resourceGroupName, string deploymentName, string subscriptionId, int? top = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableResourcesTenantResource(tenantResource).GetAll(resourceGroupName, deploymentName, subscriptionId, top, cancellationToken);
+            return GetMockableResourcesTenantResource(tenantResource).CalculateDeploymentTemplateHash(template, cancellationToken);
         }
     }
 }
