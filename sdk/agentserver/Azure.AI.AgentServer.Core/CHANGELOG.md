@@ -1,16 +1,12 @@
 # Release History
 
-## 1.0.0-beta.24 (Unreleased)
+## 1.0.0-beta.24 (2026-04-29)
 
 ### Features Added
 
 - Added `PlatformHeaders.ErrorSource` (`x-platform-error-source`), `PlatformHeaders.ErrorDetail`
   (`x-platform-error-detail`), and error source value constants (`ErrorSourceUser`,
   `ErrorSourcePlatform`, `ErrorSourceUpstream`) for error classification per container-image-spec §8.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.23 (2026-04-22)
 

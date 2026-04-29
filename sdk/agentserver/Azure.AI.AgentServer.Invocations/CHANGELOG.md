@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2026-04-29)
 
 ### Features Added
 
@@ -8,12 +8,6 @@
   origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or `upstream`
   (developer handler failure) per container-image-spec §8. Platform errors include
   `x-platform-error-detail` with diagnostic context.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2026-04-22)
 
