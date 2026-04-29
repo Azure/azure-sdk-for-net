@@ -14,6 +14,8 @@
 ### Sample Updates
 - Added evaluation cluster insight sample and documentation.
 - Added evaluation comparison insight sample and documentation.
+- Added built-in evaluators with inline data sample demonstrating violence, F1 score, and coherence evaluations.
+- Added built-in evaluators with inline data using OpenAI client sample and documentation.
 
 ## 2.1.0-beta.1 (2026-04-21)
 
