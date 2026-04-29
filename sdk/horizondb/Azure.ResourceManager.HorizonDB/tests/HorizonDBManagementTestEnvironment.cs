@@ -3,9 +3,9 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.HorizonDb.Tests
+namespace Azure.ResourceManager.HorizonDB.Tests
 {
-    public class HorizonDbManagementTestEnvironment : TestEnvironment
+    public class HorizonDBManagementTestEnvironment : TestEnvironment
     {
     }
 }

@@ -7,5 +7,5 @@ extends:
     ServiceDirectory: horizondb
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.HorizonDb
-      safeName: AzureResourceManagerHorizonDb
+    - name: Azure.ResourceManager.HorizonDB
+      safeName: AzureResourceManagerHorizonDB

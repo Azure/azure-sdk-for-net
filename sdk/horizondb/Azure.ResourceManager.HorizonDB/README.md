@@ -1,6 +1,6 @@
-# Microsoft Azure HorizonDb management client library for .NET
+# Microsoft Azure HorizonDB management client library for .NET
 
-This library supports managing Microsoft Azure HorizonDb resources.
+This library supports managing Microsoft Azure HorizonDB resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,10 +14,10 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure HorizonDb management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure HorizonDB management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.HorizonDb --prerelease
+dotnet add package Azure.ResourceManager.HorizonDB --prerelease
 ```
 
 ### Prerequisites

@@ -8,19 +8,19 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace Azure.ResourceManager.HorizonDb.Tests
+namespace Azure.ResourceManager.HorizonDB.Tests
 {
-    public class HorizonDbManagementTestBase : ManagementRecordedTestBase<HorizonDbManagementTestEnvironment>
+    public class HorizonDBManagementTestBase : ManagementRecordedTestBase<HorizonDBManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected HorizonDbManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected HorizonDBManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected HorizonDbManagementTestBase(bool isAsync)
+        protected HorizonDBManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

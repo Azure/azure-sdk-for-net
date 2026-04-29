@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Azure.ResourceManager.HorizonDb</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider HorizonDb.</Description>
+    <PackageId>Azure.ResourceManager.HorizonDB</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider HorizonDB.</Description>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>azure;management;arm;resource manager;horizondb</PackageTags>
   </PropertyGroup>
