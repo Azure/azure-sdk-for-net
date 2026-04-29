@@ -80,15 +80,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 throw new FormatException($"The model {nameof(KnowledgeBaseModelWebSummarizationActivityRecord)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(InputTokens))
+            if (Optional.IsDefined(InputTokensCount))
             {
                 writer.WritePropertyName("inputTokens"u8);
-                writer.WriteNumberValue(InputTokens.Value);
+                writer.WriteNumberValue(InputTokensCount.Value);
             }
-            if (Optional.IsDefined(OutputTokens))
+            if (Optional.IsDefined(OutputTokensCount))
             {
                 writer.WritePropertyName("outputTokens"u8);
-                writer.WriteNumberValue(OutputTokens.Value);
+                writer.WriteNumberValue(OutputTokensCount.Value);
             }
         }
 
@@ -122,8 +122,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            int? inputTokens = default;
-            int? outputTokens = default;
+            int? inputTokensCount = default;
+            int? outputTokensCount = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -160,7 +160,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    inputTokens = prop.Value.GetInt32();
+                    inputTokensCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("outputTokens"u8))
@@ -169,7 +169,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    outputTokens = prop.Value.GetInt32();
+                    outputTokensCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,8 +183,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 elapsedMs,
                 error,
                 additionalBinaryDataProperties,
-                inputTokens,
-                outputTokens);
+                inputTokensCount,
+                outputTokensCount);
         }
     }
 }
