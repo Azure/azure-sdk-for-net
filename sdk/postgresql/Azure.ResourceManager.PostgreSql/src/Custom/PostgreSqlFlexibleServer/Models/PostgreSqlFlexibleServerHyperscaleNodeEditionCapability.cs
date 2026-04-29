@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -7,11 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Required by generated capability serialization for legacy hyperscale node capability payloads.
     /// <summary> Hyperscale node edition capabilities. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class PostgreSqlFlexibleServerHyperscaleNodeEditionCapability
