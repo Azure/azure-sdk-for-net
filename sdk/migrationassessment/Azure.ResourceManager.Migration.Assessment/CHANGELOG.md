@@ -1,8 +1,6 @@
 # Release History
 
-## 1.0.0 (2026-04-28)
-
-This is the first stable release of this library.
+## 1.0.0-beta.2 (2026-04-28)
 
 ### Other Changes
 
