@@ -211,7 +211,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         message.BufferResponse = true;
 
         var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
-        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.", exception!.Message);
+        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 00:00:00.5000000. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.", exception!.Message);
 
         testDoneTcs.Cancel();
     }
@@ -243,7 +243,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         message.BufferResponse = true;
 
         var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
-        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.", exception!.Message);
+        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 00:00:00.5000000. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.", exception!.Message);
 
         testDoneTcs.Cancel();
     }
