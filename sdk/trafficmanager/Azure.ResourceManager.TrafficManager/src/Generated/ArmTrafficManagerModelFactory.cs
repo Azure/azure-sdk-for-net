@@ -17,6 +17,56 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmTrafficManagerModelFactory
     {
+        /// <summary> Class representing a Traffic Manager endpoint properties. </summary>
+        /// <param name="targetResourceId"> The Azure Resource URI of the of the endpoint. Not applicable to endpoints of type 'ExternalEndpoints'. </param>
+        /// <param name="target"> The fully-qualified DNS name or IP address of the endpoint. Traffic Manager returns this value in DNS responses to direct traffic to this endpoint. </param>
+        /// <param name="endpointStatus"> The status of the endpoint. If the endpoint is Enabled, it is probed for endpoint health and is included in the traffic routing method. </param>
+        /// <param name="weight"> The weight of this endpoint when using the 'Weighted' traffic routing method. Possible values are from 1 to 1000. </param>
+        /// <param name="priority"> The priority of this endpoint when using the 'Priority' traffic routing method. Possible values are from 1 to 1000, lower values represent higher priority. This is an optional parameter.  If specified, it must be specified on all endpoints, and no two endpoints can share the same priority value. </param>
+        /// <param name="endpointLocation"> Specifies the location of the external or nested endpoints when using the 'Performance' traffic routing method. </param>
+        /// <param name="endpointMonitorStatus"> The monitoring status of the endpoint. </param>
+        /// <param name="minChildEndpoints"> The minimum number of endpoints that must be available in the child profile in order for the parent profile to be considered available. Only applicable to endpoint of type 'NestedEndpoints'. </param>
+        /// <param name="minChildEndpointsIPv4"> The minimum number of IPv4 (DNS record type A) endpoints that must be available in the child profile in order for the parent profile to be considered available. Only applicable to endpoint of type 'NestedEndpoints'. </param>
+        /// <param name="minChildEndpointsIPv6"> The minimum number of IPv6 (DNS record type AAAA) endpoints that must be available in the child profile in order for the parent profile to be considered available. Only applicable to endpoint of type 'NestedEndpoints'. </param>
+        /// <param name="geoMapping"> The list of countries/regions mapped to this endpoint when using the 'Geographic' traffic routing method. Please consult Traffic Manager Geographic documentation for a full list of accepted values. </param>
+        /// <param name="subnets"> The list of subnets, IP addresses, and/or address ranges mapped to this endpoint when using the 'Subnet' traffic routing method. An empty list will match all ranges not covered by other endpoints. </param>
+        /// <param name="customHeaders"> List of custom headers. </param>
+        /// <param name="alwaysServe"> If Always Serve is enabled, probing for endpoint health will be disabled and endpoints will be included in the traffic routing method. </param>
+        /// <returns> A new <see cref="Models.EndpointProperties"/> instance for mocking. </returns>
+        public static EndpointProperties EndpointProperties(ResourceIdentifier targetResourceId = default, string target = default, TrafficManagerEndpointStatus? endpointStatus = default, long? weight = default, long? priority = default, string endpointLocation = default, TrafficManagerEndpointMonitorStatus? endpointMonitorStatus = default, long? minChildEndpoints = default, long? minChildEndpointsIPv4 = default, long? minChildEndpointsIPv6 = default, IEnumerable<string> geoMapping = default, IEnumerable<TrafficManagerEndpointSubnetInfo> subnets = default, IEnumerable<TrafficManagerEndpointCustomHeaderInfo> customHeaders = default, TrafficManagerEndpointAlwaysServeStatus? alwaysServe = default)
+        {
+            geoMapping ??= new ChangeTrackingList<string>();
+            subnets ??= new ChangeTrackingList<TrafficManagerEndpointSubnetInfo>();
+            customHeaders ??= new ChangeTrackingList<TrafficManagerEndpointCustomHeaderInfo>();
+
+            return new EndpointProperties(
+                targetResourceId,
+                target,
+                endpointStatus,
+                weight,
+                priority,
+                endpointLocation,
+                endpointMonitorStatus,
+                minChildEndpoints,
+                minChildEndpointsIPv4,
+                minChildEndpointsIPv6,
+                geoMapping.ToList(),
+                subnets.ToList(),
+                customHeaders.ToList(),
+                alwaysServe,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Class representing a Traffic Manager endpoint for update operations. </summary>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
+        /// <param name="properties"> The properties of the Traffic Manager endpoint. </param>
+        /// <returns> A new <see cref="Models.TrafficManagerEndpointPatch"/> instance for mocking. </returns>
+        public static TrafficManagerEndpointPatch TrafficManagerEndpointPatch(ResourceIdentifier id = default, string name = default, string @type = default, EndpointProperties properties = default)
+        {
+            return new TrafficManagerEndpointPatch(id, name, @type, properties, additionalBinaryDataProperties: null);
+        }
 
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -31,8 +81,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="trafficViewEnrollmentStatus"> Indicates whether Traffic View is 'Enabled' or 'Disabled' for the Traffic Manager profile. Null, indicates 'Disabled'. Enabling this feature will increase the cost of the Traffic Manage profile. </param>
         /// <param name="allowedEndpointRecordTypes"> The list of allowed endpoint record types. </param>
         /// <param name="maxReturn"> Maximum number of endpoints to be returned for MultiValue routing type. </param>
+        /// <param name="recordType"> When record type is set, a traffic manager profile will allow only endpoints that match this type. </param>
         /// <returns> A new <see cref="TrafficManager.TrafficManagerProfileData"/> instance for mocking. </returns>
-        public static TrafficManagerProfileData TrafficManagerProfileData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, IDictionary<string, string> tags = default, AzureLocation? location = default, TrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, TrafficManagerDnsConfig dnsConfig = default, TrafficManagerMonitorConfig monitorConfig = default, IEnumerable<TrafficManagerEndpointData> endpoints = default, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default, IEnumerable<AllowedEndpointRecordType> allowedEndpointRecordTypes = default, long? maxReturn = default)
+        public static TrafficManagerProfileData TrafficManagerProfileData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, IDictionary<string, string> tags = default, AzureLocation? location = default, TrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, TrafficManagerDnsConfig dnsConfig = default, TrafficManagerMonitorConfig monitorConfig = default, IEnumerable<TrafficManagerEndpointData> endpoints = default, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default, IEnumerable<AllowedEndpointRecordType> allowedEndpointRecordTypes = default, long? maxReturn = default, RecordType? recordType = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -43,7 +94,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                profileStatus is null && trafficRoutingMethod is null && dnsConfig is null && monitorConfig is null && endpoints is null && trafficViewEnrollmentStatus is null && allowedEndpointRecordTypes is null && maxReturn is null ? default : new ProfileProperties(
+                profileStatus is null && trafficRoutingMethod is null && dnsConfig is null && monitorConfig is null && endpoints is null && trafficViewEnrollmentStatus is null && allowedEndpointRecordTypes is null && maxReturn is null && recordType is null ? default : new ProfileProperties(
                     profileStatus,
                     trafficRoutingMethod,
                     dnsConfig,
@@ -52,6 +103,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     trafficViewEnrollmentStatus,
                     (allowedEndpointRecordTypes ?? new ChangeTrackingList<AllowedEndpointRecordType>()).ToList(),
                     maxReturn,
+                    recordType,
                     null));
         }
 
@@ -112,6 +164,57 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location);
+        }
+
+        /// <summary> Parameters supplied to update a Traffic Manager profile. </summary>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The Azure Region where the resource lives. </param>
+        /// <param name="properties"> The properties of the Traffic Manager profile. </param>
+        /// <returns> A new <see cref="Models.TrafficManagerProfilePatch"/> instance for mocking. </returns>
+        public static TrafficManagerProfilePatch TrafficManagerProfilePatch(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string location = default, ProfilePropertiesUpdate properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TrafficManagerProfilePatch(
+                id,
+                name,
+                @type,
+                tags,
+                location,
+                properties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Class representing the Traffic Manager profile properties for update operations. </summary>
+        /// <param name="profileStatus"> The status of the Traffic Manager profile. </param>
+        /// <param name="trafficRoutingMethod"> The traffic routing method of the Traffic Manager profile. </param>
+        /// <param name="dnsConfig"> The DNS settings of the Traffic Manager profile. </param>
+        /// <param name="monitorConfig"> The endpoint monitoring settings of the Traffic Manager profile. </param>
+        /// <param name="endpoints"> The list of endpoints in the Traffic Manager profile. </param>
+        /// <param name="trafficViewEnrollmentStatus"> Indicates whether Traffic View is 'Enabled' or 'Disabled' for the Traffic Manager profile. Null, indicates 'Disabled'. Enabling this feature will increase the cost of the Traffic Manage profile. </param>
+        /// <param name="allowedEndpointRecordTypes"> The list of allowed endpoint record types. </param>
+        /// <param name="maxReturn"> Maximum number of endpoints to be returned for MultiValue routing type. </param>
+        /// <param name="recordType"> When record type is set, a traffic manager profile will allow only endpoints that match this type. </param>
+        /// <returns> A new <see cref="Models.ProfilePropertiesUpdate"/> instance for mocking. </returns>
+        public static ProfilePropertiesUpdate ProfilePropertiesUpdate(TrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, TrafficManagerDnsConfig dnsConfig = default, TrafficManagerMonitorConfig monitorConfig = default, IEnumerable<TrafficManagerEndpointPatch> endpoints = default, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default, IEnumerable<AllowedEndpointRecordType> allowedEndpointRecordTypes = default, long? maxReturn = default, RecordType? recordType = default)
+        {
+            endpoints ??= new ChangeTrackingList<TrafficManagerEndpointPatch>();
+            allowedEndpointRecordTypes ??= new ChangeTrackingList<AllowedEndpointRecordType>();
+
+            return new ProfilePropertiesUpdate(
+                profileStatus,
+                trafficRoutingMethod,
+                dnsConfig,
+                monitorConfig,
+                endpoints.ToList(),
+                trafficViewEnrollmentStatus,
+                allowedEndpointRecordTypes.ToList(),
+                maxReturn,
+                recordType,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Class representing a Traffic Manager Name Availability response. </summary>
