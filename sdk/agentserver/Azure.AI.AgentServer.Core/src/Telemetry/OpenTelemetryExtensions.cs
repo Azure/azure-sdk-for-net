@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenTelemetry;
 using OpenTelemetry.Logs;
-using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -13,23 +12,20 @@ namespace Azure.AI.AgentServer.Core.Internal;
 
 /// <summary>
 /// Configures OpenTelemetry tracing, logging, and metrics for the agent server.
-/// OTLP exporters are conditional on <c>OTEL_EXPORTER_OTLP_ENDPOINT</c>.
-/// Azure Monitor is conditional on <c>APPLICATIONINSIGHTS_CONNECTION_STRING</c>.
+/// Uses the Microsoft OpenTelemetry distro which auto-detects Azure Monitor
+/// (<c>APPLICATIONINSIGHTS_CONNECTION_STRING</c>) and OTLP
+/// (<c>OTEL_EXPORTER_OTLP_ENDPOINT</c>) exporters from environment variables.
 /// </summary>
 internal static class OpenTelemetryExtensions
 {
     /// <summary>
-    /// Registers OpenTelemetry providers and conditional exporters.
+    /// Registers OpenTelemetry providers and conditional exporters via the
+    /// Microsoft OpenTelemetry distro.
     /// </summary>
     internal static IServiceCollection AddAgentHostTelemetry(
         this IServiceCollection services,
         Action<TracerProviderBuilder>? configureTracing = null)
     {
-        var otlpEndpoint = FoundryEnvironment.OtlpEndpoint;
-        var appInsightsCs = FoundryEnvironment.AppInsightsConnectionString;
-        var hasOtlp = !string.IsNullOrEmpty(otlpEndpoint);
-        var hasAppInsights = !string.IsNullOrEmpty(appInsightsCs);
-
         // Build resource attributes from Foundry environment
         var resourceBuilder = ResourceBuilder.CreateDefault();
         var agentName = FoundryEnvironment.AgentName;
@@ -50,16 +46,17 @@ internal static class OpenTelemetryExtensions
             });
         }
 
-        // Azure Monitor (must be registered first — it hooks into the OTel builder)
-        if (hasAppInsights)
-        {
-            services.AddOpenTelemetry().UseAzureMonitor(options =>
-            {
-                options.ConnectionString = appInsightsCs;
-            });
-        }
+        // The Microsoft OpenTelemetry distro auto-detects Azure Monitor and OTLP
+        // from environment variables — no manual env var checks or duplicate-
+        // instrumentation guards are needed. It registers ASP.NET Core, HttpClient,
+        // SQL, Azure SDK, and AI instrumentation automatically.
+        var otelBuilder = services.AddOpenTelemetry();
 
-        services.AddOpenTelemetry()
+        // The Microsoft OpenTelemetry distro auto-configures Azure Monitor and OTLP
+        // exporters from environment variables — no manual checks needed.
+        otelBuilder.UseMicrosoftOpenTelemetry(options => { });
+
+        otelBuilder
             .ConfigureResource(r =>
             {
                 r.AddDetector(new FoundryResourceDetector());
@@ -67,15 +64,6 @@ internal static class OpenTelemetryExtensions
             })
             .WithTracing(tracing =>
             {
-                // Only add ASP.NET Core and HttpClient instrumentation when UseAzureMonitor
-                // is not active, because UseAzureMonitor already registers both and adding
-                // them again would produce duplicate spans.
-                if (!hasAppInsights)
-                {
-                    tracing.AddAspNetCoreInstrumentation();
-                    tracing.AddHttpClientInstrumentation();
-                }
-
                 tracing.AddSource(AgentHostTelemetry.ResponsesSourceName);
                 tracing.AddSource(AgentHostTelemetry.InvocationsSourceName);
 
@@ -84,28 +72,11 @@ internal static class OpenTelemetryExtensions
                 tracing.AddProcessor(new FoundryEnrichmentProcessor());
 
                 configureTracing?.Invoke(tracing);
-
-                if (hasOtlp)
-                {
-                    tracing.AddOtlpExporter();
-                }
             })
             .WithMetrics(metrics =>
             {
-                // Same guard — UseAzureMonitor already adds ASP.NET Core and HttpClient metrics.
-                if (!hasAppInsights)
-                {
-                    metrics.AddAspNetCoreInstrumentation();
-                    metrics.AddHttpClientInstrumentation();
-                }
-
                 metrics.AddMeter(AgentHostTelemetry.ResponsesMeterName);
                 metrics.AddMeter(AgentHostTelemetry.InvocationsMeterName);
-
-                if (hasOtlp)
-                {
-                    metrics.AddOtlpExporter();
-                }
             });
 
         // Logging with OTel bridge
@@ -117,11 +88,6 @@ internal static class OpenTelemetryExtensions
                 otelLogging.IncludeScopes = true;
                 otelLogging.IncludeFormattedMessage = true;
                 otelLogging.AddProcessor(new BaggageToLogProcessor());
-
-                if (hasOtlp)
-                {
-                    otelLogging.AddOtlpExporter();
-                }
             });
         });
 
