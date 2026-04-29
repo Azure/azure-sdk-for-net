@@ -4,22 +4,24 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 using OpenAI.Evals;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
-public class Sample_EvaluationsGradersWithImage : SamplesBase
+public class Sample_EvaluationsGradersWithImages : SamplesBase
 {
-    #region Snippet:Sample_GetError_EvaluationsGradersWithImage
+    #region Snippet:Sample_GetError_EvaluationsGradersWithImages
     private static string GetErrorMessageOrEmpty(ClientResult result)
     {
         string error = "";
@@ -54,7 +56,7 @@ public class Sample_EvaluationsGradersWithImage : SamplesBase
         return error;
     }
     #endregion
-    #region Snippet:Sample_GetResultCounts_EvaluationsGradersWithImage
+    #region Snippet:Sample_GetResultCounts_EvaluationsGradersWithImages
     private static string GetResultsCounts(ClientResult result)
     {
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -81,7 +83,7 @@ public class Sample_EvaluationsGradersWithImage : SamplesBase
         return sbFormattedCounts.ToString();
     }
     #endregion
-    #region Snippet:Sample_GetStringValues_EvaluationsGradersWithImage
+    #region Snippet:Sample_GetStringValues_EvaluationsGradersWithImages
     private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
     {
         Dictionary<string, string> results = [];
@@ -114,7 +116,7 @@ public class Sample_EvaluationsGradersWithImage : SamplesBase
         return results;
     }
     #endregion
-    #region Snippet:Sample_GetResultsList_EvaluationsGradersWithImage_Async
+    #region Snippet:Sample_GetResultsList_EvaluationsGradersWithImages_Async
     private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
     {
         List<string> resultJsons = [];
@@ -151,7 +153,7 @@ public class Sample_EvaluationsGradersWithImage : SamplesBase
         return resultJsons;
     }
     #endregion
-    #region Snippet:Sample_GetResultsList_EvaluationsGradersWithImage_Sync
+    #region Snippet:Sample_GetResultsList_EvaluationsGradersWithImages_Sync
     private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
     {
         List<string> resultJsons = [];
@@ -188,7 +190,7 @@ public class Sample_EvaluationsGradersWithImage : SamplesBase
         return resultJsons;
     }
     #endregion
-    #region Snippet:Sample_CreateData_EvaluationsGradersWithImage
+    #region Snippet:Sample_CreateData_EvaluationsGradersWithImages
     private static BinaryData GetDatasetConfig(string modelDeploymentName)
     {
         object[] testingCriteria = [
@@ -237,11 +239,90 @@ public class Sample_EvaluationsGradersWithImage : SamplesBase
         );
     }
     #endregion
+    #region Snippet:Sample_ImageToUri_EvaluationsGradersWithImages
+    private static string GetImageDataAsUri(string fileName, [CallerFilePath] string pth = "")
+    {
+        var dirName = Path.GetDirectoryName(pth) ?? "";
+        byte[] imageData = File.ReadAllBytes(Path.Combine([dirName, fileName]));
+        return $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
+    }
+    #endregion
+    #region Snippet:Sample_CreateRunDataSource_EvaluationsGradersWithImages
+    public static BinaryData GetData(string evaluationId, string modelDeploymentName, string filePath)
+    {
+        object input_messages = new
+        {
+            type = "template",
+            template = new object[]
+            {
+                new
+                {
+                    type = "message",
+                    role = "system",
+                    content = "You are an assistant that analyzes images and provides captions that accurately describe the content of the image."
+                },
+                new
+                {
+                    type = "message",
+                    role = "user",
+                    content = new
+                    {
+                        type = "input_image",
+                        image_url = "{{item.image_url}}",
+                        detail = "auto",
+                    }
+                }
+            }
+        };
+        string imageUrl = filePath.StartsWith("data") ? GetImageDataAsUri(fileName: filePath) : GetImageDataAsUri(fileName: Path.GetFileName(filePath), pth: filePath.Substring(0, filePath.Length - Path.GetFileName(filePath).Length));
+        object dataSource = new
+        {
+            type = "completions",
+            source = new
+            {
+                type = "file_content",
+                content = new object[] {
+                    new
+                    {
+                        item = new
+                        {
+                            image_url = imageUrl,
+                            caption = "industrial plants in the distance at night",
+                        }
+                    },
+                    new
+                    {
+                        item = new
+                        {
+                            image_url = "https://ep1.pinkbike.org/p4pb6973204/p4pb6973204.jpg",
+                            caption = "all shots by person and rider shots can be found on his website.",
+                        }
+                    },
+                }
+            },
+            model = modelDeploymentName,
+            input_messages = input_messages,
+            sampling_params = new
+            {
+                temperature = 0.8f
+            },
+        };
+        return BinaryData.FromObjectAsJson(
+            new
+            {
+                eval_id = evaluationId,
+                name = "Eval",
+                metadata = new { team = "eval-exp", scenario = "notifications-v1" },
+                data_source = dataSource
+            }
+        );
+    }
+    #endregion
     [Test]
     [AsyncOnly]
     public async Task EvaluationsGradersExampleAsync()
     {
-        #region Snippet:Sample_CreateClients_EvaluationsGradersWithImage
+        #region Snippet:Sample_CreateClients_EvaluationsGradersWithImages
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
@@ -252,48 +333,23 @@ public class Sample_EvaluationsGradersWithImage : SamplesBase
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
-        #region Snippet:Sample_CreateEvaluation_EvaluationsGradersWithImage_Async
-        using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
+        #region Snippet:Sample_CreateEvaluation_EvaluationsGradersWithImages_Async
+        using BinaryContent evaluationDataContent = BinaryContent.Create(GetDatasetConfig(modelDeploymentName));
         ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
         Dictionary<string, string> fields = ParseClientResult(evaluation, ["name", "id"]);
         string evaluationName = fields["name"];
         string evaluationId = fields["id"];
         Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
         #endregion
-        #region Snippet:Sample_CreateRunDataSource_EvaluationsGradersWithImage
-        object dataSource = new
-        {
-            type = "jsonl",
-            source = new
-            {
-                type = "file_content",
-                content = new[] {
-                    new { item = new { query = "I love this product! It works great.", context = "Product review context", ground_truth = "The product is excellent and performs well.", response = "The product is amazing and works perfectly." } },
-                    new { item = new { query = "The weather is cloudy today.", context = "Weather observation", ground_truth = "Today's weather is overcast.", response = "The sky is covered with clouds today." } },
-                    new { item = new { query = "What is the capital of France?", context = "Geography question about European capitals", ground_truth = "Paris", response = "The capital of France is Paris." } },
-                    new { item = new { query = "Explain quantum computing", context = "Complex scientific concept explanation", ground_truth = "Quantum computing uses quantum mechanics principles", response = "Quantum computing leverages quantum mechanical phenomena like superposition and entanglement to process information." } },
-                }
-            }
-        };
-        BinaryData runData = BinaryData.FromObjectAsJson(
-            new
-            {
-                eval_id = evaluationId,
-                name = "inline_data_graders_run",
-                metadata = new { team = "eval-exp", scenario = "graders-inline-v1" },
-                data_source = dataSource
-            }
-        );
-        using BinaryContent runDataContent = BinaryContent.Create(runData);
-        #endregion
-        #region Snippet:Sample_CreateRun_EvaluationsGradersWithImage_Async
+        #region Snippet:Sample_CreateRun_EvaluationsGradersWithImages_Async
+        using BinaryContent runDataContent = BinaryContent.Create(GetData(evaluationId, modelDeploymentName, Path.Combine("data", "sample_evaluations_score_model_grader_with_image.jpg")));
         ClientResult run = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent);
         fields = ParseClientResult(run, ["id", "status"]);
         string runId = fields["id"];
         string runStatus = fields["status"];
         Console.WriteLine($"Evaluation run created (id: {runId})");
         #endregion
-        #region Snippet:Sample_WaitForRun_EvaluationsGradersWithImage_Async
+        #region Snippet:Sample_WaitForRun_EvaluationsGradersWithImages_Async
         while (runStatus != "failed" && runStatus != "completed")
         {
             await Task.Delay(TimeSpan.FromSeconds(5));
@@ -306,7 +362,7 @@ public class Sample_EvaluationsGradersWithImage : SamplesBase
             throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
         }
         #endregion
-        #region Snippet:Sample_ParseResults_EvaluationsGradersWithImage_Async
+        #region Snippet:Sample_ParseResults_EvaluationsGradersWithImages_Async
         Console.WriteLine("Evaluation run completed successfully!");
         Console.WriteLine($"Result Counts: {GetResultsCounts(run)}");
         List<string> evaluationResults = await GetResultsListAsync(client: evaluationClient, evaluationId: evaluationId, evaluationRunId: runId);
@@ -318,12 +374,71 @@ public class Sample_EvaluationsGradersWithImage : SamplesBase
         }
         Console.WriteLine($"------------------------------------------------------------");
         #endregion
-        #region Snippet:Sample_Cleanup_EvaluationsGradersWithImage_Async
+        #region Snippet:Sample_Cleanup_EvaluationsGradersWithImages_Async
         await evaluationClient.DeleteEvaluationAsync(evaluationId, new System.ClientModel.Primitives.RequestOptions());
         #endregion
     }
 
-    public Sample_EvaluationsGradersWithImage(bool isAsync) : base(isAsync)
+    [Test]
+    [SyncOnly]
+    public void EvaluationsGradersExampleSync()
+    {
+#if SNIPPET
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+#else
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+#endif
+        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
+        #region Snippet:Sample_CreateEvaluation_EvaluationsGradersWithImages_Sync
+        using BinaryContent evaluationDataContent = BinaryContent.Create(GetDatasetConfig(modelDeploymentName));
+        ClientResult evaluation = evaluationClient.CreateEvaluation(evaluationDataContent);
+        Dictionary<string, string> fields = ParseClientResult(evaluation, ["name", "id"]);
+        string evaluationName = fields["name"];
+        string evaluationId = fields["id"];
+        Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
+        #endregion
+        #region Snippet:Sample_CreateRun_EvaluationsGradersWithImages_Sync
+        using BinaryContent runDataContent = BinaryContent.Create(GetData(evaluationId, modelDeploymentName, Path.Combine("data", "sample_evaluations_score_model_grader_with_image.jpg")));
+        ClientResult run = evaluationClient.CreateEvaluationRun(evaluationId: evaluationId, content: runDataContent);
+        fields = ParseClientResult(run, ["id", "status"]);
+        string runId = fields["id"];
+        string runStatus = fields["status"];
+        Console.WriteLine($"Evaluation run created (id: {runId})");
+        #endregion
+        #region Snippet:Sample_WaitForRun_EvaluationsGradersWithImages_Sync
+        while (runStatus != "failed" && runStatus != "completed")
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            run = evaluationClient.GetEvaluationRun(evaluationId: evaluationId, evaluationRunId: runId, options: new());
+            runStatus = ParseClientResult(run, ["status"])["status"];
+            Console.WriteLine($"Waiting for eval run to complete... current status: {runStatus}");
+        }
+        if (runStatus == "failed")
+        {
+            throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
+        }
+        #endregion
+        #region Snippet:Sample_ParseResults_EvaluationsGradersWithImages_Sync
+        Console.WriteLine("Evaluation run completed successfully!");
+        Console.WriteLine($"Result Counts: {GetResultsCounts(run)}");
+        List<string> evaluationResults = GetResultsList(client: evaluationClient, evaluationId: evaluationId, evaluationRunId: runId);
+        Console.WriteLine($"OUTPUT ITEMS (Total: {evaluationResults.Count})");
+        Console.WriteLine($"------------------------------------------------------------");
+        foreach (string result in evaluationResults)
+        {
+            Console.WriteLine(result);
+        }
+        Console.WriteLine($"------------------------------------------------------------");
+        #endregion
+        #region Snippet:Sample_Cleanup_EvaluationsGradersWithImages_Sync
+        evaluationClient.DeleteEvaluation(evaluationId, new System.ClientModel.Primitives.RequestOptions());
+        #endregion
+    }
+
+    public Sample_EvaluationsGradersWithImages(bool isAsync) : base(isAsync)
     {
     }
 }
