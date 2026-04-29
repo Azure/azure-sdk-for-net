@@ -1,0 +1,70 @@
+name: pipeline-troubleshooting-trigger-eval
+description: Trigger and anti-trigger tests for the pipeline-troubleshooting skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-pipeline-troubleshooting
+  priority: p0
+
+config:
+  runs: 1
+  timeout: 300
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+stimuli:
+  # Should trigger
+  - name: trigger-my-ci-pipeline-is-failing
+    prompt: "my CI pipeline is failing"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-debug-pipeline-build-error
+    prompt: "debug pipeline build error"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-pipeline-troubleshooting-help
+    prompt: "pipeline troubleshooting help"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-fix-failing-sdk-pipeline
+    prompt: "fix failing SDK pipeline"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-ci-build-broke-after-my-change
+    prompt: "CI build broke after my change"
+    graders:
+      - type: exit-success
+        config: {}
+
+  # Should NOT trigger
+  - name: anti-trigger-write-a-typespec-definition
+    prompt: "write a TypeSpec definition"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-create-a-new-skill
+    prompt: "create a new skill"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-optimize-markdown-tokens
+    prompt: "optimize markdown tokens"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-how-do-i-release-an-sdk-package
+    prompt: "how do I release an SDK package"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-resolve-apiview-feedback
+    prompt: "resolve APIView feedback"
+    graders:
+      - type: exit-success
+        config: {}

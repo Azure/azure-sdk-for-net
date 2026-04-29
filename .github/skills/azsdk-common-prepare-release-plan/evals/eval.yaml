@@ -1,29 +1,72 @@
-name: azsdk-common-prepare-release-plan-evals
-description: Evaluations for the release plan preparation skill
-skill: azsdk-common-prepare-release-plan
-version: "1.0"
+name: prepare-release-plan-eval
+description: Evaluation suite for the prepare-release-plan skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-prepare-release-plan
+  priority: p0
+
 config:
-  model: gpt-4o
-  executor: mock
-  trials_per_task: 1
-  timeout_seconds: 300
-  parallel: false
-metrics:
-  - name: task_completion
-    weight: 0.7
-    threshold: 0.8
-    description: Did the skill complete trigger and anti-trigger checks?
-  - name: efficiency
-    weight: 0.3
-    threshold: 0.7
-    description: Did the skill stay within behavior limits?
-graders:
-  - type: text
-    name: no_fatal_errors
-    config:
-      regex_not_match:
-        - (?i)fatal error
-        - (?i)unhandled exception
-        - '(?i)panic:'
-tasks:
-  - "tasks/*.yaml"
+  runs: 1
+  timeout: 300
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+stimuli:
+  - name: release-plan-basic-001
+    prompt: "I need to create a release plan for my API spec PR https://github.com/Azure/azure-rest-api-specs/pull/12345. The API version is 2024-06-01 and it's a stable release."
+    graders:
+      - type: output-contains
+        config:
+          substring: "Service Tree"
+      - type: output-contains
+        config:
+          substring: "release plan"
+
+  - name: release-plan-edge-001
+    prompt: "Update the release plan with these SDK details: JavaScript package 'arm-compute' and Go package 'sdk/armcompute'."
+    graders:
+      - type: output-contains
+        config:
+          substring: "@azure/"
+
+  - name: release-plan-link-001
+    prompt: "I have release plan 67890 and SDK PRs for Python (PR #100) and .NET (PR #200) in the azure-sdk repos. Link them to the release plan."
+    graders:
+      - type: output-contains
+        config:
+          substring: "link"
+      - type: output-contains
+        config:
+          substring: "release plan"
+
+  - name: release-plan-negative-001
+    prompt: "Release the azure-mgmt-compute Python package to PyPI now."
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "azsdk_create_release_plan"
+      - type: output-not-contains
+        config:
+          substring: "Service Tree ID"
+
+  - name: basic-trigger
+    prompt: "I need to prepare a release plan for the new Azure SDK package version"
+    graders:
+      - type: output-contains
+        config:
+          substring: "release"
+    constraints:
+      expect_skills: ["prepare-release-plan"]
+
+  - name: anti-trigger
+    prompt: "How do I configure logging in my Azure Function?"
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "release plan"
+      - type: output-not-contains
+        config:
+          substring: "changelog"

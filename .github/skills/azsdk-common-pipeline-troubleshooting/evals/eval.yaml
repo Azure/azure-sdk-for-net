@@ -1,29 +1,83 @@
-name: azsdk-common-pipeline-troubleshooting-evals
-description: Evaluations for the pipeline troubleshooting skill
-skill: azsdk-common-pipeline-troubleshooting
-version: "1.0"
+name: pipeline-troubleshooting-eval
+description: Evaluation suite for the pipeline-troubleshooting skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-pipeline-troubleshooting
+  priority: p0
+
 config:
-  model: gpt-4o
-  executor: mock
-  trials_per_task: 1
-  timeout_seconds: 300
-  parallel: false
-metrics:
-  - name: task_completion
-    weight: 0.7
-    threshold: 0.8
-    description: Did the skill complete trigger and anti-trigger checks?
-  - name: efficiency
-    weight: 0.3
-    threshold: 0.7
-    description: Did the skill stay within behavior limits?
-graders:
-  - type: text
-    name: no_fatal_errors
-    config:
-      regex_not_match:
-        - (?i)fatal error
-        - (?i)unhandled exception
-        - '(?i)panic:'
-tasks:
-  - "tasks/*.yaml"
+  runs: 1
+  timeout: 300
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+stimuli:
+  - name: pipeline-basic-001
+    prompt: "My SDK generation pipeline failed for the Python language. The pipeline URL is https://dev.azure.com/azure-sdk/internal/_build/results?buildId=12345. Can you help me figure out what went wrong?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "pipeline"
+      - type: output-contains
+        config:
+          substring: "Python"
+    constraints:
+      expect_tools: ["azsdk_analyze_pipeline"]
+
+  - name: pipeline-edge-001
+    prompt: "My SDK generation pipeline failed for both Python and Java but succeeded for .NET and JavaScript. How do I fix the failing languages?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "Python"
+      - type: output-contains
+        config:
+          substring: "Java"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+
+  - name: pipeline-repro-001
+    prompt: "The CI pipeline for my Go SDK PR is failing with a compilation error. I want to reproduce this locally to debug it."
+    graders:
+      - type: output-contains
+        config:
+          substring: "local"
+      - type: output-contains
+        config:
+          substring: "Go"
+      - type: output-contains
+        config:
+          substring: "build"
+
+  - name: pipeline-negative-001
+    prompt: "How do I define a new REST operation in my TypeSpec project?"
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "azsdk_analyze_pipeline"
+      - type: output-not-contains
+        config:
+          substring: "pipeline failure"
+
+  - name: basic-trigger
+    prompt: "My Azure SDK CI pipeline is failing. Can you help me debug it?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "pipeline"
+    constraints:
+      expect_skills: ["pipeline-troubleshooting"]
+
+  - name: anti-trigger
+    prompt: "How do I write a TypeSpec definition for a new Azure service?"
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "pipeline"
+      - type: output-not-contains
+        config:
+          substring: "CI failure"

@@ -1,0 +1,68 @@
+name: sdk-release-trigger-eval
+description: Trigger and anti-trigger tests for the sdk-release skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-sdk-release
+  priority: p0
+
+config:
+  runs: 1
+  timeout: 300
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+stimuli:
+  - name: trigger-release-my-sdk-package
+    prompt: "release my SDK package"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-how-to-publish-a-new-sdk-version
+    prompt: "how to publish a new SDK version"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-walk-me-through-sdk-release-process
+    prompt: "walk me through SDK release process"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-release-a-new-version-of-azure-sdk
+    prompt: "release a new version of azure-sdk"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-sdk-release-checklist
+    prompt: "SDK release checklist"
+    graders:
+      - type: exit-success
+        config: {}
+
+  - name: anti-trigger-write-unit-tests
+    prompt: "write unit tests"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-fix-my-pipeline-build-error
+    prompt: "fix my pipeline build error"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-create-a-new-typespec-definition
+    prompt: "create a new TypeSpec definition"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-optimize-markdown-tokens
+    prompt: "optimize markdown tokens"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-resolve-apiview-feedback
+    prompt: "resolve APIView feedback"
+    graders:
+      - type: exit-success
+        config: {}

@@ -1,0 +1,194 @@
+name: generate-sdk-locally-eval
+description: Evaluation suite for the generate-sdk-locally skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-generate-sdk-locally
+  priority: p0
+
+config:
+  runs: 1
+  timeout: 600
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+stimuli:
+  - name: sdk-local-basic-001
+    prompt: "I want to generate the Python SDK locally from my TypeSpec project at specification/compute/resource-manager/Microsoft.Compute/ComputeRP/tspconfig.yaml. My azure-sdk-for-python repo is at ~/repos/azure-sdk-for-python."
+    graders:
+      - type: output-contains
+        config:
+          substring: "Python"
+      - type: output-contains
+        config:
+          substring: "azure-sdk-for-python"
+    constraints:
+      expect_tools: ["azsdk_verify_setup", "azsdk_package_generate_code"]
+
+  - name: sdk-local-negative-001
+    prompt: "I want to use the Azure DevOps pipeline to generate SDKs automatically and have PRs created for me. I don't want to set up local tools."
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "azsdk_verify_setup"
+      - type: output-not-contains
+        config:
+          substring: "azsdk_package_generate_code"
+
+  - name: sdk-local-full-001
+    prompt: "Walk me through the complete process of generating the Java SDK locally, building it, running tests, and preparing it for a PR."
+    graders:
+      - type: output-contains
+        config:
+          substring: "generate"
+      - type: output-contains
+        config:
+          substring: "build"
+      - type: output-contains
+        config:
+          substring: "test"
+      - type: output-contains
+        config:
+          substring: "changelog"
+    constraints:
+      expect_tools: ["azsdk_verify_setup", "azsdk_package_generate_code", "azsdk_package_build_code", "azsdk_package_run_check", "azsdk_package_run_tests", "azsdk_package_update_changelog_content", "azsdk_package_update_metadata", "azsdk_package_update_version"]
+
+  - name: sdk-local-edge-001
+    prompt: "I generated the .NET SDK locally but the build is failing with compilation errors. The error says a type name conflicts with a reserved keyword."
+    graders:
+      - type: output-contains
+        config:
+          substring: "customize"
+      - type: output-contains
+        config:
+          substring: "customization"
+      - type: output-contains
+        config:
+          substring: "client.tsp"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+    constraints:
+      expect_tools: ["azsdk_customized_code_update"]
+
+  - name: sdk-local-breaking-changes-001
+    prompt: "After regenerating the Java SDK, the build is failing because the service team renamed 'displayName' to 'name' in the TypeSpec. Our customization class still references getField('displayName') and it can't find the symbol. Can you fix this?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "customize"
+      - type: output-contains
+        config:
+          substring: "customization"
+      - type: output-contains
+        config:
+          substring: "TypeSpec"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+    constraints:
+      expect_tools: ["azsdk_customized_code_update", "azsdk_package_build_code"]
+
+  - name: sdk-local-customization-001
+    prompt: "The Java SDK build is failing after regeneration. The error says 'variable operationId is already defined in class AnalyzeOperationDetails'. It looks like the service team added operationId to the TypeSpec, but our DocumentIntelligenceCustomizations.java already injects that field manually. Can you fix this?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "customize"
+      - type: output-contains
+        config:
+          substring: "customization"
+      - type: output-contains
+        config:
+          substring: "duplicate"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+    constraints:
+      expect_tools: ["azsdk_customized_code_update", "azsdk_package_build_code"]
+
+  - name: sdk-local-hide-operation-001
+    prompt: "Remove the get_create_project_status polling operation from the Python SDK public API. It's an internal operation that shouldn't be exposed to users."
+    graders:
+      - type: output-contains
+        config:
+          substring: "access"
+      - type: output-contains
+        config:
+          substring: "client.tsp"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+    constraints:
+      expect_tools: ["azsdk_customized_code_update"]
+
+  - name: sdk-local-rename-client-001
+    prompt: "Rename the AIProjectConnectionEntraIDCredential model to use 'Id' instead of 'ID' in the .NET SDK. This was flagged in API review."
+    graders:
+      - type: output-contains
+        config:
+          substring: "clientName"
+      - type: output-contains
+        config:
+          substring: "client.tsp"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+    constraints:
+      expect_tools: ["azsdk_customized_code_update"]
+
+  - name: sdk-local-update-changelog-001
+    prompt: "Update the changelog for the Python SDK package at sdk/compute/azure-mgmt-compute."
+    graders:
+      - type: output-contains
+        config:
+          substring: "changelog"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+    constraints:
+      expect_tools: ["azsdk_package_update_changelog_content"]
+
+  - name: sdk-local-update-metadata-001
+    prompt: "Update the package metadata and ci.yml for the .NET SDK at sdk/contoso/Azure.ResourceManager.Contoso."
+    graders:
+      - type: output-contains
+        config:
+          substring: "metadata"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+    constraints:
+      expect_tools: ["azsdk_package_update_metadata"]
+
+  - name: sdk-local-update-version-001
+    prompt: "Update the package version for the Java SDK at sdk/contoso/azure-resourcemanager-contoso."
+    graders:
+      - type: output-contains
+        config:
+          substring: "version"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+    constraints:
+      expect_tools: ["azsdk_package_update_version"]
+
+  - name: sdk-local-analyzer-errors-001
+    prompt: "The .NET SDK build is failing with analyzer errors: AZC0030 says the model name ends with 'Parameters' and AZC0012 says type name 'Tasks' is too generic. Can you fix these?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "customize"
+      - type: output-contains
+        config:
+          substring: "customization"
+      - type: output-contains
+        config:
+          substring: "clientName"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+    constraints:
+      expect_tools: ["azsdk_customized_code_update"]

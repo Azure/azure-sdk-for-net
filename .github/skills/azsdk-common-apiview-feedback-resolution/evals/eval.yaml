@@ -1,29 +1,92 @@
-name: azsdk-common-apiview-feedback-resolution-evals
-description: Evaluations for the APIView feedback resolution skill
-skill: azsdk-common-apiview-feedback-resolution
-version: "1.0"
+name: apiview-feedback-resolution-eval
+description: Evaluation suite for the apiview-feedback-resolution skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-apiview-feedback-resolution
+  priority: p0
+
 config:
-  model: gpt-4o
-  executor: mock
-  trials_per_task: 1
-  timeout_seconds: 300
-  parallel: false
-metrics:
-  - name: task_completion
-    weight: 0.7
-    threshold: 0.8
-    description: Did the skill complete trigger and anti-trigger checks?
-  - name: efficiency
-    weight: 0.3
-    threshold: 0.7
-    description: Did the skill stay within behavior limits?
-graders:
-  - type: text
-    name: no_fatal_errors
-    config:
-      regex_not_match:
-        - (?i)fatal error
-        - (?i)unhandled exception
-        - '(?i)panic:'
-tasks:
-  - "tasks/*.yaml"
+  runs: 1
+  timeout: 300
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+stimuli:
+  - name: apiview-basic-001
+    prompt: "My Python SDK PR has APIView comments that I need to address. Can you help me retrieve and resolve them?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "APIView"
+      - type: output-contains
+        config:
+          substring: "comment"
+    constraints:
+      expect_tools: ["azsdk_apiview_get_comments"]
+
+  - name: apiview-edge-001
+    prompt: "An APIView reviewer says I need to rename 'ComputeProvisioningState' to 'ProvisioningState' in my SDK. This needs a TypeSpec change."
+    graders:
+      - type: output-contains
+        config:
+          substring: "client.tsp"
+      - type: output-contains
+        config:
+          substring: "clientName"
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+
+  - name: apiview-no-feedback-001
+    prompt: "Check if there are any APIView comments on my .NET SDK PR that I need to address before release."
+    graders:
+      - type: output-contains
+        config:
+          substring: "APIView"
+
+  - name: apiview-negative-001
+    prompt: "I need to create a new TypeSpec project for my Azure Storage service."
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "azsdk_apiview_get_comments"
+      - type: output-not-contains
+        config:
+          substring: "APIView"
+
+  - name: basic-trigger
+    prompt: "I have APIView comments on my SDK PR that need to be resolved. Can you help?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "APIView"
+    constraints:
+      expect_skills: ["apiview-feedback-resolution"]
+
+  - name: anti-trigger
+    prompt: "How do I set up a new Azure Storage account?"
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "APIView"
+      - type: output-not-contains
+        config:
+          substring: "API review"
+      - type: output-not-contains
+        config:
+          substring: "apiview.dev"
+      - type: output-not-contains
+        config:
+          substring: "apiviewstagingtest.com"
+
+  - name: url-trigger
+    prompt: "I have review comments on my SDK PR from this page: https://spa.apiview.dev/review/abc123?activeApiRevisionId=def456 — can you help me resolve them?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "apiview"
+    constraints:
+      expect_skills: ["apiview-feedback-resolution"]

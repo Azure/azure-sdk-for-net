@@ -1,0 +1,83 @@
+name: apiview-feedback-resolution-trigger-eval
+description: Trigger and anti-trigger tests for the apiview-feedback-resolution skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-apiview-feedback-resolution
+  priority: p0
+
+config:
+  runs: 1
+  timeout: 300
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+stimuli:
+  - name: trigger-resolve-apiview-feedback-on-my-pr
+    prompt: "resolve APIView feedback on my PR"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-fix-apiview-comments
+    prompt: "fix APIView comments"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-address-api-review-feedback
+    prompt: "address API review feedback"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-apiview-shows-issues-with-my-sdk
+    prompt: "APIView shows issues with my SDK"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-help-me-with-apiview-suggestions
+    prompt: "help me with APIView suggestions"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-fix-comments-apiview-url-1
+    prompt: "Help me fix these comments: https://spa.apiview.dev/review/0qw98r9qwur9q823r?activeApiRevisionId=afiq948tquajf8jq9f"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-address-feedback-apiview-url-2
+    prompt: "Address this feedback: https://spa.apiview.dev/review/akldfja9qjta498tjaejg0?activeApiRevisionId=odiufa9sefighj98439"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: trigger-resolve-comments-staging-url
+    prompt: "Resolve these comments: https://apiviewstagingtest.com/review/akldfja9qjta498tjaejg0?activeApiRevisionId=odiufa9sefighj98439"
+    graders:
+      - type: exit-success
+        config: {}
+
+  - name: anti-trigger-deploy-my-azure-function
+    prompt: "deploy my Azure Function"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-fix-my-pipeline-build-error
+    prompt: "fix my pipeline build error"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-create-a-new-typespec-definition
+    prompt: "create a new TypeSpec definition"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-how-do-i-release-an-sdk-package
+    prompt: "how do I release an SDK package"
+    graders:
+      - type: exit-success
+        config: {}
+  - name: anti-trigger-set-up-azure-storage-account
+    prompt: "set up Azure Storage account"
+    graders:
+      - type: exit-success
+        config: {}

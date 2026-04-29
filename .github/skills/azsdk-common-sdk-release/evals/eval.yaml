@@ -1,29 +1,79 @@
-name: azsdk-common-sdk-release-evals
-description: Evaluations for the SDK release skill
-skill: azsdk-common-sdk-release
-version: "1.0"
+name: sdk-release-eval
+description: Evaluation suite for the sdk-release skill
+type: capability
+
+environment: azsdk-mcp
+
+tags:
+  area: azsdk-common-sdk-release
+  priority: p0
+
 config:
-  model: gpt-4o
-  executor: mock
-  trials_per_task: 1
-  timeout_seconds: 300
-  parallel: false
-metrics:
-  - name: task_completion
-    weight: 0.7
-    threshold: 0.8
-    description: Did the skill complete trigger and anti-trigger checks?
-  - name: efficiency
-    weight: 0.3
-    threshold: 0.7
-    description: Did the skill stay within behavior limits?
-graders:
-  - type: text
-    name: no_fatal_errors
-    config:
-      regex_not_match:
-        - (?i)fatal error
-        - (?i)unhandled exception
-        - '(?i)panic:'
-tasks:
-  - "tasks/*.yaml"
+  runs: 1
+  timeout: 300
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+stimuli:
+  - name: release-basic-001
+    prompt: "I want to release my Azure Event Hubs Python SDK package."
+    graders:
+      - type: output-contains
+        config:
+          substring: "release"
+      - type: tool-calls
+        config:
+          required:
+            - name: azsdk_release_sdk
+
+  - name: release-trigger-001
+    prompt: "The readiness check passed. Go ahead and trigger the release pipeline for @azure/event-hubs JavaScript SDK."
+    graders:
+      - type: output-contains
+        config:
+          substring: "release"
+      - type: output-contains
+        config:
+          substring: "pipeline"
+      - type: output-contains
+        config:
+          substring: "approve"
+    constraints:
+      expect_tools: ["azsdk_release_sdk"]
+
+  - name: release-readiness-001
+    prompt: "Check if azure-messaging-eventhubs is ready for release in Java."
+    graders:
+      - type: output-contains
+        config:
+          substring: "ready"
+      - type: tool-calls
+        config:
+          required:
+            - name: azsdk_release_sdk
+
+  - name: release-negative-001
+    prompt: "I need to validate my CODEOWNERS file for the Python SDK repo."
+    graders:
+      - type: output-contains
+        config:
+          substring: "CODEOWNERS"
+
+  - name: basic-trigger
+    prompt: "I need to release a new version of my Azure SDK package. Walk me through the process."
+    graders:
+      - type: output-contains
+        config:
+          substring: "release"
+    constraints:
+      expect_skills: ["sdk-release"]
+
+  - name: anti-trigger
+    prompt: "How do I write unit tests for my Azure SDK client?"
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "release process"
+      - type: output-not-contains
+        config:
+          substring: "publish package"
