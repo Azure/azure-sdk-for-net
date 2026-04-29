@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.MigrationMode = value.Value;
+                Properties.MigrationMode = value;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.MigrationOption = value.Value;
+                Properties.MigrationOption = value;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.SourceType = value.Value;
+                Properties.SourceType = value;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.SslMode = value.Value;
+                Properties.SslMode = value;
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.SetupLogicalReplicationOnSourceDbIfNeeded = value.Value;
+                Properties.SetupLogicalReplicationOnSourceDbIfNeeded = value;
             }
         }
 
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.OverwriteDbsInTarget = value.Value;
+                Properties.OverwriteDbsInTarget = value;
             }
         }
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.MigrationWindowStartTimeInUtc = value.Value;
+                Properties.MigrationWindowStartTimeInUtc = value;
             }
         }
 
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.MigrationWindowEndTimeInUtc = value.Value;
+                Properties.MigrationWindowEndTimeInUtc = value;
             }
         }
 
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.MigrateRoles = value.Value;
+                Properties.MigrateRoles = value;
             }
         }
 
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.StartDataMigration = value.Value;
+                Properties.StartDataMigration = value;
             }
         }
 
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.TriggerCutover = value.Value;
+                Properties.TriggerCutover = value;
             }
         }
 
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.Cancel = value.Value;
+                Properties.Cancel = value;
             }
         }
 

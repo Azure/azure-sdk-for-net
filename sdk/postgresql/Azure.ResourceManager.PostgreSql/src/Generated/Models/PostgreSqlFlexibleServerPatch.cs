@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new ServerPropertiesForPatch();
                 }
-                Properties.Version = value.Value;
+                Properties.Version = value;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new ServerPropertiesForPatch();
                 }
-                Properties.CreateMode = value.Value;
+                Properties.CreateMode = value;
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new ServerPropertiesForPatch();
                 }
-                Properties.ReplicationRole = value.Value;
+                Properties.ReplicationRole = value;
             }
         }
 

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new LtrBackupOperationResponseProperties();
                 }
-                Properties.DatasourceSizeInBytes = value.Value;
+                Properties.DatasourceSizeInBytes = value;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new LtrBackupOperationResponseProperties();
                 }
-                Properties.DataTransferredInBytes = value.Value;
+                Properties.DataTransferredInBytes = value;
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new LtrBackupOperationResponseProperties();
                 }
-                Properties.EndOn = value.Value;
+                Properties.EndOn = value;
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new LtrBackupOperationResponseProperties();
                 }
-                Properties.PercentComplete = value.Value;
+                Properties.PercentComplete = value;
             }
         }
 

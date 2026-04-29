@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new VirtualEndpointResourceProperties();
                 }
-                Properties.EndpointType = value.Value;
+                Properties.EndpointType = value;
             }
         }
 

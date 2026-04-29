@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                startIPAddress is null && endIPAddress is null ? default : new FirewallRuleProperties(startIPAddress, endIPAddress, null));
+                new FirewallRuleProperties(startIPAddress, endIPAddress, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                principalType is null && principalName is null && objectId is null && tenantId is null ? default : new AdministratorMicrosoftEntraProperties(principalType, principalName, objectId, tenantId, null));
+                new AdministratorMicrosoftEntraProperties(principalType, principalName, objectId, tenantId, null));
         }
 
         /// <summary> Capability for the Azure Database for PostgreSQL flexible server. </summary>
@@ -770,14 +770,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrPreBackupContent"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrPreBackupContent PostgreSqlFlexibleServerLtrPreBackupContent(string backupName = default)
         {
-            return new PostgreSqlFlexibleServerLtrPreBackupContent(backupName is null ? default : new PostgreSqlFlexibleServerBackupSettings(backupName, null), additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerLtrPreBackupContent(new PostgreSqlFlexibleServerBackupSettings(backupName, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="backupName"> Backup Name for the current backup. </param>
         /// <returns> A new <see cref="Models.PostgreSqlBackupContent"/> instance for mocking. </returns>
         public static PostgreSqlBackupContent PostgreSqlBackupContent(string backupName = default)
         {
-            return new PostgreSqlBackupContent(backupName is null ? default : new PostgreSqlFlexibleServerBackupSettings(backupName, null), additionalBinaryDataProperties: null);
+            return new PostgreSqlBackupContent(new PostgreSqlFlexibleServerBackupSettings(backupName, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The settings for the long term backup. </summary>
@@ -790,9 +790,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <param name="numberOfContainers"> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrPreBackupResult"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerLtrPreBackupResult PostgreSqlFlexibleServerLtrPreBackupResult(int? numberOfContainers = default)
+        public static PostgreSqlFlexibleServerLtrPreBackupResult PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers = default)
         {
-            return new PostgreSqlFlexibleServerLtrPreBackupResult(numberOfContainers is null ? default : new BackupsLongTermRetentionResponseProperties(numberOfContainers.Value, null), additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerLtrPreBackupResult(new BackupsLongTermRetentionResponseProperties(numberOfContainers, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Details about the target where the backup content will be stored. </summary>
@@ -823,8 +823,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 dataTransferredInBytes,
                 backupName,
                 backupMetadata,
-                status.Value,
-                startOn.Value,
+                status.GetValueOrDefault(),
+                startOn.GetValueOrDefault(),
                 endOn,
                 percentComplete,
                 errorCode,
@@ -860,8 +860,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     dataTransferredInBytes,
                     backupName,
                     backupMetadata,
-                    status.Value,
-                    startOn.Value,
+                    status.GetValueOrDefault(),
+                    startOn.GetValueOrDefault(),
                     endOn,
                     percentComplete,
                     errorCode,
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                state is null && createdOn is null ? default : new AdvancedThreatProtectionSettingsProperties(state.Value, createdOn, null));
+                state is null && createdOn is null ? default : new AdvancedThreatProtectionSettingsProperties(state.GetValueOrDefault(), createdOn, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

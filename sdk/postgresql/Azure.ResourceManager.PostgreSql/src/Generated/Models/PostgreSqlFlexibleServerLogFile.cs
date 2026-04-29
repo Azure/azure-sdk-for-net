@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new CapturedLogProperties();
                 }
-                Properties.CreatedOn = value.Value;
+                Properties.CreatedOn = value;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new CapturedLogProperties();
                 }
-                Properties.LastModifiedOn = value.Value;
+                Properties.LastModifiedOn = value;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new CapturedLogProperties();
                 }
-                Properties.SizeInKb = value.Value;
+                Properties.SizeInKb = value;
             }
         }
 

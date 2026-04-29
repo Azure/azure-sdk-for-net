@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new BackupAutomaticAndOnDemandProperties();
                 }
-                Properties.BackupType = value.Value;
+                Properties.BackupType = value;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new BackupAutomaticAndOnDemandProperties();
                 }
-                Properties.CompletedOn = value.Value;
+                Properties.CompletedOn = value;
             }
         }
 

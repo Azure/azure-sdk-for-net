@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new AdministratorMicrosoftEntraProperties();
                 }
-                Properties.PrincipalType = value.Value;
+                Properties.PrincipalType = value;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new AdministratorMicrosoftEntraProperties();
                 }
-                Properties.ObjectId = value.Value;
+                Properties.ObjectId = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new AdministratorMicrosoftEntraProperties();
                 }
-                Properties.TenantId = value.Value;
+                Properties.TenantId = value;
             }
         }
     }

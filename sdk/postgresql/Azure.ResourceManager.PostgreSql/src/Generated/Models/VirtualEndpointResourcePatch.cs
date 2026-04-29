@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new VirtualEndpointResourceProperties();
                 }
-                Properties.EndpointType = value.Value;
+                Properties.EndpointType = value;
             }
         }
 
