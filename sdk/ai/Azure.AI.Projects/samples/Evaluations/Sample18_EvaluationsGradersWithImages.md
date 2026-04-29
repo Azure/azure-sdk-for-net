@@ -1,4 +1,4 @@
-# Sample: Evaluations with Graders in Azure.AI.Projects
+# Sample: Evaluations with Graders and Images in Azure.AI.Projects
 
 This sample demonstrates how to use graders with images.
 
