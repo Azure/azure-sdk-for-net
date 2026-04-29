@@ -18,6 +18,11 @@
 
 ### Bugs Fixed
 
+- Enabled automatic gzip/deflate/brotli decompression on the Foundry storage HTTP pipeline.
+  Intermediary gateways or load-balancers that return compressed responses are now handled
+  transparently, preventing JSON parse failures on raw gzip bytes. The pipeline also
+  advertises `Accept-Encoding` support so servers can compress responses proactively.
+
 ### Other Changes
 
 ## 1.0.0-beta.4 (2026-04-22)
