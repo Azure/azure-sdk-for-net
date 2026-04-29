@@ -53,5 +53,4 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02-preview' 
 
 // Outputs consumed by TestEnvironment via env vars
 output APPLICATIONINSIGHTS_CONNECTION_STRING string = applicationInsights.properties.ConnectionString
-output WORKSPACE_ID string = logAnalyticsWorkspace.properties.customerId
-output LOGS_ENDPOINT string = 'https://api.loganalytics.io'
+output APPLICATIONINSIGHTS_RESOURCE_ID string = applicationInsights.id

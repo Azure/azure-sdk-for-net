@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Invocations;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Logs;
 using Azure.Monitor.Query.Logs.Models;
@@ -29,27 +30,26 @@ namespace Azure.AI.AgentServer.Core.Tests
     ///
     /// Required environment variables (provisioned by test-resources.bicep):
     /// - APPLICATIONINSIGHTS_CONNECTION_STRING
-    /// - WORKSPACE_ID (Log Analytics workspace for querying)
+    /// - APPLICATIONINSIGHTS_RESOURCE_ID (App Insights resource ID for querying)
     /// - Azure credentials (DefaultAzureCredential via test framework)
     ///
     /// Excluded from normal CI via [Category("Live")].
     /// </summary>
     [Category("Live")]
-    public class LiveTelemetryTests : RecordedTestBase<AgentServerTestEnvironment>
+    [NonParallelizable]
+    public class LiveTelemetryTests
     {
         // App Insights ingestion can take 2-5 minutes
         private static readonly TimeSpan s_maxIngestionWait = TimeSpan.FromMinutes(6);
         private static readonly TimeSpan s_pollInterval = TimeSpan.FromSeconds(30);
 
-        public LiveTelemetryTests(bool isAsync) : base(isAsync)
-        {
-        }
+        private static readonly AgentServerTestEnvironment s_testEnvironment = new();
 
         /// <summary>
         /// Runs InvocationsServer.Run exactly like the HelloWorld BYO sample,
         /// sends a real HTTP request, then verifies traces in App Insights.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task TracesAppearInAppInsightsWithCorrectHierarchy()
         {
             string uniqueMarker = Guid.NewGuid().ToString("N");
@@ -57,19 +57,28 @@ namespace Azure.AI.AgentServer.Core.Tests
             TelemetryTestHandler.CapturedTraceId = null;
 
             // ── Environment setup (same as a real deployed container) ──
-            Environment.SetEnvironmentVariable("PORT", "8088");
+            int port = Random.Shared.Next(9000, 9999);
+            Environment.SetEnvironmentVariable("PORT", port.ToString());
             Environment.SetEnvironmentVariable(
                 "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                TestEnvironment.ApplicationInsightsConnectionString);
+                s_testEnvironment.ApplicationInsightsConnectionString);
 
             try
             {
                 // Start the server on a background thread — exactly as a user would
                 // run `dotnet run` which calls InvocationsServer.Run<T>().
                 // InvocationsServer.Run blocks forever, so we run it on a thread.
+                Exception? serverError = null;
                 var serverThread = new Thread(() =>
                 {
-                    InvocationsServer.Run<TelemetryTestHandler>();
+                    try
+                    {
+                        InvocationsServer.Run<TelemetryTestHandler>();
+                    }
+                    catch (Exception ex)
+                    {
+                        serverError = ex;
+                    }
                 })
                 {
                     IsBackground = true,
@@ -77,8 +86,13 @@ namespace Azure.AI.AgentServer.Core.Tests
                 };
                 serverThread.Start();
 
-                // Wait for server to start listening on port 8088
+                // Wait for server to start listening
                 await Task.Delay(TimeSpan.FromSeconds(5));
+
+                if (serverError != null)
+                {
+                    Assert.Fail($"Server failed to start: {serverError.Message}");
+                }
 
                 // ── Send a real HTTP request ──
                 // curl -X POST http://localhost:8088/invocations \
@@ -91,7 +105,7 @@ namespace Azure.AI.AgentServer.Core.Tests
                     "application/json");
 
                 var response = await httpClient.PostAsync(
-                    "http://localhost:8088/invocations", requestBody);
+                    $"http://localhost:{port}/invocations", requestBody);
 
                 Assert.That((int)response.StatusCode, Is.LessThan(500),
                     "Invocation endpoint should not return a server error");
@@ -108,8 +122,14 @@ namespace Azure.AI.AgentServer.Core.Tests
             await Task.Delay(TimeSpan.FromSeconds(5));
 
             // ── Query Application Insights ──
-            var logsClient = new LogsQueryClient(TestEnvironment.Credential);
+            var credential = new Azure.Identity.DefaultAzureCredential(
+                new Azure.Identity.DefaultAzureCredentialOptions
+                {
+                    ExcludeInteractiveBrowserCredential = true
+                });
+            var logsClient = new LogsQueryClient(credential);
             var traceId = TelemetryTestHandler.CapturedTraceId!;
+            var resourceId = new ResourceIdentifier(s_testEnvironment.ApplicationInsightsResourceId);
 
             string kql = $@"
                 union requests, dependencies
@@ -123,16 +143,12 @@ namespace Azure.AI.AgentServer.Core.Tests
             {
                 await Task.Delay(s_pollInterval);
 
-                var batch = new LogsBatchQuery();
-                var queryId = batch.AddWorkspaceQuery(
-                    TestEnvironment.WorkspaceId,
+                var result = await logsClient.QueryResourceAsync(
+                    resourceId,
                     kql,
                     new LogsQueryTimeRange(TimeSpan.FromMinutes(30)));
 
-                var batchResult = await logsClient.QueryBatchAsync(batch);
-                var table = batchResult.Value.GetResult(queryId);
-
-                var logsTable = table.Table;
+                var logsTable = result.Value.Table;
                 if (logsTable.Rows.Count >= 2)
                 {
                     var rows = logsTable.Rows;

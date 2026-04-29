@@ -20,13 +20,9 @@ namespace Azure.AI.AgentServer.Core.Tests
             GetVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
 
         /// <summary>
-        /// Log Analytics workspace customer ID for querying traces.
+        /// Application Insights resource ID for querying traces.
         /// </summary>
-        public string WorkspaceId => GetVariable("WORKSPACE_ID");
-
-        /// <summary>
-        /// Log Analytics query endpoint.
-        /// </summary>
-        public Uri LogsEndpoint => new(GetVariable("LOGS_ENDPOINT"));
+        public string ApplicationInsightsResourceId =>
+            GetVariable("APPLICATIONINSIGHTS_RESOURCE_ID");
     }
 }
