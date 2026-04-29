@@ -134,7 +134,21 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingToLlmInputContentRange
             Assert.That(multiPageText, Does.Contain("contentType: document"));
             Assert.That(multiPageText, Does.Contain("pages:"));
+            Assert.That(multiPageText, Does.Contain("2-3, 5").Or.Contains("'2-3, 5'"),
+                "'pages' value should be '2-3, 5' (original page numbers preserved)");
             Assert.That(multiPageText, Does.Contain("<!-- page"));
+
+            // Page markers in the markdown body should use the original page numbers
+            // (<!-- page 2 -->, <!-- page 3 -->, <!-- page 5 -->), not renumbered (1, 2, 3).
+            Assert.That(multiPageText, Does.Not.Contain("<!-- page 1 -->"),
+                "Page marker '<!-- page 1 -->' should not appear — we only requested pages 2-3, 5");
+            Assert.That(multiPageText, Does.Contain("<!-- page 2 -->"),
+                "Page marker '<!-- page 2 -->' should appear in the markdown body");
+            Assert.That(multiPageText, Does.Contain("<!-- page 3 -->"),
+                "Page marker '<!-- page 3 -->' should appear in the markdown body");
+            Assert.That(multiPageText, Does.Contain("<!-- page 5 -->"),
+                "Page marker '<!-- page 5 -->' should appear in the markdown body");
+
             Console.WriteLine("Multi-page content range output verified");
             #endregion
 
