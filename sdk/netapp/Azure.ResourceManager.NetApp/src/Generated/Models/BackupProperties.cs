@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
         /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
         /// <param name="snapshotName"> The name of the snapshot. </param>
-        /// <param name="backupPolicyResourceId"> ResourceId used to identify the backup policy. </param>
+        /// <param name="backupPolicyArmResourceId"> ResourceId used to identify the backup policy. </param>
         /// <param name="isLargeVolume"> Specifies if the backup is for a large volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupProperties(string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, string backupPolicyResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupProperties(string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupId = backupId;
             CreatedOn = createdOn;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp.Models
             VolumeResourceId = volumeResourceId;
             UseExistingSnapshot = useExistingSnapshot;
             SnapshotName = snapshotName;
-            BackupPolicyResourceId = backupPolicyResourceId;
+            BackupPolicyArmResourceId = backupPolicyArmResourceId;
             IsLargeVolume = isLargeVolume;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string SnapshotName { get; set; }
 
         /// <summary> ResourceId used to identify the backup policy. </summary>
-        public string BackupPolicyResourceId { get; }
+        public ResourceIdentifier BackupPolicyArmResourceId { get; }
 
         /// <summary> Specifies if the backup is for a large volume. </summary>
         public bool? IsLargeVolume { get; }

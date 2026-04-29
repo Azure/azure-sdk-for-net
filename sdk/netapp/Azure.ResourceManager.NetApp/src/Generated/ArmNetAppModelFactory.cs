@@ -295,51 +295,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="backupId"> UUID v4 used to identify the Backup. </param>
-        /// <param name="createdOn"> The creation date of the backup. </param>
-        /// <param name="snapshotCreationOn"> The snapshot creation date of the backup. </param>
-        /// <param name="completionOn"> The completion date of the backup. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="size"> Size of backup in bytes. </param>
-        /// <param name="label"> Label for backup. </param>
-        /// <param name="backupType"> Type of backup Manual or Scheduled. </param>
-        /// <param name="failureReason"> Failure reason. </param>
-        /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
-        /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
-        /// <param name="snapshotName"> The name of the snapshot. </param>
-        /// <param name="backupPolicyResourceId"> ResourceId used to identify the backup policy. </param>
-        /// <param name="isLargeVolume"> Specifies if the backup is for a large volume. </param>
-        /// <returns> A new <see cref="NetApp.NetAppBackupData"/> instance for mocking. </returns>
-        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string backupId = default, DateTimeOffset? createdOn = default, DateTimeOffset? snapshotCreationOn = default, DateTimeOffset? completionOn = default, string provisioningState = default, long? size = default, string label = default, NetAppBackupType? backupType = default, string failureReason = default, ResourceIdentifier volumeResourceId = default, bool? useExistingSnapshot = default, string snapshotName = default, string backupPolicyResourceId = default, bool? isLargeVolume = default)
-        {
-            return new NetAppBackupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                new BackupProperties(
-                    backupId,
-                    createdOn,
-                    snapshotCreationOn,
-                    completionOn,
-                    provisioningState,
-                    size,
-                    label,
-                    backupType,
-                    failureReason,
-                    volumeResourceId,
-                    useExistingSnapshot,
-                    snapshotName,
-                    backupPolicyResourceId,
-                    isLargeVolume,
-                    null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>

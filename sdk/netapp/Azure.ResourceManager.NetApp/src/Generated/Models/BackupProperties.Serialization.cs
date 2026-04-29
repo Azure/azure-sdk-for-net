@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("snapshotName"u8);
                 writer.WriteStringValue(SnapshotName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupPolicyResourceId))
+            if (options.Format != "W" && Optional.IsDefined(BackupPolicyArmResourceId))
             {
                 writer.WritePropertyName("backupPolicyResourceId"u8);
-                writer.WriteStringValue(BackupPolicyResourceId);
+                writer.WriteStringValue(BackupPolicyArmResourceId);
             }
             if (options.Format != "W" && Optional.IsDefined(IsLargeVolume))
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier volumeResourceId = default;
             bool? useExistingSnapshot = default;
             string snapshotName = default;
-            string backupPolicyResourceId = default;
+            ResourceIdentifier backupPolicyArmResourceId = default;
             bool? isLargeVolume = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -294,7 +294,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("backupPolicyResourceId"u8))
                 {
-                    backupPolicyResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupPolicyArmResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isLargeVolume"u8))
@@ -324,7 +328,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 volumeResourceId,
                 useExistingSnapshot,
                 snapshotName,
-                backupPolicyResourceId,
+                backupPolicyArmResourceId,
                 isLargeVolume,
                 additionalBinaryDataProperties);
         }

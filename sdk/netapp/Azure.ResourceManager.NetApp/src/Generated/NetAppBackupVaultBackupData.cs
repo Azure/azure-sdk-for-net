@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> ResourceId used to identify the backup policy. </summary>
-        public string BackupPolicyResourceId
+        public ResourceIdentifier BackupPolicyArmResourceId
         {
             get
             {
-                return Properties is null ? default : Properties.BackupPolicyResourceId;
+                return Properties is null ? default : Properties.BackupPolicyArmResourceId;
             }
         }
 
