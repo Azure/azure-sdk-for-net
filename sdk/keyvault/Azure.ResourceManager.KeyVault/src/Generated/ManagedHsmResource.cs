@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.KeyVault
                 else
                 {
                     ManagedHsmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ManagedHsmData patch = new ManagedHsmData();
+                    ManagedHsmData patch = new ManagedHsmData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.KeyVault
                 else
                 {
                     ManagedHsmData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ManagedHsmData patch = new ManagedHsmData();
+                    ManagedHsmData patch = new ManagedHsmData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.KeyVault
                 else
                 {
                     ManagedHsmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ManagedHsmData patch = new ManagedHsmData();
+                    ManagedHsmData patch = new ManagedHsmData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ManagedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.KeyVault
                 else
                 {
                     ManagedHsmData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ManagedHsmData patch = new ManagedHsmData();
+                    ManagedHsmData patch = new ManagedHsmData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ManagedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.KeyVault
                 else
                 {
                     ManagedHsmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ManagedHsmData patch = new ManagedHsmData();
+                    ManagedHsmData patch = new ManagedHsmData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.KeyVault
                 else
                 {
                     ManagedHsmData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ManagedHsmData patch = new ManagedHsmData();
+                    ManagedHsmData patch = new ManagedHsmData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

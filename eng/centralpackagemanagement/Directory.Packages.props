@@ -143,8 +143,8 @@
     <PackageVersion Include="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.5" />
     <PackageVersion Include="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.1" />
     <PackageVersion Include="Azure.ResourceManager.Kusto" Version="1.6.2" />
-    <PackageVersion Include="Azure.ResourceManager.Logic" Version="1.1.0" />
-    <PackageVersion Include="Azure.ResourceManager.ManagedServiceIdentities" Version="1.4.0" />
+    <PackageVersion Include="Azure.ResourceManager.Logic" Version="1.2.0" />
+    <PackageVersion Include="Azure.ResourceManager.ManagedServiceIdentities" Version="1.4.1" />
     <PackageVersion Include="Azure.ResourceManager.Monitor" Version="1.3.1" />
     <PackageVersion Include="Azure.ResourceManager.Network" Version="1.15.0" />
     <PackageVersion Include="Azure.ResourceManager.OperationalInsights" Version="1.3.1" />
@@ -156,7 +156,7 @@
     <PackageVersion Include="Azure.ResourceManager.Search" Version="1.3.0" />
     <PackageVersion Include="Azure.ResourceManager.SecurityCenter" Version="1.1.0" />
     <PackageVersion Include="Azure.ResourceManager.ServiceBus" Version="1.1.0" />
-    <PackageVersion Include="Azure.ResourceManager.ServiceGroups" Version="1.0.0-beta.1" />
+    <PackageVersion Include="Azure.ResourceManager.ServiceGroups" Version="1.0.0-beta.2" />
     <PackageVersion Include="Azure.ResourceManager.SignalR" Version="1.1.4" />
     <PackageVersion Include="Azure.ResourceManager.Sql" Version="1.4.0" />
     <PackageVersion Include="Azure.ResourceManager.Storage" Version="1.6.2" />

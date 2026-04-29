@@ -18,6 +18,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string ExportablePropertyName = "exportable";
         private const string HsmPlatformPropertyName = "hsmPlatform";
         private const string KeyAttestationPropertyName = "attestation";
+        private const string KeySizePropertyName = "key_size";
 
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
         private static readonly JsonEncodedText s_notBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
@@ -44,6 +45,8 @@ namespace Azure.Security.KeyVault.Keys
         public string HsmPlatform { get; internal set; }
 
         public KeyAttestation Attestation { get; set; }
+
+        public int? KeySize { get; internal set; }
 
         internal bool ShouldSerialize =>
             Enabled.HasValue ||
@@ -112,6 +115,12 @@ namespace Azure.Security.KeyVault.Keys
                                         break;
                                 }
                             }
+                        }
+                        break;
+                    case KeySizePropertyName:
+                        if (prop.Value.ValueKind != JsonValueKind.Null)
+                        {
+                            KeySize = prop.Value.GetInt32();
                         }
                         break;
                 }

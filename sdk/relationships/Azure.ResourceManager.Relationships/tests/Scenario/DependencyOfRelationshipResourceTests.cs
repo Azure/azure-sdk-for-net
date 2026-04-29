@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
     /// Tests for DependencyOf relationship resource operations.
     /// A DependencyOf relationship declares that one Service Group depends on another Service Group.
     /// </summary>
-    [Ignore("Recordings broken by ServiceGroups TypeSpec migration (#58689). Tracking: https://github.com/Azure/azure-sdk-for-net/issues/58724")]
     public class DependencyOfRelationshipResourceTests : RelationshipsManagementTestBase
     {
         private DependencyOfRelationshipResource _relationship;

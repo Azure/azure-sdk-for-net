@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1219,7 +1219,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<SearchServiceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1262,7 +1262,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<SearchServiceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1304,7 +1304,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1350,7 +1350,7 @@ namespace Azure.ResourceManager.Search
                 else
                 {
                     SearchServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SearchServicePatch patch = new SearchServicePatch();
+                    SearchServicePatch patch = new SearchServicePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
