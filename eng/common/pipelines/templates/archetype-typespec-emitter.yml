@@ -304,6 +304,11 @@ extends:
         - job: Initialize
           steps:
           - checkout: self
+
+          - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+            parameters:
+              TokenOwners:
+                - azure-sdk
           
           - task: UseNode@1
             displayName: 'Install Node.js'
@@ -394,6 +399,12 @@ extends:
             emitterNpmrcPath: $(Agent.TempDirectory)/${{ parameters.EmitterPackagePath }}/.npmrc
           steps:
           - checkout: self
+
+          - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+            parameters:
+              TokenOwners:
+                - azure-sdk
+
           - pwsh: |
               git remote add azure-sdk https://github.com/$(AzureSdkRepoName).git
               git fetch azure-sdk $(branchName)
@@ -446,6 +457,12 @@ extends:
             emitterIdentifier: $[stageDependencies.Build.Build.outputs['set_branch_name.emitterIdentifier']]
           steps:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+
+          - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+            parameters:
+              TokenOwners:
+                - Azure
+                - azure-sdk
 
           - pwsh: |
               $generateJobResult = '$(generateJobResult)'
@@ -534,7 +551,7 @@ extends:
                 -BaseBranch '$(pullRequestTargetBranch)'
                 -PROwner 'azure-sdk'
                 -PRBranch '$(branchName)'
-                -AuthToken '$(azuresdk-github-pat)'
+                -AuthToken '$(GH_TOKEN_Azure)'
                 -PRTitle '$(PullRequestTitle)'
                 -PRBody '$(PullRequestBody)'
                 -OpenAsDraft $$(OpenAsDraft)
