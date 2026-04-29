@@ -50,10 +50,6 @@
         $(MSBuildProjectName) == 'Azure.Core.TestFramework.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests.Public' or
-        $(MSBuildProjectName) == 'Azure.Developer.LoadTesting.Tests' or
-        $(MSBuildProjectName) == 'Azure.Developer.Playwright.MSTest.Tests' or
-        $(MSBuildProjectName) == 'Azure.Developer.Playwright.NUnit.Tests' or
-        $(MSBuildProjectName) == 'Azure.Developer.Playwright.Tests' or
         $(MSBuildProjectName) == 'Azure.DigitalTwins.Core.Tests' or
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.Configuration.Secrets.Tests' or
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests' or
@@ -217,7 +213,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.LabServices.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LambdaTestHyperExecute.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LargeInstance.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.LoadTesting.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Logic.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.MachineLearning.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.MachineLearningCompute.Tests' or
