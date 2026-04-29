@@ -243,15 +243,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("listAssociatedResources is a preview-only operation and is no longer supported.")]
+    [System.ObsoleteAttribute("This model was the return type of the preview-only listAssociatedResources operation, which is no longer supported.")]
     public partial class IdentityAssociatedResourceData : Azure.ResourceManager.Models.ResourceData
     {
         internal IdentityAssociatedResourceData() { }
-        [System.ObsoleteAttribute("listAssociatedResources is a preview-only operation and is no longer supported.")]
         public string ResourceGroup { get { throw null; } }
-        [System.ObsoleteAttribute("listAssociatedResources is a preview-only operation and is no longer supported.")]
         public string SubscriptionDisplayName { get { throw null; } }
-        [System.ObsoleteAttribute("listAssociatedResources is a preview-only operation and is no longer supported.")]
         public string SubscriptionId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
