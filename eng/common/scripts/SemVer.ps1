@@ -42,7 +42,7 @@ class AzureEngSemanticVersion : IComparable {
   # Python PEP 440 post-release extension
   # Handles all PEP 440 alternate formats: .postN, -postN, _postN, postN, .post.N, .post (implicit 0) (case-insensitive)
   # Validation: https://regex101.com/r/rAdOg0/2
-  static [string] $PYTHON_SEMVER_REGEX = [AzureEngSemanticVersion]::SEMVER_REGEX + "(?:(?<postsep>[.\-_]?)(?<postword>(?i:post))\.?(?<postnum>\d+)?)?"
+  static [string] $PYTHON_SEMVER_REGEX = [AzureEngSemanticVersion]::SEMVER_REGEX + "(?:(?<postsep>[.\-_]?)(?<postword>(?i:post))\.?(?<postnum>\d{1,8})?)?"
 
   static [AzureEngSemanticVersion] ParseVersionString([string] $versionString)
   {
