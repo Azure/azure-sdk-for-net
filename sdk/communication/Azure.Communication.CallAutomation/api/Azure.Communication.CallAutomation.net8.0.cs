@@ -1,5 +1,16 @@
 namespace Azure.Communication.CallAutomation
 {
+    public partial class AcsWebSocketAuthenticator
+    {
+        public AcsWebSocketAuthenticator() { }
+        public AcsWebSocketAuthenticator(Azure.AzureKeyCredential keyCredential, string acsEndpoint) { }
+        public AcsWebSocketAuthenticator(Azure.Communication.CallAutomation.CallAutomationClient callAutomationClient) { }
+        public AcsWebSocketAuthenticator(Azure.Core.TokenCredential tokenCredential, string acsEndpoint) { }
+        public void AddCustomHeader(System.Net.WebSockets.ClientWebSocket webSocket, string headerName, string headerValue) { }
+        protected virtual System.Threading.Tasks.Task AuthenticateCustomAsync(System.Net.WebSockets.ClientWebSocket webSocket, System.Uri streamUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task AuthenticateWebSocketAsync(System.Net.WebSockets.ClientWebSocket webSocket, System.Uri streamUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void ConfigureWebSocketOptions(System.Net.WebSockets.ClientWebSocket webSocket, System.TimeSpan? keepAliveInterval = default(System.TimeSpan?), int? receiveBufferSize = default(int?), int? sendBufferSize = default(int?), string subProtocol = null) { }
+    }
     public partial class AddParticipantEventResult
     {
         internal AddParticipantEventResult() { }
@@ -145,7 +156,7 @@ namespace Azure.Communication.CallAutomation
         public virtual Azure.Communication.CallAutomation.CallConnection GetCallConnection(string callConnectionId) { throw null; }
         public virtual Azure.Communication.CallAutomation.CallRecording GetCallRecording() { throw null; }
         public virtual Azure.Communication.CallAutomation.CallAutomationEventProcessor GetEventProcessor() { throw null; }
-        public virtual Azure.Communication.CallAutomation.WebSocketConnectionHelper GetWebSocketConnectionHelper() { throw null; }
+        public virtual Azure.Communication.CallAutomation.AcsWebSocketAuthenticator GetWebSocketAuthenticator() { throw null; }
         public virtual Azure.Response RedirectCall(Azure.Communication.CallAutomation.RedirectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RedirectCall(string incomingCallContext, Azure.Communication.CallAutomation.CallInvite callInvite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RedirectCallAsync(Azure.Communication.CallAutomation.RedirectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1965,16 +1976,6 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.VoiceKind (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.VoiceKind left, Azure.Communication.CallAutomation.VoiceKind right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class WebSocketConnectionHelper : System.IDisposable
-    {
-        internal WebSocketConnectionHelper() { }
-        public System.Net.WebSockets.ClientWebSocket ConnectToAcsMediaStreamingWebsocket(System.Uri transportUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<System.Net.WebSockets.ClientWebSocket> ConnectToAcsMediaStreamingWebsocketAsync(System.Uri transportUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Net.WebSockets.ClientWebSocket ConnectToAcsTranscriptionWebsocket(System.Uri transportUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<System.Net.WebSockets.ClientWebSocket> ConnectToAcsTranscriptionWebsocketAsync(System.Uri transportUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
     }
     public partial class WordData
     {
