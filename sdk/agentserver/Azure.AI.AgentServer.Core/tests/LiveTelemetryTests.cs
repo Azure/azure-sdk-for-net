@@ -19,6 +19,7 @@ using Azure.Monitor.Query.Logs.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.Core.Tests
 {
@@ -73,7 +74,15 @@ namespace Azure.AI.AgentServer.Core.Tests
                 {
                     try
                     {
-                        InvocationsServer.Run<TelemetryTestHandler>();
+                        InvocationsServer.Run<TelemetryTestHandler>(
+                            configure: builder =>
+                            {
+                                // Register the handler's custom ActivitySource so its spans
+                                // are exported — this is the pattern real developers use to
+                                // add their own tracing alongside the built-in agent spans.
+                                builder.ConfigureTracing(tracing =>
+                                    tracing.AddSource("AgentServer.Test.Handler"));
+                            });
                     }
                     catch (Exception ex)
                     {
@@ -131,10 +140,12 @@ namespace Azure.AI.AgentServer.Core.Tests
             var traceId = TelemetryTestHandler.CapturedTraceId!;
             var resourceId = new ResourceIdentifier(s_testEnvironment.ApplicationInsightsResourceId);
 
+            // Query for all spans in the trace — requests table has Server spans,
+            // dependencies table has Internal/Client spans.
             string kql = $@"
                 union requests, dependencies
                 | where operation_Id == '{traceId}'
-                | project name, id, operation_ParentId, customDimensions
+                | project name, id, operation_ParentId, type
                 | order by name asc";
 
             var deadline = DateTimeOffset.UtcNow + s_maxIngestionWait;
@@ -149,7 +160,10 @@ namespace Azure.AI.AgentServer.Core.Tests
                     new LogsQueryTimeRange(TimeSpan.FromMinutes(30)));
 
                 var logsTable = result.Value.Table;
-                if (logsTable.Rows.Count >= 2)
+
+                // We expect at least 3 spans: HTTP request, invoke_agent, HandleInvocation
+                // (plus possibly outgoing HTTP dependency from in-process HttpClient)
+                if (logsTable.Rows.Count >= 3)
                 {
                     var rows = logsTable.Rows;
                     var columns = logsTable.Columns;
@@ -158,31 +172,34 @@ namespace Azure.AI.AgentServer.Core.Tests
                     int idIdx = columns.ToList().FindIndex(c => c.Name == "id");
                     int parentIdx = columns.ToList().FindIndex(c => c.Name == "operation_ParentId");
 
-                    // ASP.NET Core request span (POST /invocations)
-                    var requestRow = rows.FirstOrDefault(r =>
-                        r[nameIdx]?.ToString()?.Contains("/invocations") == true ||
-                        r[nameIdx]?.ToString()?.StartsWith("POST") == true);
+                    // invoke_agent span (Server span from InvocationsActivitySource)
+                    var invokeAgentRow = rows.FirstOrDefault(r =>
+                        r[nameIdx]?.ToString() == "invoke_agent");
 
-                    Assert.That(requestRow, Is.Not.Null,
-                        "POST /invocations request span not found in App Insights");
+                    Assert.That(invokeAgentRow, Is.Not.Null,
+                        "invoke_agent span not found in App Insights. " +
+                        $"Found spans: {string.Join(", ", rows.Select(r => r[nameIdx]?.ToString()))}");
 
-                    // Handler child span
+                    // HandleInvocation span (child of invoke_agent)
                     var handlerRow = rows.FirstOrDefault(r =>
                         r[nameIdx]?.ToString() == "HandleInvocation");
 
-                    if (handlerRow != null)
-                    {
-                        Assert.That(handlerRow[parentIdx]?.ToString(),
-                            Is.EqualTo(requestRow![idIdx]?.ToString()),
-                            "Handler span should be child of the request span");
-                    }
+                    Assert.That(handlerRow, Is.Not.Null,
+                        "HandleInvocation child span not found in App Insights. " +
+                        $"Found spans: {string.Join(", ", rows.Select(r => r[nameIdx]?.ToString()))}");
+
+                    // Verify parent-child: HandleInvocation's parent == invoke_agent's id
+                    Assert.That(handlerRow![parentIdx]?.ToString(),
+                        Is.EqualTo(invokeAgentRow![idIdx]?.ToString()),
+                        "HandleInvocation should be a child of invoke_agent");
 
                     return;
                 }
             }
 
             Assert.Fail($"Traces for operation_Id '{traceId}' did not appear in " +
-                        $"App Insights within {s_maxIngestionWait.TotalMinutes} minutes.");
+                        $"App Insights within {s_maxIngestionWait.TotalMinutes} minutes. " +
+                        "Expected at least 3 spans (HTTP request + invoke_agent + HandleInvocation).");
         }
 
         // ═══════════════════════════════════════════════════════════════════════
