@@ -27,7 +27,15 @@ internal static class CredentialSectionHasher
         var sb = new StringBuilder();
         foreach (KeyValuePair<string, string?> entry in leaves)
         {
-            sb.Append(entry.Key).Append('=').Append(entry.Value ?? string.Empty).Append(';');
+            // Length-prefix both key and value so that no value content can
+            // be confused with the structural separators '=' or ';'. This
+            // prevents cache-key collisions for values containing those bytes
+            // (e.g., connection-string-like secrets such as "b;c=d").
+            string value = entry.Value ?? string.Empty;
+            sb.Append(entry.Key.Length).Append(':').Append(entry.Key)
+              .Append('=')
+              .Append(value.Length).Append(':').Append(value)
+              .Append(';');
         }
 
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
