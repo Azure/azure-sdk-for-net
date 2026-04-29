@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reasonInternal"> The reason why the given name is not available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name for which validity and availability was checked. </param>
         /// <param name="resourceType"> Type of resource. It can be 'Microsoft.DBforPostgreSQL/flexibleServers' or 'Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints'. </param>
-        internal PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable, CheckNameAvailabilityReason? reasonInternal, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType) : base(isNameAvailable, reasonInternal, message, additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable, PostgreSqlFlexibleServerNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType) : base(isNameAvailable, reason, message, additionalBinaryDataProperties)
         {
             Name = name;
             ResourceType = resourceType;

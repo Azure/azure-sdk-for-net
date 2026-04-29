@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (Optional.IsDefined(ReasonInternal))
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(ReasonInternal.Value.ToString());
+                writer.WriteStringValue(Reason.Value.ToString());
             }
             if (Optional.IsDefined(Message))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             bool? isNameAvailable = default;
-            CheckNameAvailabilityReason? reasonInternal = default;
+            PostgreSqlFlexibleServerNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    reasonInternal = new CheckNameAvailabilityReason(prop.Value.GetString());
+                    reason = new PostgreSqlFlexibleServerNameUnavailableReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reasonInternal, message, additionalBinaryDataProperties);
+            return new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason, message, additionalBinaryDataProperties);
         }
     }
 }

@@ -10,8 +10,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     // Suppress generated factory methods that reference internal ForPatch / "Internal" types.
     // These methods use internal types (AuthConfigForPatch, BackupForPatch, HighAvailabilityForPatch,
-    // MaintenanceWindowForPatch, SkuForPatch, MigrationSecretParametersForPatch, UserIdentity,
-    // CheckNameAvailabilityReason) in their public signatures, which causes CS0051 errors.
+    // MaintenanceWindowForPatch, SkuForPatch, MigrationSecretParametersForPatch, UserIdentity)
+    // in their public signatures, which causes CS0051 errors.
     // The backward-compat factory methods in ArmPostgreSqlFlexibleServersModelFactory provide
     // equivalent functionality using the old public types.
     //
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     [CodeGenSuppress(
         "PostgreSqlFlexibleServerNameAvailabilityResult",
         typeof(bool?),
-        typeof(CheckNameAvailabilityReason?),
+        typeof(PostgreSqlFlexibleServerNameUnavailableReason?),
         typeof(string),
         typeof(string),
         typeof(ResourceType?))]
     [CodeGenSuppress(
         "PostgreSqlFlexibleServerNameAvailabilityResponse",
         typeof(bool?),
-        typeof(CheckNameAvailabilityReason?),
+        typeof(PostgreSqlFlexibleServerNameUnavailableReason?),
         typeof(string))]
     // The new emitter flattens `backupSettings.backupName` into a `string backupName` parameter,
     // but the public API for this factory historically takes `PostgreSqlFlexibleServerBackupSettings`.

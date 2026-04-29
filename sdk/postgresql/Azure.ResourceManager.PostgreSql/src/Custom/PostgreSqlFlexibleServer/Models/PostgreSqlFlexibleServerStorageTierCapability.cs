@@ -8,7 +8,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Required by generated storage tier serialization and preserves legacy Iops.
+    // Preserves legacy storage-tier property names that differ from generated members.
     /// <summary> Represents capability of a storage tier. </summary>
     public partial class PostgreSqlFlexibleServerStorageTierCapability : PostgreSqlBaseCapability
     {
@@ -20,8 +20,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("isBaseline")]
         public bool? IsBaseline { get; }
-        /// <summary> Supported IOPS for this storage tier. </summary>
-        [WirePath("iops")]
-        public long? Iops { get; }
     }
 }

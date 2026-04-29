@@ -34,5 +34,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Name of the storage tier. </summary>
         [WirePath("name")]
         public string Name { get; }
+
+        /// <summary> Supported IOPS for the storage tier. </summary>
+        [WirePath("iops")]
+        public long? Iops { get; }
     }
 }

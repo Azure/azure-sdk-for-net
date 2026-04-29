@@ -8,6 +8,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous Num* table-count property names while forwarding to the generated migration status members.
     /// <summary> Migration status of an individual database. </summary>
     public partial class DbMigrationStatus
     {

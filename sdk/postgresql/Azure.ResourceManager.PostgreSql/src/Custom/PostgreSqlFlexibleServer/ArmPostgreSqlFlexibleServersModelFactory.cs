@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 statusEnum,
                 default,
                 default,
-                supportedIops,
+                (int?)supportedIops,
                 default,
                 storageSizeInMB,
                 default,
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 default,
                 default,
                 name,
-                iops);
+                (int?)iops);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerVCoreCapability"/>. </summary>
@@ -531,12 +531,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResponse"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerNameAvailabilityResponse PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable = null, PostgreSqlFlexibleServerNameUnavailableReason? reason = null, string message = null)
-            => new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason.HasValue ? new CheckNameAvailabilityReason(reason.Value.ToString()) : (CheckNameAvailabilityReason?)null, message, additionalBinaryDataProperties: null);
+            => new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResult"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerNameAvailabilityResult PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable = null, PostgreSqlFlexibleServerNameUnavailableReason? reason = null, string message = null, string name = null, ResourceType? resourceType = null)
-            => new PostgreSqlFlexibleServerNameAvailabilityResult(isNameAvailable, reason.HasValue ? new CheckNameAvailabilityReason(reason.Value.ToString()) : (CheckNameAvailabilityReason?)null, message, additionalBinaryDataProperties: null, name, resourceType);
+            => new PostgreSqlFlexibleServerNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null, name, resourceType);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerQuotaUsage"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageCapability"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerStorageCapability PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, long? supportedIops, int? supportedMaximumIops, long? storageSizeInMB, long? maximumStorageSizeMb, int? supportedThroughput, int? supportedMaximumThroughput, string defaultIopsTier, IEnumerable<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers)
-            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerStorageCapability(capabilityStatus, reason, supportedIops, supportedMaximumIops, storageSizeInMB, maximumStorageSizeMb, supportedThroughput, supportedMaximumThroughput, defaultIopsTier, supportedIopsTiers);
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerStorageCapability(capabilityStatus, reason, (int?)supportedIops, supportedMaximumIops, storageSizeInMB, maximumStorageSizeMb, supportedThroughput, supportedMaximumThroughput, defaultIopsTier, supportedIopsTiers);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerStorageTierCapability PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, long? iops)
-            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerStorageTierCapability(capabilityStatus, reason, name, iops);
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerStorageTierCapability(capabilityStatus, reason, name, (int?)iops);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -9,7 +9,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Required by generated storage capability serialization and preserves legacy property names.
+    // Preserves legacy storage capability property names that differ from generated members.
     /// <summary> storage size in MB capability. </summary>
     public partial class PostgreSqlFlexibleServerStorageCapability : PostgreSqlBaseCapability
     {
@@ -21,9 +21,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("supportedUpgradableTierList")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedUpgradableTierList { get; }
-
-        /// <summary> Supported IOPS. </summary>
-        [WirePath("supportedIops")]
-        public long? SupportedIops { get; }
     }
 }

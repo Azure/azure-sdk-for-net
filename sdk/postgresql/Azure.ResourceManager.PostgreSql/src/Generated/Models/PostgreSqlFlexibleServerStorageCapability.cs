@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             SupportedIopsTiers = supportedIopsTiers;
         }
 
+        /// <summary> Minimum IOPS supported by the storage size. </summary>
+        [WirePath("supportedIops")]
+        public long? SupportedIops { get; }
+
         /// <summary> Maximum IOPS supported by the storage size. </summary>
         [WirePath("supportedMaximumIops")]
         public int? SupportedMaximumIops { get; }
