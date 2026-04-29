@@ -668,12 +668,6 @@ namespace Azure.AI.VoiceLive.Telemetry
             }
         }
 
-        /// <summary>Called when input_audio_buffer.speech_started is received; increments the turn counter.</summary>
-        public void OnRecvSpeechStarted()
-        {
-            // speech_started no longer increments turn_count; turns are counted on response.done.
-        }
-
         /// <summary>Called when response.done is received; increments the completed-turn counter.</summary>
         public void OnRecvResponseDone()
         {
@@ -895,7 +889,7 @@ namespace Azure.AI.VoiceLive.Telemetry
 
             if (!string.IsNullOrEmpty(_serverAddress))
                 activity.SetTag(Keys.ServerAddress, _serverAddress);
-            if (_serverPort > 0)
+            if (_serverPort > 0 && _serverPort != 443)
                 activity.SetTag(Keys.ServerPort, _serverPort);
         }
 
