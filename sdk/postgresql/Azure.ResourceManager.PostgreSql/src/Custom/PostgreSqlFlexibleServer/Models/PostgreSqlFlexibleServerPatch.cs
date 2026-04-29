@@ -10,6 +10,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous flattened StorageSizeInGB patch property.
     /// <summary> Represents a server to be updated. </summary>
     public partial class PostgreSqlFlexibleServerPatch
     {

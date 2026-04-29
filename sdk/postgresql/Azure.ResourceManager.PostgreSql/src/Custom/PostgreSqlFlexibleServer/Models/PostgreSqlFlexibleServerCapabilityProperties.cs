@@ -9,6 +9,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves legacy capability property names while forwarding to the generated capability model.
     /// <summary> Capability for the PostgreSQL server. </summary>
     public partial class PostgreSqlFlexibleServerCapabilityProperties : PostgreSqlBaseCapability
     {

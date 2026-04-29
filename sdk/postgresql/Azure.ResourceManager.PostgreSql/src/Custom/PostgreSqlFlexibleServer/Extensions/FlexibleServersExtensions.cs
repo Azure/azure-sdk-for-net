@@ -14,7 +14,8 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> Backward-compatible extension class preserving the old type name FlexibleServersExtensions. </summary>
+    // Preserves the old FlexibleServersExtensions type name for backward compatibility.
+    /// <summary> A class to add extension methods to Azure.ResourceManager.PostgreSql.FlexibleServers. </summary>
     public static partial class FlexibleServersExtensions
     {
         // Helper methods that delegate to the mockable resources (same pattern as generated PostgreSqlFlexibleServersExtensions)

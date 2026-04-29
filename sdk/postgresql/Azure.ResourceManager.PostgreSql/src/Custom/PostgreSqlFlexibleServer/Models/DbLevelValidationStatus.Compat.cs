@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous IReadOnlyList API shape while keeping the generated mutable list for serialization.
     [CodeGenSuppress("Summary")]
     public partial class DbLevelValidationStatus
     {

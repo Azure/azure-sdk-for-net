@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous IReadOnlyList validation detail properties.
     [CodeGenSuppress("ServerLevelValidationDetails")]
     [CodeGenSuppress("DbLevelValidationDetails")]
     public partial class PostgreSqlFlexibleServersValidationDetails

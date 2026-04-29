@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous IReadOnlyList database detail property.
     [CodeGenSuppress("DbDetails")]
     public partial class PostgreSqlMigrationSubStateDetails
     {

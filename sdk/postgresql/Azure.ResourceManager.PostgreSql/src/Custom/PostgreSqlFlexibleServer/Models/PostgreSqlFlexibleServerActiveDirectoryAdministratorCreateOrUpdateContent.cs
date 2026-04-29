@@ -10,6 +10,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the deprecated ActiveDirectory administrator content type from the previous SDK.
     /// <summary> Represents an Active Directory administrator. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This class is deprecated. Please use the new 'PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent ' class instead.")]

@@ -8,10 +8,9 @@
 - Migrated from AutoRest to TypeSpec-based generation (management plane generator).
 - Added new models and operations for tuning options, virtual endpoints, network migration, and enhanced backup capabilities.
 
-### Breaking Changes
+### Other Changes
 
-- `MigrateNetworkStatus.SubscriptionId` property type changed from `string` to `Guid?`.
-- `PostgreSqlFlexibleServerLtrBackupContent` constructor signature changed.
+- Preserved compatibility with the previously shipped public API surface during the TypeSpec migration.
 
 ## 1.4.1 (2026-02-12)
 

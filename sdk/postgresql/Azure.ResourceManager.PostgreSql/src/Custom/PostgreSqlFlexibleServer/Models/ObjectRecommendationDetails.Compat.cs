@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous IReadOnlyList properties for recommendation details.
     [CodeGenSuppress("IndexColumns")]
     [CodeGenSuppress("IncludedColumns")]
     public partial class ObjectRecommendationDetails

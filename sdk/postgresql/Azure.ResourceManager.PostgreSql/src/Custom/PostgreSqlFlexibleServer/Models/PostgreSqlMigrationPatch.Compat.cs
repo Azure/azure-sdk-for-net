@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous SecretParameters property while forwarding to the generated patch wire model.
     [CodeGenSuppress("SecretParameters")]
     public partial class PostgreSqlMigrationPatch
     {

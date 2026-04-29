@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             [EditorBrowsable(EditorBrowsableState.Never)]
             set
             {
+                // Setter is preserved for binary compatibility; replicaCapacity is service-readonly in the generated model.
             }
         }
     }

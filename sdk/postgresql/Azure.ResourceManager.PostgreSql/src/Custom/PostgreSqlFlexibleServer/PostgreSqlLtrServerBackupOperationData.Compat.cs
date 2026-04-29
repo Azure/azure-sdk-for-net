@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    // Preserves previous flattened LTR backup operation properties.
     [CodeGenSuppress("Status")]
     [CodeGenSuppress("StartOn")]
     public partial class PostgreSqlLtrServerBackupOperationData
@@ -22,11 +23,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             get => Properties is null ? default(PostgreSqlExecutionStatus?) : Properties.Status;
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new LtrBackupOperationResponseProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new LtrBackupOperationResponseProperties();
+                    }
+                    Properties.Status = value.Value;
                 }
-                Properties.Status = value ?? default;
             }
         }
 
@@ -38,11 +42,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             get => Properties is null ? default(DateTimeOffset?) : Properties.StartOn;
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new LtrBackupOperationResponseProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new LtrBackupOperationResponseProperties();
+                    }
+                    Properties.StartOn = value.Value;
                 }
-                Properties.StartOn = value ?? default;
             }
         }
     }

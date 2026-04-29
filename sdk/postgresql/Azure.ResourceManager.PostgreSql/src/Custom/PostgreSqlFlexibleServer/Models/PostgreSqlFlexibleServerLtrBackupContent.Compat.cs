@@ -7,6 +7,7 @@ using System;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous constructor shape that accepted BackupSettings.
     public partial class PostgreSqlFlexibleServerLtrBackupContent
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>

@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous flattened patch properties where the generated wire model uses ForPatch sub-models.
     [CodeGenSuppress("AuthConfig")]
     [CodeGenSuppress("Backup")]
     [CodeGenSuppress("HighAvailability")]

@@ -9,6 +9,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Required by generated storage capability serialization and preserves legacy property names.
     /// <summary> storage size in MB capability. </summary>
     public partial class PostgreSqlFlexibleServerStorageCapability : PostgreSqlBaseCapability
     {

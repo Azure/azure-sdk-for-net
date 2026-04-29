@@ -8,6 +8,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Required by generated storage tier serialization and preserves legacy Iops.
     /// <summary> Represents capability of a storage tier. </summary>
     public partial class PostgreSqlFlexibleServerStorageTierCapability : PostgreSqlBaseCapability
     {

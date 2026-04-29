@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -11,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
 {
+    // Preserves the legacy mockable tenant operation for the private DNS zone suffix extension.
     [CodeGenSuppress("ExecuteGetPrivateDnsZoneSuffixAsync", typeof(CancellationToken))]
     [CodeGenSuppress("ExecuteGetPrivateDnsZoneSuffix", typeof(CancellationToken))]
     public partial class MockablePostgreSqlFlexibleServersTenantResource
@@ -31,13 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 };
                 HttpMessage message = PrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                string suffix = result.Content.ToString().Trim('"');
-                Response<string> response = Response.FromValue(suffix, result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
+                return Response.FromValue(GetStringContent(result), result);
             }
             catch (Exception e)
             {
@@ -62,19 +58,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 };
                 HttpMessage message = PrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                string suffix = result.Content.ToString().Trim('"');
-                Response<string> response = Response.FromValue(suffix, result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
+                return Response.FromValue(GetStringContent(result), result);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static string GetStringContent(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content.ToStream());
+            string suffix = document.RootElement.ValueKind == JsonValueKind.String ? document.RootElement.GetString() : null;
+            if (suffix is null)
+            {
+                throw new RequestFailedException(response);
+            }
+            return suffix;
         }
     }
 }

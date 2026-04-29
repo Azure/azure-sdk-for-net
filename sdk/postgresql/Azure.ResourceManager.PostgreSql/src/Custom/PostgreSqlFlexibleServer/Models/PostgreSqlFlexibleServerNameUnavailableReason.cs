@@ -8,6 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous public reason enum while the generated common reason enum is internal.
     /// <summary> The reason why the given name is not available. </summary>
     public readonly partial struct PostgreSqlFlexibleServerNameUnavailableReason : IEquatable<PostgreSqlFlexibleServerNameUnavailableReason>
     {

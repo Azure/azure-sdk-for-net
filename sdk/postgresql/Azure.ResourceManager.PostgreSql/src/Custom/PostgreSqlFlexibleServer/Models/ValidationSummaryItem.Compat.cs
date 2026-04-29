@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous IReadOnlyList message property.
     [CodeGenSuppress("Messages")]
     public partial class ValidationSummaryItem
     {

@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous public reason enum while the generated model stores the common internal enum.
     [CodeGenSuppress("Reason")]
     public partial class PostgreSqlFlexibleServerNameAvailabilityResponse
     {

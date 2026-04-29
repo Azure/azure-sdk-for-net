@@ -11,6 +11,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
 {
+    // Preserves legacy string-location overloads that were public in the previous SDK.
     public partial class MockablePostgreSqlFlexibleServersSubscriptionResource
     {
         /// <summary> Check the availability of name for resource. </summary>

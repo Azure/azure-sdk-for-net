@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    // Preserves the previous flattened threat-protection State property.
     [CodeGenSuppress("State")]
     public partial class ServerThreatProtectionSettingsModelData
     {
@@ -20,11 +21,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             get => Properties is null ? default(ThreatProtectionState?) : Properties.State;
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new AdvancedThreatProtectionSettingsProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new AdvancedThreatProtectionSettingsProperties();
+                    }
+                    Properties.State = value.Value;
                 }
-                Properties.State = value ?? default;
             }
         }
     }

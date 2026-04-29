@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous ResourceType property name for name-availability requests.
     [CodeGenSuppress("Type")]
     public partial class PostgreSqlFlexibleServerNameAvailabilityContent
     {
