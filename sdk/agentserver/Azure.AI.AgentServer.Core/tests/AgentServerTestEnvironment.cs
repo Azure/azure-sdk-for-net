@@ -9,6 +9,7 @@ namespace Azure.AI.AgentServer.Core.Tests
     /// <summary>
     /// Test environment for AgentServer live tests.
     /// Reads outputs from test-resources.bicep deployment.
+    /// Variables are required — tests fail when not provisioned.
     /// </summary>
     public class AgentServerTestEnvironment : TestEnvironment
     {
@@ -16,16 +17,16 @@ namespace Azure.AI.AgentServer.Core.Tests
         /// Application Insights connection string for exporting traces.
         /// </summary>
         public string ApplicationInsightsConnectionString =>
-            GetRecordedVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+            GetVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
 
         /// <summary>
         /// Log Analytics workspace customer ID for querying traces.
         /// </summary>
-        public string WorkspaceId => GetRecordedVariable("WORKSPACE_ID");
+        public string WorkspaceId => GetVariable("WORKSPACE_ID");
 
         /// <summary>
         /// Log Analytics query endpoint.
         /// </summary>
-        public Uri LogsEndpoint => new(GetRecordedVariable("LOGS_ENDPOINT"));
+        public Uri LogsEndpoint => new(GetVariable("LOGS_ENDPOINT"));
     }
 }
