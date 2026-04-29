@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="properties"> The deployment properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentWhatIfContent(string location, ArmDeploymentWhatIfProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentWhatIfContent(AzureLocation? location, ArmDeploymentWhatIfProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Properties = properties;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The location to store the deployment data. </summary>
         [WirePath("location")]
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> The deployment properties. </summary>
         [WirePath("properties")]

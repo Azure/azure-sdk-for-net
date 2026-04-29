@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ErrorAdditionalInfo"/>. </summary>
-        /// <param name="type"> The additional info type. </param>
+        /// <param name="errorAdditionalInfoType"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorAdditionalInfo(string @type, BinaryData info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorAdditionalInfo(string errorAdditionalInfoType, BinaryData info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ErrorAdditionalInfoType = errorAdditionalInfoType;
             Info = info;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The additional info type. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string ErrorAdditionalInfoType { get; }
 
         /// <summary>
         /// The additional info.

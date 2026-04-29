@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="status"> Status of the deployment operation. </param>
         /// <param name="error"> The error reported by the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StatusMessage(string status, ErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StatusMessage(string status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Error = error;
@@ -36,9 +37,5 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Status of the deployment operation. </summary>
         [WirePath("status")]
         public string Status { get; }
-
-        /// <summary> The error reported by the operation. </summary>
-        [WirePath("error")]
-        public ErrorResponse Error { get; }
     }
 }

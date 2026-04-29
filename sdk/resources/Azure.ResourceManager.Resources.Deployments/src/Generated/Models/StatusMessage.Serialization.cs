@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                SerializationError(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string status = default;
-            ErrorResponse error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,11 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
+                    DeserializeError(prop, ref error, options);
                     continue;
                 }
                 if (options.Format != "W")

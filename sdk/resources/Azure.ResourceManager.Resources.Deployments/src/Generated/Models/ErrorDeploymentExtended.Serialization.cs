@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(DeploymentType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeploymentName))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string provisioningState = default;
-            ErrorDeploymentType? @type = default;
+            ErrorDeploymentType? deploymentType = default;
             string deploymentName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToErrorDeploymentType();
+                    deploymentType = prop.Value.GetString().ToErrorDeploymentType();
                     continue;
                 }
                 if (prop.NameEquals("deploymentName"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Resources.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ErrorDeploymentExtended(provisioningState, @type, deploymentName, additionalBinaryDataProperties);
+            return new ErrorDeploymentExtended(provisioningState, deploymentType, deploymentName, additionalBinaryDataProperties);
         }
     }
 }

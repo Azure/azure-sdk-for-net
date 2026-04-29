@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ExtensionConfigPropertyType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ExtensionConfigPropertyType.Value.ToString());
             }
             if (Optional.IsDefined(Value))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            ExtensionConfigPropertyType? @type = default;
+            ExtensionConfigPropertyType? extensionConfigPropertyType = default;
             BinaryData value = default;
             KeyVaultParameterReference keyVaultReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    @type = new ExtensionConfigPropertyType(prop.Value.GetString());
+                    extensionConfigPropertyType = new ExtensionConfigPropertyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Resources.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ArmDeploymentExtensionConfigItem(@type, value, keyVaultReference, additionalBinaryDataProperties);
+            return new ArmDeploymentExtensionConfigItem(extensionConfigPropertyType, value, keyVaultReference, additionalBinaryDataProperties);
         }
     }
 }

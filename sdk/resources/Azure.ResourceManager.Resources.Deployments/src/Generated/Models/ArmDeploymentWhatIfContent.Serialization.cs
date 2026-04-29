@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
@@ -139,14 +139,18 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            string location = default;
+            AzureLocation? location = default;
             ArmDeploymentWhatIfProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

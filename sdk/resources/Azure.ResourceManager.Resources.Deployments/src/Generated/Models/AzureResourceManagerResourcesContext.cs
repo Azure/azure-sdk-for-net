@@ -46,7 +46,6 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(ErrorAdditionalInfo))]
     [ModelReaderWriterBuildable(typeof(ErrorDeployment))]
     [ModelReaderWriterBuildable(typeof(ErrorDeploymentExtended))]
-    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(ExpressionEvaluationOptions))]
     [ModelReaderWriterBuildable(typeof(HttpMessage))]
     [ModelReaderWriterBuildable(typeof(KeyVaultParameterReference))]

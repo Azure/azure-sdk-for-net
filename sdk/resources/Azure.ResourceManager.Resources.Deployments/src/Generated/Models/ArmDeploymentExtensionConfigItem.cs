@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionConfigItem"/>. </summary>
-        /// <param name="type"> The value type of the extension config property. </param>
+        /// <param name="extensionConfigPropertyType"> The value type of the extension config property. </param>
         /// <param name="value"> The value of the extension config property. </param>
         /// <param name="keyVaultReference"> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? @type, BinaryData value, KeyVaultParameterReference keyVaultReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType, BinaryData value, KeyVaultParameterReference keyVaultReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ExtensionConfigPropertyType = extensionConfigPropertyType;
             Value = value;
             KeyVaultReference = keyVaultReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The value type of the extension config property. </summary>
         [WirePath("type")]
-        public ExtensionConfigPropertyType? Type { get; }
+        public ExtensionConfigPropertyType? ExtensionConfigPropertyType { get; }
 
         /// <summary>
         /// The value of the extension config property.

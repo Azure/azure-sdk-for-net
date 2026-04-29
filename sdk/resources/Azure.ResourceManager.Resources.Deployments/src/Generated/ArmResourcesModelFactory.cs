@@ -140,23 +140,23 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The ArmDeploymentExtensionConfigItem. </summary>
-        /// <param name="type"> The value type of the extension config property. </param>
+        /// <param name="extensionConfigPropertyType"> The value type of the extension config property. </param>
         /// <param name="value"> The value of the extension config property. </param>
         /// <param name="keyVaultReference"> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentExtensionConfigItem"/> instance for mocking. </returns>
-        public static ArmDeploymentExtensionConfigItem ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? @type = default, BinaryData value = default, KeyVaultParameterReference keyVaultReference = default)
+        public static ArmDeploymentExtensionConfigItem ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType = default, BinaryData value = default, KeyVaultParameterReference keyVaultReference = default)
         {
-            return new ArmDeploymentExtensionConfigItem(@type, value, keyVaultReference, additionalBinaryDataProperties: null);
+            return new ArmDeploymentExtensionConfigItem(extensionConfigPropertyType, value, keyVaultReference, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Deployment on error behavior with additional details. </summary>
         /// <param name="provisioningState"> The state of the provisioning for the on error deployment. </param>
-        /// <param name="type"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
+        /// <param name="deploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
         /// <param name="deploymentName"> The deployment to be used on error case. </param>
         /// <returns> A new <see cref="Models.ErrorDeploymentExtended"/> instance for mocking. </returns>
-        public static ErrorDeploymentExtended ErrorDeploymentExtended(string provisioningState = default, ErrorDeploymentType? @type = default, string deploymentName = default)
+        public static ErrorDeploymentExtended ErrorDeploymentExtended(string provisioningState = default, ErrorDeploymentType? deploymentType = default, string deploymentName = default)
         {
-            return new ErrorDeploymentExtended(provisioningState, @type, deploymentName, additionalBinaryDataProperties: null);
+            return new ErrorDeploymentExtended(provisioningState, deploymentType, deploymentName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The resource Id model. </summary>
@@ -177,34 +177,13 @@ namespace Azure.ResourceManager.Resources.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="target"> The error target. </param>
-        /// <param name="details"> The error details. </param>
-        /// <param name="additionalInfo"> The error additional info. </param>
-        /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(string code = default, string message = default, string target = default, IEnumerable<ErrorResponse> details = default, IEnumerable<ErrorAdditionalInfo> additionalInfo = default)
-        {
-            details ??= new ChangeTrackingList<ErrorResponse>();
-            additionalInfo ??= new ChangeTrackingList<ErrorAdditionalInfo>();
-
-            return new ErrorResponse(
-                code,
-                message,
-                target,
-                details.ToList(),
-                additionalInfo.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The resource management error additional info. </summary>
-        /// <param name="type"> The additional info type. </param>
+        /// <param name="errorAdditionalInfoType"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
         /// <returns> A new <see cref="Models.ErrorAdditionalInfo"/> instance for mocking. </returns>
-        public static ErrorAdditionalInfo ErrorAdditionalInfo(string @type = default, BinaryData info = default)
+        public static ErrorAdditionalInfo ErrorAdditionalInfo(string errorAdditionalInfoType = default, BinaryData info = default)
         {
-            return new ErrorAdditionalInfo(@type, info, additionalBinaryDataProperties: null);
+            return new ErrorAdditionalInfo(errorAdditionalInfoType, info, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The DeploymentDiagnosticsDefinition. </summary>
@@ -294,21 +273,23 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Information from validate template deployment response. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="error"> The deployment validation error. </param>
-        /// <param name="id"> The ID of the deployment. </param>
         /// <param name="name"> The name of the deployment. </param>
-        /// <param name="type"> The type of the deployment. </param>
         /// <param name="properties"> The template deployment properties. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentValidateResult"/> instance for mocking. </returns>
-        public static ArmDeploymentValidateResult ArmDeploymentValidateResult(ErrorResponse error = default, string id = default, string name = default, string @type = default, ArmDeploymentPropertiesExtended properties = default)
+        public static ArmDeploymentValidateResult ArmDeploymentValidateResult(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, ResponseError error = default, string name = default, ArmDeploymentPropertiesExtended properties = default)
         {
             return new ArmDeploymentValidateResult(
-                error,
                 id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                error,
                 name,
-                @type,
-                properties,
-                additionalBinaryDataProperties: null);
+                properties);
         }
 
         /// <summary> The deployment export result. </summary>
@@ -360,7 +341,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="status"> Status of the deployment operation. </param>
         /// <param name="error"> The error reported by the operation. </param>
         /// <returns> A new <see cref="Models.StatusMessage"/> instance for mocking. </returns>
-        public static StatusMessage StatusMessage(string status = default, ErrorResponse error = default)
+        public static StatusMessage StatusMessage(string status = default, ResponseError error = default)
         {
             return new StatusMessage(status, error, additionalBinaryDataProperties: null);
         }
@@ -391,7 +372,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="properties"> The deployment properties. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentWhatIfContent"/> instance for mocking. </returns>
-        public static ArmDeploymentWhatIfContent ArmDeploymentWhatIfContent(string location = default, ArmDeploymentWhatIfProperties properties = default)
+        public static ArmDeploymentWhatIfContent ArmDeploymentWhatIfContent(AzureLocation? location = default, ArmDeploymentWhatIfProperties properties = default)
         {
             return new ArmDeploymentWhatIfContent(location, properties, additionalBinaryDataProperties: null);
         }
@@ -440,7 +421,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="diagnostics"> List of resource diagnostics detected by What-If operation. </param>
         /// <param name="error"> Error when What-If operation fails. </param>
         /// <returns> A new <see cref="Models.WhatIfOperationResult"/> instance for mocking. </returns>
-        public static WhatIfOperationResult WhatIfOperationResult(string status = default, IEnumerable<WhatIfChange> changes = default, IEnumerable<WhatIfChange> potentialChanges = default, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = default, ErrorResponse error = default)
+        public static WhatIfOperationResult WhatIfOperationResult(string status = default, IEnumerable<WhatIfChange> changes = default, IEnumerable<WhatIfChange> potentialChanges = default, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = default, ResponseError error = default)
         {
             return new WhatIfOperationResult(status, changes is null && potentialChanges is null && diagnostics is null ? default : new WhatIfOperationProperties((changes ?? new ChangeTrackingList<WhatIfChange>()).ToList(), (potentialChanges ?? new ChangeTrackingList<WhatIfChange>()).ToList(), (diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>()).ToList(), null), error, additionalBinaryDataProperties: null);
         }

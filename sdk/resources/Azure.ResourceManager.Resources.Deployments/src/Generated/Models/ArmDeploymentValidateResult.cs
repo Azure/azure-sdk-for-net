@@ -7,12 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information from validate template deployment response. </summary>
-    public partial class ArmDeploymentValidateResult
+    public partial class ArmDeploymentValidateResult : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,37 +26,19 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentValidateResult"/>. </summary>
-        /// <param name="error"> The deployment validation error. </param>
-        /// <param name="id"> The ID of the deployment. </param>
-        /// <param name="name"> The name of the deployment. </param>
-        /// <param name="type"> The type of the deployment. </param>
-        /// <param name="properties"> The template deployment properties. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentValidateResult(ErrorResponse error, string id, string name, string @type, ArmDeploymentPropertiesExtended properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="error"> The deployment validation error. </param>
+        /// <param name="name"> The name of the deployment. </param>
+        /// <param name="properties"> The template deployment properties. </param>
+        internal ArmDeploymentValidateResult(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseError error, string name, ArmDeploymentPropertiesExtended properties) : base(id, name, resourceType, systemData)
         {
-            Error = error;
-            Id = id;
-            Name = name;
-            Type = @type;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Error = error;
+            Properties = properties;
         }
-
-        /// <summary> The deployment validation error. </summary>
-        [WirePath("error")]
-        public ErrorResponse Error { get; }
-
-        /// <summary> The ID of the deployment. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
-        /// <summary> The name of the deployment. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The type of the deployment. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The template deployment properties. </summary>
         [WirePath("properties")]

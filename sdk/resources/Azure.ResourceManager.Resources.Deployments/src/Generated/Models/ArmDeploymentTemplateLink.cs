@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
         /// <param name="queryString"> The query string (for example, a SAS token) to be used with the templateLink URI. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentTemplateLink(string uri, string id, string relativePath, string contentVersion, string queryString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentTemplateLink(Uri uri, string id, string relativePath, string contentVersion, string queryString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             Id = id;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The URI of the template to deploy. Use either the uri or id property, but not both. </summary>
         [WirePath("uri")]
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> The resource id of a Template Spec. Use either the id or uri property, but not both. </summary>
         [WirePath("id")]

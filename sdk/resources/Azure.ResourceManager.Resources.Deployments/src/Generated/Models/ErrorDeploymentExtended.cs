@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of <see cref="ErrorDeploymentExtended"/>. </summary>
         /// <param name="provisioningState"> The state of the provisioning for the on error deployment. </param>
-        /// <param name="type"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
+        /// <param name="deploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
         /// <param name="deploymentName"> The deployment to be used on error case. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorDeploymentExtended(string provisioningState, ErrorDeploymentType? @type, string deploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorDeploymentExtended(string provisioningState, ErrorDeploymentType? deploymentType, string deploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            Type = @type;
+            DeploymentType = deploymentType;
             DeploymentName = deploymentName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </summary>
         [WirePath("type")]
-        public ErrorDeploymentType? Type { get; }
+        public ErrorDeploymentType? DeploymentType { get; }
 
         /// <summary> The deployment to be used on error case. </summary>
         [WirePath("deploymentName")]

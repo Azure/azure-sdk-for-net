@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 throw new FormatException($"The model {nameof(ErrorDeployment)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(DeploymentType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeploymentName))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            ErrorDeploymentType? @type = default;
+            ErrorDeploymentType? deploymentType = default;
             string deploymentName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToErrorDeploymentType();
+                    deploymentType = prop.Value.GetString().ToErrorDeploymentType();
                     continue;
                 }
                 if (prop.NameEquals("deploymentName"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Resources.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ErrorDeployment(@type, deploymentName, additionalBinaryDataProperties);
+            return new ErrorDeployment(deploymentType, deploymentName, additionalBinaryDataProperties);
         }
     }
 }

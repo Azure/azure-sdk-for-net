@@ -8,18 +8,21 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information from validate template deployment response. </summary>
-    public partial class ArmDeploymentValidateResult : IJsonModel<ArmDeploymentValidateResult>
+    public partial class ArmDeploymentValidateResult : ResourceData, IJsonModel<ArmDeploymentValidateResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArmDeploymentValidateResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +55,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArmDeploymentValidateResult IPersistableModel<ArmDeploymentValidateResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ArmDeploymentValidateResult IPersistableModel<ArmDeploymentValidateResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (ArmDeploymentValidateResult)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ArmDeploymentValidateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -75,62 +78,33 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentValidateResult)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                SerializationError(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArmDeploymentValidateResult IJsonModel<ArmDeploymentValidateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ArmDeploymentValidateResult IJsonModel<ArmDeploymentValidateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ArmDeploymentValidateResult)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArmDeploymentValidateResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -149,36 +123,50 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            ErrorResponse error = default;
-            string id = default;
-            string name = default;
-            string @type = default;
-            ArmDeploymentPropertiesExtended properties = default;
+            ResourceIdentifier id = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResponseError error = default;
+            string name = default;
+            ArmDeploymentPropertiesExtended properties = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("error"u8))
+                if (prop.NameEquals("id"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("id"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerResourcesContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("error"u8))
+                {
+                    DeserializeError(prop, ref error, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -196,12 +184,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             return new ArmDeploymentValidateResult(
-                error,
                 id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties,
+                error,
                 name,
-                @type,
-                properties,
-                additionalBinaryDataProperties);
+                properties);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="keyVaultId"> Azure Key Vault resource id. </param>
         /// <param name="secretName"> Azure Key Vault secret name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultId"/> or <paramref name="secretName"/> is null. </exception>
-        public KeyVaultParameterReference(string keyVaultId, string secretName)
+        public KeyVaultParameterReference(ResourceIdentifier keyVaultId, string secretName)
         {
             Argument.AssertNotNull(keyVaultId, nameof(keyVaultId));
             Argument.AssertNotNull(secretName, nameof(secretName));
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Azure Key Vault resource id. </summary>
         [WirePath("keyVault.id")]
-        public string KeyVaultId
+        public ResourceIdentifier KeyVaultId
         {
             get
             {

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 throw new FormatException($"The model {nameof(ErrorAdditionalInfo)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ErrorAdditionalInfoType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ErrorAdditionalInfoType);
             }
             if (options.Format != "W" && Optional.IsDefined(Info))
             {
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            string @type = default;
+            string errorAdditionalInfoType = default;
             BinaryData info = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    errorAdditionalInfoType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("info"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Resources.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ErrorAdditionalInfo(@type, info, additionalBinaryDataProperties);
+            return new ErrorAdditionalInfo(errorAdditionalInfoType, info, additionalBinaryDataProperties);
         }
     }
 }
