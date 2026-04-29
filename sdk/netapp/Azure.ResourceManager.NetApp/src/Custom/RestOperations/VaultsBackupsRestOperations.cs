@@ -1,13 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility — placeholder file. The live operations in this file were
-// commented out as part of the migration because the corresponding endpoints are now
-// fully covered by the generated `BackupVaults`/`Backups` clients. The shell remains
-// to preserve the `Custom/RestOperations/` folder layout used by the other deprecated
-// endpoints; once the legacy `Vaults`/`AccountBackups`/`Backups` (per-volume) clients
-// are removed, this file should be deleted as well.
-
 #nullable disable
 
 using System;
