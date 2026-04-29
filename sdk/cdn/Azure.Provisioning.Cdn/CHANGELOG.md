@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+- Started migration to the new TypeSpec-based provisioning generator
+  (`@azure-typespec/http-client-csharp-provisioning`). Scaffolding only in this
+  PR — regeneration is currently blocked on
+  [microsoft/typespec#10485](https://github.com/microsoft/typespec/issues/10485).
+
 ## 1.0.0-beta.1 (2026-03-13)
 
 ### Features Added
