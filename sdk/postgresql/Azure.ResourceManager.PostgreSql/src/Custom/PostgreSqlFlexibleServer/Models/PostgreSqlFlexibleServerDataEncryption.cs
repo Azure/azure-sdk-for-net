@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Preserves previous status property names while forwarding to the generated nested key status values.
     [CodeGenSuppress("PrimaryEncryptionKeyStatus")]
     [CodeGenSuppress("GeoBackupEncryptionKeyStatus")]
     public partial class PostgreSqlFlexibleServerDataEncryption

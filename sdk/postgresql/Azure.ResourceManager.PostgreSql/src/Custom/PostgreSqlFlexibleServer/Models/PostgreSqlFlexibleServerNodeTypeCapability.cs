@@ -10,7 +10,6 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Required by generated capability serialization for legacy node type capability payloads.
     /// <summary> node type capability. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class PostgreSqlFlexibleServerNodeTypeCapability

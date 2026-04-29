@@ -5,7 +5,6 @@ using System;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Restores the public BackupSettings constructor shape from the previous SDK.
     public partial class PostgreSqlBackupContent
     {
         // Required by generated derived backup-content deserialization constructors.

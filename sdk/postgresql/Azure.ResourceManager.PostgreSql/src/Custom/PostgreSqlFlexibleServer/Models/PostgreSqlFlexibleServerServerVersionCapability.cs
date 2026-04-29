@@ -9,7 +9,6 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Required by generated capability serialization and preserves legacy SupportedVCores.
     /// <summary> Server version capabilities. </summary>
     public partial class PostgreSqlFlexibleServerServerVersionCapability : PostgreSqlBaseCapability
     {

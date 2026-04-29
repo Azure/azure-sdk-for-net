@@ -9,7 +9,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Preserves previous flattened LTR backup result properties.
     [CodeGenSuppress("Status")]
     [CodeGenSuppress("StartOn")]
     public partial class PostgreSqlFlexibleServerLtrBackupResult

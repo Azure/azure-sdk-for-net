@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Preserves the legacy ARM identity map surface while the generated wire type uses the service-specific UserIdentity.
     [CodeGenSuppress("UserAssignedIdentities")]
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity
     {
