@@ -7,8 +7,13 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed missing header required by `ProjectInsights`.
 
 ### Other Changes
+
+### Sample Updates
+- Added evaluation cluster insight sample and documentation.
+- Added evaluation comparison insight sample and documentation.
 
 ## 2.1.0-beta.1 (2026-04-21)
 

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new FrontDoorOriginGroupProperties();
                 }
-                Properties.TrafficRestorationTimeInMinutes = value.Value;
+                Properties.TrafficRestorationTimeInMinutes = value;
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new FrontDoorOriginGroupProperties();
                 }
-                Properties.SessionAffinityState = value.Value;
+                Properties.SessionAffinityState = value;
             }
         }
 

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.ShareQuota = value.Value;
+                FileShareProperties.ShareQuota = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.ProvisionedIops = value.Value;
+                FileShareProperties.ProvisionedIops = value;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.ProvisionedBandwidthMibps = value.Value;
+                FileShareProperties.ProvisionedBandwidthMibps = value;
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.EnabledProtocol = value.Value;
+                FileShareProperties.EnabledProtocol = value;
             }
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.RootSquash = value.Value;
+                FileShareProperties.RootSquash = value;
             }
         }
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.AccessTier = value.Value;
+                FileShareProperties.AccessTier = value;
             }
         }
 

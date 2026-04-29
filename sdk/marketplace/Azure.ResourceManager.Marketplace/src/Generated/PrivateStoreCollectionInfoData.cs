@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new CollectionProperties();
                 }
-                Properties.AreAllSubscriptionsSelected = value.Value;
+                Properties.AreAllSubscriptionsSelected = value;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new CollectionProperties();
                 }
-                Properties.IsEnabled = value.Value;
+                Properties.IsEnabled = value;
             }
         }
 

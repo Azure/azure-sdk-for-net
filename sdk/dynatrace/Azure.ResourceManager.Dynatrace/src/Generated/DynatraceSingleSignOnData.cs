@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     Properties = new DynatraceSingleSignOnProperties();
                 }
-                Properties.SingleSignOnState = value.Value;
+                Properties.SingleSignOnState = value;
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     Properties = new DynatraceSingleSignOnProperties();
                 }
-                Properties.EnterpriseAppId = value.Value;
+                Properties.EnterpriseAppId = value;
             }
         }
 

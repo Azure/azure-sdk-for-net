@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.DataMap.Tests
             sg.Keywords = "Glossary";
             sg.Limit = 1;
             Response<QueryResult> result = await client.GetDiscoveryClient().QueryAsync(sg);
-            Assert.AreEqual(200, result.GetRawResponse().Status);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.DataMap.Tests
             var client = GetDataMapClient().GetGlossaryClient();
             Response fetchResponse = await client.BatchGetAsync(1, null, null, true, new RequestContext());
             // Console.WriteLine(fetchResponse.Content);
-            Assert.AreEqual(200, fetchResponse.Status);
+            Assert.That(fetchResponse.Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.DataMap.Tests
             var client = GetDataMapClient().GetTypeDefinitionClient();
             Response<AtlasTypeDef> response = await client.GetByNameAsync("AtlasGlossary");
             // Console.WriteLine(response);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }
     }
 }

@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     provisioningState,
                     healthCheckStatus,
                     networkingResourceGroupName,
-                    domainJoinType.Value));
+                    domainJoinType.GetValueOrDefault()));
         }
 
         /// <param name="tags"> Resource tags. </param>

@@ -48,7 +48,13 @@ function Process-Package([string]$packageInfoPath)
     } 
 
     Write-Host "Marking release completion for package, name: $PackageName"
-    $releaseInfo = & $AzsdkExePath release-plan update-release-status --package-name $PackageName --language $LanguageDisplayName --status "Released"
+    $PackageVersion = $pkgInfo.Version
+    $releaseArgs = @("release-plan", "update-release-status", "--package-name", $PackageName, "--language", $LanguageDisplayName, "--status", "Released")
+    if ($PackageVersion)
+    {
+        $releaseArgs += @("--package-version", $PackageVersion)
+    }
+    $releaseInfo = & $AzsdkExePath @releaseArgs
     if ($LASTEXITCODE -ne 0)
     {
         ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.

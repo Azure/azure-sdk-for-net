@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new ProfileUpdateProperties();
                 }
-                Properties.EnabledState = value.Value;
+                Properties.EnabledState = value;
             }
         }
     }
