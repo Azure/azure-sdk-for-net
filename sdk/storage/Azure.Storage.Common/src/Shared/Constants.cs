@@ -133,7 +133,15 @@ namespace Azure.Storage
         public const string UseLegacyDefaultConcurrencySwitchName = "Azure.Storage.UseLegacyDefaultConcurrency";
         public const string UseLegacyDefaultConcurrencyEnvVar = "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY";
 
-        public const string DefaultScope = "/.default";
+        public const string DefaultScope = ".default";
+        public const string DefaultAudience = "https://storage.azure.com";
+
+        /// <summary>
+        /// Builds an OAuth scope from an audience value by trimming any trailing slash
+        /// and appending <see cref="DefaultScope"/>.
+        /// </summary>
+        internal static string CreateDefaultScope(string audience) =>
+            $"{audience.TrimEnd('/')}/{DefaultScope}";
 
         /// <summary>
         /// Error string constant values.
@@ -775,7 +783,7 @@ namespace Azure.Storage
 
         internal static class CopyHttpAuthorization
         {
-            internal static readonly string[] Scopes = { "https://storage.azure.com/.default" };
+            internal static readonly string[] Scopes = { CreateDefaultScope(DefaultAudience) };
             internal const string BearerScheme = "Bearer";
         }
     }
