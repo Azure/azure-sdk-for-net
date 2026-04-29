@@ -9,7 +9,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Preserves previous IReadOnlyList properties for recommendation details.
+    // Keep the generated mutable lists as internal backing members so serialization can populate them,
+    // while preserving the previous public IReadOnlyList property shape.
     [CodeGenSuppress("IndexColumns")]
     [CodeGenSuppress("IncludedColumns")]
     public partial class ObjectRecommendationDetails
