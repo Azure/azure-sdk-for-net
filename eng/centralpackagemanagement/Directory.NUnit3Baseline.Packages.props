@@ -50,7 +50,6 @@
         $(MSBuildProjectName) == 'Azure.Core.TestFramework.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Tests.Public' or
-        $(MSBuildProjectName) == 'Azure.Data.SchemaRegistry.Tests' or
         $(MSBuildProjectName) == 'Azure.Data.Tables.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.DevCenter.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.LoadTesting.Tests' or
@@ -365,7 +364,6 @@
         $(MSBuildProjectName) == 'Microsoft.Azure.Core.NewtonsoftJson.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.Core.Spatial.Tests' or
-        $(MSBuildProjectName) == 'Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.PostgreSQL.Auth.Tests' or
         $(MSBuildProjectName) == 'Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests' or
