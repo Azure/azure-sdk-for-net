@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Source Azure Blob container. </summary>
+        [WirePath("source")]
         internal AzureBlobContainer Source { get; set; }
 
         /// <summary> Destination Cassandra table. </summary>
+        [WirePath("destination")]
         public CosmosDBCassandraTable Destination { get; set; }
 
         /// <summary> Azure Blob container. </summary>
+        [WirePath("source.containerName")]
         public string SourceContainerName
         {
             get

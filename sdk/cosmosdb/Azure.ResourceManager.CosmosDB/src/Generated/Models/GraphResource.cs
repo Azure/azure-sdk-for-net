@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB Graph. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
     }
 }

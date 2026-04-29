@@ -42,15 +42,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Source Cassandra DataStore details. </summary>
+        [WirePath("sourceDetails")]
         internal CosmosDBSourceSinkDetails SourceDetails { get; set; }
 
         /// <summary> Destination Cassandra DataStore details. </summary>
+        [WirePath("destinationDetails")]
         internal AzureBlobSourceSinkDetails DestinationDetails { get; set; }
 
         /// <summary> Copy Job tasks. </summary>
+        [WirePath("tasks")]
         public IList<CassandraRUToBlobCopyJobTask> Tasks { get; }
 
         /// <summary> Name of remote account in case of cross-account data transfer. </summary>
+        [WirePath("sourceDetails.remoteAccountName")]
         public string SourceDetailsRemoteAccountName
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Azure Blob container endpoint. </summary>
+        [WirePath("destinationDetails.endpointUrl")]
         public string DestinationDetailsEndpointUri
         {
             get

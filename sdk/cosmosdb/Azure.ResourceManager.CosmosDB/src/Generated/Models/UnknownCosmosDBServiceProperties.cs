@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="serviceType"> ServiceType for the service. </param>
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownCosmosDBServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(createdOn, instanceSize, instanceCount, serviceType != default ? serviceType : "unknown", status, additionalProperties)
+        internal UnknownCosmosDBServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties) : base(createdOn, instanceSize, instanceCount, serviceType != default ? serviceType : "unknown", status, additionalProperties)
         {
         }
     }

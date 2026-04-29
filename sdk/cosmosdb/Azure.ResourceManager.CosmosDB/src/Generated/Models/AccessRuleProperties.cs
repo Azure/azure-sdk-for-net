@@ -50,24 +50,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets the Direction. </summary>
+        [WirePath("direction")]
         public AccessRuleDirection? Direction { get; }
 
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
+        [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
 
         /// <summary> Subscriptions for inbound rules. </summary>
+        [WirePath("subscriptions")]
         public IList<AccessRulePropertiesSubscription> Subscriptions { get; }
 
         /// <summary> Network security perimeters for inbound rules. </summary>
+        [WirePath("networkSecurityPerimeters")]
         public IList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
 
         /// <summary> Fully qualified domain names (FQDN) for outbound rules. </summary>
+        [WirePath("fullyQualifiedDomainNames")]
         public IList<string> FullyQualifiedDomainNames { get; }
 
         /// <summary> Email addresses for outbound rules. </summary>
+        [WirePath("emailAddresses")]
         public IList<string> EmailAddresses { get; }
 
         /// <summary> Phone numbers for outbound rules. </summary>
+        [WirePath("phoneNumbers")]
         public IList<string> PhoneNumbers { get; }
     }
 }

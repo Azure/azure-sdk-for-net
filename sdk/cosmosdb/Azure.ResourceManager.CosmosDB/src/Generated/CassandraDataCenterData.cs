@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Properties of a managed Cassandra data center. </summary>
+        [WirePath("properties")]
         public CassandraDataCenterProperties Properties { get; set; }
     }
 }

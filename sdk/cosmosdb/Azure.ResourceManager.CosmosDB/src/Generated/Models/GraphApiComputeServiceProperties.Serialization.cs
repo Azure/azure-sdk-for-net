@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text.Json;
 using Azure.ResourceManager.CosmosDB;
 
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             int? instanceCount = default;
             CosmosDBServiceType serviceType = default;
             CosmosDBServiceStatus? status = default;
-            ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string graphApiComputeEndpoint = default;
             IReadOnlyList<GraphApiComputeRegionalService> locations = default;
             foreach (var prop in element.EnumerateObject())
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 instanceCount,
                 serviceType,
                 status,
-                new ReadOnlyDictionary<string, BinaryData>(additionalProperties),
+                additionalProperties,
                 graphApiComputeEndpoint,
                 locations ?? new ChangeTrackingList<GraphApiComputeRegionalService>());
         }

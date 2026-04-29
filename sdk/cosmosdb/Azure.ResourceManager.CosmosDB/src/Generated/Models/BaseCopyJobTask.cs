@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Task level Total Count. </summary>
+        [WirePath("totalCount")]
         public long? TotalCount { get; }
 
         /// <summary> Task level Processed Count. </summary>
+        [WirePath("processedCount")]
         public long? ProcessedCount { get; }
     }
 }

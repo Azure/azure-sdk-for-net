@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Container for the array of clusters. </summary>
+        [WirePath("value")]
         public IList<CassandraClusterData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

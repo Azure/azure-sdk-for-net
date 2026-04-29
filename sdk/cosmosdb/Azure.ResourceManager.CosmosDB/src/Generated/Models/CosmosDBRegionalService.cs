@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The regional service name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The location name. </summary>
+        [WirePath("location")]
         public string Location { get; }
 
         /// <summary> Describes the status of a service. </summary>
+        [WirePath("status")]
         public CosmosDBServiceStatus? Status { get; }
     }
 }

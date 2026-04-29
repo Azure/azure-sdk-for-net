@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> An array that contains the connection strings for the Cosmos DB account. </summary>
+        [WirePath("connectionStrings")]
         public IList<CosmosDBAccountConnectionString> ConnectionStrings { get; }
     }
 }

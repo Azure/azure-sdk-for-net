@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Azure Blob container endpoint. </summary>
+        [WirePath("endpointUrl")]
         public string EndpointUri { get; set; }
     }
 }

@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a resource throughput. </summary>
+        [WirePath("resource")]
         public RedistributeThroughputPropertiesResource Resource { get; }
     }
 }

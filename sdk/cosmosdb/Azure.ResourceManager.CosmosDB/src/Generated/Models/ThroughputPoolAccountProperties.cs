@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -38,15 +39,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A provisioning state of the ThroughputPool Account. </summary>
+        [WirePath("provisioningState")]
         public CosmosDBStatus? ProvisioningState { get; }
 
         /// <summary> The resource identifier of global database account in the throughputPool. </summary>
+        [WirePath("accountResourceIdentifier")]
         public ResourceIdentifier AccountResourceIdentifier { get; set; }
 
         /// <summary> The location of  global database account in the throughputPool. </summary>
+        [WirePath("accountLocation")]
         public AzureLocation? AccountLocation { get; set; }
 
         /// <summary> The instance id of global database account in the throughputPool. </summary>
+        [WirePath("accountInstanceId")]
         public string AccountInstanceId { get; }
     }
 }

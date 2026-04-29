@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> A request object to enable/disable the chaos fault. </summary>
+        [WirePath("properties")]
         internal ChaosFaultProperties Properties { get; set; }
 
         /// <summary> Indicates whether what action to take for the Chaos Fault. </summary>
+        [WirePath("properties.action")]
         public CosmosDBChaosFaultSupportedActions? Action
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Region of the account where the Chaos Fault is to be enabled/disabled. </summary>
+        [WirePath("properties.region")]
         public string Region
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Database name. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName
         {
             get
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Container name. </summary>
+        [WirePath("properties.containerName")]
         public string ContainerName
         {
             get
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> A provisioning state of the Chaos Fault. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

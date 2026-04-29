@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The database name the role is applied. </summary>
+        [WirePath("db")]
         public string DBName { get; set; }
 
         /// <summary> The role name. </summary>
+        [WirePath("role")]
         public string Role { get; set; }
     }
 }

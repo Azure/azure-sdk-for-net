@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
+        [WirePath("_rid")]
         public string Rid { get; }
 
         /// <summary> The operation type of this graph event. </summary>
+        [WirePath("operationType")]
         public CosmosDBOperationType? OperationType { get; }
 
         /// <summary> A state of this graph to identify if this graph is restorable in same account. </summary>
+        [WirePath("canUndelete")]
         public string CanUndelete { get; }
 
         /// <summary> The reason why this graph can not be restored in same account. </summary>
+        [WirePath("canUndeleteReason")]
         public string CanUndeleteReason { get; }
 
         /// <summary> The time when this graph event happened. </summary>
+        [WirePath("eventTimestamp")]
         public string EventTimestamp { get; }
 
         /// <summary> The name of this Gremlin graph. </summary>
+        [WirePath("ownerId")]
         public string GraphName { get; }
 
         /// <summary> The resource ID of this Gremlin graph. </summary>
+        [WirePath("ownerResourceId")]
         public string GraphId { get; }
     }
 }

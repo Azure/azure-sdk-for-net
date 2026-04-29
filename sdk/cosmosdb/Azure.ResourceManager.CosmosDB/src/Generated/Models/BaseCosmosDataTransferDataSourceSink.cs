@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the RemoteAccountName. </summary>
+        [WirePath("remoteAccountName")]
         public string RemoteAccountName { get; set; }
     }
 }

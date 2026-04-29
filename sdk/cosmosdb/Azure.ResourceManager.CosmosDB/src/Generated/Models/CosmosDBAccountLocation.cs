@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unique identifier of the region within the database account. Example: &lt;accountName&gt;-&lt;locationName&gt;. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The name of the region. </summary>
+        [WirePath("locationName")]
         public string LocationName { get; set; }
 
         /// <summary> The connection endpoint for the specific region. Example: https://&lt;accountName&gt;-&lt;locationName&gt;.documents.azure.com:443/. </summary>
+        [WirePath("documentEndpoint")]
         public string DocumentEndpoint { get; }
 
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> The failover priority of the region. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </summary>
+        [WirePath("failoverPriority")]
         public int? FailoverPriority { get; set; }
 
         /// <summary> Flag to indicate whether or not this region is an AvailabilityZone region. </summary>
+        [WirePath("isZoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
     }
 }

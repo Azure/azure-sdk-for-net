@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Determines whether the ThroughputPolicy is active or not. </summary>
+        [WirePath("isEnabled")]
         public bool? IsEnabled { get; set; }
 
         /// <summary> Represents the percentage by which throughput can increase every time throughput policy kicks in. </summary>
+        [WirePath("incrementPercent")]
         public int? IncrementPercent { get; set; }
     }
 }

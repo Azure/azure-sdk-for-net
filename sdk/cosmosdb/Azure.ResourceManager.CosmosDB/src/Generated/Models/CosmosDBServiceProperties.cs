@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBServiceProperties"/>. </summary>
         /// <param name="serviceType"> ServiceType for the service. </param>
-        internal CosmosDBServiceProperties(CosmosDBServiceType serviceType)
+        public CosmosDBServiceProperties(CosmosDBServiceType serviceType)
         {
             ServiceType = serviceType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -33,32 +32,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="serviceType"> ServiceType for the service. </param>
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"></param>
-        internal CosmosDBServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal CosmosDBServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties)
         {
             CreatedOn = createdOn;
             InstanceSize = instanceSize;
             InstanceCount = instanceCount;
             ServiceType = serviceType;
             Status = status;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Time of the last state change (ISO-8601 format). </summary>
+        [WirePath("creationTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Instance type for the service. </summary>
-        public CosmosDBServiceSize? InstanceSize { get; }
+        [WirePath("instanceSize")]
+        public CosmosDBServiceSize? InstanceSize { get; set; }
 
         /// <summary> Instance count for the service. </summary>
-        public int? InstanceCount { get; }
+        [WirePath("instanceCount")]
+        public int? InstanceCount { get; set; }
 
         /// <summary> ServiceType for the service. </summary>
+        [WirePath("serviceType")]
         internal CosmosDBServiceType ServiceType { get; set; }
 
         /// <summary> Describes the status of a service. </summary>
+        [WirePath("status")]
         public CosmosDBServiceStatus? Status { get; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

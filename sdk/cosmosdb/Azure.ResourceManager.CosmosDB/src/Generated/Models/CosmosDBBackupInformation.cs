@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Information about the status of continuous backups. </summary>
+        [WirePath("continuousBackupInformation")]
         internal ContinuousBackupInformation ContinuousBackupInformation { get; }
 
         /// <summary> The latest restorable timestamp for a resource. </summary>
+        [WirePath("continuousBackupInformation.latestRestorableTimestamp")]
         public string ContinuousBackupInformationLatestRestorableTimestamp
         {
             get

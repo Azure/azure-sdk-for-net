@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Specifies the endpoint of Notebook server. </summary>
+        [WirePath("notebookServerEndpoint")]
         public string NotebookServerEndpoint { get; }
 
         /// <summary> Status of the notebook workspace. Possible values are: Creating, Online, Deleting, Failed, Updating. </summary>
+        [WirePath("status")]
         public string Status { get; }
     }
 }

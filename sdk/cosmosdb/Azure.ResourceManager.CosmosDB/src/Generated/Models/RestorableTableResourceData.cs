@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -24,23 +25,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestorableTableResourceData"/>. </summary>
         /// <param name="id"> The unique resource identifier of the ARM resource. </param>
         /// <param name="name"> The name of the Table. </param>
-        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="resourceType"> The type of Azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableTableResourceData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableTableResourceData(string id, string name, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique resource identifier of the ARM resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The name of the Table. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The type of Azure resource. </summary>
-        public string Type { get; }
+        [WirePath("type")]
+        public string ResourceType { get; }
     }
 }

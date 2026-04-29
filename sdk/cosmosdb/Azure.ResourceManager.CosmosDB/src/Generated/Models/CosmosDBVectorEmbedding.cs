@@ -49,15 +49,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The path to the vector field in the document. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
 
         /// <summary> Indicates the data type of vector. </summary>
+        [WirePath("dataType")]
         public CosmosDBVectorDataType DataType { get; set; }
 
         /// <summary> The distance function to use for distance calculation in between vectors. </summary>
+        [WirePath("distanceFunction")]
         public VectorDistanceFunction DistanceFunction { get; set; }
 
         /// <summary> The number of dimensions in the vector. </summary>
+        [WirePath("dimensions")]
         public int Dimensions { get; set; }
     }
 }

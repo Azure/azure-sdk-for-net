@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a Graph resource. </summary>
+        [WirePath("resource")]
         internal GraphResource Resource { get; }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
+        [WirePath("options")]
         public CosmosDBCreateUpdateConfig Options { get; set; }
 
         /// <summary> Name of the Cosmos DB Graph. </summary>
+        [WirePath("resource.id")]
         public string ResourceId
         {
             get

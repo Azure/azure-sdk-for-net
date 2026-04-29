@@ -18,8 +18,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> An Azure Cosmos DB Gremlin database. </summary>
-    public partial class GremlinDatabaseData : ResourceData, IJsonModel<GremlinDatabaseData>
+    public partial class GremlinDatabaseData : TrackedResourceData, IJsonModel<GremlinDatabaseData>
     {
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabaseData"/> for deserialization. </summary>
+        internal GremlinDatabaseData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -91,27 +96,6 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -149,9 +133,9 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             GremlinDatabaseProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,6 +171,11 @@ namespace Azure.ResourceManager.CosmosDB
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCosmosDBContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -217,11 +206,6 @@ namespace Azure.ResourceManager.CosmosDB
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -242,9 +226,9 @@ namespace Azure.ResourceManager.CosmosDB
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                location,
                 properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 identity);
         }
     }

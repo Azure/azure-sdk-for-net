@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> An Azure Cosmos DB Gremlin database. </summary>
-    public partial class GremlinDatabaseData : ResourceData
+    public partial class GremlinDatabaseData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GremlinDatabaseData"/>. </summary>
-        internal GremlinDatabaseData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal GremlinDatabaseData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GremlinDatabaseData"/>. </summary>
@@ -31,32 +31,27 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The properties of an Azure Cosmos DB SQL database. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of an Azure Cosmos DB SQL database. </param>
+        /// <param name="tags"></param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal GremlinDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GremlinDatabaseProperties properties, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal GremlinDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, GremlinDatabaseProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
-            Location = location;
             Identity = identity;
         }
 
         /// <summary> The properties of an Azure Cosmos DB SQL database. </summary>
+        [WirePath("properties")]
         internal GremlinDatabaseProperties Properties { get; }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
-
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; }
 
         /// <summary> Gets the Resource. </summary>
+        [WirePath("properties.resource")]
         public ExtendedGremlinDatabaseResourceInfo Resource
         {
             get
@@ -66,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the Options. </summary>
+        [WirePath("properties.options")]
         public GremlinDatabasePropertiesConfig Options
         {
             get

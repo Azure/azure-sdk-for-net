@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The resource identifier of global database account in the Fleetspace Account. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> The location of  global database account in the Fleetspace Account. </summary>
+        [WirePath("armLocation")]
         public AzureLocation? ArmLocation { get; set; }
     }
 }

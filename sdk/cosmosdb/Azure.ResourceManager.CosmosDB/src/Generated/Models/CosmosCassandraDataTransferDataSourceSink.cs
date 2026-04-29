@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the KeyspaceName. </summary>
+        [WirePath("keyspaceName")]
         public string KeyspaceName { get; set; }
 
         /// <summary> Gets or sets the TableName. </summary>
+        [WirePath("tableName")]
         public string TableName { get; set; }
     }
 }

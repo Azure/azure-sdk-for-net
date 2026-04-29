@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string id = default;
             string name = default;
-            string @type = default;
+            string resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorableTableResourceData(id, name, @type, additionalBinaryDataProperties);
+            return new RestorableTableResourceData(id, name, resourceType, additionalBinaryDataProperties);
         }
     }
 }

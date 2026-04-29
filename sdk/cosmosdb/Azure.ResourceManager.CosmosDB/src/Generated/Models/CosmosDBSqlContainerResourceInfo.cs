@@ -71,57 +71,75 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB SQL container. </summary>
+        [WirePath("id")]
         public string ContainerName { get; set; }
 
         /// <summary> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </summary>
+        [WirePath("indexingPolicy")]
         public CosmosDBIndexingPolicy IndexingPolicy { get; set; }
 
         /// <summary> The configuration of the partition key to be used for partitioning data into multiple partitions. </summary>
+        [WirePath("partitionKey")]
         public CosmosDBContainerPartitionKey PartitionKey { get; set; }
 
         /// <summary> Default time to live. </summary>
+        [WirePath("defaultTtl")]
         public int? DefaultTtl { get; set; }
 
         /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>
+        [WirePath("uniqueKeyPolicy")]
         internal CosmosDBUniqueKeyPolicy UniqueKeyPolicy { get; set; }
 
         /// <summary> The conflict resolution policy for the container. </summary>
+        [WirePath("conflictResolutionPolicy")]
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
 
         /// <summary> The client encryption policy for the container. </summary>
+        [WirePath("clientEncryptionPolicy")]
         public CosmosDBClientEncryptionPolicy ClientEncryptionPolicy { get; set; }
 
         /// <summary> Analytical TTL. </summary>
+        [WirePath("analyticalStorageTtl")]
         public long? AnalyticalStorageTtl { get; set; }
 
         /// <summary> Parameters to indicate the information about the restore. </summary>
+        [WirePath("restoreParameters")]
         public ResourceRestoreParameters RestoreParameters { get; set; }
 
         /// <summary> Enum to indicate the mode of account creation. </summary>
+        [WirePath("createMode")]
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
 
         /// <summary> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </summary>
+        [WirePath("materializedViewDefinition")]
         public MaterializedViewDefinition MaterializedViewDefinition { get; set; }
 
         /// <summary> Materialized Views defined on the container. </summary>
+        [WirePath("materializedViews")]
         public IList<MaterializedViewDetails> MaterializedViews { get; }
 
         /// <summary> Materialized Views Properties defined for source container. </summary>
+        [WirePath("materializedViewsProperties")]
         internal MaterializedViewsProperties MaterializedViewsProperties { get; set; }
 
         /// <summary> List of computed properties. </summary>
+        [WirePath("computedProperties")]
         public IList<ComputedProperty> ComputedProperties { get; }
 
         /// <summary> The vector embedding policy for the container. </summary>
+        [WirePath("vectorEmbeddingPolicy")]
         internal VectorEmbeddingPolicy VectorEmbeddingPolicy { get; set; }
 
         /// <summary> The FullText policy for the container. </summary>
+        [WirePath("fullTextPolicy")]
         public FullTextPolicy FullTextPolicy { get; set; }
 
         /// <summary> The Data Masking policy for the container. </summary>
+        [WirePath("dataMaskingPolicy")]
         public DataMaskingPolicy DataMaskingPolicy { get; set; }
 
         /// <summary> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>
+        [WirePath("uniqueKeyPolicy.uniqueKeys")]
         public IList<CosmosDBUniqueKey> UniqueKeys
         {
             get
@@ -135,6 +153,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Throughput bucket assigned for the materialized view operations on source container. </summary>
+        [WirePath("materializedViewsProperties.throughputBucketForBuild")]
         public int? MaterializedViewsThroughputBucketForBuild
         {
             get
@@ -152,6 +171,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of vector embeddings. </summary>
+        [WirePath("vectorEmbeddingPolicy.vectorEmbeddings")]
         public IList<CosmosDBVectorEmbedding> VectorEmbeddings
         {
             get

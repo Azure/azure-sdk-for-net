@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The id for the permission. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
 
         /// <summary> An array of data actions that are allowed. </summary>
+        [WirePath("dataActions")]
         public IList<string> DataActions { get; }
 
         /// <summary> An array of data actions that are denied. </summary>
+        [WirePath("notDataActions")]
         public IList<string> NotDataActions { get; }
     }
 }

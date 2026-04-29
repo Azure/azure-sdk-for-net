@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Source SQL container. </summary>
+        [WirePath("source")]
         public CosmosDBNoSqlContainer Source { get; set; }
 
         /// <summary> Destination SQL container. </summary>
+        [WirePath("destination")]
         public CosmosDBNoSqlContainer Destination { get; set; }
     }
 }

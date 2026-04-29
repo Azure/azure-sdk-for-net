@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The default language for a full text paths. </summary>
+        [WirePath("defaultLanguage")]
         public string DefaultLanguage { get; set; }
 
         /// <summary> List of FullText Paths. </summary>
+        [WirePath("fullTextPaths")]
         public IList<FullTextPath> FullTextPaths { get; }
     }
 }

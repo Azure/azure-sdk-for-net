@@ -43,15 +43,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The JSON path to apply masking (e.g. "/contact/phones"). </summary>
+        [WirePath("path")]
         public string Path { get; set; }
 
         /// <summary> Masking strategy to apply (e.g. "MaskSubstring"). </summary>
+        [WirePath("strategy")]
         public string Strategy { get; set; }
 
         /// <summary> Start position for substring masking (when applicable). </summary>
+        [WirePath("startPosition")]
         public int? StartPosition { get; set; }
 
         /// <summary> Length of substring to mask (when applicable). </summary>
+        [WirePath("length")]
         public int? Length { get; set; }
     }
 }

@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Source Mongo (RU) collection. </summary>
+        [WirePath("source")]
         public CosmosDBMongoCollection Source { get; set; }
 
         /// <summary> Destination Mongo (RU) collection. </summary>
+        [WirePath("destination")]
         public CosmosDBMongoCollection Destination { get; set; }
     }
 }

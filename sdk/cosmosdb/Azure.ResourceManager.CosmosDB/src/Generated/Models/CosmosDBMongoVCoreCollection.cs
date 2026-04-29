@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Azure Cosmos DB for MongoDB (vCore) database. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary> Azure Cosmos DB for MongoDB (vCore) collection. </summary>
+        [WirePath("collectionName")]
         public string CollectionName { get; set; }
     }
 }

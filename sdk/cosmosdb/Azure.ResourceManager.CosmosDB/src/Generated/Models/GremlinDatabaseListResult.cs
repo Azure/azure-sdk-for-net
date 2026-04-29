@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of Gremlin databases and their properties. </summary>
+        [WirePath("value")]
         public IReadOnlyList<GremlinDatabaseData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

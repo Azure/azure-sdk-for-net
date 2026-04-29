@@ -42,18 +42,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>
+        [WirePath("roleName")]
         public string RoleName { get; set; }
 
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
+        [WirePath("type")]
         public MongoDBRoleDefinitionType? RoleDefinitionType { get; set; }
 
         /// <summary> The database name for which access is being granted for this Role Definition. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </summary>
+        [WirePath("privileges")]
         public IList<MongoDBPrivilege> Privileges { get; } = new ChangeTrackingList<MongoDBPrivilege>();
 
         /// <summary> The set of roles inherited by this Role Definition. </summary>
+        [WirePath("roles")]
         public IList<MongoDBRole> Roles { get; } = new ChangeTrackingList<MongoDBRole>();
     }
 }

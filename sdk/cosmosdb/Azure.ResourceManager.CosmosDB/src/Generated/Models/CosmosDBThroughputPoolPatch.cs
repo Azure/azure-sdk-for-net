@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties of the throughput pool. </summary>
+        [WirePath("properties")]
         internal ThroughputPoolProperties Properties { get; set; }
 
         /// <summary> A provisioning state of the ThroughputPool. </summary>
+        [WirePath("properties.provisioningState")]
         public CosmosDBStatus? ProvisioningState
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Value for throughput to be shared among CosmosDB resources in the pool. </summary>
+        [WirePath("properties.maxThroughput")]
         public int? MaxThroughput
         {
             get

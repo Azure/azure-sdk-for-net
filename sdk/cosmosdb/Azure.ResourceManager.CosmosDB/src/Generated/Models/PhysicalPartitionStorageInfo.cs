@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unique identifier of the partition. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The storage in KB for the physical partition. </summary>
+        [WirePath("storageInKB")]
         public double? StorageInKB { get; }
     }
 }

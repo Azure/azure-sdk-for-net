@@ -43,9 +43,11 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         public GarnetClusterResourceProperties Properties { get; set; }
 
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedCassandraManagedServiceIdentity Identity { get; set; }
     }
 }

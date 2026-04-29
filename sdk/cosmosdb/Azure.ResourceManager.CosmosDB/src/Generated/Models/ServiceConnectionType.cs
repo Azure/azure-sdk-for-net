@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         private readonly string _value;
         private const string NoneValue = "None";
-        private const string VPNValue = "VPN";
+        private const string VpnValue = "VPN";
 
         /// <summary> Initializes a new instance of <see cref="ServiceConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Gets the None. </summary>
         public static ServiceConnectionType None { get; } = new ServiceConnectionType(NoneValue);
 
-        /// <summary> Gets the VPN. </summary>
-        public static ServiceConnectionType VPN { get; } = new ServiceConnectionType(VPNValue);
+        /// <summary> Gets the Vpn. </summary>
+        public static ServiceConnectionType Vpn { get; } = new ServiceConnectionType(VpnValue);
 
         /// <summary> Determines if two <see cref="ServiceConnectionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

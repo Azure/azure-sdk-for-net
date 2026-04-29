@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties to create and update an Azure Cosmos DB SQL Role Definition. </summary>
+        [WirePath("properties")]
         internal SqlRoleDefinitionResource Properties { get; set; }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>
+        [WirePath("properties.roleName")]
         public string RoleName
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
+        [WirePath("properties.type")]
         public CosmosDBSqlRoleDefinitionType? RoleDefinitionType
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A set of fully qualified Scopes at or below which Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </summary>
+        [WirePath("properties.assignableScopes")]
         public IList<string> AssignableScopes
         {
             get
@@ -81,6 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The set of operations allowed through this Role Definition. </summary>
+        [WirePath("properties.permissions")]
         public IList<CosmosDBSqlRolePermission> Permissions
         {
             get

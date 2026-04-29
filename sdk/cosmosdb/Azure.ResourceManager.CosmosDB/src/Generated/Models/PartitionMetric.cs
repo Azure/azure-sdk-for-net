@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -35,9 +36,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The partition id (GUID identifier) of the metric values. </summary>
+        [WirePath("partitionId")]
         public string PartitionId { get; }
 
         /// <summary> The partition key range id (integer identifier) of the metric values. </summary>
+        [WirePath("partitionKeyRangeId")]
         public string PartitionKeyRangeId { get; }
     }
 }

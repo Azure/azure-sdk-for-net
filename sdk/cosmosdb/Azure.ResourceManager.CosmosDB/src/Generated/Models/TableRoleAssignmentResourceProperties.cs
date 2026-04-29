@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -38,15 +39,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unique identifier for the associated Role Definition. </summary>
+        [WirePath("roleDefinitionId")]
         public ResourceIdentifier RoleDefinitionId { get; set; }
 
         /// <summary> The data plane resource path for which access is being granted through this Table Role Assignment. </summary>
+        [WirePath("scope")]
         public ResourceIdentifier Scope { get; set; }
 
         /// <summary> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Table Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

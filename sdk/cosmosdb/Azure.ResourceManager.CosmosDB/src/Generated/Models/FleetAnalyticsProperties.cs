@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A provisioning state of the FleetAnalytics. </summary>
+        [WirePath("provisioningState")]
         public CosmosDBStatus? ProvisioningState { get; }
 
         /// <summary> The type of the fleet analytics resource. </summary>
+        [WirePath("storageLocationType")]
         public FleetAnalyticsPropertiesStorageLocationType? StorageLocationType { get; set; }
 
         /// <summary> The unique identifier of the fleet analytics resource. </summary>
+        [WirePath("storageLocationUri")]
         public string StorageLocationUri { get; set; }
     }
 }

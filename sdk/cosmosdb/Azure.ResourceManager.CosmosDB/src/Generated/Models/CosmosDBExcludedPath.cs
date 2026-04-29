@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

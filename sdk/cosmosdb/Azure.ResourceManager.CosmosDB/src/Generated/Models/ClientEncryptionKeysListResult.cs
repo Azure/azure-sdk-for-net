@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of client encryption keys and their properties. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CosmosDBSqlClientEncryptionKeyData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

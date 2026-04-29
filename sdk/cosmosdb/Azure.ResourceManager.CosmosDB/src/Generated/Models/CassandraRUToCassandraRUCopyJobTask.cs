@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Source Cassandra table. </summary>
+        [WirePath("source")]
         public CosmosDBCassandraTable Source { get; set; }
 
         /// <summary> Destination Cassandra table. </summary>
+        [WirePath("destination")]
         public CosmosDBCassandraTable Destination { get; set; }
     }
 }

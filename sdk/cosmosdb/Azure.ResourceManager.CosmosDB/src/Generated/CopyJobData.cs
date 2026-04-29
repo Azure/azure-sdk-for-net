@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The properties of a Copy Job. </summary>
+        [WirePath("properties")]
         public CopyJobProperties Properties { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Indicates the conflict resolution mode. </summary>
+        [WirePath("mode")]
         public ConflictResolutionMode? Mode { get; set; }
 
         /// <summary> The conflict resolution path in the case of LastWriterWins mode. </summary>
+        [WirePath("conflictResolutionPath")]
         public string ConflictResolutionPath { get; set; }
 
         /// <summary> The procedure to resolve conflicts in the case of custom mode. </summary>
+        [WirePath("conflictResolutionProcedure")]
         public string ConflictResolutionProcedure { get; set; }
     }
 }

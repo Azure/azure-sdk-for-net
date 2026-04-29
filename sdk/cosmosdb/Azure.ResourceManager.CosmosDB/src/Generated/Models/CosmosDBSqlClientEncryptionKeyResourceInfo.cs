@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the ClientEncryptionKey. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
 
         /// <summary> Encryption algorithm that will be used along with this client encryption key to encrypt/decrypt data. </summary>
+        [WirePath("encryptionAlgorithm")]
         public string EncryptionAlgorithm { get; set; }
 
         /// <summary>
@@ -58,9 +61,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("wrappedDataEncryptionKey")]
         public BinaryData WrappedDataEncryptionKey { get; set; }
 
         /// <summary> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </summary>
+        [WirePath("keyWrapMetadata")]
         public CosmosDBKeyWrapMetadata KeyWrapMetadata { get; set; }
     }
 }

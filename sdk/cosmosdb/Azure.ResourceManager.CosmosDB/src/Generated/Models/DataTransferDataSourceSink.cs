@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the Component. </summary>
+        [WirePath("component")]
         internal DataTransferComponent Component { get; set; }
     }
 }

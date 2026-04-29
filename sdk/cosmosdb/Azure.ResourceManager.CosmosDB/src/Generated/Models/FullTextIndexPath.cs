@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The path to the full text field in the document. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

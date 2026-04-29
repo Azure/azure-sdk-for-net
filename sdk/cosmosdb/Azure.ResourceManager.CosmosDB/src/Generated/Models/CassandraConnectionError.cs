@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The kind of connection error that occurred. </summary>
+        [WirePath("connectionState")]
         public CassandraConnectionState? ConnectionState { get; }
 
         /// <summary> The IP of host that originated the failed connection. </summary>
+        [WirePath("iPFrom")]
         public string IPFrom { get; }
 
         /// <summary> The IP that the connection attempted to reach. </summary>
+        [WirePath("iPTo")]
         public string IPTo { get; }
 
         /// <summary> The TCP port the connection was attempted on. </summary>
+        [WirePath("port")]
         public int? Port { get; }
 
         /// <summary> Detailed error message about the failed connection. </summary>
+        [WirePath("exception")]
         public string Exception { get; }
     }
 }

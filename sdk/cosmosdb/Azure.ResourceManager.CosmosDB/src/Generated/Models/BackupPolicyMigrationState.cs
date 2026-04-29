@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Describes the status of migration between backup policy types. </summary>
+        [WirePath("status")]
         public BackupPolicyMigrationStatus? Status { get; set; }
 
         /// <summary> Describes the target backup policy type of the backup policy migration. </summary>
+        [WirePath("targetType")]
         public BackupPolicyType? TargetType { get; set; }
 
         /// <summary> Time at which the backup policy migration started (ISO-8601 format). </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
     }
 }

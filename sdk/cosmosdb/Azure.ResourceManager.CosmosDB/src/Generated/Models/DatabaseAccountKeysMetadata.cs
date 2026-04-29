@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -37,18 +38,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The metadata related to the Primary Read-Write Key for the given Cosmos DB database account. </summary>
+        [WirePath("primaryMasterKey")]
         internal AccountKeyMetadata PrimaryMasterKey { get; }
 
         /// <summary> The metadata related to the Secondary Read-Write Key for the given Cosmos DB database account. </summary>
+        [WirePath("secondaryMasterKey")]
         internal AccountKeyMetadata SecondaryMasterKey { get; }
 
         /// <summary> The metadata related to the Primary Read-Only Key for the given Cosmos DB database account. </summary>
+        [WirePath("primaryReadonlyMasterKey")]
         internal AccountKeyMetadata PrimaryReadonlyMasterKey { get; }
 
         /// <summary> The metadata related to the Secondary Read-Only Key for the given Cosmos DB database account. </summary>
+        [WirePath("secondaryReadonlyMasterKey")]
         internal AccountKeyMetadata SecondaryReadonlyMasterKey { get; }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
+        [WirePath("primaryMasterKey.generationTime")]
         public DateTimeOffset? PrimaryMasterKeyGeneratedOn
         {
             get
@@ -58,6 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
+        [WirePath("secondaryMasterKey.generationTime")]
         public DateTimeOffset? SecondaryMasterKeyGeneratedOn
         {
             get
@@ -67,6 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
+        [WirePath("primaryReadonlyMasterKey.generationTime")]
         public DateTimeOffset? PrimaryReadonlyMasterKeyGeneratedOn
         {
             get
@@ -76,6 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
+        [WirePath("secondaryReadonlyMasterKey.generationTime")]
         public DateTimeOffset? SecondaryReadonlyMasterKeyGeneratedOn
         {
             get

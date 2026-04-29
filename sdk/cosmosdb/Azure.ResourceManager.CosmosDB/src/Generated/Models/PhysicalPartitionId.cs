@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Id of a physical partition. </summary>
+        [WirePath("id")]
         public string Id { get; }
     }
 }

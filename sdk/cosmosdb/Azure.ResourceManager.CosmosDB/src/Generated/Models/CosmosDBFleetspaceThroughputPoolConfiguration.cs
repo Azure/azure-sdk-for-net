@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Minimum throughput for the pool. </summary>
+        [WirePath("minThroughput")]
         public int? MinThroughput { get; set; }
 
         /// <summary> Maximum throughput for the pool. </summary>
+        [WirePath("maxThroughput")]
         public int? MaxThroughput { get; set; }
 
         /// <summary> Total dedicated throughput (RU/s) for fleetspace. Represents the sum of all manual provisioned throughput and all autoscale max RU/s across all shared throughput databases and dedicated throughput containers across all accounts in the fleetspace for 1 region. </summary>
+        [WirePath("dedicatedRUs")]
         public long? DedicatedRUs { get; set; }
 
         /// <summary> Maximum consumable throughput (RU/s) for fleetspace. Represents the maximum throughput that resources in the fleetspace can consume from the fleetspace's pool in 1 region. </summary>
+        [WirePath("maxConsumableRUs")]
         public long? MaxConsumableRUs { get; set; }
     }
 }

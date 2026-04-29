@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
 
         /// <summary> Create firewall rule before the virtual network has vnet service endpoint enabled. </summary>
+        [WirePath("ignoreMissingVNetServiceEndpoint")]
         public bool? IgnoreMissingVNetServiceEndpoint { get; set; }
     }
 }

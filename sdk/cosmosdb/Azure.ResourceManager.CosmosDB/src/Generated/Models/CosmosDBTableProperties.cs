@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets the Resource. </summary>
+        [WirePath("resource")]
         public CosmosDBTablePropertiesResource Resource { get; }
 
         /// <summary> Gets the Options. </summary>
+        [WirePath("options")]
         public CosmosDBTablePropertiesOptions Options { get; }
     }
 }

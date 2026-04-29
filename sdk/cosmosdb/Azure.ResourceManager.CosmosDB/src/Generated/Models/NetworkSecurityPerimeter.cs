@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Fully qualified Azure resource ID of the NSP resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
 
         /// <summary> Universal unique ID (UUID) of the network security perimeter. </summary>
+        [WirePath("perimeterGuid")]
         public Guid? PerimeterGuid { get; }
 
         /// <summary> Location of the network security perimeter. </summary>
+        [WirePath("location")]
         public string Location { get; }
     }
 }

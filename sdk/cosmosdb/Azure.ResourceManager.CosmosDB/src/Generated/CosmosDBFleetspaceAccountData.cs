@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> An Azure Cosmos DB Global Database Account which is part of a Fleetspace Account. </summary>
+        [WirePath("properties")]
         internal FleetspaceAccountProperties Properties { get; set; }
 
         /// <summary> A provisioning state of the Fleetspace Account. </summary>
+        [WirePath("properties.provisioningState")]
         public CosmosDBStatus? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Configuration for fleetspace Account in the fleetspace. </summary>
+        [WirePath("properties.globalDatabaseAccountProperties")]
         public CosmosDBFleetspaceAccountConfiguration GlobalDatabaseAccountProperties
         {
             get

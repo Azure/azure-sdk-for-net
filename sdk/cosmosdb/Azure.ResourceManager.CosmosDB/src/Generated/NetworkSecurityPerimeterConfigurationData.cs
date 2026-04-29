@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Network security configuration properties. </summary>
+        [WirePath("properties")]
         public NetworkSecurityPerimeterConfigurationProperties Properties { get; }
     }
 }

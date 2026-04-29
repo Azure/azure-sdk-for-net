@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the issue. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Gets the Properties. </summary>
+        [WirePath("properties")]
         public ProvisioningIssueProperties Properties { get; }
     }
 }

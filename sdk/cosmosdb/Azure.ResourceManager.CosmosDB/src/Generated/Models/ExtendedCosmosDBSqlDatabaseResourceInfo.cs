@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
+        [WirePath("_rid")]
         public string Rid { get; }
 
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
+        [WirePath("_ts")]
         public float? Timestamp { get; }
 
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
+        [WirePath("_etag")]
         public string ETag { get; }
 
         /// <summary> A system generated property that specified the addressable path of the collections resource. </summary>
+        [WirePath("_colls")]
         public string Colls { get; }
 
         /// <summary> A system generated property that specifies the addressable path of the users resource. </summary>
+        [WirePath("_users")]
         public string Users { get; }
     }
 }

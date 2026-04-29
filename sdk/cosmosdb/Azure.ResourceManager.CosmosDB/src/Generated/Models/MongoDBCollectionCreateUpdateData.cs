@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties to create and update Azure Cosmos DB MongoDB collection. </summary>
+        [WirePath("properties")]
         internal MongoDBCollectionCreateUpdateProperties Properties { get; }
 
         /// <summary> The standard JSON format of a MongoDB collection. </summary>
+        [WirePath("properties.resource")]
         public MongoDBCollectionResourceInfo Resource
         {
             get
@@ -52,6 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
+        [WirePath("properties.options")]
         public CosmosDBCreateUpdateConfig Options
         {
             get

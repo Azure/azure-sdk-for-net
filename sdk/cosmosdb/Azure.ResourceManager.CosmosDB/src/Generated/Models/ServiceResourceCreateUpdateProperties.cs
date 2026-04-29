@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -40,12 +41,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Instance type for the service. </summary>
+        [WirePath("instanceSize")]
         public CosmosDBServiceSize? InstanceSize { get; set; }
 
         /// <summary> Instance count for the service. </summary>
+        [WirePath("instanceCount")]
         public int? InstanceCount { get; set; }
 
         /// <summary> ServiceType for the service. </summary>
+        [WirePath("serviceType")]
         internal CosmosDBServiceType ServiceType { get; set; }
     }
 }

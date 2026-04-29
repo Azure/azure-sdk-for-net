@@ -11,7 +11,6 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Properties to retrieve throughput for Azure Cosmos DB resource. </summary>
     internal partial class RetrieveThroughputProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,11 +18,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="RetrieveThroughputProperties"/>. </summary>
         /// <param name="resourcePhysicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePhysicalPartitionIds"/> is null. </exception>
         public RetrieveThroughputProperties(IList<PhysicalPartitionId> resourcePhysicalPartitionIds)
         {
-            Argument.AssertNotNull(resourcePhysicalPartitionIds, nameof(resourcePhysicalPartitionIds));
-
             Resource = new RetrieveThroughputPropertiesResource(resourcePhysicalPartitionIds);
         }
 
@@ -37,9 +33,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a resource throughput. </summary>
+        [WirePath("resource")]
         internal RetrieveThroughputPropertiesResource Resource { get; }
 
         /// <summary> Array of PhysicalPartitionId objects. </summary>
+        [WirePath("resource.physicalPartitionIds")]
         public IList<PhysicalPartitionId> ResourcePhysicalPartitionIds
         {
             get

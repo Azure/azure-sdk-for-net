@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The name of associated KeyEncryptionKey (aka CustomerManagedKey). </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> ProviderName of KeyStoreProvider. </summary>
+        [WirePath("type")]
         public string Type { get; set; }
 
         /// <summary> Reference / link to the KeyEncryptionKey. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Algorithm used in wrapping and unwrapping of the data encryption key. </summary>
+        [WirePath("algorithm")]
         public string Algorithm { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of remote account in case of cross-account data transfer. </summary>
+        [WirePath("remoteAccountName")]
         public string RemoteAccountName { get; set; }
     }
 }

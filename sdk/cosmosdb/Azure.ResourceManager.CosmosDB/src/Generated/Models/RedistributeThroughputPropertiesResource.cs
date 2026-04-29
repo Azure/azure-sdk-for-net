@@ -47,12 +47,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> ThroughputPolicy to apply for throughput redistribution. </summary>
+        [WirePath("throughputPolicy")]
         public ThroughputPolicyType ThroughputPolicy { get; }
 
         /// <summary> Array of PhysicalPartitionThroughputInfoResource objects. </summary>
+        [WirePath("targetPhysicalPartitionThroughputInfo")]
         public IList<PhysicalPartitionThroughputInfoResource> TargetPhysicalPartitionThroughputInfo { get; }
 
         /// <summary> Array of PhysicalPartitionThroughputInfoResource objects. </summary>
+        [WirePath("sourcePhysicalPartitionThroughputInfo")]
         public IList<PhysicalPartitionThroughputInfoResource> SourcePhysicalPartitionThroughputInfo { get; }
     }
 }

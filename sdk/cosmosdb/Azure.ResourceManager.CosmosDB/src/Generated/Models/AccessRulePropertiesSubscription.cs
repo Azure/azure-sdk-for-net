@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
     }
 }

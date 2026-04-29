@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The properties of an Azure Cosmos DB PhysicalPartitionThroughputInfoResult object. </summary>
+        [WirePath("properties")]
         internal PhysicalPartitionThroughputInfoResultProperties Properties { get; }
 
         /// <summary> Array of physical partition throughput info objects. </summary>
+        [WirePath("properties.resource.physicalPartitionThroughputInfo")]
         public IList<PhysicalPartitionThroughputInfoResource> ResourcePhysicalPartitionThroughputInfo
         {
             get

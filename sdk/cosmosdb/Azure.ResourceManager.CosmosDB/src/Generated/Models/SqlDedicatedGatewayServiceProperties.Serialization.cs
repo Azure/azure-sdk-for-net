@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text.Json;
 using Azure.ResourceManager.CosmosDB;
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             int? instanceCount = default;
             CosmosDBServiceType serviceType = default;
             CosmosDBServiceStatus? status = default;
-            ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string sqlDedicatedGatewayEndpoint = default;
             DedicatedGatewayType? dedicatedGatewayType = default;
             IReadOnlyList<SqlDedicatedGatewayRegionalService> locations = default;
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 instanceCount,
                 serviceType,
                 status,
-                new ReadOnlyDictionary<string, BinaryData>(additionalProperties),
+                additionalProperties,
                 sqlDedicatedGatewayEndpoint,
                 dedicatedGatewayType,
                 locations ?? new ChangeTrackingList<SqlDedicatedGatewayRegionalService>());

@@ -42,18 +42,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The path id for the Role Definition. </summary>
+        [WirePath("id")]
         public string RoleDefinitionId { get; set; }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>
+        [WirePath("roleName")]
         public string RoleName { get; set; }
 
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
+        [WirePath("type")]
         public CosmosDBSqlRoleDefinitionType? Type { get; set; }
 
         /// <summary> A set of fully qualified Scopes at or below which Gremlin Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </summary>
+        [WirePath("assignableScopes")]
         public IList<string> AssignableScopes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The set of operations allowed through this Role Definition. </summary>
+        [WirePath("permissions")]
         public IList<CosmosDBSqlRolePermission> Permissions { get; } = new ChangeTrackingList<CosmosDBSqlRolePermission>();
     }
 }

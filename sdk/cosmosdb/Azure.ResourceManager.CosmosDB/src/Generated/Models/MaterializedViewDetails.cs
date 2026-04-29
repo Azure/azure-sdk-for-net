@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Id field of Materialized container. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
 
         /// <summary> _rid field of Materialized container. </summary>
+        [WirePath("_rid")]
         public string Rid { get; set; }
     }
 }

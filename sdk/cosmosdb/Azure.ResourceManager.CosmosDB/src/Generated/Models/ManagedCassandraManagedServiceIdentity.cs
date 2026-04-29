@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The object id of the identity resource. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; }
 
         /// <summary> The tenant id of the resource. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; }
 
         /// <summary> The type of the resource. </summary>
+        [WirePath("type")]
         public ManagedCassandraResourceIdentityType? Type { get; set; }
     }
 }

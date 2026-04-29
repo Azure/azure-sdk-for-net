@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,12 +34,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets the Resource. </summary>
+        [WirePath("resource")]
         internal GraphResourceGetPropertiesResource Resource { get; }
 
         /// <summary> Gets the Options. </summary>
+        [WirePath("options")]
         public GraphResourceGetPropertiesOptions Options { get; }
 
         /// <summary> Name of the Cosmos DB Graph. </summary>
+        [WirePath("resource.id")]
         public string ResourceId
         {
             get

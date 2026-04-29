@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The error object. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

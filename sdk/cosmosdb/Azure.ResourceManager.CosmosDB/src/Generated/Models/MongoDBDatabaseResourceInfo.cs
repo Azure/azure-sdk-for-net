@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB MongoDB database. </summary>
+        [WirePath("id")]
         public string DatabaseName { get; set; }
 
         /// <summary> Parameters to indicate the information about the restore. </summary>
+        [WirePath("restoreParameters")]
         public ResourceRestoreParameters RestoreParameters { get; set; }
 
         /// <summary> Enum to indicate the mode of account creation. </summary>
+        [WirePath("createMode")]
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
     }
 }

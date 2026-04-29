@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -39,12 +40,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Represents the throughput bucket id. </summary>
+        [WirePath("id")]
         public int Id { get; set; }
 
         /// <summary> Represents maximum percentage throughput that can be used by the bucket. </summary>
+        [WirePath("maxThroughputPercentage")]
         public int MaxThroughputPercentage { get; set; }
 
         /// <summary> Indicates whether this is the default throughput bucket. </summary>
+        [WirePath("isDefaultBucket")]
         public bool? IsDefaultBucket { get; set; }
     }
 }

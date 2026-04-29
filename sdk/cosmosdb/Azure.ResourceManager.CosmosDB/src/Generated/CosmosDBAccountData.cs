@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> An Azure Cosmos DB database account. </summary>
-    public partial class CosmosDBAccountData : ResourceData
+    public partial class CosmosDBAccountData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountData"/>. </summary>
-        internal CosmosDBAccountData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal CosmosDBAccountData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountData"/>. </summary>
@@ -31,37 +31,33 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Properties for the database account. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties for the database account. </param>
+        /// <param name="tags"></param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
-        internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDBAccountProperties properties, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity, CosmosDBAccountKind? kind) : base(id, name, resourceType, systemData)
+        internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, CosmosDBAccountProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity, CosmosDBAccountKind? kind) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
-            Location = location;
             Identity = identity;
             Kind = kind;
         }
 
         /// <summary> Properties for the database account. </summary>
+        [WirePath("properties")]
         internal CosmosDBAccountProperties Properties { get; }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
-
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
+        [WirePath("kind")]
         public CosmosDBAccountKind? Kind { get; }
 
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -71,6 +67,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The connection endpoint for the Cosmos DB database account. </summary>
+        [WirePath("properties.documentEndpoint")]
         public string DocumentEndpoint
         {
             get
@@ -80,6 +77,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The offer type for the Cosmos DB database account. Default value: Standard. </summary>
+        [WirePath("properties.databaseAccountOfferType")]
         public CosmosDBAccountPropertiesDatabaseAccountOfferType? DatabaseAccountOfferType
         {
             get
@@ -89,6 +87,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> List of IpRules. </summary>
+        [WirePath("properties.ipRules")]
         public IList<CosmosDBIPAddressOrRange> IpRules
         {
             get
@@ -98,6 +97,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Flag to indicate whether to enable/disable Virtual Network ACL rules. </summary>
+        [WirePath("properties.isVirtualNetworkFilterEnabled")]
         public bool? IsVirtualNetworkFilterEnabled
         {
             get
@@ -107,6 +107,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account. </summary>
+        [WirePath("properties.enableAutomaticFailover")]
         public bool? EnableAutomaticFailover
         {
             get
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The consistency policy for the Cosmos DB database account. </summary>
+        [WirePath("properties.consistencyPolicy")]
         public ConsistencyPolicy ConsistencyPolicy
         {
             get
@@ -125,6 +127,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> List of Cosmos DB capabilities for the account. </summary>
+        [WirePath("properties.capabilities")]
         public IList<CosmosDBAccountCapability> Capabilities
         {
             get
@@ -134,6 +137,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> An array that contains the write location for the Cosmos DB account. </summary>
+        [WirePath("properties.writeLocations")]
         public IReadOnlyList<CosmosDBAccountLocation> WriteLocations
         {
             get
@@ -143,6 +147,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> An array that contains of the read locations enabled for the Cosmos DB account. </summary>
+        [WirePath("properties.readLocations")]
         public IReadOnlyList<CosmosDBAccountLocation> ReadLocations
         {
             get
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> An array that contains all of the locations enabled for the Cosmos DB account. </summary>
+        [WirePath("properties.locations")]
         public IReadOnlyList<CosmosDBAccountLocation> Locations
         {
             get
@@ -161,6 +167,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> An array that contains the regions ordered by their failover priorities. </summary>
+        [WirePath("properties.failoverPolicies")]
         public IReadOnlyList<CosmosDBFailoverPolicy> FailoverPolicies
         {
             get
@@ -170,6 +177,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> List of Virtual Network ACL rules configured for the Cosmos DB account. </summary>
+        [WirePath("properties.virtualNetworkRules")]
         public IList<CosmosDBVirtualNetworkRule> VirtualNetworkRules
         {
             get
@@ -179,6 +187,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> List of Private Endpoint Connections configured for the Cosmos DB account. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<CosmosDBPrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get
@@ -188,6 +197,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Enables the account to write in multiple locations. </summary>
+        [WirePath("properties.enableMultipleWriteLocations")]
         public bool? EnableMultipleWriteLocations
         {
             get
@@ -197,6 +207,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Enables the cassandra connector on the Cosmos DB C* account. </summary>
+        [WirePath("properties.enableCassandraConnector")]
         public bool? EnableCassandraConnector
         {
             get
@@ -206,6 +217,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The cassandra connector offer type for the Cosmos DB database C* account. </summary>
+        [WirePath("properties.connectorOffer")]
         public ConnectorOffer? ConnectorOffer
         {
             get
@@ -215,6 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </summary>
+        [WirePath("properties.disableKeyBasedMetadataWriteAccess")]
         public bool? DisableKeyBasedMetadataWriteAccess
         {
             get
@@ -224,6 +237,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The URI of the key vault. </summary>
+        [WirePath("properties.keyVaultKeyUri")]
         public string KeyVaultKeyUri
         {
             get
@@ -233,6 +247,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </summary>
+        [WirePath("properties.defaultIdentity")]
         public string DefaultIdentity
         {
             get
@@ -242,6 +257,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Whether requests from Public Network are allowed. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public CosmosDBPublicNetworkAccess? PublicNetworkAccess
         {
             get
@@ -251,6 +267,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
+        [WirePath("properties.enableFreeTier")]
         public bool? IsFreeTierEnabled
         {
             get
@@ -260,6 +277,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Flag to indicate whether to enable storage analytics. </summary>
+        [WirePath("properties.enableAnalyticalStorage")]
         public bool? IsAnalyticalStorageEnabled
         {
             get
@@ -269,6 +287,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> A unique identifier assigned to the database account. </summary>
+        [WirePath("properties.instanceId")]
         public string InstanceId
         {
             get
@@ -278,6 +297,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Enum to indicate the mode of account creation. </summary>
+        [WirePath("properties.createMode")]
         public CosmosDBAccountCreateMode? CreateMode
         {
             get
@@ -287,6 +307,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Parameters to indicate the information about the restore. </summary>
+        [WirePath("properties.restoreParameters")]
         public CosmosDBAccountRestoreParameters RestoreParameters
         {
             get
@@ -296,6 +317,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The object representing the policy for taking backups on an account. </summary>
+        [WirePath("properties.backupPolicy")]
         public CosmosDBAccountBackupPolicy BackupPolicy
         {
             get
@@ -305,6 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
+        [WirePath("properties.cors")]
         public IList<CosmosDBAccountCorsPolicy> Cors
         {
             get
@@ -314,6 +337,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Indicates what services are allowed to bypass firewall checks. </summary>
+        [WirePath("properties.networkAclBypass")]
         public NetworkAclBypass? NetworkAclBypass
         {
             get
@@ -323,6 +347,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
+        [WirePath("properties.networkAclBypassResourceIds")]
         public IList<ResourceIdentifier> NetworkAclBypassResourceIds
         {
             get
@@ -332,6 +357,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? DisableLocalAuth
         {
             get
@@ -341,6 +367,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Indicates the capacityMode of the Cosmos DB account. </summary>
+        [WirePath("properties.capacityMode")]
         public CapacityMode? CapacityMode
         {
             get
@@ -350,6 +377,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The object that represents the migration state for the CapacityMode of the Cosmos DB account. </summary>
+        [WirePath("properties.capacityModeChangeTransitionState")]
         public CapacityModeChangeTransitionState CapacityModeChangeTransitionState
         {
             get
@@ -359,6 +387,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
+        [WirePath("properties.enableMaterializedViews")]
         public bool? EnableMaterializedViews
         {
             get
@@ -368,6 +397,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The object that represents the metadata for the Account Keys of the Cosmos DB account. </summary>
+        [WirePath("properties.keysMetadata")]
         public DatabaseAccountKeysMetadata KeysMetadata
         {
             get
@@ -377,6 +407,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
+        [WirePath("properties.enablePartitionMerge")]
         public bool? EnablePartitionMerge
         {
             get
@@ -386,6 +417,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </summary>
+        [WirePath("properties.enableBurstCapacity")]
         public bool? EnableBurstCapacity
         {
             get
@@ -395,6 +427,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
+        [WirePath("properties.minimalTlsVersion")]
         public CosmosDBMinimalTlsVersion? MinimalTlsVersion
         {
             get
@@ -404,6 +437,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </summary>
+        [WirePath("properties.customerManagedKeyStatus")]
         public string CustomerManagedKeyStatus
         {
             get
@@ -413,6 +447,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The version of the Customer Managed Key currently being used by the account. </summary>
+        [WirePath("properties.keyVaultKeyUriVersion")]
         public string KeyVaultKeyUriVersion
         {
             get
@@ -422,6 +457,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </summary>
+        [WirePath("properties.enablePriorityBasedExecution")]
         public bool? EnablePriorityBasedExecution
         {
             get
@@ -431,6 +467,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Enum to indicate default Priority Level of request for Priority Based Execution. </summary>
+        [WirePath("properties.defaultPriorityLevel")]
         public DefaultPriorityLevel? DefaultPriorityLevel
         {
             get
@@ -440,6 +477,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </summary>
+        [WirePath("properties.enablePerRegionPerPartitionAutoscale")]
         public bool? EnablePerRegionPerPartitionAutoscale
         {
             get
@@ -449,6 +487,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </summary>
+        [WirePath("properties.enableAllVersionsAndDeletesChangeFeed")]
         public bool? EnableAllVersionsAndDeletesChangeFeed
         {
             get
@@ -458,6 +497,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Total dedicated throughput (RU/s) for database account. Represents the sum of all manual provisioned throughput and all autoscale max RU/s across all shared throughput databases and dedicated throughput containers in the account for 1 region. READ ONLY. </summary>
+        [WirePath("properties.throughputPoolDedicatedRUs")]
         public long? ThroughputPoolDedicatedRUs
         {
             get
@@ -467,6 +507,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> When this account is part of a fleetspace with throughput pooling enabled, this is the maximum additional throughput (RU/s) that can be consumed from the pool, summed across all shared throughput databases and dedicated throughput containers in the account for 1 region.  READ ONLY. </summary>
+        [WirePath("properties.throughputPoolMaxConsumableRUs")]
         public long? ThroughputPoolMaxConsumableRUs
         {
             get
@@ -476,6 +517,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Describes the version of the MongoDB account. </summary>
+        [WirePath("properties.apiProperties.serverVersion")]
         public CosmosDBServerVersion? ApiServerVersion
         {
             get
@@ -485,6 +527,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Describes the types of schema for analytical storage. </summary>
+        [WirePath("properties.analyticalStorageConfiguration.schemaType")]
         public AnalyticalStorageSchemaType? AnalyticalStorageSchemaType
         {
             get
@@ -494,6 +537,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Describe the level of detail with which queries are to be logged. </summary>
+        [WirePath("properties.diagnosticLogSettings.enableFullTextQuery")]
         public EnableFullTextQuery? DiagnosticLogEnableFullTextQuery
         {
             get
@@ -503,6 +547,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </summary>
+        [WirePath("properties.capacity.totalThroughputLimit")]
         public int? CapacityTotalThroughputLimit
         {
             get

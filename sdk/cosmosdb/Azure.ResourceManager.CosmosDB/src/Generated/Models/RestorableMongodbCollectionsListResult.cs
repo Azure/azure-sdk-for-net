@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of MongoDB collection events and their properties. </summary>
+        [WirePath("value")]
         public IReadOnlyList<RestorableMongoDBCollection> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

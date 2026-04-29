@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties in ServiceResourceCreateUpdateParameters. </summary>
+        [WirePath("properties")]
         public ServiceResourceCreateUpdateProperties Properties { get; set; }
     }
 }

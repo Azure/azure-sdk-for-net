@@ -39,9 +39,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The path to the full text field in the document. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
 
         /// <summary> The language of the full text field in the document. </summary>
+        [WirePath("language")]
         public string Language { get; set; }
     }
 }

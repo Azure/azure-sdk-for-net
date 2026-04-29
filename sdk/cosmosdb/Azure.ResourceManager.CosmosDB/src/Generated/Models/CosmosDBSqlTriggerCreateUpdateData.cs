@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties to create and update Azure Cosmos DB trigger. </summary>
+        [WirePath("properties")]
         internal SqlTriggerCreateUpdateProperties Properties { get; }
 
         /// <summary> The standard JSON format of a trigger. </summary>
+        [WirePath("properties.resource")]
         public CosmosDBSqlTriggerResourceInfo Resource
         {
             get
@@ -52,6 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
+        [WirePath("properties.options")]
         public CosmosDBCreateUpdateConfig Options
         {
             get

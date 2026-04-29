@@ -42,18 +42,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the profile. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Current access rules version. </summary>
+        [WirePath("accessRulesVersion")]
         public int? AccessRulesVersion { get; }
 
         /// <summary> List of Access Rules. </summary>
+        [WirePath("accessRules")]
         public IList<AccessRule> AccessRules { get; }
 
         /// <summary> Current diagnostic settings version. </summary>
+        [WirePath("diagnosticSettingsVersion")]
         public int? DiagnosticSettingsVersion { get; }
 
         /// <summary> List of log categories that are enabled. </summary>
+        [WirePath("enabledLogCategories")]
         public IList<string> EnabledLogCategories { get; }
     }
 }

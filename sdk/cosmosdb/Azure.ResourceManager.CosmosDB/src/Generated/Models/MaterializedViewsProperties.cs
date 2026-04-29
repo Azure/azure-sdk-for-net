@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Throughput bucket assigned for the materialized view operations on source container. </summary>
+        [WirePath("throughputBucketForBuild")]
         public int? ThroughputBucketForBuild { get; set; }
     }
 }

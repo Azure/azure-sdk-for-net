@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The location of the regional restorable account. </summary>
+        [WirePath("locationName")]
         public string LocationName { get; }
 
         /// <summary> The instance id of the regional restorable account. </summary>
+        [WirePath("regionalDatabaseAccountInstanceId")]
         public string RegionalDatabaseAccountInstanceId { get; }
 
         /// <summary> The creation time of the regional restorable database account (ISO-8601 format). </summary>
+        [WirePath("creationTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The time at which the regional restorable database account has been deleted (ISO-8601 format). </summary>
+        [WirePath("deletionTime")]
         public DateTimeOffset? DeletedOn { get; }
     }
 }

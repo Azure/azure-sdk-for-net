@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -32,9 +33,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties to create and update an Azure Cosmos DB SQL Role Assignment. </summary>
+        [WirePath("properties")]
         internal SqlRoleAssignmentResource Properties { get; set; }
 
         /// <summary> The unique identifier for the associated Role Definition. </summary>
+        [WirePath("properties.roleDefinitionId")]
         public ResourceIdentifier RoleDefinitionId
         {
             get
@@ -52,6 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The data plane resource path for which access is being granted through this Role Assignment. </summary>
+        [WirePath("properties.scope")]
         public string Scope
         {
             get
@@ -69,6 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </summary>
+        [WirePath("properties.principalId")]
         public string PrincipalId
         {
             get

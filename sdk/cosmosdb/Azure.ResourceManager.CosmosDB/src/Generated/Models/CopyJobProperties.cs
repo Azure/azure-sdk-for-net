@@ -54,33 +54,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Job Properties. </summary>
+        [WirePath("jobProperties")]
         public BaseCopyJobProperties JobProperties { get; set; }
 
         /// <summary> Job Status. </summary>
+        [WirePath("status")]
         public CopyJobStatus? Status { get; }
 
         /// <summary> Processed Count. </summary>
+        [WirePath("processedCount")]
         public long? ProcessedCount { get; }
 
         /// <summary> Total Count. </summary>
+        [WirePath("totalCount")]
         public long? TotalCount { get; }
 
         /// <summary> Last Updated Time (ISO-8601 format). </summary>
+        [WirePath("lastUpdatedUtcTime")]
         public DateTimeOffset? LastUpdatedUtcOn { get; }
 
         /// <summary> Worker count. </summary>
+        [WirePath("workerCount")]
         public int? WorkerCount { get; set; }
 
         /// <summary> Error response for Faulted job. </summary>
+        [WirePath("error")]
         internal ErrorResponse ErrorResponse { get; }
 
         /// <summary> Total Duration of Job. </summary>
+        [WirePath("duration")]
         public string Duration { get; }
 
         /// <summary> Mode of job execution. </summary>
+        [WirePath("mode")]
         public CopyJobMode? Mode { get; set; }
 
         /// <summary> The error object. </summary>
+        [WirePath("error.error")]
         public ResponseError Error
         {
             get

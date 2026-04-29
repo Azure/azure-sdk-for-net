@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -37,18 +38,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The properties of a SQL container event. </summary>
+        [WirePath("properties")]
         internal RestorableSqlContainerProperties Properties { get; }
 
         /// <summary> The unique resource Identifier of the ARM resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The name of the ARM resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The type of Azure resource. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> The resource of an Azure Cosmos DB SQL container event. </summary>
+        [WirePath("properties.resource")]
         public ExtendedRestorableSqlContainerResourceInfo Resource
         {
             get

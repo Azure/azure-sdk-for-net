@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The latest restorable timestamp for a resource. </summary>
+        [WirePath("latestRestorableTimestamp")]
         public string LatestRestorableTimestamp { get; }
     }
 }

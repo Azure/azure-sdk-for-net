@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The command which should be run. </summary>
+        [WirePath("command")]
         public string Command { get; }
 
         /// <summary>
@@ -77,15 +78,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("arguments")]
         public BinaryData Arguments { get; set; }
 
         /// <summary> IP address of the cassandra host to run the command on. </summary>
+        [WirePath("host")]
         public string Host { get; }
 
         /// <summary> If true, stops cassandra before executing the command and then start it again. </summary>
+        [WirePath("cassandra-stop-start")]
         public bool? CassandraStopStart { get; set; }
 
         /// <summary> If true, allows the command to <i>write</i> to the cassandra directory, otherwise read-only. </summary>
+        [WirePath("readWrite")]
         public bool? ReadWrite { get; set; }
     }
 }

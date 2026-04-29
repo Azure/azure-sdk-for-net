@@ -13,7 +13,6 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Properties to retrieve throughput for Azure Cosmos DB resource. </summary>
     internal partial class RetrieveThroughputProperties : IJsonModel<RetrieveThroughputProperties>
     {
         /// <summary> Initializes a new instance of <see cref="RetrieveThroughputProperties"/> for deserialization. </summary>

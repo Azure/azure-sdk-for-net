@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Ipv4 address of the endpoint. </summary>
+        [WirePath("ipAddress")]
         public string IpAddress { get; }
 
         /// <summary> Port number. </summary>
+        [WirePath("port")]
         public int? Port { get; }
     }
 }

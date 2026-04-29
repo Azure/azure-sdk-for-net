@@ -141,156 +141,207 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> The connection endpoint for the Cosmos DB database account. </summary>
+        [WirePath("documentEndpoint")]
         public string DocumentEndpoint { get; }
 
         /// <summary> The offer type for the Cosmos DB database account. Default value: Standard. </summary>
+        [WirePath("databaseAccountOfferType")]
         public CosmosDBAccountPropertiesDatabaseAccountOfferType? DatabaseAccountOfferType { get; }
 
         /// <summary> List of IpRules. </summary>
+        [WirePath("ipRules")]
         public IList<CosmosDBIPAddressOrRange> IpRules { get; } = new ChangeTrackingList<CosmosDBIPAddressOrRange>();
 
         /// <summary> Flag to indicate whether to enable/disable Virtual Network ACL rules. </summary>
+        [WirePath("isVirtualNetworkFilterEnabled")]
         public bool? IsVirtualNetworkFilterEnabled { get; }
 
         /// <summary> Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account. </summary>
+        [WirePath("enableAutomaticFailover")]
         public bool? EnableAutomaticFailover { get; }
 
         /// <summary> The consistency policy for the Cosmos DB database account. </summary>
+        [WirePath("consistencyPolicy")]
         public ConsistencyPolicy ConsistencyPolicy { get; }
 
         /// <summary> List of Cosmos DB capabilities for the account. </summary>
+        [WirePath("capabilities")]
         public IList<CosmosDBAccountCapability> Capabilities { get; } = new ChangeTrackingList<CosmosDBAccountCapability>();
 
         /// <summary> An array that contains the write location for the Cosmos DB account. </summary>
+        [WirePath("writeLocations")]
         public IReadOnlyList<CosmosDBAccountLocation> WriteLocations { get; } = new ChangeTrackingList<CosmosDBAccountLocation>();
 
         /// <summary> An array that contains of the read locations enabled for the Cosmos DB account. </summary>
+        [WirePath("readLocations")]
         public IReadOnlyList<CosmosDBAccountLocation> ReadLocations { get; } = new ChangeTrackingList<CosmosDBAccountLocation>();
 
         /// <summary> An array that contains all of the locations enabled for the Cosmos DB account. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<CosmosDBAccountLocation> Locations { get; } = new ChangeTrackingList<CosmosDBAccountLocation>();
 
         /// <summary> An array that contains the regions ordered by their failover priorities. </summary>
+        [WirePath("failoverPolicies")]
         public IReadOnlyList<CosmosDBFailoverPolicy> FailoverPolicies { get; } = new ChangeTrackingList<CosmosDBFailoverPolicy>();
 
         /// <summary> List of Virtual Network ACL rules configured for the Cosmos DB account. </summary>
+        [WirePath("virtualNetworkRules")]
         public IList<CosmosDBVirtualNetworkRule> VirtualNetworkRules { get; } = new ChangeTrackingList<CosmosDBVirtualNetworkRule>();
 
         /// <summary> List of Private Endpoint Connections configured for the Cosmos DB account. </summary>
+        [WirePath("privateEndpointConnections")]
         public IReadOnlyList<CosmosDBPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>();
 
         /// <summary> Enables the account to write in multiple locations. </summary>
+        [WirePath("enableMultipleWriteLocations")]
         public bool? EnableMultipleWriteLocations { get; }
 
         /// <summary> Enables the cassandra connector on the Cosmos DB C* account. </summary>
+        [WirePath("enableCassandraConnector")]
         public bool? EnableCassandraConnector { get; }
 
         /// <summary> The cassandra connector offer type for the Cosmos DB database C* account. </summary>
+        [WirePath("connectorOffer")]
         public ConnectorOffer? ConnectorOffer { get; }
 
         /// <summary> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </summary>
+        [WirePath("disableKeyBasedMetadataWriteAccess")]
         public bool? DisableKeyBasedMetadataWriteAccess { get; }
 
         /// <summary> The URI of the key vault. </summary>
+        [WirePath("keyVaultKeyUri")]
         public string KeyVaultKeyUri { get; }
 
         /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </summary>
+        [WirePath("defaultIdentity")]
         public string DefaultIdentity { get; }
 
         /// <summary> Whether requests from Public Network are allowed. </summary>
+        [WirePath("publicNetworkAccess")]
         public CosmosDBPublicNetworkAccess? PublicNetworkAccess { get; }
 
         /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
+        [WirePath("enableFreeTier")]
         public bool? IsFreeTierEnabled { get; }
 
         /// <summary> API specific properties. </summary>
+        [WirePath("apiProperties")]
         internal ApiProperties ApiProperties { get; }
 
         /// <summary> Flag to indicate whether to enable storage analytics. </summary>
+        [WirePath("enableAnalyticalStorage")]
         public bool? IsAnalyticalStorageEnabled { get; }
 
         /// <summary> Analytical storage specific properties. </summary>
+        [WirePath("analyticalStorageConfiguration")]
         internal AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; }
 
         /// <summary> A unique identifier assigned to the database account. </summary>
+        [WirePath("instanceId")]
         public string InstanceId { get; }
 
         /// <summary> Enum to indicate the mode of account creation. </summary>
+        [WirePath("createMode")]
         public CosmosDBAccountCreateMode? CreateMode { get; }
 
         /// <summary> Parameters to indicate the information about the restore. </summary>
+        [WirePath("restoreParameters")]
         public CosmosDBAccountRestoreParameters RestoreParameters { get; }
 
         /// <summary> The object representing the policy for taking backups on an account. </summary>
+        [WirePath("backupPolicy")]
         public CosmosDBAccountBackupPolicy BackupPolicy { get; }
 
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
+        [WirePath("cors")]
         public IList<CosmosDBAccountCorsPolicy> Cors { get; } = new ChangeTrackingList<CosmosDBAccountCorsPolicy>();
 
         /// <summary> Indicates what services are allowed to bypass firewall checks. </summary>
+        [WirePath("networkAclBypass")]
         public NetworkAclBypass? NetworkAclBypass { get; }
 
         /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
+        [WirePath("networkAclBypassResourceIds")]
         public IList<ResourceIdentifier> NetworkAclBypassResourceIds { get; } = new ChangeTrackingList<ResourceIdentifier>();
 
         /// <summary> The Object representing the different Diagnostic log settings for the Cosmos DB Account. </summary>
+        [WirePath("diagnosticLogSettings")]
         internal DiagnosticLogSettings DiagnosticLogSettings { get; }
 
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
+        [WirePath("disableLocalAuth")]
         public bool? DisableLocalAuth { get; }
 
         /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
+        [WirePath("capacity")]
         internal CosmosDBAccountCapacity Capacity { get; }
 
         /// <summary> Indicates the capacityMode of the Cosmos DB account. </summary>
+        [WirePath("capacityMode")]
         public CapacityMode? CapacityMode { get; }
 
         /// <summary> The object that represents the migration state for the CapacityMode of the Cosmos DB account. </summary>
+        [WirePath("capacityModeChangeTransitionState")]
         public CapacityModeChangeTransitionState CapacityModeChangeTransitionState { get; }
 
         /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
+        [WirePath("enableMaterializedViews")]
         public bool? EnableMaterializedViews { get; }
 
         /// <summary> The object that represents the metadata for the Account Keys of the Cosmos DB account. </summary>
+        [WirePath("keysMetadata")]
         public DatabaseAccountKeysMetadata KeysMetadata { get; }
 
         /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
+        [WirePath("enablePartitionMerge")]
         public bool? EnablePartitionMerge { get; }
 
         /// <summary> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </summary>
+        [WirePath("enableBurstCapacity")]
         public bool? EnableBurstCapacity { get; }
 
         /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
+        [WirePath("minimalTlsVersion")]
         public CosmosDBMinimalTlsVersion? MinimalTlsVersion { get; }
 
         /// <summary> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </summary>
+        [WirePath("customerManagedKeyStatus")]
         public string CustomerManagedKeyStatus { get; }
 
         /// <summary> The version of the Customer Managed Key currently being used by the account. </summary>
+        [WirePath("keyVaultKeyUriVersion")]
         public string KeyVaultKeyUriVersion { get; }
 
         /// <summary> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </summary>
+        [WirePath("enablePriorityBasedExecution")]
         public bool? EnablePriorityBasedExecution { get; }
 
         /// <summary> Enum to indicate default Priority Level of request for Priority Based Execution. </summary>
+        [WirePath("defaultPriorityLevel")]
         public DefaultPriorityLevel? DefaultPriorityLevel { get; }
 
         /// <summary> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </summary>
+        [WirePath("enablePerRegionPerPartitionAutoscale")]
         public bool? EnablePerRegionPerPartitionAutoscale { get; }
 
         /// <summary> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </summary>
+        [WirePath("enableAllVersionsAndDeletesChangeFeed")]
         public bool? EnableAllVersionsAndDeletesChangeFeed { get; }
 
         /// <summary> Total dedicated throughput (RU/s) for database account. Represents the sum of all manual provisioned throughput and all autoscale max RU/s across all shared throughput databases and dedicated throughput containers in the account for 1 region. READ ONLY. </summary>
+        [WirePath("throughputPoolDedicatedRUs")]
         public long? ThroughputPoolDedicatedRUs { get; }
 
         /// <summary> When this account is part of a fleetspace with throughput pooling enabled, this is the maximum additional throughput (RU/s) that can be consumed from the pool, summed across all shared throughput databases and dedicated throughput containers in the account for 1 region.  READ ONLY. </summary>
+        [WirePath("throughputPoolMaxConsumableRUs")]
         public long? ThroughputPoolMaxConsumableRUs { get; }
 
         /// <summary> Describes the version of the MongoDB account. </summary>
+        [WirePath("apiProperties.serverVersion")]
         public CosmosDBServerVersion? ApiServerVersion
         {
             get
@@ -300,6 +351,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Describes the types of schema for analytical storage. </summary>
+        [WirePath("analyticalStorageConfiguration.schemaType")]
         public AnalyticalStorageSchemaType? AnalyticalStorageSchemaType
         {
             get
@@ -309,6 +361,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Describe the level of detail with which queries are to be logged. </summary>
+        [WirePath("diagnosticLogSettings.enableFullTextQuery")]
         public EnableFullTextQuery? DiagnosticLogEnableFullTextQuery
         {
             get
@@ -318,6 +371,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </summary>
+        [WirePath("capacity.totalThroughputLimit")]
         public int? CapacityTotalThroughputLimit
         {
             get

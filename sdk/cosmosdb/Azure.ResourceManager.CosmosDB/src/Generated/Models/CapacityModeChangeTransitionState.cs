@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The transition status of capacity mode. </summary>
+        [WirePath("capacityModeTransitionStatus")]
         public CapacityModeTransitionStatus? CapacityModeTransitionStatus { get; }
 
         /// <summary> Indicates the current capacity mode of the account. </summary>
+        [WirePath("currentCapacityMode")]
         public CapacityMode? CurrentCapacityMode { get; }
 
         /// <summary> Indicates the previous capacity mode of the account before successful transition. </summary>
+        [WirePath("previousCapacityMode")]
         public CapacityMode? PreviousCapacityMode { get; }
 
         /// <summary> Begin time in UTC of the capacity mode change. </summary>
+        [WirePath("capacityModeTransitionBeginTimestamp")]
         public DateTimeOffset? CapacityModeTransitionBeginTimestamp { get; }
 
         /// <summary> End time in UTC of the capacity mode change. </summary>
+        [WirePath("capacityModeTransitionEndTimestamp")]
         public DateTimeOffset? CapacityModeTransitionEndTimestamp { get; }
 
         /// <summary> End time in UTC of the last successful capacity mode change. </summary>
+        [WirePath("capacityModeLastSuccessfulTransitionEndTimestamp")]
         public DateTimeOffset? CapacityModeLastSuccessfulTransitionEndTimestamp { get; }
     }
 }

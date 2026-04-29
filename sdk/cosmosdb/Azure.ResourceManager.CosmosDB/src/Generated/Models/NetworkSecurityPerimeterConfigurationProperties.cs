@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [WirePath("provisioningState")]
         public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of provisioning issues, if any. </summary>
+        [WirePath("provisioningIssues")]
         public IReadOnlyList<ProvisioningIssue> ProvisioningIssues { get; }
 
         /// <summary> Gets the NetworkSecurityPerimeter. </summary>
+        [WirePath("networkSecurityPerimeter")]
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
         /// <summary> Gets the ResourceAssociation. </summary>
+        [WirePath("resourceAssociation")]
         public ResourceAssociation ResourceAssociation { get; }
 
         /// <summary> Gets the Profile. </summary>
+        [WirePath("profile")]
         public NetworkSecurityProfile Profile { get; }
     }
 }

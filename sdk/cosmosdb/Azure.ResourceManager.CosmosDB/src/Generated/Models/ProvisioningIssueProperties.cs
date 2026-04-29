@@ -43,18 +43,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Type of issue. </summary>
+        [WirePath("issueType")]
         public IssueType? IssueType { get; }
 
         /// <summary> Severity of the issue. </summary>
+        [WirePath("severity")]
         public Severity? Severity { get; }
 
         /// <summary> Description of the issue. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </summary>
+        [WirePath("suggestedResourceIds")]
         public IReadOnlyList<ResourceIdentifier> SuggestedResourceIds { get; }
 
         /// <summary> Access rules that can be added to the network security profile (NSP) to remediate the issue. </summary>
+        [WirePath("suggestedAccessRules")]
         public IReadOnlyList<AccessRule> SuggestedAccessRules { get; }
     }
 }

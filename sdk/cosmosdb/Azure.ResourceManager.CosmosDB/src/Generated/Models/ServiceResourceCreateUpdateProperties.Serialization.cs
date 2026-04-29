@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     [PersistableModelProxy(typeof(UnknownServiceResourceCreateUpdateProperties))]
     public abstract partial class ServiceResourceCreateUpdateProperties : IJsonModel<ServiceResourceCreateUpdateProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ServiceResourceCreateUpdateProperties"/> for deserialization. </summary>
-        internal ServiceResourceCreateUpdateProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ServiceResourceCreateUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Represents throughput policy which service must adhere to for auto-upgrade. </summary>
+        [WirePath("throughputPolicy")]
         public ThroughputPolicyResourceInfo ThroughputPolicy { get; set; }
     }
 }

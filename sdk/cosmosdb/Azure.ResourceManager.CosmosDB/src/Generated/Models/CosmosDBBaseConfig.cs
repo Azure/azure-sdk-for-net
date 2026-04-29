@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,12 +34,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </summary>
+        [WirePath("throughput")]
         public int? Throughput { get; }
 
         /// <summary> Specifies the Autoscale settings. </summary>
+        [WirePath("autoscaleSettings")]
         internal AutoscaleSettings AutoscaleSettings { get; }
 
         /// <summary> Represents maximum throughput, the resource can scale up to. </summary>
+        [WirePath("autoscaleSettings.maxThroughput")]
         public int? AutoscaleMaxThroughput
         {
             get

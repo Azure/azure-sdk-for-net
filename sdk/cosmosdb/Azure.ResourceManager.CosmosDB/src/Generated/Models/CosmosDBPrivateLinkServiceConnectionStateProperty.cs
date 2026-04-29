@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The private link service connection status. </summary>
+        [WirePath("status")]
         public string Status { get; set; }
 
         /// <summary> The private link service connection description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </summary>
+        [WirePath("actionsRequired")]
         public string ActionsRequired { get; }
     }
 }

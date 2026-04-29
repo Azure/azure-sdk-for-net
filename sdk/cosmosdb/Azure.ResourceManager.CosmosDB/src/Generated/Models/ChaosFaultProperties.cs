@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Indicates whether what action to take for the Chaos Fault. </summary>
+        [WirePath("action")]
         public CosmosDBChaosFaultSupportedActions? Action { get; set; }
 
         /// <summary> Region of the account where the Chaos Fault is to be enabled/disabled. </summary>
+        [WirePath("region")]
         public string Region { get; set; }
 
         /// <summary> Database name. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary> Container name. </summary>
+        [WirePath("containerName")]
         public string ContainerName { get; set; }
 
         /// <summary> A provisioning state of the Chaos Fault. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

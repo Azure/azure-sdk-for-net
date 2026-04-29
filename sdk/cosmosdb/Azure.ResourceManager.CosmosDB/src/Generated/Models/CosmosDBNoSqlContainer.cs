@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Azure Cosmos DB for NoSQL database. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary> Azure Cosmos DB for NoSQL container. </summary>
+        [WirePath("containerName")]
         public string ContainerName { get; set; }
     }
 }

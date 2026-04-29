@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -32,9 +33,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties of the fleetspace. </summary>
+        [WirePath("properties")]
         internal FleetspaceProperties Properties { get; set; }
 
         /// <summary> A provisioning state of the Fleetspace. </summary>
+        [WirePath("properties.provisioningState")]
         public CosmosDBStatus? ProvisioningState
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </summary>
+        [WirePath("properties.fleetspaceApiKind")]
         public CosmosDBFleetspaceApiKind? FleetspaceApiKind
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </summary>
+        [WirePath("properties.serviceTier")]
         public CosmosDBFleetspaceServiceTier? ServiceTier
         {
             get
@@ -78,6 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of data regions assigned to the fleetspace. Eg [westus2]. </summary>
+        [WirePath("properties.dataRegions")]
         public AzureLocation? DataRegions
         {
             get
@@ -95,6 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Configuration for throughput pool in the fleetspace. </summary>
+        [WirePath("properties.throughputPoolConfiguration")]
         public CosmosDBFleetspaceThroughputPoolConfiguration ThroughputPoolConfiguration
         {
             get

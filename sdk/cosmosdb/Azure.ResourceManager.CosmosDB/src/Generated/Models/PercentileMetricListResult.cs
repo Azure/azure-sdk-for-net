@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The list of percentile metrics for the account. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CosmosDBPercentileMetric> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

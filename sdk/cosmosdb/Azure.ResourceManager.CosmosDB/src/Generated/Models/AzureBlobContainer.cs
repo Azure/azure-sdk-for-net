@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Azure Blob container. </summary>
+        [WirePath("containerName")]
         public string ContainerName { get; set; }
     }
 }

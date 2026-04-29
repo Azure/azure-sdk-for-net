@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A provisioning state of the Fleetspace Account. </summary>
+        [WirePath("provisioningState")]
         public CosmosDBStatus? ProvisioningState { get; }
 
         /// <summary> Configuration for fleetspace Account in the fleetspace. </summary>
+        [WirePath("globalDatabaseAccountProperties")]
         public CosmosDBFleetspaceAccountConfiguration GlobalDatabaseAccountProperties { get; set; }
     }
 }

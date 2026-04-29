@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The access key to regenerate. </summary>
+        [WirePath("keyKind")]
         public CosmosDBAccountKeyKind KeyKind { get; }
     }
 }

@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The JSON path to exclude from masking (e.g. "/id"). </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

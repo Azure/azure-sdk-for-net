@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties to redistribute throughput parameters object. </summary>
+        [WirePath("properties")]
         internal RedistributeThroughputProperties Properties { get; }
 
         /// <summary> The standard JSON format of a resource throughput. </summary>
+        [WirePath("properties.resource")]
         public RedistributeThroughputPropertiesResource Resource
         {
             get

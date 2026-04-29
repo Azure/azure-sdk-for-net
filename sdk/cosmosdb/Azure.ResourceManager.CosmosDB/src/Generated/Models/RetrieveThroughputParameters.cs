@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties to retrieve throughput parameters object. </summary>
+        [WirePath("properties")]
         internal RetrieveThroughputProperties Properties { get; }
 
         /// <summary> Array of PhysicalPartitionId objects. </summary>
+        [WirePath("properties.resource.physicalPartitionIds")]
         public IList<PhysicalPartitionId> ResourcePhysicalPartitionIds
         {
             get

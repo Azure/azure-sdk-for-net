@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unique resource identifier of the ARM resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The name of the ARM resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The type of Azure resource. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> The name of the database available for restore. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; }
 
         /// <summary> The names of the collections available for restore. </summary>
+        [WirePath("collectionNames")]
         public IReadOnlyList<string> CollectionNames { get; }
     }
 }

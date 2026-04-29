@@ -42,15 +42,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Source Mongo (RU) DataStore details. </summary>
+        [WirePath("sourceDetails")]
         internal CosmosDBSourceSinkDetails SourceDetails { get; set; }
 
         /// <summary> Destination Mongo (vCore) DataStore details. </summary>
+        [WirePath("destinationDetails")]
         public MongoVCoreSourceSinkDetails DestinationDetails { get; set; }
 
         /// <summary> Copy Job tasks. </summary>
+        [WirePath("tasks")]
         public IList<MongoRUToMongoVCoreCopyJobTask> Tasks { get; }
 
         /// <summary> Name of remote account in case of cross-account data transfer. </summary>
+        [WirePath("sourceDetails.remoteAccountName")]
         public string SourceDetailsRemoteAccountName
         {
             get

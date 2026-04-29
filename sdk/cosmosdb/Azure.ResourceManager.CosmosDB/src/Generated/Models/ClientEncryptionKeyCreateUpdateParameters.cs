@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties to create and update ClientEncryptionKey. </summary>
+        [WirePath("properties")]
         internal ClientEncryptionKeyCreateUpdateProperties Properties { get; }
 
         /// <summary> The standard JSON format of a ClientEncryptionKey. </summary>
+        [WirePath("properties.resource")]
         public CosmosDBSqlClientEncryptionKeyResourceInfo Resource
         {
             get

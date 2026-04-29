@@ -60,36 +60,47 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Job Name. </summary>
+        [WirePath("jobName")]
         public string JobName { get; }
 
         /// <summary> Source DataStore details. </summary>
+        [WirePath("source")]
         public DataTransferDataSourceSink Source { get; set; }
 
         /// <summary> Destination DataStore details. </summary>
+        [WirePath("destination")]
         public DataTransferDataSourceSink Destination { get; set; }
 
         /// <summary> Job Status. </summary>
+        [WirePath("status")]
         public string Status { get; }
 
         /// <summary> Processed Count. </summary>
+        [WirePath("processedCount")]
         public long? ProcessedCount { get; }
 
         /// <summary> Total Count. </summary>
+        [WirePath("totalCount")]
         public long? TotalCount { get; }
 
         /// <summary> Last Updated Time (ISO-8601 format). </summary>
+        [WirePath("lastUpdatedUtcTime")]
         public DateTimeOffset? LastUpdatedUtcOn { get; }
 
         /// <summary> Worker count. </summary>
+        [WirePath("workerCount")]
         public int? WorkerCount { get; set; }
 
         /// <summary> Error response for Faulted job. </summary>
+        [WirePath("error")]
         public CosmosDBErrorResult Error { get; }
 
         /// <summary> Total Duration of Job. </summary>
+        [WirePath("duration")]
         public string Duration { get; }
 
         /// <summary> Mode of job execution. </summary>
+        [WirePath("mode")]
         public DataTransferJobMode? Mode { get; set; }
     }
 }

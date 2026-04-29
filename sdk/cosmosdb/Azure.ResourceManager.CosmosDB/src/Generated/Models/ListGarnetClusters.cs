@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Container for the array of clusters. </summary>
+        [WirePath("value")]
         public IList<GarnetClusterData> Value { get; }
 
         /// <summary> The link used to get the next page of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

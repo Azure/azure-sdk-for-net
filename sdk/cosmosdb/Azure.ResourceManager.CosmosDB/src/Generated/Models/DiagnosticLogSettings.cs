@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Describe the level of detail with which queries are to be logged. </summary>
+        [WirePath("enableFullTextQuery")]
         public EnableFullTextQuery? EnableFullTextQuery { get; set; }
     }
 }

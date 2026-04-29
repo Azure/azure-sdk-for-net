@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The list of usages for the database. A usage is a point in time metric. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CosmosDBBaseUsage> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

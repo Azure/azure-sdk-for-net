@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Properties to create and update Azure Cosmos DB Graph resource. </summary>
+        [WirePath("properties")]
         internal GraphResourceCreateUpdateProperties Properties { get; }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
+        [WirePath("properties.options")]
         public CosmosDBCreateUpdateConfig Options
         {
             get
@@ -52,6 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB Graph. </summary>
+        [WirePath("properties.resource.id")]
         public string ResourceId
         {
             get

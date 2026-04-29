@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,12 +34,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Cosmos DB MongoDB collection index keys. </summary>
+        [WirePath("key")]
         internal MongoIndexKeys Key { get; set; }
 
         /// <summary> Cosmos DB MongoDB collection index key options. </summary>
+        [WirePath("options")]
         public MongoDBIndexConfig Options { get; set; }
 
         /// <summary> List of keys for each MongoDB collection in the Azure Cosmos DB service. </summary>
+        [WirePath("key.keys")]
         public IList<string> KeyKeys
         {
             get

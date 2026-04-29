@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB Cassandra table cluster key. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Order of the Cosmos DB Cassandra table cluster key, only support "Asc" and "Desc". </summary>
+        [WirePath("orderBy")]
         public string OrderBy { get; set; }
     }
 }

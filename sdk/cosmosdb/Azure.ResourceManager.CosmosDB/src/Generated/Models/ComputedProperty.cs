@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The name of a computed property, for example - "cp_lowerName". </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The query that evaluates the value for computed property, for example - "SELECT VALUE LOWER(c.name) FROM c". </summary>
+        [WirePath("query")]
         public string Query { get; set; }
     }
 }

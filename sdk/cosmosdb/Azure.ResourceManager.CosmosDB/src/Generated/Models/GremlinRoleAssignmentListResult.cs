@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The GremlinRoleAssignmentResource items on this page. </summary>
+        [WirePath("value")]
         public IList<GremlinRoleAssignmentData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

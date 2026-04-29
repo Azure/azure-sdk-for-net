@@ -29,16 +29,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalProperties"></param>
         /// <param name="graphApiComputeEndpoint"> GraphAPICompute endpoint for the service. </param>
         /// <param name="locations"> An array that contains all of the locations for the service. </param>
-        internal GraphApiComputeServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IReadOnlyDictionary<string, BinaryData> additionalProperties, string graphApiComputeEndpoint, IReadOnlyList<GraphApiComputeRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
+        internal GraphApiComputeServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, string graphApiComputeEndpoint, IReadOnlyList<GraphApiComputeRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
         {
             GraphApiComputeEndpoint = graphApiComputeEndpoint;
             Locations = locations;
         }
 
         /// <summary> GraphAPICompute endpoint for the service. </summary>
+        [WirePath("graphApiComputeEndpoint")]
         public string GraphApiComputeEndpoint { get; }
 
         /// <summary> An array that contains all of the locations for the service. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<GraphApiComputeRegionalService> Locations { get; }
     }
 }

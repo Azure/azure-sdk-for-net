@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -38,18 +39,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>
+        [WirePath("privateEndpoint")]
         internal PrivateEndpointProperty PrivateEndpoint { get; set; }
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public CosmosDBPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> Group id of the private endpoint. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; set; }
 
         /// <summary> Provisioning state of the private endpoint. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary> Resource id of the private endpoint. </summary>
+        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get

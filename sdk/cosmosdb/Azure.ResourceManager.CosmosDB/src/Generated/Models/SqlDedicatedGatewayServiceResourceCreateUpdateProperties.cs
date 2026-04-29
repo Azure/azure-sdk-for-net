@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> DedicatedGatewayType for the service. </summary>
+        [WirePath("dedicatedGatewayType")]
         public DedicatedGatewayType? DedicatedGatewayType { get; set; }
     }
 }

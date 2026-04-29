@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The properties of a DataTransfer Job. </summary>
+        [WirePath("properties")]
         internal DataTransferJobProperties Properties { get; }
 
         /// <summary> Job Name. </summary>
+        [WirePath("properties.jobName")]
         public string JobName
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Source DataStore details. </summary>
+        [WirePath("properties.source")]
         public DataTransferDataSourceSink Source
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Destination DataStore details. </summary>
+        [WirePath("properties.destination")]
         public DataTransferDataSourceSink Destination
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Job Status. </summary>
+        [WirePath("properties.status")]
         public string Status
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Processed Count. </summary>
+        [WirePath("properties.processedCount")]
         public long? ProcessedCount
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Total Count. </summary>
+        [WirePath("properties.totalCount")]
         public long? TotalCount
         {
             get
@@ -95,6 +102,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Last Updated Time (ISO-8601 format). </summary>
+        [WirePath("properties.lastUpdatedUtcTime")]
         public DateTimeOffset? LastUpdatedUtcOn
         {
             get
@@ -104,6 +112,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Worker count. </summary>
+        [WirePath("properties.workerCount")]
         public int? WorkerCount
         {
             get
@@ -113,6 +122,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Error response for Faulted job. </summary>
+        [WirePath("properties.error")]
         public CosmosDBErrorResult Error
         {
             get
@@ -122,6 +132,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Total Duration of Job. </summary>
+        [WirePath("properties.duration")]
         public string Duration
         {
             get
@@ -131,6 +142,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Mode of job execution. </summary>
+        [WirePath("properties.mode")]
         public DataTransferJobMode? Mode
         {
             get

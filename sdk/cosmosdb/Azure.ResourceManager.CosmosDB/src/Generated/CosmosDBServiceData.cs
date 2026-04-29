@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Services response resource. </summary>
+        [WirePath("properties")]
         public CosmosDBServiceProperties Properties { get; }
     }
 }

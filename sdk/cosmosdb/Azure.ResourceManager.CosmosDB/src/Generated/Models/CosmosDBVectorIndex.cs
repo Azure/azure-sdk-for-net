@@ -48,18 +48,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The path to the vector field in the document. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
 
         /// <summary> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </summary>
+        [WirePath("type")]
         public CosmosDBVectorIndexType Type { get; set; }
 
         /// <summary> The number of bytes used in product quantization of the vectors. A larger value may result in better recall for vector searches at the expense of latency. This is only applicable for the quantizedFlat and diskANN vector index types. </summary>
+        [WirePath("quantizationByteSize")]
         public long? QuantizationByteSize { get; set; }
 
         /// <summary> This is the size of the candidate list of approximate neighbors stored while building the DiskANN index as part of the optimization processes. Large values may improve recall at the expense of latency. This is only applicable for the diskANN vector index type. </summary>
+        [WirePath("indexingSearchListSize")]
         public long? IndexingSearchListSize { get; set; }
 
         /// <summary> Array of shard keys for the vector index. This is only applicable for the quantizedFlat and diskANN vector index types. </summary>
+        [WirePath("vectorIndexShardKey")]
         public IList<string> VectorIndexShardKey { get; }
     }
 }

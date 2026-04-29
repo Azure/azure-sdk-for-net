@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         internal FleetAnalyticsProperties Properties { get; set; }
 
         /// <summary> A provisioning state of the FleetAnalytics. </summary>
+        [WirePath("properties.provisioningState")]
         public CosmosDBStatus? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The type of the fleet analytics resource. </summary>
+        [WirePath("properties.storageLocationType")]
         public FleetAnalyticsPropertiesStorageLocationType? StorageLocationType
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The unique identifier of the fleet analytics resource. </summary>
+        [WirePath("properties.storageLocationUri")]
         public string StorageLocationUri
         {
             get

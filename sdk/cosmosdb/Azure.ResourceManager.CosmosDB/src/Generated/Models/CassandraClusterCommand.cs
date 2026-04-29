@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -50,9 +51,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The command which should be run. </summary>
+        [WirePath("command")]
         public string Command { get; }
 
         /// <summary> The unique id of command. </summary>
+        [WirePath("commandId")]
         public string CommandId { get; }
 
         /// <summary>
@@ -81,27 +84,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("arguments")]
         public BinaryData Arguments { get; }
 
         /// <summary> IP address of the cassandra host to run the command on. </summary>
+        [WirePath("host")]
         public string Host { get; }
 
         /// <summary> Whether command has admin privileges. </summary>
+        [WirePath("isAdmin")]
         public bool? IsAdmin { get; }
 
         /// <summary> If true, stops cassandra before executing the command and then start it again. </summary>
+        [WirePath("cassandraStopStart")]
         public bool? ShouldStopCassandraBeforeStart { get; }
 
         /// <summary> If true, allows the command to <i>write</i> to the cassandra directory, otherwise read-only. </summary>
+        [WirePath("readWrite")]
         public bool? IsReadWrite { get; }
 
         /// <summary> Result output of the command. </summary>
+        [WirePath("result")]
         public string Result { get; }
 
         /// <summary> Status of the command. </summary>
+        [WirePath("status")]
         public CassandraClusterCommandStatus? Status { get; }
 
         /// <summary> The name of the file where the result is written. </summary>
+        [WirePath("outputFile")]
         public string OutputFile { get; }
     }
 }

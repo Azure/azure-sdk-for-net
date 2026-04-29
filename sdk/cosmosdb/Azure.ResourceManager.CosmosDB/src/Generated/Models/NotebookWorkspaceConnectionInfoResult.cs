@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Specifies auth token used for connecting to Notebook server (uses token-based auth). </summary>
+        [WirePath("authToken")]
         public string AuthToken { get; }
 
         /// <summary> Specifies the endpoint of Notebook server. </summary>
+        [WirePath("notebookServerEndpoint")]
         public string NotebookServerEndpoint { get; }
     }
 }

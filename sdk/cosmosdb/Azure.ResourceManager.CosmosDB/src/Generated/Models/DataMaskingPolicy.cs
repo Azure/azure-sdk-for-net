@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of JSON paths to include in the masking policy. </summary>
+        [WirePath("includedPaths")]
         public IList<DataMaskingPolicyIncludedPathsItem> IncludedPaths { get; }
 
         /// <summary> List of JSON paths to exclude from masking. </summary>
+        [WirePath("excludedPaths")]
         public IList<DataMaskingPolicyExcludedPathsItem> ExcludedPaths { get; }
 
         /// <summary> Flag indicating whether the data masking policy is enabled. </summary>
+        [WirePath("isPolicyEnabled")]
         public bool? IsPolicyEnabled { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Configuration values for periodic mode backup. </summary>
+        [WirePath("periodicModeProperties")]
         public PeriodicModeProperties PeriodicModeProperties { get; set; }
     }
 }

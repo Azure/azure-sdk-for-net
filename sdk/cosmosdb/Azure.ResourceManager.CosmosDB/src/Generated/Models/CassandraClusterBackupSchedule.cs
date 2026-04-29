@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unique identifier of backup schedule. </summary>
+        [WirePath("scheduleName")]
         public string ScheduleName { get; set; }
 
         /// <summary> The cron expression that defines when you want to back up your data. </summary>
+        [WirePath("cronExpression")]
         public string CronExpression { get; set; }
 
         /// <summary> The retention period (hours) of the backups. If you want to retain data forever, set retention to 0. </summary>
+        [WirePath("retentionInHours")]
         public int? RetentionInHours { get; set; }
     }
 }

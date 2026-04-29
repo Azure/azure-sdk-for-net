@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Value of the connection string. </summary>
+        [WirePath("connectionString")]
         public string ConnectionString { get; }
 
         /// <summary> Description of the connection string. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Kind of the connection string key. </summary>
+        [WirePath("keyKind")]
         public CosmosDBKind? KeyKind { get; }
 
         /// <summary> Type of the connection string. </summary>
+        [WirePath("type")]
         public Type? KeyType { get; }
     }
 }

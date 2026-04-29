@@ -56,36 +56,47 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("provisioningState")]
         public GarnetCacheProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource id of a subnet that this cluster's management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </summary>
+        [WirePath("subnetId")]
         public ResourceIdentifier SubnetId { get; set; }
 
         /// <summary> Endpoints for clients to connect to the cluster. </summary>
+        [WirePath("endPoints")]
         public IReadOnlyList<GarnetClusterResourcePropertiesEndPointsItem> EndPoints { get; }
 
         /// <summary> Number of copies of data maintained by the cluster. </summary>
+        [WirePath("replicationFactor")]
         public int? ReplicationFactor { get; set; }
 
         /// <summary> Number of nodes. </summary>
+        [WirePath("nodeCount")]
         public int? NodeCount { get; set; }
 
         /// <summary> Virtual Machine SKU used for clusters. Default value is Standard_DS14_v2. </summary>
+        [WirePath("nodeSku")]
         public string NodeSku { get; set; }
 
         /// <summary> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the garnet cluster virtual machines. </summary>
+        [WirePath("availabilityZone")]
         public bool? AvailabilityZone { get; set; }
 
         /// <summary> Allocation state of the cluster and data center resources. Active implies the virtual machines of the cluster are allocated, deallocated implies virtual machines and resources are deallocated. </summary>
+        [WirePath("allocationState")]
         public AllocationState? AllocationState { get; set; }
 
         /// <summary> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </summary>
+        [WirePath("clusterType")]
         public CassandraClusterType? ClusterType { get; set; }
 
         /// <summary> Error related to resource provisioning. </summary>
+        [WirePath("provisionError")]
         public ResponseError ProvisionError { get; set; }
 
         /// <summary> Extensions to be added or updated on cluster. </summary>
+        [WirePath("extensions")]
         public IList<string> Extensions { get; }
     }
 }

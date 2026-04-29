@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of SQL databases and their properties. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CosmosDBSqlDatabaseData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

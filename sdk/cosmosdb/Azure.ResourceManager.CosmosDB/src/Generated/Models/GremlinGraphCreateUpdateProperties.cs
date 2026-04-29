@@ -39,9 +39,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a Gremlin graph. </summary>
+        [WirePath("resource")]
         public GremlinGraphResourceInfo Resource { get; }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
+        [WirePath("options")]
         public CosmosDBCreateUpdateConfig Options { get; set; }
     }
 }

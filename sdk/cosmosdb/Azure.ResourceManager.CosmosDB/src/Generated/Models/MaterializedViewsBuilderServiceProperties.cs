@@ -28,12 +28,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="locations"> An array that contains all of the locations for the service. </param>
-        internal MaterializedViewsBuilderServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IReadOnlyDictionary<string, BinaryData> additionalProperties, IReadOnlyList<MaterializedViewsBuilderRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
+        internal MaterializedViewsBuilderServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, IReadOnlyList<MaterializedViewsBuilderRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
         {
             Locations = locations;
         }
 
         /// <summary> An array that contains all of the locations for the service. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<MaterializedViewsBuilderRegionalService> Locations { get; }
     }
 }

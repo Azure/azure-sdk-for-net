@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The properties of a ClientEncryptionKey. </summary>
+        [WirePath("properties")]
         internal ClientEncryptionKeyGetProperties Properties { get; }
 
         /// <summary> Gets the Resource. </summary>
+        [WirePath("properties.resource")]
         public CosmosDBSqlClientEncryptionKeyProperties Resource
         {
             get

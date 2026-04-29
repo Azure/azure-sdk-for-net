@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The DataTransferJobGetResults items on this page. </summary>
+        [WirePath("value")]
         public IList<DataTransferJobData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

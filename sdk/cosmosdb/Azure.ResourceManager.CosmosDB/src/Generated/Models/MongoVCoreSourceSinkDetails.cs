@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the HostName. </summary>
+        [WirePath("hostName")]
         public string HostName { get; set; }
 
         /// <summary> URI of Azure KeyVault secret containing connection string. </summary>
+        [WirePath("connectionStringKeyVaultUri")]
         public string ConnectionStringKeyVaultUri { get; set; }
     }
 }

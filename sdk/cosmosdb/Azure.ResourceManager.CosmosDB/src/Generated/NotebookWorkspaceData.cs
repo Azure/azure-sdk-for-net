@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         internal NotebookWorkspaceProperties Properties { get; }
 
         /// <summary> Specifies the endpoint of Notebook server. </summary>
+        [WirePath("properties.notebookServerEndpoint")]
         public string NotebookServerEndpoint
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Status of the notebook workspace. Possible values are: Creating, Online, Deleting, Failed, Updating. </summary>
+        [WirePath("properties.status")]
         public string Status
         {
             get

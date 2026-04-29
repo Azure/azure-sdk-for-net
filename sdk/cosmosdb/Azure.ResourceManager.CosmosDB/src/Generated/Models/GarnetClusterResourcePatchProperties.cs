@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </summary>
+        [WirePath("clusterType")]
         public CassandraClusterType? ClusterType { get; set; }
 
         /// <summary> Extensions to be added or updated on cluster. </summary>
+        [WirePath("extensions")]
         public IList<string> Extensions { get; }
     }
 }

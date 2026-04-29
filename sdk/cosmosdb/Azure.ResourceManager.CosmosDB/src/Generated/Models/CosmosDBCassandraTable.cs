@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Azure Cosmos DB for Apache Cassandra keyspace. </summary>
+        [WirePath("keyspaceName")]
         public string KeyspaceName { get; set; }
 
         /// <summary> Azure Cosmos DB for Apache Cassandra table. </summary>
+        [WirePath("tableName")]
         public string TableName { get; set; }
     }
 }
