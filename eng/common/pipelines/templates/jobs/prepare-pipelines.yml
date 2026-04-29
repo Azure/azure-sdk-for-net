@@ -39,7 +39,8 @@ jobs:
     APIReview_AutoCreate_Configurations: 93
 
   steps:
-    - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+    - ${{ if endsWith(parameters.Repository, '-pr') }}:
+      - template: /eng/common/pipelines/templates/steps/login-to-github.yml
 
     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
       parameters:
