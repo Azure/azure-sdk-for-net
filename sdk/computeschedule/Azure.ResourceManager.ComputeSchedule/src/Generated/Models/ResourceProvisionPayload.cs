@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         public ResourceProvisionPayload(int resourceCount)
         {
-            VirtualMachineOverrides = new ChangeTrackingList<BulkVMConfiguration>();
+            VirtualMachineOverrides = new ChangeTrackingList<BulkVmConfiguration>();
             ResourceCount = resourceCount;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProvisionPayload(BulkVMConfiguration virtualMachineBaseProfile, IList<BulkVMConfiguration> virtualMachineOverrides, int resourceCount, string resourcePrefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProvisionPayload(BulkVmConfiguration virtualMachineBaseProfile, IList<BulkVmConfiguration> virtualMachineOverrides, int resourceCount, string resourcePrefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachineBaseProfile = virtualMachineBaseProfile;
             VirtualMachineOverrides = virtualMachineOverrides;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Virtual machine profile object that contains VM properties that are common across all VMs in this batch  (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </summary>
-        public BulkVMConfiguration VirtualMachineBaseProfile { get; set; }
+        public BulkVmConfiguration VirtualMachineBaseProfile { get; set; }
 
         /// <summary> Virtual machine profile array that contains VM properties that needs to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </summary>
-        public IList<BulkVMConfiguration> VirtualMachineOverrides { get; }
+        public IList<BulkVmConfiguration> VirtualMachineOverrides { get; }
 
         /// <summary> Number of VMs to be created. </summary>
         public int ResourceCount { get; }

@@ -14,20 +14,20 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Specifies the configuration for a virtual machine operation. </summary>
-    public partial class BulkVMConfiguration
+    public partial class BulkVmConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkVMConfiguration"/>. </summary>
-        public BulkVMConfiguration()
+        /// <summary> Initializes a new instance of <see cref="BulkVmConfiguration"/>. </summary>
+        public BulkVmConfiguration()
         {
             Zones = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
             VmExtensions = new ChangeTrackingList<BulkActionVmExtension>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkVMConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkVmConfiguration"/>. </summary>
         /// <param name="name"> Identifier for created virtual machine. If not passed, it will be created from resource prefix. </param>
         /// <param name="computeApiVersion"> Specifies the Microsoft.Compute API version to use when creating underlying Virtual Machines. </param>
         /// <param name="resourceGroupName"> Resource group name for the virtual machine. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="properties"> Specifies the properties of the virtual machine to be created. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkVMConfiguration(string name, string computeApiVersion, string resourceGroupName, IList<string> zones, ArmPlan plan, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, Placement placement, IDictionary<string, string> tags, BulkActionVmProperties properties, IList<BulkActionVmExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkVmConfiguration(string name, string computeApiVersion, string resourceGroupName, IList<string> zones, ArmPlan plan, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, Placement placement, IDictionary<string, string> tags, BulkActionVmProperties properties, IList<BulkActionVmExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ComputeApiVersion = computeApiVersion;

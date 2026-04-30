@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceExtensionResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OccurrenceExtensionResourceData> GetAssociatedOccurrencesAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceExtensionData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OccurrenceExtensionData> GetAssociatedOccurrencesAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceExtensionResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OccurrenceExtensionResourceData> GetAssociatedOccurrences(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceExtensionData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OccurrenceExtensionData> GetAssociatedOccurrences(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 

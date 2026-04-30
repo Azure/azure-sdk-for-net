@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceExtensionResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OccurrenceExtensionResourceData> GetAssociatedOccurrencesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceExtensionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OccurrenceExtensionData> GetAssociatedOccurrencesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -178,8 +178,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceExtensionResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OccurrenceExtensionResourceData> GetAssociatedOccurrences(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceExtensionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OccurrenceExtensionData> GetAssociatedOccurrences(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 

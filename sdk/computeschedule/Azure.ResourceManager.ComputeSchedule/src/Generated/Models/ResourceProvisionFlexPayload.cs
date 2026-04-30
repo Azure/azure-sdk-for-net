@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             Argument.AssertNotNull(flexProperties, nameof(flexProperties));
 
-            VirtualMachineOverrides = new ChangeTrackingList<BulkVMConfiguration>();
+            VirtualMachineOverrides = new ChangeTrackingList<BulkVmConfiguration>();
             ResourceCount = resourceCount;
             FlexProperties = flexProperties;
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourcePrefix"> If resourceOverrides doesn't contain name, service will create name based on prefix and resourceCount. </param>
         /// <param name="flexProperties"> The flex properties for flexible VM creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProvisionFlexPayload(BulkVMConfiguration virtualMachineBaseProfile, IList<BulkVMConfiguration> virtualMachineOverrides, int resourceCount, string resourcePrefix, ComputeScheduleFlexProperties flexProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProvisionFlexPayload(BulkVmConfiguration virtualMachineBaseProfile, IList<BulkVmConfiguration> virtualMachineOverrides, int resourceCount, string resourcePrefix, ComputeScheduleFlexProperties flexProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachineBaseProfile = virtualMachineBaseProfile;
             VirtualMachineOverrides = virtualMachineOverrides;
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> JSON object that contains VM properties that are common across all VMs in this batch. </summary>
-        public BulkVMConfiguration VirtualMachineBaseProfile { get; set; }
+        public BulkVmConfiguration VirtualMachineBaseProfile { get; set; }
 
         /// <summary> JSON array that contains VM properties that should be overridden for each VM in the batch. </summary>
-        public IList<BulkVMConfiguration> VirtualMachineOverrides { get; }
+        public IList<BulkVmConfiguration> VirtualMachineOverrides { get; }
 
         /// <summary> Number of VMs to be created. </summary>
         public int ResourceCount { get; }

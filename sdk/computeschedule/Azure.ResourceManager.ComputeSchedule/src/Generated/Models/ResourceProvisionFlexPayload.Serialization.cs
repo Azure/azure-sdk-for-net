@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 writer.WritePropertyName("virtualMachineOverrides"u8);
                 writer.WriteStartArray();
-                foreach (BulkVMConfiguration item in VirtualMachineOverrides)
+                foreach (BulkVmConfiguration item in VirtualMachineOverrides)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            BulkVMConfiguration virtualMachineBaseProfile = default;
-            IList<BulkVMConfiguration> virtualMachineOverrides = default;
+            BulkVmConfiguration virtualMachineBaseProfile = default;
+            IList<BulkVmConfiguration> virtualMachineOverrides = default;
             int resourceCount = default;
             string resourcePrefix = default;
             ComputeScheduleFlexProperties flexProperties = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    virtualMachineBaseProfile = BulkVMConfiguration.DeserializeBulkVMConfiguration(prop.Value, options);
+                    virtualMachineBaseProfile = BulkVmConfiguration.DeserializeBulkVmConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("virtualMachineOverrides"u8))
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<BulkVMConfiguration> array = new List<BulkVMConfiguration>();
+                    List<BulkVmConfiguration> array = new List<BulkVmConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BulkVMConfiguration.DeserializeBulkVMConfiguration(item, options));
+                        array.Add(BulkVmConfiguration.DeserializeBulkVmConfiguration(item, options));
                     }
                     virtualMachineOverrides = array;
                     continue;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             return new ResourceProvisionFlexPayload(
                 virtualMachineBaseProfile,
-                virtualMachineOverrides ?? new ChangeTrackingList<BulkVMConfiguration>(),
+                virtualMachineOverrides ?? new ChangeTrackingList<BulkVmConfiguration>(),
                 resourceCount,
                 resourcePrefix,
                 flexProperties,

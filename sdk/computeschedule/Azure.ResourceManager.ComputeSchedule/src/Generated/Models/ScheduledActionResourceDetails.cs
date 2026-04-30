@@ -7,30 +7,32 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Represents an scheduled action resource metadata. </summary>
-    public partial class OccurrenceResourceData
+    public partial class ScheduledActionResourceDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceDetails"/>. </summary>
         /// <param name="resourceId">
         /// The ARM Id of the resource.
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </param>
-        internal OccurrenceResourceData(ResourceIdentifier resourceId)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        public ScheduledActionResourceDetails(ResourceIdentifier resourceId)
         {
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
             ResourceId = resourceId;
             NotificationSettings = new ChangeTrackingList<NotificationSettings>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceDetails"/>. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="id"> The compute RP resource id of the resource in the scheduled actions scope. . </param>
         /// <param name="type"> The type of resource. </param>
@@ -39,20 +41,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </param>
         /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
-        /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. </param>
-        /// <param name="provisioningState"> The current state of the resource. </param>
-        /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceResourceData(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationSettings> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionResourceDetails(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationSettings> notificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
             Type = @type;
             ResourceId = resourceId;
             NotificationSettings = notificationSettings;
-            ScheduledOn = scheduledOn;
-            ProvisioningState = provisioningState;
-            ErrorDetails = errorDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -69,18 +65,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// The ARM Id of the resource.
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </summary>
-        public ResourceIdentifier ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> The desired notification settings for the specified resource. </summary>
         public IList<NotificationSettings> NotificationSettings { get; }
-
-        /// <summary> The time the occurrence is scheduled for the resource. </summary>
-        public DateTimeOffset ScheduledOn { get; }
-
-        /// <summary> The current state of the resource. </summary>
-        public OccurrenceResourceProvisioningState? ProvisioningState { get; }
-
-        /// <summary> Error details for the resource. Only populated if resource is in failed state. </summary>
-        public ResponseError ErrorDetails { get; }
     }
 }

@@ -14,56 +14,56 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Specifies the required information to reference a compute gallery application version. </summary>
-    public partial class VMGalleryApplication : IJsonModel<VMGalleryApplication>
+    public partial class VmGalleryApplication : IJsonModel<VmGalleryApplication>
     {
-        /// <summary> Initializes a new instance of <see cref="VMGalleryApplication"/> for deserialization. </summary>
-        internal VMGalleryApplication()
+        /// <summary> Initializes a new instance of <see cref="VmGalleryApplication"/> for deserialization. </summary>
+        internal VmGalleryApplication()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMGalleryApplication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VmGalleryApplication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVMGalleryApplication(document.RootElement, options);
+                        return DeserializeVmGalleryApplication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMGalleryApplication)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmGalleryApplication)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VMGalleryApplication)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmGalleryApplication)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VMGalleryApplication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VmGalleryApplication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMGalleryApplication IPersistableModel<VMGalleryApplication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VmGalleryApplication IPersistableModel<VmGalleryApplication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VMGalleryApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VmGalleryApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VMGalleryApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VmGalleryApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMGalleryApplication)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VmGalleryApplication)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Tags))
             {
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMGalleryApplication IJsonModel<VMGalleryApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VmGalleryApplication IJsonModel<VmGalleryApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMGalleryApplication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VmGalleryApplication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMGalleryApplication)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VmGalleryApplication)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMGalleryApplication(document.RootElement, options);
+            return DeserializeVmGalleryApplication(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VMGalleryApplication DeserializeVMGalleryApplication(JsonElement element, ModelReaderWriterOptions options)
+        internal static VmGalleryApplication DeserializeVmGalleryApplication(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VMGalleryApplication(
+            return new VmGalleryApplication(
                 tags,
                 order,
                 packageReferenceId,

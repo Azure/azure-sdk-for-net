@@ -432,8 +432,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OccurrenceResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OccurrenceResourceData> GetAttachedResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OccurrenceDetails> GetAttachedResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -471,8 +471,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OccurrenceResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OccurrenceResourceData> GetAttachedResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OccurrenceDetails> GetAttachedResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

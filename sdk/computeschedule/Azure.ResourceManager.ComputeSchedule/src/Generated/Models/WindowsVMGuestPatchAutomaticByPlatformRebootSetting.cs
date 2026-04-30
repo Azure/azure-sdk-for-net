@@ -12,7 +12,7 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </summary>
-    public readonly partial struct WindowsVMGuestPatchAutomaticByPlatformRebootSetting : IEquatable<WindowsVMGuestPatchAutomaticByPlatformRebootSetting>
+    public readonly partial struct WindowsVmGuestPatchAutomaticByPlatformRebootSetting : IEquatable<WindowsVmGuestPatchAutomaticByPlatformRebootSetting>
     {
         private readonly string _value;
         /// <summary> Reboot setting for Unknown. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Reboot setting for Always. </summary>
         private const string AlwaysValue = "Always";
 
-        /// <summary> Initializes a new instance of <see cref="WindowsVMGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WindowsVMGuestPatchAutomaticByPlatformRebootSetting(string value)
+        public WindowsVmGuestPatchAutomaticByPlatformRebootSetting(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Reboot setting for Unknown. </summary>
-        public static WindowsVMGuestPatchAutomaticByPlatformRebootSetting Unknown { get; } = new WindowsVMGuestPatchAutomaticByPlatformRebootSetting(UnknownValue);
+        public static WindowsVmGuestPatchAutomaticByPlatformRebootSetting Unknown { get; } = new WindowsVmGuestPatchAutomaticByPlatformRebootSetting(UnknownValue);
 
         /// <summary> Reboot setting for IfRequired. </summary>
-        public static WindowsVMGuestPatchAutomaticByPlatformRebootSetting IfRequired { get; } = new WindowsVMGuestPatchAutomaticByPlatformRebootSetting(IfRequiredValue);
+        public static WindowsVmGuestPatchAutomaticByPlatformRebootSetting IfRequired { get; } = new WindowsVmGuestPatchAutomaticByPlatformRebootSetting(IfRequiredValue);
 
         /// <summary> Reboot setting for Never. </summary>
-        public static WindowsVMGuestPatchAutomaticByPlatformRebootSetting Never { get; } = new WindowsVMGuestPatchAutomaticByPlatformRebootSetting(NeverValue);
+        public static WindowsVmGuestPatchAutomaticByPlatformRebootSetting Never { get; } = new WindowsVmGuestPatchAutomaticByPlatformRebootSetting(NeverValue);
 
         /// <summary> Reboot setting for Always. </summary>
-        public static WindowsVMGuestPatchAutomaticByPlatformRebootSetting Always { get; } = new WindowsVMGuestPatchAutomaticByPlatformRebootSetting(AlwaysValue);
+        public static WindowsVmGuestPatchAutomaticByPlatformRebootSetting Always { get; } = new WindowsVmGuestPatchAutomaticByPlatformRebootSetting(AlwaysValue);
 
-        /// <summary> Determines if two <see cref="WindowsVMGuestPatchAutomaticByPlatformRebootSetting"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="WindowsVmGuestPatchAutomaticByPlatformRebootSetting"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(WindowsVMGuestPatchAutomaticByPlatformRebootSetting left, WindowsVMGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
+        public static bool operator ==(WindowsVmGuestPatchAutomaticByPlatformRebootSetting left, WindowsVmGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="WindowsVMGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="WindowsVmGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(WindowsVMGuestPatchAutomaticByPlatformRebootSetting left, WindowsVMGuestPatchAutomaticByPlatformRebootSetting right) => !left.Equals(right);
+        public static bool operator !=(WindowsVmGuestPatchAutomaticByPlatformRebootSetting left, WindowsVmGuestPatchAutomaticByPlatformRebootSetting right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="WindowsVMGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Converts a string to a <see cref="WindowsVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WindowsVMGuestPatchAutomaticByPlatformRebootSetting(string value) => new WindowsVMGuestPatchAutomaticByPlatformRebootSetting(value);
+        public static implicit operator WindowsVmGuestPatchAutomaticByPlatformRebootSetting(string value) => new WindowsVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
-        /// <summary> Converts a string to a <see cref="WindowsVMGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Converts a string to a <see cref="WindowsVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WindowsVMGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? null : new WindowsVMGuestPatchAutomaticByPlatformRebootSetting(value);
+        public static implicit operator WindowsVmGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? null : new WindowsVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is WindowsVMGuestPatchAutomaticByPlatformRebootSetting other && Equals(other);
+        public override bool Equals(object obj) => obj is WindowsVmGuestPatchAutomaticByPlatformRebootSetting other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(WindowsVMGuestPatchAutomaticByPlatformRebootSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(WindowsVmGuestPatchAutomaticByPlatformRebootSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

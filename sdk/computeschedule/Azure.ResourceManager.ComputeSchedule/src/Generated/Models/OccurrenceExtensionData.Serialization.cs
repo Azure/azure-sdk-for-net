@@ -17,51 +17,51 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The scheduled action extension. </summary>
-    public partial class OccurrenceExtensionResourceData : ResourceData, IJsonModel<OccurrenceExtensionResourceData>
+    public partial class OccurrenceExtensionData : ResourceData, IJsonModel<OccurrenceExtensionData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOccurrenceExtensionResourceData(document.RootElement, options);
+                        return DeserializeOccurrenceExtensionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OccurrenceExtensionResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OccurrenceExtensionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OccurrenceExtensionResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OccurrenceExtensionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OccurrenceExtensionResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OccurrenceExtensionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OccurrenceExtensionResourceData IPersistableModel<OccurrenceExtensionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OccurrenceExtensionResourceData)PersistableModelCreateCore(data, options);
+        OccurrenceExtensionData IPersistableModel<OccurrenceExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OccurrenceExtensionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OccurrenceExtensionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OccurrenceExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OccurrenceExtensionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OccurrenceExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OccurrenceExtensionResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OccurrenceExtensionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -87,24 +87,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OccurrenceExtensionResourceData IJsonModel<OccurrenceExtensionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OccurrenceExtensionResourceData)JsonModelCreateCore(ref reader, options);
+        OccurrenceExtensionData IJsonModel<OccurrenceExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OccurrenceExtensionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OccurrenceExtensionResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OccurrenceExtensionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOccurrenceExtensionResourceData(document.RootElement, options);
+            return DeserializeOccurrenceExtensionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OccurrenceExtensionResourceData DeserializeOccurrenceExtensionResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static OccurrenceExtensionData DeserializeOccurrenceExtensionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OccurrenceExtensionResourceData(
+            return new OccurrenceExtensionData(
                 id,
                 name,
                 resourceType,

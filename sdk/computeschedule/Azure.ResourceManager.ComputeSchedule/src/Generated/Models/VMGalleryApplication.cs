@@ -12,22 +12,22 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Specifies the required information to reference a compute gallery application version. </summary>
-    public partial class VMGalleryApplication
+    public partial class VmGalleryApplication
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMGalleryApplication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmGalleryApplication"/>. </summary>
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageReferenceId"/> is null. </exception>
-        public VMGalleryApplication(string packageReferenceId)
+        public VmGalleryApplication(string packageReferenceId)
         {
             Argument.AssertNotNull(packageReferenceId, nameof(packageReferenceId));
 
             PackageReferenceId = packageReferenceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMGalleryApplication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmGalleryApplication"/>. </summary>
         /// <param name="tags"> Optional, Specifies a passthrough value for more generic context. </param>
         /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="treatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
         /// <param name="enableAutomaticUpgrade"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the VM/VMSS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMGalleryApplication(string tags, int? order, string packageReferenceId, string configurationReference, bool? treatFailureAsDeploymentFailure, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmGalleryApplication(string tags, int? order, string packageReferenceId, string configurationReference, bool? treatFailureAsDeploymentFailure, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Order = order;

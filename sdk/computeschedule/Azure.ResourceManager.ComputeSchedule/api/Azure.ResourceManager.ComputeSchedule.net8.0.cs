@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         public static Azure.Response<Azure.ResourceManager.ComputeSchedule.Models.StartResourceOperationResult> ExecuteVirtualMachineStart(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationparameter, Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeSchedule.Models.StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationparameter, Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeSchedule.Models.StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationparameter, Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData> GetAssociatedOccurrences(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData> GetAssociatedOccurrencesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData> GetAssociatedOccurrences(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData> GetAssociatedOccurrencesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResources> GetAssociatedScheduledActions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResources> GetAssociatedScheduledActionsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ComputeSchedule.ScheduledActionResource> GetScheduledAction(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string scheduledActionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceOperationResult>> DelayAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDelayContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData> GetAttachedResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData> GetAttachedResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails> GetAttachedResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails> GetAttachedResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         public virtual System.Threading.Tasks.Task<Azure.Response> EnableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ComputeSchedule.ScheduledActionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeSchedule.ScheduledActionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData> GetAttachedResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData> GetAttachedResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails> GetAttachedResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails> GetAttachedResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceResource> GetScheduledActionOccurrence(string occurrenceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceResource>> GetScheduledActionOccurrenceAsync(string occurrenceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceCollection GetScheduledActionOccurrences() { throw null; }
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
     public partial class MockableComputeScheduleArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableComputeScheduleArmClient() { }
-        public virtual Azure.Pageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData> GetAssociatedOccurrences(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData> GetAssociatedOccurrencesAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData> GetAssociatedOccurrences(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData> GetAssociatedOccurrencesAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResources> GetAssociatedScheduledActions(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResources> GetAssociatedScheduledActionsAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ComputeSchedule.ScheduledActionOccurrenceResource GetScheduledActionOccurrenceResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         public static Azure.ResourceManager.ComputeSchedule.Models.BulkActionVmExtension BulkActionVmExtension(string name = null, Azure.ResourceManager.ComputeSchedule.Models.BulkActionVmExtensionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.BulkActionVmExtensionProperties BulkActionVmExtensionProperties(string forceUpdateTag = null, string publisher = null, string type = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, System.Collections.Generic.IDictionary<string, System.BinaryData> protectedSettings = null, bool? suppressFailures = default(bool?), Azure.ResourceManager.ComputeSchedule.Models.KeyVaultSecretReference protectedSettingsFromKeyVault = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration BulkVMConfiguration(string name = null, string computeApiVersion = null, string resourceGroupName = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ArmPlan plan = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.ComputeSchedule.Models.Placement placement = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ComputeSchedule.Models.BulkActionVmProperties properties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.BulkActionVmExtension> vmExtensions = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration BulkVmConfiguration(string name = null, string computeApiVersion = null, string resourceGroupName = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ArmPlan plan = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.ComputeSchedule.Models.Placement placement = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ComputeSchedule.Models.BulkActionVmProperties properties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.BulkActionVmExtension> vmExtensions = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent CancelOperationsContent(System.Collections.Generic.IEnumerable<string> operationIds = null, string correlationId = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsResult CancelOperationsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> results = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleFlexProperties ComputeScheduleFlexProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleVmSizeProfile> vmSizeProfiles = null, Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleOSType osType = default(Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleOSType), Azure.ResourceManager.ComputeSchedule.Models.ComputeSchedulePriorityProfile priorityProfile = null, Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZoneAllocationPolicy zoneAllocationPolicy = null) { throw null; }
@@ -352,10 +352,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static Azure.ResourceManager.ComputeSchedule.Models.KeyVaultKeyReference KeyVaultKeyReference(System.Uri keyUri = null, Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.KeyVaultSecretReference KeyVaultSecretReference(System.Uri secretUri = null, Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.OccurrenceCancelContent OccurrenceCancelContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDelayContent OccurrenceDelayContent(System.DateTimeOffset delay = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDelayContent OccurrenceDelayContent(System.DateTimeOffset delayOn = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails OccurrenceDetails(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null, Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> notificationSettings = null, System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceProvisioningState?), Azure.ResponseError errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData OccurrenceExtensionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties OccurrenceExtensionProperties(Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> notificationSettings = null, System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceProvisioningState?), Azure.ResponseError errorDetails = null, Azure.Core.ResourceIdentifier scheduledActionId = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData OccurrenceExtensionResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData OccurrenceResourceData(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null, Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> notificationSettings = null, System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceProvisioningState?), Azure.ResponseError errorDetails = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResultSummary OccurrenceResultSummary(int total = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ResourceResultSummary> statuses = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails OperationErrorDetails(string errorCode = null, string errorDetails = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.DateTimeOffset? errorDetailsTimestamp = default(System.DateTimeOffset?), string azureOperationName = null, string crpOperationId = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.OperationErrorsResult OperationErrorsResult(string operationId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? activationOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails> operationErrors = null, string requestErrorCode = null, string requestErrorDetails = null) { throw null; }
@@ -364,9 +364,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails ResourceOperationDetails(string operationId, Azure.Core.ResourceIdentifier resourceId, Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationType? opType, string subscriptionId, System.DateTimeOffset? deadline, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType? deadlineType, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionOperationState? state, string timezone, string operationTimezone, Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError resourceOperationError, System.DateTimeOffset? completedOn, Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy retryPolicy = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError ResourceOperationError(string errorCode = null, string errorDetails = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult ResourceOperationResult(Azure.Core.ResourceIdentifier resourceId = null, string errorCode = null, string errorDetails = null, Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails operation = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.ResourceProvisionFlexPayload ResourceProvisionFlexPayload(Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration virtualMachineBaseProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration> virtualMachineOverrides = null, int resourceCount = 0, string resourcePrefix = null, Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleFlexProperties flexProperties = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.ResourceProvisionFlexPayload ResourceProvisionFlexPayload(Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration virtualMachineBaseProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration> virtualMachineOverrides = null, int resourceCount = 0, string resourcePrefix = null, Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleFlexProperties flexProperties = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ResourceProvisionFlexPayload ResourceProvisionFlexPayload(System.Collections.Generic.IDictionary<string, System.BinaryData> baseProfile, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, System.BinaryData>> resourceOverrides, int resourceCount, string resourcePrefix, Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleFlexProperties flexProperties) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.ResourceProvisionPayload ResourceProvisionPayload(Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration virtualMachineBaseProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration> virtualMachineOverrides = null, int resourceCount = 0, string resourcePrefix = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.ResourceProvisionPayload ResourceProvisionPayload(Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration virtualMachineBaseProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration> virtualMachineOverrides = null, int resourceCount = 0, string resourcePrefix = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ResourceProvisionPayload ResourceProvisionPayload(System.Collections.Generic.IDictionary<string, System.BinaryData> baseProfile, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, System.BinaryData>> resourceOverrides, int resourceCount, string resourcePrefix) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ResourceResultSummary ResourceResultSummary(string code = null, int count = 0, Azure.ResponseError errorDetails = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.ScheduledActionData ScheduledActionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionProperties properties = null) { throw null; }
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionPatch ScheduledActionPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionPatchProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionPatchProperties ScheduledActionPatchProperties(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceType? resourceType = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceType?), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionType? actionType = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionType?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionsSchedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> notificationSettings = null, bool? disabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionProperties ScheduledActionProperties(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceType resourceType = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceType), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionType actionType = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionType), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionsSchedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> notificationSettings = null, bool? disabled = default(bool?), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceAttachContent ScheduledActionResourceAttachContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData> resources = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData ScheduledActionResourceData(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null, Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> notificationSettings = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceAttachContent ScheduledActionResourceAttachContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails> resources = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetachContent ScheduledActionResourceDetachContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resources = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails ScheduledActionResourceDetails(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null, Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> notificationSettings = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceOperationResult ScheduledActionResourceOperationResult(int totalResources = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceStatus> resourcesStatuses = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourcePatchContent ScheduledActionResourcePatchContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData> resources = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourcePatchContent ScheduledActionResourcePatchContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails> resources = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResources ScheduledActionResources(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionsExtensionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceStatus ScheduledActionResourceStatus(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceOperationStatus status = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceOperationStatus), Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceType resourceType = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceType), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionType actionType = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionType), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionsSchedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> notificationSettings = null, bool? disabled = default(bool?), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> resourceNotificationSettings = null) { throw null; }
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static Azure.ResourceManager.ComputeSchedule.Models.VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default(int?), Azure.ResourceManager.ComputeSchedule.Models.DeleteOptions? deleteOption = default(Azure.ResourceManager.ComputeSchedule.Models.DeleteOptions?), Azure.ResourceManager.ComputeSchedule.Models.VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineIpTag> ipTags = null, Azure.Core.ResourceIdentifier publicIPPrefixId = null, Azure.ResourceManager.ComputeSchedule.Models.IPVersion? publicIPAddressVersion = default(Azure.ResourceManager.ComputeSchedule.Models.IPVersion?), Azure.ResourceManager.ComputeSchedule.Models.PublicIPAllocationMethod? publicIPAllocationMethod = default(Azure.ResourceManager.ComputeSchedule.Models.PublicIPAllocationMethod?)) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.VirtualMachinePublicIPAddressDnsSettingsConfiguration VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel = null, Azure.ResourceManager.ComputeSchedule.Models.DomainNameLabelScopeType? domainNameLabelScope = default(Azure.ResourceManager.ComputeSchedule.Models.DomainNameLabelScopeType?)) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineStorageProfile VirtualMachineStorageProfile(Azure.ResourceManager.ComputeSchedule.Models.ImageReference imageReference = null, Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineOSDisk osDisk = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDataDisk> dataDisks = null, Azure.ResourceManager.ComputeSchedule.Models.DiskControllerType? diskControllerType = default(Azure.ResourceManager.ComputeSchedule.Models.DiskControllerType?)) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication VMGalleryApplication(string tags = null, int? order = default(int?), string packageReferenceId = null, string configurationReference = null, bool? treatFailureAsDeploymentFailure = default(bool?), bool? enableAutomaticUpgrade = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication VmGalleryApplication(string tags = null, int? order = default(int?), string packageReferenceId = null, string configurationReference = null, bool? treatFailureAsDeploymentFailure = default(bool?), bool? enableAutomaticUpgrade = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.WindowsConfiguration WindowsConfiguration(bool? provisionVmAgent = default(bool?), bool? isAutomaticUpdatesEnabled = default(bool?), string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.AdditionalUnattendContent> additionalUnattendContent = null, Azure.ResourceManager.ComputeSchedule.Models.PatchSettings patchSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.WinRMListener> winRMListeners = null) { throw null; }
     }
     public partial class BootDiagnostics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.BootDiagnostics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BootDiagnostics>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public Azure.ResourceManager.ComputeSchedule.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public string ExtensionsTimeBudget { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication> GalleryApplications { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication> GalleryApplications { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineHardwareProfile HardwareProfile { get { throw null; } set { } }
         public string LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
@@ -487,9 +487,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BulkActionVmProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BulkActionVmProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BulkVMConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration>
+    public partial class BulkVmConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration>
     {
-        public BulkVMConfiguration() { }
+        public BulkVmConfiguration() { }
         public string ComputeApiVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -501,15 +501,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.BulkActionVmExtension> VmExtensions { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CachingType : System.IEquatable<Azure.ResourceManager.ComputeSchedule.Models.CachingType>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         public ComputeScheduleManagedDiskConfig() { }
         public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeSchedule.Models.StorageAccountType? StorageAccountType { get { throw null; } set { } }
         protected override Azure.ResourceManager.ComputeSchedule.Models.SubResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1314,8 +1314,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         public LinuxPatchSettings() { }
         public Azure.ResourceManager.ComputeSchedule.Models.LinuxPatchAssessmentMode? AssessmentMode { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode? PatchMode { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode? PatchMode { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.LinuxPatchSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.LinuxPatchSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1327,54 +1327,54 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxPatchSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LinuxVMGuestPatchAutomaticByPlatformRebootSetting : System.IEquatable<Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting>
+    public readonly partial struct LinuxVmGuestPatchAutomaticByPlatformRebootSetting : System.IEquatable<Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public LinuxVMGuestPatchAutomaticByPlatformRebootSetting(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting Always { get { throw null; } }
-        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting IfRequired { get { throw null; } }
-        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting Never { get { throw null; } }
-        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting other) { throw null; }
+        public LinuxVmGuestPatchAutomaticByPlatformRebootSetting(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting Always { get { throw null; } }
+        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting IfRequired { get { throw null; } }
+        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting Never { get { throw null; } }
+        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LinuxVMGuestPatchAutomaticByPlatformSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings>
+    public partial class LinuxVmGuestPatchAutomaticByPlatformSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings>
     {
-        public LinuxVMGuestPatchAutomaticByPlatformSettings() { }
+        public LinuxVmGuestPatchAutomaticByPlatformSettings() { }
         public bool? BypassPlatformSafetyChecksOnUserSchedule { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchAutomaticByPlatformSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchAutomaticByPlatformSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LinuxVMGuestPatchMode : System.IEquatable<Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode>
+    public readonly partial struct LinuxVmGuestPatchMode : System.IEquatable<Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public LinuxVMGuestPatchMode(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode AutomaticByPlatform { get { throw null; } }
-        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode ImageDefault { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode other) { throw null; }
+        public LinuxVmGuestPatchMode(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode AutomaticByPlatform { get { throw null; } }
+        public static Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode ImageDefault { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode left, Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode left, Azure.ResourceManager.ComputeSchedule.Models.LinuxVMGuestPatchMode right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode left, Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode left, Azure.ResourceManager.ComputeSchedule.Models.LinuxVmGuestPatchMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1529,8 +1529,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class OccurrenceDelayContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDelayContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDelayContent>
     {
-        public OccurrenceDelayContent(System.DateTimeOffset delay, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds) { }
-        public System.DateTimeOffset Delay { get { throw null; } }
+        public OccurrenceDelayContent(System.DateTimeOffset delayOn, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds) { }
+        public System.DateTimeOffset DelayOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourceIds { get { throw null; } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDelayContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1541,6 +1541,41 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDelayContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDelayContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDelayContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDelayContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OccurrenceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails>
+    {
+        internal OccurrenceDetails() { }
+        public Azure.ResponseError ErrorDetails { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> NotificationSettings { get { throw null; } }
+        public Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public System.DateTimeOffset ScheduledOn { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OccurrenceExtensionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData>
+    {
+        internal OccurrenceExtensionData() { }
+        public Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OccurrenceExtensionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties>
     {
@@ -1560,41 +1595,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OccurrenceExtensionResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData>
-    {
-        internal OccurrenceExtensionResourceData() { }
-        public Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceExtensionResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OccurrenceResourceData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData>
-    {
-        internal OccurrenceResourceData() { }
-        public Azure.ResponseError ErrorDetails { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> NotificationSettings { get { throw null; } }
-        public Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
-        public System.DateTimeOffset ScheduledOn { get { throw null; } }
-        public string Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OccurrenceResourceProvisioningState : System.IEquatable<Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceProvisioningState>
@@ -1704,9 +1704,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         public PatchSettings() { }
         public Azure.ResourceManager.ComputeSchedule.Models.WindowsPatchAssessmentMode? AssessmentMode { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get { throw null; } set { } }
         public bool? EnableHotpatching { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode? PatchMode { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode? PatchMode { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.PatchSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.PatchSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1905,8 +1905,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public int ResourceCount { get { throw null; } }
         public System.Collections.Generic.IList<System.Collections.Generic.IDictionary<string, System.BinaryData>> ResourceOverrides { get { throw null; } }
         public string ResourcePrefix { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration VirtualMachineBaseProfile { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration> VirtualMachineOverrides { get { throw null; } }
+        public Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration VirtualMachineBaseProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration> VirtualMachineOverrides { get { throw null; } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ResourceProvisionFlexPayload JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ResourceProvisionFlexPayload PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1924,8 +1924,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public int ResourceCount { get { throw null; } }
         public System.Collections.Generic.IList<System.Collections.Generic.IDictionary<string, System.BinaryData>> ResourceOverrides { get { throw null; } }
         public string ResourcePrefix { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration VirtualMachineBaseProfile { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.BulkVMConfiguration> VirtualMachineOverrides { get { throw null; } }
+        public Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration VirtualMachineBaseProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.BulkVmConfiguration> VirtualMachineOverrides { get { throw null; } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ResourceProvisionPayload JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ResourceProvisionPayload PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2123,8 +2123,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ScheduledActionResourceAttachContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceAttachContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceAttachContent>
     {
-        public ScheduledActionResourceAttachContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData> resources) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData> Resources { get { throw null; } }
+        public ScheduledActionResourceAttachContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails> resources) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails> Resources { get { throw null; } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceAttachContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceAttachContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2134,24 +2134,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceAttachContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceAttachContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceAttachContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceAttachContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ScheduledActionResourceData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData>
-    {
-        public ScheduledActionResourceData(Azure.Core.ResourceIdentifier resourceId) { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> NotificationSettings { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-        public string Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScheduledActionResourceDetachContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetachContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetachContent>
     {
@@ -2166,6 +2148,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetachContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetachContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetachContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetachContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ScheduledActionResourceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails>
+    {
+        public ScheduledActionResourceDetails(Azure.Core.ResourceIdentifier resourceId) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.NotificationSettings> NotificationSettings { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScheduledActionResourceOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceOperationResult>
     {
@@ -2201,8 +2201,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ScheduledActionResourcePatchContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourcePatchContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourcePatchContent>
     {
-        public ScheduledActionResourcePatchContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData> resources) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData> Resources { get { throw null; } }
+        public ScheduledActionResourcePatchContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails> resources) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceDetails> Resources { get { throw null; } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourcePatchContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourcePatchContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2745,6 +2745,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDataDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDataDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class VirtualMachineDiskSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile>
+    {
+        public VirtualMachineDiskSecurityProfile() { }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeSchedule.Models.SecurityEncryptionType? SecurityEncryptionType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineDiskSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class VirtualMachineHardwareProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineHardwareProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineHardwareProfile>
     {
         public VirtualMachineHardwareProfile() { }
@@ -3012,39 +3027,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineStorageProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VirtualMachineStorageProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VMDiskSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile>
+    public partial class VmGalleryApplication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication>
     {
-        public VMDiskSecurityProfile() { }
-        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeSchedule.Models.SecurityEncryptionType? SecurityEncryptionType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VMDiskSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class VMGalleryApplication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication>
-    {
-        public VMGalleryApplication(string packageReferenceId) { }
+        public VmGalleryApplication(string packageReferenceId) { }
         public string ConfigurationReference { get { throw null; } set { } }
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public int? Order { get { throw null; } set { } }
         public string PackageReferenceId { get { throw null; } }
         public string Tags { get { throw null; } set { } }
         public bool? TreatFailureAsDeploymentFailure { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VMGalleryApplication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.VmGalleryApplication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WindowsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsConfiguration>
     {
@@ -3083,55 +3083,55 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WindowsVMGuestPatchAutomaticByPlatformRebootSetting : System.IEquatable<Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting>
+    public readonly partial struct WindowsVmGuestPatchAutomaticByPlatformRebootSetting : System.IEquatable<Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public WindowsVMGuestPatchAutomaticByPlatformRebootSetting(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting Always { get { throw null; } }
-        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting IfRequired { get { throw null; } }
-        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting Never { get { throw null; } }
-        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting other) { throw null; }
+        public WindowsVmGuestPatchAutomaticByPlatformRebootSetting(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting Always { get { throw null; } }
+        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting IfRequired { get { throw null; } }
+        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting Never { get { throw null; } }
+        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WindowsVMGuestPatchAutomaticByPlatformSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings>
+    public partial class WindowsVmGuestPatchAutomaticByPlatformSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings>
     {
-        public WindowsVMGuestPatchAutomaticByPlatformSettings() { }
+        public WindowsVmGuestPatchAutomaticByPlatformSettings() { }
         public bool? BypassPlatformSafetyChecksOnUserSchedule { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchAutomaticByPlatformSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchAutomaticByPlatformSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WindowsVMGuestPatchMode : System.IEquatable<Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode>
+    public readonly partial struct WindowsVmGuestPatchMode : System.IEquatable<Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public WindowsVMGuestPatchMode(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode AutomaticByOS { get { throw null; } }
-        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode AutomaticByPlatform { get { throw null; } }
-        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode Manual { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode other) { throw null; }
+        public WindowsVmGuestPatchMode(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode AutomaticByOS { get { throw null; } }
+        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode AutomaticByPlatform { get { throw null; } }
+        public static Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode Manual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode left, Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode left, Azure.ResourceManager.ComputeSchedule.Models.WindowsVMGuestPatchMode right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode left, Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode left, Azure.ResourceManager.ComputeSchedule.Models.WindowsVmGuestPatchMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class WinRMListener : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.WinRMListener>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.WinRMListener>

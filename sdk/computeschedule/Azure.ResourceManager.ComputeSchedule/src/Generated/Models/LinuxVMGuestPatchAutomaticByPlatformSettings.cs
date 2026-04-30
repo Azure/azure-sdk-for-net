@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Specifies additional settings to be applied when patch mode AutomaticByPlatform is selected in Linux patch settings. </summary>
-    public partial class LinuxVMGuestPatchAutomaticByPlatformSettings
+    public partial class LinuxVmGuestPatchAutomaticByPlatformSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LinuxVMGuestPatchAutomaticByPlatformSettings"/>. </summary>
-        public LinuxVMGuestPatchAutomaticByPlatformSettings()
+        /// <summary> Initializes a new instance of <see cref="LinuxVmGuestPatchAutomaticByPlatformSettings"/>. </summary>
+        public LinuxVmGuestPatchAutomaticByPlatformSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinuxVMGuestPatchAutomaticByPlatformSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxVmGuestPatchAutomaticByPlatformSettings"/>. </summary>
         /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
         /// <param name="bypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxVMGuestPatchAutomaticByPlatformSettings(LinuxVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? bypassPlatformSafetyChecksOnUserSchedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinuxVmGuestPatchAutomaticByPlatformSettings(LinuxVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? bypassPlatformSafetyChecksOnUserSchedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RebootSetting = rebootSetting;
             BypassPlatformSafetyChecksOnUserSchedule = bypassPlatformSafetyChecksOnUserSchedule;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </summary>
-        public LinuxVMGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get; set; }
+        public LinuxVmGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get; set; }
 
         /// <summary> Enables customer to schedule patching without accidental upgrades. </summary>
         public bool? BypassPlatformSafetyChecksOnUserSchedule { get; set; }

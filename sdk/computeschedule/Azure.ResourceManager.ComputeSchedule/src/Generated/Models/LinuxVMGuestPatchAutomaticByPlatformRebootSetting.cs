@@ -12,7 +12,7 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </summary>
-    public readonly partial struct LinuxVMGuestPatchAutomaticByPlatformRebootSetting : IEquatable<LinuxVMGuestPatchAutomaticByPlatformRebootSetting>
+    public readonly partial struct LinuxVmGuestPatchAutomaticByPlatformRebootSetting : IEquatable<LinuxVmGuestPatchAutomaticByPlatformRebootSetting>
     {
         private readonly string _value;
         /// <summary> Unknown reboot setting. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Always reboot. </summary>
         private const string AlwaysValue = "Always";
 
-        /// <summary> Initializes a new instance of <see cref="LinuxVMGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LinuxVMGuestPatchAutomaticByPlatformRebootSetting(string value)
+        public LinuxVmGuestPatchAutomaticByPlatformRebootSetting(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Unknown reboot setting. </summary>
-        public static LinuxVMGuestPatchAutomaticByPlatformRebootSetting Unknown { get; } = new LinuxVMGuestPatchAutomaticByPlatformRebootSetting(UnknownValue);
+        public static LinuxVmGuestPatchAutomaticByPlatformRebootSetting Unknown { get; } = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(UnknownValue);
 
         /// <summary> Reboot if required. </summary>
-        public static LinuxVMGuestPatchAutomaticByPlatformRebootSetting IfRequired { get; } = new LinuxVMGuestPatchAutomaticByPlatformRebootSetting(IfRequiredValue);
+        public static LinuxVmGuestPatchAutomaticByPlatformRebootSetting IfRequired { get; } = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(IfRequiredValue);
 
         /// <summary> Never reboot. </summary>
-        public static LinuxVMGuestPatchAutomaticByPlatformRebootSetting Never { get; } = new LinuxVMGuestPatchAutomaticByPlatformRebootSetting(NeverValue);
+        public static LinuxVmGuestPatchAutomaticByPlatformRebootSetting Never { get; } = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(NeverValue);
 
         /// <summary> Always reboot. </summary>
-        public static LinuxVMGuestPatchAutomaticByPlatformRebootSetting Always { get; } = new LinuxVMGuestPatchAutomaticByPlatformRebootSetting(AlwaysValue);
+        public static LinuxVmGuestPatchAutomaticByPlatformRebootSetting Always { get; } = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(AlwaysValue);
 
-        /// <summary> Determines if two <see cref="LinuxVMGuestPatchAutomaticByPlatformRebootSetting"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LinuxVMGuestPatchAutomaticByPlatformRebootSetting left, LinuxVMGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
+        public static bool operator ==(LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LinuxVMGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LinuxVMGuestPatchAutomaticByPlatformRebootSetting left, LinuxVMGuestPatchAutomaticByPlatformRebootSetting right) => !left.Equals(right);
+        public static bool operator !=(LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LinuxVMGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinuxVMGuestPatchAutomaticByPlatformRebootSetting(string value) => new LinuxVMGuestPatchAutomaticByPlatformRebootSetting(value);
+        public static implicit operator LinuxVmGuestPatchAutomaticByPlatformRebootSetting(string value) => new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
-        /// <summary> Converts a string to a <see cref="LinuxVMGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LinuxVMGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? null : new LinuxVMGuestPatchAutomaticByPlatformRebootSetting(value);
+        public static implicit operator LinuxVmGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? null : new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LinuxVMGuestPatchAutomaticByPlatformRebootSetting other && Equals(other);
+        public override bool Equals(object obj) => obj is LinuxVmGuestPatchAutomaticByPlatformRebootSetting other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LinuxVMGuestPatchAutomaticByPlatformRebootSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LinuxVmGuestPatchAutomaticByPlatformRebootSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

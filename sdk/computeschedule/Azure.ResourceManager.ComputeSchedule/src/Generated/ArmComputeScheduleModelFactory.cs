@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourcePrefix"> If resourceOverrides doesn't contain name, service will create name based on prefix and resourceCount. </param>
         /// <param name="flexProperties"> The flex properties for flexible VM creation. </param>
         /// <returns> A new <see cref="Models.ResourceProvisionFlexPayload"/> instance for mocking. </returns>
-        public static ResourceProvisionFlexPayload ResourceProvisionFlexPayload(BulkVMConfiguration virtualMachineBaseProfile = default, IEnumerable<BulkVMConfiguration> virtualMachineOverrides = default, int resourceCount = default, string resourcePrefix = default, ComputeScheduleFlexProperties flexProperties = default)
+        public static ResourceProvisionFlexPayload ResourceProvisionFlexPayload(BulkVmConfiguration virtualMachineBaseProfile = default, IEnumerable<BulkVmConfiguration> virtualMachineOverrides = default, int resourceCount = default, string resourcePrefix = default, ComputeScheduleFlexProperties flexProperties = default)
         {
-            virtualMachineOverrides ??= new ChangeTrackingList<BulkVMConfiguration>();
+            virtualMachineOverrides ??= new ChangeTrackingList<BulkVmConfiguration>();
 
             return new ResourceProvisionFlexPayload(
                 virtualMachineBaseProfile,
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="tags"> Resource tags to apply to the virtual machines created by this bulk action. </param>
         /// <param name="properties"> Specifies the properties of the virtual machine to be created. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
-        /// <returns> A new <see cref="Models.BulkVMConfiguration"/> instance for mocking. </returns>
-        public static BulkVMConfiguration BulkVMConfiguration(string name = default, string computeApiVersion = default, string resourceGroupName = default, IEnumerable<string> zones = default, ArmPlan plan = default, ManagedServiceIdentity identity = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, BulkActionVmProperties properties = default, IEnumerable<BulkActionVmExtension> vmExtensions = default)
+        /// <returns> A new <see cref="Models.BulkVmConfiguration"/> instance for mocking. </returns>
+        public static BulkVmConfiguration BulkVmConfiguration(string name = default, string computeApiVersion = default, string resourceGroupName = default, IEnumerable<string> zones = default, ArmPlan plan = default, ManagedServiceIdentity identity = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, BulkActionVmProperties properties = default, IEnumerable<BulkActionVmExtension> vmExtensions = default)
         {
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
             vmExtensions ??= new ChangeTrackingList<BulkActionVmExtension>();
 
-            return new BulkVMConfiguration(
+            return new BulkVmConfiguration(
                 name,
                 computeApiVersion,
                 resourceGroupName,
@@ -585,10 +585,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="configurationReference"> Optional, Specifies the uri to an azure blob that will replace the default configuration for the package if provided. </param>
         /// <param name="treatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
         /// <param name="enableAutomaticUpgrade"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the VM/VMSS. </param>
-        /// <returns> A new <see cref="Models.VMGalleryApplication"/> instance for mocking. </returns>
-        public static VMGalleryApplication VMGalleryApplication(string tags = default, int? order = default, string packageReferenceId = default, string configurationReference = default, bool? treatFailureAsDeploymentFailure = default, bool? enableAutomaticUpgrade = default)
+        /// <returns> A new <see cref="Models.VmGalleryApplication"/> instance for mocking. </returns>
+        public static VmGalleryApplication VmGalleryApplication(string tags = default, int? order = default, string packageReferenceId = default, string configurationReference = default, bool? treatFailureAsDeploymentFailure = default, bool? enableAutomaticUpgrade = default)
         {
-            return new VMGalleryApplication(
+            return new VmGalleryApplication(
                 tags,
                 order,
                 packageReferenceId,
@@ -712,9 +712,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
         /// <returns> A new <see cref="Models.ResourceProvisionPayload"/> instance for mocking. </returns>
-        public static ResourceProvisionPayload ResourceProvisionPayload(BulkVMConfiguration virtualMachineBaseProfile = default, IEnumerable<BulkVMConfiguration> virtualMachineOverrides = default, int resourceCount = default, string resourcePrefix = default)
+        public static ResourceProvisionPayload ResourceProvisionPayload(BulkVmConfiguration virtualMachineBaseProfile = default, IEnumerable<BulkVmConfiguration> virtualMachineOverrides = default, int resourceCount = default, string resourcePrefix = default)
         {
-            virtualMachineOverrides ??= new ChangeTrackingList<BulkVMConfiguration>();
+            virtualMachineOverrides ??= new ChangeTrackingList<BulkVmConfiguration>();
 
             return new ResourceProvisionPayload(virtualMachineBaseProfile, virtualMachineOverrides.ToList(), resourceCount, resourcePrefix, additionalBinaryDataProperties: null);
         }
@@ -981,12 +981,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </param>
         /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionResourceData"/> instance for mocking. </returns>
-        public static ScheduledActionResourceData ScheduledActionResourceData(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationSettings> notificationSettings = default)
+        /// <returns> A new <see cref="Models.ScheduledActionResourceDetails"/> instance for mocking. </returns>
+        public static ScheduledActionResourceDetails ScheduledActionResourceDetails(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationSettings> notificationSettings = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
 
-            return new ScheduledActionResourceData(
+            return new ScheduledActionResourceDetails(
                 name,
                 id,
                 @type,
@@ -998,9 +998,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Request model to attach a list of scheduled action resources. </summary>
         /// <param name="resources"> List of resources to be attached/patched. </param>
         /// <returns> A new <see cref="Models.ScheduledActionResourceAttachContent"/> instance for mocking. </returns>
-        public static ScheduledActionResourceAttachContent ScheduledActionResourceAttachContent(IEnumerable<ScheduledActionResourceData> resources = default)
+        public static ScheduledActionResourceAttachContent ScheduledActionResourceAttachContent(IEnumerable<ScheduledActionResourceDetails> resources = default)
         {
-            resources ??= new ChangeTrackingList<ScheduledActionResourceData>();
+            resources ??= new ChangeTrackingList<ScheduledActionResourceDetails>();
 
             return new ScheduledActionResourceAttachContent(resources.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1039,9 +1039,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Request model perform a resource operation in a list of resources. </summary>
         /// <param name="resources"> The list of resources we watch to patch. </param>
         /// <returns> A new <see cref="Models.ScheduledActionResourcePatchContent"/> instance for mocking. </returns>
-        public static ScheduledActionResourcePatchContent ScheduledActionResourcePatchContent(IEnumerable<ScheduledActionResourceData> resources = default)
+        public static ScheduledActionResourcePatchContent ScheduledActionResourcePatchContent(IEnumerable<ScheduledActionResourceDetails> resources = default)
         {
-            resources ??= new ChangeTrackingList<ScheduledActionResourceData>();
+            resources ??= new ChangeTrackingList<ScheduledActionResourceDetails>();
 
             return new ScheduledActionResourcePatchContent(resources.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1164,12 +1164,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. </param>
         /// <param name="provisioningState"> The current state of the resource. </param>
         /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
-        /// <returns> A new <see cref="Models.OccurrenceResourceData"/> instance for mocking. </returns>
-        public static OccurrenceResourceData OccurrenceResourceData(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationSettings> notificationSettings = default, DateTimeOffset scheduledOn = default, OccurrenceResourceProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        /// <returns> A new <see cref="Models.OccurrenceDetails"/> instance for mocking. </returns>
+        public static OccurrenceDetails OccurrenceDetails(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationSettings> notificationSettings = default, DateTimeOffset scheduledOn = default, OccurrenceResourceProvisioningState? provisioningState = default, ResponseError errorDetails = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
 
-            return new OccurrenceResourceData(
+            return new OccurrenceDetails(
                 name,
                 id,
                 @type,
@@ -1182,14 +1182,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Request to ask for a delay in an occurrence, delay should be set to client local time eg (ACST) 2025-05-30T22:03:00+09:30, (PST) 2025-05-30T06:35:00-07:00. </summary>
-        /// <param name="delay"> The exact time to delay the operations to. </param>
+        /// <param name="delayOn"> The exact time to delay the operations to. </param>
         /// <param name="resourceIds"> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </param>
         /// <returns> A new <see cref="Models.OccurrenceDelayContent"/> instance for mocking. </returns>
-        public static OccurrenceDelayContent OccurrenceDelayContent(DateTimeOffset delay = default, IEnumerable<ResourceIdentifier> resourceIds = default)
+        public static OccurrenceDelayContent OccurrenceDelayContent(DateTimeOffset delayOn = default, IEnumerable<ResourceIdentifier> resourceIds = default)
         {
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new OccurrenceDelayContent(delay, resourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new OccurrenceDelayContent(delayOn, resourceIds.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The scheduled action extension. </summary>
@@ -1198,10 +1198,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.OccurrenceExtensionResourceData"/> instance for mocking. </returns>
-        public static OccurrenceExtensionResourceData OccurrenceExtensionResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceExtensionProperties properties = default)
+        /// <returns> A new <see cref="Models.OccurrenceExtensionData"/> instance for mocking. </returns>
+        public static OccurrenceExtensionData OccurrenceExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceExtensionProperties properties = default)
         {
-            return new OccurrenceExtensionResourceData(
+            return new OccurrenceExtensionData(
                 id,
                 name,
                 resourceType,

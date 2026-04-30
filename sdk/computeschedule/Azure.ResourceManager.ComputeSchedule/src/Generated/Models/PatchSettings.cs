@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="assessmentMode"> Specifies the mode of VM Guest patch assessment for the IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>ImageDefault</b> - You control the timing of patch assessments on a virtual machine.&lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - The platform will trigger periodic patch assessments. The property provisionVMAgent must be true. </param>
         /// <param name="automaticByPlatformSettings"> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Windows. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PatchSettings(WindowsVMGuestPatchMode? patchMode, bool? enableHotpatching, WindowsPatchAssessmentMode? assessmentMode, WindowsVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PatchSettings(WindowsVmGuestPatchMode? patchMode, bool? enableHotpatching, WindowsPatchAssessmentMode? assessmentMode, WindowsVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchMode = patchMode;
             EnableHotpatching = enableHotpatching;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual machines associated to virtual machine scale set with OrchestrationMode as Flexible.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of patches to a virtual machine. You do this by applying patches manually inside the VM. In this mode, automatic updates are disabled; the property WindowsConfiguration.enableAutomaticUpdates must be false&lt;br /&gt;&lt;br /&gt; <b>AutomaticByOS</b> - The virtual machine will automatically be updated by the OS. The property WindowsConfiguration.enableAutomaticUpdates must be true. &lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - the virtual machine will automatically updated by the platform. The properties provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates must be true. </summary>
-        public WindowsVMGuestPatchMode? PatchMode { get; set; }
+        public WindowsVmGuestPatchMode? PatchMode { get; set; }
 
         /// <summary> Enables customers to patch their Azure VMs without requiring a reboot. For enableHotpatching, the 'provisionVMAgent' must be set to true and 'patchMode' must be set to 'AutomaticByPlatform'. </summary>
         public bool? EnableHotpatching { get; set; }
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public WindowsPatchAssessmentMode? AssessmentMode { get; set; }
 
         /// <summary> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Windows. </summary>
-        public WindowsVMGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
+        public WindowsVmGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
     }
 }
