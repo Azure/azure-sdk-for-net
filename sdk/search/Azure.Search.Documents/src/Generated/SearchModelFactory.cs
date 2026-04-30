@@ -3426,10 +3426,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="inputTokens"> The number of input tokens for the LLM web summarization activity. </param>
-        /// <param name="outputTokens"> The number of output tokens for the LLM web summarization activity. </param>
+        /// <param name="inputTokensCount"> The number of input tokens for the LLM web summarization activity. </param>
+        /// <param name="outputTokensCount"> The number of output tokens for the LLM web summarization activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? inputTokens = default, int? outputTokens = default)
+        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? inputTokensCount = default, int? outputTokensCount = default)
         {
             return new KnowledgeBaseModelWebSummarizationActivityRecord(
                 id,
@@ -3437,8 +3437,8 @@ namespace Azure.Search.Documents.Models
                 elapsedMs,
                 error,
                 additionalBinaryDataProperties: null,
-                inputTokens,
-                outputTokens);
+                inputTokensCount,
+                outputTokensCount);
         }
 
         /// <summary> Represents an agentic reasoning activity record. </summary>
