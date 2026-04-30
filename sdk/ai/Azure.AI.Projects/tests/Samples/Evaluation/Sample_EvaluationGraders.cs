@@ -4,7 +4,6 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;

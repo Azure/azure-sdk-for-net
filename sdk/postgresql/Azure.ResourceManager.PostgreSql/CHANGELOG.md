@@ -8,9 +8,12 @@
 - Migrated from AutoRest to TypeSpec-based generation (management plane generator).
 - Added new models and operations for tuning options, virtual endpoints, network migration, and enhanced backup capabilities.
 
+## 1.4.2 (2026-04-28)
+
 ### Other Changes
 
-- Preserved compatibility with the previously shipped public API surface during the TypeSpec migration.
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.4.1 (2026-02-12)
 
