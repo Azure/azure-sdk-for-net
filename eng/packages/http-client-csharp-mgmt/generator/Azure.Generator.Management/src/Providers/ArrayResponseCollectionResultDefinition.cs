@@ -93,9 +93,13 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildName()
         {
-            // Use the enclosing type name (e.g., "FooResource") and actual method name
-            // The method name already contains "Async" suffix when it's async, so we don't need to add/remove it
-            return $"{_enclosingTypeName}{_methodName}CollectionResultOfT";
+            // Use CrossLanguageDefinitionId (e.g., "Compute.VirtualMachineExtensionImages.listVersions")
+            // converted to a valid C# identifier. CrossLanguageDefinitionId is stable across @@clientName
+            // customizations and uniquely identifies the operation, which avoids name collisions when
+            // multiple operations on the same enclosing type are surfaced under one user-facing method
+            // name (e.g., a tuple resource collection exposing two list operations both as "GetAll").
+            var asyncSuffix = _isAsync ? "Async" : string.Empty;
+            return $"{_serviceMethod.CrossLanguageDefinitionId.ToIdentifierName()}{asyncSuffix}CollectionResultOfT";
         }
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
