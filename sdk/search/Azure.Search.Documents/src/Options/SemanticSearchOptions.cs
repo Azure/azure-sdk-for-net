@@ -39,5 +39,19 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
         public TimeSpan? MaxWait { get; set; }
+
+        /// <summary> A value that specifies the language of the search query. </summary>
+        public QueryLanguage? QueryLanguage { get; set; }
+
+        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
+        public QuerySpellerType? QuerySpeller { get; set; }
+
+        /// <summary> A value that specifies whether query rewrites should be generated to augment the search query. </summary>
+        public QueryRewritesType? QueryRewrites { get; set; }
+
+        /// <summary>
+        /// The list of field names used for semantic ranking.
+        /// </summary>
+        public IList<string> SemanticFields { get; internal set; } = new List<string>();
     }
 }

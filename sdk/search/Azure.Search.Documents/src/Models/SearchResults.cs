@@ -242,24 +242,7 @@ namespace Azure.Search.Documents.Models
                         List<FacetResult> facets = new List<FacetResult>();
                         foreach (JsonElement facetValue in facetObject.Value.EnumerateArray())
                         {
-                            Dictionary<string, object> facetValues = new Dictionary<string, object>();
-                            long? facetCount = null;
-                            foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
-                            {
-                                if (facetProperty.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetCount = facetProperty.Value.GetInt64();
-                                    }
-                                }
-                                else
-                                {
-                                    object value = facetProperty.Value.GetSearchObject();
-                                    facetValues[facetProperty.Name] = value;
-                                }
-                            }
-                            facets.Add(new FacetResult(facetCount, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, facetValues.ToBinaryDataDictionary()));
+                            facets.Add(FacetResult.DeserializeFacetResult(facetValue, ModelReaderWriterOptions.Json));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;

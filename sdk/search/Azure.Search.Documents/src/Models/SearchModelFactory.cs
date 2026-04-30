@@ -407,6 +407,31 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
+        /// <param name="avg"> The resulting total avg for the facet when an avg metric is requested. </param>
+        /// <param name="min"> The resulting total min for the facet when a min metric is requested. </param>
+        /// <param name="max"> The resulting total max for the facet when a max metric is requested. </param>
+        /// <param name="sum"> The resulting total sum for the facet when a sum metric is requested. </param>
+        /// <param name="cardinality"> The resulting total cardinality for the facet when a cardinality metric is requested. </param>
+        /// <param name="facets"> The nested facet query results for the search operation. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
+        public static FacetResult FacetResult(
+            long? count = null,
+            double? avg = null,
+            double? min = null,
+            double? max = null,
+            double? sum = null,
+            long? cardinality = null,
+            IReadOnlyDictionary<string, IList<FacetResult>> facets = null,
+            IReadOnlyDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new FacetResult(count, avg, min, max, sum, cardinality, facets, additionalProperties.ToBinaryDataDictionary());
+        }
+
+        /// <summary> Initializes a new instance of FacetResult. </summary>
+        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
         /// <example>
@@ -426,7 +451,7 @@ namespace Azure.Search.Documents.Models
         /// </example>
         /// <remarks> For more details please refer <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/search-documents#query-parameters"/></remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FacetResult FacetResult(long? count = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static FacetResult FacetResult(long? count, IReadOnlyDictionary<string, object> additionalProperties)
         {
             additionalProperties ??= new Dictionary<string, object>();
 

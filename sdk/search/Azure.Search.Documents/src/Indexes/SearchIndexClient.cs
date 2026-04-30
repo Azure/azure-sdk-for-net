@@ -419,34 +419,24 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
         public virtual Pageable<SearchIndex> GetIndexes(
-            CancellationToken cancellationToken = default)
-        {
-            return new PageableWrapper<BinaryData, SearchIndex>(
-                GetIndexes(top: null, skip: null, count: null, cancellationToken.ToRequestContext()),
-                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
-                supportsContinuationToken: false,
-                ClientDiagnostics,
-                "SearchIndexClient.GetIndexes");
-        }
+            CancellationToken cancellationToken) =>
+            GetIndexes(top: null, skip: null, count: null, cancellationToken);
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Gets a list of all indexes.
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
+        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
-            CancellationToken cancellationToken = default)
-        {
-            return new AsyncPageableWrapper<BinaryData, SearchIndex>(
-                GetIndexesAsync(top: null, skip: null, count: null, cancellationToken.ToRequestContext()),
-                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
-                supportsContinuationToken: false,
-                ClientDiagnostics,
-                "SearchIndexClient.GetIndexes");
-        }
+            CancellationToken cancellationToken) =>
+            GetIndexesAsync(top: null, skip: null, count: null, cancellationToken);
+#pragma warning restore AZC0002
 
         #endregion
 

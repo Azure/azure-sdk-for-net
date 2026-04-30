@@ -22,5 +22,8 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Determines whether or not filters are applied before or after the vector search is performed. Default is <see cref="VectorFilterMode.PreFilter" /> for new indexes. </summary>
         public VectorFilterMode? FilterMode { get; set; }
+
+        /// <summary> The query parameters to configure hybrid search behaviors. </summary>
+        public HybridSearch HybridSearch { get; set; }
     }
 }

@@ -89,20 +89,5 @@ namespace Azure.Search.Documents
             HybridSearch = hybridSearch;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> A value that specifies the language of the search query. </summary>
-        public QueryLanguage? QueryLanguage { get; }
-
-        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
-        public QuerySpellerType? QuerySpeller { get; }
-
-        /// <summary> A value that specifies whether query rewrites should be generated to augment the search query. </summary>
-        public QueryRewritesType? QueryRewrites { get; }
-
-        /// <summary> The comma-separated list of field names used for semantic ranking. </summary>
-        public IList<string> SemanticFields { get; }
-
-        /// <summary> The query parameters to configure hybrid search behaviors. </summary>
-        public HybridSearch HybridSearch { get; }
     }
 }

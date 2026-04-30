@@ -11,6 +11,7 @@
 - [Backwards compatibility for removed API version types](#backwards-compatibility-for-removed-api-version-types)
 - [Checking previous releases via git tags](#checking-previous-releases-via-git-tags)
 - [Known retained types](#known-retained-types)
+- [SearchOptions property wiring](#searchoptions-property-wiring)
 - [SearchModelFactory](#searchmodelfactory)
 - [SearchDocument (dynamic documents)](#searchdocument-dynamic-documents)
 - [Buffered indexing](#buffered-indexing)
@@ -29,6 +30,7 @@
 - [Backwards compatibility for removed API version types](#backwards-compatibility-for-removed-api-version-types)
 - [Checking previous releases via git tags](#checking-previous-releases-via-git-tags)
 - [Known retained types](#known-retained-types)
+- [SearchOptions property wiring](#searchoptions-property-wiring)
 - [SearchModelFactory](#searchmodelfactory)
 - [SearchDocument (dynamic documents)](#searchdocument-dynamic-documents)
 - [Buffered indexing](#buffered-indexing)
@@ -321,6 +323,94 @@ git show Azure.Search.Documents_11.7.0:sdk/search/Azure.Search.Documents/api/Azu
 - Type does not appear → deletion is safe.
 - Same logic can be used to check beta releases, but remember a type does not need to be restored if it ONLY exists in preview/beta, but MUST be restored if it is in GA.
 
+---
+
+## SearchOptions Property Wiring
+
+`SearchOptions` is a `partial class` spanning generated and custom code. The generated half defines a flat internal constructor and JSON serialization that reference properties like `QueryLanguage`, `SemanticFields`, `HybridSearch`, etc. The custom half groups these into user-facing option objects (`SemanticSearchOptions`, `VectorSearchOptions`) for a better API experience.
+
+### Architecture
+
+```
+Generated constructor / serialization
+  │
+  ├── QueryLanguage ──────► [CodeGenMember] bridge property ──► SemanticSearch.QueryLanguage
+  ├── QuerySpeller ───────► [CodeGenMember] bridge property ──► SemanticSearch.QuerySpeller
+  ├── QueryRewrites ──────► [CodeGenMember] bridge property ──► SemanticSearch.QueryRewrites
+  ├── SemanticFields ─────► [CodeGenMember] bridge property ──► SemanticSearch.SemanticFields
+  ├── SemanticQuery ──────► [CodeGenMember] bridge property ──► SemanticSearch.SemanticQuery
+  ├── SemanticConfig ─────► [CodeGenMember] bridge property ──► SemanticSearch.SemanticConfigurationName
+  ├── SemanticErrorMode ──► [CodeGenMember] bridge property ──► SemanticSearch.ErrorMode
+  ├── QueryAnswerRaw ─────► [CodeGenMember] bridge property ──► SemanticSearch.QueryAnswer.QueryAnswerRaw
+  ├── QueryCaptionRaw ────► [CodeGenMember] bridge property ──► SemanticSearch.QueryCaption.QueryCaptionRaw
+  ├── VectorQueries ──────► private bridge property ──────────► VectorSearch.Queries
+  ├── VectorFilterMode ───► [CodeGenMember] bridge property ──► VectorSearch.FilterMode
+  └── HybridSearch ───────► [CodeGenMember] bridge property ──► VectorSearch.HybridSearch
+```
+
+Users interact with `options.SemanticSearch.QueryLanguage` etc. The generated code interacts with the flat `QueryLanguage` property. The bridge properties translate between the two.
+
+### Adding a new generated property
+
+When a new API version adds a property to the generated `SearchOptions`:
+
+1. **Add a public property** on `SemanticSearchOptions` or `VectorSearchOptions` (or create a new options class if it doesn't fit either).
+2. **Add a private bridge property** in `Options/SearchOptions.cs`:
+   ```csharp
+   [CodeGenMember("GeneratedPropertyName")]
+   private PropertyType GeneratedPropertyName
+   {
+       get { return SemanticSearch?.PropertyName; }
+       set
+       {
+           if (value != null)
+           {
+               SemanticSearch ??= new SemanticSearchOptions();
+           }
+           if (SemanticSearch != null)
+           {
+               SemanticSearch.PropertyName = value;
+           }
+       }
+   }
+   ```
+3. **Regenerate** the code to ensure the properties are properly bridged. (Note: Do not regenerate code repeatedly, as this is a time consuming process)
+4. The **lazy initialization** (`??= new ...()`) in the setter is critical: the generated internal constructor assigns these properties before `SemanticSearch`/`VectorSearch` are initialized. Without it, values from deserialization are silently dropped.
+
+### Verifying correctness
+
+After adding a wiring property, verify the following:
+
+1. **Build `src/`** — no CS0102 (duplicate member) or CS0103 (name not found) errors.
+2. **Build `tests/`** — no downstream breaks.
+3. **Check the generated constructor** (`Generated/Models/SearchOptions.cs`) assigns the property. 
+4. **Check the generated serialization** (`Generated/Models/SearchOptions.Serialization.cs`) reads/writes the property. Serialization uses the property getter, so your bridge getter must return the correct value.
+5. **Check the `Copy` method** — since `Copy` assigns `SemanticSearch` and `VectorSearch` by reference, all bridge properties are automatically included. No update needed unless you create a new top-level options object.
+
+### Checking for missing wiring after regeneration
+
+Compare the generated `SearchOptions.cs` properties against the custom bridge properties:
+
+```powershell
+# Properties defined in the generated file (public auto-properties)
+Select-String 'public .+ \{ get; \}' src/Generated/Models/SearchOptions.cs
+
+# Bridge properties defined in custom code
+Select-String '\[CodeGenMember\(' src/Options/SearchOptions.cs
+```
+
+Any generated public property that does NOT have a corresponding `[CodeGenMember]` bridge — and is not one of the flat properties handled directly (like `IncludeTotalCount`, `Filter`, etc.) — is a wiring gap. It means the property will exist on the generated class but won't be accessible through the user-facing `SemanticSearch`/`VectorSearch` objects.
+
+### FacetResult and SearchResults deserialization
+
+Similar wiring issues can occur in custom deserialization methods that override the generated ones. `FacetResult` and `SearchResults<T>` both have custom `DeserializeFacetResult` / `DeserializeEnvelope` methods in their custom partial classes. When new properties are added to the generated model (e.g., `Avg`, `Min`, `Max`, `Sum`, `Cardinality`, `Facets` on `FacetResult`), the custom deserializer must be updated to parse them — otherwise they are hardcoded to `null`.
+
+**Checklist after adding a new property to a model with custom deserialization:**
+1. Check `Generated/Models/<Type>.cs` for new properties.
+2. Check the custom partial's `Deserialize*` method — does it parse the new JSON keys?
+3. Check `SearchModelFactory` — does the custom factory method accept the new parameters? If not, add a new overload and mark the old one `[EditorBrowsable(Never)]`.
+
+---
 
 ## SearchModelFactory
 

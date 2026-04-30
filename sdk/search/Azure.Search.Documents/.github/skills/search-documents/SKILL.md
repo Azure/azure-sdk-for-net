@@ -252,14 +252,16 @@ azsdk_package_update_metadata
    - **GA**: Promote preview test files — remove `#if AZURE_SEARCH_PREVIEW` guards, merge into main test classes or update `[ClientTestFixture]` to the new GA version.
    - **Preview**: Create `*.Preview.cs` test files wrapped in `#if AZURE_SEARCH_PREVIEW` for preview-specific features.
 5. Run `azsdk_package_build_code`. Fix errors per [Error Resolution Strategy](#error-resolution-strategy) and [customization.md](./references/customization.md#identifying-what-needs-updating-after-regeneration).
-6. Check for deleted types and apply backward compat rules per [architecture.md](./references/architecture.md#backwards-compatibility-for-removed-api-version-types).
-7. Run `Export-API.ps1 search`. Run `dotnet pack src/` to verify ApiCompat.
-8. Run `dotnet format` on src and tests projects.
-9. Run `Update-Snippets.ps1 search`.
-10. Run `azsdk_package_run_tests` and `azsdk_package_run_check`.
-11. Update `CHANGELOG.md` per [Tool 7](#7-azsdk_package_update_changelog_content--changelog).
-12. Update `src/Azure.Search.Documents.csproj` `<Version>` (use `-beta.N` suffix for preview). Run `Prepare-Release.ps1` and `azsdk_package_update_metadata`.
-13. Final gate: re-run Export-API if `src/` changed after step 7; re-run snippets if `*.md` changed after step 9; confirm `git status` is clean.
+6. Check for new properties on `SearchOptions`, `FacetResult`, `SearchResults`, and other types with custom deserialization. Wire them per [architecture.md](./references/architecture.md#searchoptions-property-wiring).
+7. Check for deleted types and apply backward compat rules per [architecture.md](./references/architecture.md#backwards-compatibility-for-removed-api-version-types).
+7. Check for deleted types and apply backward compat rules per [architecture.md](./references/architecture.md#backwards-compatibility-for-removed-api-version-types).
+8. Run `Export-API.ps1 search`. Run `dotnet pack src/` to verify ApiCompat.
+9. Run `dotnet format` on src and tests projects.
+10. Run `Update-Snippets.ps1 search`.
+11. Run `azsdk_package_run_tests` and `azsdk_package_run_check`.
+12. Update `CHANGELOG.md` per [Tool 7](#7-azsdk_package_update_changelog_content--changelog).
+13. Update `src/Azure.Search.Documents.csproj` `<Version>` (use `-beta.N` suffix for preview). Run `Prepare-Release.ps1` and `azsdk_package_update_metadata`.
+14. Final gate: re-run Export-API if `src/` changed after step 8; re-run snippets if `*.md` changed after step 10; confirm `git status` is clean.
 
 ---
 
@@ -298,6 +300,8 @@ azsdk_package_update_metadata
 - **Forgetting `Export-API.ps1`** — CI ApiCompat fails.
 - **Changelog entry for a non-existent type** — cross-check against `api/*.cs`.
 - **Listing as "Breaking Change" a type never released** — not a breaking change; update "Features Added" instead.
+- **New generated `SearchOptions` property not wired** — property exists in generated code but is silently ignored at runtime. See [architecture.md](./references/architecture.md#searchoptions-property-wiring) for the bridge property pattern and verification checklist.
+- **Custom `Deserialize*` method ignoring new properties** — `FacetResult`, `SearchResults<T>`, and other types with custom deserialization drop new fields unless explicitly updated. See [architecture.md](./references/architecture.md#facetresult-and-searchresults-deserialization).
 - **Restoring a preview-only deleted type** — only restore types from previous GA releases.
 - **Creating a new changelog section for unreleased version** — patch in-place.
 
