@@ -47,13 +47,9 @@ internal static class OpenTelemetryExtensions
         }
 
         // The Microsoft OpenTelemetry distro auto-detects Azure Monitor and OTLP
-        // from environment variables — no manual env var checks or duplicate-
-        // instrumentation guards are needed. It registers ASP.NET Core, HttpClient,
+        // exporters from environment variables. It registers ASP.NET Core, HttpClient,
         // SQL, Azure SDK, and AI instrumentation automatically.
         var otelBuilder = services.AddOpenTelemetry();
-
-        // The Microsoft OpenTelemetry distro auto-configures Azure Monitor and OTLP
-        // exporters from environment variables — no manual checks needed.
         otelBuilder.UseMicrosoftOpenTelemetry(options => { });
 
         otelBuilder
