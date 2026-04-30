@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the token store. </summary>
+    /// <summary>
+    /// The configuration settings of the token store.
+    /// Serialized Name: TokenStore
+    /// </summary>
     public partial class AppServiceTokenStore
     {
         /// <summary>
@@ -53,14 +56,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="AppServiceTokenStore"/>. </summary>
         /// <param name="isEnabled">
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///  The default is &lt;code&gt;false&lt;/code&gt;.
+        /// The default is &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: TokenStore.enabled
         /// </param>
         /// <param name="tokenRefreshExtensionHours">
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
+        /// Serialized Name: TokenStore.tokenRefreshExtensionHours
         /// </param>
-        /// <param name="fileSystem"> The configuration settings of the storage of the tokens if a file system is used. </param>
-        /// <param name="azureBlobStorage"> The configuration settings of the storage of the tokens if blob storage is used. </param>
+        /// <param name="fileSystem">
+        /// The configuration settings of the storage of the tokens if a file system is used.
+        /// Serialized Name: TokenStore.fileSystem
+        /// </param>
+        /// <param name="azureBlobStorage">
+        /// The configuration settings of the storage of the tokens if blob storage is used.
+        /// Serialized Name: TokenStore.azureBlobStorage
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, FileSystemTokenStore fileSystem, AppServiceBlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,19 +84,27 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///  The default is &lt;code&gt;false&lt;/code&gt;.
+        /// The default is &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: TokenStore.enabled
         /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary>
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
+        /// Serialized Name: TokenStore.tokenRefreshExtensionHours
         /// </summary>
         [WirePath("tokenRefreshExtensionHours")]
         public double? TokenRefreshExtensionHours { get; set; }
-        /// <summary> The configuration settings of the storage of the tokens if a file system is used. </summary>
+        /// <summary>
+        /// The configuration settings of the storage of the tokens if a file system is used.
+        /// Serialized Name: TokenStore.fileSystem
+        /// </summary>
         internal FileSystemTokenStore FileSystem { get; set; }
-        /// <summary> The directory in which the tokens will be stored. </summary>
+        /// <summary>
+        /// The directory in which the tokens will be stored.
+        /// Serialized Name: FileSystemTokenStore.directory
+        /// </summary>
         [WirePath("fileSystem.directory")]
         public string FileSystemDirectory
         {
@@ -98,9 +117,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
+        /// <summary>
+        /// The configuration settings of the storage of the tokens if blob storage is used.
+        /// Serialized Name: TokenStore.azureBlobStorage
+        /// </summary>
         internal AppServiceBlobStorageTokenStore AzureBlobStorage { get; set; }
-        /// <summary> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </summary>
+        /// <summary>
+        /// The name of the app setting containing the SAS URL of the blob storage containing the tokens.
+        /// Serialized Name: BlobStorageTokenStore.sasUrlSettingName
+        /// </summary>
         [WirePath("azureBlobStorage.sasUrlSettingName")]
         public string AzureBlobStorageSasUrlSettingName
         {

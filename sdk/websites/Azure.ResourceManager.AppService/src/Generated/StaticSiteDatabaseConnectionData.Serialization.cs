@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 resourceId,
                 connectionIdentity,
                 connectionString,
                 region,
                 configurationFiles ?? new ChangeTrackingList<StaticSiteDatabaseConnectionConfigurationFileOverview>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

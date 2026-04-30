@@ -84,10 +84,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Strict))
+            if (Optional.IsDefined(IsStrict))
             {
                 writer.WritePropertyName("strict"u8);
-                writer.WriteBooleanValue(Strict.Value);
+                writer.WriteBooleanValue(IsStrict.Value);
             }
             if (Optional.IsDefined(Schema))
             {
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             string description = default;
-            bool? strict = default;
+            bool? isStrict = default;
             ChatCompletionSchema schema = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    strict = prop.Value.GetBoolean();
+                    isStrict = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("schema"u8))
@@ -186,7 +186,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ChatCompletionSchemaProperties(name, description, strict, schema, additionalBinaryDataProperties);
+            return new ChatCompletionSchemaProperties(name, description, isStrict, schema, additionalBinaryDataProperties);
         }
     }
 }

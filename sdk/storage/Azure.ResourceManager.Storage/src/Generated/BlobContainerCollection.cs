@@ -303,7 +303,8 @@ namespace Azure.ResourceManager.Storage
                 maxpagesize,
                 filter,
                 include?.ToString(),
-                context), data => new BlobContainerResource(Client, data));
+                context,
+                "BlobContainerCollection.GetAll"), data => new BlobContainerResource(Client, data));
         }
 
         /// <summary>
@@ -342,7 +343,8 @@ namespace Azure.ResourceManager.Storage
                 maxpagesize,
                 filter,
                 include?.ToString(),
-                context), data => new BlobContainerResource(Client, data));
+                context,
+                "BlobContainerCollection.GetAll"), data => new BlobContainerResource(Client, data));
         }
 
         /// <summary>

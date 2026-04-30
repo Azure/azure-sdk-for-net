@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new AzureBackupJobResourcesGetAllAsyncCollectionResultOfT(_azureBackupJobResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataProtectionBackupJobResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new AzureBackupJobResourcesGetAllAsyncCollectionResultOfT(
+                _azureBackupJobResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataProtectionBackupJobCollection.GetAll"), data => new DataProtectionBackupJobResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new AzureBackupJobResourcesGetAllCollectionResultOfT(_azureBackupJobResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataProtectionBackupJobResource(Client, data));
+            return new PageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new AzureBackupJobResourcesGetAllCollectionResultOfT(
+                _azureBackupJobResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataProtectionBackupJobCollection.GetAll"), data => new DataProtectionBackupJobResource(Client, data));
         }
 
         /// <summary>

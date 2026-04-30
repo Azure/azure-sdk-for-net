@@ -524,7 +524,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new NginxDeploymentsGetWafPoliciesAsyncCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new NginxDeploymentsGetWafPoliciesAsyncCollectionResultOfT(
+                _nginxDeploymentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxDeploymentResource.GetWafPolicies");
         }
 
         /// <summary>
@@ -556,7 +562,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new NginxDeploymentsGetWafPoliciesCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new NginxDeploymentsGetWafPoliciesCollectionResultOfT(
+                _nginxDeploymentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxDeploymentResource.GetWafPolicies");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

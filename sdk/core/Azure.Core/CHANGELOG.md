@@ -1,14 +1,30 @@
 # Release History
 
-## 1.53.0-beta.1 (Unreleased)
+## 1.55.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Added `AzureLocation.DenmarkEast` for the Denmark East Azure region.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed `AzureDeveloperCliCredential` to correctly parse error messages from Azure Developer CLI v1.23.7 and later, which previously caused raw JSON to surface in `AuthenticationFailedException` instead of the underlying error text.
+
 ### Other Changes
+
+## 1.54.0 (2026-04-23)
+
+### Bugs Fixed
+
+- Removed duplicate top-level `required: ["CredentialSource"]` from the `credential` definition in `ConfigurationSchema.json` to prevent duplicate entries when the schema is merged with `System.ClientModel`'s schema.
+
+## 1.53.0 (2026-04-09)
+
+### Other Changes
+
+- `Azure.Identity` credential types are now included in `Azure.Core`, enabling SDK libraries to provide configuration-driven DI extensions (e.g., `AddAzureSecretClient`) without requiring a direct dependency on `Azure.Identity`.
 
 ## 1.52.0 (2026-03-23)
 

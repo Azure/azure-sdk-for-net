@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.TrustedSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrustedSigningCertificateProfileData, TrustedSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountAsyncCollectionResultOfT(_certificateProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new TrustedSigningCertificateProfileResource(Client, data));
+            return new AsyncPageableWrapper<TrustedSigningCertificateProfileData, TrustedSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountAsyncCollectionResultOfT(
+                _certificateProfilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "TrustedSigningCertificateProfileCollection.GetAll"), data => new TrustedSigningCertificateProfileResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.TrustedSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrustedSigningCertificateProfileData, TrustedSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountCollectionResultOfT(_certificateProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new TrustedSigningCertificateProfileResource(Client, data));
+            return new PageableWrapper<TrustedSigningCertificateProfileData, TrustedSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountCollectionResultOfT(
+                _certificateProfilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "TrustedSigningCertificateProfileCollection.GetAll"), data => new TrustedSigningCertificateProfileResource(Client, data));
         }
 
         /// <summary>

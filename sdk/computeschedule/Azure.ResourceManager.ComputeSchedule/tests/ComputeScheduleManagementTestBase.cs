@@ -531,6 +531,29 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
+        protected static async Task<CreateFlexResourceOperationResult> TestExecuteCreateFlexAsync(AzureLocation location, ExecuteCreateFlexContent executeCreateFlexRequest, string subid, ArmClient client)
+        {
+            SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
+            ExecuteCreateFlexContent content = executeCreateFlexRequest;
+            CreateFlexResourceOperationResult result;
+
+            try
+            {
+                result = await subscriptionResource.ExecuteVirtualMachineCreateFlexOperationAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
+            return result;
+        }
+
         #endregion
         /*
                 #region Recurring scheduledactions operations

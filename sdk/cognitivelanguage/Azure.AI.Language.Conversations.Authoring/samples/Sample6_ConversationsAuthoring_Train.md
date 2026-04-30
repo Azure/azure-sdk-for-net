@@ -23,6 +23,8 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To train a model, call Train on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object containing the status of the training job, and the operation-location header can be used to track the training process.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_Train
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
     modelLabel: "{modelLabel}",
@@ -38,7 +40,7 @@ ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAut
     }
 };
 
-Operation<ConversationAuthoringTrainingJobResult> operation = client.Train(
+Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     details: trainingJobDetails
@@ -56,6 +58,8 @@ Console.WriteLine($"Training completed with status: {operation.GetRawResponse().
 To train a model with data generation, include `DataGenerationSettings` when calling `Train` on the `ConversationAuthoringProject` client. This enables the service to generate additional training data using a connected Azure OpenAI resource. The method returns an `Operation<TrainingJobResult>` object, and the `operation-location` header can be used to track the training process.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_Train_WithDataGeneration
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 
 // Create connection info for data generation
@@ -84,7 +88,7 @@ var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
 };
 
 // Start the training operation
-Operation<ConversationAuthoringTrainingJobResult> operation = client.Train(
+Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     details: trainingJobDetails);
@@ -100,6 +104,8 @@ Console.WriteLine($"Training completed with status: {operation.GetRawResponse().
 To train a model asynchronously, call TrainAsync on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object containing the status of the training job, and the operation-location header can be used to track the training process.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_TrainAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
     modelLabel: "{modelLabel}",
@@ -115,7 +121,7 @@ ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAut
     }
 };
 
-Operation<ConversationAuthoringTrainingJobResult> operation = await client.TrainAsync(
+Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     details: trainingJobDetails
@@ -135,6 +141,8 @@ By providing `DataGenerationSettings`, the service can generate additional train
 The method returns an `Operation<TrainingJobResult>` object, and the `operation-location` header can be used to track the training status.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_TrainAsync_WithDataGeneration
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 
 // Create connection info for data generation
@@ -163,7 +171,7 @@ var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
 };
 
 // Start training
-Operation<ConversationAuthoringTrainingJobResult> operation = await client.TrainAsync(
+Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     details: trainingJobDetails);

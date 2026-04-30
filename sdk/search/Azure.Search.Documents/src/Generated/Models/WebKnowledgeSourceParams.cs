@@ -28,7 +28,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
-        /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -36,7 +35,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="market"> The market of the web results. </param>
         /// <param name="count"> The number of web results to return. </param>
         /// <param name="freshness"> The freshness of web results. </param>
-        internal WebKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string language, string market, int? count, string freshness) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, rerankerThreshold, kind, additionalBinaryDataProperties)
+        internal WebKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string language, string market, int? count, string freshness) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, rerankerThreshold, kind, additionalBinaryDataProperties)
         {
             Language = language;
             Market = market;

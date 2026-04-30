@@ -7,47 +7,47 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceGroups;
 
 namespace Azure.ResourceManager.ServiceGroups.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmServiceGroupsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ServiceGroups.ServiceGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The serviceGroup details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> ServiceGroup creation request body parameters. </param>
         /// <param name="kind"> The kind of the serviceGroup. </param>
         /// <param name="tags"> The serviceGroup tags. </param>
-        /// <param name="properties"> ServiceGroup creation request body parameters. </param>
         /// <returns> A new <see cref="ServiceGroups.ServiceGroupData"/> instance for mocking. </returns>
-        public static ServiceGroupData ServiceGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, IDictionary<string, string> tags = null, ServiceGroupProperties properties = null)
+        public static ServiceGroupData ServiceGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceGroupProperties properties = default, string kind = default, IDictionary<string, string> tags = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ServiceGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
-                tags,
+                additionalBinaryDataProperties: null,
                 properties,
-                serializedAdditionalRawData: null);
+                kind,
+                tags);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceGroupProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the serviceGroup. For example, Running. </param>
         /// <param name="displayName"> The display name of the serviceGroup. For example, ServiceGroupTest1. </param>
-        /// <param name="parentResourceId"> The details of the parent serviceGroup. </param>
+        /// <param name="parentResourceId"> The fully qualified ID of the parent serviceGroup.  For example, '/providers/Microsoft.Management/serviceGroups/TestServiceGroup'. </param>
         /// <returns> A new <see cref="Models.ServiceGroupProperties"/> instance for mocking. </returns>
-        public static ServiceGroupProperties ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState = null, string displayName = null, ResourceIdentifier parentResourceId = null)
+        public static ServiceGroupProperties ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState = default, string displayName = default, ResourceIdentifier parentResourceId = default)
         {
-            return new ServiceGroupProperties(provisioningState, displayName, parentResourceId != null ? new ParentServiceGroupProperties(parentResourceId, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new ServiceGroupProperties(provisioningState, displayName, parentResourceId is null ? default : new ParentServiceGroupProperties(parentResourceId, null), additionalBinaryDataProperties: null);
         }
     }
 }

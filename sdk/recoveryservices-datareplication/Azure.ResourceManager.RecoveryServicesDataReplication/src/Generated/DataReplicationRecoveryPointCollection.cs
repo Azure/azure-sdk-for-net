@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DataReplicationRecoveryPointResource(Client, data));
+                context,
+                "DataReplicationRecoveryPointCollection.GetAll"), data => new DataReplicationRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DataReplicationRecoveryPointResource(Client, data));
+                context,
+                "DataReplicationRecoveryPointCollection.GetAll"), data => new DataReplicationRecoveryPointResource(Client, data));
         }
 
         /// <summary>

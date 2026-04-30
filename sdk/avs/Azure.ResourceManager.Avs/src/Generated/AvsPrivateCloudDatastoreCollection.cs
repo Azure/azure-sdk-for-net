@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AvsPrivateCloudDatastoreResource(Client, data));
+                context,
+                "AvsPrivateCloudDatastoreCollection.GetAll"), data => new AvsPrivateCloudDatastoreResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AvsPrivateCloudDatastoreResource(Client, data));
+                context,
+                "AvsPrivateCloudDatastoreCollection.GetAll"), data => new AvsPrivateCloudDatastoreResource(Client, data));
         }
 
         /// <summary>

@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.Relay
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new RelayHybridConnectionAuthorizationRuleResource(Client, data));
+                context,
+                "RelayHybridConnectionAuthorizationRuleCollection.GetAll"), data => new RelayHybridConnectionAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.Relay
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new RelayHybridConnectionAuthorizationRuleResource(Client, data));
+                context,
+                "RelayHybridConnectionAuthorizationRuleCollection.GetAll"), data => new RelayHybridConnectionAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

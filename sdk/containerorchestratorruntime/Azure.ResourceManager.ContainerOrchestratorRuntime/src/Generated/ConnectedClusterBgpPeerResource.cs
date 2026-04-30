@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectedClusterBgpPeerData> response = Response.FromValue(ConnectedClusterBgpPeerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectedClusterBgpPeerData> response = Response.FromValue(ConnectedClusterBgpPeerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _bgpPeersRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _bgpPeersRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
+                HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource>(
                     new ConnectedClusterBgpPeerOperationSource(Client),
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
+                HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource>(
                     new ConnectedClusterBgpPeerOperationSource(Client),

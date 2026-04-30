@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostRulestackRuleData, PostRulestackRuleResource>(new PostRulesGetAllAsyncCollectionResultOfT(_postRulesRestClient, Id.Name, context), data => new PostRulestackRuleResource(Client, data));
+            return new AsyncPageableWrapper<PostRulestackRuleData, PostRulestackRuleResource>(new PostRulesGetAllAsyncCollectionResultOfT(_postRulesRestClient, Id.Name, context, "PostRulestackRuleCollection.GetAll"), data => new PostRulestackRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostRulestackRuleData, PostRulestackRuleResource>(new PostRulesGetAllCollectionResultOfT(_postRulesRestClient, Id.Name, context), data => new PostRulestackRuleResource(Client, data));
+            return new PageableWrapper<PostRulestackRuleData, PostRulestackRuleResource>(new PostRulesGetAllCollectionResultOfT(_postRulesRestClient, Id.Name, context, "PostRulestackRuleCollection.GetAll"), data => new PostRulestackRuleResource(Client, data));
         }
 
         /// <summary>

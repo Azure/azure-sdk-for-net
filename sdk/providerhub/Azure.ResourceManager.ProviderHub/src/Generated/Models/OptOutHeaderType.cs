@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct OptOutHeaderType : IEquatable<OptOutHeaderType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="OptOutHeaderType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OptOutHeaderType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string SystemDataCreatedByLastModifiedByValue = "SystemDataCreatedByLastModifiedBy";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptOutHeaderType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public OptOutHeaderType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static OptOutHeaderType NotSpecified { get; } = new OptOutHeaderType(NotSpecifiedValue);
-        /// <summary> SystemDataCreatedByLastModifiedBy. </summary>
+
+        /// <summary> Gets the SystemDataCreatedByLastModifiedBy. </summary>
         public static OptOutHeaderType SystemDataCreatedByLastModifiedBy { get; } = new OptOutHeaderType(SystemDataCreatedByLastModifiedByValue);
+
         /// <summary> Determines if two <see cref="OptOutHeaderType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OptOutHeaderType left, OptOutHeaderType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OptOutHeaderType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OptOutHeaderType left, OptOutHeaderType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OptOutHeaderType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OptOutHeaderType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OptOutHeaderType(string value) => new OptOutHeaderType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OptOutHeaderType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OptOutHeaderType?(string value) => value == null ? null : new OptOutHeaderType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OptOutHeaderType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OptOutHeaderType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

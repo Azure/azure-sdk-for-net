@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSignalRPrivateLinkResourcesAsyncCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new SignalRResourcesGetSignalRPrivateLinkResourcesAsyncCollectionResultOfT(
+                _signalRResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRResource.GetSignalRPrivateLinkResources");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSignalRPrivateLinkResourcesCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new SignalRResourcesGetSignalRPrivateLinkResourcesCollectionResultOfT(
+                _signalRResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRResource.GetSignalRPrivateLinkResources");
         }
 
         /// <summary>
@@ -594,7 +606,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSkusAsyncCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new SignalRResourcesGetSkusAsyncCollectionResultOfT(
+                _signalRResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRResource.GetSkus");
         }
 
         /// <summary>
@@ -626,7 +644,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSkusCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new SignalRResourcesGetSkusCollectionResultOfT(
+                _signalRResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRResource.GetSkus");
         }
 
         /// <summary>
@@ -876,7 +900,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SignalRData patch = new SignalRData();
+                    SignalRData patch = new SignalRData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -924,7 +948,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SignalRData patch = new SignalRData();
+                    SignalRData patch = new SignalRData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -971,7 +995,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SignalRData patch = new SignalRData();
+                    SignalRData patch = new SignalRData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SignalRResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1014,7 +1038,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SignalRData patch = new SignalRData();
+                    SignalRData patch = new SignalRData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SignalRResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1056,7 +1080,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SignalRData patch = new SignalRData();
+                    SignalRData patch = new SignalRData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1102,7 +1126,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SignalRData patch = new SignalRData();
+                    SignalRData patch = new SignalRData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

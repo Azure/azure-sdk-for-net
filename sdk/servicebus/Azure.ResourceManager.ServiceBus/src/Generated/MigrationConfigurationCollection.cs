@@ -282,7 +282,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MigrationConfigurationData, MigrationConfigurationResource>(new MigrationConfigsGetAllAsyncCollectionResultOfT(_migrationConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MigrationConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<MigrationConfigurationData, MigrationConfigurationResource>(new MigrationConfigsGetAllAsyncCollectionResultOfT(
+                _migrationConfigsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MigrationConfigurationCollection.GetAll"), data => new MigrationConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MigrationConfigurationData, MigrationConfigurationResource>(new MigrationConfigsGetAllCollectionResultOfT(_migrationConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MigrationConfigurationResource(Client, data));
+            return new PageableWrapper<MigrationConfigurationData, MigrationConfigurationResource>(new MigrationConfigsGetAllCollectionResultOfT(
+                _migrationConfigsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MigrationConfigurationCollection.GetAll"), data => new MigrationConfigurationResource(Client, data));
         }
 
         /// <summary>

@@ -4,10 +4,10 @@
 using System;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Projects;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -41,7 +41,8 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_ListConversations_ConversationCRUD_Async
-        await foreach (ProjectConversation res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationsAsync()){
+        await foreach (ProjectConversation res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationsAsync())
+        {
             Console.WriteLine($"Listed conversation (id: {res.Id})");
         }
         #endregion

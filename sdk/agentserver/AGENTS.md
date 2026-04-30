@@ -84,7 +84,7 @@ principles conflict, resolve in this priority order:
 
 | Project | Path | Description |
 |---|---|---|
-| **Core** | `Azure.AI.AgentServer.Core/src/` | Shared foundation: `AgentHost`, `AgentHostBuilder`, OpenTelemetry, user-agent header, health endpoint |
+| **Core** | `Azure.AI.AgentServer.Core/src/` | Shared foundation: `AgentHost`, `AgentHostBuilder`, OpenTelemetry, server version header, inbound request logging, health endpoint |
 | **Core Tests** | `Azure.AI.AgentServer.Core/tests/` | NUnit tests for Core |
 | **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol: `InvocationHandler`, session resolution, client header forwarding |
 | **Invocations Tests** | `Azure.AI.AgentServer.Invocations/tests/` | NUnit tests for Invocations |
@@ -102,9 +102,32 @@ principles conflict, resolve in this priority order:
 | Protocol | Location | Notes |
 |---|---|---|
 | Core / Invocations | This file | — |
-| Responses | `Azure.AI.AgentServer.Responses/AGENTS.md` | Contract compliance (B1–B37, S-001–S-046) |
+| Responses | `Azure.AI.AgentServer.Responses/AGENTS.md` | Contract compliance (B1–B39, S-001–S-052) |
 
 > When adding a new protocol, create an `AGENTS.md` in the protocol directory.
+
+**AI agent instruction (MANDATORY):** Before modifying any file under a package
+directory listed above that has its own `AGENTS.md`, **read that file in full**
+and follow its rules in addition to this file. The per-protocol `AGENTS.md` contains
+package-specific rules (spec contracts, model governance, testing requirements)
+that are **not** duplicated here. Failure to load the per-protocol file risks
+introducing spec-violating code.
+
+### Authoritative spec documents
+
+The AgentServer libraries implement specifications maintained in an external repo.
+These docs define the contract for **all** packages — individual protocol specs
+are listed in the per-protocol `AGENTS.md` files.
+
+| Document | Location | Scope |
+|----------|----------|-------|
+| **Container Image Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/container-image-spec.md` | All packages — networking, health probe, env vars, observability, graceful shutdown, identity header |
+| **Package Architecture** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/package-architecture.md` | All packages — package layering, developer tiers (zero-config → spec-only), dependency graph |
+| **Tools Integration Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/tools-integration-spec.md` | All packages — tool call routing, function execution, tool result reporting |
+| **Invocation Protocol Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/invocation-protocol-spec.md` | Invocations package — invocation endpoint protocol, session resolution, client header forwarding |
+| **Handler Implementation Guide** | `docs/handler-implementation-guide.md` | All packages — handler contract, builder pattern, cancellation, error handling, configuration |
+
+> **Dev setup**: Run `pwsh -File scripts/Bootstrap-Copilot.ps1` from `sdk/agentserver/` — it auto-clones the specs repo to `/tmp/foundrysdk_specs`. The repo requires EMU auth; the script skips gracefully if access is denied. Use `-Clean` to remove all generated artifacts.
 
 ---
 
@@ -176,7 +199,7 @@ string comparisons like `$(TargetFramework) != 'net462'`.
 
 When another production assembly needs internal types, eliminate the cross-library dependency:
 - Add `@@usage(..., Usage.input | Usage.output)` in `client.tsp` for public constructors on generated models.
-- Use the public model factory (`AzureAIAgentServerResponsesModelFactory`).
+- Use the internal model factory (`AgentServerResponsesModelFactory`) or public constructors.
 - Add a public constructor or factory method via partial-class customization.
 
 ### 2.6 Copyright headers
@@ -240,27 +263,37 @@ dotnet format Azure.AI.AgentServer.sln
 
 ### Pre-commit checks (strict ordering)
 
-Run these **in this exact order** before every commit. Order matters — `dotnet format`
+Run these **in this exact order** before every commit. Order matters — tests must
+run **first** to catch regressions before any formatting work, and `dotnet format`
 must run **last** so it catches formatting issues introduced by earlier steps.
 
-Steps 1–2 run from the **repo root**; steps 3–4 run from `sdk/agentserver/`.
+Step 1 runs from `sdk/agentserver/`; steps 2–3 run from the **repo root**;
+steps 4–5 run from `sdk/agentserver/`.
 
 ```powershell
-# 1. Export public API  (from repo root)
+# 1. Run tests FIRST  (from sdk/agentserver/ — catches regressions before formatting)
+cd sdk/agentserver
+dotnet test Azure.AI.AgentServer.sln --filter TestCategory!=Live
+
+# 2. Export public API  (from repo root)
 eng/scripts/Export-API.ps1 agentserver
 
-# 2. Update doc snippets  (from repo root — syncs #region blocks into markdown)
+# 3. Update doc snippets  (from repo root — syncs #region blocks into markdown)
 eng/scripts/Update-Snippets.ps1 agentserver
 
-# 3. Build snippets  (from sdk/agentserver/ — reproduces CI "Build snippets" step)
+# 4. Build snippets  (from sdk/agentserver/ — reproduces CI "Build snippets" step)
 cd sdk/agentserver
 dotnet build Azure.AI.AgentServer.sln /p:BuildSnippets=true
 
-# 4. Format LAST  (from sdk/agentserver/ — catches indent/whitespace from all prior steps)
+# 5. Format LAST  (from sdk/agentserver/ — catches indent/whitespace from all prior steps)
 dotnet format Azure.AI.AgentServer.sln
 ```
 
-**Why format last?** Steps 1–3 may modify files (API listings, snippet markdown, or
+**Why tests first?** Lifecycle validation, protocol compliance, and handler logic
+bugs are only caught by tests — not by formatting or API export. Running tests
+first prevents pushing regressions that pass all static checks but fail at runtime.
+
+**Why format last?** Steps 2–4 may modify files (API listings, snippet markdown, or
 code via scripts like `sed`). Running format first would miss those changes. The CI
 "Build snippets" step defines the `SNIPPET` preprocessor constant — snippet code must
 compile in that mode.

@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     Properties = new AutoUpgradeProfileProperties();
                 }
-                Properties.Disabled = value.Value;
+                Properties.Disabled = value;
             }
         }
 
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     Properties = new AutoUpgradeProfileProperties();
                 }
-                Properties.LongTermSupport = value.Value;
+                Properties.LongTermSupport = value;
             }
         }
 
@@ -169,11 +170,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     Properties = new AutoUpgradeProfileProperties();
                 }
-                Properties.SelectionType = value.Value;
+                Properties.SelectionType = value;
             }
         }
 
         /// <summary> Configures how auto-upgrade will be run. </summary>
+        [CodeGenMember("Channel")]
         public ContainerServiceFleetUpgradeChannel? Channel
         {
             get
@@ -186,7 +188,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     Properties = new AutoUpgradeProfileProperties();
                 }
-                Properties.Channel = value.Value;
+                Properties.Channel = value;
             }
         }
     }

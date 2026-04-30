@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -186,30 +187,20 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("similarity"u8);
                 writer.WriteObjectValue(Similarity, options);
             }
-            if (Optional.IsDefined(Semantic))
+            if (Optional.IsDefined(SemanticSearch))
             {
                 writer.WritePropertyName("semantic"u8);
-                writer.WriteObjectValue(Semantic, options);
+                writer.WriteObjectValue(SemanticSearch, options);
             }
             if (Optional.IsDefined(VectorSearch))
             {
                 writer.WritePropertyName("vectorSearch"u8);
                 writer.WriteObjectValue(VectorSearch, options);
             }
-            if (Optional.IsDefined(PermissionFilterOption))
-            {
-                writer.WritePropertyName("permissionFilterOption"u8);
-                writer.WriteStringValue(PermissionFilterOption.Value.ToString());
-            }
-            if (Optional.IsDefined(PurviewEnabled))
-            {
-                writer.WritePropertyName("purviewEnabled"u8);
-                writer.WriteBooleanValue(PurviewEnabled.Value);
-            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -267,11 +258,9 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<LexicalNormalizer> normalizers = default;
             SearchResourceEncryptionKey encryptionKey = default;
             SimilarityAlgorithm similarity = default;
-            SemanticSearch semantic = default;
+            SemanticSearch semanticSearch = default;
             VectorSearch vectorSearch = default;
-            SearchIndexPermissionFilterOption? permissionFilterOption = default;
-            bool? purviewEnabled = default;
-            string eTag = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -435,10 +424,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        semantic = null;
+                        semanticSearch = null;
                         continue;
                     }
-                    semantic = SemanticSearch.DeserializeSemanticSearch(prop.Value, options);
+                    semanticSearch = SemanticSearch.DeserializeSemanticSearch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vectorSearch"u8))
@@ -451,29 +440,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorSearch = VectorSearch.DeserializeVectorSearch(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("permissionFilterOption"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        permissionFilterOption = null;
-                        continue;
-                    }
-                    permissionFilterOption = new SearchIndexPermissionFilterOption(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("purviewEnabled"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        purviewEnabled = null;
-                        continue;
-                    }
-                    purviewEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("@odata.etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -496,10 +469,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 normalizers ?? new ChangeTrackingList<LexicalNormalizer>(),
                 encryptionKey,
                 similarity,
-                semantic,
+                semanticSearch,
                 vectorSearch,
-                permissionFilterOption,
-                purviewEnabled,
                 eTag,
                 additionalBinaryDataProperties);
         }

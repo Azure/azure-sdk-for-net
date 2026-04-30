@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfilesGetMeshUpgradeProfilesAsyncCollectionResultOfT(_meshUpgradeProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MeshUpgradeProfileResource(Client, data));
+            return new AsyncPageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfilesGetMeshUpgradeProfilesAsyncCollectionResultOfT(
+                _meshUpgradeProfilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MeshUpgradeProfileCollection.GetAll"), data => new MeshUpgradeProfileResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfilesGetMeshUpgradeProfilesCollectionResultOfT(_meshUpgradeProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MeshUpgradeProfileResource(Client, data));
+            return new PageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfilesGetMeshUpgradeProfilesCollectionResultOfT(
+                _meshUpgradeProfilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MeshUpgradeProfileCollection.GetAll"), data => new MeshUpgradeProfileResource(Client, data));
         }
 
         /// <summary>

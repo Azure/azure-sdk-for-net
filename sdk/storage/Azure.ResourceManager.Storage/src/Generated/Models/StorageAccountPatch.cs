@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.AccessTier = value.Value;
+                Properties.AccessTier = value;
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.EnableHttpsTrafficOnly = value.Value;
+                Properties.EnableHttpsTrafficOnly = value;
             }
         }
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.IsSftpEnabled = value.Value;
+                Properties.IsSftpEnabled = value;
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.IsLocalUserEnabled = value.Value;
+                Properties.IsLocalUserEnabled = value;
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.IsExtendedGroupEnabled = value.Value;
+                Properties.IsExtendedGroupEnabled = value;
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.LargeFileSharesState = value.Value;
+                Properties.LargeFileSharesState = value;
             }
         }
 
@@ -304,11 +304,11 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.AllowBlobPublicAccess = value.Value;
+                Properties.AllowBlobPublicAccess = value;
             }
         }
 
-        /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
+        /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. Minimum TLS version 1.3 version is not supported. </summary>
         [WirePath("properties.minimumTlsVersion")]
         public StorageMinimumTlsVersion? MinimumTlsVersion
         {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.MinimumTlsVersion = value.Value;
+                Properties.MinimumTlsVersion = value;
             }
         }
 
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.AllowSharedKeyAccess = value.Value;
+                Properties.AllowSharedKeyAccess = value;
             }
         }
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.AllowCrossTenantReplication = value.Value;
+                Properties.AllowCrossTenantReplication = value;
             }
         }
 
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.IsDefaultToOAuthAuthentication = value.Value;
+                Properties.IsDefaultToOAuthAuthentication = value;
             }
         }
 
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.AllowedCopyScope = value.Value;
+                Properties.AllowedCopyScope = value;
             }
         }
 
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.DnsEndpointType = value.Value;
+                Properties.DnsEndpointType = value;
             }
         }
 
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.KeyExpirationPeriodInDays = value.Value;
+                Properties.KeyExpirationPeriodInDays = value;
             }
         }
 
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.IsIPv6EndpointToBePublished = value.Value;
+                Properties.IsIPv6EndpointToBePublished = value;
             }
         }
 
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.IsBlobEnabled = value.Value;
+                Properties.IsBlobEnabled = value;
             }
         }
 

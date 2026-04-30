@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     Properties = new ScheduleCreationParameterProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     Properties = new ScheduleCreationParameterProperties();
                 }
-                Properties.HourlyRecurrenceMinute = value.Value;
+                Properties.HourlyRecurrenceMinute = value;
             }
         }
     }

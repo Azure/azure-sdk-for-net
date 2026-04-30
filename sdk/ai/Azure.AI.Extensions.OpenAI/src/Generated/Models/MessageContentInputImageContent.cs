@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class MessageContentInputImageContent : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentInputImageContent"/>. </summary>
-        /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </param>
+        /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
         internal MessageContentInputImageContent(ImageDetail detail) : base(MessageContentType.InputImage)
         {
             Detail = detail;
@@ -22,7 +22,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
-        /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </param>
+        /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
         internal MessageContentInputImageContent(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri imageUrl, string fileId, ImageDetail detail) : base(@type, additionalBinaryDataProperties)
         {
             ImageUrl = imageUrl;
@@ -36,7 +36,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Gets the FileId. </summary>
         public string FileId { get; }
 
-        /// <summary> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </summary>
+        /// <summary> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </summary>
         public ImageDetail Detail { get; }
     }
 }

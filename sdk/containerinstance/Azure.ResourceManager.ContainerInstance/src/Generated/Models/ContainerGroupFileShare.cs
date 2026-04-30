@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> File shares that can be mounted on container groups. </summary>
     public partial class ContainerGroupFileShare
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShare"/>. </summary>
         public ContainerGroupFileShare()
@@ -55,23 +26,26 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="resourceGroupName"></param>
         /// <param name="storageAccountName"></param>
         /// <param name="properties"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupFileShare(string name, string resourceGroupName, string storageAccountName, ContainerGroupFileShareProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupFileShare(string name, string resourceGroupName, string storageAccountName, ContainerGroupFileShareProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ResourceGroupName = resourceGroupName;
             StorageAccountName = storageAccountName;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the resource group name. </summary>
+
+        /// <summary> Gets or sets the ResourceGroupName. </summary>
         public string ResourceGroupName { get; set; }
-        /// <summary> Gets or sets the storage account name. </summary>
+
+        /// <summary> Gets or sets the StorageAccountName. </summary>
         public string StorageAccountName { get; set; }
-        /// <summary> Gets or sets the properties. </summary>
+
+        /// <summary> Gets or sets the Properties. </summary>
         public ContainerGroupFileShareProperties Properties { get; set; }
     }
 }

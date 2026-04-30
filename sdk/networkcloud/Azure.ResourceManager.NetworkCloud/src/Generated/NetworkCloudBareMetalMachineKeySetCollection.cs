@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudBareMetalMachineKeySetResource(Client, data));
+                context,
+                "NetworkCloudBareMetalMachineKeySetCollection.GetAll"), data => new NetworkCloudBareMetalMachineKeySetResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +342,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudBareMetalMachineKeySetResource(Client, data));
+                context,
+                "NetworkCloudBareMetalMachineKeySetCollection.GetAll"), data => new NetworkCloudBareMetalMachineKeySetResource(Client, data));
         }
 
         /// <summary>

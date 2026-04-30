@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ComparisonOperatorType : IEquatable<ComparisonOperatorType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ComparisonOperatorType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComparisonOperatorType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InValue = "In";
         private const string ContainsValue = "Contains";
 
-        /// <summary> In. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComparisonOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ComparisonOperatorType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the In. </summary>
         public static ComparisonOperatorType In { get; } = new ComparisonOperatorType(InValue);
-        /// <summary> Contains. </summary>
+
+        /// <summary> Gets the Contains. </summary>
         public static ComparisonOperatorType Contains { get; } = new ComparisonOperatorType(ContainsValue);
+
         /// <summary> Determines if two <see cref="ComparisonOperatorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComparisonOperatorType left, ComparisonOperatorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComparisonOperatorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComparisonOperatorType left, ComparisonOperatorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComparisonOperatorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComparisonOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComparisonOperatorType(string value) => new ComparisonOperatorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComparisonOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComparisonOperatorType?(string value) => value == null ? null : new ComparisonOperatorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComparisonOperatorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComparisonOperatorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

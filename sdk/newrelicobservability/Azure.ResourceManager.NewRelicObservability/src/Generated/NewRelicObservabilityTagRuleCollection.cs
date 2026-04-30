@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NewRelicObservabilityTagRuleData, NewRelicObservabilityTagRuleResource>(new TagRulesGetByNewRelicMonitorResourceAsyncCollectionResultOfT(_tagRulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new NewRelicObservabilityTagRuleResource(Client, data));
+            return new AsyncPageableWrapper<NewRelicObservabilityTagRuleData, NewRelicObservabilityTagRuleResource>(new TagRulesGetByNewRelicMonitorResourceAsyncCollectionResultOfT(
+                _tagRulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NewRelicObservabilityTagRuleCollection.GetAll"), data => new NewRelicObservabilityTagRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NewRelicObservabilityTagRuleData, NewRelicObservabilityTagRuleResource>(new TagRulesGetByNewRelicMonitorResourceCollectionResultOfT(_tagRulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new NewRelicObservabilityTagRuleResource(Client, data));
+            return new PageableWrapper<NewRelicObservabilityTagRuleData, NewRelicObservabilityTagRuleResource>(new TagRulesGetByNewRelicMonitorResourceCollectionResultOfT(
+                _tagRulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NewRelicObservabilityTagRuleCollection.GetAll"), data => new NewRelicObservabilityTagRuleResource(Client, data));
         }
 
         /// <summary>

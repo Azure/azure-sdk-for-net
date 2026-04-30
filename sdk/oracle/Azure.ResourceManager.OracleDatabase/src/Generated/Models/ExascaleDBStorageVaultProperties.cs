@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="additionalFlashCacheInPercent"> The size of additional Flash Cache in percentage of High Capacity database storage. </param>
         /// <param name="description"> Exadata Database Storage Vault description. </param>
         /// <param name="displayName"> The user-friendly name for the Exadata Database Storage Vault. The name does not need to be unique. </param>
-        /// <param name="highCapacityDatabaseStorageInput"> Create exadata Database Storage Details. </param>
+        /// <param name="highCapacityStorageInput"> Create exadata Database Storage Details. </param>
         /// <param name="highCapacityDatabaseStorage"> Response exadata Database Storage Details. </param>
         /// <param name="timeZone"> The time zone that you want to use for the Exadata Database Storage Vault. </param>
         /// <param name="provisioningState"> Exadata Database Storage Vault provisioning state. </param>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="exadataInfrastructureId"> Cloud Exadata infrastructure ID. </param>
         /// <param name="attachedShapeAttributes"> The shapeAttribute of the Exadata VM cluster(s) associated with the Exadata Database Storage Vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput, ExascaleDBStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDBStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri, ResourceIdentifier exadataInfrastructureId, IReadOnlyList<ExascaleStorageShapeAttribute> attachedShapeAttributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, ExascaleDBStorageInputDetails highCapacityStorageInput, ExascaleDBStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDBStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri, ResourceIdentifier exadataInfrastructureId, IReadOnlyList<ExascaleStorageShapeAttribute> attachedShapeAttributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdditionalFlashCacheInPercent = additionalFlashCacheInPercent;
             Description = description;
             DisplayName = displayName;
-            HighCapacityDatabaseStorageInput = highCapacityDatabaseStorageInput;
+            HighCapacityStorageInput = highCapacityStorageInput;
             HighCapacityDatabaseStorage = highCapacityDatabaseStorage;
             TimeZone = timeZone;
             ProvisioningState = provisioningState;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string DisplayName { get; set; }
 
         /// <summary> Create exadata Database Storage Details. </summary>
-        internal ExascaleDBStorageInputDetails HighCapacityDatabaseStorageInput { get; set; }
+        internal ExascaleDBStorageInputDetails HighCapacityStorageInput { get; set; }
 
         /// <summary> Response exadata Database Storage Details. </summary>
         public ExascaleDBStorageDetails HighCapacityDatabaseStorage { get; }
@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public IReadOnlyList<ExascaleStorageShapeAttribute> AttachedShapeAttributes { get; }
 
         /// <summary> Total Capacity. </summary>
-        public int? HighCapacityDatabaseStorageInputTotalSizeInGbs
+        public int HighCapacityStorageInputTotalSizeInGbs
         {
             get
             {
-                return HighCapacityDatabaseStorageInput is null ? default : HighCapacityDatabaseStorageInput.TotalSizeInGbs;
+                return HighCapacityStorageInput is null ? default : HighCapacityStorageInput.TotalSizeInGbs;
             }
             set
             {
-                HighCapacityDatabaseStorageInput = value.HasValue ? new ExascaleDBStorageInputDetails(value.Value) : default;
+                HighCapacityStorageInput = new ExascaleDBStorageInputDetails(value);
             }
         }
     }

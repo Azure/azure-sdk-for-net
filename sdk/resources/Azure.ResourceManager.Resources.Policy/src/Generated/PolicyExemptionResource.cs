@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyExemptionData> response = Response.FromValue(PolicyExemptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyExemptionData> response = Response.FromValue(PolicyExemptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PolicyExemptionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _policyExemptionsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PolicyExemptionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyExemptionData> response = Response.FromValue(PolicyExemptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PolicyExemptionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _policyExemptionsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PolicyExemptionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyExemptionData> response = Response.FromValue(PolicyExemptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _policyExemptionsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _policyExemptionsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

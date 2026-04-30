@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationPrivateLinkResourceData, DataReplicationPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationPrivateLinkResourceData, DataReplicationPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPrivateLinkResourceCollection.GetAll"), data => new DataReplicationPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationPrivateLinkResourceData, DataReplicationPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPrivateLinkResource(Client, data));
+            return new PageableWrapper<DataReplicationPrivateLinkResourceData, DataReplicationPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPrivateLinkResourceCollection.GetAll"), data => new DataReplicationPrivateLinkResource(Client, data));
         }
 
         /// <summary>

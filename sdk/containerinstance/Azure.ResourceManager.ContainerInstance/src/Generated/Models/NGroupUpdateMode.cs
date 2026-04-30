@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The NGroupUpdateMode. </summary>
+    /// <summary></summary>
     public readonly partial struct NGroupUpdateMode : IEquatable<NGroupUpdateMode>
     {
         private readonly string _value;
+        /// <summary> Manual. </summary>
+        private const string ManualValue = "Manual";
+        /// <summary> Rolling. </summary>
+        private const string RollingValue = "Rolling";
 
         /// <summary> Initializes a new instance of <see cref="NGroupUpdateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NGroupUpdateMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ManualValue = "Manual";
-        private const string RollingValue = "Rolling";
+            _value = value;
+        }
 
         /// <summary> Manual. </summary>
         public static NGroupUpdateMode Manual { get; } = new NGroupUpdateMode(ManualValue);
+
         /// <summary> Rolling. </summary>
         public static NGroupUpdateMode Rolling { get; } = new NGroupUpdateMode(RollingValue);
+
         /// <summary> Determines if two <see cref="NGroupUpdateMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NGroupUpdateMode left, NGroupUpdateMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NGroupUpdateMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NGroupUpdateMode left, NGroupUpdateMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NGroupUpdateMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NGroupUpdateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NGroupUpdateMode(string value) => new NGroupUpdateMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NGroupUpdateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NGroupUpdateMode?(string value) => value == null ? null : new NGroupUpdateMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NGroupUpdateMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NGroupUpdateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

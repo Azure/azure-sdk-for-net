@@ -26,6 +26,8 @@ Use this skill instead of `azure-sdk-mgmt-pr-review` when the PR is a **migratio
 
 Run the full review from the `azure-sdk-mgmt-pr-review` skill (Phase 1: Versioning, Phase 2: API Review, Phase 3: Breaking Change Detection). All rules from that skill apply.
 
+**Migration-specific note for Phase 2**: Migrations often introduce newly generated enums/models with names that are technically valid C# but still too generic for the public API, such as `Scope`, `GroupScope`, `Sensitivity`, or `ManagedRuleSetException`. Flag these as contextual naming issues and recommend a `@@clientName(..., "csharp")` rename that adds service or resource context (for example, `FrontDoorRuleScope`).
+
 **Migration-specific note for Phase 3**: In migration PRs, breaking changes are expected but must still be mitigated. Pay close attention to `ApiCompatBaseline.txt` — migration PRs are the most tempting place to add baseline entries, but they are still **not allowed**. Every ApiCompat error must be mitigated through customization code or TypeSpec decorators.
 
 ## Phase 4: Migration Customization Review

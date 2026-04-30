@@ -13,18 +13,22 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AssignmentRestrictions))]
+    [ModelReaderWriterBuildable(typeof(FederatedIdentityClaimsMatchingExpression))]
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialData))]
+    [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialProperties))]
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialResource))]
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialsListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityData))]
+    [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityProperties))]
     [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentitiesListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityPatch))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityResource))]
     public partial class AzureResourceManagerManagedServiceIdentitiesContext : ModelReaderWriterContext
     {

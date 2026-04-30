@@ -73,5 +73,59 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         {
             return new ComputeLimitLimitName(value, localizedValue, additionalBinaryDataProperties: null);
         }
+
+        /// <summary> Compute limit feature. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ComputeLimit.ComputeLimitFeatureData"/> instance for mocking. </returns>
+        public static ComputeLimitFeatureData ComputeLimitFeatureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeLimitFeatureProperties properties = default)
+        {
+            return new ComputeLimitFeatureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of the compute limit feature. </summary>
+        /// <param name="state"> The current state of the feature (for example, Enabled, Disabled). </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.ComputeLimitFeatureProperties"/> instance for mocking. </returns>
+        public static ComputeLimitFeatureProperties ComputeLimitFeatureProperties(ComputeLimitFeatureState? state = default, ComputeLimitResourceProvisioningState? provisioningState = default)
+        {
+            return new ComputeLimitFeatureProperties(state, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> VM family resource representing a virtual machine family and its category. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ComputeLimit.ComputeLimitVmFamilyData"/> instance for mocking. </returns>
+        public static ComputeLimitVmFamilyData ComputeLimitVmFamilyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeLimitVmFamilyProperties properties = default)
+        {
+            return new ComputeLimitVmFamilyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of a VM family resource. </summary>
+        /// <param name="category"> The category of the VM family (for example, GeneralPurpose, ComputeOptimized). </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.ComputeLimitVmFamilyProperties"/> instance for mocking. </returns>
+        public static ComputeLimitVmFamilyProperties ComputeLimitVmFamilyProperties(string category = default, ComputeLimitResourceProvisioningState? provisioningState = default)
+        {
+            return new ComputeLimitVmFamilyProperties(category, provisioningState, additionalBinaryDataProperties: null);
+        }
     }
 }

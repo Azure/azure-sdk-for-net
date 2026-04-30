@@ -7,6 +7,8 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -79,5 +81,471 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> Create a new agent version. </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersion(string agentName, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            CreateAgentVersionRequest1 spreadModel = new CreateAgentVersionRequest1(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, blueprintReference, default);
+            ClientResult result = CreateAgentVersion(agentName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+        }
+
+        /// <summary> Create a new agent version. </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionAsync(string agentName, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            CreateAgentVersionRequest1 spreadModel = new CreateAgentVersionRequest1(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, blueprintReference, default);
+            ClientResult result = await CreateAgentVersionAsync(agentName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates an agent endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to retrieve. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult PatchAgentObject(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates an agent endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to retrieve. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> PatchAgentObjectAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new session for an agent endpoint.
+        /// The endpoint resolves the backing agent version from `version_indicator` and
+        /// enforces session ownership using the provided isolation key for session-mutating operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to create a session for. </param>
+        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult CreateSession(string agentName, string isolationKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using PipelineMessage message = CreateCreateSessionRequest(agentName, isolationKey, content, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new session for an agent endpoint.
+        /// The endpoint resolves the backing agent version from `version_indicator` and
+        /// enforces session ownership using the provided isolation key for session-mutating operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to create a session for. </param>
+        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> CreateSessionAsync(string agentName, string isolationKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using PipelineMessage message = CreateCreateSessionRequest(agentName, isolationKey, content, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary>
+        /// Creates a new session for an agent endpoint.
+        /// The endpoint resolves the backing agent version from `version_indicator` and
+        /// enforces session ownership using the provided isolation key for session-mutating operations.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to create a session for. </param>
+        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+        /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
+        /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+            ClientResult result = CreateSession(agentName, isolationKey, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Creates a new session for an agent endpoint.
+        /// The endpoint resolves the backing agent version from `version_indicator` and
+        /// enforces session ownership using the provided isolation key for session-mutating operations.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to create a session for. </param>
+        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+        /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
+        /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+            ClientResult result = await CreateSessionAsync(agentName, isolationKey, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a session by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult GetSession(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        {
+            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a session by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> GetSessionAsync(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        {
+            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary> Retrieves a session by ID. </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<ProjectAgentSession> GetSession(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult result = GetSession(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
+        }
+
+        /// <summary> Retrieves a session by ID. </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<ClientResult<ProjectAgentSession>> GetSessionAsync(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult result = await GetSessionAsync(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a session synchronously.
+        /// Returns 204 No Content when the session is deleted or does not exist.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, string foundryFeatures, RequestOptions options)
+        {
+            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, isolationKey, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a session synchronously.
+        /// Returns 204 No Content when the session is deleted or does not exist.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, string foundryFeatures, RequestOptions options)
+        {
+            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, isolationKey, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary>
+        /// Deletes a session synchronously.
+        /// Returns 204 No Content when the session is deleted or does not exist.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            return DeleteSession(agentName, sessionId, isolationKey, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Deletes a session synchronously.
+        /// Returns 204 No Content when the session is deleted or does not exist.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            return await DeleteSessionAsync(agentName, sessionId, isolationKey, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Streams console logs (stdout / stderr) for a specific hosted agent session
+        /// as a Server-Sent Events (SSE) stream.
+        /// Each SSE frame contains:
+        /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+        /// is not contractual and may include additional keys or change format
+        /// over time — clients should treat it as an opaque string)
+        /// Example SSE frames:
+        /// ```
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+        /// ```
+        /// The stream remains open until the client disconnects or the server
+        /// terminates the connection. Clients should handle reconnection as needed.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the hosted agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult GetSessionLogStream(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
+        {
+            using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Streams console logs (stdout / stderr) for a specific hosted agent session
+        /// as a Server-Sent Events (SSE) stream.
+        /// Each SSE frame contains:
+        /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+        /// is not contractual and may include additional keys or change format
+        /// over time — clients should treat it as an opaque string)
+        /// Example SSE frames:
+        /// ```
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+        /// ```
+        /// The stream remains open until the client disconnects or the server
+        /// terminates the connection. Clients should handle reconnection as needed.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the hosted agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
+        {
+            using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary>
+        /// Streams console logs (stdout / stderr) for a specific hosted agent session
+        /// as a Server-Sent Events (SSE) stream.
+        /// Each SSE frame contains:
+        /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+        /// is not contractual and may include additional keys or change format
+        /// over time — clients should treat it as an opaque string)
+        /// Example SSE frames:
+        /// ```
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+        /// ```
+        /// The stream remains open until the client disconnects or the server
+        /// terminates the connection. Clients should handle reconnection as needed.
+        /// </summary>
+        /// <param name="agentName"> The name of the hosted agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<SessionLogEvent> GetSessionLogStream(string agentName, string agentVersion, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult result = GetSessionLogStream(agentName, agentVersion, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((SessionLogEvent)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Streams console logs (stdout / stderr) for a specific hosted agent session
+        /// as a Server-Sent Events (SSE) stream.
+        /// Each SSE frame contains:
+        /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+        /// is not contractual and may include additional keys or change format
+        /// over time — clients should treat it as an opaque string)
+        /// Example SSE frames:
+        /// ```
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+        /// ```
+        /// The stream remains open until the client disconnects or the server
+        /// terminates the connection. Clients should handle reconnection as needed.
+        /// </summary>
+        /// <param name="agentName"> The name of the hosted agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<ClientResult<SessionLogEvent>> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult result = await GetSessionLogStreamAsync(agentName, agentVersion, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((SessionLogEvent)result, result.GetRawResponse());
+        }
     }
 }

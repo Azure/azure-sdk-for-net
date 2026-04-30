@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ProjectImageVersionResource(Client, data));
+                context,
+                "ProjectImageVersionCollection.GetAll"), data => new ProjectImageVersionResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ProjectImageVersionResource(Client, data));
+                context,
+                "ProjectImageVersionCollection.GetAll"), data => new ProjectImageVersionResource(Client, data));
         }
 
         /// <summary>

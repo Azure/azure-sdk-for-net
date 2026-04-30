@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupAsyncCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ConfluentOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupAsyncCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConfluentOrganizationCollection.GetAll"), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ConfluentOrganizationResource(Client, data));
+            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConfluentOrganizationCollection.GetAll"), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>

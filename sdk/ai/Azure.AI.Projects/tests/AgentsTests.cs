@@ -108,7 +108,7 @@ public class AgentsTests : AgentsTestBase
             Assert.That(ids[idNum], Is.EqualTo(agent.Id), $"The ID #{idNum} is incorrect.");
             idNum++;
         }
-        Assert.That(idNum, Is.EqualTo(2));
+        Assert.That(idNum, Is.EqualTo(4));
         // Test calling after.
         agents = projectClient.AgentAdministrationClient.GetAgentsAsync(after: ids[idNum - 1], limit: 2, order: "asc");
         await foreach (ProjectsAgentRecord agent in agents)
@@ -1452,6 +1452,52 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    public async Task TestHostedAgentEndpoint()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
+        };
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: HOSTED_AGENT,
+            options: creationOptions);
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Active)
+        {
+            await Delay();
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
+        AgentEndpoint config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            Protocols = { AgentEndpointProtocol.Responses }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentObjectAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        responsesOptions.AgentName = agentVersion.Name;
+        ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+        Assert.That(response.GetOutputText(), Is.Not.Empty);
+    }
+
+    [RecordedTest]
     [TestCase(ToolType.None)]
     [TestCase(ToolType.FileSearch)]
     public async Task StructuredInputsWorkWithTools(ToolType toolType)
@@ -1550,7 +1596,7 @@ public class AgentsTests : AgentsTestBase
                     if (annotation is UriCitationMessageAnnotation uriAnnotation)
                     {
                         isUriCitationFound = true;
-                        if (ExpectedAnnotationTitle.TryGetValue(type,out string expectedTitle))
+                        if (ExpectedAnnotationTitle.TryGetValue(type, out string expectedTitle))
                         {
                             if (uriAnnotation.Title.ToLower().Contains(expectedTitle.ToLower()))
                             {

@@ -8,8 +8,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="PluginSnippets\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\samples\PluginSample\PluginSample.csproj" />
+    <ProjectReference Include="PluginSnippets\PluginSnippets.csproj" />
     <ProjectReference Include="..\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
 

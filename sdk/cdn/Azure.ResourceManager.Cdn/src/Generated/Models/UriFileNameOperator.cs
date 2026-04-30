@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct UriFileNameOperator : IEquatable<UriFileNameOperator>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="UriFileNameOperator"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UriFileNameOperator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string EqualValue = "Equal";
         private const string ContainsValue = "Contains";
@@ -33,43 +26,76 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFileNameOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public UriFileNameOperator(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static UriFileNameOperator Any { get; } = new UriFileNameOperator(AnyValue);
-        /// <summary> Equal. </summary>
+
+        /// <summary> Gets the Equal. </summary>
         public static UriFileNameOperator Equal { get; } = new UriFileNameOperator(EqualValue);
-        /// <summary> Contains. </summary>
+
+        /// <summary> Gets the Contains. </summary>
         public static UriFileNameOperator Contains { get; } = new UriFileNameOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+
+        /// <summary> Gets the BeginsWith. </summary>
         public static UriFileNameOperator BeginsWith { get; } = new UriFileNameOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+
+        /// <summary> Gets the EndsWith. </summary>
         public static UriFileNameOperator EndsWith { get; } = new UriFileNameOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+
+        /// <summary> Gets the LessThan. </summary>
         public static UriFileNameOperator LessThan { get; } = new UriFileNameOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+
+        /// <summary> Gets the LessThanOrEqual. </summary>
         public static UriFileNameOperator LessThanOrEqual { get; } = new UriFileNameOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+
+        /// <summary> Gets the GreaterThan. </summary>
         public static UriFileNameOperator GreaterThan { get; } = new UriFileNameOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+
+        /// <summary> Gets the GreaterThanOrEqual. </summary>
         public static UriFileNameOperator GreaterThanOrEqual { get; } = new UriFileNameOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+
+        /// <summary> Gets the RegEx. </summary>
         public static UriFileNameOperator RegEx { get; } = new UriFileNameOperator(RegExValue);
+
         /// <summary> Determines if two <see cref="UriFileNameOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UriFileNameOperator left, UriFileNameOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UriFileNameOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UriFileNameOperator left, UriFileNameOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UriFileNameOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UriFileNameOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UriFileNameOperator(string value) => new UriFileNameOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UriFileNameOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UriFileNameOperator?(string value) => value == null ? null : new UriFileNameOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UriFileNameOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UriFileNameOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

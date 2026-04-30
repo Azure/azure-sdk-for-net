@@ -7,49 +7,36 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A Class representing an ArmDeployment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArmDeploymentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetArmDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/>, <see cref="ResourceGroupResource"/>, <see cref="ManagementGroupResource"/> or <see cref="TenantResource"/> using the GetArmDeployment method.
+    /// A class representing a ArmDeployment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ArmDeploymentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetArmDeployments method.
     /// </summary>
     public partial class ArmDeploymentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ArmDeploymentResource"/> instance. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="deploymentName"> The deploymentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string deploymentName)
-        {
-            var resourceId = $"{scope}/providers/Microsoft.Resources/deployments/{deploymentName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _armDeploymentDeploymentsClientDiagnostics;
-        private readonly DeploymentsRestOperations _armDeploymentDeploymentsRestClient;
-        private readonly ClientDiagnostics _deploymentOperationsClientDiagnostics;
-        private readonly DeploymentRestOperations _deploymentOperationsRestClient;
+        private readonly ClientDiagnostics _armDeploymentsClientDiagnostics;
+        private readonly ArmDeployments _armDeploymentsRestClient;
         private readonly ArmDeploymentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/deployments";
 
-        /// <summary> Initializes a new instance of the <see cref="ArmDeploymentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ArmDeploymentResource for mocking. </summary>
         protected ArmDeploymentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArmDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArmDeploymentResource(ArmClient client, ArmDeploymentData data) : this(client, data.Id)
@@ -58,73 +45,91 @@ namespace Azure.ResourceManager.Resources
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArmDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArmDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _armDeploymentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string armDeploymentDeploymentsApiVersion);
-            _armDeploymentDeploymentsRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, armDeploymentDeploymentsApiVersion);
-            _deploymentOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _deploymentOperationsRestClient = new DeploymentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string armDeploymentApiVersion);
+            _armDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
+            _armDeploymentsRestClient = new ArmDeployments(_armDeploymentsClientDiagnostics, Pipeline, Endpoint, armDeploymentApiVersion ?? "2025-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ArmDeploymentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="deploymentName"> The deploymentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string deploymentName)
+        {
+            string resourceId = $"{scope}/providers/Microsoft.Resources/deployments/{deploymentName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a deployment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_GetAtScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_GetAtScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ArmDeploymentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Get");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Get");
             scope.Start();
             try
             {
-                var response = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,33 +143,41 @@ namespace Azure.ResourceManager.Resources
         /// Gets a deployment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_GetAtScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_GetAtScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ArmDeploymentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Get");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Get");
             scope.Start();
             try
             {
-                var response = _armDeploymentDeploymentsRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -178,20 +191,20 @@ namespace Azure.ResourceManager.Resources
         /// A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_DeleteAtScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_DeleteAtScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,14 +212,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Delete");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _armDeploymentDeploymentsRestClient.DeleteAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ResourcesArmOperation operation = new ResourcesArmOperation(_armDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -220,20 +240,20 @@ namespace Azure.ResourceManager.Resources
         /// A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_DeleteAtScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_DeleteAtScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,106 +261,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Delete");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Delete");
             scope.Start();
             try
             {
-                var response = _armDeploymentDeploymentsRestClient.DeleteAtScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ResourcesArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ResourcesArmOperation operation = new ResourcesArmOperation(_armDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// You can provide the template and parameters directly in the request or link to JSON files.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_CreateOrUpdateAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Additional parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ArmDeploymentResource>> UpdateAsync(WaitUntil waitUntil, ArmDeploymentContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScopeAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// You can provide the template and parameters directly in the request or link to JSON files.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_CreateOrUpdateAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Additional parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ArmDeploymentResource> Update(WaitUntil waitUntil, ArmDeploymentContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScope(Id.Parent, Id.Name, content, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -354,31 +289,36 @@ namespace Azure.ResourceManager.Resources
         /// You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resources partially deployed.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_CancelAtScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_CancelAtScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Cancel");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Cancel");
             scope.Start();
             try
             {
-                var response = await _armDeploymentDeploymentsRestClient.CancelAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -392,31 +332,316 @@ namespace Azure.ResourceManager.Resources
         /// You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resources partially deployed.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_CancelAtScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_CancelAtScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Cancel(CancellationToken cancellationToken = default)
         {
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Cancel");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Cancel");
             scope.Start();
             try
             {
-                var response = _armDeploymentDeploymentsRestClient.CancelAtScope(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a deployments operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_DeploymentOperationsGetAtScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The ID of the operation to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ArmDeploymentOperation>> GetDeploymentOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetDeploymentOperationRequest(Id.Parent.ToString(), Id.Name, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ArmDeploymentOperation> response = Response.FromValue(ArmDeploymentOperation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a deployments operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_DeploymentOperationsGetAtScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The ID of the operation to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ArmDeploymentOperation> GetDeploymentOperation(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetDeploymentOperationRequest(Id.Parent.ToString(), Id.Name, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ArmDeploymentOperation> response = Response.FromValue(ArmDeploymentOperation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all deployments operations for a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_DeploymentOperationsListAtScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArmDeploymentOperation> GetDeploymentOperationsAsync(int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ArmDeploymentsGetDeploymentOperationsAsyncCollectionResultOfT(
+                _armDeploymentsRestClient,
+                Id.Parent.ToString(),
+                Id.Name,
+                top,
+                context,
+                "ArmDeploymentResource.GetDeploymentOperations");
+        }
+
+        /// <summary>
+        /// Gets all deployments operations for a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_DeploymentOperationsListAtScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArmDeploymentOperation> GetDeploymentOperations(int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ArmDeploymentsGetDeploymentOperationsCollectionResultOfT(
+                _armDeploymentsRestClient,
+                Id.Parent.ToString(),
+                Id.Name,
+                top,
+                context,
+                "ArmDeploymentResource.GetDeploymentOperations");
+        }
+
+        /// <summary>
+        /// Exports the template used for specified deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_ExportTemplateAtScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ArmDeploymentExportResult>> ExportTemplateAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ExportTemplate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateExportTemplateRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ArmDeploymentExportResult> response = Response.FromValue(ArmDeploymentExportResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Exports the template used for specified deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_ExportTemplateAtScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ArmDeploymentExportResult> ExportTemplate(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ExportTemplate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateExportTemplateRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ArmDeploymentExportResult> response = Response.FromValue(ArmDeploymentExportResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -430,20 +655,20 @@ namespace Azure.ResourceManager.Resources
         /// Validates whether the specified template is syntactically correct and will be accepted by Azure Resource Manager..
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/validate</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/validate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_ValidateAtScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_ValidateAtScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,14 +680,27 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Validate");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Validate");
             scope.Start();
             try
             {
-                var response = await _armDeploymentDeploymentsRestClient.ValidateAtScopeAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ResourcesArmOperation<ArmDeploymentValidateResult> operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(
+                    new ArmDeploymentValidateResultOperationSource(),
+                    _armDeploymentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -476,20 +714,20 @@ namespace Azure.ResourceManager.Resources
         /// Validates whether the specified template is syntactically correct and will be accepted by Azure Resource Manager..
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/validate</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/validate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_ValidateAtScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_ValidateAtScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -501,14 +739,27 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Validate");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Validate");
             scope.Start();
             try
             {
-                var response = _armDeploymentDeploymentsRestClient.ValidateAtScope(Id.Parent, Id.Name, content, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ResourcesArmOperation<ArmDeploymentValidateResult> operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(
+                    new ArmDeploymentValidateResultOperationSource(),
+                    _armDeploymentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -519,198 +770,56 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Exports the template used for specified deployment.
+        /// Update a ArmDeployment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_ExportTemplateAtScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_CreateOrUpdateAtScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ArmDeploymentExportResult>> ExportTemplateAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ExportTemplate");
-            scope.Start();
-            try
-            {
-                var response = await _armDeploymentDeploymentsRestClient.ExportTemplateAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Exports the template used for specified deployment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_ExportTemplateAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ArmDeploymentExportResult> ExportTemplate(CancellationToken cancellationToken = default)
-        {
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ExportTemplate");
-            scope.Start();
-            try
-            {
-                var response = _armDeploymentDeploymentsRestClient.ExportTemplateAtScope(Id.Parent, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns changes that will be made by the deployment if executed at the scope of the tenant group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_WhatIfAtTenantScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_WhatIfAtManagementGroupScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_WhatIfAtSubscriptionScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_WhatIf</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters to validate. </param>
+        /// <param name="content"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<WhatIfOperationResult>> WhatIfAsync(WaitUntil waitUntil, ArmDeploymentWhatIfContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArmDeploymentResource>> UpdateAsync(WaitUntil waitUntil, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.WhatIf");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Update");
             scope.Start();
             try
             {
-                if (Id.Parent.ResourceType == TenantResource.ResourceType)
+                RequestContext context = new RequestContext
                 {
-                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtTenantScopeAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                    if (waitUntil == WaitUntil.Completed)
-                        await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                    return operation;
-                }
-                else if (Id.Parent.ResourceType == ManagementGroupResource.ResourceType)
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
+                    new ArmDeploymentOperationSource(Client),
+                    _armDeploymentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtManagementGroupScopeAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                    if (waitUntil == WaitUntil.Completed)
-                        await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                    return operation;
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
-                else if (Id.Parent.ResourceType == SubscriptionResource.ResourceType)
-                {
-                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtSubscriptionScopeAsync(Id.SubscriptionId, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                    if (waitUntil == WaitUntil.Completed)
-                        await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                    return operation;
-                }
-                else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
-                {
-                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                    if (waitUntil == WaitUntil.Completed)
-                        await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                    return operation;
-                }
-                else
-                {
-                    throw new InvalidOperationException($"{Id.Parent.ResourceType} is not supported here");
-                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -720,122 +829,56 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Returns changes that will be made by the deployment if executed at the scope of the tenant group.
+        /// Update a ArmDeployment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_WhatIfAtTenantScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> Deployments_CreateOrUpdateAtScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_WhatIfAtManagementGroupScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_WhatIfAtSubscriptionScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_WhatIf</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArmDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters to validate. </param>
+        /// <param name="content"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<WhatIfOperationResult> WhatIf(WaitUntil waitUntil, ArmDeploymentWhatIfContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArmDeploymentResource> Update(WaitUntil waitUntil, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.WhatIf");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Update");
             scope.Start();
             try
             {
-                if (Id.Parent.ResourceType == TenantResource.ResourceType)
+                RequestContext context = new RequestContext
                 {
-                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtTenantScope(Id.Name, content, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                    if (waitUntil == WaitUntil.Completed)
-                        operation.WaitForCompletion(cancellationToken);
-                    return operation;
-                }
-                else if (Id.Parent.ResourceType == ManagementGroupResource.ResourceType)
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
+                    new ArmDeploymentOperationSource(Client),
+                    _armDeploymentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtManagementGroupScope(Id.Parent.Name, Id.Name, content, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                    if (waitUntil == WaitUntil.Completed)
-                        operation.WaitForCompletion(cancellationToken);
-                    return operation;
+                    operation.WaitForCompletion(cancellationToken);
                 }
-                else if (Id.Parent.ResourceType == SubscriptionResource.ResourceType)
-                {
-                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtSubscriptionScope(Id.SubscriptionId, Id.Name, content, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                    if (waitUntil == WaitUntil.Completed)
-                        operation.WaitForCompletion(cancellationToken);
-                    return operation;
-                }
-                else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
-                {
-                    var response = _armDeploymentDeploymentsRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                    if (waitUntil == WaitUntil.Completed)
-                        operation.WaitForCompletion(cancellationToken);
-                    return operation;
-                }
-                else
-                {
-                    throw new InvalidOperationException($"{Id.Parent.ResourceType} is not supported here");
-                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -844,235 +887,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary>
-        /// Gets a deployments operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentOperations_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The ID of the operation to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<ArmDeploymentOperation>> GetDeploymentOperationAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperation");
-            scope.Start();
-            try
-            {
-                var response = await _deploymentOperationsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a deployments operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentOperations_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The ID of the operation to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<ArmDeploymentOperation> GetDeploymentOperation(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperation");
-            scope.Start();
-            try
-            {
-                var response = _deploymentOperationsRestClient.GetAtScope(Id.Parent, Id.Name, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets all deployments operations for a deployment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentOperations_ListAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ArmDeploymentOperation> GetDeploymentOperationsAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _deploymentOperationsRestClient.CreateListAtScopeRequest(Id.Parent, Id.Name, top);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deploymentOperationsRestClient.CreateListAtScopeNextPageRequest(nextLink, Id.Parent, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ArmDeploymentOperation.DeserializeArmDeploymentOperation(e), _deploymentOperationsClientDiagnostics, Pipeline, "ArmDeploymentResource.GetDeploymentOperations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all deployments operations for a deployment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentOperations_ListAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ArmDeploymentOperation> GetDeploymentOperations(int? top = null, CancellationToken cancellationToken = default)
-        {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _deploymentOperationsRestClient.CreateListAtScopeRequest(Id.Parent, Id.Name, top);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deploymentOperationsRestClient.CreateListAtScopeNextPageRequest(nextLink, Id.Parent, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ArmDeploymentOperation.DeserializeArmDeploymentOperation(e), _deploymentOperationsClientDiagnostics, Pipeline, "ArmDeploymentResource.GetDeploymentOperations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks whether the deployment exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_CheckExistenceAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckExistenceAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.CheckExistence");
-            scope.Start();
-            try
-            {
-                var response = await _armDeploymentDeploymentsRestClient.CheckExistenceAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks whether the deployment exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_CheckExistenceAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistence(CancellationToken cancellationToken = default)
-        {
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.CheckExistence");
-            scope.Start();
-            try
-            {
-                var response = _armDeploymentDeploymentsRestClient.CheckExistenceAtScope(Id.Parent, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1082,28 +897,29 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.AddTag");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
+                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ArmDeploymentContent(new ArmDeploymentProperties(current.Properties.Mode.HasValue ? current.Properties.Mode.Value : ArmDeploymentMode.Incremental));
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1114,27 +930,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1144,28 +940,29 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.AddTag");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _armDeploymentDeploymentsRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
-                    return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
+                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ArmDeploymentContent(new ArmDeploymentProperties(current.Properties.Mode.HasValue ? current.Properties.Mode.Value : ArmDeploymentMode.Incremental));
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1176,53 +973,38 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ArmDeploymentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.SetTags");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
+                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ArmDeploymentContent(new ArmDeploymentProperties(current.Properties.Mode.HasValue ? current.Properties.Mode.Value : ArmDeploymentMode.Incremental));
-                    patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1233,53 +1015,38 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ArmDeploymentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.SetTags");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _armDeploymentDeploymentsRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
-                    return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
+                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ArmDeploymentContent(new ArmDeploymentProperties(current.Properties.Mode.HasValue ? current.Properties.Mode.Value : ArmDeploymentMode.Incremental));
-                    patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1290,27 +1057,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1318,28 +1065,29 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.RemoveTag");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
+                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ArmDeploymentContent(new ArmDeploymentProperties(current.Properties.Mode.HasValue ? current.Properties.Mode.Value : ArmDeploymentMode.Incremental));
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1350,27 +1098,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1378,28 +1106,29 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.RemoveTag");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _armDeploymentDeploymentsRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
-                    return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
+                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ArmDeploymentContent(new ArmDeploymentProperties(current.Properties.Mode.HasValue ? current.Properties.Mode.Value : ArmDeploymentMode.Incremental));
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

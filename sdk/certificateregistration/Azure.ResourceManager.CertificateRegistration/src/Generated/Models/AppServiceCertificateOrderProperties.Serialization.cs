@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 writer.WriteNumberValue(KeySize.Value);
             }
             writer.WritePropertyName("productType"u8);
-            writer.WriteStringValue(ProductType.ToSerialString());
+            writer.WriteStringValue(CertificateProductType.ToSerialString());
             if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             string domainVerificationToken = default;
             int? validityInYears = default;
             int? keySize = default;
-            CertificateProductType productType = default;
+            CertificateProductType certificateProductType = default;
             bool? isAutoRenew = default;
             CertificateRegistrationProvisioningState? provisioningState = default;
             CertificateOrderStatus? status = default;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 }
                 if (prop.NameEquals("productType"u8))
                 {
-                    productType = prop.Value.GetString().ToCertificateProductType();
+                    certificateProductType = prop.Value.GetString().ToCertificateProductType();
                     continue;
                 }
                 if (prop.NameEquals("autoRenew"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 domainVerificationToken,
                 validityInYears,
                 keySize,
-                productType,
+                certificateProductType,
                 isAutoRenew,
                 provisioningState,
                 status,

@@ -1,0 +1,36 @@
+id: sdk-local-full-001
+name: Full Local Generation Workflow
+description: |
+  Test that the skill covers the complete local workflow:
+  generate, build, validate, test, update metadata.
+tags:
+  - basic
+  - full-workflow
+inputs:
+  prompt: "Walk me through the complete process of generating the Java SDK locally, building it, running tests, and preparing it for a PR."
+expected:
+  output_contains:
+    - "generate"
+    - "build"
+    - "test"
+    - "changelog"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_verify_setup
+    - type: tool_called
+      tool_name: azsdk_package_generate_code
+    - type: tool_called
+      tool_name: azsdk_package_build_code
+    - type: tool_called
+      tool_name: azsdk_package_run_check
+    - type: tool_called
+      tool_name: azsdk_package_run_tests
+    - type: tool_called
+      tool_name: azsdk_package_update_changelog_content
+    - type: tool_called
+      tool_name: azsdk_package_update_metadata
+    - type: tool_called
+      tool_name: azsdk_package_update_version
+  behavior:
+    max_tool_calls: 15
+    max_response_time_ms: 120000

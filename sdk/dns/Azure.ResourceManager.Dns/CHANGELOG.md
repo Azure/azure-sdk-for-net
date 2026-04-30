@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,18 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.2.0-beta.3 (2026-04-16)
+
+### Bugs Fixed
+
 - Fix `SystemData` deserialize method in custom code.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.53.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.2.0-beta.2 (2024-10-31)
 

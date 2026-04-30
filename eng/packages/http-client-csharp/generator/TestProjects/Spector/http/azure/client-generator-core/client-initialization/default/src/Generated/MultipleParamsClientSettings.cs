@@ -33,7 +33,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
             set => throw null;
         }
 
-        public MultipleParamsClientOptions Options
+        public SpecsAzureTcgcClientInitDefaultClientOptions Options
         {
             get => throw null;
             set => throw null;
