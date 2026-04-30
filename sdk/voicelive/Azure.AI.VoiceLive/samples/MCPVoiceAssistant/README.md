@@ -52,7 +52,7 @@ Both servers are configured with `RequireApproval = Never` so tool calls proceed
 
 - **`VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW`**: Required API version for MCP support.
 - **`VoiceLiveMcpServerDefinition`**: Registers an MCP server with the session. Provide a label, URL, optional `AllowedTools` list, and `RequireApproval`.
-- **`RequireApproval = BinaryData.FromString("\"never\"")`**: Sends the exact JSON string value required by the service to allow tool calls without prompting.
+- **`MCPApprovalType.Never`**: Set on `RequireApproval` to allow all tool calls without prompting.
 - **`VoiceLiveSessionOptions.Tools`**: Add `VoiceLiveMcpServerDefinition` instances here before calling `ConfigureSessionAsync`.
 - **MCP lifecycle events**: `SessionUpdateMcpListToolsInProgress/Completed/Failed` fire during tool discovery; `SessionUpdateResponseMcpCallInProgress/Completed/Failed` fire during tool calls.
 
