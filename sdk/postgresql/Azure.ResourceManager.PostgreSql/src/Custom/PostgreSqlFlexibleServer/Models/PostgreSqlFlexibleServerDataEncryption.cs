@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     public partial class PostgreSqlFlexibleServerDataEncryption
@@ -15,7 +13,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private bool _geoBackupEncryptionKeyStatusSet;
 
         /// <summary> Primary encryption key status. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("primaryEncryptionKeyStatus")]
         public PostgreSqlKeyStatus? PrimaryEncryptionKeyStatus
         {
@@ -26,7 +23,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         internal PostgreSqlKeyStatus? PrimaryEncryptionKeyStatusInternal { get; }
 
         /// <summary> Geo-backup encryption key status. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("geoBackupEncryptionKeyStatus")]
         public PostgreSqlKeyStatus? GeoBackupEncryptionKeyStatus
         {

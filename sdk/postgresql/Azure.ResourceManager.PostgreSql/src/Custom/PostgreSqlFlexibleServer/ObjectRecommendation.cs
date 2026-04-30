@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -28,7 +27,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private bool _analyzedWorkloadSet;
 
         /// <summary> Creation time (UTC) of this recommendation. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.initialRecommendedTime")]
         public DateTimeOffset? InitialRecommendedOn
         {
@@ -37,7 +35,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Last time (UTC) that this recommendation was produced. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.lastRecommendedTime")]
         public DateTimeOffset? LastRecommendedOn
         {
@@ -46,7 +43,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Number of times this recommendation has been produced. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.timesRecommended")]
         public int? TimesRecommended
         {
@@ -55,7 +51,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Reason for this recommendation. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.recommendationReason")]
         public string RecommendationReason
         {
@@ -64,7 +59,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Current state. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.currentState")]
         public string CurrentState
         {
@@ -73,7 +67,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Type for this recommendation. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.recommendationType")]
         public PostgreSqlFlexibleServerRecommendationType? RecommendationType
         {
@@ -82,7 +75,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Implementation details for the recommended action. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.implementationDetails")]
         public ObjectRecommendationImplementationDetails ImplementationDetails
         {
@@ -91,7 +83,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Workload information for the recommended action. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.analyzedWorkload")]
         public ObjectRecommendationAnalyzedWorkload AnalyzedWorkload
         {

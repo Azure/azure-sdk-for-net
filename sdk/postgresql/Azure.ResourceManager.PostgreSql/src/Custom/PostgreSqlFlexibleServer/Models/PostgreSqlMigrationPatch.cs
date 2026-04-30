@@ -3,14 +3,11 @@
 
 #nullable disable
 
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     public partial class PostgreSqlMigrationPatch
     {
         /// <summary> Migration secret parameters. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.secretParameters")]
         public PostgreSqlMigrationSecretParameters SecretParameters
         {

@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -13,7 +12,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData
     {
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.privateLinkServiceConnectionState")]
         public PostgreSqlFlexibleServersPrivateLinkServiceConnectionState ConnectionState
         {

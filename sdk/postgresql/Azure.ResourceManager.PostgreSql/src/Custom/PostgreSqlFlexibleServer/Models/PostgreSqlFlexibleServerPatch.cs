@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -16,7 +15,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private AzureLocation? _location;
 
         /// <summary> Max storage allowed for a server. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.storage.storageSizeGB")]
         public int? StorageSizeInGB
         {
@@ -30,7 +28,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The administrator&apos;s login name. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.administratorLogin")]
         public string AdministratorLogin
         {
@@ -42,7 +39,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The geo-affinity location. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("location")]
         public AzureLocation? Location
         {

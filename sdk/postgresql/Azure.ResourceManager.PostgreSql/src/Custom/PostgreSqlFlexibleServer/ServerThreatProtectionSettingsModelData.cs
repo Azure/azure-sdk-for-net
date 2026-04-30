@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -12,7 +11,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     public partial class ServerThreatProtectionSettingsModelData
     {
         /// <summary> Specifies the state of the advanced threat protection. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.state")]
         public ThreatProtectionState? State
         {

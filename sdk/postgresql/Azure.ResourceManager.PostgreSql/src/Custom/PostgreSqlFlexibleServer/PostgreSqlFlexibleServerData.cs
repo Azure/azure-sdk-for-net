@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
@@ -19,7 +18,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     public partial class PostgreSqlFlexibleServerData : TrackedResourceData
     {
         /// <summary> Max storage allowed for a server. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.storage.storageSizeGB")]
         public int? StorageSizeInGB
         {
@@ -36,7 +34,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public int? ReplicaCapacity
         {
             get => Properties is null ? default : Properties.ReplicaCapacity;
-            [EditorBrowsable(EditorBrowsableState.Never)]
             set
             {
                 // Setter is preserved for binary compatibility; replicaCapacity is service-readonly in the generated model.

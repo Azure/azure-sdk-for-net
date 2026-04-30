@@ -4,14 +4,12 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     public partial class PostgreSqlFlexibleServerLtrBackupResult
     {
         /// <summary> Service-set extensible enum indicating the status of operation. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.status")]
         public PostgreSqlExecutionStatus? Status
         {
@@ -19,7 +17,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Start time of the operation. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn
         {

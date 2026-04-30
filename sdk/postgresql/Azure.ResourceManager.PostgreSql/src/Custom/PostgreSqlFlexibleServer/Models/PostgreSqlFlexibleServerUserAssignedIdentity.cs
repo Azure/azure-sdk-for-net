@@ -5,7 +5,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -15,7 +14,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity
     {
         /// <summary> Represents user assigned identities map. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities
         {
