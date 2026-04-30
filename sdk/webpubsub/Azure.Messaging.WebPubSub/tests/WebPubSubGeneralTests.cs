@@ -48,44 +48,54 @@ namespace Azure.Rest.WebPubSub.Tests
         public async Task ServiceClientCanListConnectionsInGroup(int totalConnectionCount, int? maxCountToList, int? maxPageSize, int expectedTotalCount, int expectedPageCount)
         {
             WebPubSubServiceClientOptions serviceClientOptions = InstrumentClientOptions(new WebPubSubServiceClientOptions());
-            var serviceClient = new WebPubSubServiceClient(TestEnvironment.ConnectionString, nameof(ServiceClientCanListConnectionsInGroup).ToLower(), serviceClientOptions);
+            var hubName = Recording.GenerateAlphaNumericId("list", useOnlyLowercase: true);
+            var serviceClient = new WebPubSubServiceClient(TestEnvironment.ConnectionString, hubName, serviceClientOptions);
 
             // Connect a few websocket connections to a group
-            var groupName = "group1";
+            var groupName = Recording.GenerateAlphaNumericId("group", useOnlyLowercase: true);
             Uri clientAccessUri = serviceClient.GetClientAccessUri(groups: [groupName]);
 
             var clients = new ClientWebSocket[totalConnectionCount];
-            // Client WebSocket connections cannot be recorded, so disable them in playback mode.
-            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+            try
             {
-                for (int i = 0; i < totalConnectionCount; i++)
+                // Client WebSocket connections cannot be recorded, so disable them in playback mode.
+                if (TestEnvironment.Mode != RecordedTestMode.Playback)
                 {
-                    var client = new ClientWebSocket();
-                    await client.ConnectAsync(clientAccessUri, CancellationToken.None);
-                    clients[i] = client;
+                    for (int i = 0; i < totalConnectionCount; i++)
+                    {
+                        var client = new ClientWebSocket();
+                        await client.ConnectAsync(clientAccessUri, CancellationToken.None);
+                        clients[i] = client;
+                    }
                 }
-            }
 
-            // List connections in the group
-            var actualPageCount = 0;
-            var actualConnectionCount = 0;
+                // List connections in the group
+                var actualPageCount = 0;
+                var actualConnectionCount = 0;
 
-            await foreach (Page<WebPubSubGroupMember> page in serviceClient.ListConnectionsInGroupAsync(groupName, maxPageSize, maxCountToList).AsPages())
-            {
-                //actualPageCount++;
-                actualConnectionCount += page.Values.Count;
-                actualPageCount++;
-            }
-
-            Assert.AreEqual(expectedPageCount, actualPageCount);
-            Assert.AreEqual(expectedTotalCount, actualConnectionCount);
-
-            if (TestEnvironment.Mode != RecordedTestMode.Playback)
-            {
-                foreach (ClientWebSocket client in clients)
+                await foreach (Page<WebPubSubGroupMember> page in serviceClient.ListConnectionsInGroupAsync(groupName, maxPageSize, maxCountToList).AsPages())
                 {
-                    await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
-                    client.Dispose();
+                    actualConnectionCount += page.Values.Count;
+                    actualPageCount++;
+                }
+
+                Assert.AreEqual(expectedPageCount, actualPageCount);
+                Assert.AreEqual(expectedTotalCount, actualConnectionCount);
+            }
+            finally
+            {
+                if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                {
+                    foreach (ClientWebSocket client in clients)
+                    {
+                        if (client == null)
+                        {
+                            continue;
+                        }
+
+                        await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                        client.Dispose();
+                    }
                 }
             }
         }
@@ -94,49 +104,60 @@ namespace Azure.Rest.WebPubSub.Tests
         public async Task ServiceClientCanListConnectionsInGroupWithContinuationToken()
         {
             WebPubSubServiceClientOptions options = InstrumentClientOptions(new WebPubSubServiceClientOptions());
-            var serviceClient = new WebPubSubServiceClient(TestEnvironment.ConnectionString, nameof(ServiceClientCanListConnectionsInGroupWithContinuationToken).ToLower(), options);
+            var hubName = Recording.GenerateAlphaNumericId("list", useOnlyLowercase: true);
+            var serviceClient = new WebPubSubServiceClient(TestEnvironment.ConnectionString, hubName, options);
 
             // Connect a few websocket connections to a group
-            var groupName = nameof(ServiceClientCanListConnectionsInGroupWithContinuationToken).ToLower();
+            var groupName = Recording.GenerateAlphaNumericId("group", useOnlyLowercase: true);
             var totalCount = 2;
             Uri clientAccessUri = serviceClient.GetClientAccessUri(groups: [groupName]);
 
             var clients = new ClientWebSocket[totalCount];
-            // Client WebSocket connections cannot be recorded, so disable them in playback mode.
-            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+            try
             {
-                for (int i = 0; i < totalCount; i++)
+                // Client WebSocket connections cannot be recorded, so disable them in playback mode.
+                if (TestEnvironment.Mode != RecordedTestMode.Playback)
                 {
-                    var client = new ClientWebSocket();
-                    await client.ConnectAsync(clientAccessUri, CancellationToken.None);
-                    clients[i] = client;
+                    for (int i = 0; i < totalCount; i++)
+                    {
+                        var client = new ClientWebSocket();
+                        await client.ConnectAsync(clientAccessUri, CancellationToken.None);
+                        clients[i] = client;
+                    }
                 }
-            }
 
-            // List connections in the group
-            var firstContinuationToken = "";
-            var firstPageSize = 0;
+                // List connections in the group
+                var firstContinuationToken = "";
+                var firstPageSize = 0;
 
-            await foreach (var page in serviceClient.ListConnectionsInGroupAsync(groupName, maxpagesize: 1).AsPages())
-            {
-                firstContinuationToken = page.ContinuationToken;
-                firstPageSize = page.Values.Count;
-                break;
-            }
-
-            var remainingConnectionsAfterFirstPage = new List<WebPubSubGroupMember>();
-            await foreach (var page in serviceClient.ListConnectionsInGroupAsync(groupName).AsPages(continuationToken: firstContinuationToken))
-            {
-                remainingConnectionsAfterFirstPage.AddRange(page.Values);
-            }
-            Assert.AreEqual(totalCount - firstPageSize, remainingConnectionsAfterFirstPage.Count);
-
-            if (TestEnvironment.Mode != RecordedTestMode.Playback)
-            {
-                foreach (ClientWebSocket client in clients)
+                await foreach (var page in serviceClient.ListConnectionsInGroupAsync(groupName, maxpagesize: 1).AsPages())
                 {
-                    await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
-                    client.Dispose();
+                    firstContinuationToken = page.ContinuationToken;
+                    firstPageSize = page.Values.Count;
+                    break;
+                }
+
+                var remainingConnectionsAfterFirstPage = new List<WebPubSubGroupMember>();
+                await foreach (var page in serviceClient.ListConnectionsInGroupAsync(groupName).AsPages(continuationToken: firstContinuationToken))
+                {
+                    remainingConnectionsAfterFirstPage.AddRange(page.Values);
+                }
+                Assert.AreEqual(totalCount - firstPageSize, remainingConnectionsAfterFirstPage.Count);
+            }
+            finally
+            {
+                if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                {
+                    foreach (ClientWebSocket client in clients)
+                    {
+                        if (client == null)
+                        {
+                            continue;
+                        }
+
+                        await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                        client.Dispose();
+                    }
                 }
             }
         }
