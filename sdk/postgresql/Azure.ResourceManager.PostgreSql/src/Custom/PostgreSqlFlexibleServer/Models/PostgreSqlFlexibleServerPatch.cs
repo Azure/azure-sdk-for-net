@@ -7,12 +7,10 @@
 
 using System.ComponentModel;
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Represents a server to be updated. </summary>
-    [CodeGenSuppress("AdministratorLogin")]
     public partial class PostgreSqlFlexibleServerPatch
     {
         private AzureLocation? _location;
