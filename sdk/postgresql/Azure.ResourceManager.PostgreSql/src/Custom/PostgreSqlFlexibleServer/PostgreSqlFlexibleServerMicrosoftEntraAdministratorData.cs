@@ -8,7 +8,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    // Preserves the previous parameterless constructor while suppressing the generated required-parameter constructor.
+    // TODO: Remove this shim after https://github.com/Azure/azure-sdk-for-net/pull/58867 is available in the generator.
+    // It preserves the previous parameterless constructor while suppressing the generated required-parameter constructor.
     [CodeGenSuppress("PostgreSqlFlexibleServerMicrosoftEntraAdministratorData")]
     public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministratorData
     {
