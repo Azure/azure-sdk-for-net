@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="id"> The ID of the sub-resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes a network interface reference properties. </param>
-        internal VirtualMachineNetworkInterfaceReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkInterfaceReferenceProperties properties) : base(id, additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualMachineNetworkInterfaceReferenceProperties properties) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Describes a network interface reference properties. </summary>
-        public NetworkInterfaceReferenceProperties Properties { get; set; }
+        public VirtualMachineNetworkInterfaceReferenceProperties Properties { get; set; }
     }
 }

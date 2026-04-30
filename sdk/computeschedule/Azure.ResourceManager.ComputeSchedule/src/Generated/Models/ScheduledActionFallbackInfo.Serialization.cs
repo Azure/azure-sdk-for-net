@@ -13,52 +13,57 @@ using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> Describes a network interface reference properties. </summary>
-    public partial class NetworkInterfaceReferenceProperties : IJsonModel<NetworkInterfaceReferenceProperties>
+    /// <summary> Describes the fallback operation that was performed. </summary>
+    public partial class ScheduledActionFallbackInfo : IJsonModel<ScheduledActionFallbackInfo>
     {
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionFallbackInfo"/> for deserialization. </summary>
+        internal ScheduledActionFallbackInfo()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkInterfaceReferenceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionFallbackInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceReferenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionFallbackInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNetworkInterfaceReferenceProperties(document.RootElement, options);
+                        return DeserializeScheduledActionFallbackInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceReferenceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionFallbackInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceReferenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionFallbackInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceReferenceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionFallbackInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkInterfaceReferenceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScheduledActionFallbackInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkInterfaceReferenceProperties IPersistableModel<NetworkInterfaceReferenceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScheduledActionFallbackInfo IPersistableModel<ScheduledActionFallbackInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkInterfaceReferenceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledActionFallbackInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetworkInterfaceReferenceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionFallbackInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +74,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceReferenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionFallbackInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceReferenceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionFallbackInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Primary))
+            writer.WritePropertyName("lastOpType"u8);
+            writer.WriteStringValue(LastOpType.ToString());
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status);
+            if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(Primary.Value);
-            }
-            if (Optional.IsDefined(DeleteOption))
-            {
-                writer.WritePropertyName("deleteOption"u8);
-                writer.WriteStringValue(DeleteOption.Value.ToString());
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +107,52 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkInterfaceReferenceProperties IJsonModel<NetworkInterfaceReferenceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScheduledActionFallbackInfo IJsonModel<ScheduledActionFallbackInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkInterfaceReferenceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionFallbackInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceReferenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionFallbackInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceReferenceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionFallbackInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkInterfaceReferenceProperties(document.RootElement, options);
+            return DeserializeScheduledActionFallbackInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkInterfaceReferenceProperties DeserializeNetworkInterfaceReferenceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScheduledActionFallbackInfo DeserializeScheduledActionFallbackInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? primary = default;
-            DeleteOptions? deleteOption = default;
+            ResourceOperationType lastOpType = default;
+            string status = default;
+            ResourceOperationError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("primary"u8))
+                if (prop.NameEquals("lastOpType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    primary = prop.Value.GetBoolean();
+                    lastOpType = new ResourceOperationType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("deleteOption"u8))
+                if (prop.NameEquals("status"u8))
+                {
+                    status = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("error"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    error = ResourceOperationError.DeserializeResourceOperationError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkInterfaceReferenceProperties(primary, deleteOption, additionalBinaryDataProperties);
+            return new ScheduledActionFallbackInfo(lastOpType, status, error, additionalBinaryDataProperties);
         }
     }
 }

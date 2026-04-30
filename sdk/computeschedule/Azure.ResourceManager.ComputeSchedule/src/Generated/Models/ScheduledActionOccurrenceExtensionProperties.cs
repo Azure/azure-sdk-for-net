@@ -14,25 +14,25 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The properties of the occurrence extension. </summary>
-    public partial class OccurrenceExtensionProperties
+    public partial class ScheduledActionOccurrenceExtensionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionOccurrenceExtensionProperties"/>. </summary>
         /// <param name="resourceId">
         /// The ARM Id of the resource.
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </param>
         /// <param name="scheduledActionId"> The arm identifier of the scheduled action the occurrence belongs to. </param>
-        internal OccurrenceExtensionProperties(ResourceIdentifier resourceId, ResourceIdentifier scheduledActionId)
+        internal ScheduledActionOccurrenceExtensionProperties(ResourceIdentifier resourceId, ResourceIdentifier scheduledActionId)
         {
             ResourceId = resourceId;
             NotificationSettings = new ChangeTrackingList<NotificationSettings>();
             ScheduledActionId = scheduledActionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionOccurrenceExtensionProperties"/>. </summary>
         /// <param name="resourceId">
         /// The ARM Id of the resource.
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
         /// <param name="scheduledActionId"> The arm identifier of the scheduled action the occurrence belongs to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceExtensionProperties(ResourceIdentifier resourceId, IList<NotificationSettings> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, ResourceIdentifier scheduledActionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionOccurrenceExtensionProperties(ResourceIdentifier resourceId, IList<NotificationSettings> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, ResourceIdentifier scheduledActionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             NotificationSettings = notificationSettings;

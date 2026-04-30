@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OccurrenceExtensionProperties properties = default;
+            ScheduledActionOccurrenceExtensionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    properties = OccurrenceExtensionProperties.DeserializeOccurrenceExtensionProperties(prop.Value, options);
+                    properties = ScheduledActionOccurrenceExtensionProperties.DeserializeScheduledActionOccurrenceExtensionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

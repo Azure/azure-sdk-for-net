@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Describes a network interface reference properties. </summary>
-    public partial class NetworkInterfaceReferenceProperties
+    public partial class VirtualMachineNetworkInterfaceReferenceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceReferenceProperties"/>. </summary>
-        public NetworkInterfaceReferenceProperties()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceReferenceProperties"/>. </summary>
+        public VirtualMachineNetworkInterfaceReferenceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceReferenceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceReferenceProperties"/>. </summary>
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInterfaceReferenceProperties(bool? primary, DeleteOptions? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceReferenceProperties(bool? primary, DeleteOptions? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Primary = primary;
             DeleteOption = deleteOption;

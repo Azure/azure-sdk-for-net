@@ -13,16 +13,16 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The response from a create flex request. </summary>
-    public partial class CreateFlexResourceOperationResult
+    public partial class ScheduledActionCreateFlexResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateFlexResourceOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionCreateFlexResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="resourceType"> The type of resources used in the create flex request eg virtual machines. </param>
         /// <param name="location"> The location of the create flex request eg westus. </param>
-        internal CreateFlexResourceOperationResult(string description, string resourceType, AzureLocation location)
+        internal ScheduledActionCreateFlexResult(string description, string resourceType, AzureLocation location)
         {
             Description = description;
             ResourceType = resourceType;
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Results = new ChangeTrackingList<ResourceOperationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateFlexResourceOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionCreateFlexResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="resourceType"> The type of resources used in the create flex request eg virtual machines. </param>
         /// <param name="location"> The location of the create flex request eg westus. </param>
         /// <param name="results"> The results from the create flex request if no errors exist. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateFlexResourceOperationResult(string description, string resourceType, AzureLocation location, IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionCreateFlexResult(string description, string resourceType, AzureLocation location, IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ResourceType = resourceType;

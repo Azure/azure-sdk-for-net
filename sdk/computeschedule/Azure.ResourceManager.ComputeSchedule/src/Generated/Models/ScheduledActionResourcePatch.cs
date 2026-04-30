@@ -13,25 +13,25 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Request model perform a resource operation in a list of resources. </summary>
-    public partial class ScheduledActionResourcePatchContent
+    public partial class ScheduledActionResourcePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourcePatchContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourcePatch"/>. </summary>
         /// <param name="resources"> The list of resources we watch to patch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
-        public ScheduledActionResourcePatchContent(IEnumerable<ScheduledActionResourceDetails> resources)
+        public ScheduledActionResourcePatch(IEnumerable<ScheduledActionResourceDetails> resources)
         {
             Argument.AssertNotNull(resources, nameof(resources));
 
             Resources = resources.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourcePatchContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourcePatch"/>. </summary>
         /// <param name="resources"> The list of resources we watch to patch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionResourcePatchContent(IList<ScheduledActionResourceDetails> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionResourcePatch(IList<ScheduledActionResourceDetails> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resources = resources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

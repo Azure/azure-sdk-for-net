@@ -13,57 +13,52 @@ using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> Describes the fallback operation that was performed. </summary>
-    public partial class FallbackOperationInfo : IJsonModel<FallbackOperationInfo>
+    /// <summary> Describes a network interface reference properties. </summary>
+    public partial class VirtualMachineNetworkInterfaceReferenceProperties : IJsonModel<VirtualMachineNetworkInterfaceReferenceProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="FallbackOperationInfo"/> for deserialization. </summary>
-        internal FallbackOperationInfo()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FallbackOperationInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineNetworkInterfaceReferenceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceReferenceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFallbackOperationInfo(document.RootElement, options);
+                        return DeserializeVirtualMachineNetworkInterfaceReferenceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceReferenceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceReferenceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceReferenceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FallbackOperationInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualMachineNetworkInterfaceReferenceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FallbackOperationInfo IPersistableModel<FallbackOperationInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualMachineNetworkInterfaceReferenceProperties IPersistableModel<VirtualMachineNetworkInterfaceReferenceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FallbackOperationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualMachineNetworkInterfaceReferenceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FallbackOperationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualMachineNetworkInterfaceReferenceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,19 +69,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceReferenceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceReferenceProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("lastOpType"u8);
-            writer.WriteStringValue(LastOpType.ToString());
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status);
-            if (Optional.IsDefined(Error))
+            if (Optional.IsDefined(Primary))
             {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WritePropertyName("primary"u8);
+                writer.WriteBooleanValue(Primary.Value);
+            }
+            if (Optional.IsDefined(DeleteOption))
+            {
+                writer.WritePropertyName("deleteOption"u8);
+                writer.WriteStringValue(DeleteOption.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -107,52 +103,50 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FallbackOperationInfo IJsonModel<FallbackOperationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualMachineNetworkInterfaceReferenceProperties IJsonModel<VirtualMachineNetworkInterfaceReferenceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FallbackOperationInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineNetworkInterfaceReferenceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceReferenceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceReferenceProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFallbackOperationInfo(document.RootElement, options);
+            return DeserializeVirtualMachineNetworkInterfaceReferenceProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FallbackOperationInfo DeserializeFallbackOperationInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualMachineNetworkInterfaceReferenceProperties DeserializeVirtualMachineNetworkInterfaceReferenceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceOperationType lastOpType = default;
-            string status = default;
-            ResourceOperationError error = default;
+            bool? primary = default;
+            DeleteOptions? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("lastOpType"u8))
-                {
-                    lastOpType = new ResourceOperationType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
-                {
-                    status = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("error"u8))
+                if (prop.NameEquals("primary"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = ResourceOperationError.DeserializeResourceOperationError(prop.Value, options);
+                    primary = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("deleteOption"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deleteOption = new DeleteOptions(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +154,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FallbackOperationInfo(lastOpType, status, error, additionalBinaryDataProperties);
+            return new VirtualMachineNetworkInterfaceReferenceProperties(primary, deleteOption, additionalBinaryDataProperties);
         }
     }
 }

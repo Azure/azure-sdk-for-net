@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CreateFlexResourceOperationResult>> ExecuteVirtualMachineCreateFlexOperationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScheduledActionCreateFlexResult>> ExecuteVirtualMachineCreateFlexOperationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CreateFlexResourceOperationResult> ExecuteVirtualMachineCreateFlexOperation(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
+        public static Response<ScheduledActionCreateFlexResult> ExecuteVirtualMachineCreateFlexOperation(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

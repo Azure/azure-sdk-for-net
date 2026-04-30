@@ -11,26 +11,26 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Describes the fallback operation that was performed. </summary>
-    public partial class FallbackOperationInfo
+    public partial class ScheduledActionFallbackInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FallbackOperationInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionFallbackInfo"/>. </summary>
         /// <param name="lastOpType"> The last operation type that was performed as a fallback. </param>
         /// <param name="status"> The status of the fallback operation. </param>
-        internal FallbackOperationInfo(ResourceOperationType lastOpType, string status)
+        internal ScheduledActionFallbackInfo(ResourceOperationType lastOpType, string status)
         {
             LastOpType = lastOpType;
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FallbackOperationInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionFallbackInfo"/>. </summary>
         /// <param name="lastOpType"> The last operation type that was performed as a fallback. </param>
         /// <param name="status"> The status of the fallback operation. </param>
         /// <param name="error"> The error code if the fallback operation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FallbackOperationInfo(ResourceOperationType lastOpType, string status, ResourceOperationError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionFallbackInfo(ResourceOperationType lastOpType, string status, ResourceOperationError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastOpType = lastOpType;
             Status = status;

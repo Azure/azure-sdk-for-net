@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="properties"> Properties of the virtual machine extension. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public BulkActionVmExtension(string name, BulkActionVmExtensionProperties properties)
+        public BulkActionVmExtension(string name, BulkActionVirtualMachineExtensionProperties properties)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="properties"> Properties of the virtual machine extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionVmExtension(string name, BulkActionVmExtensionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVmExtension(string name, BulkActionVirtualMachineExtensionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string Name { get; }
 
         /// <summary> Properties of the virtual machine extension. </summary>
-        public BulkActionVmExtensionProperties Properties { get; }
+        public BulkActionVirtualMachineExtensionProperties Properties { get; }
     }
 }

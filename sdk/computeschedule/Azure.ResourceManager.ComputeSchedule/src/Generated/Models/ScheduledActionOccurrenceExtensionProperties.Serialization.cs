@@ -17,56 +17,56 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The properties of the occurrence extension. </summary>
-    public partial class OccurrenceExtensionProperties : IJsonModel<OccurrenceExtensionProperties>
+    public partial class ScheduledActionOccurrenceExtensionProperties : IJsonModel<ScheduledActionOccurrenceExtensionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionProperties"/> for deserialization. </summary>
-        internal OccurrenceExtensionProperties()
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionOccurrenceExtensionProperties"/> for deserialization. </summary>
+        internal ScheduledActionOccurrenceExtensionProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OccurrenceExtensionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionOccurrenceExtensionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOccurrenceExtensionProperties(document.RootElement, options);
+                        return DeserializeScheduledActionOccurrenceExtensionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OccurrenceExtensionProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionOccurrenceExtensionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OccurrenceExtensionProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionOccurrenceExtensionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OccurrenceExtensionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScheduledActionOccurrenceExtensionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OccurrenceExtensionProperties IPersistableModel<OccurrenceExtensionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScheduledActionOccurrenceExtensionProperties IPersistableModel<ScheduledActionOccurrenceExtensionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OccurrenceExtensionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledActionOccurrenceExtensionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OccurrenceExtensionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionOccurrenceExtensionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OccurrenceExtensionProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionOccurrenceExtensionProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
@@ -130,24 +130,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OccurrenceExtensionProperties IJsonModel<OccurrenceExtensionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScheduledActionOccurrenceExtensionProperties IJsonModel<ScheduledActionOccurrenceExtensionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OccurrenceExtensionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionOccurrenceExtensionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OccurrenceExtensionProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionOccurrenceExtensionProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOccurrenceExtensionProperties(document.RootElement, options);
+            return DeserializeScheduledActionOccurrenceExtensionProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OccurrenceExtensionProperties DeserializeOccurrenceExtensionProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScheduledActionOccurrenceExtensionProperties DeserializeScheduledActionOccurrenceExtensionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OccurrenceExtensionProperties(
+            return new ScheduledActionOccurrenceExtensionProperties(
                 resourceId,
                 notificationSettings ?? new ChangeTrackingList<NotificationSettings>(),
                 scheduledOn,

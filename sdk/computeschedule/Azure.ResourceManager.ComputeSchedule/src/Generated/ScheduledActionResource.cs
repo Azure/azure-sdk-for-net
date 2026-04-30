@@ -972,12 +972,12 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content of the action request. </param>
+        /// <param name="patch"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ScheduledActionResourceOperationResult>> PatchResourcesAsync(ScheduledActionResourcePatchContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ScheduledActionResourceOperationResult>> PatchResourcesAsync(ScheduledActionResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.PatchResources");
             scope.Start();
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionsRestClient.CreatePatchResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionResourcePatchContent.ToRequestContent(content), context);
+                HttpMessage message = _scheduledActionsRestClient.CreatePatchResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionResourcePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1024,12 +1024,12 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content of the action request. </param>
+        /// <param name="patch"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ScheduledActionResourceOperationResult> PatchResources(ScheduledActionResourcePatchContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ScheduledActionResourceOperationResult> PatchResources(ScheduledActionResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.PatchResources");
             scope.Start();
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionsRestClient.CreatePatchResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionResourcePatchContent.ToRequestContent(content), context);
+                HttpMessage message = _scheduledActionsRestClient.CreatePatchResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionResourcePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)

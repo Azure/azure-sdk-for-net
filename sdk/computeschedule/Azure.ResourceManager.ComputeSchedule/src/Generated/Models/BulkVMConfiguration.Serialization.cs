@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ExtendedLocation extendedLocation = default;
             Placement placement = default;
             IDictionary<string, string> tags = default;
-            BulkActionVmProperties properties = default;
+            BulkActionVirtualMachineProperties properties = default;
             IList<BulkActionVmExtension> vmExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    properties = BulkActionVmProperties.DeserializeBulkActionVmProperties(prop.Value, options);
+                    properties = BulkActionVirtualMachineProperties.DeserializeBulkActionVirtualMachineProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vmExtensions"u8))

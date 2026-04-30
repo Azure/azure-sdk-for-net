@@ -15,66 +15,66 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Request model perform a resource operation in a list of resources. </summary>
-    public partial class ScheduledActionResourcePatchContent : IJsonModel<ScheduledActionResourcePatchContent>
+    public partial class ScheduledActionResourcePatch : IJsonModel<ScheduledActionResourcePatch>
     {
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourcePatchContent"/> for deserialization. </summary>
-        internal ScheduledActionResourcePatchContent()
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourcePatch"/> for deserialization. </summary>
+        internal ScheduledActionResourcePatch()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScheduledActionResourcePatchContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourcePatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScheduledActionResourcePatchContent(document.RootElement, options);
+                        return DeserializeScheduledActionResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledActionResourcePatchContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourcePatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledActionResourcePatchContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScheduledActionResourcePatchContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScheduledActionResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduledActionResourcePatchContent IPersistableModel<ScheduledActionResourcePatchContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScheduledActionResourcePatch IPersistableModel<ScheduledActionResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScheduledActionResourcePatchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledActionResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="scheduledActionResourcePatchContent"> The <see cref="ScheduledActionResourcePatchContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ScheduledActionResourcePatchContent scheduledActionResourcePatchContent)
+        /// <param name="scheduledActionResourcePatch"> The <see cref="ScheduledActionResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ScheduledActionResourcePatch scheduledActionResourcePatch)
         {
-            if (scheduledActionResourcePatchContent == null)
+            if (scheduledActionResourcePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(scheduledActionResourcePatchContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(scheduledActionResourcePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScheduledActionResourcePatchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourcePatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledActionResourcePatchContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionResourcePatch)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("resources"u8);
             writer.WriteStartArray();
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduledActionResourcePatchContent IJsonModel<ScheduledActionResourcePatchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScheduledActionResourcePatch IJsonModel<ScheduledActionResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScheduledActionResourcePatchContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourcePatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledActionResourcePatchContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionResourcePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScheduledActionResourcePatchContent(document.RootElement, options);
+            return DeserializeScheduledActionResourcePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScheduledActionResourcePatchContent DeserializeScheduledActionResourcePatchContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScheduledActionResourcePatch DeserializeScheduledActionResourcePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScheduledActionResourcePatchContent(resources, additionalBinaryDataProperties);
+            return new ScheduledActionResourcePatch(resources, additionalBinaryDataProperties);
         }
     }
 }

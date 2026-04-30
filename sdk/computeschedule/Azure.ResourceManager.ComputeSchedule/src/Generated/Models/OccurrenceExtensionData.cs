@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal OccurrenceExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, OccurrenceExtensionProperties properties) : base(id, name, resourceType, systemData)
+        internal OccurrenceExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScheduledActionOccurrenceExtensionProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public OccurrenceExtensionProperties Properties { get; }
+        public ScheduledActionOccurrenceExtensionProperties Properties { get; }
     }
 }

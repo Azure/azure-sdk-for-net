@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadline = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timezone = default, string operationTimezone = default, ResourceOperationError resourceOperationError = default, FallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, UserRequestRetryPolicy retryPolicy = default)
+        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadline = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timezone = default, string operationTimezone = default, ResourceOperationError resourceOperationError = default, ScheduledActionFallbackInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, UserRequestRetryPolicy retryPolicy = default)
         {
             return new ResourceOperationDetails(
                 operationId,
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="lastOpType"> The last operation type that was performed as a fallback. </param>
         /// <param name="status"> The status of the fallback operation. </param>
         /// <param name="error"> The error code if the fallback operation failed. </param>
-        /// <returns> A new <see cref="Models.FallbackOperationInfo"/> instance for mocking. </returns>
-        public static FallbackOperationInfo FallbackOperationInfo(ResourceOperationType lastOpType = default, string status = default, ResourceOperationError error = default)
+        /// <returns> A new <see cref="Models.ScheduledActionFallbackInfo"/> instance for mocking. </returns>
+        public static ScheduledActionFallbackInfo ScheduledActionFallbackInfo(ResourceOperationType lastOpType = default, string status = default, ResourceOperationError error = default)
         {
-            return new FallbackOperationInfo(lastOpType, status, error, additionalBinaryDataProperties: null);
+            return new ScheduledActionFallbackInfo(lastOpType, status, error, additionalBinaryDataProperties: null);
         }
 
         /// <param name="schedule"> The schedule for the request. </param>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="properties"> Specifies the properties of the virtual machine to be created. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
         /// <returns> A new <see cref="Models.BulkVmConfiguration"/> instance for mocking. </returns>
-        public static BulkVmConfiguration BulkVmConfiguration(string name = default, string computeApiVersion = default, string resourceGroupName = default, IEnumerable<string> zones = default, ArmPlan plan = default, ManagedServiceIdentity identity = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, BulkActionVmProperties properties = default, IEnumerable<BulkActionVmExtension> vmExtensions = default)
+        public static BulkVmConfiguration BulkVmConfiguration(string name = default, string computeApiVersion = default, string resourceGroupName = default, IEnumerable<string> zones = default, ArmPlan plan = default, ManagedServiceIdentity identity = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, BulkActionVirtualMachineProperties properties = default, IEnumerable<BulkActionVmExtension> vmExtensions = default)
         {
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="properties"> Properties of the virtual machine extension. </param>
         /// <returns> A new <see cref="Models.BulkActionVmExtension"/> instance for mocking. </returns>
-        public static BulkActionVmExtension BulkActionVmExtension(string name = default, BulkActionVmExtensionProperties properties = default)
+        public static BulkActionVmExtension BulkActionVmExtension(string name = default, BulkActionVirtualMachineExtensionProperties properties = default)
         {
             return new BulkActionVmExtension(name, properties, additionalBinaryDataProperties: null);
         }
@@ -619,14 +619,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
-        /// <returns> A new <see cref="Models.BulkActionVmExtensionProperties"/> instance for mocking. </returns>
-        public static BulkActionVmExtensionProperties BulkActionVmExtensionProperties(string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default, bool? suppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default)
+        /// <returns> A new <see cref="Models.BulkActionVirtualMachineExtensionProperties"/> instance for mocking. </returns>
+        public static BulkActionVirtualMachineExtensionProperties BulkActionVirtualMachineExtensionProperties(string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default, bool? suppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default)
         {
             settings ??= new ChangeTrackingDictionary<string, BinaryData>();
             protectedSettings ??= new ChangeTrackingDictionary<string, BinaryData>();
             provisionAfterExtensions ??= new ChangeTrackingList<string>();
 
-            return new BulkActionVmExtensionProperties(
+            return new BulkActionVirtualMachineExtensionProperties(
                 forceUpdateTag,
                 publisher,
                 @type,
@@ -688,12 +688,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceType"> The type of resources used in the create flex request eg virtual machines. </param>
         /// <param name="location"> The location of the create flex request eg westus. </param>
         /// <param name="results"> The results from the create flex request if no errors exist. </param>
-        /// <returns> A new <see cref="Models.CreateFlexResourceOperationResult"/> instance for mocking. </returns>
-        public static CreateFlexResourceOperationResult CreateFlexResourceOperationResult(string description = default, string resourceType = default, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = default)
+        /// <returns> A new <see cref="Models.ScheduledActionCreateFlexResult"/> instance for mocking. </returns>
+        public static ScheduledActionCreateFlexResult ScheduledActionCreateFlexResult(string description = default, string resourceType = default, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = default)
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new CreateFlexResourceOperationResult(description, resourceType, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new ScheduledActionCreateFlexResult(description, resourceType, location, results.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ExecuteCreateRequest request for create operations. </summary>
@@ -1038,12 +1038,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Request model perform a resource operation in a list of resources. </summary>
         /// <param name="resources"> The list of resources we watch to patch. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionResourcePatchContent"/> instance for mocking. </returns>
-        public static ScheduledActionResourcePatchContent ScheduledActionResourcePatchContent(IEnumerable<ScheduledActionResourceDetails> resources = default)
+        /// <returns> A new <see cref="Models.ScheduledActionResourcePatch"/> instance for mocking. </returns>
+        public static ScheduledActionResourcePatch ScheduledActionResourcePatch(IEnumerable<ScheduledActionResourceDetails> resources = default)
         {
             resources ??= new ChangeTrackingList<ScheduledActionResourceDetails>();
 
-            return new ScheduledActionResourcePatchContent(resources.ToList(), additionalBinaryDataProperties: null);
+            return new ScheduledActionResourcePatch(resources.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The request to cancel an occurrence. </summary>
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.OccurrenceExtensionData"/> instance for mocking. </returns>
-        public static OccurrenceExtensionData OccurrenceExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceExtensionProperties properties = default)
+        public static OccurrenceExtensionData OccurrenceExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScheduledActionOccurrenceExtensionProperties properties = default)
         {
             return new OccurrenceExtensionData(
                 id,
@@ -1220,12 +1220,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="provisioningState"> The current state of the resource. </param>
         /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
         /// <param name="scheduledActionId"> The arm identifier of the scheduled action the occurrence belongs to. </param>
-        /// <returns> A new <see cref="Models.OccurrenceExtensionProperties"/> instance for mocking. </returns>
-        public static OccurrenceExtensionProperties OccurrenceExtensionProperties(ResourceIdentifier resourceId = default, IEnumerable<NotificationSettings> notificationSettings = default, DateTimeOffset scheduledOn = default, OccurrenceResourceProvisioningState? provisioningState = default, ResponseError errorDetails = default, ResourceIdentifier scheduledActionId = default)
+        /// <returns> A new <see cref="Models.ScheduledActionOccurrenceExtensionProperties"/> instance for mocking. </returns>
+        public static ScheduledActionOccurrenceExtensionProperties ScheduledActionOccurrenceExtensionProperties(ResourceIdentifier resourceId = default, IEnumerable<NotificationSettings> notificationSettings = default, DateTimeOffset scheduledOn = default, OccurrenceResourceProvisioningState? provisioningState = default, ResponseError errorDetails = default, ResourceIdentifier scheduledActionId = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
 
-            return new OccurrenceExtensionProperties(
+            return new ScheduledActionOccurrenceExtensionProperties(
                 resourceId,
                 notificationSettings.ToList(),
                 scheduledOn,

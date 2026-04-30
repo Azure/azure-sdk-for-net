@@ -13,20 +13,20 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Describes the properties of a Virtual Machine Extension. </summary>
-    public partial class BulkActionVmExtensionProperties
+    public partial class BulkActionVirtualMachineExtensionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionVmExtensionProperties"/>. </summary>
-        public BulkActionVmExtensionProperties()
+        /// <summary> Initializes a new instance of <see cref="BulkActionVirtualMachineExtensionProperties"/>. </summary>
+        public BulkActionVirtualMachineExtensionProperties()
         {
             Settings = new ChangeTrackingDictionary<string, BinaryData>();
             ProtectedSettings = new ChangeTrackingDictionary<string, BinaryData>();
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionVmExtensionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionVirtualMachineExtensionProperties"/>. </summary>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> Specifies the type of the extension; an example is 'CustomScriptExtension'. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionVmExtensionProperties(string forceUpdateTag, string publisher, string @type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, bool? suppressFailures, KeyVaultSecretReference protectedSettingsFromKeyVault, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVirtualMachineExtensionProperties(string forceUpdateTag, string publisher, string @type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, bool? suppressFailures, KeyVaultSecretReference protectedSettingsFromKeyVault, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
