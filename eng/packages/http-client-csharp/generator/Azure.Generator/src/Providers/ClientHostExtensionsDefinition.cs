@@ -149,8 +149,7 @@ namespace Azure.Generator.Providers
                 args[i] = targetArgs[i];
             }
 
-            var invoke = hostParam.Invoke(targetMethodName, args, typeArgs);
-            invoke.Update(extensionType: ConfigurationExtensionsType);
+            var invoke = hostParam.Invoke(targetMethodName, args, typeArgs, ConfigurationExtensionsType);
 
             return new MethodProvider(
                 new MethodSignature(
