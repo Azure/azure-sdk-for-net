@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Tests
             // Delete Agent Pool
             await agentPoolGet.DeleteAsync(WaitUntil.Completed);
             // Delete Cluster
-            await cluster.DeleteAsync(WaitUntil.Completed);
+            await cluster.DeleteAsync(WaitUntil.Completed, default);
         }
     }
 }

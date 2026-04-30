@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
 
             // invoke the operation
-            await containerServiceManagedCluster.DeleteAsync(WaitUntil.Completed);
+            await containerServiceManagedCluster.DeleteAsync(WaitUntil.Completed, default);
 
             Console.WriteLine("Succeeded");
         }

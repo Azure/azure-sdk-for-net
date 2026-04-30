@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Tests
             Assert.AreEqual(clusterFromGet.Data.Name, cluster.Data.Name);
             Assert.AreEqual(clusterFromGet.Data.DnsPrefix, cluster.Data.DnsPrefix);
             // Delete
-            await clusterFromGet.DeleteAsync(WaitUntil.Completed);
+            await clusterFromGet.DeleteAsync(WaitUntil.Completed, default);
         }
 
         [RecordedTest]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Tests
             Assert.AreEqual(clusterFromUpdate.Data.Name, clusterName);
             Assert.AreEqual(clusterFromUpdate.Data.AgentPoolProfiles[0].Count, 2);
             // Delete
-            await clusterFromUpdate.DeleteAsync(WaitUntil.Completed);
+            await clusterFromUpdate.DeleteAsync(WaitUntil.Completed, default);
         }
 
         [RecordedTest]
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService.Tests
             ManagedClusterCredentials userCredentials = await cluster.GetClusterUserCredentialsAsync();
             Assert.True(userCredentials.Kubeconfigs.Count > 0);
             // Delete
-            await cluster.DeleteAsync(WaitUntil.Completed);
+            await cluster.DeleteAsync(WaitUntil.Completed, default);
         }
     }
 }
