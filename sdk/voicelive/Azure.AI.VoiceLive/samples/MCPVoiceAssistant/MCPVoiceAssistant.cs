@@ -3,6 +3,8 @@
 
 namespace Azure.AI.VoiceLive.Samples;
 
+using System.Net.WebSockets;
+
 /// <summary>
 /// Voice assistant that uses MCP (Model Context Protocol) servers to give the model
 /// access to external tools and data sources via the VoiceLive MCP API.
@@ -87,14 +89,15 @@ public class MCPVoiceAssistant : IDisposable
             InputAudioFormat = InputAudioFormat.Pcm16,
             OutputAudioFormat = OutputAudioFormat.Pcm16,
             InputAudioEchoCancellation = new AudioEchoCancellation(),
-            InputAudioNoiseReduction = new AudioNoiseReduction(),
+            InputAudioNoiseReduction = new AudioNoiseReduction(AudioNoiseReductionType.NearField),
             TurnDetection = new ServerVadTurnDetection
             {
                 Threshold = 0.5f,
                 PrefixPadding = TimeSpan.FromMilliseconds(300),
                 SilenceDuration = TimeSpan.FromMilliseconds(500)
             },
-            InputAudioTranscription = new AudioInputTranscriptionOptions()
+            // Whisper1 is the most broadly available transcription model across resources.
+            InputAudioTranscription = new AudioInputTranscriptionOptions(AudioInputTranscriptionOptionsModel.Whisper1)
         };
 
         sessionOptions.Modalities.Clear();
@@ -105,17 +108,27 @@ public class MCPVoiceAssistant : IDisposable
         // MCPApprovalResponseRequestItem is not available for sending approvals from client code.
         sessionOptions.Tools.Add(new VoiceLiveMcpServerDefinition("deepwiki", "https://mcp.deepwiki.com/mcp")
         {
-            RequireApproval = BinaryData.FromObjectAsJson(MCPApprovalType.Never),
+            RequireApproval = MCPApprovalType.Never,
             AllowedTools = { "read_wiki_structure", "ask_question" }
         });
 
         sessionOptions.Tools.Add(new VoiceLiveMcpServerDefinition("azure_doc", "https://learn.microsoft.com/api/mcp")
         {
-            RequireApproval = BinaryData.FromObjectAsJson(MCPApprovalType.Never)
+            RequireApproval = MCPApprovalType.Never
         });
 
-        await _session!.ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
-        _logger.LogInformation("Session configured with {ToolCount} MCP server(s)", sessionOptions.Tools.Count);
+        try
+        {
+            await _session!.ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
+            _logger.LogInformation("Session configured with {ToolCount} MCP server(s)", sessionOptions.Tools.Count);
+        }
+        catch (WebSocketException ex)
+        {
+            _logger.LogError(ex, "MCP session configuration failed. The endpoint/model may not support MCP configuration or the requested options.");
+            throw new InvalidOperationException(
+                "MCP session setup was rejected by the service. Verify this resource supports VoiceLive MCP with API version 2026-01-01-preview, and that the configured model/transcription options are available.",
+                ex);
+        }
     }
 
     private async Task ProcessEventsAsync(CancellationToken cancellationToken)

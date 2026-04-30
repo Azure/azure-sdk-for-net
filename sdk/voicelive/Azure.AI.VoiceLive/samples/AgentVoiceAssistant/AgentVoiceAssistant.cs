@@ -82,14 +82,14 @@ public class AgentVoiceAssistant : IDisposable
             InputAudioFormat = InputAudioFormat.Pcm16,
             OutputAudioFormat = OutputAudioFormat.Pcm16,
             InputAudioEchoCancellation = new AudioEchoCancellation(),
-            InputAudioNoiseReduction = new AudioNoiseReduction(),
+            InputAudioNoiseReduction = new AudioNoiseReduction(AudioNoiseReductionType.NearField),
             TurnDetection = new ServerVadTurnDetection
             {
                 Threshold = 0.5f,
                 PrefixPadding = TimeSpan.FromMilliseconds(300),
                 SilenceDuration = TimeSpan.FromMilliseconds(500)
             },
-            InputAudioTranscription = new AudioInputTranscriptionOptions()
+            InputAudioTranscription = new AudioInputTranscriptionOptions(AudioInputTranscriptionOptionsModel.Whisper1)
         };
 
         sessionOptions.Modalities.Clear();

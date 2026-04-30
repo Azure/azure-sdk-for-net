@@ -166,7 +166,7 @@ namespace Azure.AI.VoiceLive.Samples
                 var agentConfig = new AgentSessionConfig(agentName, agentProject)
                 {
                     AgentVersion = agentVersion,
-                    FoundryResourceOverride = string.IsNullOrEmpty(foundryOverride) ? null : new Uri(foundryOverride),
+                    FoundryResourceOverride = string.IsNullOrEmpty(foundryOverride) ? null : foundryOverride,
                     AuthenticationIdentityClientId = authIdentityClientId
                 };
 

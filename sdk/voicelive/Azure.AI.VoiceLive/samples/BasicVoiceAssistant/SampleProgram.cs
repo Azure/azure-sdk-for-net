@@ -105,7 +105,7 @@ namespace Azure.AI.VoiceLive.Samples
 
             var apiKey = parseResult.GetValue(apiKeyOption);
             var endpoint = parseResult.GetValue(endpointOption) ?? "wss://api.voicelive.com/v1";
-            var model = parseResult.GetValue(modelOption) ?? "gpt-4o";
+            var model = parseResult.GetValue(modelOption) ?? "gpt-realtime";
             var voice = parseResult.GetValue(voiceOption) ?? "en-US-AvaNeural";
             var instructions = parseResult.GetValue(instructionsOption) ?? "You are a helpful AI assistant. Respond naturally and conversationally. Keep your responses concise but engaging.";
             var useTokenCredential = parseResult.GetValue(useTokenCredentialOption);
@@ -117,8 +117,8 @@ namespace Azure.AI.VoiceLive.Samples
 
         private static async Task RunVoiceAssistantAsync(
                 string? apiKey,
-                string endpoint,
-                string model,
+            string endpoint,
+            string model,
                 string voice,
                 string instructions,
                 bool useTokenCredential,

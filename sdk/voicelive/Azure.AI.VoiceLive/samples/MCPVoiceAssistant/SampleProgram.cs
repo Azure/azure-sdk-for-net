@@ -5,6 +5,7 @@ using System.CommandLine;
 using System.CommandLine.Parsing;
 using Azure.AI.VoiceLive.Samples;
 using Azure.Identity;
+using System.Net.WebSockets;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NAudio.Wave;
@@ -25,7 +26,7 @@ namespace Azure.AI.VoiceLive.Samples
     ///
     ///     Required environment variables:
     ///     1) AZURE_VOICELIVE_ENDPOINT  - The Azure VoiceLive endpoint
-    ///     2) AZURE_VOICELIVE_MODEL     - The model to use (e.g., gpt-4o-realtime-preview)
+    ///     2) AZURE_VOICELIVE_MODEL     - The model to use (e.g., gpt-realtime)
     ///
     ///     Optional environment variables:
     ///     3) AZURE_VOICELIVE_API_KEY   - API key (if not using DefaultAzureCredential)
@@ -102,7 +103,7 @@ namespace Azure.AI.VoiceLive.Samples
             var model = parseResult.GetValue(modelOption)
                 ?? configuration["VoiceLive:Model"]
                 ?? Environment.GetEnvironmentVariable("AZURE_VOICELIVE_MODEL")
-                ?? "gpt-4o-realtime-preview";
+                ?? "gpt-realtime";
 
             var voice = parseResult.GetValue(voiceOption)
                 ?? configuration["VoiceLive:Voice"]
@@ -175,6 +176,12 @@ namespace Azure.AI.VoiceLive.Samples
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
+
+                if (IsWebSocketUnauthorized(ex))
+                {
+                    PrintUnauthorizedTroubleshooting(endpoint, model, useTokenCredential);
+                }
+
                 return 1;
             }
 
@@ -216,6 +223,34 @@ namespace Azure.AI.VoiceLive.Samples
                 Console.WriteLine($"Audio system check failed: {ex.Message}");
                 return false;
             }
+        }
+
+        private static bool IsWebSocketUnauthorized(Exception ex)
+        {
+            if (ex is WebSocketException wsex && wsex.Message.Contains("status code '401'", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            return ex.InnerException is WebSocketException inner
+                && inner.Message.Contains("status code '401'", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static void PrintUnauthorizedTroubleshooting(string endpoint, string model, bool useTokenCredential)
+        {
+            Console.WriteLine();
+            Console.WriteLine("VoiceLive authentication failed (HTTP 401 during websocket handshake).");
+            Console.WriteLine("Verify the following settings:");
+            Console.WriteLine($"  - Endpoint: {endpoint}");
+            Console.WriteLine($"  - Model: {model}");
+            Console.WriteLine($"  - Auth mode: {(useTokenCredential ? "DefaultAzureCredential" : "API key")}");
+            Console.WriteLine();
+            Console.WriteLine("Common fixes:");
+            Console.WriteLine("  1) Use a VoiceLive endpoint in this format:");
+            Console.WriteLine("     https://<your-resource>.services.ai.azure.com/");
+            Console.WriteLine("  2) Ensure the API key comes from the same Azure AI resource as the endpoint.");
+            Console.WriteLine("  3) Ensure the model is available on that resource (for example gpt-realtime).");
+            Console.WriteLine("  4) If using --use-token-credential, verify you're logged in to the right tenant/subscription and have access to the resource.");
         }
     }
 }
