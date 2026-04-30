@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `AzureLocation.DenmarkEast` for the Denmark East Azure region.
+
 ### Breaking Changes
 
 ### Bugs Fixed

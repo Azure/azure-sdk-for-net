@@ -16,6 +16,8 @@ jobs:
         workingDirectory: $(Build.BinariesDirectory)
         displayName: Download and Extract DocFX
 
+      - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+
       - task: AzureCLI@2
         displayName: 'Generate Doc Index'
         inputs:
@@ -66,5 +68,5 @@ jobs:
           arguments: >
             -PRBranchName "gh-pages"
             -CommitMsg "Auto-generated docs from SHA(s) $(Build.SourceVersion)"
-            -GitUrl "https://$(azuresdk-github-pat)@github.com/$(Build.Repository.Name).git"
+            -GitUrl "https://x-access-token:$(GH_TOKEN)@github.com/$(Build.Repository.Name).git"
             -PushArgs "--force"

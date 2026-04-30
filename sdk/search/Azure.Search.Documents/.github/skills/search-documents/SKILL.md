@@ -1,6 +1,7 @@
 ---
 name: search-documents
 description: 'Domain knowledge for Azure.Search.Documents SDK. Covers tool invocation, code generation, build, API export, testing, changelog, customization, and release workflows. Use when regenerating, building, fixing errors, customizing types, exporting API, running tests, or releasing the search SDK. Do not use for Azure.ResourceManager.Search or Azure.Provisioning.Search.'
+description: 'Domain knowledge for Azure.Search.Documents SDK. Covers tool invocation, code generation, build, API export, testing, changelog, customization, and release workflows. Use when regenerating, building, fixing errors, customizing types, exporting API, running tests, or releasing the search SDK. Do not use for Azure.ResourceManager.Search or Azure.Provisioning.Search.'
 ---
 
 # Azure.Search.Documents — Package Skill
@@ -20,12 +21,20 @@ Procedural workflows and tool invocations for the Azure.Search.Documents SDK. Fo
 | Root path | `sdk/search/Azure.Search.Documents/` |
 | TypeSpec pin | `tsp-location.yaml` |
 | Service directory key | `search` |
+| Service directory key | `search` |
 
+`src/Generated/` is auto-generated — **never hand-edit**. All other `src/` files are custom code extending generated `partial` classes. See [architecture.md](./references/architecture.md) for full layout and client list.
 `src/Generated/` is auto-generated — **never hand-edit**. All other `src/` files are custom code extending generated `partial` classes. See [architecture.md](./references/architecture.md) for full layout and client list.
 
 ---
 
 ## Tool Reference
+ALWAYS attempt to use available MCP tools for each of the below steps. Do not manually invoke scripts unless a tool is unavailable or fails after repeated attempts.
+
+### 1. `azsdk_package_generate_code` — Regenerate from TypeSpec
+
+Takes 2+ minutes. Avoid calling repeatedly.
+
 ALWAYS attempt to use available MCP tools for each of the below steps. Do not manually invoke scripts unless a tool is unavailable or fails after repeated attempts.
 
 ### 1. `azsdk_package_generate_code` — Regenerate from TypeSpec
@@ -43,7 +52,14 @@ azsdk_package_generate_code
 1. Check for deleted files: `git diff --diff-filter=D --name-only HEAD -- src/Generated/`.
 2. Decide whether to restore deleted types — see [backward compat rules in architecture.md](./references/architecture.md#backwards-compatibility-for-removed-api-version-types).
 3. Run `azsdk_package_build_code` immediately.
+**Before invoking:** Update `tsp-location.yaml` `commit` field if the spec SHA changed.
 
+**After invoking:**
+1. Check for deleted files: `git diff --diff-filter=D --name-only HEAD -- src/Generated/`.
+2. Decide whether to restore deleted types — see [backward compat rules in architecture.md](./references/architecture.md#backwards-compatibility-for-removed-api-version-types).
+3. Run `azsdk_package_build_code` immediately.
+
+> **Rule:** Never edit files inside `src/Generated/`. Fix upstream in TypeSpec or add a C# customization (see [customization.md](./references/customization.md)).
 > **Rule:** Never edit files inside `src/Generated/`. Fix upstream in TypeSpec or add a C# customization (see [customization.md](./references/customization.md)).
 
 ---
@@ -117,13 +133,18 @@ This is ~3 tool calls per group instead of ~3 per error.
 
 ```powershell
 eng/scripts/Export-API.ps1 search
+eng/scripts/Export-API.ps1 search
 ```
 
 Run after any public API change. Produces `api/Azure.Search.Documents.{net10.0,net8.0,netstandard2.0}.cs`.
+Run after any public API change. Produces `api/Azure.Search.Documents.{net10.0,net8.0,netstandard2.0}.cs`.
 
+> **Rule:** Never update `ApiCompatBaseline.txt` or `ApiCompatVersion` without explicit directive.
 > **Rule:** Never update `ApiCompatBaseline.txt` or `ApiCompatVersion` without explicit directive.
 
 ---
+
+### 4. Code Quality
 
 ### 4. Code Quality
 
@@ -141,10 +162,14 @@ azsdk_package_run_check
 
 ### 5. `Update-Snippets.ps1`
 
+### 5. `Update-Snippets.ps1`
+
 ```powershell
+eng/scripts/Update-Snippets.ps1 search
 eng/scripts/Update-Snippets.ps1 search
 ```
 
+Run after adding/renaming public types that appear in samples. Ensure build passes first.
 Run after adding/renaming public types that appear in samples. Ensure build passes first.
 
 ---
@@ -159,6 +184,7 @@ Recordings are in a separate repo pointed to by `assets.json`.
 
 ---
 
+### 7. `azsdk_package_update_changelog_content` — Changelog
 ### 7. `azsdk_package_update_changelog_content` — Changelog
 
 ```
@@ -176,6 +202,22 @@ May return `noop` — manually draft entries in comparison to the previous relea
 **Breaking change classification:**
 - Only removals/renames of types from a **previously released** version are breaking changes.
 - Types introduced in the current unreleased version and then removed are **not** breaking changes — update "Features Added" instead.
+May return `noop` — manually draft entries in comparison to the previous release tag.
+
+**Changelog patching rules:**
+- If the topmost version has **not shipped to NuGet**, patch that entry in-place. Do not create a new version section.
+- If the topmost version has an `(Unreleased)` header, add entries directly to it.
+- Only create a new section when the topmost version has already been released.
+
+**Breaking change classification:**
+- Only removals/renames of types from a **previously released** version are breaking changes.
+- Types introduced in the current unreleased version and then removed are **not** breaking changes — update "Features Added" instead.
+
+> **Rule:** Verify every entry against `api/*.cs`. Use git tags to check what was in the previous release — see [architecture.md](./references/architecture.md#checking-previous-releases-via-git-tags).
+
+---
+
+### 8. Version and Metadata
 
 > **Rule:** Verify every entry against `api/*.cs`. Use git tags to check what was in the previous release — see [architecture.md](./references/architecture.md#checking-previous-releases-via-git-tags).
 
@@ -184,6 +226,7 @@ May return `noop` — manually draft entries in comparison to the previous relea
 ### 8. Version and Metadata
 
 ```powershell
+eng/common/scripts/Prepare-Release.ps1 Azure.Search.Documents search <ReleaseDate>
 eng/common/scripts/Prepare-Release.ps1 Azure.Search.Documents search <ReleaseDate>
 ```
 
@@ -220,6 +263,7 @@ azsdk_package_update_metadata
 
 ---
 
+### B: Spec Patch (Same API Version, Not Yet Released)
 ### B: Spec Patch (Same API Version, Not Yet Released)
 
 1. Update `tsp-location.yaml` `commit`.

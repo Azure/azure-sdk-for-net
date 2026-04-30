@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class ArmDeploymentValidateResultOperationSource : IOperationSource<ArmDeploymentValidateResult>
+    /// <summary></summary>
+    internal partial class ArmDeploymentValidateResultOperationSource : IOperationSource<ArmDeploymentValidateResult>
     {
-        ArmDeploymentValidateResult IOperationSource<ArmDeploymentValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal ArmDeploymentValidateResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        ArmDeploymentValidateResult IOperationSource<ArmDeploymentValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ArmDeploymentValidateResult result = ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ArmDeploymentValidateResult> IOperationSource<ArmDeploymentValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ArmDeploymentValidateResult result = ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

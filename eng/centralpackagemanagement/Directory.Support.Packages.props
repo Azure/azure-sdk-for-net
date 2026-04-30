@@ -112,11 +112,11 @@
     <PackageVersion Include="NAudio" Version="2.2.1" />
     <PackageVersion Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
     <PackageVersion Include="OpenTelemetry" Version="$(OpenTelemetryVersion)" />
-    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.15.1" />
-    <PackageVersion Include="OpenTelemetry.Exporter.InMemory" Version="1.15.1" />
-    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.15.1" />
+    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.15.3" />
+    <PackageVersion Include="OpenTelemetry.Exporter.InMemory" Version="1.15.3" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.15.3" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryInstrumentationHttpVersion)" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.14.0-beta.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.15.2" />
 
     <!-- Note: Polly v8+ is a complete rewrite with a new resilience pipeline API and significant breaking changes -->
     <PackageVersion Include="Polly" Version="7.1.0" />
