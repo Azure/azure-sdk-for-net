@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         {
             // Create
             ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
-            PostgreSqlFlexibleServerCollection serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            PostgreSqlFlexibleServerCollection serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
             string serverName = Recording.GenerateAssetName("pgflexserver");
             var data = new PostgreSqlFlexibleServerData(rg.Data.Location)
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         {
             // Create
             ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
-            PostgreSqlFlexibleServerCollection serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            PostgreSqlFlexibleServerCollection serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
             string serverName = Recording.GenerateAssetName("pgflexserver");
             var data = new PostgreSqlFlexibleServerData(rg.Data.Location)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         {
             // Create
             ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
-            PostgreSqlFlexibleServerCollection serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            PostgreSqlFlexibleServerCollection serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
             string serverName = Recording.GenerateAssetName("pgflexserverssdv2");
             var data = new PostgreSqlFlexibleServerData(rg.Data.Location)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var targetSubnetName = Recording.GenerateAssetName("subnet");
 
             var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
-            var serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            var serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
 
             // Create public server
             var sourcePublicServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourcePublicServerName, new PostgreSqlFlexibleServerData(rg.Data.Location)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var targetLocation = AzureLocation.WestUS;
 
             var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
-            var serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            var serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
 
             // Create public server
             var sourcePublicServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourcePublicServerName, new PostgreSqlFlexibleServerData(rg.Data.Location)
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var virtualEndpointName = Recording.GenerateAssetName("vendpoint");
 
             var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
-            var serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            var serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
 
             var replicaSubnetID = new ResourceIdentifier[3];
             ResourceIdentifier vnetID;
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var serverName = Recording.GenerateAssetName("pgflexserver");
 
             var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
-            var serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            var serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
 
             var serverOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, new PostgreSqlFlexibleServerData(rg.Data.Location)
             {
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var serverName = Recording.GenerateAssetName("pgflexserver");
 
             var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.SouthCentralUS);
-            var serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            var serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
 
             var serverOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, new PostgreSqlFlexibleServerData(rg.Data.Location)
             {
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var restoreName = Recording.GenerateAssetName("pgflexserver");
 
             var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
-            var serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            var serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
 
             // Create key and identity
             var (key, identity) = await CreateKeyAndIdentity(keyVaultName, keyName, identityName, rg.Data.Name);
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var replicaName = new string[2] { Recording.GenerateAssetName("pgflexserver"), Recording.GenerateAssetName("pgflexserver") };
 
             var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
-            var serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            var serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
 
             // Get current client info
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
 
             var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
             var geoRg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.WestUS);
-            var serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            var serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
 
             // Create key and identity
             var (key, identity) = await CreateKeyAndIdentity(keyVaultName, keyName, identityName, rg.Data.Name);
@@ -1297,7 +1297,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var targetLocation = AzureLocation.WestUS;
 
             var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
-            var serverCollection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
+            var serverCollection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(rg);
             #endregion
 
             #region Create public server

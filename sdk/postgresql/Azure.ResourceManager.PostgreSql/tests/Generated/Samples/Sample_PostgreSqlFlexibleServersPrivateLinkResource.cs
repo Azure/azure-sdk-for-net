@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string groupName = "exampleprivatelink";
             ResourceIdentifier postgreSqlFlexibleServersPrivateLinkResourceId = PostgreSqlFlexibleServersPrivateLinkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, groupName);
-            PostgreSqlFlexibleServersPrivateLinkResource postgreSqlFlexibleServersPrivateLinkResource = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServersPrivateLinkResource(client, postgreSqlFlexibleServersPrivateLinkResourceId);
+            PostgreSqlFlexibleServersPrivateLinkResource postgreSqlFlexibleServersPrivateLinkResource = FlexibleServersExtensions.GetPostgreSqlFlexibleServersPrivateLinkResource(client, postgreSqlFlexibleServersPrivateLinkResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServersPrivateLinkResource result = await postgreSqlFlexibleServersPrivateLinkResource.GetAsync();

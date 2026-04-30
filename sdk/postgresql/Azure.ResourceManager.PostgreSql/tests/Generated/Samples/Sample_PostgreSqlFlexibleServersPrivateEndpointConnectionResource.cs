@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string privateEndpointConnectionName = "private-endpoint-connection-name.1fa229cd-bf3f-47f0-8c49-afb36723997e";
             ResourceIdentifier postgreSqlFlexibleServersPrivateEndpointConnectionResourceId = PostgreSqlFlexibleServersPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, privateEndpointConnectionName);
-            PostgreSqlFlexibleServersPrivateEndpointConnectionResource postgreSqlFlexibleServersPrivateEndpointConnection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(client, postgreSqlFlexibleServersPrivateEndpointConnectionResourceId);
+            PostgreSqlFlexibleServersPrivateEndpointConnectionResource postgreSqlFlexibleServersPrivateEndpointConnection = FlexibleServersExtensions.GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(client, postgreSqlFlexibleServersPrivateEndpointConnectionResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServersPrivateEndpointConnectionResource result = await postgreSqlFlexibleServersPrivateEndpointConnection.GetAsync();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string privateEndpointConnectionName = "private-endpoint-connection-name.1fa229cd-bf3f-47f0-8c49-afb36723997e";
             ResourceIdentifier postgreSqlFlexibleServersPrivateEndpointConnectionResourceId = PostgreSqlFlexibleServersPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, privateEndpointConnectionName);
-            PostgreSqlFlexibleServersPrivateEndpointConnectionResource postgreSqlFlexibleServersPrivateEndpointConnection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(client, postgreSqlFlexibleServersPrivateEndpointConnectionResourceId);
+            PostgreSqlFlexibleServersPrivateEndpointConnectionResource postgreSqlFlexibleServersPrivateEndpointConnection = FlexibleServersExtensions.GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(client, postgreSqlFlexibleServersPrivateEndpointConnectionResourceId);
 
             // invoke the operation
             await postgreSqlFlexibleServersPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string privateEndpointConnectionName = "private-endpoint-connection-name.1fa229cd-bf3f-47f0-8c49-afb36723997e";
             ResourceIdentifier postgreSqlFlexibleServersPrivateEndpointConnectionResourceId = PostgreSqlFlexibleServersPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, privateEndpointConnectionName);
-            PostgreSqlFlexibleServersPrivateEndpointConnectionResource postgreSqlFlexibleServersPrivateEndpointConnection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(client, postgreSqlFlexibleServersPrivateEndpointConnectionResourceId);
+            PostgreSqlFlexibleServersPrivateEndpointConnectionResource postgreSqlFlexibleServersPrivateEndpointConnection = FlexibleServersExtensions.GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(client, postgreSqlFlexibleServersPrivateEndpointConnectionResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServersPrivateEndpointConnectionData data = new PostgreSqlFlexibleServersPrivateEndpointConnectionData

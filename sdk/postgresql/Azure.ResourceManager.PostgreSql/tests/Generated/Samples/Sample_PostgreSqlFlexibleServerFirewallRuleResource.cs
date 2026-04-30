@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string firewallRuleName = "examplefirewallrule";
             ResourceIdentifier postgreSqlFlexibleServerFirewallRuleResourceId = PostgreSqlFlexibleServerFirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, firewallRuleName);
-            PostgreSqlFlexibleServerFirewallRuleResource postgreSqlFlexibleServerFirewallRule = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerFirewallRuleResource(client, postgreSqlFlexibleServerFirewallRuleResourceId);
+            PostgreSqlFlexibleServerFirewallRuleResource postgreSqlFlexibleServerFirewallRule = FlexibleServersExtensions.GetPostgreSqlFlexibleServerFirewallRuleResource(client, postgreSqlFlexibleServerFirewallRuleResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerFirewallRuleResource result = await postgreSqlFlexibleServerFirewallRule.GetAsync();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string firewallRuleName = "examplefirewallrule";
             ResourceIdentifier postgreSqlFlexibleServerFirewallRuleResourceId = PostgreSqlFlexibleServerFirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, firewallRuleName);
-            PostgreSqlFlexibleServerFirewallRuleResource postgreSqlFlexibleServerFirewallRule = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerFirewallRuleResource(client, postgreSqlFlexibleServerFirewallRuleResourceId);
+            PostgreSqlFlexibleServerFirewallRuleResource postgreSqlFlexibleServerFirewallRule = FlexibleServersExtensions.GetPostgreSqlFlexibleServerFirewallRuleResource(client, postgreSqlFlexibleServerFirewallRuleResourceId);
 
             // invoke the operation
             await postgreSqlFlexibleServerFirewallRule.DeleteAsync(WaitUntil.Completed);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string firewallRuleName = "examplefirewallrule";
             ResourceIdentifier postgreSqlFlexibleServerFirewallRuleResourceId = PostgreSqlFlexibleServerFirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, firewallRuleName);
-            PostgreSqlFlexibleServerFirewallRuleResource postgreSqlFlexibleServerFirewallRule = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerFirewallRuleResource(client, postgreSqlFlexibleServerFirewallRuleResourceId);
+            PostgreSqlFlexibleServerFirewallRuleResource postgreSqlFlexibleServerFirewallRule = FlexibleServersExtensions.GetPostgreSqlFlexibleServerFirewallRuleResource(client, postgreSqlFlexibleServerFirewallRuleResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerFirewallRuleData data = new PostgreSqlFlexibleServerFirewallRuleData(IPAddress.Parse("0.0.0.0"), IPAddress.Parse("255.255.255.255"));

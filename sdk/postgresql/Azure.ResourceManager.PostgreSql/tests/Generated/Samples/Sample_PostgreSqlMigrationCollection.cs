@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = FlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlMigrationResource
             PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();

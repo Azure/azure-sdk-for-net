@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation and iterate over the result
             await foreach (PostgreSqlFlexibleServerResource item in collection.GetAllAsync())
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation and iterate over the result
             string serverName = "exampleserver";
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this PostgreSqlFlexibleServerResource
-            PostgreSqlFlexibleServerCollection collection = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
+            PostgreSqlFlexibleServerCollection collection = FlexibleServersExtensions.GetPostgreSqlFlexibleServers(resourceGroupResource);
 
             // invoke the operation
             string serverName = "exampleserver";

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string objectId = "oooooooo-oooo-oooo-oooo-oooooooooooo";
             ResourceIdentifier postgreSqlFlexibleServerMicrosoftEntraAdministratorResourceId = PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, objectId);
-            PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource postgreSqlFlexibleServerMicrosoftEntraAdministrator = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(client, postgreSqlFlexibleServerMicrosoftEntraAdministratorResourceId);
+            PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource postgreSqlFlexibleServerMicrosoftEntraAdministrator = FlexibleServersExtensions.GetPostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(client, postgreSqlFlexibleServerMicrosoftEntraAdministratorResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource result = await postgreSqlFlexibleServerMicrosoftEntraAdministrator.GetAsync();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string objectId = "oooooooo-oooo-oooo-oooo-oooooooooooo";
             ResourceIdentifier postgreSqlFlexibleServerMicrosoftEntraAdministratorResourceId = PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, objectId);
-            PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource postgreSqlFlexibleServerMicrosoftEntraAdministrator = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(client, postgreSqlFlexibleServerMicrosoftEntraAdministratorResourceId);
+            PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource postgreSqlFlexibleServerMicrosoftEntraAdministrator = FlexibleServersExtensions.GetPostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(client, postgreSqlFlexibleServerMicrosoftEntraAdministratorResourceId);
 
             // invoke the operation
             await postgreSqlFlexibleServerMicrosoftEntraAdministrator.DeleteAsync(WaitUntil.Completed);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string objectId = "oooooooo-oooo-oooo-oooo-oooooooooooo";
             ResourceIdentifier postgreSqlFlexibleServerMicrosoftEntraAdministratorResourceId = PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, objectId);
-            PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource postgreSqlFlexibleServerMicrosoftEntraAdministrator = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(client, postgreSqlFlexibleServerMicrosoftEntraAdministratorResourceId);
+            PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource postgreSqlFlexibleServerMicrosoftEntraAdministrator = FlexibleServersExtensions.GetPostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(client, postgreSqlFlexibleServerMicrosoftEntraAdministratorResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent content = new PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent

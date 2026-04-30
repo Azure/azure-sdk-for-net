@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string backupName = "exampleltrbackup";
             ResourceIdentifier postgreSqlLtrServerBackupOperationResourceId = PostgreSqlLtrServerBackupOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
-            PostgreSqlLtrServerBackupOperationResource postgreSqlLtrServerBackupOperation = PostgreSqlFlexibleServersExtensions.GetPostgreSqlLtrServerBackupOperationResource(client, postgreSqlLtrServerBackupOperationResourceId);
+            PostgreSqlLtrServerBackupOperationResource postgreSqlLtrServerBackupOperation = FlexibleServersExtensions.GetPostgreSqlLtrServerBackupOperationResource(client, postgreSqlLtrServerBackupOperationResourceId);
 
             // invoke the operation
             PostgreSqlLtrServerBackupOperationResource result = await postgreSqlLtrServerBackupOperation.GetAsync();

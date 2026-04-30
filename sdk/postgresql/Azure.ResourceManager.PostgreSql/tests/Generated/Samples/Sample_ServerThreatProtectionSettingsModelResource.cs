@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             ThreatProtectionName threatProtectionName = ThreatProtectionName.Default;
             ResourceIdentifier serverThreatProtectionSettingsModelResourceId = ServerThreatProtectionSettingsModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, threatProtectionName);
-            ServerThreatProtectionSettingsModelResource serverThreatProtectionSettingsModel = PostgreSqlFlexibleServersExtensions.GetServerThreatProtectionSettingsModelResource(client, serverThreatProtectionSettingsModelResourceId);
+            ServerThreatProtectionSettingsModelResource serverThreatProtectionSettingsModel = FlexibleServersExtensions.GetServerThreatProtectionSettingsModelResource(client, serverThreatProtectionSettingsModelResourceId);
 
             // invoke the operation
             ServerThreatProtectionSettingsModelResource result = await serverThreatProtectionSettingsModel.GetAsync();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             ThreatProtectionName threatProtectionName = ThreatProtectionName.Default;
             ResourceIdentifier serverThreatProtectionSettingsModelResourceId = ServerThreatProtectionSettingsModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, threatProtectionName);
-            ServerThreatProtectionSettingsModelResource serverThreatProtectionSettingsModel = PostgreSqlFlexibleServersExtensions.GetServerThreatProtectionSettingsModelResource(client, serverThreatProtectionSettingsModelResourceId);
+            ServerThreatProtectionSettingsModelResource serverThreatProtectionSettingsModel = FlexibleServersExtensions.GetServerThreatProtectionSettingsModelResource(client, serverThreatProtectionSettingsModelResourceId);
 
             // invoke the operation
             ServerThreatProtectionSettingsModelData data = new ServerThreatProtectionSettingsModelData
