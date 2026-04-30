@@ -9,11 +9,11 @@ using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmDeploymentProperties
     {
+        // NOTE: The type of the Parameters property is changed from BinaryData to IDictionary<string, ArmDeploymentParameterValue>, this customization is intentionally kept for backward compatibility.
         /// <summary>
         /// Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string.
         /// <para>

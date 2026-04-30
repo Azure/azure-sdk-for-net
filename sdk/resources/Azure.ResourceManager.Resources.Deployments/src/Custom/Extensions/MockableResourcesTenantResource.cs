@@ -8,8 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
-// All the GetArmDeployments and GetArmDeployment operations are existed in the library before, but now can't be generated from TypeSpec because of the scope implementation change.
+// NOTE: All the GetArmDeployments and GetArmDeployment operations are existed in the library before, but now can't be generated from TypeSpec because of the scope implementation change.
 // To avoid breaking customers who are using these operations, we use customization code to keep them, would like to be removed in the future when MPG can provide some better way to handle this kind of scenario.
 namespace Azure.ResourceManager.Resources.Mocking
 {

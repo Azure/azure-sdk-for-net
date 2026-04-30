@@ -14,15 +14,13 @@ using System.Text.Json;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Deployment properties with additional details. </summary>
-    [CodeGenSuppress("DebugSettingDetailLevel")]
     [CodeGenSerialization(nameof(Providers), SerializationValueHook = nameof(SerializationProviders), DeserializationValueHook = nameof(DeserializeProviders))]
     [CodeGenSerialization(nameof(Error), SerializationValueHook = nameof(SerializationError), DeserializationValueHook = nameof(DeserializeError))]
     public partial class ArmDeploymentPropertiesExtended
     {
+        // NOTE: the setter of DebugSettingDetailLevel is intentionally added for backward compatibility.
         /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information you are passing in during deployment. By logging information about the request or response, you could potentially expose sensitive data that is retrieved through the deployment operations. </summary>
         public string DebugSettingDetailLevel
         {

@@ -10,7 +10,6 @@ using Azure.Core;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources.Models;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Resources
 {
     public partial class ArmDeploymentResource : ArmResource
