@@ -24,10 +24,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return tenantResource.GetCachedClient(client => new MockablePostgreSqlFlexibleServersTenantResource(client, tenantResource.Id));
         }
 
-        private static MockablePostgreSqlFlexibleServersSubscriptionResource GetMockablePostgreSqlFlexibleServersSubscriptionResource(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient(client => new MockablePostgreSqlFlexibleServersSubscriptionResource(client, subscriptionResource.Id));
-        }
         /// <summary>
         /// Gets an object representing a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
         /// </summary>
@@ -51,70 +47,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
             return GetMockablePostgreSqlFlexibleServersTenantResource(tenantResource).ExecuteGetPrivateDnsZoneSuffix(cancellationToken);
-        }
-
-        /// <summary> Check the availability of name for resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(this SubscriptionResource subscriptionResource, string locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return await GetMockablePostgreSqlFlexibleServersSubscriptionResource(subscriptionResource).CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(locationName, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Check the availability of name for resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(this SubscriptionResource subscriptionResource, string locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockablePostgreSqlFlexibleServersSubscriptionResource(subscriptionResource).CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(locationName, content, cancellationToken);
-        }
-
-        /// <summary> Lists the capabilities available in a given location for a specific subscription. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilitiesAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockablePostgreSqlFlexibleServersSubscriptionResource(subscriptionResource).ExecuteLocationBasedCapabilitiesAsync(locationName, cancellationToken);
-        }
-
-        /// <summary> Lists the capabilities available in a given location for a specific subscription. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilities(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockablePostgreSqlFlexibleServersSubscriptionResource(subscriptionResource).ExecuteLocationBasedCapabilities(locationName, cancellationToken);
-        }
-
-        /// <summary> Lists the virtual network subnet usage for a given virtual network. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteVirtualNetworkSubnetUsageAsync(this SubscriptionResource subscriptionResource, string locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return await GetMockablePostgreSqlFlexibleServersSubscriptionResource(subscriptionResource).ExecuteVirtualNetworkSubnetUsageAsync(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists the virtual network subnet usage for a given virtual network. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteVirtualNetworkSubnetUsage(this SubscriptionResource subscriptionResource, string locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockablePostgreSqlFlexibleServersSubscriptionResource(subscriptionResource).ExecuteVirtualNetworkSubnetUsage(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken);
-        }
-
-        /// <summary> Get quota usages at specified location in a given subscription. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<PostgreSqlFlexibleServerQuotaUsage> GetQuotaUsagesAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockablePostgreSqlFlexibleServersSubscriptionResource(subscriptionResource).GetQuotaUsagesAsync(locationName, cancellationToken);
-        }
-
-        /// <summary> Get quota usages at specified location in a given subscription. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<PostgreSqlFlexibleServerQuotaUsage> GetQuotaUsages(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockablePostgreSqlFlexibleServersSubscriptionResource(subscriptionResource).GetQuotaUsages(locationName, cancellationToken);
         }
 
         // =====================================================================
