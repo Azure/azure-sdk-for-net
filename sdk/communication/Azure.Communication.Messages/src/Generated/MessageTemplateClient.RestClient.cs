@@ -18,7 +18,7 @@ namespace Azure.Communication.Messages
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateGetTemplatesRequest(Guid channelId, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateGetTemplatesRequest(Guid channelId, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -29,9 +29,9 @@ namespace Azure.Communication.Messages
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxPageSize != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("maxPageSize", TypeFormatters.ConvertToString(maxPageSize), true);
+                uri.AppendQuery("maxPageSize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages
             return message;
         }
 
-        internal HttpMessage CreateNextGetTemplatesRequest(Uri nextPage, Guid channelId, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateNextGetTemplatesRequest(Uri nextPage, Guid channelId, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

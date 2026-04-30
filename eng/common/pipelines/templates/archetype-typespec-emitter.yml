@@ -133,7 +133,7 @@ extends:
                 -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
                 -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
           env:
-            NPM_CONFIG_USERCONFIG: $(emitterNpmrcPath)
+            npm_config_userconfig: $(emitterNpmrcPath)
 
         - task: PowerShell@2
           displayName: 'Run build script'
@@ -146,7 +146,7 @@ extends:
               -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
               -GeneratorVersion: $(initialize.emitterVersion)
           env:
-            NPM_CONFIG_USERCONFIG: $(emitterNpmrcPath)
+            npm_config_userconfig: $(emitterNpmrcPath)
 
         - pwsh: |
             $sourceBranch = '$(Build.SourceBranch)'
@@ -322,7 +322,7 @@ extends:
             displayName: Install tsp-client
             workingDirectory: $(Build.SourcesDirectory)/eng/common/tsp-client
             env:
-              NPM_CONFIG_USERCONFIG: $(tspClientNpmrcPath)
+              npm_config_userconfig: $(tspClientNpmrcPath)
 
           - pwsh: |
               # Resolve EmitterPackageJsonOutputPath to absolute path if it's relative
@@ -349,7 +349,7 @@ extends:
             displayName: Generate emitter-package.json and emitter-package-lock files
             workingDirectory: $(Build.SourcesDirectory)/eng/common/tsp-client
             env:
-              NPM_CONFIG_USERCONFIG: $(tspClientNpmrcPath)
+              npm_config_userconfig: $(tspClientNpmrcPath)
 
           - ${{ parameters.InitializationSteps }}
 
@@ -424,7 +424,7 @@ extends:
               workingDirectory: $(Build.SourcesDirectory)
             continueOnError: true
             env:
-              NPM_CONFIG_USERCONFIG: $(emitterNpmrcPath)
+              npm_config_userconfig: $(emitterNpmrcPath)
 
           - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
             parameters:
@@ -580,7 +580,7 @@ extends:
                 -BuildArtifactsPath '$(buildArtifactsPath)/lock-files'
                 -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
             env:
-              NPM_CONFIG_USERCONFIG: $(emitterNpmrcPath)
+              npm_config_userconfig: $(emitterNpmrcPath)
 
           - task: PowerShell@2
             displayName: 'Run test script'
@@ -592,7 +592,7 @@ extends:
                 -OutputDirectory "$(Build.ArtifactStagingDirectory)"
                 -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
             env:
-              NPM_CONFIG_USERCONFIG: $(emitterNpmrcPath)
+              npm_config_userconfig: $(emitterNpmrcPath)
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:

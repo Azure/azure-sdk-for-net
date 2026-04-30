@@ -315,6 +315,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation ChinaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth2 { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth3 { get { throw null; } }
+        public static Azure.Core.AzureLocation DenmarkEast { get { throw null; } }
         public string? DisplayName { get { throw null; } }
         public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS { get { throw null; } }
@@ -1714,6 +1715,7 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public bool IsAzureProxyEnabled { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string TokenFilePath { get { throw null; } set { } }
     }

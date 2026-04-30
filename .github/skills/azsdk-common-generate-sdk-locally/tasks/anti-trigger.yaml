@@ -1,0 +1,14 @@
+id: sdk-local-negative-001
+name: Anti-Trigger - Pipeline Generation
+description: |
+  Test that the skill does NOT activate when user wants pipeline-based
+  SDK generation rather than local generation.
+tags:
+  - negative-test
+  - anti-trigger
+inputs:
+  prompt: "I want to use the Azure DevOps pipeline to generate SDKs automatically and have PRs created for me. I don't want to set up local tools."
+expected:
+  output_not_contains:
+    - "azsdk_verify_setup"
+    - "azsdk_package_generate_code"

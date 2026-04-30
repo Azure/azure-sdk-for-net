@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <returns> A new <see cref="Models.PureStorageResourceLimitDetails"/> instance for mocking. </returns>
         public static PureStorageResourceLimitDetails PureStorageResourceLimitDetails(StoragePoolLimits storagePool = default, PropertyValueRangeLimits volumeProvisionedSize = default, ProtectionPolicyLimits protectionPolicy = default, PerformancePolicyLimits performancePolicy = default)
         {
-            return new PureStorageResourceLimitDetails(storagePool, volumeProvisionedSize is null ? default : new VolumeLimits(volumeProvisionedSize, null), protectionPolicy, performancePolicy, additionalBinaryDataProperties: null);
+            return new PureStorageResourceLimitDetails(storagePool, new VolumeLimits(volumeProvisionedSize, null), protectionPolicy, performancePolicy, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Limits used for storage pool creation. </summary>

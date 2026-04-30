@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     Properties = new AgentPoolProperties();
                 }
-                Properties.Count = value.Value;
+                Properties.Count = value;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     Properties = new AgentPoolProperties();
                 }
-                Properties.OS = value.Value;
+                Properties.OS = value;
             }
         }
 

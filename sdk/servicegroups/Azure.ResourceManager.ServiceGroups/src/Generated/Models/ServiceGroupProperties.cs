@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.ServiceGroups.Models
     /// <summary> ServiceGroup creation request body parameters. </summary>
     public partial class ServiceGroupProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceGroupProperties"/>. </summary>
         public ServiceGroupProperties()
@@ -55,32 +26,37 @@ namespace Azure.ResourceManager.ServiceGroups.Models
         /// <param name="provisioningState"> The provisioning state of the serviceGroup. For example, Running. </param>
         /// <param name="displayName"> The display name of the serviceGroup. For example, ServiceGroupTest1. </param>
         /// <param name="parent"> The details of the parent serviceGroup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState, string displayName, ParentServiceGroupProperties parent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState, string displayName, ParentServiceGroupProperties parent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
             Parent = parent;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the serviceGroup. For example, Running. </summary>
-        [WirePath("provisioningState")]
         public ServiceGroupProvisioningState? ProvisioningState { get; }
+
         /// <summary> The display name of the serviceGroup. For example, ServiceGroupTest1. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
+
         /// <summary> The details of the parent serviceGroup. </summary>
         internal ParentServiceGroupProperties Parent { get; set; }
+
         /// <summary> The fully qualified ID of the parent serviceGroup.  For example, '/providers/Microsoft.Management/serviceGroups/TestServiceGroup'. </summary>
-        [WirePath("parent.resourceId")]
         public ResourceIdentifier ParentResourceId
         {
-            get => Parent is null ? default : Parent.ResourceId;
+            get
+            {
+                return Parent is null ? default : Parent.ResourceId;
+            }
             set
             {
                 if (Parent is null)
+                {
                     Parent = new ParentServiceGroupProperties();
+                }
                 Parent.ResourceId = value;
             }
         }

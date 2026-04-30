@@ -146,13 +146,13 @@ describe("Operation Scope Detection", () => {
 });
 
 describe("Resolve Resource API Versions", () => {
-  const methodApiVersionsMap = new Map<string, string[]>([
-    ["create-method-id", ["2024-04-01", "2024-05-01"]],
-    ["read-method-id", ["2024-04-01", "2024-05-01"]],
-    ["delete-method-id", ["2024-05-01"]],
-    ["list-method-id", ["2024-04-01", "2024-05-01"]],
-    ["action-method-id", ["2024-05-01"]]
-  ]);
+  const methodMap = new Map<string, { apiVersions: string[] }>([
+    ["create-method-id", { apiVersions: ["2024-04-01", "2024-05-01"] }],
+    ["read-method-id", { apiVersions: ["2024-04-01", "2024-05-01"] }],
+    ["delete-method-id", { apiVersions: ["2024-05-01"] }],
+    ["list-method-id", { apiVersions: ["2024-04-01", "2024-05-01"] }],
+    ["action-method-id", { apiVersions: ["2024-05-01"] }]
+  ]) as unknown as Map<string, import("@azure-tools/typespec-client-generator-core").SdkMethod<import("@azure-tools/typespec-client-generator-core").SdkHttpOperation>>;
 
   function makeMethod(methodId: string, kind: ResourceOperationKind) {
     return {
@@ -169,7 +169,7 @@ describe("Resolve Resource API Versions", () => {
       makeMethod("create-method-id", ResourceOperationKind.Create),
       makeMethod("delete-method-id", ResourceOperationKind.Delete)
     ];
-    const versions = resolveResourceApiVersions(methods, methodApiVersionsMap);
+    const versions = resolveResourceApiVersions(methods, methodMap);
     deepStrictEqual(versions, ["2024-04-01", "2024-05-01"]);
   });
 
@@ -178,7 +178,7 @@ describe("Resolve Resource API Versions", () => {
       makeMethod("read-method-id", ResourceOperationKind.Read),
       makeMethod("delete-method-id", ResourceOperationKind.Delete)
     ];
-    const versions = resolveResourceApiVersions(methods, methodApiVersionsMap);
+    const versions = resolveResourceApiVersions(methods, methodMap);
     deepStrictEqual(versions, ["2024-04-01", "2024-05-01"]);
   });
 
@@ -187,18 +187,18 @@ describe("Resolve Resource API Versions", () => {
       makeMethod("list-method-id", ResourceOperationKind.List),
       makeMethod("action-method-id", ResourceOperationKind.Action)
     ];
-    const versions = resolveResourceApiVersions(methods, methodApiVersionsMap);
+    const versions = resolveResourceApiVersions(methods, methodMap);
     deepStrictEqual(versions, []);
   });
 
   it("returns empty array for empty methods list", () => {
-    const versions = resolveResourceApiVersions([], methodApiVersionsMap);
+    const versions = resolveResourceApiVersions([], methodMap);
     deepStrictEqual(versions, []);
   });
 
   it("returns empty array when method not in map", () => {
     const methods = [makeMethod("unknown-id", ResourceOperationKind.Create)];
-    const versions = resolveResourceApiVersions(methods, methodApiVersionsMap);
+    const versions = resolveResourceApiVersions(methods, methodMap);
     deepStrictEqual(versions, []);
   });
 });

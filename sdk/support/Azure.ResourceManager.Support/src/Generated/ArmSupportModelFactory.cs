@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Support.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                communicationType is null && communicationDirection is null && sender is null && subject is null && body is null && createdOn is null ? default : new CommunicationDetailsProperties(
+                new CommunicationDetailsProperties(
                     communicationType,
                     communicationDirection,
                     sender,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="supportEngineerEmailAddress"> Email address of the Azure Support engineer assigned to the support ticket. </param>
         /// <param name="technicalTicketDetailsResourceId"> This is the resource Id of the Azure service resource (For example: A virtual machine resource or an HDInsight resource) for which the support ticket is created. </param>
         /// <returns> A new <see cref="Support.SupportTicketData"/> instance for mocking. </returns>
-        public static SupportTicketData SupportTicketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string supportTicketId = default, string description = default, string problemClassificationId = default, string problemClassificationDisplayName = default, SupportSeverityLevel? severity = default, string enrollmentId = default, bool? require24X7Response = default, AdvancedDiagnosticConsent? advancedDiagnosticConsent = default, string problemScopingQuestions = default, string supportPlanId = default, SupportContactProfile contactDetails = default, SupportServiceLevelAgreement serviceLevelAgreement = default, string supportPlanType = default, string supportPlanDisplayName = default, string title = default, DateTimeOffset? problemStartOn = default, string serviceId = default, string serviceDisplayName = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string fileWorkspaceName = default, IsTemporaryTicket? isTemporaryTicket = default, QuotaTicketDetails quotaTicketDetails = default, IEnumerable<SecondaryConsent> secondaryConsent = default, SupportDirectConnectEscalation directConnectEscalation = default, string communityForumPost = default, string supportEngineerEmailAddress = default, ResourceIdentifier technicalTicketDetailsResourceId = default)
+        public static SupportTicketData SupportTicketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string supportTicketId = default, string description = default, string problemClassificationId = default, string problemClassificationDisplayName = default, SupportSeverityLevel severity = default, string enrollmentId = default, bool? require24X7Response = default, AdvancedDiagnosticConsent advancedDiagnosticConsent = default, string problemScopingQuestions = default, string supportPlanId = default, SupportContactProfile contactDetails = default, SupportServiceLevelAgreement serviceLevelAgreement = default, string supportPlanType = default, string supportPlanDisplayName = default, string title = default, DateTimeOffset? problemStartOn = default, string serviceId = default, string serviceDisplayName = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string fileWorkspaceName = default, IsTemporaryTicket? isTemporaryTicket = default, QuotaTicketDetails quotaTicketDetails = default, IEnumerable<SecondaryConsent> secondaryConsent = default, SupportDirectConnectEscalation directConnectEscalation = default, string communityForumPost = default, string supportEngineerEmailAddress = default, ResourceIdentifier technicalTicketDetailsResourceId = default)
         {
             return new SupportTicketData(
                 id,
@@ -220,15 +220,15 @@ namespace Azure.ResourceManager.Support.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                supportTicketId is null && description is null && problemClassificationId is null && problemClassificationDisplayName is null && severity is null && enrollmentId is null && require24X7Response is null && advancedDiagnosticConsent is null && problemScopingQuestions is null && supportPlanId is null && contactDetails is null && serviceLevelAgreement is null && supportPlanType is null && supportPlanDisplayName is null && title is null && problemStartOn is null && serviceId is null && serviceDisplayName is null && status is null && createdOn is null && modifiedOn is null && fileWorkspaceName is null && isTemporaryTicket is null && quotaTicketDetails is null && secondaryConsent is null && directConnectEscalation is null && communityForumPost is null && supportEngineerEmailAddress is null && technicalTicketDetailsResourceId is null ? default : new SupportTicketDetailsProperties(
+                new SupportTicketDetailsProperties(
                     supportTicketId,
                     description,
                     problemClassificationId,
                     problemClassificationDisplayName,
-                    severity.Value,
+                    severity,
                     enrollmentId,
                     require24X7Response,
-                    advancedDiagnosticConsent.Value,
+                    advancedDiagnosticConsent,
                     problemScopingQuestions,
                     supportPlanId,
                     contactDetails,

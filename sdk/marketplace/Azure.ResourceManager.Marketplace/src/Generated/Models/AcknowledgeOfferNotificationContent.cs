@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     Properties = new AcknowledgeOfferNotificationDetails();
                 }
-                Properties.IsAcknowledgeActionFlagEnabled = value.Value;
+                Properties.IsAcknowledgeActionFlagEnabled = value;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     Properties = new AcknowledgeOfferNotificationDetails();
                 }
-                Properties.IsDismissActionFlagEnabled = value.Value;
+                Properties.IsDismissActionFlagEnabled = value;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     Properties = new AcknowledgeOfferNotificationDetails();
                 }
-                Properties.IsRemoveOfferActionFlagEnabled = value.Value;
+                Properties.IsRemoveOfferActionFlagEnabled = value;
             }
         }
 

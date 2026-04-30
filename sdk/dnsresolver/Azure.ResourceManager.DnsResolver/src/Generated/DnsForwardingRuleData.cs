@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     Properties = new ForwardingRuleProperties();
                 }
-                Properties.DnsForwardingRuleState = value.Value;
+                Properties.DnsForwardingRuleState = value;
             }
         }
 

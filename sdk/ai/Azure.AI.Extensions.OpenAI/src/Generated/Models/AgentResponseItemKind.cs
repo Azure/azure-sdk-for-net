@@ -58,6 +58,8 @@ namespace Azure.AI.Extensions.OpenAI
         private const string FabricDataagentPreviewCallOutputValue = "fabric_dataagent_preview_call_output";
         private const string AzureFunctionCallValue = "azure_function_call";
         private const string AzureFunctionCallOutputValue = "azure_function_call_output";
+        private const string FabricIqPreviewCallValue = "fabric_iq_preview_call";
+        private const string FabricIqPreviewCallOutputValue = "fabric_iq_preview_call_output";
 
         /// <summary> Initializes a new instance of <see cref="AgentResponseItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -209,6 +211,12 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Gets the AzureFunctionCallOutput. </summary>
         public static AgentResponseItemKind AzureFunctionCallOutput { get; } = new AgentResponseItemKind(AzureFunctionCallOutputValue);
+
+        /// <summary> Gets the FabricIqPreviewCall. </summary>
+        public static AgentResponseItemKind FabricIqPreviewCall { get; } = new AgentResponseItemKind(FabricIqPreviewCallValue);
+
+        /// <summary> Gets the FabricIqPreviewCallOutput. </summary>
+        public static AgentResponseItemKind FabricIqPreviewCallOutput { get; } = new AgentResponseItemKind(FabricIqPreviewCallOutputValue);
 
         /// <summary> Determines if two <see cref="AgentResponseItemKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

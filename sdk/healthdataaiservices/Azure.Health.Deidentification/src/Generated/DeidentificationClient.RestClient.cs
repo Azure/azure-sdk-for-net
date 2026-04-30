@@ -62,7 +62,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateGetJobsInternalRequest(int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobsInternalRequest(int? maxPageSize, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -71,9 +71,9 @@ namespace Azure.Health.Deidentification
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             if (continuationToken != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsInternalRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetJobsInternalRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -102,9 +102,9 @@ namespace Azure.Health.Deidentification
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -114,7 +114,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateGetJobDocumentsInternalRequest(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobDocumentsInternalRequest(string jobName, int? maxPageSize, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -125,9 +125,9 @@ namespace Azure.Health.Deidentification
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             if (continuationToken != null)
             {
@@ -141,7 +141,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobDocumentsInternalRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetJobDocumentsInternalRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -156,9 +156,9 @@ namespace Azure.Health.Deidentification
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

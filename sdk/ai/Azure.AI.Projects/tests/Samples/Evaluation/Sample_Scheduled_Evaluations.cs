@@ -38,7 +38,7 @@ public class Sample_ScheduledEvaluations : SamplesBase
     {
         Dictionary<string, string> results = [];
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
         {
             foreach (string key in expectedProperties)

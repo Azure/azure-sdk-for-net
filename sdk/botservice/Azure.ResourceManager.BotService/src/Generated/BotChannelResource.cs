@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotChannelData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BotChannelData patch = new BotChannelData();
+                    BotChannelData patch = new BotChannelData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotChannelData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BotChannelData patch = new BotChannelData();
+                    BotChannelData patch = new BotChannelData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotChannelData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BotChannelData patch = new BotChannelData();
+                    BotChannelData patch = new BotChannelData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<BotChannelResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotChannelData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BotChannelData patch = new BotChannelData();
+                    BotChannelData patch = new BotChannelData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<BotChannelResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotChannelData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BotChannelData patch = new BotChannelData();
+                    BotChannelData patch = new BotChannelData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotChannelData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BotChannelData patch = new BotChannelData();
+                    BotChannelData patch = new BotChannelData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
