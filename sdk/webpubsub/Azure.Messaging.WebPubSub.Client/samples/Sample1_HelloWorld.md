@@ -81,3 +81,44 @@ await client.SendToGroupAsync("testGroup", BinaryData.FromString("hello world"),
 // Send custom event to server
 await client.SendEventAsync("testEvent", BinaryData.FromString("hello world"), WebPubSubDataType.Text);
 ```
+
+## Invoke upstream event and await response
+
+This section demonstrates how to invoke an upstream event and wait for a correlated response from the service.
+
+### Invoke event
+
+```C# Snippet:WebPubSubClient_InvokeEvent
+var result = await client.InvokeEventAsync("processOrder", BinaryData.FromObjectAsJson(new { orderId = 1 }), WebPubSubDataType.Json);
+Console.WriteLine($"Invocation result: {result.Data}");
+```
+
+### Handle invocation failure
+
+If the invocation fails, `InvocationFailedException` is thrown. The exception includes the invocation ID and service error code.
+
+```C# Snippet:WebPubSubClient_InvokeEventFailure
+try
+{
+    await client.InvokeEventAsync("processOrder", BinaryData.FromObjectAsJson(new { orderId = 1 }), WebPubSubDataType.Json);
+}
+catch (InvocationFailedException ex)
+{
+    Console.WriteLine($"Invocation {ex.InvocationId} failed: {ex.Message}, Code: {ex.Code}");
+}
+```
+
+### Invoke event with timeout
+
+```C# Snippet:WebPubSubClient_InvokeEventTimeout
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+try
+{
+    var result = await client.InvokeEventAsync("processOrder", BinaryData.FromObjectAsJson(new { orderId = 1 }), WebPubSubDataType.Json, cancellationToken: cts.Token);
+    Console.WriteLine($"Invocation result: {result.Data}");
+}
+catch (OperationCanceledException)
+{
+    Console.WriteLine("Invocation timed out and was cancelled.");
+}
+```

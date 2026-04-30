@@ -25,18 +25,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="inputTokens"> The number of input tokens for the LLM web summarization activity. </param>
-        /// <param name="outputTokens"> The number of output tokens for the LLM web summarization activity. </param>
-        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokens, int? outputTokens) : base(id, @type, elapsedMs, error, additionalBinaryDataProperties)
+        /// <param name="inputTokensCount"> The number of input tokens for the LLM web summarization activity. </param>
+        /// <param name="outputTokensCount"> The number of output tokens for the LLM web summarization activity. </param>
+        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokensCount, int? outputTokensCount) : base(id, @type, elapsedMs, error, additionalBinaryDataProperties)
         {
-            InputTokens = inputTokens;
-            OutputTokens = outputTokens;
+            InputTokensCount = inputTokensCount;
+            OutputTokensCount = outputTokensCount;
         }
 
         /// <summary> The number of input tokens for the LLM web summarization activity. </summary>
-        public int? InputTokens { get; }
+        public int? InputTokensCount { get; }
 
         /// <summary> The number of output tokens for the LLM web summarization activity. </summary>
-        public int? OutputTokens { get; }
+        public int? OutputTokensCount { get; }
     }
 }
