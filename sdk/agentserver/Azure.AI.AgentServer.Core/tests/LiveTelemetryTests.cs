@@ -96,19 +96,33 @@ namespace Azure.AI.AgentServer.Core.Tests
                 };
                 serverThread.Start();
 
-                // Wait for server to start listening
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                // Wait for server to start listening — poll until it accepts connections
+                using var httpClient = new HttpClient();
+                var startDeadline = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(30);
+                bool serverReady = false;
 
-                if (serverError != null)
+                while (DateTimeOffset.UtcNow < startDeadline)
                 {
-                    Assert.Fail($"Server failed to start: {serverError.Message}");
+                    if (serverError != null)
+                    {
+                        Assert.Fail($"Server failed to start: {serverError.Message}");
+                    }
+
+                    try
+                    {
+                        using var probe = await httpClient.GetAsync($"http://localhost:{port}/health");
+                        serverReady = true;
+                        break;
+                    }
+                    catch (HttpRequestException)
+                    {
+                        await Task.Delay(TimeSpan.FromMilliseconds(500));
+                    }
                 }
 
+                Assert.That(serverReady, Is.True, "Server did not start within 30 seconds");
+
                 // ── Send a real HTTP request ──
-                // curl -X POST http://localhost:8088/invocations \
-                //   -H "Content-Type: application/json" \
-                //   -d '{"message": "Hello from test"}'
-                using var httpClient = new HttpClient();
                 var requestBody = new StringContent(
                     JsonSerializer.Serialize(new { message = "Hello from test" }),
                     Encoding.UTF8,
