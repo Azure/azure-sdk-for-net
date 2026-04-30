@@ -70,6 +70,38 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [TestCase]
+        public void NullableKnownSystemModelTypeIsReplacedWithNullableSystemType()
+        {
+            var model = new InputModelType(
+                "UserAssignedIdentity",
+                "Azure.ResourceManager.WorkloadsSapVirtualInstance",
+                "Azure.ResourceManager.CommonTypes.UserAssignedIdentity",
+                "public",
+                null,
+                null,
+                "User assigned identity properties",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                [],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new(),
+                false);
+
+            var nullableModel = new InputNullableType(model);
+            var plugin = ManagementMockHelpers.LoadMockPlugin();
+            var result = plugin.Object.TypeFactory.CreateCSharpType(nullableModel);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.FrameworkType, Is.EqualTo(typeof(UserAssignedIdentity)));
+            Assert.That(result.IsNullable, Is.True);
+        }
+
+        [TestCase]
         public void UseManagedServiceIdentityV3_DetectsNoSpaceValue()
         {
             // v3/v5/v6 format: "SystemAssigned,UserAssigned" (no space)

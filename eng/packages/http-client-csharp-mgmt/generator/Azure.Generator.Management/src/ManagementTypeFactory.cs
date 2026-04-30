@@ -87,6 +87,18 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
+            if (inputType is InputNullableType { Type: InputModelType nullableModel })
+            {
+                if (KnownManagementTypes.TryGetInheritableSystemType(nullableModel.CrossLanguageDefinitionId, out var inheritableType))
+                {
+                    return inheritableType.WithNullable(true);
+                }
+                if (KnownManagementTypes.TryGetSystemType(nullableModel.CrossLanguageDefinitionId, out var systemType))
+                {
+                    return systemType.WithNullable(true);
+                }
+            }
+
             if (inputType is InputModelType model)
             {
                 if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var inheritableType))
