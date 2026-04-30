@@ -8,6 +8,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     // Preserves the previous backupSettings-based constructor shape for backup content models.
     public partial class PostgreSqlBackupContent
     {
+        // TODO: Remove this shim after https://github.com/Azure/azure-sdk-for-net/pull/58867 is merged and consumed.
         // Required by generated derived backup-content deserialization constructors.
         private protected PostgreSqlBackupContent()
         {
