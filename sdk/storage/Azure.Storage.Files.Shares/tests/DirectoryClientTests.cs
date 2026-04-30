@@ -710,6 +710,17 @@ namespace Azure.Storage.Files.Shares.Tests
                     }
                 });
 
+            // Child symbolic link pointing at the regular file
+            string symlinkName = GetNewFileName();
+            ShareFileClient symlink = InstrumentClient(parent.GetFileClient(symlinkName));
+            await symlink.CreateSymbolicLinkAsync(
+                linkText: file.Uri.ToString(),
+                options: new ShareFileCreateSymbolicLinkOptions
+                {
+                    Owner = owner,
+                    Group = group
+                });
+
             // Act — request all NFS-applicable traits
             ShareDirectoryGetFilesAndDirectoriesOptions options = new ShareDirectoryGetFilesAndDirectoriesOptions
             {
@@ -728,7 +739,7 @@ namespace Azure.Storage.Files.Shares.Tests
             }
 
             // Assert
-            Assert.AreEqual(2, items.Count);
+            Assert.AreEqual(3, items.Count);
 
             ShareFileItem fileItem = items.Single(i => !i.IsDirectory && i.Name == fileName);
             Assert.AreEqual(NfsFileType.Regular, fileItem.FileType);
@@ -747,6 +758,14 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(group, dirItem.Properties.Group);
             Assert.IsNotNull(dirItem.Properties.FileMode);
             Assert.AreEqual(fileMode, dirItem.Properties.FileMode.ToOctalFileMode());
+
+            ShareFileItem symlinkItem = items.Single(i => !i.IsDirectory && i.Name == symlinkName);
+            Assert.AreEqual(NfsFileType.SymLink, symlinkItem.FileType);
+            Assert.IsNotNull(symlinkItem.LinkCount);
+            Assert.IsFalse(string.IsNullOrEmpty(symlinkItem.LinkText));
+            Assert.IsNotNull(symlinkItem.Properties);
+            Assert.AreEqual(owner, symlinkItem.Properties.Owner);
+            Assert.AreEqual(group, symlinkItem.Properties.Group);
         }
 
         [RecordedTest]
