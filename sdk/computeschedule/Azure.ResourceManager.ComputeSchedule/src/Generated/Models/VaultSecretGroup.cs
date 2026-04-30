@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.ComputeSchedule;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VaultSecretGroup(SubResource sourceVault, IList<VaultCertificate> vaultCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VaultSecretGroup(WritableSubResource sourceVault, IList<VaultCertificate> vaultCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVault = sourceVault;
             VaultCertificates = vaultCertificates;
@@ -36,26 +36,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </summary>
-        internal SubResource SourceVault { get; set; }
+        public WritableSubResource SourceVault { get; set; }
 
         /// <summary> The list of key vault references in SourceVault which contain certificates. </summary>
         public IList<VaultCertificate> VaultCertificates { get; }
-
-        /// <summary> The ID of the sub-resource. </summary>
-        public ResourceIdentifier SourceVaultId
-        {
-            get
-            {
-                return SourceVault is null ? default : SourceVault.Id;
-            }
-            set
-            {
-                if (SourceVault is null)
-                {
-                    SourceVault = new SubResource();
-                }
-                SourceVault.Id = value;
-            }
-        }
     }
 }

@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.ComputeSchedule;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault"u8);
-                writer.WriteObjectValue(SourceVault, options);
+                ((IJsonModel<WritableSubResource>)SourceVault).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VaultCertificates))
             {
@@ -131,7 +133,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            SubResource sourceVault = default;
+            WritableSubResource sourceVault = default;
             IList<VaultCertificate> vaultCertificates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,7 +144,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    sourceVault = SubResource.DeserializeSubResource(prop.Value, options);
+                    sourceVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeScheduleContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("vaultCertificates"u8))

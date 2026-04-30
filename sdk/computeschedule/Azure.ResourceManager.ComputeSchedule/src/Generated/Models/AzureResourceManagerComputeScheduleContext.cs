@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(LinuxConfiguration))]
     [ModelReaderWriterBuildable(typeof(LinuxPatchSettings))]
     [ModelReaderWriterBuildable(typeof(LinuxVMGuestPatchAutomaticByPlatformSettings))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkInterfaceReferenceProperties))]
     [ModelReaderWriterBuildable(typeof(NotificationSettings))]
     [ModelReaderWriterBuildable(typeof(OccurrenceCancelContent))]
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TerminateNotificationProfile))]
     [ModelReaderWriterBuildable(typeof(UefiSettings))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentitiesValue))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserInitiatedReboot))]
     [ModelReaderWriterBuildable(typeof(UserInitiatedRedeploy))]
     [ModelReaderWriterBuildable(typeof(UserRequestResources))]
@@ -138,7 +139,6 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(VirtualHardDisk))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineDataDisk))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineHardwareProfile))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineIpTag))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineNetworkInterfaceConfiguration))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineNetworkInterfaceConfigurationProperties))]
@@ -160,6 +160,7 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(WindowsVMGuestPatchAutomaticByPlatformSettings))]
     [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
     [ModelReaderWriterBuildable(typeof(WinRMListener))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerComputeScheduleContext : ModelReaderWriterContext
     {
     }

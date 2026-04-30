@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="properties"> Specifies the properties of the virtual machine to be created. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
         /// <returns> A new <see cref="Models.BulkVMConfiguration"/> instance for mocking. </returns>
-        public static BulkVMConfiguration BulkVMConfiguration(string name = default, string computeApiVersion = default, string resourceGroupName = default, IEnumerable<string> zones = default, ArmPlan plan = default, VirtualMachineIdentity identity = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, BulkActionVmProperties properties = default, IEnumerable<BulkActionVmExtension> vmExtensions = default)
+        public static BulkVMConfiguration BulkVMConfiguration(string name = default, string computeApiVersion = default, string resourceGroupName = default, IEnumerable<string> zones = default, ArmPlan plan = default, ManagedServiceIdentity identity = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, BulkActionVmProperties properties = default, IEnumerable<BulkActionVmExtension> vmExtensions = default)
         {
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -271,28 +271,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 properties,
                 vmExtensions.ToList(),
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Identity for the virtual machine. </summary>
-        /// <param name="principalId"> The principal id of virtual machine identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id associated with the virtual machine. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the Virtual Machine. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineIdentity"/> instance for mocking. </returns>
-        public static VirtualMachineIdentity VirtualMachineIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentitiesValue>();
-
-            return new VirtualMachineIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The UserAssignedIdentitiesValue. </summary>
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentitiesValue"/> instance for mocking. </returns>
-        public static UserAssignedIdentitiesValue UserAssignedIdentitiesValue(string principalId = default, string clientId = default)
-        {
-            return new UserAssignedIdentitiesValue(principalId, clientId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes the user-defined constraints for resource hardware placement. </summary>
@@ -352,20 +330,22 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes a reference to Key Vault Secret. </summary>
         /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
-        /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
+        /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
         /// <returns> A new <see cref="Models.KeyVaultSecretReference"/> instance for mocking. </returns>
-        public static KeyVaultSecretReference KeyVaultSecretReference(Uri secretUri = default, ResourceIdentifier sourceVaultId = default)
+        public static KeyVaultSecretReference KeyVaultSecretReference(Uri secretUri = default, WritableSubResource sourceVault = default)
         {
-            return new KeyVaultSecretReference(secretUri, new SubResource(sourceVaultId, null), additionalBinaryDataProperties: null);
+            return new KeyVaultSecretReference(secretUri, sourceVault, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes a reference to Key Vault Key. </summary>
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
-        /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
+        /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
         /// <returns> A new <see cref="Models.KeyVaultKeyReference"/> instance for mocking. </returns>
-        public static KeyVaultKeyReference KeyVaultKeyReference(Uri keyUri = default, ResourceIdentifier sourceVaultId = default)
+        public static KeyVaultKeyReference KeyVaultKeyReference(Uri keyUri = default, WritableSubResource sourceVault = default)
         {
-            return new KeyVaultKeyReference(keyUri, new SubResource(sourceVaultId, null), additionalBinaryDataProperties: null);
+            return new KeyVaultKeyReference(keyUri, sourceVault, additionalBinaryDataProperties: null);
         }
 
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
@@ -450,14 +430,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
+        /// <summary> Describes a set of certificates which are all in the same Key Vault. </summary>
+        /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <returns> A new <see cref="Models.VaultSecretGroup"/> instance for mocking. </returns>
-        public static VaultSecretGroup VaultSecretGroup(ResourceIdentifier sourceVaultId = default, IEnumerable<VaultCertificate> vaultCertificates = default)
+        public static VaultSecretGroup VaultSecretGroup(WritableSubResource sourceVault = default, IEnumerable<VaultCertificate> vaultCertificates = default)
         {
             vaultCertificates ??= new ChangeTrackingList<VaultCertificate>();
 
-            return new VaultSecretGroup(sourceVaultId is null ? default : new SubResource(sourceVaultId, null), vaultCertificates.ToList(), additionalBinaryDataProperties: null);
+            return new VaultSecretGroup(sourceVault, vaultCertificates.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies the network interfaces or the networking configuration of the virtual machine. </summary>

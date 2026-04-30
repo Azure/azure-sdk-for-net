@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="properties"> Specifies the properties of the virtual machine to be created. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkVMConfiguration(string name, string computeApiVersion, string resourceGroupName, IList<string> zones, ArmPlan plan, VirtualMachineIdentity identity, ExtendedLocation extendedLocation, Placement placement, IDictionary<string, string> tags, BulkActionVmProperties properties, IList<BulkActionVmExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkVMConfiguration(string name, string computeApiVersion, string resourceGroupName, IList<string> zones, ArmPlan plan, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, Placement placement, IDictionary<string, string> tags, BulkActionVmProperties properties, IList<BulkActionVmExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ComputeApiVersion = computeApiVersion;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ArmPlan Plan { get; set; }
 
         /// <summary> The identity of the virtual machine, if configured. </summary>
-        public VirtualMachineIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The extended location of the Virtual Machine. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }

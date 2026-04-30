@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.ComputeSchedule;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -20,19 +20,22 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultKeyReference"/>. </summary>
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> is null. </exception>
-        public KeyVaultKeyReference(Uri keyUri)
+        /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> or <paramref name="sourceVault"/> is null. </exception>
+        public KeyVaultKeyReference(Uri keyUri, WritableSubResource sourceVault)
         {
             Argument.AssertNotNull(keyUri, nameof(keyUri));
+            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
 
             KeyUri = keyUri;
+            SourceVault = sourceVault;
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultKeyReference"/>. </summary>
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultKeyReference(Uri keyUri, SubResource sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultKeyReference(Uri keyUri, WritableSubResource sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyUri = keyUri;
             SourceVault = sourceVault;
@@ -43,15 +46,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public Uri KeyUri { get; }
 
         /// <summary> The relative URL of the Key Vault containing the key. </summary>
-        internal SubResource SourceVault { get; }
-
-        /// <summary> The ID of the sub-resource. </summary>
-        public ResourceIdentifier SourceVaultId
-        {
-            get
-            {
-                return SourceVault.Id;
-            }
-        }
+        public WritableSubResource SourceVault { get; }
     }
 }

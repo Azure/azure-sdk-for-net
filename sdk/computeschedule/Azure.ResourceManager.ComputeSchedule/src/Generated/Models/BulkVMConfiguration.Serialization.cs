@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             string resourceGroupName = default;
             IList<string> zones = default;
             ArmPlan plan = default;
-            VirtualMachineIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             ExtendedLocation extendedLocation = default;
             Placement placement = default;
             IDictionary<string, string> tags = default;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    identity = VirtualMachineIdentity.DeserializeVirtualMachineIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerComputeScheduleContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("extendedLocation"u8))

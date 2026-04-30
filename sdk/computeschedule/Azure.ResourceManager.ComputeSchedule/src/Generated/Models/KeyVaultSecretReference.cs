@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.ComputeSchedule;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -20,19 +20,22 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/>. </summary>
         /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretUri"/> is null. </exception>
-        public KeyVaultSecretReference(Uri secretUri)
+        /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretUri"/> or <paramref name="sourceVault"/> is null. </exception>
+        public KeyVaultSecretReference(Uri secretUri, WritableSubResource sourceVault)
         {
             Argument.AssertNotNull(secretUri, nameof(secretUri));
+            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
 
             SecretUri = secretUri;
+            SourceVault = sourceVault;
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/>. </summary>
         /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultSecretReference(Uri secretUri, SubResource sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultSecretReference(Uri secretUri, WritableSubResource sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretUri = secretUri;
             SourceVault = sourceVault;
@@ -43,15 +46,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public Uri SecretUri { get; }
 
         /// <summary> The relative URL of the Key Vault containing the secret. </summary>
-        internal SubResource SourceVault { get; }
-
-        /// <summary> The ID of the sub-resource. </summary>
-        public ResourceIdentifier SourceVaultId
-        {
-            get
-            {
-                return SourceVault.Id;
-            }
-        }
+        public WritableSubResource SourceVault { get; }
     }
 }
