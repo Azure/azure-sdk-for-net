@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
