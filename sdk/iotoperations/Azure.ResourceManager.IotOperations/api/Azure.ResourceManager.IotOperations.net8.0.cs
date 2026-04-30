@@ -1248,7 +1248,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class BrokerAuthenticatorCustomAuth : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorCustomAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorCustomAuth>
     {
-        public BrokerAuthenticatorCustomAuth(string secretRef) { }
+        internal BrokerAuthenticatorCustomAuth() { }
         public string X509SecretRef { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorCustomAuth JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
