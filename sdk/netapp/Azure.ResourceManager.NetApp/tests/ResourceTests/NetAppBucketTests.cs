@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             //   Buckets_CreateOrUpdate / Buckets_Update request body.
             // - accessKey / secretKey / keyPair / keyPairValue: credentials returned from
             //   Buckets_GenerateCredentials / Buckets_GenerateAkvCredentials response bodies.
-            //JsonPathSanitizers.Add("$..certificateObject");
-            //JsonPathSanitizers.Add("$..accessKey");
-            //JsonPathSanitizers.Add("$..secretKey");
-            //JsonPathSanitizers.Add("$..keyPair");
-            //JsonPathSanitizers.Add("$..keyPairValue");
+            JsonPathSanitizers.Add("$..certificateObject");
+            JsonPathSanitizers.Add("$..accessKey");
+            JsonPathSanitizers.Add("$..secretKey");
+            JsonPathSanitizers.Add("$..keyPair");
+            JsonPathSanitizers.Add("$..keyPairValue");
         }
 
         /// <summary>
