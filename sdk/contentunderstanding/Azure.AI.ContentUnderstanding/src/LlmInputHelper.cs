@@ -35,9 +35,24 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary>
         /// Converts a Content Understanding analysis result into LLM-friendly text.
         /// <para>
-        /// Produces a formatted text string from the analysis result, suitable for
+        /// Produces a YAML front matter block followed by markdown body, suitable for
         /// injecting into an LLM prompt, storing in a vector database, or passing
         /// as tool output.
+        /// </para>
+        /// <para>
+        /// The YAML front matter (delimited by <c>---</c>) may include:
+        /// <c>contentType</c> (document, image, audio, video),
+        /// <c>pages</c> (page range),
+        /// <c>timeRange</c> (media time span),
+        /// <c>category</c> (classification label),
+        /// <c>fields</c> (extracted structured fields as YAML),
+        /// <c>rai_warnings</c> (content safety flags),
+        /// and any caller-supplied <paramref name="metadata"/> entries.
+        /// </para>
+        /// <para>
+        /// The markdown body contains the extracted text with page-break markers
+        /// (<c>&lt;!-- page N --&gt;</c>) inserted at page boundaries so downstream
+        /// consumers can locate content by page number.
         /// </para>
         /// </summary>
         /// <param name="result">The <see cref="AnalysisResult"/> from a Content Understanding analyze operation.</param>
@@ -252,6 +267,35 @@ namespace Azure.AI.ContentUnderstanding
         // Content rendering
         // ---------------------------------------------------------------
 
+        /// <summary>
+        /// Flattens the contents list for rendering. In classification scenarios, the service
+        /// returns a parent DocumentContent (with full Markdown and Segments) plus separate
+        /// routed DocumentContent items (with their own Markdown and Fields) for segments
+        /// that matched a specific analyzer.
+        ///
+        /// Example input:
+        ///   contents[0] = parent doc
+        ///     Path="input1", Category=null
+        ///     Markdown="INVOICE\nVendor: Contoso\nTotal: $1500\n&lt;!-- PageBreak --&gt;\nRECEIPT\nStore: Fabrikam\nAmount: $50"
+        ///     Segments=[
+        ///       { SegmentId="seg1", Category="invoice", Pages=1, Span={Offset:0, Length:38} },
+        ///       { SegmentId="seg2", Category="receipt", Pages=2, Span={Offset:55, Length:37} }
+        ///     ]
+        ///   contents[1] = routed doc (produced by prebuilt-invoice analyzer)
+        ///     Path="input1/seg1", Category="invoice"
+        ///     Markdown="INVOICE\nVendor: Contoso\nTotal: $1500"   (analyzer's own markdown)
+        ///     Fields={ vendor: "Contoso", total: 1500 }
+        ///
+        /// This method:
+        ///   1. Identifies contents[1] as a routed version of seg1 (path "input1/seg1" matches).
+        ///   2. Skips seg1 during parent expansion — the routed version (with its own Markdown
+        ///      and Fields) will be used directly instead of slicing from the parent's Span.
+        ///   3. Creates a synthetic DocumentContent for seg2 by slicing the parent's Markdown
+        ///      using Span {Offset:55, Length:37} → "RECEIPT\nStore: Fabrikam\nAmount: $50".
+        ///   4. Sorts all results by page number so blocks appear in document order.
+        ///
+        /// Result: [routed invoice (page 1, own markdown + fields), synthetic receipt (page 2, sliced markdown)]
+        /// </summary>
         private static IList<AnalysisContent> GetRenderableContents(IList<AnalysisContent> contents)
         {
             // Collect paths of routed top-level content items
