@@ -8,7 +8,6 @@
 - Upgraded api-version tag from 'package-2025-12-01' to 'package-2026-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c5044e9d381c2bf1b3119011b4696e777f819f76/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
 - Added `NetAppBucketResource` and related bucket models, including credential generation and Key Vault integration support.
 - Added `NetAppCacheResource` for NetApp cache scenarios.
-- Added `NetAppActiveDirectoryConfigResource` for account-level Active Directory configuration, including LDAP configuration support via `NetAppLdapConfiguration`.
 - Added `NetAppSecretPassword` model and Key Vault-backed credential models (e.g., `CertificateKeyVaultDetails`, `CredentialsKeyVaultDetails`, `EntraIdKeyVaultConfig`, `EntraIdKeyVaultConfigPatch`).
 - Added `NetAppDayOfWeek` enum and additional supporting models and enums (e.g., file system user, NFS user, SMB settings, peering passphrases, origin cluster information, change-zone content; policy/encryption/credential/breakthrough/volume-size/snapshot/Kerberos/global-file-locking/large-volume/SMB-encryption/CIFS-change-notify/write-back/LDAP/certificate-conflict/snapshot-directory-visibility/external-replication enums).
 
@@ -16,6 +15,7 @@
 
 - Upgraded dependent `Azure.Core` to 1.51.1.
 - Upgraded dependent `Azure.ResourceManager` to 1.14.0.
+
 ## 1.16.0-beta.2 (2026-03-26)
 
 ### Breaking Changes
