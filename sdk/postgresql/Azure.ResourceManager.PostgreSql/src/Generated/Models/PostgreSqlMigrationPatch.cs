@@ -97,6 +97,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
+        /// <summary> Migration secret parameters. </summary>
+        [WirePath("properties.secretParameters")]
+        public PostgreSqlMigrationSecretParameters SecretParameters
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecretParameters;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.SecretParameters = value;
+            }
+        }
+
         /// <summary> Names of databases to migrate. </summary>
         [WirePath("properties.dbsToMigrate")]
         public IList<string> DbsToMigrate

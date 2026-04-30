@@ -230,6 +230,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServersServerSku(name, tier, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="sourceDbServerResourceId"> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </param>
+        /// <param name="sourceDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </param>
+        /// <param name="targetDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </param>
+        /// <param name="secretParameters"> Migration secret parameters. </param>
+        /// <param name="dbsToMigrate"> Names of databases to migrate. </param>
+        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded"> Indicates whether to setup logical replication on source server, if needed. </param>
+        /// <param name="overwriteDbsInTarget"> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </param>
+        /// <param name="migrationWindowStartTimeInUtc"> Start time (UTC) for migration window. </param>
+        /// <param name="migrateRoles"> Indicates if roles and permissions must be migrated. </param>
+        /// <param name="startDataMigration"> Indicates if data migration must start right away. </param>
+        /// <param name="triggerCutover"> Indicates if cutover must be triggered for the entire migration. </param>
+        /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
+        /// <param name="cancel"> Indicates if cancel must be triggered for the entire migration. </param>
+        /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
+        /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlMigrationPatch"/> instance for mocking. </returns>
+        public static PostgreSqlMigrationPatch PostgreSqlMigrationPatch(ResourceIdentifier sourceDbServerResourceId = default, string sourceDbServerFullyQualifiedDomainName = default, string targetDbServerFullyQualifiedDomainName = default, PostgreSqlMigrationSecretParameters secretParameters = default, IEnumerable<string> dbsToMigrate = default, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default, DateTimeOffset? migrationWindowStartTimeInUtc = default, MigrateRolesEnum? migrateRoles = default, PostgreSqlMigrationStartDataMigration? startDataMigration = default, PostgreSqlMigrationTriggerCutover? triggerCutover = default, IEnumerable<string> dbsToTriggerCutoverOn = default, PostgreSqlMigrationCancel? cancel = default, IEnumerable<string> dbsToCancelMigrationOn = default, PostgreSqlMigrationMode? migrationMode = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PostgreSqlMigrationPatch(sourceDbServerResourceId is null && sourceDbServerFullyQualifiedDomainName is null && targetDbServerFullyQualifiedDomainName is null && secretParameters is null && dbsToMigrate is null && setupLogicalReplicationOnSourceDbIfNeeded is null && overwriteDbsInTarget is null && migrationWindowStartTimeInUtc is null && migrateRoles is null && startDataMigration is null && triggerCutover is null && dbsToTriggerCutoverOn is null && cancel is null && dbsToCancelMigrationOn is null && migrationMode is null ? default : new MigrationPropertiesForPatch(
+                sourceDbServerResourceId,
+                sourceDbServerFullyQualifiedDomainName,
+                targetDbServerFullyQualifiedDomainName,
+                secretParameters,
+                (dbsToMigrate ?? new ChangeTrackingList<string>()).ToList(),
+                setupLogicalReplicationOnSourceDbIfNeeded,
+                overwriteDbsInTarget,
+                migrationWindowStartTimeInUtc,
+                migrateRoles,
+                startDataMigration,
+                triggerCutover,
+                (dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>()).ToList(),
+                cancel,
+                (dbsToCancelMigrationOn ?? new ChangeTrackingList<string>()).ToList(),
+                migrationMode,
+                null), tags, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Availability of a migration name. </summary>
         /// <param name="name"> Name of the migration to check for validity and availability. </param>
         /// <param name="resourceType"> Type of resource. </param>

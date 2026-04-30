@@ -1,4 +1,4 @@
 directory: specification/postgresql/DBforPostgreSQL.Management
-commit: 0251520caeed55fb6d95658d0a356804c2a06bb4
+commit: 8d0f73961c1048254003f878daeacd42691e2cc9
 repo: live1206/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
