@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public long? MaxBurstIOPerSecCredits { get; }
 
         /// <summary> Protocol settings specific NFS. </summary>
-        internal NfsProtocolProperties NfsProtocolProperties { get; set; }
+        public NfsProtocolProperties NfsProtocolProperties { get; set; }
 
         /// <summary> The set of properties for control public access. </summary>
         internal PublicAccessProperties PublicAccessProperties { get; set; }
@@ -119,23 +119,6 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> The list of associated private endpoint connections. </summary>
         public IReadOnlyList<FileSharePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-
-        /// <summary> Root squash defines how root users on clients are mapped to the NFS share. </summary>
-        public ShareRootSquash? NfsProtocolRootSquash
-        {
-            get
-            {
-                return NfsProtocolProperties is null ? default : NfsProtocolProperties.RootSquash;
-            }
-            set
-            {
-                if (NfsProtocolProperties is null)
-                {
-                    NfsProtocolProperties = new NfsProtocolProperties();
-                }
-                NfsProtocolProperties.RootSquash = value;
-            }
-        }
 
         /// <summary> The allowed set of subnets when access is restricted. </summary>
         public IList<string> PublicAccessAllowedSubnets

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 throw new FormatException($"The model {nameof(FileSharePatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ProvisionedStorageInGiB))
+            if (Optional.IsDefined(ProvisionedStorageGiB))
             {
                 writer.WritePropertyName("provisionedStorageGiB"u8);
-                writer.WriteNumberValue(ProvisionedStorageInGiB.Value);
+                writer.WriteNumberValue(ProvisionedStorageGiB.Value);
             }
             if (Optional.IsDefined(ProvisionedIOPerSec))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 return null;
             }
-            int? provisionedStorageInGiB = default;
+            int? provisionedStorageGiB = default;
             int? provisionedIOPerSec = default;
             int? provisionedThroughputMiBPerSec = default;
             NfsProtocolProperties nfsProtocolProperties = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     {
                         continue;
                     }
-                    provisionedStorageInGiB = prop.Value.GetInt32();
+                    provisionedStorageGiB = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("provisionedIOPerSec"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 }
             }
             return new FileSharePatchProperties(
-                provisionedStorageInGiB,
+                provisionedStorageGiB,
                 provisionedIOPerSec,
                 provisionedThroughputMiBPerSec,
                 nfsProtocolProperties,
