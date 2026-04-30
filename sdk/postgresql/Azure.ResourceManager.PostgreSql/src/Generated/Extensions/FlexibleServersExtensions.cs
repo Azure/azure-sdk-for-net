@@ -18,7 +18,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.PostgreSql.FlexibleServers. </summary>
-    public static partial class PostgreSqlFlexibleServersExtensions
+    public static partial class FlexibleServersExtensions
     {
         /// <param name="client"></param>
         private static MockablePostgreSqlFlexibleServersArmClient GetMockablePostgreSqlFlexibleServersArmClient(ArmClient client)
