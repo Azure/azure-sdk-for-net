@@ -80,78 +80,7 @@ BinaryData evaluationData = BinaryData.FromObjectAsJson(
 );
 ```
 
-3. Create the evaluation with the defined graders and data source configuration.
-
-Synchronous sample:
-```C# Snippet:Sample_CreateEvaluation_EvaluationsGraders_Sync
-using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
-ClientResult evaluation = evaluationClient.CreateEvaluation(evaluationDataContent);
-Dictionary<string, string> fields = ParseClientResult(evaluation, ["name", "id"]);
-string evaluationName = fields["name"];
-string evaluationId = fields["id"];
-Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
-```
-
-Asynchronous sample:
-```C# Snippet:Sample_CreateEvaluation_EvaluationsGraders_Async
-using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
-ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
-Dictionary<string, string> fields = ParseClientResult(evaluation, ["name", "id"]);
-string evaluationName = fields["name"];
-string evaluationId = fields["id"];
-Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
-```
-
-4. Define the inline JSONL data source with sample items containing query, context, ground truth, and response fields that the graders will evaluate.
-
-```C# Snippet:Sample_CreateRunDataSource_EvaluationsGraders
-object dataSource = new
-{
-    type = "jsonl",
-    source = new
-    {
-        type = "file_content",
-        content = new[] {
-            new { item = new { query = "I love this product! It works great.", context = "Product review context", ground_truth = "The product is excellent and performs well.", response = "The product is amazing and works perfectly." } },
-            new { item = new { query = "The weather is cloudy today.", context = "Weather observation", ground_truth = "Today's weather is overcast.", response = "The sky is covered with clouds today." } },
-            new { item = new { query = "What is the capital of France?", context = "Geography question about European capitals", ground_truth = "Paris", response = "The capital of France is Paris." } },
-            new { item = new { query = "Explain quantum computing", context = "Complex scientific concept explanation", ground_truth = "Quantum computing uses quantum mechanics principles", response = "Quantum computing leverages quantum mechanical phenomena like superposition and entanglement to process information." } },
-        }
-    }
-};
-BinaryData runData = BinaryData.FromObjectAsJson(
-    new
-    {
-        eval_id = evaluationId,
-        name = "inline_data_graders_run",
-        metadata = new { team = "eval-exp", scenario = "graders-inline-v1" },
-        data_source = dataSource
-    }
-);
-using BinaryContent runDataContent = BinaryContent.Create(runData);
-```
-
-5. Create the evaluation run using the inline data.
-
-Synchronous sample:
-```C# Snippet:Sample_CreateRun_EvaluationsGraders_Sync
-ClientResult run = evaluationClient.CreateEvaluationRun(evaluationId: evaluationId, content: runDataContent);
-fields = ParseClientResult(run, ["id", "status"]);
-string runId = fields["id"];
-string runStatus = fields["status"];
-Console.WriteLine($"Evaluation run created (id: {runId})");
-```
-
-Asynchronous sample:
-```C# Snippet:Sample_CreateRun_EvaluationsGraders_Async
-ClientResult run = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent);
-fields = ParseClientResult(run, ["id", "status"]);
-string runId = fields["id"];
-string runStatus = fields["status"];
-Console.WriteLine($"Evaluation run created (id: {runId})");
-```
-
-6. Define helper method for parsing results from the protocol-based API responses.
+3. Define helper method for parsing results from the protocol-based API responses.
 
 ```C# Snippet:Sample_GetStringValues_EvaluationsGraders
 private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
@@ -187,7 +116,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
 }
 ```
 
-7. Define the method to extract error messages from failed responses.
+4. Define the method to extract error messages from failed responses.
 
 ```C# Snippet:Sample_GetError_EvaluationsGraders
 private static string GetErrorMessageOrEmpty(ClientResult result)
@@ -223,6 +152,77 @@ private static string GetErrorMessageOrEmpty(ClientResult result)
     }
     return error;
 }
+```
+
+5. Create the evaluation with the defined graders and data source configuration.
+
+Synchronous sample:
+```C# Snippet:Sample_CreateEvaluation_EvaluationsGraders_Sync
+using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
+ClientResult evaluation = evaluationClient.CreateEvaluation(evaluationDataContent);
+Dictionary<string, string> fields = ParseClientResult(evaluation, ["name", "id"]);
+string evaluationName = fields["name"];
+string evaluationId = fields["id"];
+Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_CreateEvaluation_EvaluationsGraders_Async
+using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
+ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
+Dictionary<string, string> fields = ParseClientResult(evaluation, ["name", "id"]);
+string evaluationName = fields["name"];
+string evaluationId = fields["id"];
+Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
+```
+
+6. Define the inline JSONL data source with sample items containing query, context, ground truth, and response fields that the graders will evaluate.
+
+```C# Snippet:Sample_CreateRunDataSource_EvaluationsGraders
+object dataSource = new
+{
+    type = "jsonl",
+    source = new
+    {
+        type = "file_content",
+        content = new[] {
+            new { item = new { query = "I love this product! It works great.", context = "Product review context", ground_truth = "The product is excellent and performs well.", response = "The product is amazing and works perfectly." } },
+            new { item = new { query = "The weather is cloudy today.", context = "Weather observation", ground_truth = "Today's weather is overcast.", response = "The sky is covered with clouds today." } },
+            new { item = new { query = "What is the capital of France?", context = "Geography question about European capitals", ground_truth = "Paris", response = "The capital of France is Paris." } },
+            new { item = new { query = "Explain quantum computing", context = "Complex scientific concept explanation", ground_truth = "Quantum computing uses quantum mechanics principles", response = "Quantum computing leverages quantum mechanical phenomena like superposition and entanglement to process information." } },
+        }
+    }
+};
+BinaryData runData = BinaryData.FromObjectAsJson(
+    new
+    {
+        eval_id = evaluationId,
+        name = "inline_data_graders_run",
+        metadata = new { team = "eval-exp", scenario = "graders-inline-v1" },
+        data_source = dataSource
+    }
+);
+using BinaryContent runDataContent = BinaryContent.Create(runData);
+```
+
+7. Create the evaluation run using the inline data.
+
+Synchronous sample:
+```C# Snippet:Sample_CreateRun_EvaluationsGraders_Sync
+ClientResult run = evaluationClient.CreateEvaluationRun(evaluationId: evaluationId, content: runDataContent);
+fields = ParseClientResult(run, ["id", "status"]);
+string runId = fields["id"];
+string runStatus = fields["status"];
+Console.WriteLine($"Evaluation run created (id: {runId})");
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_CreateRun_EvaluationsGraders_Async
+ClientResult run = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent);
+fields = ParseClientResult(run, ["id", "status"]);
+string runId = fields["id"];
+string runStatus = fields["status"];
+Console.WriteLine($"Evaluation run created (id: {runId})");
 ```
 
 8. Wait for the evaluation run to reach a terminal state (completed or failed).
