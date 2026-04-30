@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.DataDiskSizeInGB = value.Value;
+                Properties.DataDiskSizeInGB = value;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.DataDiskType = value.Value;
+                Properties.DataDiskType = value;
             }
         }
 
@@ -107,7 +107,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.PlacementProperties;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.PlacementProperties;
             }
         }
 
@@ -116,7 +120,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.Capacities;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.Capacities;
             }
         }
 
@@ -244,7 +252,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.VmSecrets;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.VmSecrets;
             }
         }
 
@@ -253,7 +265,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.VmExtensions;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.VmExtensions;
             }
         }
 
@@ -270,7 +286,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.IsStateless = value.Value;
+                Properties.IsStateless = value;
             }
         }
 
@@ -287,7 +303,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.HasMultiplePlacementGroups = value.Value;
+                Properties.HasMultiplePlacementGroups = value;
             }
         }
 
@@ -296,7 +312,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.FrontendConfigurations;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.FrontendConfigurations;
             }
         }
 
@@ -305,7 +325,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.NetworkSecurityRules;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.NetworkSecurityRules;
             }
         }
 
@@ -314,7 +338,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.AdditionalDataDisks;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.AdditionalDataDisks;
             }
         }
 
@@ -331,7 +359,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.IsEncryptionAtHostEnabled = value.Value;
+                Properties.IsEncryptionAtHostEnabled = value;
             }
         }
 
@@ -357,7 +385,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.IsAcceleratedNetworkingEnabled = value.Value;
+                Properties.IsAcceleratedNetworkingEnabled = value;
             }
         }
 
@@ -374,7 +402,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.UseDefaultPublicLoadBalancer = value.Value;
+                Properties.UseDefaultPublicLoadBalancer = value;
             }
         }
 
@@ -391,7 +419,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.UseTempDataDisk = value.Value;
+                Properties.UseTempDataDisk = value;
             }
         }
 
@@ -408,7 +436,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.IsOverProvisioningEnabled = value.Value;
+                Properties.IsOverProvisioningEnabled = value;
             }
         }
 
@@ -417,7 +445,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.Zones;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.Zones;
             }
         }
 
@@ -434,7 +466,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.IsSpotVm = value.Value;
+                Properties.IsSpotVm = value;
             }
         }
 
@@ -468,7 +500,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.UseEphemeralOSDisk = value.Value;
+                Properties.UseEphemeralOSDisk = value;
             }
         }
 
@@ -502,7 +534,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.EvictionPolicy = value.Value;
+                Properties.EvictionPolicy = value;
             }
         }
 
@@ -545,7 +577,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.VmSetupActions;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.VmSetupActions;
             }
         }
 
@@ -562,7 +598,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.SecurityType = value.Value;
+                Properties.SecurityType = value;
             }
         }
 
@@ -579,7 +615,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.SecurityEncryptionType = value.Value;
+                Properties.SecurityEncryptionType = value;
             }
         }
 
@@ -596,7 +632,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.IsSecureBootEnabled = value.Value;
+                Properties.IsSecureBootEnabled = value;
             }
         }
 
@@ -613,7 +649,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.IsNodePublicIPEnabled = value.Value;
+                Properties.IsNodePublicIPEnabled = value;
             }
         }
 
@@ -630,7 +666,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.IsNodePublicIPv6Enabled = value.Value;
+                Properties.IsNodePublicIPv6Enabled = value;
             }
         }
 
@@ -673,7 +709,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.NatConfigurations;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.NatConfigurations;
             }
         }
 
@@ -733,7 +773,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.AdditionalNetworkInterfaceConfigurations;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.AdditionalNetworkInterfaceConfigurations;
             }
         }
 
@@ -759,7 +803,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.VmApplications;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.VmApplications;
             }
         }
 
@@ -776,7 +824,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.IsZoneBalanceEnabled = value.Value;
+                Properties.IsZoneBalanceEnabled = value;
             }
         }
 
@@ -793,7 +841,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.IsOutboundOnly = value.Value;
+                Properties.IsOutboundOnly = value;
+            }
+        }
+
+        /// <summary> Specifies whether the node type should use a resilient ephemeral OS disk when using a supported SKU size. A resilient ephemeral OS disk provides improved reliability for ephemeral OS disks by enabling full caching. </summary>
+        public bool? EnableResilientEphemeralOsDisk
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableResilientEphemeralOsDisk;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.EnableResilientEphemeralOsDisk = value;
             }
         }
     }

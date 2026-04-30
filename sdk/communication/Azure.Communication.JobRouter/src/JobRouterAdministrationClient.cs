@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,8 +7,7 @@ using System.Threading;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Autorest.CSharp.Core;
-
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenSuppress("JobRouterAdministrationClient", typeof(Uri))]
@@ -76,7 +75,7 @@ namespace Azure.Communication.JobRouter
             options ??= new JobRouterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -93,7 +92,6 @@ namespace Azure.Communication.JobRouter
         private JobRouterAdministrationClient(string endpoint, TokenCredential tokenCredential, JobRouterClientOptions options)
             : this(new Uri(endpoint, UriKind.Absolute), options.BuildHttpPipeline(tokenCredential), options)
         {
-            _tokenCredential = tokenCredential;
         }
 
         private JobRouterAdministrationClient(string endpoint, AzureKeyCredential keyCredential, JobRouterClientOptions options)
@@ -137,10 +135,10 @@ namespace Azure.Communication.JobRouter
                         classificationPolicyId: options.ClassificationPolicyId,
                         content: request.ToRequestContent(),
                         requestConditions: options.RequestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(ClassificationPolicy.FromResponse(result), result);
+                return Response.FromValue((ClassificationPolicy)result, result);
             }
             catch (Exception ex)
             {
@@ -175,9 +173,9 @@ namespace Azure.Communication.JobRouter
                     classificationPolicyId: options.ClassificationPolicyId,
                     content: request.ToRequestContent(),
                     requestConditions: options.RequestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(ClassificationPolicy.FromResponse(result), result);
+                return Response.FromValue((ClassificationPolicy)result, result);
             }
             catch (Exception ex)
             {
@@ -203,10 +201,10 @@ namespace Azure.Communication.JobRouter
                         classificationPolicyId: classificationPolicy.Id,
                         content: classificationPolicy.ToRequestContent(),
                         requestConditions: requestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(ClassificationPolicy.FromResponse(response), response);
+                return Response.FromValue((ClassificationPolicy)response, response);
             }
             catch (Exception ex)
             {
@@ -232,9 +230,9 @@ namespace Azure.Communication.JobRouter
                     classificationPolicyId: classificationPolicy.Id,
                     content: classificationPolicy.ToRequestContent(),
                     requestConditions: requestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(ClassificationPolicy.FromResponse(response), response);
+                return Response.FromValue((ClassificationPolicy)response, response);
             }
             catch (Exception ex)
             {
@@ -274,7 +272,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertClassificationPolicyRequest(classificationPolicyId, content, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -314,7 +312,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertClassificationPolicyRequest(classificationPolicyId, content, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -327,20 +325,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<ClassificationPolicy> GetClassificationPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClassificationPolicy.DeserializeClassificationPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<ClassificationPolicy> GetClassificationPolicies(CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClassificationPolicy.DeserializeClassificationPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         /// <summary>
@@ -363,9 +355,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetClassificationPoliciesAsync(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResult(this, null, context, "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         /// <summary>
@@ -388,9 +378,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetClassificationPolicies(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResult(this, null, context, "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         #endregion ClassificationPolicy
@@ -418,10 +406,10 @@ namespace Azure.Communication.JobRouter
                         distributionPolicyId: options.DistributionPolicyId,
                         content: request.ToRequestContent(),
                         requestConditions: options.RequestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(DistributionPolicy.FromResponse(response), response);
+                return Response.FromValue((DistributionPolicy)response, response);
             }
             catch (Exception ex)
             {
@@ -451,9 +439,9 @@ namespace Azure.Communication.JobRouter
                     distributionPolicyId: options.DistributionPolicyId,
                     content: request.ToRequestContent(),
                     requestConditions: options.RequestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(DistributionPolicy.FromResponse(response), response);
+                return Response.FromValue((DistributionPolicy)response, response);
             }
             catch (Exception ex)
             {
@@ -479,10 +467,10 @@ namespace Azure.Communication.JobRouter
                         distributionPolicyId: distributionPolicy.Id,
                         content: distributionPolicy.ToRequestContent(),
                         requestConditions: requestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(DistributionPolicy.FromResponse(response), response);
+                return Response.FromValue((DistributionPolicy)response, response);
             }
             catch (Exception ex)
             {
@@ -508,9 +496,9 @@ namespace Azure.Communication.JobRouter
                     distributionPolicyId: distributionPolicy.Id,
                     content: distributionPolicy.ToRequestContent(),
                     requestConditions: requestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(DistributionPolicy.FromResponse(response), response);
+                return Response.FromValue((DistributionPolicy)response, response);
             }
             catch (Exception ex)
             {
@@ -550,7 +538,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertDistributionPolicyRequest(distributionPolicyId, content, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -590,7 +578,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertDistributionPolicyRequest(distributionPolicyId, content, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -603,20 +591,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<DistributionPolicy> GetDistributionPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DistributionPolicy.DeserializeDistributionPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<DistributionPolicy> GetDistributionPolicies(CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DistributionPolicy.DeserializeDistributionPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         /// <summary>
@@ -639,9 +621,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetDistributionPoliciesAsync(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResult(this, null, context, "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         /// <summary>
@@ -664,9 +644,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetDistributionPolicies(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResult(this, null, context, "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         #endregion DistributionPolicy
@@ -696,10 +674,10 @@ namespace Azure.Communication.JobRouter
                         exceptionPolicyId: options.ExceptionPolicyId,
                         content: request.ToRequestContent(),
                         requestConditions: options.RequestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
+                return Response.FromValue((ExceptionPolicy)response, response);
             }
             catch (Exception ex)
             {
@@ -731,9 +709,9 @@ namespace Azure.Communication.JobRouter
                     exceptionPolicyId: options.ExceptionPolicyId,
                     content: request.ToRequestContent(),
                     requestConditions: options.RequestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
+                return Response.FromValue((ExceptionPolicy)response, response);
             }
             catch (Exception ex)
             {
@@ -759,10 +737,10 @@ namespace Azure.Communication.JobRouter
                         exceptionPolicyId: exceptionPolicy.Id,
                         content: exceptionPolicy.ToRequestContent(),
                         requestConditions: requestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
+                return Response.FromValue((ExceptionPolicy)response, response);
             }
             catch (Exception ex)
             {
@@ -788,9 +766,9 @@ namespace Azure.Communication.JobRouter
                     exceptionPolicyId: exceptionPolicy.Id,
                     content: exceptionPolicy.ToRequestContent(),
                     requestConditions: requestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
+                return Response.FromValue((ExceptionPolicy)response, response);
             }
             catch (Exception ex)
             {
@@ -830,7 +808,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertExceptionPolicyRequest(exceptionPolicyId, content, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -870,7 +848,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertExceptionPolicyRequest(exceptionPolicyId, content, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -883,20 +861,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<ExceptionPolicy> GetExceptionPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ExceptionPolicy.DeserializeExceptionPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<ExceptionPolicy> GetExceptionPolicies(CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ExceptionPolicy.DeserializeExceptionPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         /// <summary>
@@ -919,9 +891,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetExceptionPoliciesAsync(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResult(this, null, context, "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         /// <summary>
@@ -944,9 +914,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetExceptionPolicies(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResult(this, null, context, "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         #endregion ExceptionPolicy
@@ -981,10 +949,10 @@ namespace Azure.Communication.JobRouter
                         queueId: options.QueueId,
                         content: request.ToRequestContent(),
                         requestConditions: options.RequestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(RouterQueue.FromResponse(response), response);
+                return Response.FromValue((RouterQueue)response, response);
             }
             catch (Exception ex)
             {
@@ -1021,9 +989,9 @@ namespace Azure.Communication.JobRouter
                     queueId: options.QueueId,
                     content: request.ToRequestContent(),
                     requestConditions: options.RequestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(RouterQueue.FromResponse(response), response);
+                return Response.FromValue((RouterQueue)response, response);
             }
             catch (Exception ex)
             {
@@ -1050,10 +1018,10 @@ namespace Azure.Communication.JobRouter
                         queueId: queue.Id,
                         content: queue.ToRequestContent(),
                         requestConditions: requestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(RouterQueue.FromResponse(response), response);
+                return Response.FromValue((RouterQueue)response, response);
             }
             catch (Exception ex)
             {
@@ -1079,9 +1047,9 @@ namespace Azure.Communication.JobRouter
                     queueId: queue.Id,
                     content: queue.ToRequestContent(),
                     requestConditions: requestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(RouterQueue.FromResponse(response), response);
+                return Response.FromValue((RouterQueue)response, response);
             }
             catch (Exception ex)
             {
@@ -1121,7 +1089,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertQueueRequest(queueId, content, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1161,7 +1129,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertQueueRequest(queueId, content, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1174,20 +1142,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<RouterQueue> GetQueuesAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RouterQueue.DeserializeRouterQueue(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetQueuesAsyncCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetQueues");
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<RouterQueue> GetQueues(CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RouterQueue.DeserializeRouterQueue(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetQueuesCollectionResultOfT(this, null, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetQueues");
         }
 
         /// <summary>
@@ -1210,9 +1172,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetQueuesAsync(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetQueuesAsyncCollectionResult(this, null, context, "JobRouterAdministrationClient.GetQueues");
         }
 
         /// <summary>
@@ -1235,9 +1195,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetQueues(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
+            return new JobRouterAdministrationClientGetQueuesCollectionResult(this, null, context, "JobRouterAdministrationClient.GetQueues");
         }
 
         #endregion Queue
@@ -1253,7 +1211,7 @@ namespace Azure.Communication.JobRouter
             options ??= new JobRouterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = pipeline;
+            Pipeline = pipeline;
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -1263,7 +1221,7 @@ namespace Azure.Communication.JobRouter
         internal HttpMessage CreateGetExceptionPoliciesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1280,7 +1238,7 @@ namespace Azure.Communication.JobRouter
         internal HttpMessage CreateGetClassificationPoliciesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1297,7 +1255,7 @@ namespace Azure.Communication.JobRouter
         internal HttpMessage CreateGetQueuesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1314,7 +1272,7 @@ namespace Azure.Communication.JobRouter
         internal HttpMessage CreateGetDistributionPoliciesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

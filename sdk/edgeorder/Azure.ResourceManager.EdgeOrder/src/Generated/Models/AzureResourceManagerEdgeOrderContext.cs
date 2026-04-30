@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransportPreferences))]
     [ModelReaderWriterBuildable(typeof(UnknownMeterDetails))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerEdgeOrderContext : ModelReaderWriterContext
     {
     }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         private readonly string _value;
         private const string AzureKeyVaultSmbValue = "AzureKeyVaultSmb";
+        private const string AzureKeyVaultS3WithHMACValue = "AzureKeyVaultS3WithHMAC";
 
         /// <summary> Initializes a new instance of <see cref="CredentialType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,6 +30,9 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Gets the AzureKeyVaultSmb. </summary>
         public static CredentialType AzureKeyVaultSmb { get; } = new CredentialType(AzureKeyVaultSmbValue);
+
+        /// <summary> Gets the AzureKeyVaultS3WithHMAC. </summary>
+        public static CredentialType AzureKeyVaultS3WithHMAC { get; } = new CredentialType(AzureKeyVaultS3WithHMACValue);
 
         /// <summary> Determines if two <see cref="CredentialType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -15,6 +15,46 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the exported assets for a custom text sentiment project. </summary>
     public partial class CustomTextSentimentProjectAssets : TextAuthoringExportedProjectAsset, IJsonModel<CustomTextSentimentProjectAssets>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TextAuthoringExportedProjectAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomTextSentimentProjectAssets>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomTextSentimentProjectAssets(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomTextSentimentProjectAssets)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomTextSentimentProjectAssets>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomTextSentimentProjectAssets)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomTextSentimentProjectAssets>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomTextSentimentProjectAssets IPersistableModel<CustomTextSentimentProjectAssets>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomTextSentimentProjectAssets)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomTextSentimentProjectAssets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomTextSentimentProjectAssets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -102,45 +142,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new CustomTextSentimentProjectAssets(projectKind, additionalBinaryDataProperties, documents ?? new ChangeTrackingList<ExportedCustomTextSentimentDocument>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomTextSentimentProjectAssets>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomTextSentimentProjectAssets>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CustomTextSentimentProjectAssets)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CustomTextSentimentProjectAssets IPersistableModel<CustomTextSentimentProjectAssets>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomTextSentimentProjectAssets)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TextAuthoringExportedProjectAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomTextSentimentProjectAssets>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCustomTextSentimentProjectAssets(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomTextSentimentProjectAssets)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomTextSentimentProjectAssets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

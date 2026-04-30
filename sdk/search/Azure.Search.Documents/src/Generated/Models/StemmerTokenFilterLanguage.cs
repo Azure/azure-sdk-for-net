@@ -84,11 +84,11 @@ namespace Azure.Search.Documents.Indexes.Models
         Sorani,
         /// <summary> Selects the Lucene stemming tokenizer for Latvian. </summary>
         Latvian,
-        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Bokmål). </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l). </summary>
         Norwegian,
-        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Bokmål) that does light stemming. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l) that does light stemming. </summary>
         LightNorwegian,
-        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Bokmål) that does minimal stemming. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l) that does minimal stemming. </summary>
         MinimalNorwegian,
         /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does light stemming. </summary>
         LightNynorsk,

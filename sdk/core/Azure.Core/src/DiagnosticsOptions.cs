@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
 
@@ -15,9 +14,9 @@ namespace Azure.Core
     /// </summary>
     public class DiagnosticsOptions
     {
-        private const int MaxApplicationIdLength = 24;
-
         private string? _applicationId;
+        private int _maxApplicationIdLength = DefaultMaxApplicationIdLength;
+        private const int DefaultMaxApplicationIdLength = 24;
 
         /// <summary>
         /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
@@ -50,31 +49,31 @@ namespace Azure.Core
             {
                 IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             }
-            IConfigurationSection loggedHeaderSection = section.GetSection("LoggedHeaderNames");
+            IConfigurationSection loggedHeaderSection = section.GetSection("AdditionalLoggedHeaderNames");
+            LoggedHeaderNames = GetDefaultLoggedHeaders();
             if (loggedHeaderSection.Exists())
             {
-                LoggedHeaderNames = loggedHeaderSection
-                    .GetChildren()
-                    .Where(c => c.Value is not null)
-                    .Select(c => c.Value!)
-                    .ToList();
+                HashSet<string> existing = new(LoggedHeaderNames, StringComparer.OrdinalIgnoreCase);
+                foreach (IConfigurationSection child in loggedHeaderSection.GetChildren())
+                {
+                    if (child.Value is not null && existing.Add(child.Value))
+                    {
+                        LoggedHeaderNames.Add(child.Value);
+                    }
+                }
             }
-            else
-            {
-                LoggedHeaderNames = GetDefaultLoggedHeaders();
-            }
-            IConfigurationSection loggedQueryParametersSection = section.GetSection("LoggedQueryParameters");
+            IConfigurationSection loggedQueryParametersSection = section.GetSection("AdditionalLoggedQueryParameters");
+            LoggedQueryParameters = new List<string> { "api-version" };
             if (loggedQueryParametersSection.Exists())
             {
-                LoggedQueryParameters = loggedQueryParametersSection
-                    .GetChildren()
-                    .Where(c => c.Value is not null)
-                    .Select(c => c.Value!)
-                    .ToList();
-            }
-            else
-            {
-                LoggedQueryParameters = new List<string> { "api-version" };
+                HashSet<string> existing = new(LoggedQueryParameters, StringComparer.OrdinalIgnoreCase);
+                foreach (IConfigurationSection child in loggedQueryParametersSection.GetChildren())
+                {
+                    if (child.Value is not null && existing.Add(child.Value))
+                    {
+                        LoggedQueryParameters.Add(child.Value);
+                    }
+                }
             }
             if (int.TryParse(section["LoggedContentSizeLimit"], out var loggedContentSizeLimit))
             {
@@ -102,6 +101,7 @@ namespace Azure.Core
         {
             if (diagnosticsOptions != null)
             {
+                _maxApplicationIdLength = diagnosticsOptions.MaxApplicationIdLength;
                 ApplicationId = diagnosticsOptions.ApplicationId;
                 IsLoggingEnabled = diagnosticsOptions.IsLoggingEnabled;
                 IsTelemetryEnabled = diagnosticsOptions.IsTelemetryEnabled;
@@ -198,19 +198,36 @@ namespace Azure.Core
         public IList<string> LoggedQueryParameters { get; internal set; }
 
         /// <summary>
+        /// Gets or sets the maximum allowed length for <see cref="ApplicationId"/>.
+        /// </summary>
+        /// <remarks>
+        /// The default value is 24 characters. This can be increased to accommodate longer
+        /// application identifiers. Values less than 24 are not permitted.
+        /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the value is less than 24.</exception>
+        internal int MaxApplicationIdLength
+        {
+            get => _maxApplicationIdLength;
+            set
+            {
+                if (value < DefaultMaxApplicationIdLength)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, $"{nameof(MaxApplicationIdLength)} must be at least {DefaultMaxApplicationIdLength}.");
+                }
+                _maxApplicationIdLength = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the value sent as the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
         /// </summary>
+        /// <remarks>
+        /// The length of <see cref="ApplicationId"/> is validated against <see cref="MaxApplicationIdLength"/> when the HTTP pipeline is built.
+        /// </remarks>
         public string? ApplicationId
         {
             get => _applicationId;
-            set
-            {
-                if (value != null && value.Length > MaxApplicationIdLength)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ApplicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
-                }
-                _applicationId = value;
-            }
+            set => _applicationId = value;
         }
 
         /// <summary>

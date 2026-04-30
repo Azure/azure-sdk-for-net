@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Describes the properties of an existing private endpoint connection to the search service. </summary>
     public partial class SearchServicePrivateEndpointConnectionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchServicePrivateEndpointConnectionProperties"/>. </summary>
         public SearchServicePrivateEndpointConnectionProperties()
@@ -57,39 +28,48 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="connectionState"> Describes the current state of an existing Azure Private Link service connection to the private endpoint. </param>
         /// <param name="groupId"> The group ID of the Azure resource for which the private link service is for. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service connection. Valid values are Updating, Deleting, Failed, Succeeded, Incomplete, or Canceled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServicePrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, SearchServicePrivateLinkServiceConnectionState connectionState, string groupId, SearchPrivateLinkServiceConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServicePrivateEndpointConnectionProperties(PrivateEndpointConnectionPropertiesPrivateEndpoint privateEndpoint, SearchServicePrivateLinkServiceConnectionState connectionState, string groupId, SearchPrivateLinkServiceConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             GroupId = groupId;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The private endpoint resource from Microsoft.Network provider. </summary>
-        internal WritableSubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("privateEndpoint.id")]
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-            set
-            {
-                if (PrivateEndpoint is null)
-                    PrivateEndpoint = new WritableSubResource();
-                PrivateEndpoint.Id = value;
-            }
-        }
+        [WirePath("privateEndpoint")]
+        internal PrivateEndpointConnectionPropertiesPrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> Describes the current state of an existing Azure Private Link service connection to the private endpoint. </summary>
         [WirePath("privateLinkServiceConnectionState")]
         public SearchServicePrivateLinkServiceConnectionState ConnectionState { get; set; }
+
         /// <summary> The group ID of the Azure resource for which the private link service is for. </summary>
         [WirePath("groupId")]
         public string GroupId { get; set; }
+
         /// <summary> The provisioning state of the private link service connection. Valid values are Updating, Deleting, Failed, Succeeded, Incomplete, or Canceled. </summary>
         [WirePath("provisioningState")]
         public SearchPrivateLinkServiceConnectionProvisioningState? ProvisioningState { get; set; }
+
+        /// <summary> The resource ID of the private endpoint resource from Microsoft.Network provider. </summary>
+        [WirePath("privateEndpoint.id")]
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get
+            {
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            }
+            set
+            {
+                if (PrivateEndpoint is null)
+                {
+                    PrivateEndpoint = new PrivateEndpointConnectionPropertiesPrivateEndpoint();
+                }
+                PrivateEndpoint.Id = value;
+            }
+        }
     }
 }

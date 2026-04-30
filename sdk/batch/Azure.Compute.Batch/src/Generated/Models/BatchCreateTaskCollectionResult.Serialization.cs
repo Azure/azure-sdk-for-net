@@ -16,6 +16,53 @@ namespace Azure.Compute.Batch
     /// <summary> The result of creating a collection of Tasks to a Job. </summary>
     public partial class BatchCreateTaskCollectionResult : IJsonModel<BatchCreateTaskCollectionResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchCreateTaskCollectionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchCreateTaskCollectionResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchCreateTaskCollectionResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchCreateTaskCollectionResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchCreateTaskCollectionResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BatchCreateTaskCollectionResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchCreateTaskCollectionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchCreateTaskCollectionResult IPersistableModel<BatchCreateTaskCollectionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchCreateTaskCollectionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchCreateTaskCollectionResult"/> from. </param>
+        public static explicit operator BatchCreateTaskCollectionResult(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBatchCreateTaskCollectionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchCreateTaskCollectionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -34,11 +81,11 @@ namespace Azure.Compute.Batch
             {
                 throw new FormatException($"The model {nameof(BatchCreateTaskCollectionResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (BatchTaskCreateResult item in Values)
+                foreach (BatchTaskCreateResult item in Results)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -86,7 +133,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<BatchTaskCreateResult> values = default;
+            IList<BatchTaskCreateResult> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -101,7 +148,7 @@ namespace Azure.Compute.Batch
                     {
                         array.Add(BatchTaskCreateResult.DeserializeBatchTaskCreateResult(item, options));
                     }
-                    values = array;
+                    results = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -109,54 +156,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchCreateTaskCollectionResult(values ?? new ChangeTrackingList<BatchTaskCreateResult>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchCreateTaskCollectionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchCreateTaskCollectionResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BatchCreateTaskCollectionResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchCreateTaskCollectionResult IPersistableModel<BatchCreateTaskCollectionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchCreateTaskCollectionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchCreateTaskCollectionResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchCreateTaskCollectionResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchCreateTaskCollectionResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchCreateTaskCollectionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchCreateTaskCollectionResult"/> from. </param>
-        public static explicit operator BatchCreateTaskCollectionResult(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchCreateTaskCollectionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BatchCreateTaskCollectionResult(results ?? new ChangeTrackingList<BatchTaskCreateResult>(), additionalBinaryDataProperties);
         }
     }
 }

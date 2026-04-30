@@ -21,6 +21,46 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OfferDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOfferDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OfferDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OfferDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OfferDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OfferDetails IPersistableModel<OfferDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OfferDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OfferDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -43,8 +83,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             writer.WriteStringValue(PublisherId);
             writer.WritePropertyName("offerId"u8);
             writer.WriteStringValue(OfferId);
-            writer.WritePropertyName("planId"u8);
-            writer.WriteStringValue(PlanId);
+            if (Optional.IsDefined(PlanId))
+            {
+                writer.WritePropertyName("planId"u8);
+                writer.WriteStringValue(PlanId);
+            }
             if (Optional.IsDefined(PlanName))
             {
                 writer.WritePropertyName("planName"u8);
@@ -59,16 +102,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 writer.WritePropertyName("termId"u8);
                 writer.WriteStringValue(TermId);
-            }
-            if (Optional.IsDefined(RenewalMode))
-            {
-                writer.WritePropertyName("renewalMode"u8);
-                writer.WriteStringValue(RenewalMode.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -118,8 +151,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             string planName = default;
             string termUnit = default;
             string termId = default;
-            RenewalMode? renewalMode = default;
-            DateTimeOffset? endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,24 +184,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     termId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("renewalMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    renewalMode = new RenewalMode(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("endDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    endOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -183,49 +196,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 planName,
                 termUnit,
                 termId,
-                renewalMode,
-                endOn,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OfferDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(OfferDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OfferDetails IPersistableModel<OfferDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OfferDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOfferDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OfferDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OfferDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

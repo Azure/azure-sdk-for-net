@@ -14,13 +14,15 @@ namespace Azure.AI.Projects
     /// </summary>
     internal class ClientConnectionCacheManager
     {
+        private readonly ClientPipeline _pipeline;
         private readonly AuthenticationTokenProvider _tokenProvider;
         private readonly Uri _endpoint;
         private readonly ConcurrentDictionary<ConnectionType, Uri> _connectionCache = new();
         private readonly ConcurrentDictionary<string, ClientConnection> _connections = new();
 
-        public ClientConnectionCacheManager(Uri endpoint, AuthenticationTokenProvider tokenProvider)
+        public ClientConnectionCacheManager(Uri endpoint, ClientPipeline pipeline, AuthenticationTokenProvider tokenProvider)
         {
+            _pipeline = pipeline;
             _endpoint = endpoint;
             _tokenProvider = tokenProvider;
         }
@@ -43,8 +45,24 @@ namespace Azure.AI.Projects
                 throw new ArgumentException($"The AAD authentication target URI is missing or invalid for {connectionId}.");
             }
 
-            var newConnection = new ClientConnection(connectionId, _endpoint.AbsoluteUri, _tokenProvider, CredentialKind.TokenCredential);
-            return _connections.GetOrAdd(connectionId, newConnection);
+            ClientConnection? newConnection = null;
+
+            if (connectionType == "DirectPipelinePassthrough")
+            {
+                // Allow pipeline smuggling for responses/conversation paths.
+                newConnection = new(connectionId, _endpoint.AbsoluteUri.TrimEnd('/') + "/openai/v1", _pipeline, CredentialKind.None);
+            }
+            else if (connectionType == "AgentsPipelinePassthrough")
+            {
+                // Allow pipeline smuggling for agent path.
+                newConnection = new(connectionId, _endpoint.AbsoluteUri, _pipeline, CredentialKind.None);
+            }
+            else
+            {
+                newConnection = new(connectionId, _endpoint.AbsoluteUri, _tokenProvider, CredentialKind.TokenCredential);
+            }
+
+            return _connections.GetOrAdd(connectionId, newConnection.Value);
         }
 
         /// <summary>
@@ -77,6 +95,11 @@ namespace Azure.AI.Projects
                 case "Azure.AI.Inference.EmbeddingsClient":
                 case "Azure.AI.Inference.ImageEmbeddingsClient":
                     return new ConnectionType("Inference");
+
+                case "Internal.DirectPipelinePassthrough":
+                    return new("DirectPipelinePassthrough");
+                case "Internal.AgentsPipelinePassthrough":
+                    return new("AgentsPipelinePassthrough");
 
                 default:
                     throw new ArgumentException($"Unknown connection type for ID: {connectionId}");

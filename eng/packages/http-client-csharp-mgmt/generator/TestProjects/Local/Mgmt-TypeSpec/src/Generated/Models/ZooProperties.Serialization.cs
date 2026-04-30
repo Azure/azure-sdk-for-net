@@ -18,6 +18,51 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     [JsonConverter(typeof(ZooPropertiesConverter))]
     public partial class ZooProperties : IJsonModel<ZooProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="ZooProperties"/> for deserialization. </summary>
+        internal ZooProperties()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ZooProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ZooProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeZooProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ZooProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ZooProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ZooProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ZooProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ZooProperties IPersistableModel<ZooProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ZooProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ZooProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -41,6 +86,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("something"u8);
                 writer.WriteStringValue(Something);
             }
+            writer.WritePropertyName("requiredInt"u8);
+            writer.WriteNumberValue(RequiredInt);
+            writer.WritePropertyName("requiredFixedEnum"u8);
+            writer.WriteStringValue(RequiredFixedEnum.ToSerialString());
+            writer.WritePropertyName("requiredExtensibleEnum"u8);
+            writer.WriteStringValue(RequiredExtensibleEnum.ToString());
+            writer.WritePropertyName("requiredString"u8);
+            writer.WriteStringValue(RequiredString);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -84,6 +137,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             string something = default;
+            int requiredInt = default;
+            ZooFixedMode requiredFixedEnum = default;
+            ZooProvisioningState requiredExtensibleEnum = default;
+            string requiredString = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -92,53 +149,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     something = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("requiredInt"u8))
+                {
+                    requiredInt = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("requiredFixedEnum"u8))
+                {
+                    requiredFixedEnum = prop.Value.GetString().ToZooFixedMode();
+                    continue;
+                }
+                if (prop.NameEquals("requiredExtensibleEnum"u8))
+                {
+                    requiredExtensibleEnum = new ZooProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("requiredString"u8))
+                {
+                    requiredString = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ZooProperties(something, additionalBinaryDataProperties);
+            return new ZooProperties(
+                something,
+                requiredInt,
+                requiredFixedEnum,
+                requiredExtensibleEnum,
+                requiredString,
+                additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ZooProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ZooProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ZooProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ZooProperties IPersistableModel<ZooProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ZooProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ZooProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeZooProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ZooProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ZooProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ZooPropertiesConverter : JsonConverter<ZooProperties>
         {

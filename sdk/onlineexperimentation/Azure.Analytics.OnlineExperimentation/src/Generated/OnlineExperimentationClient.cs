@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,8 +19,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class OnlineExperimentationClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://exp.azure.net/.default" };
         private readonly string _apiVersion;
 
@@ -37,22 +36,42 @@ namespace Azure.Analytics.OnlineExperimentation
         }
 
         /// <summary> Initializes a new instance of OnlineExperimentationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OnlineExperimentationClient(Uri endpoint, TokenCredential credential, OnlineExperimentationClientOptions options)
+        internal OnlineExperimentationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, OnlineExperimentationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new OnlineExperimentationClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of OnlineExperimentationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public OnlineExperimentationClient(Uri endpoint, TokenCredential credential, OnlineExperimentationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of OnlineExperimentationClient from a <see cref="OnlineExperimentationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for OnlineExperimentationClient. </param>
+        [Experimental("SCME0002")]
+        public OnlineExperimentationClient(OnlineExperimentationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -419,13 +438,19 @@ namespace Azure.Analytics.OnlineExperimentation
         /// </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetMetrics(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetMetrics(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new OnlineExperimentationClientGetMetricsCollectionResult(this, maxCount, skip, maxpagesize, context);
+            return new OnlineExperimentationClientGetMetricsCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                context,
+                "OnlineExperimentationClient.GetMetrics");
         }
 
         /// <summary>
@@ -438,35 +463,53 @@ namespace Azure.Analytics.OnlineExperimentation
         /// </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new OnlineExperimentationClientGetMetricsAsyncCollectionResult(this, maxCount, skip, maxpagesize, context);
+            return new OnlineExperimentationClientGetMetricsAsyncCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                context,
+                "OnlineExperimentationClient.GetMetrics");
         }
 
         /// <summary> Lists experiment metrics. </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ExperimentMetric> GetMetrics(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ExperimentMetric> GetMetrics(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new OnlineExperimentationClientGetMetricsCollectionResultOfT(this, maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new OnlineExperimentationClientGetMetricsCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "OnlineExperimentationClient.GetMetrics");
         }
 
         /// <summary> Lists experiment metrics. </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ExperimentMetric> GetMetricsAsync(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ExperimentMetric> GetMetricsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new OnlineExperimentationClientGetMetricsAsyncCollectionResultOfT(this, maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new OnlineExperimentationClientGetMetricsAsyncCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "OnlineExperimentationClient.GetMetrics");
         }
     }
 }

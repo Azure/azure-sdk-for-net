@@ -1,0 +1,20 @@
+id: pipeline-basic-001
+name: Analyze Pipeline Build Failure
+description: |
+  Test that the skill analyzes a failing pipeline and provides
+  actionable diagnosis.
+tags:
+  - basic
+  - happy-path
+inputs:
+  prompt: "My SDK generation pipeline failed for the Python language. The pipeline URL is https://dev.azure.com/azure-sdk/internal/_build/results?buildId=12345. Can you help me figure out what went wrong?"
+expected:
+  output_contains:
+    - "pipeline"
+    - "Python"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_analyze_pipeline
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

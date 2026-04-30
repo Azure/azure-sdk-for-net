@@ -3,27 +3,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.NetApp.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using NUnit.Framework;
-using Azure.Core;
+using Azure.ResourceManager.Resources;
 using FluentAssertions;
-using Polly.Contrib.WaitAndRetry;
+using NUnit.Framework;
 using Polly;
-using System.Net;
+using Polly.Contrib.WaitAndRetry;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
     public class VolumeTests : NetAppTestBase
     {
         private string _pool1Name = "pool1";
-        private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts();}
+        private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
 
         public VolumeTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -636,22 +636,42 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(400, exception.Status);
         }
 
-        // TODO in preview, enable when GA
-        //[Ignore("Ignore for now due to CI pipeline issue.")]
-        //[RecordedTest]
-        //public async Task ListQuotaReport()
-        //{
-        //    //create volume
-        //    string volumeName = Recording.GenerateAssetName("volumeName-");
-        //    NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
-        //    //Check filePathAvailability, should be unavailable after volume creation
-        //    NetAppVolumeResource netAppVolume = Client.GetNetAppVolumeResource(volumeResource1.Id);
-        //    // invoke the operation
-        //    ArmOperation<NetAppVolumeQuotaReportListResult> lro = await netAppVolume.GetQuotaReportAsync(WaitUntil.Completed);
-        //    NetAppVolumeQuotaReportListResult result = lro.Value;
-        //    result.Should().NotBeNull();
-        //    result.Value.Should().BeEmpty();
-        //}
+        [RecordedTest]
+        public async Task ListQuotaReport()
+        {
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            NetAppVolumeResource volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
+
+            ArmOperation<ListQuotaReportResult> operation = await volumeResource.GetQuotaReportAsync(WaitUntil.Completed);
+            ListQuotaReportResult result = operation.Value;
+
+            result.Should().NotBeNull();
+            result.QuotaReportRecords.Should().NotBeNull();
+            if (result.QuotaReportRecords.Count > 0)
+            {
+                result.QuotaReportRecords[0].QuotaType.Should().NotBeNull();
+                result.QuotaReportRecords[0].QuotaTarget.Should().NotBeNullOrWhiteSpace();
+                result.QuotaReportRecords[0].QuotaLimitUsedInKiBs.Should().NotBeNull();
+                result.QuotaReportRecords[0].QuotaLimitTotalInKiBs.Should().NotBeNull();
+            }
+        }
+
+        [RecordedTest]
+        public async Task ListRansomwareReports()
+        {
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            NetAppVolumeResource volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
+
+            RansomwareReportCollection ransomwareReports = volumeResource.GetRansomwareReports();
+            List<RansomwareReportResource> results = await ransomwareReports.GetAllAsync().ToListAsync();
+
+            results.Should().NotBeNull();
+            if (results.Count > 0)
+            {
+                results[0].Id.Should().NotBeNull();
+                results[0].Data.Should().NotBeNull();
+            }
+        }
 
         private async Task WaitForReplicationStatus(NetAppVolumeResource volumeResource, NetAppMirrorState mirrorState)
         {
@@ -702,7 +722,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 try
                 {
-                    replicationStatus =     await volumeResource.GetReplicationStatusAsync();
+                    replicationStatus = await volumeResource.GetReplicationStatusAsync();
                     attempts++;
                 }
                 catch (RequestFailedException ex)

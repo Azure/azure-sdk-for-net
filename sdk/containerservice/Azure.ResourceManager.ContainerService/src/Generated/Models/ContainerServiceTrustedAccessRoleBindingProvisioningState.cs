@@ -7,72 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The current provisioning state of trusted access role binding.
-    /// Serialized Name: TrustedAccessRoleBindingProvisioningState
-    /// </summary>
+    /// <summary> The current provisioning state of trusted access role binding. </summary>
     public readonly partial struct ContainerServiceTrustedAccessRoleBindingProvisioningState : IEquatable<ContainerServiceTrustedAccessRoleBindingProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Trusted access role binding provisioning was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Trusted access role binding is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Trusted access role binding provisioning failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Trusted access role binding provisioning succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Trusted access role binding is being updated. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleBindingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceTrustedAccessRoleBindingProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CanceledValue = "Canceled";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string UpdatingValue = "Updating";
-
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: TrustedAccessRoleBindingProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Trusted access role binding provisioning was canceled. </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Canceled { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(CanceledValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: TrustedAccessRoleBindingProvisioningState.Deleting
-        /// </summary>
+
+        /// <summary> Trusted access role binding is being deleted. </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Deleting { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: TrustedAccessRoleBindingProvisioningState.Failed
-        /// </summary>
+
+        /// <summary> Trusted access role binding provisioning failed. </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Failed { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(FailedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: TrustedAccessRoleBindingProvisioningState.Succeeded
-        /// </summary>
+
+        /// <summary> Trusted access role binding provisioning succeeded. </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Succeeded { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(SucceededValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: TrustedAccessRoleBindingProvisioningState.Updating
-        /// </summary>
+
+        /// <summary> Trusted access role binding is being updated. </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Updating { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceTrustedAccessRoleBindingProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceTrustedAccessRoleBindingProvisioningState left, ContainerServiceTrustedAccessRoleBindingProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceTrustedAccessRoleBindingProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceTrustedAccessRoleBindingProvisioningState left, ContainerServiceTrustedAccessRoleBindingProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceTrustedAccessRoleBindingProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceTrustedAccessRoleBindingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceTrustedAccessRoleBindingProvisioningState(string value) => new ContainerServiceTrustedAccessRoleBindingProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceTrustedAccessRoleBindingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceTrustedAccessRoleBindingProvisioningState?(string value) => value == null ? null : new ContainerServiceTrustedAccessRoleBindingProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceTrustedAccessRoleBindingProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceTrustedAccessRoleBindingProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

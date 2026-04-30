@@ -1,15 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
-using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -21,26 +21,27 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri sampleEndpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
-            var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             // Set project name and create client for the project
             string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
-
             // Define assigned resource ID to be unassigned
-            var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
+            var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
             {
-                AzureResourceIds =
+                AssignedResourceIds =
                 {
                     "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
                 }
             };
 
             // Start the operation
-            Operation sampleOperation = sampleProjectClient.UnassignProjectResources(
-                waitUntil: WaitUntil.Started,
-                details: sampleUnassignIds
+            Operation sampleOperation = projectClient.UnassignProjectResources(
+                WaitUntil.Started,
+                sampleProjectName,
+                sampleUnassignIds
             );
 
             Console.WriteLine($"UnassignProjectResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
@@ -64,26 +65,27 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri sampleEndpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
-            var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             // Set project name and create client for the project
             string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
-
             // Define assigned resource ID to be unassigned
-            var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
+            var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
             {
-                AzureResourceIds =
+                AssignedResourceIds =
                 {
                     "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
                 }
             };
 
             // Call the operation
-            Operation sampleOperation = await sampleProjectClient.UnassignProjectResourcesAsync(
-                waitUntil: WaitUntil.Started,
-                details: sampleUnassignIds
+            Operation sampleOperation = await projectClient.UnassignProjectResourcesAsync(
+                WaitUntil.Started,
+                sampleProjectName,
+                sampleUnassignIds
             );
 
             Console.WriteLine($"UnassignProjectResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");

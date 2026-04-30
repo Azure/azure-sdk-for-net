@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,11 +19,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
@@ -40,22 +37,42 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringAuthoringClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringAuthoringClientOptions options)
+        internal QuestionAnsweringAuthoringClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, QuestionAnsweringAuthoringClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new QuestionAnsweringAuthoringClientOptions();
 
             _endpoint = endpoint;
-            _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public QuestionAnsweringAuthoringClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringAuthoringClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient from a <see cref="QuestionAnsweringAuthoringClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for QuestionAnsweringAuthoringClient. </param>
+        [Experimental("SCME0002")]
+        public QuestionAnsweringAuthoringClient(QuestionAnsweringAuthoringClientSettings settings) : this(settings?.Endpoint, string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredential(settings.Credential.Key) : null, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -80,7 +97,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResult(this, maxCount, skip, maxpagesize, context);
+            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxpagesize,
+                context,
+                "QuestionAnsweringAuthoringClient.GetProjects");
         }
 
         /// <summary>
@@ -99,7 +122,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResult(this, maxCount, skip, maxpagesize, context);
+            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxpagesize,
+                context,
+                "QuestionAnsweringAuthoringClient.GetProjects");
         }
 
         /// <summary> Gets all projects for a user. </summary>
@@ -110,7 +139,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<QuestionAnsweringProject> GetProjects(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResultOfT(this, maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxpagesize,
+                cancellationToken.ToRequestContext(),
+                "QuestionAnsweringAuthoringClient.GetProjects");
         }
 
         /// <summary> Gets all projects for a user. </summary>
@@ -121,7 +156,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<QuestionAnsweringProject> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT(this, maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxpagesize,
+                cancellationToken.ToRequestContext(),
+                "QuestionAnsweringAuthoringClient.GetProjects");
         }
 
         /// <summary>
@@ -706,15 +747,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="body"> Project assets the needs to be imported. </param>
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
-        /// <param name="contentType"> Body parameter's content type. Known values are application/json. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation Import(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, ImportContentType? contentType = default, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return Import(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), contentType?.ToString(), cancellationToken.ToRequestContext());
+            return Import(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Import project assets. </summary>
@@ -723,15 +763,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="body"> Project assets the needs to be imported. </param>
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
-        /// <param name="contentType"> Body parameter's content type. Known values are application/json. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, ImportContentType? contentType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return await ImportAsync(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), contentType?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ImportAsync(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Import project assets from file. </summary>
@@ -1111,7 +1150,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context);
+                context,
+                "QuestionAnsweringAuthoringClient.GetDeployments");
         }
 
         /// <summary>
@@ -1141,7 +1181,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context);
+                context,
+                "QuestionAnsweringAuthoringClient.GetDeployments");
         }
 
         /// <summary> List all deployments of a project. </summary>
@@ -1163,7 +1204,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "QuestionAnsweringAuthoringClient.GetDeployments");
         }
 
         /// <summary> List all deployments of a project. </summary>
@@ -1185,7 +1227,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "QuestionAnsweringAuthoringClient.GetDeployments");
         }
 
         /// <summary>
@@ -1215,7 +1258,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context);
+                context,
+                "QuestionAnsweringAuthoringClient.GetSynonyms");
         }
 
         /// <summary>
@@ -1245,7 +1289,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context);
+                context,
+                "QuestionAnsweringAuthoringClient.GetSynonyms");
         }
 
         /// <summary> Gets all the synonyms of a project. </summary>
@@ -1267,7 +1312,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "QuestionAnsweringAuthoringClient.GetSynonyms");
         }
 
         /// <summary> Gets all the synonyms of a project. </summary>
@@ -1289,7 +1335,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "QuestionAnsweringAuthoringClient.GetSynonyms");
         }
 
         /// <summary>
@@ -1417,7 +1464,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context);
+                context,
+                "QuestionAnsweringAuthoringClient.GetSources");
         }
 
         /// <summary>
@@ -1447,7 +1495,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context);
+                context,
+                "QuestionAnsweringAuthoringClient.GetSources");
         }
 
         /// <summary> Gets all the sources of a project. </summary>
@@ -1469,7 +1518,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "QuestionAnsweringAuthoringClient.GetSources");
         }
 
         /// <summary> Gets all the sources of a project. </summary>
@@ -1491,7 +1541,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "QuestionAnsweringAuthoringClient.GetSources");
         }
 
         /// <summary> Updates the sources of a project. </summary>
@@ -1733,7 +1784,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 skip,
                 maxpagesize,
                 source,
-                context);
+                context,
+                "QuestionAnsweringAuthoringClient.GetQnas");
         }
 
         /// <summary>
@@ -1765,7 +1817,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 skip,
                 maxpagesize,
                 source,
-                context);
+                context,
+                "QuestionAnsweringAuthoringClient.GetQnas");
         }
 
         /// <summary> Gets all the QnAs of a project. </summary>
@@ -1789,7 +1842,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 skip,
                 maxpagesize,
                 source,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "QuestionAnsweringAuthoringClient.GetQnas");
         }
 
         /// <summary> Gets all the QnAs of a project. </summary>
@@ -1813,7 +1867,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 skip,
                 maxpagesize,
                 source,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "QuestionAnsweringAuthoringClient.GetQnas");
         }
 
         /// <summary> Updates the QnAs of a project. </summary>

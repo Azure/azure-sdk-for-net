@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace _Type.Property.Optional
@@ -14,7 +15,12 @@ namespace _Type.Property.Optional
     {
         public OptionalClient() : this(new Uri("http://localhost:3000"), new OptionalClientOptions()) => throw null;
 
-        public OptionalClient(Uri endpoint, OptionalClientOptions options) => throw null;
+        internal OptionalClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, OptionalClientOptions options) => throw null;
+
+        public OptionalClient(Uri endpoint, OptionalClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public OptionalClient(OptionalClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

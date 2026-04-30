@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -234,7 +234,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(piiTaskResult);
             Assert.IsNotNull(piiTaskResult.Results);
             Assert.IsNotNull(piiTaskResult.Results.Documents);
-            foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
             {
                 Assert.IsNotNull(piiResult.Id);
                 Assert.IsNotNull(piiResult.Entities);
@@ -326,19 +326,19 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
-            AnalyzeTextOperationState analyzeTextOperationState = response.Value;
+            Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+            AnalyzeTextJobState analyzeTextJobState = response.Value;
 
             Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.IsNotNull(analyzeTextJobState);
+            Assert.IsNotNull(analyzeTextJobState.Tasks);
+            Assert.IsNotNull(analyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
+            foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextOperationResult is HealthcareOperationResult)
+                if (taskResult is HealthcareOperationResult)
                 {
-                    HealthcareOperationResult healthcareLROResult = (HealthcareOperationResult)analyzeTextOperationResult;
+                    HealthcareOperationResult healthcareLROResult = (HealthcareOperationResult)taskResult;
                     Assert.IsNotNull(healthcareLROResult);
                     Assert.IsNotNull(healthcareLROResult.Results);
                     Assert.IsNotNull(healthcareLROResult.Results.Documents);
@@ -410,23 +410,23 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 new CustomEntitiesOperationAction
                 {
                     Name = "CustomEntitiesOperationActionSample",
-                    ActionContent = customEntitiesActionContent
+                    Parameters = customEntitiesActionContent
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
-            AnalyzeTextOperationState analyzeTextOperationState = response.Value;
+            Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+            AnalyzeTextJobState AnalyzeTextJobState = response.Value;
 
             Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.IsNotNull(AnalyzeTextJobState);
+            Assert.IsNotNull(AnalyzeTextJobState.Tasks);
+            Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
+            foreach (AnalyzeTextOperationResult taskResult in AnalyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextOperationResult is CustomEntityRecognitionOperationResult)
+                if (taskResult is CustomEntityRecognitionOperationResult)
                 {
-                    CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)analyzeTextOperationResult;
+                    CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)taskResult;
                     Assert.IsNotNull(customClassificationResult);
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
@@ -479,19 +479,19 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextOperationState analyzeTextOperationState = response.Value;
+            AnalyzeTextJobState AnalyzeTextJobState = response.Value;
             Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.IsNotNull(AnalyzeTextJobState);
+            Assert.IsNotNull(AnalyzeTextJobState.Tasks);
+            Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
+            foreach (AnalyzeTextOperationResult taskResult in AnalyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextOperationResult is CustomSingleLabelClassificationOperationResult)
+                if (taskResult is CustomSingleLabelClassificationOperationResult)
                 {
-                    CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)analyzeTextOperationResult;
+                    CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)taskResult;
                     Assert.IsNotNull(customClassificationResult);
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
@@ -540,19 +540,19 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextOperationState analyzeTextOperationState = response.Value;
+            AnalyzeTextJobState AnalyzeTextJobState = response.Value;
             Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.IsNotNull(AnalyzeTextJobState);
+            Assert.IsNotNull(AnalyzeTextJobState.Tasks);
+            Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
+            foreach (AnalyzeTextOperationResult taskResult in AnalyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextOperationResult is CustomMultiLabelClassificationOperationResult)
+                if (taskResult is CustomMultiLabelClassificationOperationResult)
                 {
-                    CustomMultiLabelClassificationOperationResult customClassificationResult = (CustomMultiLabelClassificationOperationResult)analyzeTextOperationResult;
+                    CustomMultiLabelClassificationOperationResult customClassificationResult = (CustomMultiLabelClassificationOperationResult)taskResult;
                     Assert.IsNotNull(customClassificationResult);
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
@@ -632,19 +632,19 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextOperationState analyzeTextOperationState = response.Value;
+            AnalyzeTextJobState AnalyzeTextJobState = response.Value;
             Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.IsNotNull(AnalyzeTextJobState);
+            Assert.IsNotNull(AnalyzeTextJobState.Tasks);
+            Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
+            foreach (AnalyzeTextOperationResult taskResult in AnalyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextOperationResult is ExtractiveSummarizationOperationResult)
+                if (taskResult is ExtractiveSummarizationOperationResult)
                 {
-                    ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextOperationResult;
+                    ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)taskResult;
                     Assert.IsNotNull(extractiveSummarizationLROResult);
                     Assert.IsNotNull(extractiveSummarizationLROResult.Results);
                     Assert.IsNotNull(extractiveSummarizationLROResult.Results.Documents);
@@ -725,19 +725,19 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextOperationState analyzeTextOperationState = response.Value;
+            AnalyzeTextJobState AnalyzeTextJobState = response.Value;
             Assert.IsNotNull(response);
-            Assert.IsNotNull(analyzeTextOperationState);
-            Assert.IsNotNull(analyzeTextOperationState.Actions);
-            Assert.IsNotNull(analyzeTextOperationState.Actions.Items);
+            Assert.IsNotNull(AnalyzeTextJobState);
+            Assert.IsNotNull(AnalyzeTextJobState.Tasks);
+            Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextOperationState.Actions.Items)
+            foreach (AnalyzeTextOperationResult taskResult in AnalyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextOperationResult is AbstractiveSummarizationOperationResult)
+                if (taskResult is AbstractiveSummarizationOperationResult)
                 {
-                    AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextOperationResult;
+                    AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)taskResult;
                     Assert.IsNotNull(abstractiveSummarizationLROResult);
                     Assert.IsNotNull(abstractiveSummarizationLROResult.Results);
                     Assert.IsNotNull(abstractiveSummarizationLROResult.Results.Documents);
@@ -796,7 +796,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-            foreach (PiiActionResult result in piiTaskResult.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage result in piiTaskResult.Results.Documents)
             {
                 Assert.AreEqual("3", result.Id);
                 Assert.IsNotNull(result.Entities);
@@ -809,9 +809,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview)]
         public async Task AnalyzeText_RecognizePii_WithSynonyms()
         {
-            PiiActionContent actionContent = new PiiActionContent();
-            actionContent.ExcludePiiCategories.Add(PiiCategoriesExclude.PhoneNumber);
-            actionContent.EntitySynonyms.Add(
+            PiiActionContent ActionContent = new PiiActionContent();
+            ActionContent.ExcludePiiCategories.Add(PiiCategoriesExclude.PhoneNumber);
+            ActionContent.EntitySynonyms.Add(
                 new EntitySynonyms(
                     new EntityCategory("USBankAccountNumber"),
                     new List<EntitySynonym>
@@ -833,7 +833,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                         new MultiLanguageInput("3", "My FAN is 281314478878 and Tom's RAN is 281314478879.") { Language = "en" },
                     }
                 },
-                ActionContent = actionContent
+                ActionContent = ActionContent
             };
 
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(input);
@@ -894,7 +894,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
             // Assert: document 1 (Date of birth)
-            PiiActionResult doc1 = piiResult.Results.Documents.Single(d => d.Id == "1");
+            PiiResultWithDetectedLanguage doc1 = piiResult.Results.Documents.Single(d => d.Id == "1");
 
             // The raw date string should not appear in redacted text.
             const string dobText = "May 15th, 2015";
@@ -904,7 +904,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             );
 
             // Assert: document 2 (Phone number)
-            PiiActionResult doc2 = piiResult.Results.Documents.Single(d => d.Id == "2");
+            PiiResultWithDetectedLanguage doc2 = piiResult.Results.Documents.Single(d => d.Id == "2");
 
             // There should be at least one PhoneNumber entity.
             Assert.IsTrue(
@@ -946,7 +946,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     // defaultPolicy: use entity mask for everything unless overridden
                     PolicyName = "defaultPolicy",
-                    IsDefault = true,
+                    IsDefaultPolicy = true,
                 },
                 new CharacterMaskPolicyType
                 {
@@ -981,7 +981,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.AreEqual(2, piiResult.Results.Documents.Count, "Expected 2 document results.");
             Assert.IsEmpty(piiResult.Results.Errors, "Did not expect any document errors.");
 
-            foreach (PiiActionResult doc in piiResult.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage doc in piiResult.Results.Documents)
             {
                 // 1. We should have at least these three PII categories recognized:
                 Assert.IsTrue(
@@ -1026,7 +1026,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 new MultiLanguageInput("1", text) { Language = "en" }
             }
-                };
+            };
 
             // Confidence score overrides:
             //   default = 0.3
@@ -1035,15 +1035,17 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             confidenceThreshold.Overrides.Add(
                 new ConfidenceScoreThresholdOverride(
                     value: 0.9f,
-                    entity: PiiCategory.UsSocialSecurityNumber.ToString()
+                    entity: PiiCategory.UsSocialSecurityNumber.ToString(),
+                    language: "en"
                 ));
             confidenceThreshold.Overrides.Add(
                 new ConfidenceScoreThresholdOverride(
                     value: 0.9f,
-                    entity: PiiCategory.Email.ToString()
+                    entity: PiiCategory.Email.ToString(),
+                    language: "en"
                 ));
 
-            var actionContent = new PiiActionContent
+            var ActionContent = new PiiActionContent
             {
                 PiiCategories = { PiiCategory.All },
                 DisableEntityValidation = true,
@@ -1053,7 +1055,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             var body = new TextPiiEntitiesRecognitionInput
             {
                 TextInput = textInput,
-                ActionContent = actionContent
+                ActionContent = ActionContent
             };
 
             // Act (non-LRO)
@@ -1066,7 +1068,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(piiResult.Results.Documents);
             Assert.AreEqual(1, piiResult.Results.Documents.Count);
 
-            PiiActionResult doc = piiResult.Results.Documents[0];
+            PiiResultWithDetectedLanguage doc = piiResult.Results.Documents[0];
             string redacted = doc.RedactedText;
 
             // Person should be masked out in text; SSN & Email should remain in the text

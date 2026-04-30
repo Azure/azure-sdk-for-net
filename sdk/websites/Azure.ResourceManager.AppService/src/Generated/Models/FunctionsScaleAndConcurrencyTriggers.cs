@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Scale and concurrency settings for the function app triggers. </summary>
+    /// <summary>
+    /// Scale and concurrency settings for the function app triggers.
+    /// Serialized Name: FunctionsScaleAndConcurrencyTriggers
+    /// </summary>
     internal partial class FunctionsScaleAndConcurrencyTriggers
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionsScaleAndConcurrencyTriggers"/>. </summary>
-        /// <param name="http"> Scale and concurrency settings for the HTTP trigger. </param>
+        /// <param name="http">
+        /// Scale and concurrency settings for the HTTP trigger.
+        /// Serialized Name: FunctionsScaleAndConcurrencyTriggers.http
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionsScaleAndConcurrencyTriggers(FunctionsScaleAndConcurrencyTriggersHttp http, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,9 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Scale and concurrency settings for the HTTP trigger. </summary>
+        /// <summary>
+        /// Scale and concurrency settings for the HTTP trigger.
+        /// Serialized Name: FunctionsScaleAndConcurrencyTriggers.http
+        /// </summary>
         internal FunctionsScaleAndConcurrencyTriggersHttp Http { get; set; }
-        /// <summary> The maximum number of concurrent HTTP trigger invocations per instance. </summary>
+        /// <summary>
+        /// The maximum number of concurrent HTTP trigger invocations per instance.
+        /// Serialized Name: FunctionsScaleAndConcurrencyTriggersHttp.perInstanceConcurrency
+        /// </summary>
         [WirePath("http.perInstanceConcurrency")]
         public int? ConcurrentHttpPerInstanceConcurrency
         {

@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes the properties of an existing Shared Private Link Resource to use when connecting to a private origin. </summary>
     public partial class SharedPrivateLinkResourceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceProperties"/>. </summary>
         public SharedPrivateLinkResourceProperties()
@@ -58,43 +29,53 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. Can be Pending, Approved, Rejected, Disconnected, or Timeout. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedPrivateLinkResourceProperties(WritableSubResource privateLink, string privateLinkLocation, string groupId, string requestMessage, SharedPrivateLinkResourceStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SharedPrivateLinkResourceProperties(CdnResourceReference privateLink, string privateLinkLocation, string groupId, string requestMessage, SharedPrivateLinkResourceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateLink = privateLink;
             PrivateLinkLocation = privateLinkLocation;
             GroupId = groupId;
             RequestMessage = requestMessage;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
-        internal WritableSubResource PrivateLink { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("privateLink.id")]
-        public ResourceIdentifier PrivateLinkId
-        {
-            get => PrivateLink is null ? default : PrivateLink.Id;
-            set
-            {
-                if (PrivateLink is null)
-                    PrivateLink = new WritableSubResource();
-                PrivateLink.Id = value;
-            }
-        }
+        [WirePath("privateLink")]
+        internal CdnResourceReference PrivateLink { get; set; }
 
         /// <summary> The location of the shared private link resource. </summary>
         [WirePath("privateLinkLocation")]
         public string PrivateLinkLocation { get; set; }
+
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>
         [WirePath("groupId")]
         public string GroupId { get; set; }
+
         /// <summary> The request message for requesting approval of the shared private link resource. </summary>
         [WirePath("requestMessage")]
         public string RequestMessage { get; set; }
+
         /// <summary> Status of the shared private link resource. Can be Pending, Approved, Rejected, Disconnected, or Timeout. </summary>
         [WirePath("status")]
         public SharedPrivateLinkResourceStatus? Status { get; set; }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("privateLink.id")]
+        public ResourceIdentifier PrivateLinkId
+        {
+            get
+            {
+                return PrivateLink is null ? default : PrivateLink.Id;
+            }
+            set
+            {
+                if (PrivateLink is null)
+                {
+                    PrivateLink = new CdnResourceReference();
+                }
+                PrivateLink.Id = value;
+            }
+        }
     }
 }

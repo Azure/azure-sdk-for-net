@@ -2314,14 +2314,14 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
 
-                var setting = (FeatureFlagConfigurationSetting) settingResponse.Value;
+                var setting = (FeatureFlagConfigurationSetting)settingResponse.Value;
                 Assert.True(setting.IsEnabled);
                 setting.IsEnabled = false;
 
                 await service.SetConfigurationSettingAsync(setting);
 
                 settingResponse = await service.GetConfigurationSettingAsync(setting.Key);
-                setting = (FeatureFlagConfigurationSetting) settingResponse.Value;
+                setting = (FeatureFlagConfigurationSetting)settingResponse.Value;
 
                 Assert.IsInstanceOf<FeatureFlagConfigurationSetting>(settingResponse.Value);
                 Assert.AreEqual("Feature description", setting.Description);
@@ -2364,13 +2364,13 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting2);
 
                 var selectedSettings = await service.GetConfigurationSettingsAsync(
-                    new SettingSelector() { KeyFilter = FeatureFlagConfigurationSetting.KeyPrefix + "feature 1-*"})
+                    new SettingSelector() { KeyFilter = FeatureFlagConfigurationSetting.KeyPrefix + "feature 1-*" })
                     .ToEnumerableAsync();
 
                 Assert.AreEqual(2, selectedSettings.Count);
                 foreach (var setting in selectedSettings)
                 {
-                    FeatureFlagConfigurationSetting featureFlag = (FeatureFlagConfigurationSetting) setting;
+                    FeatureFlagConfigurationSetting featureFlag = (FeatureFlagConfigurationSetting)setting;
                     Assert.AreEqual("Feature description", featureFlag.Description);
                 }
             }
@@ -2413,13 +2413,13 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
 
-                var setting = (SecretReferenceConfigurationSetting) settingResponse.Value;
+                var setting = (SecretReferenceConfigurationSetting)settingResponse.Value;
                 setting.SecretId = new Uri("http://secret2.com/");
 
                 await service.SetConfigurationSettingAsync(setting);
 
                 settingResponse = await service.GetConfigurationSettingAsync(setting.Key);
-                setting = (SecretReferenceConfigurationSetting) settingResponse.Value;
+                setting = (SecretReferenceConfigurationSetting)settingResponse.Value;
 
                 Assert.IsInstanceOf<SecretReferenceConfigurationSetting>(settingResponse.Value);
                 Assert.AreEqual("http://secret2.com/", setting.SecretId.AbsoluteUri);
@@ -2444,13 +2444,13 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting2);
 
                 var selectedSettings = await service.GetConfigurationSettingsAsync(
-                    new SettingSelector() { KeyFilter = "secret 1-*"})
+                    new SettingSelector() { KeyFilter = "secret 1-*" })
                     .ToEnumerableAsync();
 
                 Assert.AreEqual(2, selectedSettings.Count);
                 foreach (var setting in selectedSettings)
                 {
-                    SecretReferenceConfigurationSetting featureFlag = (SecretReferenceConfigurationSetting) setting;
+                    SecretReferenceConfigurationSetting featureFlag = (SecretReferenceConfigurationSetting)setting;
                     StringAssert.StartsWith("http://secret", featureFlag.SecretId.AbsoluteUri);
                     StringAssert.EndsWith(".com/", featureFlag.SecretId.AbsoluteUri);
                 }
@@ -2496,8 +2496,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting1);
 
                 var selectedSetting = (FeatureFlagConfigurationSetting)await service.GetConfigurationSettingAsync(testSetting1.Key);
-                var audience = (IDictionary) selectedSetting.ClientFilters[0].Parameters["Audience"];
-                var groups = (IList) audience["Groups"];
+                var audience = (IDictionary)selectedSetting.ClientFilters[0].Parameters["Audience"];
+                var groups = (IList)audience["Groups"];
 
                 groups.Add(new Dictionary<string, object>()
                 {

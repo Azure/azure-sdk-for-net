@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Failover mode.
-    /// Serialized Name: FailoverMode
-    /// </summary>
+    /// <summary> Failover mode. </summary>
     public readonly partial struct PostgreSqlFlexibleServerFailoverMode : IEquatable<PostgreSqlFlexibleServerFailoverMode>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string PlannedSwitchoverValue = "PlannedSwitchover";
         private const string ForcedSwitchoverValue = "ForcedSwitchover";
 
-        /// <summary>
-        /// PlannedFailover
-        /// Serialized Name: FailoverMode.PlannedFailover
-        /// </summary>
+        /// <summary> PlannedFailover. </summary>
         public static PostgreSqlFlexibleServerFailoverMode PlannedFailover { get; } = new PostgreSqlFlexibleServerFailoverMode(PlannedFailoverValue);
-        /// <summary>
-        /// ForcedFailover
-        /// Serialized Name: FailoverMode.ForcedFailover
-        /// </summary>
+        /// <summary> ForcedFailover. </summary>
         public static PostgreSqlFlexibleServerFailoverMode ForcedFailover { get; } = new PostgreSqlFlexibleServerFailoverMode(ForcedFailoverValue);
-        /// <summary>
-        /// PlannedSwitchover
-        /// Serialized Name: FailoverMode.PlannedSwitchover
-        /// </summary>
+        /// <summary> PlannedSwitchover. </summary>
         public static PostgreSqlFlexibleServerFailoverMode PlannedSwitchover { get; } = new PostgreSqlFlexibleServerFailoverMode(PlannedSwitchoverValue);
-        /// <summary>
-        /// ForcedSwitchover
-        /// Serialized Name: FailoverMode.ForcedSwitchover
-        /// </summary>
+        /// <summary> ForcedSwitchover. </summary>
         public static PostgreSqlFlexibleServerFailoverMode ForcedSwitchover { get; } = new PostgreSqlFlexibleServerFailoverMode(ForcedSwitchoverValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFailoverMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerFailoverMode left, PostgreSqlFlexibleServerFailoverMode right) => left.Equals(right);

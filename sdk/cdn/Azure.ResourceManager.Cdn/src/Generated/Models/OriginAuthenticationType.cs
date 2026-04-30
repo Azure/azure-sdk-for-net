@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct OriginAuthenticationType : IEquatable<OriginAuthenticationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="OriginAuthenticationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OriginAuthenticationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SystemAssignedIdentityValue = "SystemAssignedIdentity";
         private const string UserAssignedIdentityValue = "UserAssignedIdentity";
 
-        /// <summary> SystemAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="OriginAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public OriginAuthenticationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SystemAssignedIdentity. </summary>
         public static OriginAuthenticationType SystemAssignedIdentity { get; } = new OriginAuthenticationType(SystemAssignedIdentityValue);
-        /// <summary> UserAssignedIdentity. </summary>
+
+        /// <summary> Gets the UserAssignedIdentity. </summary>
         public static OriginAuthenticationType UserAssignedIdentity { get; } = new OriginAuthenticationType(UserAssignedIdentityValue);
+
         /// <summary> Determines if two <see cref="OriginAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OriginAuthenticationType left, OriginAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OriginAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OriginAuthenticationType left, OriginAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OriginAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OriginAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OriginAuthenticationType(string value) => new OriginAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OriginAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OriginAuthenticationType?(string value) => value == null ? null : new OriginAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OriginAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OriginAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

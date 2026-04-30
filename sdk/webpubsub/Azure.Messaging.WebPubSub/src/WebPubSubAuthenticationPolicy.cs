@@ -26,7 +26,8 @@ namespace Azure.Messaging.WebPubSub
         public override void OnSendingRequest(HttpMessage message)
         {
             string audience;
-            if (!TryGetAudience(message, out audience)) {
+            if (!TryGetAudience(message, out audience))
+            {
                 audience = message.Request.Uri.ToUri().AbsoluteUri;
             }
 
@@ -50,7 +51,8 @@ namespace Azure.Messaging.WebPubSub
 
             var prefix = "Bearer ";
             var state = (prefix, writer);
-            var headerValue = NS2Bridge.CreateString(jwtLength + prefix.Length, state, (destination, state) => {
+            var headerValue = NS2Bridge.CreateString(jwtLength + prefix.Length, state, (destination, state) =>
+            {
                 var statePrefix = state.prefix;
                 statePrefix.AsSpan().CopyTo(destination);
                 state.writer.TryBuildTo(destination.Slice(statePrefix.Length), out _);
@@ -69,9 +71,9 @@ namespace Azure.Messaging.WebPubSub
         private static bool TryGetAudience(HttpMessage message, out string audience)
         {
             if (message.TryGetProperty(AUDIENCE_SETTING, out var jwtAudience) &&
-            	jwtAudience is string uri)
+                jwtAudience is string uri)
             {
-            	audience = uri;
+                audience = uri;
                 return true;
             }
             audience = default;

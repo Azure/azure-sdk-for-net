@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceHydrationAccount. </summary>
     public partial class ResourceHydrationAccount
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceHydrationAccount"/>. </summary>
         public ResourceHydrationAccount()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="encryptedKey"> The encrypted key. </param>
         /// <param name="accountName"> The account name. </param>
         /// <param name="subscriptionId"> The subscription id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHydrationAccount(long? maxChildResourceConsistencyJobLimit, string encryptedKey, string accountName, string subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHydrationAccount(long? maxChildResourceConsistencyJobLimit, string encryptedKey, string accountName, string subscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxChildResourceConsistencyJobLimit = maxChildResourceConsistencyJobLimit;
             EncryptedKey = encryptedKey;
             AccountName = accountName;
             SubscriptionId = subscriptionId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The max child resource consistency job limit. </summary>
         public long? MaxChildResourceConsistencyJobLimit { get; set; }
+
         /// <summary> The encrypted key. </summary>
         public string EncryptedKey { get; set; }
+
         /// <summary> The account name. </summary>
         public string AccountName { get; set; }
+
         /// <summary> The subscription id. </summary>
         public string SubscriptionId { get; set; }
     }

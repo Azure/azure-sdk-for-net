@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct ContentUnderstandingSkillExtractionOptions : IEquatable<ContentUnderstandingSkillExtractionOptions>
     {
         private readonly string _value;
+        /// <summary> Specify that image content should be extracted from the document. </summary>
+        private const string ImagesValue = "images";
+        /// <summary> Specify that location metadata should be extracted from the document. </summary>
+        private const string LocationMetadataValue = "locationMetadata";
 
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingSkillExtractionOptions"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContentUnderstandingSkillExtractionOptions(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ImagesValue = "images";
-        private const string LocationMetadataValue = "locationMetadata";
+            _value = value;
+        }
 
         /// <summary> Specify that image content should be extracted from the document. </summary>
         public static ContentUnderstandingSkillExtractionOptions Images { get; } = new ContentUnderstandingSkillExtractionOptions(ImagesValue);
+
         /// <summary> Specify that location metadata should be extracted from the document. </summary>
         public static ContentUnderstandingSkillExtractionOptions LocationMetadata { get; } = new ContentUnderstandingSkillExtractionOptions(LocationMetadataValue);
+
         /// <summary> Determines if two <see cref="ContentUnderstandingSkillExtractionOptions"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContentUnderstandingSkillExtractionOptions left, ContentUnderstandingSkillExtractionOptions right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContentUnderstandingSkillExtractionOptions"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContentUnderstandingSkillExtractionOptions left, ContentUnderstandingSkillExtractionOptions right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentUnderstandingSkillExtractionOptions"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContentUnderstandingSkillExtractionOptions"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContentUnderstandingSkillExtractionOptions(string value) => new ContentUnderstandingSkillExtractionOptions(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContentUnderstandingSkillExtractionOptions"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContentUnderstandingSkillExtractionOptions?(string value) => value == null ? null : new ContentUnderstandingSkillExtractionOptions(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContentUnderstandingSkillExtractionOptions other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContentUnderstandingSkillExtractionOptions other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -20,36 +20,39 @@ namespace Azure.Analytics.Defender.Easm
         private readonly string _filter;
         private readonly string _orderby;
         private readonly int? _skip;
-        private readonly int? _maxpagesize;
+        private readonly int? _maxPageSize;
         private readonly string _mark;
         private readonly string _responseType;
         private readonly IEnumerable<string> _responseIncludes;
         private readonly bool? _recentOnly;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of EasmClientGetAssetResourcesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EasmClient client used to send requests. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
         /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="mark"> Specify this value instead of 'skip' to use cursor-based searching. Initial value is '*' and subsequent values are returned in the response. </param>
         /// <param name="responseType"> Specify the response type. The possible values are: ID, STANDARD, FULL, REDUCED. </param>
         /// <param name="responseIncludes"> The properties to include in the response. </param>
         /// <param name="recentOnly"> If it's recent only. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EasmClientGetAssetResourcesAsyncCollectionResultOfT(EasmClient client, string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public EasmClientGetAssetResourcesAsyncCollectionResultOfT(EasmClient client, string filter, string @orderby, int? skip, int? maxPageSize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
             _orderby = @orderby;
             _skip = skip;
-            _maxpagesize = maxpagesize;
+            _maxPageSize = maxPageSize;
             _mark = mark;
             _responseType = responseType;
             _responseIncludes = responseIncludes;
             _recentOnly = recentOnly;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of EasmClientGetAssetResourcesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.Analytics.Defender.Easm
                     yield break;
                 }
                 PagedAssetResource result = (PagedAssetResource)response;
-                yield return Page<AssetResource>.FromValues((IReadOnlyList<AssetResource>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AssetResource>.FromValues((IReadOnlyList<AssetResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -81,9 +84,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetAssetResourcesRequest(nextLink, pageSize, _context) : _client.CreateGetAssetResourcesRequest(_filter, _orderby, _skip, pageSize, _mark, _responseType, _responseIncludes, _recentOnly, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetAssetResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

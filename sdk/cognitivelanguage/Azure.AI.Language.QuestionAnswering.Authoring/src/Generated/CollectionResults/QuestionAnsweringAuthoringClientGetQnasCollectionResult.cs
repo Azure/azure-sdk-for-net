@@ -23,6 +23,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private readonly int? _maxpagesize;
         private readonly string _source;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClientGetQnasCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The QuestionAnsweringAuthoringClient client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public QuestionAnsweringAuthoringClientGetQnasCollectionResult(QuestionAnsweringAuthoringClient client, string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public QuestionAnsweringAuthoringClientGetQnasCollectionResult(QuestionAnsweringAuthoringClient client, string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
@@ -41,6 +43,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             _maxpagesize = maxpagesize;
             _source = source;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of QuestionAnsweringAuthoringClientGetQnasCollectionResult as an enumerable collection. </summary>
@@ -63,7 +66,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAILanguageQuestionAnsweringAuthoringContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -78,7 +81,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetQnasRequest(nextLink, _projectName, _maxCount, _skip, _maxpagesize, _source, _context) : _client.CreateGetQnasRequest(_projectName, _maxCount, _skip, _maxpagesize, _source, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetQnas");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

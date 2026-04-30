@@ -16,6 +16,56 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The request payload for classification association. </summary>
     public partial class ClassificationAssociateConfig : IJsonModel<ClassificationAssociateConfig>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClassificationAssociateConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClassificationAssociateConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeClassificationAssociateConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClassificationAssociateConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClassificationAssociateConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClassificationAssociateConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClassificationAssociateConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClassificationAssociateConfig IPersistableModel<ClassificationAssociateConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClassificationAssociateConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="classificationAssociateConfig"> The <see cref="ClassificationAssociateConfig"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ClassificationAssociateConfig classificationAssociateConfig)
+        {
+            if (classificationAssociateConfig == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(classificationAssociateConfig, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClassificationAssociateConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -137,58 +187,6 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             return new ClassificationAssociateConfig(classification, entityGuids ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClassificationAssociateConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassificationAssociateConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClassificationAssociateConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClassificationAssociateConfig IPersistableModel<ClassificationAssociateConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClassificationAssociateConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassificationAssociateConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeClassificationAssociateConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClassificationAssociateConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClassificationAssociateConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="classificationAssociateConfig"> The <see cref="ClassificationAssociateConfig"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ClassificationAssociateConfig classificationAssociateConfig)
-        {
-            if (classificationAssociateConfig == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(classificationAssociateConfig, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

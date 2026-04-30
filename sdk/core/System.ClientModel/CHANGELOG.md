@@ -1,14 +1,35 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.11.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- `IClientBuilder` no longer inherits from `IHostApplicationBuilder`. The internal `ClientBuilder` implementation now uses composition instead of inheritance. `PostConfigure` return type changed from `IHostApplicationBuilder` to `IClientBuilder`. `AddClient` and `AddKeyedClient` continue to return `IClientBuilder`.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.10.0 (2026-03-16)
+
+### Features Added
+
+- Added `JsonPatch.EnumerateArray` method that iterates over JSON array elements at a specified path, yielding each element as raw UTF-8 bytes.
+- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing. 
+- Added `IsReadOnly` property to `ClientPipelineOptions` and `ClientLoggingOptions` so callers can check whether options can still be modified without catching an exception.
+- Added `Clone()` method to `ClientPipelineOptions` and `ClientLoggingOptions` that creates a new mutable instance from an existing instance that may be read-only.
+- Added `ConfigurationSchema.json` to the NuGet package via the MSBuild `JsonSchemaSegment` feature, enabling automatic JSON IntelliSense and validation for `appsettings.json` when configuring System.ClientModel-based clients.
+- Updated BCL dependencies to 10.x.
+
+### Bugs Fixed
+
+- Fixed implicit conversion operator for `ClientResult<T>` to not throw exceptions on null inputs per Framework Design Guidelines. Null inputs now return `default`.
+
+### Breaking Changes
+
+- Added nullability annotation to the `ClientResult<T>` implicit conversion operator parameter to indicate that null is a valid input. This change was made because throwing exceptions from implicit conversions violates the [Framework Design Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/operator-overloads).
 
 ## 1.9.0 (2026-01-27)
 

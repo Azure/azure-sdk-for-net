@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.Language.QuestionAnswering.Authoring;
+using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Language.QuestionAnswering.Authoring;
-using Azure.Core;
-using System.Text.Json;
-using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
 {
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             importedProjectName = CreateTestProjectName();
 #endif
             RequestContent importRequestContent = RequestContent.Create(new
-                {
+            {
                 Metadata = new
                 {
                     Description = "This is the description for a test project",
@@ -82,7 +82,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             await CreateProjectAsync(exportedProjectName);
 
             #region Snippet:QuestionAnsweringAuthoringClient_ExportProjectAsync_Authoring
-            Operation exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
+            Operation exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format: "json");
 
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);

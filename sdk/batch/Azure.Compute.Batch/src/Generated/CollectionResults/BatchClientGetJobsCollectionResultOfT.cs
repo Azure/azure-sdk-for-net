@@ -16,23 +16,24 @@ namespace Azure.Compute.Batch
     internal partial class BatchClientGetJobsCollectionResultOfT : Pageable<BatchJob>
     {
         private readonly BatchClient _client;
-        private readonly TimeSpan? _timeOutInSeconds;
-        private readonly DateTimeOffset? _ocpDate;
-        private readonly int? _maxresults;
+        private readonly TimeSpan? _timeout;
+        private readonly DateTimeOffset? _requestDate;
+        private readonly int? _maxResults;
         private readonly string _filter;
         private readonly IEnumerable<string> _select;
         private readonly IEnumerable<string> _expand;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BatchClientGetJobsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BatchClient client used to send requests. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpDate">
+        /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="requestDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
-        /// <param name="maxresults">
+        /// <param name="maxResults">
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
@@ -43,16 +44,18 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BatchClientGetJobsCollectionResultOfT(BatchClient client, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BatchClientGetJobsCollectionResultOfT(BatchClient client, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _timeOutInSeconds = timeOutInSeconds;
-            _ocpDate = ocpDate;
-            _maxresults = maxresults;
+            _timeout = timeout;
+            _requestDate = requestDate;
+            _maxResults = maxResults;
             _filter = filter;
             _select = @select;
             _expand = expand;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BatchClientGetJobsCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.Compute.Batch
                     yield break;
                 }
                 BatchJobListResult result = (BatchJobListResult)response;
-                yield return Page<BatchJob>.FromValues((IReadOnlyList<BatchJob>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BatchJob>.FromValues((IReadOnlyList<BatchJob>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.OdataNextLink;
                 if (nextPage == null)
                 {
@@ -84,8 +87,8 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetJobsRequest(nextLink, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _select, _expand, _context) : _client.CreateGetJobsRequest(_timeOutInSeconds, _ocpDate, _maxresults, _filter, _select, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchClient.GetJobs");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetJobsRequest(nextLink, _timeout, _requestDate, _maxResults, _filter, _select, _expand, _context) : _client.CreateGetJobsRequest(_timeout, _requestDate, _maxResults, _filter, _select, _expand, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

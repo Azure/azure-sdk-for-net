@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
                     ["sku"] = new Dictionary<string, object>()
                     {
                     ["name"] = "[parameters('storageAccountType')]"}} },
-                    ["variables"] = new Dictionary<string, object>()
+                ["variables"] = new Dictionary<string, object>()
                 {
                     ["storageAccountName"] = "[concat(uniquestring(resourceGroup().id), 'standardsa')]"
                 }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         {
             AssertResource(data1, data2);
             //Assert.AreEqual(data1.Status , data2.Status);
-            Assert.AreEqual (data1.Description , data2.Description);
+            Assert.AreEqual(data1.Description, data2.Description);
             //Assert.AreEqual(data1.Parameters., data2.Parameters.ElementAt(0).Value);
             //Assert.AreEqual(data1.Parameters.ElementAt(1), data2.Parameters.ElementAt(1));
         }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         }
         public static void AssertPublishedBlueprintData(PublishedBlueprintData data1, PublishedBlueprintData data2)
         {
-            AssertResource(data1 , data2);
+            AssertResource(data1, data2);
         }
         #endregion
     }

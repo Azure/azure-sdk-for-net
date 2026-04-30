@@ -7,7 +7,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-   public partial class HostNameMatchCondition
+    // Customization: This file adds the old constructor and ConditionType property to HostNameMatchCondition for backward API compatibility with the previous SDK.
+    // Reason: The old SDK (AutoRest-generated) used the HostNameMatchConditionType struct as the polymorphic discriminator property (conditionType),
+    // with the constructor signature (conditionType, operator). After the TypeSpec migration, the discriminator was changed to a string-typed TypeName property
+    // and the constructor no longer includes the conditionType parameter. The old constructor and ConditionType property (bridging to TypeName) are preserved here,
+    // marked as EditorBrowsable.Never.
+    public partial class HostNameMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
         public HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator hostNameOperator) : this(hostNameOperator)

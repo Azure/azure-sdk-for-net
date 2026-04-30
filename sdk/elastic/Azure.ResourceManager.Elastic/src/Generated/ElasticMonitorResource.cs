@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Elastic
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Elastic resource model update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ElasticMonitorResource>> UpdateAsync(WaitUntil waitUntil, ElasticMonitorPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticMonitorResource>> UpdateAsync(WaitUntil waitUntil, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Update");
             scope.Start();
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Elastic resource model update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ElasticMonitorResource> Update(WaitUntil waitUntil, ElasticMonitorPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ElasticMonitorResource> Update(WaitUntil waitUntil, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Update");
             scope.Start();
@@ -720,7 +720,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetConnectedPartnerResourcesAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetConnectedPartnerResourcesAsyncCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetConnectedPartnerResources");
         }
 
         /// <summary>
@@ -752,7 +758,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetConnectedPartnerResourcesCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetConnectedPartnerResourcesCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetConnectedPartnerResources");
         }
 
         /// <summary>
@@ -1564,7 +1576,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetMonitoredResourcesAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetMonitoredResourcesAsyncCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetMonitoredResources");
         }
 
         /// <summary>
@@ -1596,7 +1614,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetMonitoredResourcesCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetMonitoredResourcesCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetMonitoredResources");
         }
 
         /// <summary>
@@ -2112,7 +2136,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetVmHostsAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetVmHostsAsyncCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetVmHosts");
         }
 
         /// <summary>
@@ -2144,7 +2174,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetVmHostsCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetVmHostsCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetVmHosts");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

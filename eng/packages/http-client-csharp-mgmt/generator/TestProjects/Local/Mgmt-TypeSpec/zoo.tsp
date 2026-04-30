@@ -18,7 +18,53 @@ model Zoo is TrackedResource<ZooProperties> {
 model ZooProperties {
   /** something */
   something?: string;
+
+  /** Required value-type property. Used to validate that required value types
+      flattened from an optional ``properties?:`` parent (default-optional
+      `properties?`) surface as Nullable<T> on the public property while
+      remaining non-nullable T on the inner model and the model factory body. */
+  requiredInt: int32;
+
+  /** Required fixed (closed) enum. */
+  requiredFixedEnum: ZooFixedMode;
+
+  /** Required extensible enum (union). */
+  requiredExtensibleEnum: ZooProvisioningState;
+
+  /** Required reference-type property. Used to validate that required reference
+      types flattened from an optional ``properties?:`` parent surface as nullable
+      on the public property under the unified wrapper-optionality rule. */
+  requiredString: string;
 }
+
+/** Fixed (closed) mode enum for Zoo. */
+enum ZooFixedMode {
+  Normal,
+  Strict,
+  Relaxed,
+}
+
+/** Extensible (open) provisioning state union for Zoo. */
+union ZooProvisioningState {
+  string,
+
+  /** The resource is being provisioned. */
+  Provisioning: "Provisioning",
+
+  /** The resource has been successfully provisioned. */
+  Succeeded: "Succeeded",
+
+  /** Provisioning failed. */
+  Failed: "Failed",
+
+  /** Provisioning was canceled. */
+  Canceled: "Canceled",
+}
+
+// Force the optional `properties?:` field to be flattened so we can validate the
+// "optional wrapper + required inner value-type → public Nullable<T>" code path.
+#suppress "deprecated"
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(Zoo.properties);
 
 @armResourceOperations
 interface Zoos {
@@ -70,4 +116,83 @@ model ZooRecommendation {
 }
 
 @@clientLocation(Zoos.recommend, "ZooRecommendation");
+
+/**
+ * Test resource to reproduce issue #55436 - Missing constructor parameters in factory methods.
+ * This uses a patch model with properties that extend a base type with nested complex objects.
+ */
+@resource("issueTests")
+model IssueTestResource is TrackedResource<IssueTestBaseProperties> {
+  ...ResourceNameParameter<IssueTestResource, SegmentName = "issueTests">;
+}
+
+@armResourceOperations
+interface IssueTestResources {
+  get is ArmResourceRead<IssueTestResource>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<IssueTestResource>;
+  
+  // Use custom patch with a properties model that extends a base type
+  update is ArmCustomPatchAsync<IssueTestResource, IssueTestPatch>;
+  
+  listByResourceGroup is ArmResourceListByParent<IssueTestResource>;
+}
+
+/**
+ * The patch model with flattened properties.
+ * Without the fix, the factory method would skip the nested config parameters.
+ */
+model IssueTestPatch {
+  /** Resource tags. */
+  tags?: Record<string>;
+  
+  /** The properties to update - extends base properties with nested objects */
+  properties?: IssueTestUpdateProperties;
+}
+
+/**
+ * Update properties that extend base properties - this is the key pattern.
+ * The base type has a nested complex object (nestedConfig) that gets flattened.
+ */
+model IssueTestUpdateProperties extends IssueTestBaseProperties {
+  /** Property specific to updates */
+  updateOnlyValue?: string;
+}
+
+/**
+ * Base properties with a nested complex object.
+ * The nestedConfig property has inner flattening, so the factory needs to construct it.
+ */
+model IssueTestBaseProperties {
+  /** Simple property */
+  displayName?: string;
+  
+  /**
+   * Nested complex object - its inner properties are flattened.
+   * The factory method needs to construct this even when there are no flattened properties for it.
+   */
+  nestedConfig?: IssueTestNestedConfig;
+  
+  /** Read-only property */
+  @visibility(Lifecycle.Read)
+  status?: string;
+}
+
+/**
+ * Nested configuration model - its properties get flattened.
+ */
+model IssueTestNestedConfig {
+  /** Inner value that gets flattened */
+  innerValue?: string;
+  
+  /** Inner flag that gets flattened */
+  innerFlag?: boolean;
+}
+
+// Apply flattening to the patch model's properties
+#suppress "deprecated"
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(IssueTestPatch.properties);
+
+// Also flatten the nested config within the base properties
+#suppress "deprecated"
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(IssueTestBaseProperties.nestedConfig);
 }

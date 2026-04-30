@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             return exaScaleStorage;
         }
 
-          private ExascaleDBStorageVaultData GetDefaultExascaleDbStorageVaultData(string vaultName)
+        private ExascaleDBStorageVaultData GetDefaultExascaleDbStorageVaultData(string vaultName)
         {
             return new ExascaleDBStorageVaultData(_location)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
                 {
                     Description = "This is a test Exascale DB Storage Vault created by the .NET SDK tests.",
                     DisplayName = vaultName,
-                    HighCapacityDatabaseStorageInput = new ExascaleDBStorageInputDetails(300),
+                    HighCapacityStorageInputTotalSizeInGbs = 300,
                 },
                 Zones = { "2" },
                 Tags = { { "env", "test" }, { "purpose", "sdk-test" } }

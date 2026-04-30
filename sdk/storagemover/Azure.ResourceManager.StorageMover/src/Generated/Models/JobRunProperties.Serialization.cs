@@ -17,6 +17,46 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> Job run properties. </summary>
     internal partial class JobRunProperties : IJsonModel<JobRunProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JobRunProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobRunProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeJobRunProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobRunProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobRunProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(JobRunProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<JobRunProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JobRunProperties IPersistableModel<JobRunProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<JobRunProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JobRunProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -64,6 +104,16 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 writer.WritePropertyName("executionEndTime"u8);
                 writer.WriteStringValue(ExecutionEndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(TriggerType))
+            {
+                writer.WritePropertyName("triggerType"u8);
+                writer.WriteStringValue(TriggerType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ScheduledExecutionOn))
+            {
+                writer.WritePropertyName("scheduledExecutionTime"u8);
+                writer.WriteStringValue(ScheduledExecutionOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
             {
@@ -254,6 +304,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             ResourceIdentifier agentResourceId = default;
             DateTimeOffset? executionStartOn = default;
             DateTimeOffset? executionEndOn = default;
+            StorageMoverJobTriggerType? triggerType = default;
+            DateTimeOffset? scheduledExecutionOn = default;
             DateTimeOffset? lastStatusUpdate = default;
             long? itemsScanned = default;
             long? itemsExcluded = default;
@@ -328,6 +380,24 @@ namespace Azure.ResourceManager.StorageMover.Models
                         continue;
                     }
                     executionEndOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("triggerType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    triggerType = new StorageMoverJobTriggerType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("scheduledExecutionTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledExecutionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastStatusUpdate"u8))
@@ -546,6 +616,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                 agentResourceId,
                 executionStartOn,
                 executionEndOn,
+                triggerType,
+                scheduledExecutionOn,
                 lastStatusUpdate,
                 itemsScanned,
                 itemsExcluded,
@@ -571,45 +643,5 @@ namespace Azure.ResourceManager.StorageMover.Models
                 provisioningState,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JobRunProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JobRunProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(JobRunProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        JobRunProperties IPersistableModel<JobRunProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JobRunProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JobRunProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeJobRunProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(JobRunProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<JobRunProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

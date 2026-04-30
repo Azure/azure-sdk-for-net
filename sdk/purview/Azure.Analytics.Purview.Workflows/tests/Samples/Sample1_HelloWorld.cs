@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
-    public class WorkflowsSamples: SamplesBase<WorkflowsClientTestEnvironment>
+    public class WorkflowsSamples : SamplesBase<WorkflowsClientTestEnvironment>
     {
         [Test]
         public async Task CreateWorkflowClient()
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 #endif
 
             var client = new WorkflowsClient(endpoint, credential);
-#endregion
+            #endregion
 
             //Perform an operation
             AsyncPageable<BinaryData> workflowList = client.GetWorkflowsAsync(new RequestContext());
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
                 Console.WriteLine(bodyJson.GetProperty("name").ToString());
             }
 
-            Assert.IsNotNull(workflowList);
+            Assert.That(workflowList, Is.Not.Null);
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
             using var createJsonDocument = JsonDocument.Parse(GetContentFromResponse(createResult));
             JsonElement createBodyJson = createJsonDocument.RootElement;
 
-            Assert.AreEqual(workflowId.ToString(), createBodyJson.GetProperty("id").ToString());
+            Assert.That(createBodyJson.GetProperty("id").ToString(), Is.EqualTo(workflowId.ToString()));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResult));
             JsonElement getBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual(workflowId.ToString(), getBodyJson.GetProperty("id").GetString());
+            Assert.That(getBodyJson.GetProperty("id").GetString(), Is.EqualTo(workflowId.ToString()));
         }
 
         private static BinaryData GetContentFromResponse(Response r)

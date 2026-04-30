@@ -73,8 +73,18 @@ namespace Azure.ResourceManager.NetApp
         /// </param>
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation. </param>
+        /// <param name="keyVaultDetails">
+        /// Specifies the Azure Key Vault settings. These are used when
+        /// a) retrieving the bucket server certificate, and
+        /// b) storing the bucket credentials
+        ///
+        /// Notes:
+        ///
+        /// 1. If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.
+        /// 2. These properties are mutually exclusive with the server.certificateObject property.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBucketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, NetAppBucketFileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, NetAppBucketCredentialStatus? status, NetAppBucketServerProperties server, NetAppBucketPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppBucketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, NetAppFileSystemUser fileSystemUser, NetAppVolumeQuotaRuleProvisioningState? provisioningState, NetAppCredentialsStatus? status, NetAppBucketServerProperties server, NetAppBucketPermission? permissions, NetAppKeyVaultDetails keyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             FileSystemUser = fileSystemUser;
@@ -82,15 +92,16 @@ namespace Azure.ResourceManager.NetApp
             Status = status;
             Server = server;
             Permissions = permissions;
+            KeyVaultDetails = keyVaultDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The volume path mounted inside the bucket. The default is the root path '/' if no value is provided when the bucket is created. </summary>
         public string Path { get; set; }
         /// <summary> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </summary>
-        public NetAppBucketFileSystemUser FileSystemUser { get; set; }
+        public NetAppFileSystemUser FileSystemUser { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
+        public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The bucket credentials status. There states:
         ///
@@ -98,10 +109,21 @@ namespace Azure.ResourceManager.NetApp
         /// "CredentialsExpired": Access and Secret key pair have expired.
         /// "Active": The certificate has been installed and credentials are unexpired.
         /// </summary>
-        public NetAppBucketCredentialStatus? Status { get; }
+        public NetAppCredentialsStatus? Status { get; }
         /// <summary> Properties of the server managing the lifecycle of volume buckets. </summary>
         public NetAppBucketServerProperties Server { get; set; }
         /// <summary> Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation. </summary>
         public NetAppBucketPermission? Permissions { get; set; }
+        /// <summary>
+        /// Specifies the Azure Key Vault settings. These are used when
+        /// a) retrieving the bucket server certificate, and
+        /// b) storing the bucket credentials
+        ///
+        /// Notes:
+        ///
+        /// 1. If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.
+        /// 2. These properties are mutually exclusive with the server.certificateObject property.
+        /// </summary>
+        public NetAppKeyVaultDetails KeyVaultDetails { get; set; }
     }
 }

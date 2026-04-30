@@ -19,22 +19,25 @@ namespace Azure.AI.Language.Text.Authoring
         private readonly TextAnalysisAuthoringClient _client;
         private readonly int? _maxCount;
         private readonly int? _skip;
-        private readonly int? _maxpagesize;
+        private readonly int? _maxPageSize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TextAnalysisAuthoringClient client used to send requests. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT(TextAnalysisAuthoringClient client, int? maxCount, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT(TextAnalysisAuthoringClient client, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxCount = maxCount;
             _skip = skip;
-            _maxpagesize = maxpagesize;
+            _maxPageSize = maxPageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -52,7 +55,7 @@ namespace Azure.AI.Language.Text.Authoring
                     yield break;
                 }
                 PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata result = (PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata)response;
-                yield return Page<TextAuthoringAssignedProjectDeploymentsMetadata>.FromValues((IReadOnlyList<TextAuthoringAssignedProjectDeploymentsMetadata>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<TextAuthoringAssignedProjectDeploymentsMetadata>.FromValues((IReadOnlyList<TextAuthoringAssignedProjectDeploymentsMetadata>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -66,9 +69,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetAssignedResourceDeploymentsRequest(nextLink, pageSize, _context) : _client.CreateGetAssignedResourceDeploymentsRequest(_maxCount, _skip, pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TextAnalysisAuthoringClient.GetAssignedResourceDeployments");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

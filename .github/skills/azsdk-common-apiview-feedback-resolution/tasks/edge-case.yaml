@@ -1,0 +1,19 @@
+id: apiview-edge-001
+name: APIView Requires TypeSpec Change
+description: |
+  Test that the skill handles feedback requiring TypeSpec modifications
+  and triggers regeneration.
+tags:
+  - edge-case
+  - typespec-change
+inputs:
+  prompt: "An APIView reviewer says I need to rename 'ComputeProvisioningState' to 'ProvisioningState' in my SDK. This needs a TypeSpec change."
+expected:
+  output_contains:
+    - "client.tsp"
+    - "clientName"
+  output_excludes:
+    - "cannot help"
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

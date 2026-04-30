@@ -16,6 +16,12 @@
 
 .PARAMETER SdkRepoRoot
     Full path to the azure-sdk-for-net repository root.
+
+.PARAMETER LocalSpecRepoPath
+    Path to a local azure-rest-api-specs repo root. When specified, spec files are
+    copied from this directory instead of fetching from GitHub via sparse clone.
+    The path should point to the repo root (e.g., C:\src\azure-rest-api-specs);
+    the script joins it with the 'directory' value from tsp-location.yaml.
 #>
 
 param(
@@ -27,6 +33,8 @@ param(
     
     [Parameter(Mandatory)]
     [string]$SdkRepoRoot,
+    
+    [string]$LocalSpecRepoPath,
     
     [switch]$SaveInputs,
     
@@ -55,52 +63,6 @@ try {
     $specDir = Split-Path $directory -Leaf
     $projectName = Split-Path $ProjectPath -Leaf
     
-    # Convert backslashes to forward slashes for git
-    $directoryForGit = ($directory -replace '\\', '/').TrimEnd('/')
-    
-    # Setup sparse-spec clone directory
-    $sparseSpecRoot = Join-Path (Split-Path $SdkRepoRoot -Parent) "sparse-spec"
-    $sparseSpecDir = Join-Path $sparseSpecRoot $projectName
-    
-    # Clean up and recreate
-    if (Test-Path $sparseSpecDir) {
-        Remove-Item $sparseSpecDir -Recurse -Force
-    }
-    New-Item $sparseSpecDir -ItemType Directory -Force | Out-Null
-    
-    Push-Location $sparseSpecDir
-    try {
-        # Initialize sparse clone with forward slashes
-        $gitRemote = "https://github.com/$repo.git"
-        $gitOutput = git clone --filter=blob:none --no-checkout --depth 1 --sparse $gitRemote . 2>&1
-        if ($LASTEXITCODE -ne 0) { throw "git clone failed: $gitOutput" }
-        
-        $gitOutput = git sparse-checkout init --cone 2>&1
-        if ($LASTEXITCODE -ne 0) { throw "git sparse-checkout init failed: $gitOutput" }
-        
-        $gitOutput = git sparse-checkout set $directoryForGit 2>&1
-        if ($LASTEXITCODE -ne 0) { throw "git sparse-checkout set failed: $gitOutput" }
-        
-        # Add additional directories if any
-        if ($additionalDirs) {
-            foreach ($addDir in $additionalDirs) {
-                $addDirForGit = ($addDir -replace '\\', '/').TrimEnd('/')
-                $gitOutput = git sparse-checkout add $addDirForGit 2>&1
-                if ($LASTEXITCODE -ne 0) { throw "git sparse-checkout add failed: $gitOutput" }
-            }
-        }
-        
-        # Checkout the specific commit
-        $gitOutput = git fetch --depth 1 origin $commit 2>&1
-        if ($LASTEXITCODE -ne 0) { throw "git fetch failed: $gitOutput" }
-        
-        $gitOutput = git checkout $commit 2>&1
-        if ($LASTEXITCODE -ne 0) { throw "git checkout failed: $gitOutput" }
-    }
-    finally {
-        Pop-Location
-    }
-    
     # Copy spec files to TempTypeSpecFiles
     $tempTypeSpecDir = Join-Path $ProjectPath "TempTypeSpecFiles"
     if (Test-Path $tempTypeSpecDir) {
@@ -108,14 +70,78 @@ try {
     }
     New-Item $tempTypeSpecDir -ItemType Directory -Force | Out-Null
     
-    $source = Join-Path $sparseSpecDir $directory
-    Copy-Item -Path $source -Destination $tempTypeSpecDir -Recurse -Force
-    
-    # Copy additional directories if any
-    if ($additionalDirs) {
-        foreach ($addDir in $additionalDirs) {
-            $addSource = Join-Path $sparseSpecDir $addDir
-            Copy-Item -Path $addSource -Destination $tempTypeSpecDir -Recurse -Force
+    if ($LocalSpecRepoPath) {
+        # Use local spec repo directly — normalize path separators for cross-OS compatibility
+        $normalizedDir = $directory -replace '[/\\]', [IO.Path]::DirectorySeparatorChar
+        $source = Join-Path $LocalSpecRepoPath $normalizedDir
+        if (-not (Test-Path $source)) { throw "Local spec directory not found: $source" }
+        Copy-Item -Path $source -Destination $tempTypeSpecDir -Recurse -Force
+        
+        if ($additionalDirs) {
+            foreach ($addDir in $additionalDirs) {
+                $normalizedAddDir = $addDir -replace '[/\\]', [IO.Path]::DirectorySeparatorChar
+                $addSource = Join-Path $LocalSpecRepoPath $normalizedAddDir
+                Copy-Item -Path $addSource -Destination $tempTypeSpecDir -Recurse -Force
+            }
+        }
+    }
+    else {
+        # Fetch spec from remote via sparse clone
+        # Convert backslashes to forward slashes for git
+        $directoryForGit = ($directory -replace '\\', '/').TrimEnd('/')
+        
+        # Setup sparse-spec clone directory
+        $sparseSpecRoot = Join-Path (Split-Path $SdkRepoRoot -Parent) "sparse-spec"
+        $sparseSpecDir = Join-Path $sparseSpecRoot $projectName
+        
+        # Clean up and recreate
+        if (Test-Path $sparseSpecDir) {
+            Remove-Item $sparseSpecDir -Recurse -Force
+        }
+        New-Item $sparseSpecDir -ItemType Directory -Force | Out-Null
+        
+        Push-Location $sparseSpecDir
+        try {
+            # Initialize sparse clone with forward slashes
+            $gitRemote = "https://github.com/$repo.git"
+            $gitOutput = git clone --filter=blob:none --no-checkout --depth 1 --sparse $gitRemote . 2>&1
+            if ($LASTEXITCODE -ne 0) { throw "git clone failed: $gitOutput" }
+            
+            $gitOutput = git sparse-checkout init --cone 2>&1
+            if ($LASTEXITCODE -ne 0) { throw "git sparse-checkout init failed: $gitOutput" }
+            
+            $gitOutput = git sparse-checkout set $directoryForGit 2>&1
+            if ($LASTEXITCODE -ne 0) { throw "git sparse-checkout set failed: $gitOutput" }
+            
+            # Add additional directories if any
+            if ($additionalDirs) {
+                foreach ($addDir in $additionalDirs) {
+                    $addDirForGit = ($addDir -replace '\\', '/').TrimEnd('/')
+                    $gitOutput = git sparse-checkout add $addDirForGit 2>&1
+                    if ($LASTEXITCODE -ne 0) { throw "git sparse-checkout add failed: $gitOutput" }
+                }
+            }
+            
+            # Checkout the specific commit
+            $gitOutput = git fetch --depth 1 origin $commit 2>&1
+            if ($LASTEXITCODE -ne 0) { throw "git fetch failed: $gitOutput" }
+            
+            $gitOutput = git checkout $commit 2>&1
+            if ($LASTEXITCODE -ne 0) { throw "git checkout failed: $gitOutput" }
+        }
+        finally {
+            Pop-Location
+        }
+        
+        $source = Join-Path $sparseSpecDir $directory
+        Copy-Item -Path $source -Destination $tempTypeSpecDir -Recurse -Force
+        
+        # Copy additional directories if any
+        if ($additionalDirs) {
+            foreach ($addDir in $additionalDirs) {
+                $addSource = Join-Path $sparseSpecDir $addDir
+                Copy-Item -Path $addSource -Destination $tempTypeSpecDir -Recurse -Force
+            }
         }
     }
     
@@ -137,10 +163,19 @@ try {
         Rename-Item $sdkNodeModules $sdkNodeModulesBackup -Force
     }
     
-    # Create junction from TempTypeSpecFiles/node_modules to mgmt package's node_modules
+    # Create a link from TempTypeSpecFiles/node_modules to mgmt package's node_modules
+    # Use Junction on Windows (works without elevation) and SymbolicLink on Linux/macOS
     $linkPath = Join-Path $tempTypeSpecDir "node_modules"
     if (Test-Path $linkPath) { Remove-Item $linkPath -Recurse -Force }
-    New-Item -ItemType Junction -Path $linkPath -Target (Join-Path $MgmtPackageRoot "node_modules") | Out-Null
+    $linkTarget = Join-Path $MgmtPackageRoot "node_modules"
+    if ($IsWindows) {
+        New-Item -ItemType Junction -Path $linkPath -Target $linkTarget -ErrorAction Stop | Out-Null
+    } else {
+        New-Item -ItemType SymbolicLink -Path $linkPath -Target $linkTarget -ErrorAction Stop | Out-Null
+    }
+    if (-not (Test-Path $linkPath)) {
+        throw "Failed to create link from '$linkPath' to '$linkTarget'"
+    }
     
     try {
         # Run tsp compile using local emitter path

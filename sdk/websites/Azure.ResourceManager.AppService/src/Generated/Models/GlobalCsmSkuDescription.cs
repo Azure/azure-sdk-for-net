@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A Global SKU Description. </summary>
+    /// <summary>
+    /// A Global SKU Description.
+    /// Serialized Name: GlobalCsmSkuDescription
+    /// </summary>
     public partial class GlobalCsmSkuDescription
     {
         /// <summary>
@@ -54,13 +57,34 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GlobalCsmSkuDescription"/>. </summary>
-        /// <param name="name"> Name of the resource SKU. </param>
-        /// <param name="tier"> Service Tier of the resource SKU. </param>
-        /// <param name="size"> Size specifier of the resource SKU. </param>
-        /// <param name="family"> Family code of the resource SKU. </param>
-        /// <param name="capacity"> Min, max, and default scale values of the SKU. </param>
-        /// <param name="locations"> Locations of the SKU. </param>
-        /// <param name="capabilities"> Capabilities of the SKU, e.g., is traffic manager enabled?. </param>
+        /// <param name="name">
+        /// Name of the resource SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.name
+        /// </param>
+        /// <param name="tier">
+        /// Service Tier of the resource SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.tier
+        /// </param>
+        /// <param name="size">
+        /// Size specifier of the resource SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.size
+        /// </param>
+        /// <param name="family">
+        /// Family code of the resource SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.family
+        /// </param>
+        /// <param name="capacity">
+        /// Min, max, and default scale values of the SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.capacity
+        /// </param>
+        /// <param name="locations">
+        /// Locations of the SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.locations
+        /// </param>
+        /// <param name="capabilities">
+        /// Capabilities of the SKU, e.g., is traffic manager enabled?
+        /// Serialized Name: GlobalCsmSkuDescription.capabilities
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GlobalCsmSkuDescription(string name, string tier, string size, string family, AppServiceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AppServiceSkuCapability> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,25 +98,46 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the resource SKU. </summary>
+        /// <summary>
+        /// Name of the resource SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Service Tier of the resource SKU. </summary>
+        /// <summary>
+        /// Service Tier of the resource SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.tier
+        /// </summary>
         [WirePath("tier")]
         public string Tier { get; }
-        /// <summary> Size specifier of the resource SKU. </summary>
+        /// <summary>
+        /// Size specifier of the resource SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.size
+        /// </summary>
         [WirePath("size")]
         public string Size { get; }
-        /// <summary> Family code of the resource SKU. </summary>
+        /// <summary>
+        /// Family code of the resource SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.family
+        /// </summary>
         [WirePath("family")]
         public string Family { get; }
-        /// <summary> Min, max, and default scale values of the SKU. </summary>
+        /// <summary>
+        /// Min, max, and default scale values of the SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.capacity
+        /// </summary>
         [WirePath("capacity")]
         public AppServiceSkuCapacity Capacity { get; }
-        /// <summary> Locations of the SKU. </summary>
+        /// <summary>
+        /// Locations of the SKU.
+        /// Serialized Name: GlobalCsmSkuDescription.locations
+        /// </summary>
         [WirePath("locations")]
         public IReadOnlyList<AzureLocation> Locations { get; }
-        /// <summary> Capabilities of the SKU, e.g., is traffic manager enabled?. </summary>
+        /// <summary>
+        /// Capabilities of the SKU, e.g., is traffic manager enabled?
+        /// Serialized Name: GlobalCsmSkuDescription.capabilities
+        /// </summary>
         [WirePath("capabilities")]
         public IReadOnlyList<AppServiceSkuCapability> Capabilities { get; }
     }

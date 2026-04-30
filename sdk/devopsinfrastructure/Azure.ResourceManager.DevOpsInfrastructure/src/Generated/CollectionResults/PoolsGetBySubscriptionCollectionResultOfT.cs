@@ -19,16 +19,19 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         private readonly Pools _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PoolsGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Pools client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PoolsGetBySubscriptionCollectionResultOfT(Pools client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PoolsGetBySubscriptionCollectionResultOfT(Pools client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PoolsGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                     yield break;
                 }
                 PoolListResult result = PoolListResult.FromResponse(response);
-                yield return Page<DevOpsPoolData>.FromValues((IReadOnlyList<DevOpsPoolData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevOpsPoolData>.FromValues((IReadOnlyList<DevOpsPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDevOpsInfrastructureSubscriptionResource.GetDevOpsPools");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

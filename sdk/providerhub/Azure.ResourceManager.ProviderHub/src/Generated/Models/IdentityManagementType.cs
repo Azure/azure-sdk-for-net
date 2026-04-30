@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct IdentityManagementType : IEquatable<IdentityManagementType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="IdentityManagementType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IdentityManagementType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string SystemAssignedValue = "SystemAssigned";
         private const string UserAssignedValue = "UserAssigned";
         private const string ActorValue = "Actor";
         private const string DelegatedResourceIdentityValue = "DelegatedResourceIdentity";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityManagementType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IdentityManagementType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static IdentityManagementType NotSpecified { get; } = new IdentityManagementType(NotSpecifiedValue);
-        /// <summary> SystemAssigned. </summary>
+
+        /// <summary> Gets the SystemAssigned. </summary>
         public static IdentityManagementType SystemAssigned { get; } = new IdentityManagementType(SystemAssignedValue);
-        /// <summary> UserAssigned. </summary>
+
+        /// <summary> Gets the UserAssigned. </summary>
         public static IdentityManagementType UserAssigned { get; } = new IdentityManagementType(UserAssignedValue);
-        /// <summary> Actor. </summary>
+
+        /// <summary> Gets the Actor. </summary>
         public static IdentityManagementType Actor { get; } = new IdentityManagementType(ActorValue);
-        /// <summary> DelegatedResourceIdentity. </summary>
+
+        /// <summary> Gets the DelegatedResourceIdentity. </summary>
         public static IdentityManagementType DelegatedResourceIdentity { get; } = new IdentityManagementType(DelegatedResourceIdentityValue);
+
         /// <summary> Determines if two <see cref="IdentityManagementType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IdentityManagementType left, IdentityManagementType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IdentityManagementType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IdentityManagementType left, IdentityManagementType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityManagementType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IdentityManagementType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IdentityManagementType(string value) => new IdentityManagementType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IdentityManagementType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IdentityManagementType?(string value) => value == null ? null : new IdentityManagementType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IdentityManagementType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IdentityManagementType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

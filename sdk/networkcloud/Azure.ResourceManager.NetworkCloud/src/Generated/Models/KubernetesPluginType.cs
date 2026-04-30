@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct KubernetesPluginType : IEquatable<KubernetesPluginType>
     {
         private readonly string _value;
+        /// <summary> DPDK plugin type. </summary>
+        private const string DpdkValue = "DPDK";
+        /// <summary> SRIOV plugin type. </summary>
+        private const string SriovValue = "SRIOV";
+        /// <summary> OSDevice plugin type. </summary>
+        private const string OSDeviceValue = "OSDevice";
+        /// <summary> MACVLAN plugin type. </summary>
+        private const string MacvlanValue = "MACVLAN";
+        /// <summary> IPVLAN plugin type. </summary>
+        private const string IpvlanValue = "IPVLAN";
 
         /// <summary> Initializes a new instance of <see cref="KubernetesPluginType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KubernetesPluginType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DpdkValue = "DPDK";
-        private const string SriovValue = "SRIOV";
-        private const string OSDeviceValue = "OSDevice";
-        private const string MacvlanValue = "MACVLAN";
-        private const string IpvlanValue = "IPVLAN";
-
-        /// <summary> DPDK. </summary>
+        /// <summary> DPDK plugin type. </summary>
         public static KubernetesPluginType Dpdk { get; } = new KubernetesPluginType(DpdkValue);
-        /// <summary> SRIOV. </summary>
+
+        /// <summary> SRIOV plugin type. </summary>
         public static KubernetesPluginType Sriov { get; } = new KubernetesPluginType(SriovValue);
-        /// <summary> OSDevice. </summary>
+
+        /// <summary> OSDevice plugin type. </summary>
         public static KubernetesPluginType OSDevice { get; } = new KubernetesPluginType(OSDeviceValue);
-        /// <summary> MACVLAN. </summary>
+
+        /// <summary> MACVLAN plugin type. </summary>
         public static KubernetesPluginType Macvlan { get; } = new KubernetesPluginType(MacvlanValue);
-        /// <summary> IPVLAN. </summary>
+
+        /// <summary> IPVLAN plugin type. </summary>
         public static KubernetesPluginType Ipvlan { get; } = new KubernetesPluginType(IpvlanValue);
+
         /// <summary> Determines if two <see cref="KubernetesPluginType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KubernetesPluginType left, KubernetesPluginType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KubernetesPluginType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KubernetesPluginType left, KubernetesPluginType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesPluginType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KubernetesPluginType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KubernetesPluginType(string value) => new KubernetesPluginType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KubernetesPluginType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KubernetesPluginType?(string value) => value == null ? null : new KubernetesPluginType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KubernetesPluginType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KubernetesPluginType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

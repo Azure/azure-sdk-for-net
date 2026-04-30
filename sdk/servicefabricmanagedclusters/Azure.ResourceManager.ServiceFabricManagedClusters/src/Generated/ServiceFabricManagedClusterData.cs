@@ -107,7 +107,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.ClusterCertificateThumbprints;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.ClusterCertificateThumbprints;
             }
         }
 
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.ClientConnectionPort = value.Value;
+                Properties.ClientConnectionPort = value;
             }
         }
 
@@ -141,7 +145,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.HttpGatewayConnectionPort = value.Value;
+                Properties.HttpGatewayConnectionPort = value;
             }
         }
 
@@ -184,7 +188,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.LoadBalancingRules;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.LoadBalancingRules;
             }
         }
 
@@ -201,7 +209,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsRdpAccessAllowed = value.Value;
+                Properties.IsRdpAccessAllowed = value;
             }
         }
 
@@ -210,7 +218,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.NetworkSecurityRules;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.NetworkSecurityRules;
             }
         }
 
@@ -219,7 +231,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.Clients;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.Clients;
             }
         }
 
@@ -245,7 +261,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.FabricSettings;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.FabricSettings;
             }
         }
 
@@ -288,7 +308,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.ClusterUpgradeMode = value.Value;
+                Properties.ClusterUpgradeMode = value;
             }
         }
 
@@ -305,7 +325,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.ClusterUpgradeCadence = value.Value;
+                Properties.ClusterUpgradeCadence = value;
             }
         }
 
@@ -314,7 +334,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.AddOnFeatures;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.AddOnFeatures;
             }
         }
 
@@ -331,7 +355,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsAutoOSUpgradeEnabled = value.Value;
+                Properties.IsAutoOSUpgradeEnabled = value;
             }
         }
 
@@ -348,7 +372,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.HasZoneResiliency = value.Value;
+                Properties.HasZoneResiliency = value;
             }
         }
 
@@ -365,7 +389,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsIPv6Enabled = value.Value;
+                Properties.IsIPv6Enabled = value;
             }
         }
 
@@ -391,7 +415,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.IPTags;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.IPTags;
             }
         }
 
@@ -417,7 +445,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsServicePublicIPEnabled = value.Value;
+                Properties.IsServicePublicIPEnabled = value;
             }
         }
 
@@ -426,7 +454,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.AuxiliarySubnets;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.AuxiliarySubnets;
             }
         }
 
@@ -435,7 +467,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.ServiceEndpoints;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.ServiceEndpoints;
             }
         }
 
@@ -452,7 +488,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.ZonalUpdateMode = value.Value;
+                Properties.ZonalUpdateMode = value;
             }
         }
 
@@ -469,7 +505,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.UseCustomVnet = value.Value;
+                Properties.UseCustomVnet = value;
             }
         }
 
@@ -554,7 +590,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.HttpGatewayTokenAuthConnectionPort = value.Value;
+                Properties.HttpGatewayTokenAuthConnectionPort = value;
             }
         }
 
@@ -571,7 +607,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsHttpGatewayExclusiveAuthModeEnabled = value.Value;
+                Properties.IsHttpGatewayExclusiveAuthModeEnabled = value;
             }
         }
 
@@ -588,7 +624,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.AutoGeneratedDomainNameLabelScope = value.Value;
+                Properties.AutoGeneratedDomainNameLabelScope = value;
             }
         }
 
@@ -605,7 +641,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.AllocatedOutboundPorts = value.Value;
+                Properties.AllocatedOutboundPorts = value;
             }
         }
 
@@ -639,7 +675,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.EnableOutboundOnlyNodeTypes = value.Value;
+                Properties.EnableOutboundOnlyNodeTypes = value;
+            }
+        }
+
+        /// <summary> Determines whether to skip the assignment of the managed network security group (SF-NSG) to the cluster subnet when using a bring-your-own virtual network (BYOVNET) configuration. The default value is false. </summary>
+        public bool? SkipManagedNsgAssignment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkipManagedNsgAssignment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.SkipManagedNsgAssignment = value;
             }
         }
 
@@ -656,20 +709,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.MaxUnusedVersionsToKeep = value.Value;
-            }
-        }
-
-        /// <summary> Sku Name. </summary>
-        public ServiceFabricManagedClustersSkuName? SkuName
-        {
-            get
-            {
-                return Sku is null ? default : Sku.Name;
-            }
-            set
-            {
-                Sku = value.HasValue ? new ServiceFabricManagedClustersSku(value.Value) : default;
+                Properties.MaxUnusedVersionsToKeep = value;
             }
         }
     }

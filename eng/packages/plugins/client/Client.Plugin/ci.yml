@@ -36,8 +36,20 @@ extends:
       - job: Build
         steps:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+            Paths:
+              - "/sdk"
+              - "/common"
         - template: /eng/pipelines/templates/steps/install-dotnet.yml
         - pwsh: |
             dotnet build .
           displayName: 'Build client plugin'
           workingDirectory: eng/packages/plugins/client/Client.Plugin
+        - pwsh: |
+            dotnet test . --no-build
+          displayName: 'Test client plugin'
+          workingDirectory: eng/packages/plugins/client/Client.Plugin
+        - pwsh: |
+            ./eng/packages/plugins/client/eng/scripts/Regenerate-Sdk.ps1
+          displayName: 'Regenerate libraries using plugin and verify no diff'
+

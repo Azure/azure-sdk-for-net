@@ -11,7 +11,7 @@ using OSPlatform = System.Runtime.InteropServices.OSPlatform;
 
 namespace Azure.Core.TestFramework
 {
-    [AttributeUsage(AttributeTargets.Method|AttributeTargets.Class|AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
     public class RunOnlyOnPlatformsAttribute : NUnitAttribute, IApplyToTest
     {
         public bool Linux { get; set; }

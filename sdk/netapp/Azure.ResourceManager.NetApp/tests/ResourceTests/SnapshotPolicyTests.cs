@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
             VolumeSnapshotProperties snapshotPolicyProperties = new(snapshotPolicyResource1.Id, serializedAdditionalRawData: null);
-            NetAppVolumeDataProtection dataProtectionProperties = new() {Snapshot = snapshotPolicyProperties };
+            NetAppVolumeDataProtection dataProtectionProperties = new() { Snapshot = snapshotPolicyProperties };
             await CreateVirtualNetwork();
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 HourlySchedule = _hourlySchedule,
                 DailySchedule = _dailySchedule,
                 WeeklySchedule = _weeklySchedule,
-                MonthlySchedule =_monthlySchedule
+                MonthlySchedule = _monthlySchedule
             };
             SnapshotPolicyResource snapshotPolicyResource = (await _snapshotPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, snapshotPolicy)).Value;
             return snapshotPolicyResource;

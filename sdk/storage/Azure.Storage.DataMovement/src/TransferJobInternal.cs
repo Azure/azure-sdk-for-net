@@ -4,8 +4,8 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -331,6 +331,15 @@ namespace Azure.Storage.DataMovement
                         bool overwrite = _creationPreference == StorageResourceCreationMode.OverwriteIfExists;
                         await subContainer.CreateAsync(overwrite, sourceProperties, _cancellationToken).ConfigureAwait(false);
                     }
+                    catch (Exception ex) when (
+                        _creationPreference == StorageResourceCreationMode.SkipIfExists &&
+                        (ex is InvalidOperationException operationException &&
+                        operationException.Message.Contains(DataMovementConstants.ErrorCode.CannotOverwriteDirectory)))
+                    {
+                        DataMovementEventSource.Singleton.DirectorySkipped(
+                            _transferOperation.Id,
+                            subContainer.Uri.AbsolutePath);
+                    }
                     catch (Exception ex)
                     {
                         await InvokeFailedArgAsync(ex).ConfigureAwait(false);
@@ -537,20 +546,36 @@ namespace Azure.Storage.DataMovement
         {
             if (_transferOperation._state.SetTransferState(state))
             {
-                // If we are in a final state, dispose the JobPartEvent handlers and complete the progress tracker.
-                if (state == TransferState.Completed ||
-                    state == TransferState.Paused)
+                try
                 {
-                    if (JobPartStatusEvents != default)
+                    // If we are in a final state, dispose the JobPartEvent handlers and complete the progress tracker.
+                    if (state == TransferState.Completed ||
+                        state == TransferState.Paused)
                     {
-                        JobPartStatusEvents -= JobPartStatusEventAsync;
+                        if (JobPartStatusEvents != default)
+                        {
+                            JobPartStatusEvents -= JobPartStatusEventAsync;
+                        }
+                        // This will block until all pending progress reports have gone out
+                        await _progressTracker.CleanUpAsync().ConfigureAwait(false);
                     }
-                    // This will block until all pending progress reports have gone out
-                    await _progressTracker.CleanUpAsync().ConfigureAwait(false);
-                }
 
-                await OnJobPartStatusChangedAsync().ConfigureAwait(false);
-                await SetCheckpointerStatusAsync().ConfigureAwait(false);
+                    await OnJobPartStatusChangedAsync().ConfigureAwait(false);
+                    await SetCheckpointerStatusAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    DataMovementEventSource.Singleton.UnexpectedCleanupError(
+                        _transferOperation.Id, ex.Message);
+                }
+                finally
+                {
+                    // Signal completion AFTER all checkpointer cleanup is done.
+                    // This prevents a race condition where the pause waiter returns
+                    // and immediately resumes the transfer before the checkpointer
+                    // has finished disposing the old JobPlanFile.
+                    _transferOperation._state.CompleteIfFinalState();
+                }
             }
         }
 

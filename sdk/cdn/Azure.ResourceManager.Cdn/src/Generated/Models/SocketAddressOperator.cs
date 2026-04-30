@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct SocketAddressOperator : IEquatable<SocketAddressOperator>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SocketAddressOperator"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SocketAddressOperator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string IPMatchValue = "IPMatch";
 
-        /// <summary> Any. </summary>
+        /// <summary> Initializes a new instance of <see cref="SocketAddressOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SocketAddressOperator(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static SocketAddressOperator Any { get; } = new SocketAddressOperator(AnyValue);
-        /// <summary> IPMatch. </summary>
+
+        /// <summary> Gets the IPMatch. </summary>
         public static SocketAddressOperator IPMatch { get; } = new SocketAddressOperator(IPMatchValue);
+
         /// <summary> Determines if two <see cref="SocketAddressOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SocketAddressOperator left, SocketAddressOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SocketAddressOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SocketAddressOperator left, SocketAddressOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SocketAddressOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SocketAddressOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SocketAddressOperator(string value) => new SocketAddressOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SocketAddressOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SocketAddressOperator?(string value) => value == null ? null : new SocketAddressOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SocketAddressOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SocketAddressOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

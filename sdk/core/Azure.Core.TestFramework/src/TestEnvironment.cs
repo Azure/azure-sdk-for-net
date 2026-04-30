@@ -3,18 +3,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.Identity;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Identity;
+using Azure.Identity.Broker;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -243,13 +244,53 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        _credential = new DefaultAzureCredential(
-                             new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
+                        _credential = CreateDeveloperCredential();
                     }
                 }
 
                 return _credential;
             }
+        }
+
+        /// <summary>
+        /// Returns the credential used for local developer authentication when no service principal
+        /// or pipeline credentials are available. The default implementation uses silent broker
+        /// authentication (scoped to the Azure test tenant) and falls back to a
+        /// local-dev-optimized <see cref="DefaultAzureCredential"/> if the broker is unavailable.
+        /// Subclasses can override this method to customize the credential chain.
+        /// </summary>
+        /// <returns>A <see cref="TokenCredential"/> for local developer authentication.</returns>
+        protected virtual TokenCredential CreateDeveloperCredential()
+        {
+            const string AzureTestTenantId = "70a036f6-8e4d-4615-bad6-149c02e7720d";
+
+            try
+            {
+                var brokerOptions = new InteractiveBrowserCredentialBrokerOptions(IntPtr.Zero)
+                {
+                    TenantId = AzureTestTenantId,
+                    UseDefaultBrokerAccount = true,
+                    TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
+                };
+
+                return new ChainedTokenCredential(
+                    new InteractiveBrowserCredential(brokerOptions),
+                    new VisualStudioCodeCredential());
+            }
+            catch
+            {
+                // Broker not available on this platform, fall through to DefaultAzureCredential
+            }
+
+            return new DefaultAzureCredential(
+                new DefaultAzureCredentialOptions
+                {
+                    ExcludeEnvironmentCredential = true,
+                    ExcludeManagedIdentityCredential = true,
+                    ExcludeWorkloadIdentityCredential = true,
+                    ExcludeBrokerCredential = true,
+                    ExcludeVisualStudioCodeCredential = true,
+                });
         }
 
         /// <summary>
@@ -622,7 +663,7 @@ namespace Azure.Core.TestFramework
             {
                 string switchString = TestContext.Parameters["LiveTestServiceVersions"] ?? Environment.GetEnvironmentVariable("AZURE_LIVE_TEST_SERVICE_VERSIONS") ?? string.Empty;
 
-                return switchString.Split(new char[] {',', ';'}, StringSplitOptions.RemoveEmptyEntries);
+                return switchString.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
 
@@ -712,9 +753,9 @@ namespace Azure.Core.TestFramework
                         "scripts",
                         $"New-TestResources-Bootstrapper.ps1 {_serviceName}");
 
-                        var processInfo = new ProcessStartInfo(
-                        @"pwsh.exe",
-                        path)
+                    var processInfo = new ProcessStartInfo(
+                    @"pwsh.exe",
+                    path)
                     {
                         UseShellExecute = true
                     };

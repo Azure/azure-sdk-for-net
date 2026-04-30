@@ -244,6 +244,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 siteName,
                 domainId,
                 azureResourceName,
@@ -253,7 +254,6 @@ namespace Azure.ResourceManager.AppService
                 sslState,
                 thumbprint,
                 virtualIP,
-                kind,
                 serializedAdditionalRawData);
         }
 

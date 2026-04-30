@@ -19,14 +19,17 @@ namespace Azure.Data.SchemaRegistry
     {
         private readonly SchemaRegistryClient _client;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SchemaRegistryClientGetSchemaGroupsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SchemaRegistryClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SchemaRegistryClientGetSchemaGroupsAsyncCollectionResultOfT(SchemaRegistryClient client, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SchemaRegistryClientGetSchemaGroupsAsyncCollectionResultOfT(SchemaRegistryClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SchemaRegistryClientGetSchemaGroupsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -44,7 +47,7 @@ namespace Azure.Data.SchemaRegistry
                     yield break;
                 }
                 SchemaGroups result = (SchemaGroups)response;
-                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -59,7 +62,7 @@ namespace Azure.Data.SchemaRegistry
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSchemaGroupsRequest(nextLink, _context) : _client.CreateGetSchemaGroupsRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaGroups");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

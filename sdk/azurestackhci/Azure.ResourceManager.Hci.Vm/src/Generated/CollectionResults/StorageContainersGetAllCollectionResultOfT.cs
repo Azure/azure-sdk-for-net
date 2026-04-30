@@ -19,16 +19,19 @@ namespace Azure.ResourceManager.Hci.Vm
         private readonly StorageContainers _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of StorageContainersGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The StorageContainers client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public StorageContainersGetAllCollectionResultOfT(StorageContainers client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public StorageContainersGetAllCollectionResultOfT(StorageContainers client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of StorageContainersGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     yield break;
                 }
                 StorageContainerListResult result = StorageContainerListResult.FromResponse(response);
-                yield return Page<HciVmStorageContainerData>.FromValues((IReadOnlyList<HciVmStorageContainerData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HciVmStorageContainerData>.FromValues((IReadOnlyList<HciVmStorageContainerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Vm
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableHciVmSubscriptionResource.GetHciVmStorageContainers");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

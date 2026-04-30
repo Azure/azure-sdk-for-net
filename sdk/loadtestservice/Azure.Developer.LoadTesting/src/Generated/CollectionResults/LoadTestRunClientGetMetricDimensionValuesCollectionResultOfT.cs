@@ -18,11 +18,12 @@ namespace Azure.Developer.LoadTesting
         private readonly LoadTestRunClient _client;
         private readonly string _testRunId;
         private readonly string _name;
-        private readonly string _metricname;
+        private readonly string _metricName;
         private readonly string _metricNamespace;
         private readonly string _timespan;
         private readonly string _interval;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LoadTestRunClientGetMetricDimensionValuesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestRunClient client used to send requests. </param>
@@ -31,21 +32,23 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="name"> Dimension name. </param>
-        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LoadTestRunClientGetMetricDimensionValuesCollectionResultOfT(LoadTestRunClient client, string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LoadTestRunClientGetMetricDimensionValuesCollectionResultOfT(LoadTestRunClient client, string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _testRunId = testRunId;
             _name = name;
-            _metricname = metricname;
+            _metricName = metricName;
             _metricNamespace = metricNamespace;
             _timespan = timespan;
             _interval = interval;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LoadTestRunClientGetMetricDimensionValuesCollectionResultOfT as an enumerable collection. </summary>
@@ -63,7 +66,7 @@ namespace Azure.Developer.LoadTesting
                     yield break;
                 }
                 DimensionValueList result = (DimensionValueList)response;
-                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -77,8 +80,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricDimensionValuesRequest(nextLink, _testRunId, _name, _metricname, _metricNamespace, _timespan, _interval, _context) : _client.CreateGetMetricDimensionValuesRequest(_testRunId, _name, _metricname, _metricNamespace, _timespan, _interval, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDimensionValues");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricDimensionValuesRequest(nextLink, _testRunId, _name, _metricName, _metricNamespace, _timespan, _interval, _context) : _client.CreateGetMetricDimensionValuesRequest(_testRunId, _name, _metricName, _metricNamespace, _timespan, _interval, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

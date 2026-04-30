@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> This property can be used by user in the request to choose which location the operating system should be in. e.g., cache disk space for Ephemeral OS disk provisioning. For more information on Ephemeral OS disk size requirements, please refer to Ephemeral OS disk size requirements for Windows VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements. </summary>
+    /// <summary> The location where the OS disk should be placed. </summary>
     public readonly partial struct BatchDiffDiskPlacement : IEquatable<BatchDiffDiskPlacement>
     {
         private readonly string _value;
+        /// <summary> The OS disk will be placed on the cache disk of the VM. </summary>
+        private const string CacheDiskValue = "CacheDisk";
 
         /// <summary> Initializes a new instance of <see cref="BatchDiffDiskPlacement"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchDiffDiskPlacement(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CacheDiskValue = "CacheDisk";
-
-        /// <summary> CacheDisk. </summary>
+        /// <summary> The OS disk will be placed on the cache disk of the VM. </summary>
         public static BatchDiffDiskPlacement CacheDisk { get; } = new BatchDiffDiskPlacement(CacheDiskValue);
+
         /// <summary> Determines if two <see cref="BatchDiffDiskPlacement"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchDiffDiskPlacement left, BatchDiffDiskPlacement right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchDiffDiskPlacement"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchDiffDiskPlacement left, BatchDiffDiskPlacement right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchDiffDiskPlacement"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchDiffDiskPlacement"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchDiffDiskPlacement(string value) => new BatchDiffDiskPlacement(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchDiffDiskPlacement"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchDiffDiskPlacement?(string value) => value == null ? null : new BatchDiffDiskPlacement(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchDiffDiskPlacement other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchDiffDiskPlacement other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

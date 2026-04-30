@@ -34,7 +34,8 @@ internal class CustomHeadersPolicy : HttpPipelineSynchronousPolicy
     /// <param name="message">The message to apply policy to.</param>
     public override void OnSendingRequest(HttpMessage message)
     {
-        foreach (KeyValuePair<string, string> header in _headers) {
+        foreach (KeyValuePair<string, string> header in _headers)
+        {
             message.Request.Headers.Add(header.Key, header.Value);
         }
     }

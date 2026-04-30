@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public static string GetPermission(
             this IDictionary<string, object> properties)
             => properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
-                ? (string) permission
+                ? (string)permission
                 : default;
 
         public static FileSmbProperties GetFileSmbProperties(
@@ -127,7 +127,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
                 permissionKeyValue = setPermissions
                     ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
-                        ? (string) permissionKeyObject
+                        ? (string)permissionKeyObject
                         : default
                     : default;
             }
@@ -223,7 +223,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
 
             return rawProperties?.TryGetValue(propertyKey, out object value) == true
-                   ? (T?) value
+                   ? (T?)value
                    : default;
         }
 
@@ -765,6 +765,45 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 DataMovementFileShareEventSource.Singleton.ProtocolValidationSkipped(transferId, endpoint, resourceUri);
             }
+        }
+
+        internal static T ValidateAndApplySnapshotAndVersionId<T>(
+            this T client,
+            Uri clientUri,
+            ShareFileStorageResourceOptions options,
+            Func<T, string, T> withSnapshot)
+        {
+            if (options == null)
+            {
+                return client;
+            }
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(clientUri);
+
+            if (!string.IsNullOrEmpty(options.Snapshot))
+            {
+                if (!string.IsNullOrEmpty(uriBuilder.Snapshot) &&
+                    options.Snapshot != uriBuilder.Snapshot)
+                {
+                    throw Azure.Storage.Errors.SnapshotMismatch(uriBuilder.Snapshot, options.Snapshot);
+                }
+                if (string.IsNullOrEmpty(uriBuilder.Snapshot))
+                {
+                    client = withSnapshot(client, options.Snapshot);
+                }
+            }
+            return client;
+        }
+
+        internal static Uri BuildSanitizedUri(this Uri uri)
+        {
+            // Strip SAS from URI for security - snapshot is preserved automatically
+            // SAS should not be exposed in events/logs
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
+            {
+                Sas = null
+            };
+            return uriBuilder.ToUri();
         }
     }
 

@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 {
-    public class DataProtectionKeysFunctionalTests: LiveTestBase<DataProtectionTestEnvironment>
+    public class DataProtectionKeysFunctionalTests : LiveTestBase<DataProtectionTestEnvironment>
     {
         [Test]
         public async Task ProtectsKeysWithKeyVaultKey()
@@ -91,7 +91,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             }
         }
 
-        private class TestKeyRepository: IXmlRepository
+        private class TestKeyRepository : IXmlRepository
         {
             private List<XElement> _elements;
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Azure.Provisioning.Expressions;
@@ -36,7 +37,7 @@ internal static class BicepSyntax
             return BicepSyntax.Value((int)value);
         }
         // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
-        return BicepFunction.ParseJson(BicepSyntax.Value(value.ToString())).Compile();
+        return BicepFunction.ParseJson(BicepSyntax.Value(value.ToString(CultureInfo.InvariantCulture))).Compile();
     }
     public static StringLiteralExpression Value(string value) => new(value);
     public static ArrayExpression Array(params BicepExpression[] values) => new(values);

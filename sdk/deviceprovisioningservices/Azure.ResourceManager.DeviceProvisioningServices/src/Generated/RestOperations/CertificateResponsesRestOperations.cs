@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath(provisioningServiceName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath(provisioningServiceName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -105,7 +111,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath(provisioningServiceName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (certificateCommonName != null)
             {
                 uri.AppendQuery("certificate.name", certificateCommonName, true);
@@ -157,7 +166,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath("/providers/Microsoft.Devices/provisioningServices/", false);
             uri.AppendPath(provisioningServiceName, true);
             uri.AppendPath("/certificates", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -179,7 +191,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
             uri.AppendPath("/generateVerificationCode", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (certificateCommonName != null)
             {
                 uri.AppendQuery("certificate.name", certificateCommonName, true);
@@ -234,7 +249,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
             uri.AppendPath("/verify", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (certificateCommonName != null)
             {
                 uri.AppendQuery("certificate.name", certificateCommonName, true);

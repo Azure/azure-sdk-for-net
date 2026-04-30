@@ -19,16 +19,19 @@ namespace BasicTypeSpec
         private readonly BasicTypeSpecClient _client;
         private readonly int _numElements;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="numElements"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult(BasicTypeSpecClient client, int numElements, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult(BasicTypeSpecClient client, int numElements, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _numElements = numElements;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResult as an enumerable collection. </summary>
@@ -51,10 +54,10 @@ namespace BasicTypeSpec
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (response.Headers.TryGetValue("next", out string value) && !string.IsNullOrEmpty(value))
                 {
-                    nextPage = new Uri(value);
+                    nextPage = new Uri(value, UriKind.RelativeOrAbsolute);
                 }
                 else
                 {
@@ -70,7 +73,7 @@ namespace BasicTypeSpec
         {
             int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _numElements;
             HttpMessage message = nextLink != null ? _client.CreateNextGetWithHeaderNextLinkWithMaxPageRequest(nextLink, pageSize, _context) : _client.CreateGetWithHeaderNextLinkWithMaxPageRequest(pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithHeaderNextLinkWithMaxPage");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

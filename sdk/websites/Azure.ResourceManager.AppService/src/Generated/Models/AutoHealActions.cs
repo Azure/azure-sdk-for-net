@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Actions which to take by the auto-heal module when a rule is triggered. </summary>
+    /// <summary>
+    /// Actions which to take by the auto-heal module when a rule is triggered.
+    /// Serialized Name: AutoHealActions
+    /// </summary>
     public partial class AutoHealActions
     {
         /// <summary>
@@ -51,11 +54,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoHealActions"/>. </summary>
-        /// <param name="actionType"> Predefined action to be taken. </param>
-        /// <param name="customAction"> Custom action to be taken. </param>
+        /// <param name="actionType">
+        /// Predefined action to be taken.
+        /// Serialized Name: AutoHealActions.actionType
+        /// </param>
+        /// <param name="customAction">
+        /// Custom action to be taken.
+        /// Serialized Name: AutoHealActions.customAction
+        /// </param>
         /// <param name="minProcessExecutionTime">
         /// Minimum time the process must execute
         /// before taking the action
+        /// Serialized Name: AutoHealActions.minProcessExecutionTime
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutoHealActions(AutoHealActionType? actionType, AutoHealCustomAction customAction, string minProcessExecutionTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -66,15 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Predefined action to be taken. </summary>
+        /// <summary>
+        /// Predefined action to be taken.
+        /// Serialized Name: AutoHealActions.actionType
+        /// </summary>
         [WirePath("actionType")]
         public AutoHealActionType? ActionType { get; set; }
-        /// <summary> Custom action to be taken. </summary>
+        /// <summary>
+        /// Custom action to be taken.
+        /// Serialized Name: AutoHealActions.customAction
+        /// </summary>
         [WirePath("customAction")]
         public AutoHealCustomAction CustomAction { get; set; }
         /// <summary>
         /// Minimum time the process must execute
         /// before taking the action
+        /// Serialized Name: AutoHealActions.minProcessExecutionTime
         /// </summary>
         [WirePath("minProcessExecutionTime")]
         public string MinProcessExecutionTime { get; set; }

@@ -213,6 +213,8 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class OnlineExperimentationClient
     {
         protected OnlineExperimentationClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public OnlineExperimentationClient(Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings settings) { }
         public OnlineExperimentationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public OnlineExperimentationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -234,10 +236,10 @@ namespace Azure.Analytics.OnlineExperimentation
         public virtual Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetric(string experimentMetricId, Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricAsync(string experimentMetricId, Azure.RequestConditions requestConditions, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric>> GetMetricAsync(string experimentMetricId, Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetMetrics(int? maxCount, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetrics(int? maxCount = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetricsAsync(int? maxCount = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMetrics(int? maxCount, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetrics(int? maxCount = default(int?), int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetricsAsync(int? maxCount = default(int?), int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric> UpdateMetric(string experimentMetricId, Azure.Analytics.OnlineExperimentation.ExperimentMetricUpdate metric, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric>> UpdateMetricAsync(string experimentMetricId, Azure.Analytics.OnlineExperimentation.ExperimentMetricUpdate metric, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult> ValidateMetric(Azure.Analytics.OnlineExperimentation.ExperimentMetric body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -252,6 +254,14 @@ namespace Azure.Analytics.OnlineExperimentation
         {
             V2025_05_31_Preview = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class OnlineExperimentationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public OnlineExperimentationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class OnlineExperimentationModelFactory
     {

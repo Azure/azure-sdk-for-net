@@ -7,66 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The expander to use when scaling up. If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information.
-    /// Serialized Name: Expander
-    /// </summary>
+    /// <summary> The expander to use when scaling up. If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </summary>
     public readonly partial struct AutoScaleExpander : IEquatable<AutoScaleExpander>
     {
         private readonly string _value;
+        /// <summary> Selects the node group that will have the least idle CPU (if tied, unused memory) after scale-up. This is useful when you have different classes of nodes, for example, high CPU or high memory nodes, and only want to expand those when there are pending pods that need a lot of those resources. </summary>
+        private const string LeastWasteValue = "least-waste";
+        /// <summary> Selects the node group that would be able to schedule the most pods when scaling up. This is useful when you are using nodeSelector to make sure certain pods land on certain nodes. Note that this won't cause the autoscaler to select bigger nodes vs. smaller, as it can add multiple smaller nodes at once. </summary>
+        private const string MostPodsValue = "most-pods";
+        /// <summary> Selects the node group that has the highest priority assigned by the user. It's configuration is described in more details [here](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md). </summary>
+        private const string PriorityValue = "priority";
+        /// <summary> Used when you don't have a particular need for the node groups to scale differently. </summary>
+        private const string RandomValue = "random";
 
         /// <summary> Initializes a new instance of <see cref="AutoScaleExpander"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoScaleExpander(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string LeastWasteValue = "least-waste";
-        private const string MostPodsValue = "most-pods";
-        private const string PriorityValue = "priority";
-        private const string RandomValue = "random";
-
-        /// <summary>
-        /// Selects the node group that will have the least idle CPU (if tied, unused memory) after scale-up. This is useful when you have different classes of nodes, for example, high CPU or high memory nodes, and only want to expand those when there are pending pods that need a lot of those resources.
-        /// Serialized Name: Expander.least-waste
-        /// </summary>
+        /// <summary> Selects the node group that will have the least idle CPU (if tied, unused memory) after scale-up. This is useful when you have different classes of nodes, for example, high CPU or high memory nodes, and only want to expand those when there are pending pods that need a lot of those resources. </summary>
         public static AutoScaleExpander LeastWaste { get; } = new AutoScaleExpander(LeastWasteValue);
-        /// <summary>
-        /// Selects the node group that would be able to schedule the most pods when scaling up. This is useful when you are using nodeSelector to make sure certain pods land on certain nodes. Note that this won't cause the autoscaler to select bigger nodes vs. smaller, as it can add multiple smaller nodes at once.
-        /// Serialized Name: Expander.most-pods
-        /// </summary>
+
+        /// <summary> Selects the node group that would be able to schedule the most pods when scaling up. This is useful when you are using nodeSelector to make sure certain pods land on certain nodes. Note that this won't cause the autoscaler to select bigger nodes vs. smaller, as it can add multiple smaller nodes at once. </summary>
         public static AutoScaleExpander MostPods { get; } = new AutoScaleExpander(MostPodsValue);
-        /// <summary>
-        /// Selects the node group that has the highest priority assigned by the user. It's configuration is described in more details [here](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md).
-        /// Serialized Name: Expander.priority
-        /// </summary>
+
+        /// <summary> Selects the node group that has the highest priority assigned by the user. It's configuration is described in more details [here](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md). </summary>
         public static AutoScaleExpander Priority { get; } = new AutoScaleExpander(PriorityValue);
-        /// <summary>
-        /// Used when you don't have a particular need for the node groups to scale differently.
-        /// Serialized Name: Expander.random
-        /// </summary>
+
+        /// <summary> Used when you don't have a particular need for the node groups to scale differently. </summary>
         public static AutoScaleExpander Random { get; } = new AutoScaleExpander(RandomValue);
+
         /// <summary> Determines if two <see cref="AutoScaleExpander"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoScaleExpander left, AutoScaleExpander right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoScaleExpander"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoScaleExpander left, AutoScaleExpander right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoScaleExpander"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoScaleExpander"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoScaleExpander(string value) => new AutoScaleExpander(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutoScaleExpander"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutoScaleExpander?(string value) => value == null ? null : new AutoScaleExpander(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoScaleExpander other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoScaleExpander other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -127,6 +127,10 @@ namespace Azure.Core.Pipeline
                             {
                                 currentRequest.Headers.Authorization = authHeader;
                             }
+                            else if (headerName == HttpHeader.Names.Host)
+                            {
+                                currentRequest.Headers.Host = stringValue;
+                            }
                             else if (!currentRequest.Headers.TryAddWithoutValidation(headerName, stringValue))
                             {
                                 if (currentContent != null && !currentContent.Headers.TryAddWithoutValidation(headerName, stringValue))
@@ -417,7 +421,7 @@ namespace Azure.Core.Pipeline
 
             // While HeaderStringValueToStringVsEnumerator performance test shows that `HeaderStringValues.ToString` is faster than DefaultInterpolatedStringHandler,
             // we can't use it here because it uses ", " as default separator and doesn't allow customization.
-            var interpolatedStringHandler = new DefaultInterpolatedStringHandler(count-1, count);
+            var interpolatedStringHandler = new DefaultInterpolatedStringHandler(count - 1, count);
             var isFirst = true;
             foreach (var str in values)
             {

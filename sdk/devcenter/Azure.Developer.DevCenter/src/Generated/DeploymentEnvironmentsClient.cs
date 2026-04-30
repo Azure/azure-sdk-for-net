@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,8 +20,6 @@ namespace Azure.Developer.DevCenter
     public partial class DeploymentEnvironmentsClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
         private readonly string _apiVersion;
 
@@ -38,22 +37,42 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Initializes a new instance of DeploymentEnvironmentsClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DeploymentEnvironmentsClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options)
+        internal DeploymentEnvironmentsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DevCenterClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new DevCenterClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of DeploymentEnvironmentsClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DeploymentEnvironmentsClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of DeploymentEnvironmentsClient from a <see cref="DeploymentEnvironmentsClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for DeploymentEnvironmentsClient. </param>
+        [Experimental("SCME0002")]
+        public DeploymentEnvironmentsClient(DeploymentEnvironmentsClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -80,7 +99,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetAllEnvironmentsCollectionResult(this, projectName, context);
+            return new DeploymentEnvironmentsClientGetAllEnvironmentsCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetAllEnvironments");
         }
 
         /// <summary>
@@ -101,7 +120,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetAllEnvironmentsAsyncCollectionResult(this, projectName, context);
+            return new DeploymentEnvironmentsClientGetAllEnvironmentsAsyncCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetAllEnvironments");
         }
 
         /// <summary> Lists the environments for a project. </summary>
@@ -114,7 +133,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetAllEnvironmentsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetAllEnvironmentsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetAllEnvironments");
         }
 
         /// <summary> Lists the environments for a project. </summary>
@@ -127,7 +146,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetAllEnvironmentsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetAllEnvironmentsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetAllEnvironments");
         }
 
         /// <summary>
@@ -150,7 +169,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentsCollectionResult(this, projectName, userId, context);
+            return new DeploymentEnvironmentsClientGetEnvironmentsCollectionResult(this, projectName, userId, context, "DeploymentEnvironmentsClient.GetEnvironments");
         }
 
         /// <summary>
@@ -173,7 +192,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentsAsyncCollectionResult(this, projectName, userId, context);
+            return new DeploymentEnvironmentsClientGetEnvironmentsAsyncCollectionResult(this, projectName, userId, context, "DeploymentEnvironmentsClient.GetEnvironments");
         }
 
         /// <summary> Lists the environments for a project and user. </summary>
@@ -188,7 +207,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentsCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetEnvironmentsCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironments");
         }
 
         /// <summary> Lists the environments for a project and user. </summary>
@@ -203,7 +222,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentsAsyncCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetEnvironmentsAsyncCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironments");
         }
 
         /// <summary>
@@ -486,7 +505,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetCatalogsCollectionResult(this, projectName, context);
+            return new DeploymentEnvironmentsClientGetCatalogsCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetCatalogs");
         }
 
         /// <summary>
@@ -507,7 +526,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetCatalogsAsyncCollectionResult(this, projectName, context);
+            return new DeploymentEnvironmentsClientGetCatalogsAsyncCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetCatalogs");
         }
 
         /// <summary> Lists all of the catalogs available for a project. </summary>
@@ -520,7 +539,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetCatalogsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetCatalogsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetCatalogs");
         }
 
         /// <summary> Lists all of the catalogs available for a project. </summary>
@@ -533,7 +552,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetCatalogsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetCatalogsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetCatalogs");
         }
 
         /// <summary>
@@ -654,7 +673,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResult(this, projectName, context);
+            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetEnvironmentDefinitions");
         }
 
         /// <summary>
@@ -675,7 +694,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsAsyncCollectionResult(this, projectName, context);
+            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsAsyncCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetEnvironmentDefinitions");
         }
 
         /// <summary> Lists all environment definitions available for a project. </summary>
@@ -688,7 +707,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentDefinitions");
         }
 
         /// <summary> Lists all environment definitions available for a project. </summary>
@@ -701,7 +720,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentDefinitions");
         }
 
         /// <summary>
@@ -724,7 +743,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogCollectionResult(this, projectName, catalogName, context);
+            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogCollectionResult(this, projectName, catalogName, context, "DeploymentEnvironmentsClient.GetEnvironmentDefinitionsByCatalog");
         }
 
         /// <summary>
@@ -747,7 +766,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogAsyncCollectionResult(this, projectName, catalogName, context);
+            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogAsyncCollectionResult(this, projectName, catalogName, context, "DeploymentEnvironmentsClient.GetEnvironmentDefinitionsByCatalog");
         }
 
         /// <summary> Lists all environment definitions available within a catalog. </summary>
@@ -762,7 +781,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogCollectionResultOfT(this, projectName, catalogName, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogCollectionResultOfT(this, projectName, catalogName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentDefinitionsByCatalog");
         }
 
         /// <summary> Lists all environment definitions available within a catalog. </summary>
@@ -777,7 +796,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogAsyncCollectionResultOfT(this, projectName, catalogName, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogAsyncCollectionResultOfT(this, projectName, catalogName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentDefinitionsByCatalog");
         }
 
         /// <summary>
@@ -906,7 +925,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentTypesCollectionResult(this, projectName, context);
+            return new DeploymentEnvironmentsClientGetEnvironmentTypesCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetEnvironmentTypes");
         }
 
         /// <summary>
@@ -927,7 +946,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentTypesAsyncCollectionResult(this, projectName, context);
+            return new DeploymentEnvironmentsClientGetEnvironmentTypesAsyncCollectionResult(this, projectName, context, "DeploymentEnvironmentsClient.GetEnvironmentTypes");
         }
 
         /// <summary> Lists all environment types configured for a project. </summary>
@@ -940,7 +959,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentTypesCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetEnvironmentTypesCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentTypes");
         }
 
         /// <summary> Lists all environment types configured for a project. </summary>
@@ -953,7 +972,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DeploymentEnvironmentsClientGetEnvironmentTypesAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext());
+            return new DeploymentEnvironmentsClientGetEnvironmentTypesAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DeploymentEnvironmentsClient.GetEnvironmentTypes");
         }
     }
 }

@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Azure.Core;
-using System;
-using System.Text;
-using Azure.ResourceManager.Resources;
-using System.Threading.Tasks;
 using NUnit.Framework.Internal;
-using System.IO;
-using System.Xml;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
 {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
                     {
                         PolicyParameters = new BackupInstancePolicySettings()
                         {
-                            BackupDataSourceParametersList = { new UnknownBackupDatasourceParameters("AzureOperationalStoreParameters" ,null) }
+                            BackupDataSourceParametersList = { new UnknownBackupDatasourceParameters("AzureOperationalStoreParameters", null) }
                         }
                     },
                     "BackupInstance"
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
         public static void AssertInstanceData(DataProtectionBackupInstanceData data1, DataProtectionBackupInstanceData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Properties.ProtectionErrorDetails, data2.Properties.ProtectionErrorDetails);
+            Assert.AreEqual(data1.Properties.ResourceProtectionErrorDetails, data2.Properties.ResourceProtectionErrorDetails);
             Assert.AreEqual(data1.Properties.ObjectType, data2.Properties.ObjectType);
             Assert.AreEqual(data1.Properties.ValidationType, data2.Properties.ValidationType);
             Assert.AreEqual(data1.Properties.ProtectionStatus, data2.Properties.ProtectionStatus);
