@@ -2,7 +2,7 @@
   <ItemGroup>
     <PackageVersion Include="Microsoft.Extensions.Telemetry" Version="10.1.0" />
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="$(OpenTelemetryExtensionsHostingVersion)" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.15.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">

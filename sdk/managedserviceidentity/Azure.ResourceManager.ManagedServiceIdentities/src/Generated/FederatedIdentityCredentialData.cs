@@ -8,79 +8,105 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServiceIdentities.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
-    /// <summary>
-    /// A class representing the FederatedIdentityCredential data model.
-    /// Describes a federated identity credential.
-    /// </summary>
+    /// <summary> Describes a federated identity credential. </summary>
     public partial class FederatedIdentityCredentialData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialData"/>. </summary>
         public FederatedIdentityCredentialData()
         {
-            Audiences = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="issuerUri"> The URL of the issuer to be trusted. </param>
-        /// <param name="subject"> The identifier of the external identity. </param>
-        /// <param name="audiences"> The list of audiences that can appear in the issued token. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri issuerUri, string subject, IList<string> audiences, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties associated with the federated identity credential. </param>
+        internal FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FederatedIdentityCredentialProperties properties) : base(id, name, resourceType, systemData)
         {
-            IssuerUri = issuerUri;
-            Subject = subject;
-            Audiences = audiences;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The properties associated with the federated identity credential. </summary>
+        [WirePath("properties")]
+        internal FederatedIdentityCredentialProperties Properties { get; set; }
 
         /// <summary> The URL of the issuer to be trusted. </summary>
         [WirePath("properties.issuer")]
-        public Uri IssuerUri { get; set; }
+        public Uri IssuerUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IssuerUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FederatedIdentityCredentialProperties();
+                }
+                Properties.IssuerUri = value;
+            }
+        }
+
         /// <summary> The identifier of the external identity. </summary>
         [WirePath("properties.subject")]
-        public string Subject { get; set; }
+        public string Subject
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subject;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FederatedIdentityCredentialProperties();
+                }
+                Properties.Subject = value;
+            }
+        }
+
         /// <summary> The list of audiences that can appear in the issued token. </summary>
         [WirePath("properties.audiences")]
-        public IList<string> Audiences { get; }
+        public IList<string> Audiences
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FederatedIdentityCredentialProperties();
+                }
+                return Properties.Audiences;
+            }
+        }
+
+        /// <summary> Object for defining the allowed identifiers of external identities. Either 'subject' or 'claimsMatchingExpression' must be defined, but not both. Introduced in 2025-01-31-preview. </summary>
+        [WirePath("properties.claimsMatchingExpression")]
+        public FederatedIdentityClaimsMatchingExpression ClaimsMatchingExpression
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClaimsMatchingExpression;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FederatedIdentityCredentialProperties();
+                }
+                Properties.ClaimsMatchingExpression = value;
+            }
+        }
     }
 }

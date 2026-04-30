@@ -138,6 +138,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case SdkVersionType.ShimNLog:
                         ExtensionLabel = "shn";
                         break;
+                    case SdkVersionType.MicrosoftOpenTelemetry:
+                        ExtensionLabel = "mot";
+                        break;
                     case SdkVersionType.Exporter:
                     default:
                         ExtensionLabel = "ext";
@@ -188,5 +191,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         ShimWeb,
         /// <summary>Application Insights NLog shim (Microsoft.ApplicationInsights.NLogTarget).</summary>
         ShimNLog,
+        /// <summary>Microsoft OpenTelemetry distro (Microsoft.OpenTelemetry).</summary>
+        MicrosoftOpenTelemetry,
     }
 }
