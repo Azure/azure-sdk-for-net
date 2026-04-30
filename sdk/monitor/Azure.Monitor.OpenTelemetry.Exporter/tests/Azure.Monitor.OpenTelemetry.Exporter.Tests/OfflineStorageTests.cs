@@ -145,6 +145,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
+            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
             Assert.True(transmitter._fileBlobProvider.TryGetBlob(out var blob));
             blob.TryRead(out var content);
 
@@ -156,6 +157,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             //Assert
             Assert.Equal(2, items.Count());
+        }
+
+        [Fact]
+        public void FailureResponseCode206WithOnlyNonRetriableErrors()
+        {
+            using var activity1 = CreateActivity("TestActivity1");
+            using var activity2 = CreateActivity("TestActivity2");
+            using var activity3 = CreateActivity("TestActivity3");
+            var telemetryItem1 = CreateTelemetryItem(activity1);
+            var telemetryItem2 = CreateTelemetryItem(activity2);
+            var telemetryItem3 = CreateTelemetryItem(activity3);
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            telemetryItems.Add(telemetryItem1);
+            telemetryItems.Add(telemetryItem2);
+            telemetryItems.Add(telemetryItem3);
+
+            // Transmit
+            var mockResponse = new MockResponse(206)
+                                    .SetContent("{\"itemsReceived\": 3,\"itemsAccepted\": 1,\"errors\":[{\"index\": 0,\"statusCode\": 206,\"message\": \"Telemetry sampled out.\"},{\"index\": 1,\"statusCode\": 206,\"message\": \"Telemetry sampled out.\"}]}");
+            using var transmitter = GetTransmitter(mockResponse);
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+
+            //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
+            Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
+            Assert.Equal(TransmissionState.Closed, transmitter._transmissionStateManager.State);
         }
 
         [Fact]
