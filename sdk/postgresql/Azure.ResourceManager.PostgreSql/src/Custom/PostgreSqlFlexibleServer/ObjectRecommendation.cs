@@ -7,7 +7,10 @@ using System;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Preserves previous flattened recommendation properties.
+    // Preserves previous flattened recommendation property setters. The TypeSpec
+    // properties envelope is read-only for the service contract; making it writable
+    // in TypeSpec would affect all languages, so the C# compatibility setters are
+    // kept as SDK-side custom code.
     public partial class ObjectRecommendation
     {
         private DateTimeOffset? _initialRecommendedOnOverride;

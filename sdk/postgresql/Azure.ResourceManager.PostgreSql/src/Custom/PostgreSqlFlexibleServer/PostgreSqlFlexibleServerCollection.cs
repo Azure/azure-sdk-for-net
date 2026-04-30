@@ -10,7 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    // Preserves previous collection-level replica listing overloads by forwarding to the server resource.
+    // Replicas are modeled as a server-level action in TypeSpec, so generation puts GetReplicas on
+    // PostgreSqlFlexibleServerResource. Preserve the previous collection-level overloads that accept
+    // serverName by forwarding to the generated server resource methods.
     public partial class PostgreSqlFlexibleServerCollection
     {
         /// <summary> List all the replicas for a given server. </summary>
