@@ -6,90 +6,95 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="SubscriptionQuotaAllocationsListResource"/> and their operations.
-    /// Each <see cref="SubscriptionQuotaAllocationsListResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
-    /// To get a <see cref="SubscriptionQuotaAllocationsListCollection"/> instance call the GetSubscriptionQuotaAllocationsLists method from an instance of <see cref="ManagementGroupResource"/>.
+    /// Each <see cref="SubscriptionQuotaAllocationsListResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SubscriptionQuotaAllocationsListCollection"/> instance call the GetSubscriptionQuotaAllocationsLists method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SubscriptionQuotaAllocationsListCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics;
-        private readonly GroupQuotaSubscriptionAllocationRestOperations _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient;
+        private readonly ClientDiagnostics _subscriptionQuotaAllocationsListsClientDiagnostics;
+        private readonly SubscriptionQuotaAllocationsLists _subscriptionQuotaAllocationsListsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionQuotaAllocationsListCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SubscriptionQuotaAllocationsListCollection for mocking. </summary>
         protected SubscriptionQuotaAllocationsListCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionQuotaAllocationsListCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaAllocationsListCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SubscriptionQuotaAllocationsListCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", SubscriptionQuotaAllocationsListResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SubscriptionQuotaAllocationsListResource.ResourceType, out string subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationApiVersion);
-            _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient = new GroupQuotaSubscriptionAllocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SubscriptionQuotaAllocationsListResource.ResourceType, out string subscriptionQuotaAllocationsListApiVersion);
+            _subscriptionQuotaAllocationsListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", SubscriptionQuotaAllocationsListResource.ResourceType.Namespace, Diagnostics);
+            _subscriptionQuotaAllocationsListsRestClient = new SubscriptionQuotaAllocationsLists(_subscriptionQuotaAllocationsListsClientDiagnostics, Pipeline, Endpoint, subscriptionQuotaAllocationsListApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagementGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != "Microsoft.Management/managementGroups/subscriptions")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Management/managementGroups/subscriptions"), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionQuotaAllocationsListResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
-        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetAsync(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Get");
+            using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.ListAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SubscriptionQuotaAllocationsListData> response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionQuotaAllocationsListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -103,43 +108,45 @@ namespace Azure.ResourceManager.Quota
         /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionQuotaAllocationsListResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
-        public virtual Response<SubscriptionQuotaAllocationsListResource> Get(string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SubscriptionQuotaAllocationsListResource> Get(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Get");
+            using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.List(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SubscriptionQuotaAllocationsListData> response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionQuotaAllocationsListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -153,41 +160,53 @@ namespace Azure.ResourceManager.Quota
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionQuotaAllocationsListResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Exists");
+            using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.ListAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SubscriptionQuotaAllocationsListData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SubscriptionQuotaAllocationsListData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,41 +220,53 @@ namespace Azure.ResourceManager.Quota
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionQuotaAllocationsListResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
-        public virtual Response<bool> Exists(string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Exists");
+            using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Exists");
             scope.Start();
             try
             {
-                var response = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.List(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SubscriptionQuotaAllocationsListData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SubscriptionQuotaAllocationsListData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,43 +280,57 @@ namespace Azure.ResourceManager.Quota
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionQuotaAllocationsListResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
-        public virtual async Task<NullableResponse<SubscriptionQuotaAllocationsListResource>> GetIfExistsAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SubscriptionQuotaAllocationsListResource>> GetIfExistsAsync(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetIfExists");
+            using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.ListAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SubscriptionQuotaAllocationsListData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SubscriptionQuotaAllocationsListData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SubscriptionQuotaAllocationsListResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionQuotaAllocationsListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -299,43 +344,57 @@ namespace Azure.ResourceManager.Quota
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionQuotaAllocationsListResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
-        public virtual NullableResponse<SubscriptionQuotaAllocationsListResource> GetIfExists(string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SubscriptionQuotaAllocationsListResource> GetIfExists(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var scope = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetIfExists");
+            using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _subscriptionQuotaAllocationsListGroupQuotaSubscriptionAllocationRestClient.List(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SubscriptionQuotaAllocationsListData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SubscriptionQuotaAllocationsListData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SubscriptionQuotaAllocationsListResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionQuotaAllocationsListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

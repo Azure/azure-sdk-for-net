@@ -8,11 +8,11 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
@@ -25,11 +25,11 @@ namespace Azure.Generator.Management.Providers
     internal class MockableResourceProvider : TypeProvider
     {
         private protected readonly IReadOnlyList<ResourceClientProvider> _resources;
-        private protected readonly IReadOnlyList<ResourceMethod> _resourceMethods;
+        private protected readonly IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> _resourceMethods;
         private protected readonly IReadOnlyList<NonResourceMethod> _nonResourceMethods;
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
-        private readonly RequestPathPattern _contextualPath;
+        private readonly OperationContext _operationContext;
 
         /// <summary>
         /// Creates a new instance of the <see cref="MockableResourceProvider"/> class.
@@ -38,28 +38,44 @@ namespace Azure.Generator.Management.Providers
         /// <param name="resources">the resources in this scope.</param>
         /// <param name="resourceMethods">the resource methods that belong to this scope.</param>
         /// <param name="nonResourceMethods">the non-resource methods that belong to this scope.</param>
-        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<ResourceMethod> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
-            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, resourceMethods, nonResourceMethods)
+        private MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), OperationContext.Create(RequestPathPattern.GetFromScope(resourceScope)), resources, resourceMethods, nonResourceMethods)
         {
         }
 
-        private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<ResourceMethod> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        /// <summary>
+        /// Creates a new instance of <see cref="MockableResourceProvider"/> if there are resources or methods to generate.
+        /// </summary>
+        /// <param name="resourceScope">The scope of this mockable resource.</param>
+        /// <param name="resources">The resources in this scope.</param>
+        /// <param name="resourceMethods">The resource methods that belong to this scope.</param>
+        /// <param name="nonResourceMethods">The non-resource methods that belong to this scope.</param>
+        /// <returns>A new instance of <see cref="MockableResourceProvider"/> if there are resources or methods, otherwise null.</returns>
+        public static MockableResourceProvider? TryCreate(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        {
+            if (resources.Count == 0 && resourceMethods.Count == 0 && nonResourceMethods.Count == 0)
+            {
+                return null;
+            }
+            return new MockableResourceProvider(resourceScope, resources, resourceMethods, nonResourceMethods);
+        }
+
+        private protected MockableResourceProvider(CSharpType armCoreType, OperationContext operationContext, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
         {
             _resources = resources;
             _resourceMethods = resourceMethods;
             _nonResourceMethods = nonResourceMethods;
             ArmCoreType = armCoreType;
-            _contextualPath = contextualPath;
-            _clientInfos = BuildRestClientInfos(resourceMethods, nonResourceMethods, this);
+            _operationContext = operationContext;
+            _clientInfos = BuildRestClientInfos(resourceMethods.Values.SelectMany(m => m).Select(m => m.InputClient).Concat(nonResourceMethods.Select(m => m.InputClient)), this);
         }
 
         private static Dictionary<InputClient, RestClientInfo> BuildRestClientInfos(
-            IReadOnlyList<ResourceMethod> resourceMethods,
-            IReadOnlyList<NonResourceMethod> nonResourceMethods,
+            IEnumerable<InputClient> inputClients,
             TypeProvider enclosingType)
         {
             var clientInfos = new Dictionary<InputClient, RestClientInfo>();
-            foreach (var inputClient in resourceMethods.Select(m => m.InputClient).Concat(nonResourceMethods.Select(m => m.InputClient)))
+            foreach (var inputClient in inputClients)
             {
                 if (clientInfos.ContainsKey(inputClient))
                 {
@@ -97,7 +113,7 @@ namespace Azure.Generator.Management.Providers
                     ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
                     new ExpressionPropertyBody(
                         restClientField.Assign(
-                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion)),
+                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Literal(inputClient.CurrentApiVersion)),
                             nullCoalesce: true)),
                     enclosingType);
 
@@ -184,14 +200,18 @@ namespace Azure.Generator.Management.Providers
                 methods.AddRange(BuildMethodsForResource(resource));
             }
 
-            foreach (var method in _resourceMethods)
+            foreach (var (resource, resourceMethods) in _resourceMethods)
             {
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
+                foreach (var resourceMethod in resourceMethods)
+                {
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, true));
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, false));
+                }
             }
 
             foreach (var method in _nonResourceMethods)
             {
+                // Process both async and sync method variants
                 methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
                 methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
             }
@@ -203,39 +223,35 @@ namespace Azure.Generator.Management.Providers
         {
             if (resource.IsSingleton)
             {
-                var resourceMethodSignature = new MethodSignature(
-                    $"Get{resource.ResourceName}",
-                    $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the {ArmCoreType:C}.",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    resource.Type,
-                    $"Returns a {resource.Type:C} object.",
-                    []
-                    );
+                var resourceMethodSignature = resource.FactoryMethodSignature;
                 var bodyStatement = Return(
                     New.Instance(
                         resource.Type,
                         This.As<ArmResource>().Client(),
-                        BuildSingletonResourceIdentifier(resource.ResourceTypeValue, resource.SingletonResourceName!)));
-                yield return new MethodProvider(
+                        BuildSingletonResourceIdentifier(This.As<ArmResource>().Id(), resource.ResourceTypeValue, resource.SingletonResourceName!)));
+                var method = new MethodProvider(
                     resourceMethodSignature,
                     bodyStatement,
                     this);
+
+                // Copy the enhanced XML documentation from the singleton resource's Get method if available
+                var getMethod = resource.Methods.FirstOrDefault(m => m.Signature.Name == "Get");
+                if (getMethod?.XmlDocs?.Summary != null)
+                {
+                    method.XmlDocs?.Update(summary: getMethod.XmlDocs.Summary);
+                }
+
+                yield return method;
             }
             else
             {
-                var collection = resource.ResourceCollection!;
                 // the first method is returning the collection
-                var pluralOfResourceName = resource.ResourceName.Pluralize();
-                var collectionMethodSignature = new MethodSignature(
-                    $"Get{pluralOfResourceName}",
-                    $"Gets a collection of {pluralOfResourceName} in the {ArmCoreType:C}",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    collection.Type,
-                    $"An object representing collection of {pluralOfResourceName} and their operations over a {resource.Name}.",
-                    []
-                    );
+                var collection = resource.ResourceCollection!;
+                var collectionMethodSignature = resource.FactoryMethodSignature;
 
-                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, client, This.As<ArmResource>().Id())));
+                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"),
+                    client => New.Instance(collection.Type,
+                        [client, This.As<ArmResource>().Id(), .. collectionMethodSignature.Parameters]))); // the first two parameters have values, others we just pass through them.
                 yield return new MethodProvider(
                     collectionMethodSignature,
                     bodyStatement,
@@ -264,29 +280,70 @@ namespace Azure.Generator.Management.Providers
                         resourceGetMethod.Signature.Modifiers,
                         resourceGetMethod.Signature.ReturnType,
                         resourceGetMethod.Signature.ReturnDescription,
-                        resourceGetMethod.Signature.Parameters,
+                        [.. collectionGetSignature.Parameters, .. resourceGetMethod.Signature.Parameters],
                         Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
-                    return new MethodProvider(
+                    var method = new MethodProvider(
                         signature,
                         // invoke on a MethodSignature would handle the async extra calls and keyword automatically
                         Return(This.Invoke(collectionGetSignature).Invoke(resourceGetMethod.Signature)),
                         enclosingType);
+
+                    // Copy the enhanced XML documentation from the collection's Get method
+                    if (resourceGetMethod.XmlDocs?.Summary != null)
+                    {
+                        method.XmlDocs?.Update(summary: resourceGetMethod.XmlDocs.Summary);
+                    }
+
+                    return method;
                 }
             }
         }
 
-        private MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync)
+        private MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync)
+        {
+            var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
+
+            // Only fall back to the raw SDK method name when no standard name was generated.
+            // This handles non-CRUD operations (e.g., GetReports, GetReport) that don't map to
+            // standard CRUD method naming patterns.
+            if (methodName == null)
+            {
+                var baseName = resourceMethod.InputMethod.Name;
+                methodName = isAsync ? $"{baseName}Async" : baseName;
+            }
+
+            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName, resource);
+        }
+
+        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null)
+        {
+            return BuildServiceMethodWithContext(method, inputClient, _operationContext, isAsync, methodName, explicitResourceClient);
+        }
+
+        protected MethodProvider BuildServiceMethodWithContext(InputServiceMethod method, InputClient inputClient, OperationContext operationContext, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
         {
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync)
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, operationContext, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter),
+                _ => BuildNonPagingServiceMethod(method, operationContext, clientInfo, isAsync, methodName, explicitResourceClient, scopeParameter)
             };
         }
 
-        private static ValueExpression BuildSingletonResourceIdentifier(string resourceType, string resourceName)
+        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, OperationContext operationContext, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
+        {
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            var responseBodyType = method.GetResponseBodyType();
+            if (responseBodyType != null && responseBodyType.IsList)
+            {
+                return new ArrayResponseOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
+            }
+
+            return new ResourceOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
+        }
+
+        public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)
         {
             var segments = resourceType.Split('/');
             if (segments.Length < 2)
@@ -305,7 +362,7 @@ namespace Azure.Generator.Management.Providers
                     $"Tuple singleton resource type is not implemented yet.");
                 return Null.CastTo(typeof(ResourceIdentifier));
             }
-            return This.As<ArmResource>().Id().AppendProviderResource(Literal(segments[0]), Literal(segments[1]), Literal(resourceName));
+            return resourceId.AppendProviderResource(Literal(segments[0]), Literal(segments[1]), Literal(resourceName));
         }
     }
 }

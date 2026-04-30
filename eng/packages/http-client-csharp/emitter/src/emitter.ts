@@ -1,13 +1,46 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { EmitContext, NoTarget } from "@typespec/compiler";
+import {
+  Diagnostic,
+  EmitContext,
+  NoTarget,
+  resolvePath
+} from "@typespec/compiler";
+import { createSdkContext } from "@azure-tools/typespec-client-generator-core";
 
-import { $onEmit as $onMTGEmit } from "@typespec/http-client-csharp";
+import {
+  CodeModel,
+  CSharpEmitterContext,
+  emitCodeModel
+} from "@typespec/http-client-csharp";
 import { AzureEmitterOptions } from "./options.js";
 import { $lib } from "./lib/lib.js";
 
 export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
+  const [, diagnostics] = await emitAzureCodeModel(context);
+  context.program.reportDiagnostics(diagnostics);
+}
+
+/**
+ * Emits Azure code model with optional customization callback.
+ *
+ * This function applies Azure-specific defaults (generator name, license, decorators, etc.),
+ * generates the metadata.json file, and delegates to the base emitter's `emitCodeModel`.
+ * Downstream emitters (e.g., management plane) can call this instead of `$onEmit` to pass
+ * an `updateCodeModel` callback for additional code model transformations.
+ *
+ * @param context - The emit context
+ * @param updateCodeModel - Optional callback to modify the code model before emission
+ * @returns A tuple containing void and any diagnostics generated during emission
+ */
+export async function emitAzureCodeModel(
+  context: EmitContext<AzureEmitterOptions>,
+  updateCodeModel?: (
+    model: CodeModel,
+    context: CSharpEmitterContext
+  ) => CodeModel
+): Promise<[void, readonly Diagnostic[]]> {
   context.options["generator-name"] ??= "AzureClientGenerator";
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["license"] ??= {
@@ -34,5 +67,67 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
     });
   }
 
-  await $onMTGEmit(context);
+  // Generate metadata.json file
+  await generateMetadataFile(context);
+
+  return await emitCodeModel(context, updateCodeModel);
+}
+
+/**
+ * Generates a metadata.json file containing API version information.
+ *
+ * The emitter automatically generates a `metadata.json` file in the `Generated/` folder.
+ * This file contains information such as the API versions and can be used for automation
+ * purposes like building a mapping of package version to supported API versions.
+ *
+ * The metadata file contains content such as:
+ * ```json
+ * {
+ *   "apiVersions": {
+ *     "Azure.Service": "2024-05-01"
+ *   }
+ * }
+ * ```
+ *
+ * For packages containing multiple services:
+ * ```json
+ * {
+ *   "apiVersions": {
+ *     "Azure.ServiceA": "2024-05-01",
+ *     "Azure.ServiceB": "2024-06-01"
+ *   }
+ * }
+ * ```
+ *
+ * If no API versions are specified, the value will be "not-specified".
+ * If the `apiVersions` property is undefined, the value will be "not-specified".
+ */
+async function generateMetadataFile(
+  context: EmitContext<AzureEmitterOptions>
+): Promise<void> {
+  // Create SDK context to access the API versions from the TypeSpec service definition
+  const sdkContext = await createSdkContext(
+    context,
+    "@azure-typespec/http-client-csharp",
+    context.options["sdk-context-options"] ?? {}
+  );
+
+  const apiVersionsMap = sdkContext.sdkPackage.metadata.apiVersions;
+
+  // Define the metadata schema we want to output.
+  // JSON.stringify does not natively serialize Maps, so we convert to a plain object.
+  // If apiVersions is undefined or empty, emit an empty object for a consistent Record<string, string> type.
+  const metadata = {
+    apiVersions:
+      apiVersionsMap && apiVersionsMap.size > 0
+        ? Object.fromEntries(apiVersionsMap)
+        : {}
+  };
+
+  const outputPath = resolvePath(context.emitterOutputDir, "metadata.json");
+  await context.program.host.mkdirp(context.emitterOutputDir);
+  await context.program.host.writeFile(
+    outputPath,
+    JSON.stringify(metadata, null, 2)
+  );
 }

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+global using Microsoft.TypeSpec.Generator.Customizations;
+
 global using OpenAI;
 global using OpenAI.Assistants;
 global using OpenAI.Audio;
@@ -12,9 +14,9 @@ global using OpenAI.FineTuning;
 global using OpenAI.Images;
 global using OpenAI.Models;
 global using OpenAI.Moderations;
+global using OpenAI.Realtime;
 global using OpenAI.VectorStores;
 #if !AZURE_OPENAI_GA
-global using OpenAI.Realtime;
 global using OpenAI.Responses;
 #endif
 
@@ -33,11 +35,15 @@ using Azure.Core;
 #if !AZURE_OPENAI_GA
 using Azure.AI.OpenAI.Assistants;
 using Azure.AI.OpenAI.FineTuning;
-using Azure.AI.OpenAI.Realtime;
 using Azure.AI.OpenAI.VectorStores;
 using Azure.AI.OpenAI.Responses;
 using OpenAI.Evals;
 using Azure.AI.OpenAI.Evals;
+using OpenAI.Conversations;
+using System.Text;
+using OpenAI.Containers;
+using OpenAI.Graders;
+using OpenAI.Videos;
 #endif
 
 #pragma warning disable AZC0007
@@ -272,27 +278,48 @@ public partial class AzureOpenAIClient : OpenAIClient
         => throw new InvalidOperationException($"VectorStoreClient is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
 #endif
 
-#if !AZURE_OPENAI_GA
-    [Experimental("OPENAI002")]
     public override RealtimeClient GetRealtimeClient()
     {
-        if (_tokenCredential is not null)
-        {
-            return new AzureRealtimeClient(_endpoint, _tokenCredential, _options);
-        }
-        else
-        {
-            return new AzureRealtimeClient(_endpoint, _keyCredential, _options);
-        }
+        throw new InvalidOperationException($"{nameof(RealtimeClient)} is not supported via the Azure.AI.OpenAI library. Please use the OpenAI library directly with v1 endpoints, instead.");
     }
+
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+    [Experimental("OPENAI001")]
+    public override ResponsesClient GetResponsesClient()
+#if !AZURE_OPENAI_GA
+        => new AzureResponsesClient(Pipeline, deploymentName: null, _endpoint, _options);
 #else
-    // Not yet present in OpenAI GA dependency
+        => throw new InvalidOperationException($"ResponsesClient is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
 #endif
 
-    public override OpenAIResponseClient GetOpenAIResponseClient(string deploymentName)
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ConversationClient GetConversationClient()
     {
-        Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-        return new AzureOpenAIResponseClient(Pipeline, deploymentName, _endpoint, _options);
+        ThrowUnsupportedAreaException(nameof(ConversationClient));
+        return null;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ContainerClient GetContainerClient()
+    {
+        ThrowUnsupportedAreaException(nameof(ContainerClient));
+        return null;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override GraderClient GetGraderClient()
+    {
+        ThrowUnsupportedAreaException(nameof(GraderClient));
+        return null;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override VideoClient GetVideoClient()
+    {
+        ThrowUnsupportedAreaException(nameof(VideoClient));
+        return null;
     }
 
     private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AzureOpenAIClientOptions options)
@@ -302,6 +329,8 @@ public partial class AzureOpenAIClient : OpenAIClient
             [
                 CreateAddUserAgentHeaderPolicy(options),
                 CreateAddClientRequestIdHeaderPolicy(),
+                CreateAddUserDefinedDefaultHeadersPolicy(options),
+                CreateAddUserDefinedDefaultQueryParametersPolicy(options),
             ],
             perTryPolicies:
             [
@@ -348,6 +377,47 @@ public partial class AzureOpenAIClient : OpenAIClient
                 request.Headers.Set(s_clientRequestIdHeaderKey, requestId);
             }
         });
+    }
+
+    private static PipelinePolicy CreateAddUserDefinedDefaultHeadersPolicy(AzureOpenAIClientOptions options = null)
+    {
+        return new GenericActionPipelinePolicy(request =>
+        {
+            if (request?.Headers is not null && options?.DefaultHeaders?.Count > 0 == true)
+            {
+                foreach (KeyValuePair<string, string> defaultHeaderPair in options.DefaultHeaders)
+                {
+                    request.Headers.Add(defaultHeaderPair.Key, defaultHeaderPair.Value);
+                }
+            }
+        });
+    }
+
+    private static PipelinePolicy CreateAddUserDefinedDefaultQueryParametersPolicy(AzureOpenAIClientOptions options = null)
+    {
+        return new GenericActionPipelinePolicy(request =>
+        {
+            if (request?.Uri is not null && options?.DefaultQueryParameters?.Count > 0 == true)
+            {
+                ClientUriBuilder uriBuilder = new();
+                uriBuilder.Reset(request.Uri);
+                foreach (KeyValuePair<string, string> defaultQueryParameter in options.DefaultQueryParameters)
+                {
+                    uriBuilder.AppendQuery(defaultQueryParameter.Key, defaultQueryParameter.Value, escape: true);
+                }
+                request.Uri = uriBuilder.ToUri();
+            }
+        });
+    }
+
+    private static void ThrowUnsupportedAreaException(string clientName)
+    {
+        StringBuilder builder = new();
+        builder.AppendLine(clientName + " use is not supported via this library.");
+        builder.AppendLine();
+        builder.Append("Please use " + nameof(OpenAIClient) + " with appropriate direct endpoint "
+            + "configuration for access to the latest features.");
+        throw new InvalidOperationException(builder.ToString());
     }
 
     private static readonly string s_userAgentHeaderKey = "User-Agent";

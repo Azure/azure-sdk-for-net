@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // message which will be used to populate properties on the batch envelope.
 
                 using var reserveOverheadMessage =
-                    _messageConverter.BuildAmqpBatchFromMessages(new[] { amqpMessage }, forceBatch: true);
+                    _messageConverter.BuildAmqpBatchFromMessages([amqpMessage], forceBatch: true);
 
                 size = _sizeBytes
                     + reserveOverheadMessage.SerializedMessageSize

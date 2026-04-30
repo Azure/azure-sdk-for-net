@@ -7,44 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Terraform;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary> The Terraform export result. </summary>
     public partial class TerraformExportResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TerraformExportResult"/>. </summary>
         internal TerraformExportResult()
@@ -54,27 +27,30 @@ namespace Azure.ResourceManager.Terraform.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TerraformExportResult"/>. </summary>
-        /// <param name="configuration"> The Terraform configuration content. </param>
-        /// <param name="import"> The Terraform import blocks for the current export, which users can use to run "terraform plan" with to import the resources. </param>
-        /// <param name="skippedResourceIds"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
-        /// <param name="errors"> A list of errors derived during exporting each resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TerraformExportResult(string configuration, string import, IReadOnlyList<ResourceIdentifier> skippedResourceIds, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="configuration"> The exported Terraform HCL configuration. </param>
+        /// <param name="import"> The Terraform import blocks for the configuration, necessary for managing existing Azure resources in Terraform. </param>
+        /// <param name="skippedResourceIds"> A list of Azure resources which could not be exported to Terraform. The most common cause is lack of Terraform provider support. Change the provider type to `azapi` for bigger set of supported resources. </param>
+        /// <param name="errors"> A list of errors encountered during export operation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TerraformExportResult(string configuration, string import, IList<ResourceIdentifier> skippedResourceIds, IList<ResponseError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Configuration = configuration;
             Import = import;
             SkippedResourceIds = skippedResourceIds;
             Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The Terraform configuration content. </summary>
+        /// <summary> The exported Terraform HCL configuration. </summary>
         public string Configuration { get; }
-        /// <summary> The Terraform import blocks for the current export, which users can use to run "terraform plan" with to import the resources. </summary>
+
+        /// <summary> The Terraform import blocks for the configuration, necessary for managing existing Azure resources in Terraform. </summary>
         public string Import { get; }
-        /// <summary> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </summary>
-        public IReadOnlyList<ResourceIdentifier> SkippedResourceIds { get; }
-        /// <summary> A list of errors derived during exporting each resource. </summary>
-        public IReadOnlyList<ResponseError> Errors { get; }
+
+        /// <summary> A list of Azure resources which could not be exported to Terraform. The most common cause is lack of Terraform provider support. Change the provider type to `azapi` for bigger set of supported resources. </summary>
+        public IList<ResourceIdentifier> SkippedResourceIds { get; }
+
+        /// <summary> A list of errors encountered during export operation. </summary>
+        public IList<ResponseError> Errors { get; }
     }
 }

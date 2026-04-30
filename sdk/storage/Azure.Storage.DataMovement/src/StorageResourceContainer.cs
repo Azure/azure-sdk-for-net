@@ -42,6 +42,7 @@ namespace Azure.Storage.DataMovement
         protected internal abstract StorageResourceItem GetStorageResourceReference(string path, string resourceId);
 
         /// <summary>
+        /// This has been deprecated. See <see cref="CreateAsync(bool, StorageResourceContainerProperties, CancellationToken)"/>.
         /// Creates storage resource container if it does not already exists.
         /// </summary>
         /// <returns></returns>
@@ -69,6 +70,7 @@ namespace Azure.Storage.DataMovement
             => throw new NotImplementedException();
 
         /// <summary>
+        /// This has been deprecated. See <see cref="CreateAsync(bool, StorageResourceContainerProperties, CancellationToken)"/>.
         /// Creates storage resource container using the source's properties if it does not already exists.
         /// </summary>
         /// <returns></returns>
@@ -77,6 +79,17 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainerProperties sourceProperties,
             CancellationToken cancellationToken = default)
             => CreateIfNotExistsAsync(cancellationToken);
+
+        /// <summary>
+        /// Creates storage resource container using the source's properties. Supports overwriting the existing container.
+        /// </summary>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual Task CreateAsync(
+            bool overwrite,
+            StorageResourceContainerProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
 
         /// <summary>
         /// Storage Resource is a container.

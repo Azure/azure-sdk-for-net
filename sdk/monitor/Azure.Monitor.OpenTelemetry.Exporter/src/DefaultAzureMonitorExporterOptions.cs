@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +30,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (_configuration != null)
                 {
-                    BindIConfigurationOptions(_configuration, options);
+                    var azureMonitorSection = _configuration.GetSection(AzureMonitorExporterSectionFromConfig);
+                    azureMonitorSection.Bind(options);
+                    if (azureMonitorSection["TracesPerSecond"] == null && azureMonitorSection["SamplingRatio"] != null)
+                    {
+                        // This is so user does not have to explicitly set TracesPerSecond to null in config to use fixed-percentage sampling.
+                        options.TracesPerSecond = null;
+                    }
 
                     // IConfiguration can read from EnvironmentVariables or InMemoryCollection if configured to do so.
                     var connectionStringFromIConfig = _configuration[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
@@ -38,6 +44,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     {
                         options.ConnectionString = connectionStringFromIConfig;
                     }
+
+                    // Sampler configuration via IConfiguration
+                    var samplerFromConfig = _configuration[EnvironmentVariableConstants.OTEL_TRACES_SAMPLER];
+                    var samplerArgFromConfig = _configuration[EnvironmentVariableConstants.OTEL_TRACES_SAMPLER_ARG];
+                    ConfigureSamplingOptions(samplerFromConfig, samplerArgFromConfig, options);
                 }
 
                 // Environment Variable should take precedence.
@@ -46,6 +57,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     options.ConnectionString = connectionStringFromEnvVar;
                 }
+
+                // Explicit environment variables for sampler should override IConfiguration.
+                var samplerTypeEnv = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.OTEL_TRACES_SAMPLER);
+                var samplerArgEnv = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.OTEL_TRACES_SAMPLER_ARG);
+                ConfigureSamplingOptions(samplerTypeEnv, samplerArgEnv, options);
             }
             catch (Exception ex)
             {
@@ -53,11 +69,63 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Binding options is a known source of trim warnings; this is a deliberate usage.")]
-        [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "Binding options is a known source of AOT warnings; this is a deliberate usage.")]
-        private static void BindIConfigurationOptions(IConfiguration configuration, AzureMonitorExporterOptions options)
+        private static void ConfigureSamplingOptions(string? samplerType, string? samplerArg, AzureMonitorExporterOptions options)
         {
-            configuration.GetSection(AzureMonitorExporterSectionFromConfig).Bind(options);
+            if (string.IsNullOrEmpty(samplerType) || string.IsNullOrEmpty(samplerArg))
+            {
+                return;
+            }
+
+            try
+            {
+                var samplerKey = samplerType!.Trim().ToLowerInvariant();
+                string samplerArgValue = samplerArg ?? string.Empty; // ensure non-null for logging
+                switch (samplerKey)
+                {
+                    case "microsoft.rate_limited":
+                        if (double.TryParse(samplerArg, NumberStyles.Float, CultureInfo.InvariantCulture, out var tracesPerSecond))
+                        {
+                            if (tracesPerSecond >= 0)
+                            {
+                                options.TracesPerSecond = tracesPerSecond;
+                            }
+                            else
+                            {
+                                AzureMonitorExporterEventSource.Log.InvalidSamplerArgument(samplerKey, samplerArgValue);
+                            }
+                        }
+                        else
+                        {
+                            AzureMonitorExporterEventSource.Log.InvalidSamplerArgument(samplerKey, samplerArgValue);
+                        }
+                        break;
+                    case "microsoft.fixed_percentage":
+                        if (double.TryParse(samplerArg, NumberStyles.Float, CultureInfo.InvariantCulture, out var ratio))
+                        {
+                            if (ratio >= 0.0 && ratio <= 1.0)
+                            {
+                                options.SamplingRatio = (float)ratio;
+                                options.TracesPerSecond = null; // Explicitly set to null to use fixed-percentage sampling
+                            }
+                            else
+                            {
+                                AzureMonitorExporterEventSource.Log.InvalidSamplerArgument(samplerKey, samplerArgValue);
+                            }
+                        }
+                        else
+                        {
+                            AzureMonitorExporterEventSource.Log.InvalidSamplerArgument(samplerKey, samplerArgValue);
+                        }
+                        break;
+                    default:
+                        AzureMonitorExporterEventSource.Log.InvalidSamplerType(samplerType ?? string.Empty);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.ConfigureFailed(ex);
+            }
         }
     }
 }

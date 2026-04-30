@@ -81,16 +81,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The variable on which we evaluate the exception condition. </summary>
+        [WirePath("matchVariable")]
         public ExceptionEntryMatchVariable MatchVariable { get; set; }
         /// <summary> Allowed values for the matchVariable. </summary>
+        [WirePath("values")]
         public IList<string> Values { get; }
         /// <summary> Operates on the allowed values for the matchVariable. </summary>
+        [WirePath("valueMatchOperator")]
         public ExceptionEntryValueMatchOperator ValueMatchOperator { get; set; }
         /// <summary> When the matchVariable points to a key-value pair (e.g, RequestHeader), this operates on the selector. </summary>
+        [WirePath("selectorMatchOperator")]
         public ExceptionEntrySelectorMatchOperator? SelectorMatchOperator { get; set; }
         /// <summary> When the matchVariable points to a key-value pair (e.g, RequestHeader), this identifies the key. </summary>
+        [WirePath("selector")]
         public string Selector { get; set; }
         /// <summary> The managed rule sets that are associated with the exception. </summary>
+        [WirePath("exceptionManagedRuleSets")]
         public IList<ExclusionManagedRuleSet> ExceptionManagedRuleSets { get; }
     }
 }

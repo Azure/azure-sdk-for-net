@@ -6,25 +6,19 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Monitor.Ingestion
 {
-    /// <summary> Client options for LogsIngestionClient. </summary>
+    /// <summary> Client options for <see cref="LogsIngestionClient"/>. </summary>
     public partial class LogsIngestionClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_01_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2023-01-01". </summary>
-            V2023_01_01 = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of LogsIngestionClientOptions. </summary>
+        /// <summary> Initializes a new instance of LogsIngestionClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public LogsIngestionClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -32,6 +26,41 @@ namespace Azure.Monitor.Ingestion
                 ServiceVersion.V2023_01_01 => "2023-01-01",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of LogsIngestionClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal LogsIngestionClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2023-01-01";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            if (section["Audience"] is string audience)
+            {
+                Audience = new LogsIngestionAudience(audience);
+            }
+            ConfigureLogging();
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> The 2023-01-01 API version. </summary>
+            V2023_01_01 = 1
         }
     }
 }

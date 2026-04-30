@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
-    internal class InformaticaOrganizationOperationSource : IOperationSource<InformaticaOrganizationResource>
+    /// <summary></summary>
+    internal partial class InformaticaOrganizationOperationSource : IOperationSource<InformaticaOrganizationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal InformaticaOrganizationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         InformaticaOrganizationResource IOperationSource<InformaticaOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InformaticaOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerInformaticaDataManagementContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            InformaticaOrganizationData data = InformaticaOrganizationData.DeserializeInformaticaOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new InformaticaOrganizationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<InformaticaOrganizationResource> IOperationSource<InformaticaOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InformaticaOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerInformaticaDataManagementContext.Default);
-            return await Task.FromResult(new InformaticaOrganizationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            InformaticaOrganizationData data = InformaticaOrganizationData.DeserializeInformaticaOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new InformaticaOrganizationResource(_client, data);
         }
     }
 }

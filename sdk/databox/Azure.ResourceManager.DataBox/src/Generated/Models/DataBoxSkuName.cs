@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The DataBoxSkuName. </summary>
+    /// <summary> SKU names. </summary>
     public enum DataBoxSkuName
     {
         /// <summary> Data Box. </summary>

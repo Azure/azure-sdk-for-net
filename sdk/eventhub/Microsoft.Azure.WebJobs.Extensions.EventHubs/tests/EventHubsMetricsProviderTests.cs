@@ -34,6 +34,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         private IEnumerable<PartitionProperties> _partitions;
         private IEnumerable<EventProcessorCheckpoint> _checkpoints;
 
+        private readonly string _errorMessage = "Uh oh";
+
         [SetUp]
         public void SetUp()
         {
@@ -52,8 +54,26 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             this._mockCheckpointStore = new Mock<BlobCheckpointStoreInternal>(MockBehavior.Strict);
 
-            _mockCheckpointStore.Setup(s => s.GetCheckpointAsync(_namespace, _eventHubName, _consumerGroup, It.IsAny<string>(), default))
-                .Returns<string, string, string, string, CancellationToken>((ns, hub, cg, partitionId, ct) => Task.FromResult(_checkpoints == null ? null : _checkpoints.SingleOrDefault(cp => cp.PartitionId == partitionId)));
+            _mockCheckpointStore
+                .Setup(s => s.GetCheckpointAsync(
+                    _namespace,
+                    _eventHubName,
+                    _consumerGroup,
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<string, string, string, string, CancellationToken>((ns, hub, cg, partitionId, ct) =>
+                {
+                    if (ct.IsCancellationRequested)
+                    {
+                        throw new TaskCanceledException();
+                    }
+
+                    var checkpoint = _checkpoints == null
+                        ? null
+                        : _checkpoints.SingleOrDefault(cp => cp.PartitionId == partitionId);
+
+                    return Task.FromResult(checkpoint);
+                });
 
             _metricsProvider = new EventHubMetricsProvider(
                                     _functionId,
@@ -196,7 +216,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // StorageException
             _mockCheckpointStore
                 .Setup(c => c.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new RequestFailedException(404, "Uh oh"));
+                .ThrowsAsync(new RequestFailedException(404, _errorMessage));
+            // Clear previous logs
+            _loggerProvider.ClearAllLogMessages();
 
             _partitions = new List<PartitionProperties>
             {
@@ -208,11 +230,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(1, metrics.PartitionCount);
             Assert.AreEqual(1, metrics.EventCount);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            AssertGetCheckpointAsyncErrorLogs(_partitions.First().Id, _errorMessage);
 
             // Generic Exception
             _mockCheckpointStore
                 .Setup(c => c.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new Exception("Uh oh"));
+                .ThrowsAsync(new Exception(_errorMessage));
+            // Clear previous logs
+            _loggerProvider.ClearAllLogMessages();
 
             _partitions = new List<PartitionProperties>
             {
@@ -224,8 +249,20 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(1, metrics.PartitionCount);
             Assert.AreEqual(1, metrics.EventCount);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            AssertGetCheckpointAsyncErrorLogs(_partitions.First().Id, _errorMessage);
 
             _loggerProvider.ClearAllLogMessages();
+        }
+
+        private void AssertGetCheckpointAsyncErrorLogs(string partitionId, string message)
+        {
+            var logs = _loggerProvider.GetAllLogMessages().ToList();
+            Assert.That(logs.Any(l =>
+                    l.Level == LogLevel.Debug),
+                $"Requesting cancellation of other checkpoint tasks. Error while getting checkpoint for eventhub '{_eventHubName}', partition '{partitionId}': {message}");
+            Assert.That(logs.Any(l =>
+                    l.Level == LogLevel.Warning),
+                $"Encountered an exception while getting checkpoints for Event Hub '{_eventHubName}' used for scaling. Error: {message}");
         }
 
         [TestCase(false, 0, -1, -1, 0)] // Microsoft.Azure.Functions.Worker.Extensions.EventHubs < 5.0.0, auto created checkpoint, no events sent
@@ -266,6 +303,68 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var metrics = await _metricsProvider.GetMetricsAsync();
             Assert.AreEqual(expectedUnprocessedMessageCount, metrics.EventCount);
+        }
+
+        private Task<EventProcessorCheckpoint> WaitTillCancelled(CancellationToken ct, string partition)
+        {
+            var tcs = new TaskCompletionSource<EventProcessorCheckpoint>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            if (ct.IsCancellationRequested)
+            {
+                _loggerProvider.CreatedLoggers.First().LogDebug($"Cancellation requested for partition {partition}");
+                throw new TaskCanceledException();
+            }
+
+            ct.Register(state => ((TaskCompletionSource<EventProcessorCheckpoint>)state).TrySetCanceled(),
+                        tcs);
+
+            return tcs.Task;
+        }
+
+        [Test]
+        public async Task CreateTriggerMetric_CancellationCascades_AfterFirstFailure()
+        {
+            _partitions = new List<PartitionProperties>
+            {
+                new TestPartitionProperties(partitionId: "0"),
+                new TestPartitionProperties(partitionId: "1"),
+                new TestPartitionProperties(partitionId: "2")
+            };
+
+            _checkpoints = Array.Empty<EventProcessorCheckpoint>();
+
+            _loggerProvider.ClearAllLogMessages();
+
+            // First partition triggers token cancellation
+            _mockCheckpointStore
+                .Setup(s => s.GetCheckpointAsync(_namespace, _eventHubName, _consumerGroup, "0", It.IsAny<CancellationToken>()))
+                .Returns(async (string ns, string hub, string cg, string partitionId, CancellationToken ct) =>
+                {
+                    await Task.Delay(500);
+                    throw new Exception(_errorMessage);
+                });
+
+            // Other partitions wait till cancellation is requested
+            _mockCheckpointStore
+                .Setup(s => s.GetCheckpointAsync(
+                    _namespace, _eventHubName, _consumerGroup,
+                    It.Is<string>(p => p == "1" || p == "2"),
+                    It.IsAny<CancellationToken>()))
+                .Returns<string, string, string, string, CancellationToken>((ns, hub, cg, pid, ct) =>
+                    WaitTillCancelled(ct, pid));
+
+            var metrics = await _metricsProvider.GetMetricsAsync();
+
+            Assert.AreEqual(3, metrics.PartitionCount);
+            var logs = _loggerProvider.GetAllLogMessages().ToList();
+
+            AssertGetCheckpointAsyncErrorLogs("0", _errorMessage);
+            Assert.That(logs.Any(), "Cancellation requested for partition 1");
+            Assert.That(logs.Any(), "Cancellation requested for partition 2");
+
+            _mockCheckpointStore.Verify(s =>
+                s.GetCheckpointAsync(_namespace, _eventHubName, _consumerGroup, It.IsAny<string>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(3));
         }
     }
 }

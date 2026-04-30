@@ -85,14 +85,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Provisioning states of a resource. </summary>
+        [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; set; }
         /// <summary> Gets or sets the description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Source resource id to verify the reachability path of. </summary>
+        [WirePath("sourceResourceId")]
         public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary> Destination resource id to verify the reachability path of. </summary>
+        [WirePath("destinationResourceId")]
         public ResourceIdentifier DestinationResourceId { get; set; }
         /// <summary> IP traffic information. </summary>
+        [WirePath("ipTraffic")]
         public NetworkVerifierIPTraffic IPTraffic { get; set; }
     }
 }

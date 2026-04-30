@@ -45,7 +45,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// Provisioned bandwidth in metabits/second.
         /// Only applicable to premium file accounts.
         /// </summary>
-        public int? ProvisionedBandwidthMiBps { get; internal set;  }
+        public int? ProvisionedBandwidthMiBps { get; internal set; }
 
         /// <summary>
         /// NextAllowedQuotaDowngradeTime.
@@ -160,6 +160,14 @@ namespace Azure.Storage.Files.Shares.Models
         /// The time the shaare can be downgraded to lower provisioned bandwidth.
         /// </summary>
         public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime { get; internal set; }
+
+        ///// <summary>
+        ///// Optional, default value is true.  Ony applicable to SMB shares.
+        ///// Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled.
+        ///// An input of true specifies that granting of new directory leases is to be allowed.
+        ///// An input of false specifies that granting of new directory leases is to be blocked.
+        ///// </summary>
+        //public bool? EnableDirectoryLease { get; internal set; }
 
         /// <summary>
         /// Internal constructor.

@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Private IP address availability. </summary>
+        [WirePath("available")]
         public bool? Available { get; }
         /// <summary> Contains other available private IP addresses if the asked for address is taken. </summary>
+        [WirePath("availableIPAddresses")]
         public IReadOnlyList<string> AvailableIPAddresses { get; }
         /// <summary> Private IP address platform reserved. </summary>
+        [WirePath("isPlatformReserved")]
         public bool? IsPlatformReserved { get; }
     }
 }

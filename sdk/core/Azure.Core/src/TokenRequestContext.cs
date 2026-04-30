@@ -157,7 +157,9 @@ namespace Azure.Core
         {
             var scopes = getTokenOptions.Properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopesValue) && scopesValue is ReadOnlyMemory<string> memoryScopes
                 ? memoryScopes.ToArray()
-                : throw new InvalidOperationException($"The '{GetTokenOptions.ScopesPropertyName}' property must be set in the {nameof(GetTokenOptions)}.");
+                : scopesValue is string[] scopeArray ?
+                    scopeArray :
+                    throw new InvalidOperationException($"The '{GetTokenOptions.ScopesPropertyName}' property must be set in the {nameof(GetTokenOptions)}.");
             string? parentRequestId = getTokenOptions.Properties.TryGetValue("parentRequestId", out var parentRequestIdValue) && parentRequestIdValue is string ? (string)parentRequestIdValue : default;
             string? claims = getTokenOptions.Properties.TryGetValue("claims", out var claimsValue) && claimsValue is string ? (string)claimsValue : default;
             string? tenantId = getTokenOptions.Properties.TryGetValue("tenantId", out var tenantIdValue) && tenantIdValue is string ? (string)tenantIdValue : default;

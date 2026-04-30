@@ -3,12 +3,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.StorageCache.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\CHANGELOG.md" Link="Scenario\CHANGELOG.md">
-      <PackagePath></PackagePath>
-      <Pack>true</Pack>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
     <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>

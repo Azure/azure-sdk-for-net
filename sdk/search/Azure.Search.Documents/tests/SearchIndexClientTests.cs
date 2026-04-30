@@ -5,17 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2026_04_01)]
     public class SearchIndexClientTests : SearchTestBase
     {
         public SearchIndexClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -109,7 +111,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
         public async Task GetServiceStatistics()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -132,21 +134,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
-        public async Task GetIndexStatsSummary()
-        {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-
-            SearchIndexClient client = resources.GetIndexClient();
-            Response<ListIndexStatsSummary> response = await client.GetIndexStatsSummaryAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.IndexesStatistics);
-            Assert.GreaterOrEqual(response.Value.IndexesStatistics.Count, 1);
-            Assert.True(response.Value.IndexesStatistics.Any(summary => summary.Name == resources.IndexName));
-        }
-
-        [Test]
         [SyncOnly]
         public void CreateIndexParameterValidation()
         {
@@ -161,7 +148,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
         public async Task CreateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -182,6 +169,32 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+        public async Task CrudIndexWithProductScoringAggregation()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+
+            resources.IndexName = Recording.Random.GetName(8);
+            SearchIndex expectedIndex = SearchResources.GetHotelIndex(resources.IndexName);
+
+            expectedIndex.ScoringProfiles[0].FunctionAggregation = ScoringFunctionAggregation.Product;
+
+            SearchIndexClient client = resources.GetIndexClient();
+            SearchIndex actualIndex = await client.CreateIndexAsync(expectedIndex);
+
+            Assert.AreEqual(expectedIndex.ScoringProfiles.Count, actualIndex.ScoringProfiles.Count);
+            Assert.AreEqual(expectedIndex.ScoringProfiles[0].Name, actualIndex.ScoringProfiles[0].Name);
+            Assert.AreEqual(ScoringFunctionAggregation.Product, actualIndex.ScoringProfiles[0].FunctionAggregation);
+
+            SearchIndex fetchedIndex = await client.GetIndexAsync(resources.IndexName);
+            Assert.AreEqual(ScoringFunctionAggregation.Product, fetchedIndex.ScoringProfiles[0].FunctionAggregation);
+
+            actualIndex.ScoringProfiles[0].FunctionAggregation = ScoringFunctionAggregation.Sum;
+            SearchIndex updatedIndex = await client.CreateOrUpdateIndexAsync(actualIndex);
+            Assert.AreEqual(ScoringFunctionAggregation.Sum, updatedIndex.ScoringProfiles[0].FunctionAggregation);
+        }
+
+        [Test]
         [SyncOnly]
         public void UpdateIndexParameterValidation()
         {
@@ -196,7 +209,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
         public async Task UpdateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -284,7 +297,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndexClient client = resources.GetIndexClient();
 
             bool found = false;
-            await foreach (SearchIndex index in client.GetIndexesAsync())
+            await foreach (SearchIndex index in client.GetIndexesAsync(CancellationToken.None))
             {
                 found |= string.Equals(resources.IndexName, index.Name, StringComparison.InvariantCultureIgnoreCase);
             }
@@ -299,7 +312,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchIndexClient client = resources.GetIndexClient();
-            AsyncPageable<SearchIndex> pageable = client.GetIndexesAsync();
+            AsyncPageable<SearchIndex> pageable = client.GetIndexesAsync(CancellationToken.None);
 
             string continuationToken = Recording.GenerateId();
             IAsyncEnumerator<Page<SearchIndex>> e = pageable.AsPages(continuationToken).GetAsyncEnumerator();
@@ -331,13 +344,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((string)null));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((string)null, CancellationToken.None));
             Assert.AreEqual("indexName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((SearchIndex)null));
             Assert.AreEqual("index", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((string)null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((string)null, CancellationToken.None));
             Assert.AreEqual("indexName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((SearchIndex)null));
@@ -393,13 +406,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((string)null));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((string)null, CancellationToken.None));
             Assert.AreEqual("synonymMapName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((SynonymMap)null));
             Assert.AreEqual("synonymMap", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((string)null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((string)null, CancellationToken.None));
             Assert.AreEqual("synonymMapName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((SynonymMap)null));
@@ -415,7 +428,7 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient client = resources.GetIndexClient();
 
-            SynonymMap createdMap = await client.CreateSynonymMapAsync(new SynonymMap(synonymMapName, "msft=>Microsoft"));
+            SynonymMap createdMap = await client.CreateSynonymMapAsync(new SynonymMap(synonymMapName, ["msft=>Microsoft"]));
             Assert.AreEqual(synonymMapName, createdMap.Name);
             Assert.AreEqual("solr", createdMap.Format);
             Assert.AreEqual("msft=>Microsoft", createdMap.Synonyms);
@@ -468,14 +481,17 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
         public async Task AnalyzeTextWithNormalizer()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchIndexClient client = resources.GetIndexClient();
 
-            AnalyzeTextOptions request = new("I dARe YoU tO reAd It IN A nORmAl vOiCE.", LexicalNormalizerName.Lowercase);
+            AnalyzeTextOptions request = new("I dARe YoU tO reAd It IN A nORmAl vOiCE.")
+            {
+                NormalizerName = LexicalNormalizerName.Lowercase
+            };
 
             Response<IReadOnlyList<AnalyzedTokenInfo>> result = await client.AnalyzeTextAsync(resources.IndexName, request);
             IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
@@ -483,7 +499,10 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(1, tokens.Count);
             Assert.AreEqual("i dare you to read it in a normal voice.", tokens[0].Token);
 
-            request = new("Item ① in my ⑽ point rant is that 75⁰F is uncomfortably warm.", LexicalNormalizerName.AsciiFolding);
+            request = new("Item ① in my ⑽ point rant is that 75⁰F is uncomfortably warm.")
+            {
+                NormalizerName = LexicalNormalizerName.AsciiFolding
+            };
 
             result = await client.AnalyzeTextAsync(resources.IndexName, request);
             tokens = result.Value;
@@ -533,131 +552,177 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
-        public async Task CreateKnowledgeAgent()
+        public async Task CreateKnowledgeBase()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
-            string deploymentName = "gpt-4.1";
+            string deploymentName = "gpt-5-mini";
             SearchIndexClient client = resources.GetIndexClient();
-            var knowledgeAgentName = Recording.Random.GetName(8);
+            var knowledgeBaseName = Recording.Random.GetName(8);
+            var knowledgeSourceName = Recording.Random.GetName(8);
 
-            var knowledgeAgent = new KnowledgeAgent(
-                knowledgeAgentName,
-                new List<KnowledgeAgentModel>{
-                    new KnowledgeAgentAzureOpenAIModel(
-                        new AzureOpenAIVectorizerParameters
-                        {
-                            ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                            ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                            DeploymentName = deploymentName,
-                            ModelName = AzureOpenAIModelName.Gpt41
-                        })
-                },
-                new List<KnowledgeAgentTargetIndex>
-                {
-                    new KnowledgeAgentTargetIndex(resources.IndexName),
-                });
+            SearchIndexKnowledgeSource indexKnowledgeSource = new(knowledgeSourceName, new(resources.IndexName));
+            KnowledgeSource knowledgeSource = await client.CreateKnowledgeSourceAsync(indexKnowledgeSource);
+            var knowledgeSources = new List<KnowledgeSourceReference>
+            {
+                new KnowledgeSourceReference(knowledgeSource.Name),
+            };
 
-            KnowledgeAgent actualAgent = await client.CreateKnowledgeAgentAsync(knowledgeAgent);
-            KnowledgeAgent expectedAgent = knowledgeAgent;
+            var knowledgeBase = new KnowledgeBase(
+                knowledgeBaseName,
+                knowledgeSources)
+            {
+                Description = "Description of the Knowledge Base"
+            };
+            knowledgeBase.Models.Add(
+                new KnowledgeBaseAzureOpenAIModel(
+                    new AzureOpenAIVectorizerParameters
+                    {
+                        ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint),
+                        ApiKey = TestEnvironment.OpenAIKey,
+                        DeploymentName = deploymentName,
+                        ModelName = AzureOpenAIModelName.Gpt5Mini
+                    }));
+
+            KnowledgeBase actualAgent = await client.CreateKnowledgeBaseAsync(knowledgeBase);
+            KnowledgeBase expectedAgent = knowledgeBase;
 
             Assert.AreEqual(expectedAgent.Name, actualAgent.Name);
-            Assert.That(actualAgent.Models, Is.EqualTo(expectedAgent.Models).Using(KnowledgeAgentModelComparer.Instance));
-            Assert.That(actualAgent.TargetIndexes, Is.EqualTo(expectedAgent.TargetIndexes).Using(KnowledgeAgentTargetIndexComparer.Instance));
+            Assert.That(actualAgent.Models, Is.EqualTo(expectedAgent.Models).Using(KnowledgeBaseModelComparer.Instance));
+            Assert.That(actualAgent.KnowledgeSources, Is.EqualTo(expectedAgent.KnowledgeSources).Using(KnowledgeSourceReferenceComparer.Instance));
 
-            await client.DeleteKnowledgeAgentAsync(knowledgeAgentName);
+            await client.DeleteKnowledgeBaseAsync(knowledgeBaseName, cancellationToken: CancellationToken.None);
+            await client.DeleteKnowledgeSourceAsync(knowledgeSource.Name, cancellationToken: CancellationToken.None);
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
-        public async Task DeleteKnowledgeAgent()
+        public async Task DeleteKnowledgeBase()
         {
-            await using SearchResources resources = await SearchResources.CreateWithknowledgeAgentAsync(this);
+            await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
             SearchIndexClient client = resources.GetIndexClient();
 
-            await client.DeleteKnowledgeAgentAsync(resources.KnowledgeAgentName);
+            await client.DeleteKnowledgeBaseAsync(resources.KnowledgeBaseName, cancellationToken: CancellationToken.None);
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await client.GetKnowledgeAgentAsync(resources.KnowledgeAgentName);
+                await client.GetKnowledgeBaseAsync(resources.KnowledgeBaseName);
             });
 
             Assert.AreEqual(404, ex.Status);
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
-        public async Task UpdateKnowledgeAgent()
+        public async Task UpdateKnowledgeBase()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
-            string deploymentName = "gpt-4.1";
+            string deploymentName = "gpt-5-mini";
             SearchIndexClient client = resources.GetIndexClient();
-            var knowledgeAgentName = Recording.Random.GetName(8);
+            var knowledgeBaseName = Recording.Random.GetName(8);
+            var knowledgeSourceName = Recording.Random.GetName(8);
 
-            var knowledgeAgent = new KnowledgeAgent(
-                knowledgeAgentName,
-                new List<KnowledgeAgentModel>{
-                    new KnowledgeAgentAzureOpenAIModel(
-                        new AzureOpenAIVectorizerParameters
-                        {
-                            ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                            ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                            DeploymentName = deploymentName,
-                            ModelName = AzureOpenAIModelName.Gpt41
-                        })
-                },
-                new List<KnowledgeAgentTargetIndex>
+            SearchIndexKnowledgeSource indexKnowledgeSource = new(knowledgeSourceName, new(resources.IndexName));
+            KnowledgeSource knowledgeSource = await client.CreateKnowledgeSourceAsync(indexKnowledgeSource);
+
+            var knowledgeBase = new KnowledgeBase(
+                knowledgeBaseName,
+                knowledgeSources: new List<KnowledgeSourceReference>
                 {
-                    new KnowledgeAgentTargetIndex(resources.IndexName),
-                }
-                );
+                    new KnowledgeSourceReference(knowledgeSource.Name),
+                })
+            {
+                Description = "Description of the Knowledge Base"
+            };
+            knowledgeBase.Models.Add(
+                new KnowledgeBaseAzureOpenAIModel(
+                    new AzureOpenAIVectorizerParameters
+                    {
+                        ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint),
+                        ApiKey = TestEnvironment.OpenAIKey,
+                        DeploymentName = deploymentName,
+                        ModelName = AzureOpenAIModelName.Gpt5Mini
+                    }));
 
-            KnowledgeAgent createdAgent = await client.CreateKnowledgeAgentAsync(knowledgeAgent);
+            KnowledgeBase createdAgent = await client.CreateKnowledgeBaseAsync(knowledgeBase);
             createdAgent.Description = "Updated description";
-            KnowledgeAgent updatedAgent = await client.CreateOrUpdateKnowledgeAgentAsync(createdAgent);
+            KnowledgeBase updatedAgent = await client.CreateOrUpdateKnowledgeBaseAsync(createdAgent);
 
             Assert.AreEqual(createdAgent.Name, updatedAgent.Name);
             Assert.AreEqual(createdAgent.Description, updatedAgent.Description);
-            Assert.That(createdAgent.Models, Is.EqualTo(updatedAgent.Models).Using(KnowledgeAgentModelComparer.Instance));
-            Assert.That(createdAgent.TargetIndexes, Is.EqualTo(updatedAgent.TargetIndexes).Using(KnowledgeAgentTargetIndexComparer.Instance));
+            Assert.That(createdAgent.Models, Is.EqualTo(updatedAgent.Models).Using(KnowledgeBaseModelComparer.Instance));
+            Assert.That(createdAgent.KnowledgeSources, Is.EqualTo(updatedAgent.KnowledgeSources).Using(KnowledgeSourceReferenceComparer.Instance));
 
-            await client.DeleteKnowledgeAgentAsync(updatedAgent.Name);
+            await client.DeleteKnowledgeBaseAsync(knowledgeBaseName, cancellationToken: CancellationToken.None);
+            await client.DeleteKnowledgeSourceAsync(knowledgeSource.Name, cancellationToken: CancellationToken.None);
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
-        public async Task GetKnowledgeAgent()
+        public async Task GetKnowledgeBase()
         {
-            await using SearchResources resources = await SearchResources.CreateWithknowledgeAgentAsync(this);
+            await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
 
             SearchIndexClient client = resources.GetIndexClient();
-            KnowledgeAgent agent = await client.GetKnowledgeAgentAsync(resources.KnowledgeAgentName);
+            KnowledgeBase agent = await client.GetKnowledgeBaseAsync(resources.KnowledgeBaseName);
 
-            Assert.AreEqual(resources.KnowledgeAgentName, agent.Name);
+            Assert.AreEqual(resources.KnowledgeBaseName, agent.Name);
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
-        public async Task GetKnowledgeAgents()
+        public async Task GetKnowledgeBases()
         {
-            await using SearchResources resources = await SearchResources.CreateWithknowledgeAgentAsync(this);
+            await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
 
             SearchIndexClient client = resources.GetIndexClient();
 
             bool found = false;
-            await foreach (KnowledgeAgent agent in client.GetKnowledgeAgentsAsync())
+            await foreach (KnowledgeBase agent in client.GetKnowledgeBasesAsync())
             {
-                found |= string.Equals(resources.KnowledgeAgentName, agent.Name, StringComparison.InvariantCultureIgnoreCase);
+                found |= string.Equals(resources.KnowledgeBaseName, agent.Name, StringComparison.InvariantCultureIgnoreCase);
             }
 
             Assert.IsTrue(found, "Knowledge agent not found");
+        }
+
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+        public async Task CrudWebKnowledgeSource()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+
+            var webKs = new WebKnowledgeSource("web") { WebParameters = new WebKnowledgeSourceParameters() { Domains = new WebKnowledgeSourceDomains() } };
+            webKs.WebParameters.Domains.AllowedDomains.Add(new WebKnowledgeSourceDomain("example.com"));
+            webKs.WebParameters.Domains.BlockedDomains.Add(new WebKnowledgeSourceDomain("blocked.com"));
+
+            KnowledgeSource createdKs = await client.CreateKnowledgeSourceAsync(webKs);
+            Assert.IsNotNull(createdKs);
+            Assert.IsTrue(createdKs is WebKnowledgeSource);
+            var createdWebKs = createdKs as WebKnowledgeSource;
+            Assert.AreEqual(1, createdWebKs.WebParameters.Domains.AllowedDomains.Count);
+            Assert.AreEqual(1, createdWebKs.WebParameters.Domains.BlockedDomains.Count);
+
+            createdWebKs.Description = "Updated description";
+            WebKnowledgeSource updatedKs = (WebKnowledgeSource)await client.CreateOrUpdateKnowledgeSourceAsync(createdWebKs);
+            Assert.AreEqual("Updated description", updatedKs.Description);
+            Assert.AreEqual(1, updatedKs.WebParameters.Domains.AllowedDomains.Count);
+            Assert.AreEqual(1, updatedKs.WebParameters.Domains.BlockedDomains.Count);
+
+            KnowledgeSource fetchedKs = await client.GetKnowledgeSourceAsync(webKs.Name);
+            Assert.IsNotNull(fetchedKs);
+            Assert.AreEqual("Updated description", fetchedKs.Description);
+
+            await client.DeleteKnowledgeSourceAsync(webKs.Name, cancellationToken: CancellationToken.None);
         }
     }
 }

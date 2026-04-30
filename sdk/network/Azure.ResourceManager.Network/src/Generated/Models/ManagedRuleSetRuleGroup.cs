@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the rule group. </summary>
+        [WirePath("ruleGroupName")]
         public string RuleGroupName { get; }
         /// <summary> List of rules within the rule group. </summary>
+        [WirePath("rules")]
         public IReadOnlyList<string> Rules { get; }
     }
 }

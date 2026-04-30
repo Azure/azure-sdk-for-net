@@ -47,9 +47,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIPPrefixesV6"> An array of public ip prefixes V6 associated with the nat gateway resource. </param>
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="sourceVirtualNetwork"> A reference to the source virtual network using this nat gateway resource. </param>
+        /// <param name="serviceGateway"> Reference to an existing service gateway. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
-        internal NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NatGatewaySku sku, IList<string> zones, ETag? etag, int? idleTimeoutInMinutes, IList<WritableSubResource> publicIPAddresses, IList<WritableSubResource> publicIPAddressesV6, IList<WritableSubResource> publicIPPrefixes, IList<WritableSubResource> publicIPPrefixesV6, IReadOnlyList<WritableSubResource> subnets, WritableSubResource sourceVirtualNetwork, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NatGatewaySku sku, IList<string> zones, ETag? etag, int? idleTimeoutInMinutes, IList<WritableSubResource> publicIPAddresses, IList<WritableSubResource> publicIPAddressesV6, IList<WritableSubResource> publicIPPrefixes, IList<WritableSubResource> publicIPPrefixesV6, IReadOnlyList<WritableSubResource> subnets, WritableSubResource sourceVirtualNetwork, WritableSubResource serviceGateway, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Sku = sku;
             Zones = zones;
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.Network
             PublicIPPrefixesV6 = publicIPPrefixesV6;
             Subnets = subnets;
             SourceVirtualNetwork = sourceVirtualNetwork;
+            ServiceGateway = serviceGateway;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
@@ -68,6 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The nat gateway SKU. </summary>
         internal NatGatewaySku Sku { get; set; }
         /// <summary> Name of Nat Gateway SKU. </summary>
+        [WirePath("sku.name")]
         public NatGatewaySkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -80,24 +83,33 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The idle timeout of the nat gateway. </summary>
+        [WirePath("properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> An array of public ip addresses V4 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpAddresses")]
         public IList<WritableSubResource> PublicIPAddresses { get; }
         /// <summary> An array of public ip addresses V6 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpAddressesV6")]
         public IList<WritableSubResource> PublicIPAddressesV6 { get; }
         /// <summary> An array of public ip prefixes V4 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpPrefixes")]
         public IList<WritableSubResource> PublicIPPrefixes { get; }
         /// <summary> An array of public ip prefixes V6 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpPrefixesV6")]
         public IList<WritableSubResource> PublicIPPrefixesV6 { get; }
         /// <summary> An array of references to the subnets using this nat gateway resource. </summary>
+        [WirePath("properties.subnets")]
         public IReadOnlyList<WritableSubResource> Subnets { get; }
         /// <summary> A reference to the source virtual network using this nat gateway resource. </summary>
         internal WritableSubResource SourceVirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.sourceVirtualNetwork.id")]
         public ResourceIdentifier SourceVirtualNetworkId
         {
             get => SourceVirtualNetwork is null ? default : SourceVirtualNetwork.Id;
@@ -109,9 +121,26 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Reference to an existing service gateway. </summary>
+        internal WritableSubResource ServiceGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.serviceGateway.id")]
+        public ResourceIdentifier ServiceGatewayId
+        {
+            get => ServiceGateway is null ? default : ServiceGateway.Id;
+            set
+            {
+                if (ServiceGateway is null)
+                    ServiceGateway = new WritableSubResource();
+                ServiceGateway.Id = value;
+            }
+        }
+
         /// <summary> The resource GUID property of the NAT gateway resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the NAT gateway resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

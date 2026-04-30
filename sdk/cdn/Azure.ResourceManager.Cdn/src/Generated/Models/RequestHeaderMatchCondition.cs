@@ -7,90 +7,57 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for RequestHeader match conditions
-    /// Serialized Name: RequestHeaderMatchConditionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for RequestHeader match conditions. </summary>
     public partial class RequestHeaderMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
-        /// <param name="requestHeaderOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: RequestHeaderMatchConditionParameters.operator
-        /// </param>
-        public RequestHeaderMatchCondition(RequestHeaderOperator requestHeaderOperator)
+        /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
+        public RequestHeaderMatchCondition(RequestHeaderOperator requestHeaderOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleRequestHeaderConditionParameters)
         {
             RequestHeaderOperator = requestHeaderOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestHeaderConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="selector">
-        /// Name of Header to be matched
-        /// Serialized Name: RequestHeaderMatchConditionParameters.selector
-        /// </param>
-        /// <param name="requestHeaderOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: RequestHeaderMatchConditionParameters.operator
-        /// </param>
-        /// <param name="negateCondition">
-        /// Describes if this is negate condition or not
-        /// Serialized Name: RequestHeaderMatchConditionParameters.negateCondition
-        /// </param>
-        /// <param name="matchValues">
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestHeaderMatchConditionParameters.matchValues
-        /// </param>
-        /// <param name="transforms">
-        /// List of transforms
-        /// Serialized Name: RequestHeaderMatchConditionParameters.transforms
-        /// </param>
-        internal RequestHeaderMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        /// <param name="typeName"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="selector"> Name of Header to be matched. </param>
+        /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
+        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
+        /// <param name="transforms"> List of transforms. </param>
+        internal RequestHeaderMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
             Selector = selector;
             RequestHeaderOperator = requestHeaderOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
-            TypeName = typeName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/> for deserialization. </summary>
-        internal RequestHeaderMatchCondition()
-        {
-        }
-
-        /// <summary>
-        /// Name of Header to be matched
-        /// Serialized Name: RequestHeaderMatchConditionParameters.selector
-        /// </summary>
+        /// <summary> Name of Header to be matched. </summary>
+        [WirePath("selector")]
         public string Selector { get; set; }
-        /// <summary>
-        /// Describes operator to be matched
-        /// Serialized Name: RequestHeaderMatchConditionParameters.operator
-        /// </summary>
+
+        /// <summary> Describes operator to be matched. </summary>
+        [WirePath("operator")]
         public RequestHeaderOperator RequestHeaderOperator { get; set; }
-        /// <summary>
-        /// Describes if this is negate condition or not
-        /// Serialized Name: RequestHeaderMatchConditionParameters.negateCondition
-        /// </summary>
+
+        /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
-        /// <summary>
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestHeaderMatchConditionParameters.matchValues
-        /// </summary>
+
+        /// <summary> The match value for the condition of the delivery rule. </summary>
+        [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
-        /// <summary>
-        /// List of transforms
-        /// Serialized Name: RequestHeaderMatchConditionParameters.transforms
-        /// </summary>
+
+        /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

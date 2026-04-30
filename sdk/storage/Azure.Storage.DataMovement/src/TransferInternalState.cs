@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -16,6 +17,7 @@ namespace Azure.Storage.DataMovement
     {
         private string _id;
         private TransferStatus _status;
+        public TransferManager TransferManager;
 
         public TaskCompletionSource<TransferStatus> CompletionSource;
 
@@ -58,7 +60,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public bool HasCompleted
         {
-            get {
+            get
+            {
                 return TransferState.Completed == _status.State;
             }
             internal set { }
@@ -89,20 +92,45 @@ namespace Azure.Storage.DataMovement
         /// <returns>Returns whether or not the status has been changed from its original state.</returns>
         public bool SetTransferState(TransferState state)
         {
-            if (_status.SetTransferStateChange(state))
+            // Only allow state changes if not already in a Completed/Paused state.
+            if (TransferState.Completed != _status.State &&
+                TransferState.Paused != _status.State)
             {
-                if (TransferState.Completed == _status.State ||
-                    TransferState.Paused == _status.State)
+                Argument.AssertNotNull(TransferManager, nameof(TransferManager));
+                if (_status.SetTransferStateChange(state))
                 {
-                    DataMovementEventSource.Singleton.TransferCompleted(Id, _status);
-                    // If the _completionSource has been cancelled or the exception
-                    // has been set, we don't need to check if TrySetResult returns false
-                    // because it's acceptable to cancel or have an error occur before then.
-                    CompletionSource.TrySetResult(_status);
+                    return true;
                 }
-                return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Signals transfer completion if the transfer is in a final state (Completed/Paused).
+        /// Must be called AFTER all checkpointer and cleanup work is done
+        /// to avoid race conditions with resume operations.
+        /// </summary>
+        public void CompleteIfFinalState()
+        {
+            if (TransferState.Completed == _status.State ||
+                TransferState.Paused == _status.State)
+            {
+                DataMovementEventSource.Singleton.TransferCompleted(Id, _status);
+                // If the _completionSource has been cancelled or the exception
+                // has been set, we don't need to check if TrySetResult returns false
+                // because it's acceptable to cancel or have an error occur before then.
+
+                CompletionSource.TrySetResult(_status);
+
+                // Tell the transfer manager to clean up the completed/paused job.
+                TransferManager?.TryRemoveTransfer(_id);
+
+                // Remove Transfer Manager reference after no longer needed.
+                TransferManager = null;
+
+                // Once we reach a Completed/Paused, Dispose the CancellationTokenSource to release resources (since it is no longer needed).
+                DisposeCancellationTokenSource();
+            }
         }
 
         public bool SetFailedItemsState() => _status.SetFailedItem();
@@ -130,12 +158,21 @@ namespace Azure.Storage.DataMovement
 
         internal bool TriggerCancellation()
         {
-            if (!CancellationTokenSource.IsCancellationRequested)
+            if (CancellationTokenSource?.IsCancellationRequested == false)
             {
                 CancellationTokenSource.Cancel();
                 return true;
             }
             return false;
+        }
+
+        private void DisposeCancellationTokenSource()
+        {
+            if (CancellationTokenSource != null)
+            {
+                CancellationTokenSource.Dispose();
+                CancellationTokenSource = null;
+            }
         }
     }
 }

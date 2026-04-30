@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     public readonly partial struct CertificateProfileStatus : IEquatable<CertificateProfileStatus>
     {
         private readonly string _value;
+        /// <summary> The certificate profile is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> The certificate profile is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> The certificate profile is suspended. </summary>
+        private const string SuspendedValue = "Suspended";
 
         /// <summary> Initializes a new instance of <see cref="CertificateProfileStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CertificateProfileStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string DisabledValue = "Disabled";
-        private const string SuspendedValue = "Suspended";
+            _value = value;
+        }
 
         /// <summary> The certificate profile is active. </summary>
         public static CertificateProfileStatus Active { get; } = new CertificateProfileStatus(ActiveValue);
+
         /// <summary> The certificate profile is disabled. </summary>
         public static CertificateProfileStatus Disabled { get; } = new CertificateProfileStatus(DisabledValue);
+
         /// <summary> The certificate profile is suspended. </summary>
         public static CertificateProfileStatus Suspended { get; } = new CertificateProfileStatus(SuspendedValue);
+
         /// <summary> Determines if two <see cref="CertificateProfileStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CertificateProfileStatus left, CertificateProfileStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CertificateProfileStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CertificateProfileStatus left, CertificateProfileStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateProfileStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CertificateProfileStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CertificateProfileStatus(string value) => new CertificateProfileStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CertificateProfileStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CertificateProfileStatus?(string value) => value == null ? null : new CertificateProfileStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CertificateProfileStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CertificateProfileStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

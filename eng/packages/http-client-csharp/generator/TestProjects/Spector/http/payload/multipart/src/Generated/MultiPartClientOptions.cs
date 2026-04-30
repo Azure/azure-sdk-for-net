@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Payload.MultiPart
 {
     /// <summary> Client options for <see cref="MultiPartClient"/>. </summary>
     public partial class MultiPartClientOptions : ClientOptions
     {
+        public MultiPartClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal MultiPartClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

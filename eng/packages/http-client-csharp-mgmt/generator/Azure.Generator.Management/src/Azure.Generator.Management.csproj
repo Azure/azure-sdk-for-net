@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 		<PackageId>Azure.Generator.Management</PackageId>
 		<Version>1.0.0-beta.1</Version>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
@@ -10,12 +11,6 @@
 		<PackageReference Include="Azure.Generator" />
 		<PackageReference Include="Azure.ResourceManager" />
 		<PackageReference Include="Humanizer.Core" />
-	</ItemGroup>
-
-	<!-- temporarily. remove once Azure.Generator version update is done -->
-	<ItemGroup>
-		<PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" VersionOverride="1.0.0-alpha.20250731.2" />
-		<PackageReference Update="Microsoft.TypeSpec.Generator.Input" VersionOverride="1.0.0-alpha.20250731.2" />
 	</ItemGroup>
 
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">

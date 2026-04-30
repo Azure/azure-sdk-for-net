@@ -36,20 +36,20 @@ namespace Azure.Generator.Management.Tests.Providers
             var resource = _plugin.OutputLibrary.TypeProviders
                 .OfType<ResourceClientProvider>().FirstOrDefault();
 
-            Assert.IsNotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             var collection = resource?.ResourceCollection;
-            Assert.IsNotNull(collection);
+            Assert.That(collection, Is.Not.Null);
 
             // find the extension
             var extension = _plugin.OutputLibrary.TypeProviders
                 .OfType<ExtensionProvider>().FirstOrDefault();
-            Assert.IsNotNull(extension);
+            Assert.That(extension, Is.Not.Null);
 
             // validate the get collection method
             var method = extension!.Methods.FirstOrDefault(m => m.Signature.Name == $"Get{resource?.ResourceName.Pluralize()}")!;
 
-            Assert.IsNotNull(method);
-            Assert.AreEqual(collection!.Type, method.Signature.ReturnType);
+            Assert.That(method, Is.Not.Null);
+            Assert.That(method.Signature.ReturnType, Is.EqualTo(collection!.Type));
         }
 
         [TestCase]
@@ -58,17 +58,36 @@ namespace Azure.Generator.Management.Tests.Providers
             // find the resource
             var resource = _plugin.OutputLibrary.TypeProviders
                 .OfType<ResourceClientProvider>().FirstOrDefault();
-            Assert.IsNotNull(resource);
+            Assert.That(resource, Is.Not.Null);
             var collection = resource?.ResourceCollection;
-            Assert.IsNotNull(collection);
+            Assert.That(collection, Is.Not.Null);
             // find the extension
             var extension = _plugin.OutputLibrary.TypeProviders
                 .OfType<ExtensionProvider>().FirstOrDefault();
-            Assert.IsNotNull(extension);
+            Assert.That(extension, Is.Not.Null);
             // validate the get by id methods
             var getMethod = extension!.Methods.FirstOrDefault(m => m.Signature.Name == $"Get{resource?.Name}");
-            Assert.IsNotNull(getMethod);
-            Assert.AreEqual(resource!.Type, getMethod!.Signature.ReturnType);
+            Assert.That(getMethod, Is.Not.Null);
+            Assert.That(getMethod!.Signature.ReturnType, Is.EqualTo(resource!.Type));
+        }
+
+        [TestCase]
+        public void Verify_MockableResourcesWithNoMethods_AreNotGenerated()
+        {
+            // Verify that all MockableResourceProvider instances in the output have at least one method
+            // This ensures that mockable resources without methods are filtered out
+            var mockableResources = _plugin.OutputLibrary.TypeProviders
+                .OfType<MockableResourceProvider>().ToList();
+
+            // With resources defined, there should be mockable resources
+            Assert.That(mockableResources.Count, Is.GreaterThan(0), "There should be at least one mockable resource when resources are defined");
+
+            // All mockable resources in the output should have at least one method
+            foreach (var mockableResource in mockableResources)
+            {
+                Assert.That(mockableResource.Methods.Count, Is.GreaterThan(0),
+                    $"MockableResourceProvider '{mockableResource.Name}' should have at least one method to be included in the output.");
+            }
         }
     }
 }

@@ -12,9 +12,9 @@ using OpenTelemetry.Logs;
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
-    /// Azure Monitor Log Exporter.
+    /// An exporter that sends logs to Application Insights.
     /// </summary>
-    internal sealed class AzureMonitorLogExporter : BaseExporter<LogRecord>
+    public sealed class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
@@ -47,10 +47,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
+                (var telemetryItems, var telemetrySchemaTypeCounter) = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
                 if (telemetryItems.Count > 0)
                 {
-                    exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();
+                    exportResult = _transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();
                 }
             }
             catch (Exception ex)

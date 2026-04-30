@@ -18,6 +18,8 @@ namespace Encode.Duration._Query
     {
         protected Query() => throw null;
 
+        internal Query(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(TimeSpan input, RequestContext context) => throw null;
@@ -44,6 +46,14 @@ namespace Encode.Duration._Query
 
         public virtual Task<Response> Int32SecondsAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
 
+        public virtual Response Int32SecondsLargerUnit(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Task<Response> Int32SecondsLargerUnitAsync(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Response Int32SecondsLargerUnit(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> Int32SecondsLargerUnitAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
         public virtual Response FloatSeconds(TimeSpan input, RequestContext context) => throw null;
 
         public virtual Task<Response> FloatSecondsAsync(TimeSpan input, RequestContext context) => throw null;
@@ -51,6 +61,14 @@ namespace Encode.Duration._Query
         public virtual Response FloatSeconds(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response> FloatSecondsAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response FloatSecondsLargerUnit(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Task<Response> FloatSecondsLargerUnitAsync(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Response FloatSecondsLargerUnit(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> FloatSecondsLargerUnitAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Float64Seconds(TimeSpan input, RequestContext context) => throw null;
 
@@ -60,6 +78,46 @@ namespace Encode.Duration._Query
 
         public virtual Task<Response> Float64SecondsAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
 
+        public virtual Response Int32Milliseconds(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsAsync(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Response Int32Milliseconds(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Int32MillisecondsLargerUnit(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsLargerUnitAsync(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Response Int32MillisecondsLargerUnit(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsLargerUnitAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response FloatMilliseconds(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Task<Response> FloatMillisecondsAsync(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Response FloatMilliseconds(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> FloatMillisecondsAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response FloatMillisecondsLargerUnit(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Task<Response> FloatMillisecondsLargerUnitAsync(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Response FloatMillisecondsLargerUnit(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> FloatMillisecondsLargerUnitAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Float64Milliseconds(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Task<Response> Float64MillisecondsAsync(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Response Float64Milliseconds(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> Float64MillisecondsAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
         public virtual Response Int32SecondsArray(IEnumerable<TimeSpan> input, RequestContext context) => throw null;
 
         public virtual Task<Response> Int32SecondsArrayAsync(IEnumerable<TimeSpan> input, RequestContext context) => throw null;
@@ -67,5 +125,13 @@ namespace Encode.Duration._Query
         public virtual Response Int32SecondsArray(IEnumerable<TimeSpan> input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response> Int32SecondsArrayAsync(IEnumerable<TimeSpan> input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Int32MillisecondsArray(IEnumerable<TimeSpan> input, RequestContext context) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsArrayAsync(IEnumerable<TimeSpan> input, RequestContext context) => throw null;
+
+        public virtual Response Int32MillisecondsArray(IEnumerable<TimeSpan> input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsArrayAsync(IEnumerable<TimeSpan> input, CancellationToken cancellationToken = default) => throw null;
     }
 }

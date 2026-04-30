@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> NRP Resource URI of the connection. </summary>
+        [WirePath("nrpResourceUri")]
         public Uri NrpResourceUri { get; }
         /// <summary> Connection Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The current status of the connection. </summary>
+        [WirePath("status")]
         public FailoverConnectionStatus? Status { get; }
         /// <summary> Time when the connection was last updated. </summary>
+        [WirePath("lastUpdatedTime")]
         public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

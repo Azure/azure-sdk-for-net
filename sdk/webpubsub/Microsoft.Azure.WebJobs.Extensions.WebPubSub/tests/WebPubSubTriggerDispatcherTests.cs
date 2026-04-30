@@ -27,7 +27,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private const string TestEvent = Constants.Events.ConnectedEvent;
         private static string TestConnectionString = $"Endpoint=http://{TestOrigin};Port=8080;AccessKey={TestKey.AccessKey};Version=1.0;";
 
-        private static readonly WebPubSubValidationOptions TestValidationOption = new(TestConnectionString);
         private static readonly string[] ValidSignature = new string[] { TestKey.Signature };
 
         [TestCase]
@@ -107,6 +106,93 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
+        // Regression: customer repro. No default WebPubSubAccess configured (and listener
+        // also has no restriction). Abuse-protection OPTIONS must not NullReferenceException
+        // on new RequestValidator([null]); it should accept any origin because nothing is
+        // restricted.
+        [TestCase]
+        public async Task TestProcessRequest_AbuseProtection_NoDefaultAccess_NoListenerRestriction_Accepts()
+        {
+            var dispatcher = SetupDispatcher(connectionString: null);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "OPTIONS", origin: new string[] { "any.example.com" });
+            var response = await dispatcher.ExecuteAsync(request);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        // Regression: customer repro. No default WebPubSubAccess, but the listener was
+        // built from the trigger attribute's Connections and has restrictions. The origin
+        // matches the listener's allowed host → accept.
+        [TestCase]
+        public async Task TestProcessRequest_AbuseProtection_NoDefaultAccess_ListenerRestrictionMatches_Accepts()
+        {
+            var triggerHost = "trigger.example.com";
+            var dispatcher = SetupDispatcherWithListenerOnlyAccess(triggerHost);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "OPTIONS", origin: new string[] { triggerHost });
+            var response = await dispatcher.ExecuteAsync(request);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        // No default access, listener has restrictions, origin does not match any of them.
+        [TestCase]
+        public async Task TestProcessRequest_AbuseProtection_NoDefaultAccess_ListenerRestrictionNoMatch_Rejects()
+        {
+            var dispatcher = SetupDispatcherWithListenerOnlyAccess("trigger.example.com");
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "OPTIONS", origin: new string[] { "stranger.example.com" });
+            var response = await dispatcher.ExecuteAsync(request);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        // Default access host does NOT match origin, but the listener was built from
+        // trigger Connections (local access) which does match → accept.
+        // The listener uses ONLY local access; global default is not consulted.
+        [TestCase]
+        public async Task TestProcessRequest_AbuseProtection_ListenerUsesLocalAccess_OriginMatchesLocal_Accepts()
+        {
+            var defaultHost = "default.example.com";
+            var triggerHost = "trigger.example.com";
+            var dispatcher = SetupDispatcherWithLocalAccess(defaultHost, triggerHost);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "OPTIONS", origin: new string[] { triggerHost });
+            var response = await dispatcher.ExecuteAsync(request);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        // Listener has local access (triggerHost). Origin matches the global default host
+        // but NOT the local access → reject. Proves that global default is NOT consulted
+        // when the listener has its own Connections.
+        [TestCase]
+        public async Task TestProcessRequest_AbuseProtection_ListenerUsesLocalAccess_OriginMatchesGlobalOnly_Rejects()
+        {
+            var defaultHost = "default.example.com";
+            var triggerHost = "trigger.example.com";
+            var dispatcher = SetupDispatcherWithLocalAccess(defaultHost, triggerHost);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "OPTIONS", origin: new string[] { defaultHost });
+            var response = await dispatcher.ExecuteAsync(request);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        // Listener has no Connections, so it falls back to global default access.
+        // Origin matches the global default → accept.
+        [TestCase]
+        public async Task TestProcessRequest_AbuseProtection_ListenerFallsBackToGlobal_OriginMatchesGlobal_Accepts()
+        {
+            var defaultHost = "default.example.com";
+            var dispatcher = SetupDispatcherWithGlobalFallback(defaultHost);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "OPTIONS", origin: new string[] { defaultHost });
+            var response = await dispatcher.ExecuteAsync(request);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        // Listener falls back to global default access. Origin does not match → reject.
+        [TestCase]
+        public async Task TestProcessRequest_AbuseProtection_ListenerFallsBackToGlobal_OriginMismatch_Rejects()
+        {
+            var defaultHost = "default.example.com";
+            var dispatcher = SetupDispatcherWithGlobalFallback(defaultHost);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "OPTIONS", origin: new string[] { "stranger.example.com" });
+            var response = await dispatcher.ExecuteAsync(request);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
         [TestCase("sha256=something,sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
         [TestCase("sha256=something, sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
         [TestCase("sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561, sha256=something")]
@@ -149,7 +235,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var connectHttpRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "connect", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt, payload: Encoding.UTF8.GetBytes(payload));
             connectHttpRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
 
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
             var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connect", WebPubSubTriggerAcceptedClientProtocols.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
@@ -190,7 +276,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var connectHttpRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "connect", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt, payload: Encoding.UTF8.GetBytes(payload));
             connectHttpRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
 
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
             var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connect", WebPubSubTriggerAcceptedClientProtocols.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
@@ -229,7 +315,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var connectedRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "connected", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt);
             connectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
             connectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttSessionId, "sessionId");
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
             var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connected", WebPubSubTriggerAcceptedClientProtocols.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
@@ -267,7 +353,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var disconnectedRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "disconnected", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt, payload: Encoding.UTF8.GetBytes(body));
             disconnectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
             disconnectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttSessionId, "sessionId");
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
             var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "disconnected", WebPubSubTriggerAcceptedClientProtocols.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
@@ -309,18 +395,73 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private static WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null, WebPubSubTriggerAcceptedClientProtocols clientProtocol = WebPubSubTriggerAcceptedClientProtocols.All)
         {
             var funcName = Utilities.GetFunctionKey(hub, type, eventName, clientProtocol).ToLower();
-            var wpsOptions = new WebPubSubFunctionsOptions
-            {
-                ConnectionString = connectionString
-            };
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, wpsOptions);
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var executor = new Mock<ITriggeredFunctionExecutor>();
             executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new FunctionResult(true)));
-            var listener = new WebPubSubListener(executor.Object, funcName, dispatcher, new WebPubSubValidationOptions(connectionString));
+            var validator = new RequestValidator(string.IsNullOrEmpty(connectionString)
+                ? null
+                : [WebPubSubServiceAccessUtil.CreateFromConnectionString(connectionString)]);
+            var listener = new WebPubSubListener(executor.Object, funcName, dispatcher, validator);
 
             dispatcher.AddListener(funcName, listener);
 
+            return dispatcher;
+        }
+
+        // No default WebPubSubAccess; the listener is built from a RequestValidator that
+        // restricts allowed hosts to triggerHost (simulates a trigger with explicit
+        // Connections but no default WebPubSubConnection app setting).
+        private static WebPubSubTriggerDispatcher SetupDispatcherWithListenerOnlyAccess(string triggerHost)
+        {
+            var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All).ToLower();
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
+            var executor = new Mock<ITriggeredFunctionExecutor>();
+            executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new FunctionResult(true)));
+            var triggerAccess = WebPubSubServiceAccessUtil.CreateFromConnectionString(
+                $"Endpoint=http://{triggerHost};Port=8080;AccessKey={TestKey.AccessKey};Version=1.0;");
+            var validator = new RequestValidator([triggerAccess]);
+            var listener = new WebPubSubListener(executor.Object, funcName, dispatcher, validator);
+            dispatcher.AddListener(funcName, listener);
+            return dispatcher;
+        }
+
+        // Default WebPubSubAccess is set (scoped to defaultHost), but the listener has
+        // its own local access (scoped to triggerHost). The listener uses ONLY local
+        // access — global default is NOT consulted for this listener.
+        private static WebPubSubTriggerDispatcher SetupDispatcherWithLocalAccess(string defaultHost, string triggerHost)
+        {
+            var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All).ToLower();
+            var defaultAccess = WebPubSubServiceAccessUtil.CreateFromConnectionString(
+                $"Endpoint=http://{defaultHost};Port=8080;AccessKey={TestKey.AccessKey};Version=1.0;");
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
+            var executor = new Mock<ITriggeredFunctionExecutor>();
+            executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new FunctionResult(true)));
+            var triggerAccess = WebPubSubServiceAccessUtil.CreateFromConnectionString(
+                $"Endpoint=http://{triggerHost};Port=8080;AccessKey={TestKey.AccessKey};Version=1.0;");
+            var validator = new RequestValidator([triggerAccess]);
+            var listener = new WebPubSubListener(executor.Object, funcName, dispatcher, validator);
+            dispatcher.AddListener(funcName, listener);
+            return dispatcher;
+        }
+
+        // Default WebPubSubAccess is set (scoped to defaultHost). The listener has no
+        // explicit Connections, so its validator falls back to the global default.
+        private static WebPubSubTriggerDispatcher SetupDispatcherWithGlobalFallback(string defaultHost)
+        {
+            var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All).ToLower();
+            var defaultAccess = WebPubSubServiceAccessUtil.CreateFromConnectionString(
+                $"Endpoint=http://{defaultHost};Port=8080;AccessKey={TestKey.AccessKey};Version=1.0;");
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
+            var executor = new Mock<ITriggeredFunctionExecutor>();
+            executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new FunctionResult(true)));
+            // Listener falls back to global default access (no local Connections)
+            var validator = new RequestValidator([defaultAccess]);
+            var listener = new WebPubSubListener(executor.Object, funcName, dispatcher, validator);
+            dispatcher.AddListener(funcName, listener);
             return dispatcher;
         }
     }

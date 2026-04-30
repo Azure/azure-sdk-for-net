@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<!--This is a workaround because `Microsoft.Generator.CSharp` and `Microsoft.Generator.CSharp.Input` is not signed-->
+		<NoWarn>CS8002</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -25,17 +29,11 @@
 
   <ItemGroup>
     <Compile Remove="**\TestData\**\*.cs" />
-		<Compile Remove="Common\**" />
+    <Compile Remove="Common\**" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="Common\Azure.Generator.Management.Tests.Common.csproj" />
   </ItemGroup>
-
-	<!-- temporarily. remove once Azure.Generator version update is done -->
-	<ItemGroup>
-		<PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" VersionOverride="1.0.0-alpha.20250731.2" />
-		<PackageReference Update="Microsoft.TypeSpec.Generator.Input" VersionOverride="1.0.0-alpha.20250731.2" />
-	</ItemGroup>
 
 </Project>

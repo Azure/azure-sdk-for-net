@@ -16,7 +16,7 @@ To analyze an utterance, you need to first create a `ConversationAnalysisClient`
 ```C# Snippet:CreateConversationAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview);
+ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview);
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
 ```
 
@@ -30,16 +30,15 @@ string deploymentName = "production";
 
 AnalyzeConversationInput data = new ConversationalAITask(
     new ConversationalAIAnalysisInput(
-        conversations: new AIConversation[] {
-            new AIConversation(
+        conversations: new TextConversation[] {
+            new TextConversation(
                 id: "order",
-                modality: InputModality.Text,
                 language: "en-GB",
-                conversationItems: new ConversationalAIItem[]
+                conversationItems: new TextConversationItem[]
                 {
-                    new ConversationalAIItem(id: "1", participantId: "user", text: "Hi"),
-                    new ConversationalAIItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
-                    new ConversationalAIItem(id: "3", participantId: "user", text: "Send an email to Carol about tomorrow's demo")
+                    new TextConversationItem(id: "1", participantId: "user", text: "Hi"),
+                    new TextConversationItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
+                    new TextConversationItem(id: "3", participantId: "user", text: "Send an email to Carol about tomorrow's demo")
                 }
             )
         }),

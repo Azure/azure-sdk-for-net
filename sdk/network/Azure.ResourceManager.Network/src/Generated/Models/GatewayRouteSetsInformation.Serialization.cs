@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -182,6 +184,123 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastComputedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastComputedTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastComputedOn))
+                {
+                    builder.Append("  lastComputedTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastComputedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextEligibleComputeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nextEligibleComputeTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextEligibleComputeOn))
+                {
+                    builder.Append("  nextEligibleComputeTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(NextEligibleComputeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RouteSetVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routeSetVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RouteSetVersion))
+                {
+                    builder.Append("  routeSetVersion: ");
+                    if (RouteSetVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RouteSetVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RouteSetVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RouteSets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routeSets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RouteSets))
+                {
+                    if (RouteSets.Any())
+                    {
+                        builder.Append("  routeSets: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RouteSets)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  routeSets: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CircuitsMetadataMap), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  circuitsMetadataMap: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CircuitsMetadataMap))
+                {
+                    if (CircuitsMetadataMap.Any())
+                    {
+                        builder.Append("  circuitsMetadataMap: ");
+                        builder.AppendLine("{");
+                        foreach (var item in CircuitsMetadataMap)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  circuitsMetadataMap: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GatewayRouteSetsInformation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GatewayRouteSetsInformation>)this).GetFormatFromOptions(options) : options.Format;
@@ -190,6 +309,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GatewayRouteSetsInformation)} does not support writing '{options.Format}' format.");
             }

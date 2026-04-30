@@ -59,8 +59,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="httpMaxRequestSize"> Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB. </param>
         /// <param name="logLevel"> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </param>
         /// <param name="isApiLoggingEnabled"> Enables API logging for the Dapr sidecar. </param>
+        /// <param name="appHealth"> Dapr application health check configuration. </param>
+        /// <param name="maxConcurrency"> Maximum number of concurrent requests, events handled by the Dapr sidecar. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppDaprConfiguration(bool? isEnabled, string appId, ContainerAppProtocol? appProtocol, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, ContainerAppDaprLogLevel? logLevel, bool? isApiLoggingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppDaprConfiguration(bool? isEnabled, string appId, ContainerAppProtocol? appProtocol, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, ContainerAppDaprLogLevel? logLevel, bool? isApiLoggingEnabled, DaprAppHealth appHealth, int? maxConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             AppId = appId;
@@ -70,6 +72,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             HttpMaxRequestSize = httpMaxRequestSize;
             LogLevel = logLevel;
             IsApiLoggingEnabled = isApiLoggingEnabled;
+            AppHealth = appHealth;
+            MaxConcurrency = maxConcurrency;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -97,5 +101,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Enables API logging for the Dapr sidecar. </summary>
         [WirePath("enableApiLogging")]
         public bool? IsApiLoggingEnabled { get; set; }
+        /// <summary> Dapr application health check configuration. </summary>
+        [WirePath("appHealth")]
+        public DaprAppHealth AppHealth { get; set; }
+        /// <summary> Maximum number of concurrent requests, events handled by the Dapr sidecar. </summary>
+        [WirePath("maxConcurrency")]
+        public int? MaxConcurrency { get; set; }
     }
 }

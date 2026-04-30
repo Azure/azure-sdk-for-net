@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the SiteExtensionInfo data model.
     /// Site Extension Information.
+    /// Serialized Name: SiteExtensionInfo
     /// </summary>
     public partial class SiteExtensionInfoData : ResourceData
     {
@@ -62,30 +63,91 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="extensionId"> Site extension ID. </param>
-        /// <param name="title"></param>
-        /// <param name="extensionType"> Site extension type. </param>
-        /// <param name="summary"> Summary description. </param>
-        /// <param name="description"> Detailed description. </param>
-        /// <param name="version"> Version information. </param>
-        /// <param name="extensionUri"> Extension URL. </param>
-        /// <param name="projectUri"> Project URL. </param>
-        /// <param name="iconUri"> Icon URL. </param>
-        /// <param name="licenseUri"> License URL. </param>
-        /// <param name="feedUri"> Feed URL. </param>
-        /// <param name="authors"> List of authors. </param>
-        /// <param name="installerCommandLineParams"> Installer command line parameters. </param>
-        /// <param name="publishedOn"> Published timestamp. </param>
-        /// <param name="downloadCount"> Count of downloads. </param>
-        /// <param name="localIsLatestVersion"> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="localPath"> Local path. </param>
-        /// <param name="installedOn"> Installed timestamp. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="comment"> Site Extension comment. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: SiteExtensionInfo.kind
+        /// </param>
+        /// <param name="extensionId">
+        /// Site extension ID.
+        /// Serialized Name: SiteExtensionInfo.properties.extension_id
+        /// </param>
+        /// <param name="title"> Serialized Name: SiteExtensionInfo.properties.title. </param>
+        /// <param name="extensionType">
+        /// Site extension type.
+        /// Serialized Name: SiteExtensionInfo.properties.extension_type
+        /// </param>
+        /// <param name="summary">
+        /// Summary description.
+        /// Serialized Name: SiteExtensionInfo.properties.summary
+        /// </param>
+        /// <param name="description">
+        /// Detailed description.
+        /// Serialized Name: SiteExtensionInfo.properties.description
+        /// </param>
+        /// <param name="version">
+        /// Version information.
+        /// Serialized Name: SiteExtensionInfo.properties.version
+        /// </param>
+        /// <param name="extensionUri">
+        /// Extension URL.
+        /// Serialized Name: SiteExtensionInfo.properties.extension_url
+        /// </param>
+        /// <param name="projectUri">
+        /// Project URL.
+        /// Serialized Name: SiteExtensionInfo.properties.project_url
+        /// </param>
+        /// <param name="iconUri">
+        /// Icon URL.
+        /// Serialized Name: SiteExtensionInfo.properties.icon_url
+        /// </param>
+        /// <param name="licenseUri">
+        /// License URL.
+        /// Serialized Name: SiteExtensionInfo.properties.license_url
+        /// </param>
+        /// <param name="feedUri">
+        /// Feed URL.
+        /// Serialized Name: SiteExtensionInfo.properties.feed_url
+        /// </param>
+        /// <param name="authors">
+        /// List of authors.
+        /// Serialized Name: SiteExtensionInfo.properties.authors
+        /// </param>
+        /// <param name="installerCommandLineParams">
+        /// Installer command line parameters.
+        /// Serialized Name: SiteExtensionInfo.properties.installer_command_line_params
+        /// </param>
+        /// <param name="publishedOn">
+        /// Published timestamp.
+        /// Serialized Name: SiteExtensionInfo.properties.published_date_time
+        /// </param>
+        /// <param name="downloadCount">
+        /// Count of downloads.
+        /// Serialized Name: SiteExtensionInfo.properties.download_count
+        /// </param>
+        /// <param name="localIsLatestVersion">
+        /// &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise.
+        /// Serialized Name: SiteExtensionInfo.properties.local_is_latest_version
+        /// </param>
+        /// <param name="localPath">
+        /// Local path.
+        /// Serialized Name: SiteExtensionInfo.properties.local_path
+        /// </param>
+        /// <param name="installedOn">
+        /// Installed timestamp.
+        /// Serialized Name: SiteExtensionInfo.properties.installed_date_time
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state.
+        /// Serialized Name: SiteExtensionInfo.properties.provisioningState
+        /// </param>
+        /// <param name="comment">
+        /// Site Extension comment.
+        /// Serialized Name: SiteExtensionInfo.properties.comment
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             ExtensionId = extensionId;
             Title = title;
             ExtensionType = extensionType;
@@ -106,72 +168,131 @@ namespace Azure.ResourceManager.AppService
             InstalledOn = installedOn;
             ProvisioningState = provisioningState;
             Comment = comment;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Site extension ID. </summary>
-        [WirePath("properties.extension_id")]
-        public string ExtensionId { get; set; }
-        /// <summary> Gets or sets the title. </summary>
-        [WirePath("properties.title")]
-        public string Title { get; set; }
-        /// <summary> Site extension type. </summary>
-        [WirePath("properties.extension_type")]
-        public SiteExtensionType? ExtensionType { get; set; }
-        /// <summary> Summary description. </summary>
-        [WirePath("properties.summary")]
-        public string Summary { get; set; }
-        /// <summary> Detailed description. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> Version information. </summary>
-        [WirePath("properties.version")]
-        public string Version { get; set; }
-        /// <summary> Extension URL. </summary>
-        [WirePath("properties.extension_url")]
-        public Uri ExtensionUri { get; set; }
-        /// <summary> Project URL. </summary>
-        [WirePath("properties.project_url")]
-        public Uri ProjectUri { get; set; }
-        /// <summary> Icon URL. </summary>
-        [WirePath("properties.icon_url")]
-        public Uri IconUri { get; set; }
-        /// <summary> License URL. </summary>
-        [WirePath("properties.license_url")]
-        public Uri LicenseUri { get; set; }
-        /// <summary> Feed URL. </summary>
-        [WirePath("properties.feed_url")]
-        public Uri FeedUri { get; set; }
-        /// <summary> List of authors. </summary>
-        [WirePath("properties.authors")]
-        public IList<string> Authors { get; }
-        /// <summary> Installer command line parameters. </summary>
-        [WirePath("properties.installer_command_line_params")]
-        public string InstallerCommandLineParams { get; set; }
-        /// <summary> Published timestamp. </summary>
-        [WirePath("properties.published_date_time")]
-        public DateTimeOffset? PublishedOn { get; set; }
-        /// <summary> Count of downloads. </summary>
-        [WirePath("properties.download_count")]
-        public int? DownloadCount { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
-        [WirePath("properties.local_is_latest_version")]
-        public bool? LocalIsLatestVersion { get; set; }
-        /// <summary> Local path. </summary>
-        [WirePath("properties.local_path")]
-        public string LocalPath { get; set; }
-        /// <summary> Installed timestamp. </summary>
-        [WirePath("properties.installed_date_time")]
-        public DateTimeOffset? InstalledOn { get; set; }
-        /// <summary> Provisioning state. </summary>
-        [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; set; }
-        /// <summary> Site Extension comment. </summary>
-        [WirePath("properties.comment")]
-        public string Comment { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: SiteExtensionInfo.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// Site extension ID.
+        /// Serialized Name: SiteExtensionInfo.properties.extension_id
+        /// </summary>
+        [WirePath("properties.extension_id")]
+        public string ExtensionId { get; set; }
+        /// <summary> Serialized Name: SiteExtensionInfo.properties.title. </summary>
+        [WirePath("properties.title")]
+        public string Title { get; set; }
+        /// <summary>
+        /// Site extension type.
+        /// Serialized Name: SiteExtensionInfo.properties.extension_type
+        /// </summary>
+        [WirePath("properties.extension_type")]
+        public SiteExtensionType? ExtensionType { get; set; }
+        /// <summary>
+        /// Summary description.
+        /// Serialized Name: SiteExtensionInfo.properties.summary
+        /// </summary>
+        [WirePath("properties.summary")]
+        public string Summary { get; set; }
+        /// <summary>
+        /// Detailed description.
+        /// Serialized Name: SiteExtensionInfo.properties.description
+        /// </summary>
+        [WirePath("properties.description")]
+        public string Description { get; set; }
+        /// <summary>
+        /// Version information.
+        /// Serialized Name: SiteExtensionInfo.properties.version
+        /// </summary>
+        [WirePath("properties.version")]
+        public string Version { get; set; }
+        /// <summary>
+        /// Extension URL.
+        /// Serialized Name: SiteExtensionInfo.properties.extension_url
+        /// </summary>
+        [WirePath("properties.extension_url")]
+        public Uri ExtensionUri { get; set; }
+        /// <summary>
+        /// Project URL.
+        /// Serialized Name: SiteExtensionInfo.properties.project_url
+        /// </summary>
+        [WirePath("properties.project_url")]
+        public Uri ProjectUri { get; set; }
+        /// <summary>
+        /// Icon URL.
+        /// Serialized Name: SiteExtensionInfo.properties.icon_url
+        /// </summary>
+        [WirePath("properties.icon_url")]
+        public Uri IconUri { get; set; }
+        /// <summary>
+        /// License URL.
+        /// Serialized Name: SiteExtensionInfo.properties.license_url
+        /// </summary>
+        [WirePath("properties.license_url")]
+        public Uri LicenseUri { get; set; }
+        /// <summary>
+        /// Feed URL.
+        /// Serialized Name: SiteExtensionInfo.properties.feed_url
+        /// </summary>
+        [WirePath("properties.feed_url")]
+        public Uri FeedUri { get; set; }
+        /// <summary>
+        /// List of authors.
+        /// Serialized Name: SiteExtensionInfo.properties.authors
+        /// </summary>
+        [WirePath("properties.authors")]
+        public IList<string> Authors { get; }
+        /// <summary>
+        /// Installer command line parameters.
+        /// Serialized Name: SiteExtensionInfo.properties.installer_command_line_params
+        /// </summary>
+        [WirePath("properties.installer_command_line_params")]
+        public string InstallerCommandLineParams { get; set; }
+        /// <summary>
+        /// Published timestamp.
+        /// Serialized Name: SiteExtensionInfo.properties.published_date_time
+        /// </summary>
+        [WirePath("properties.published_date_time")]
+        public DateTimeOffset? PublishedOn { get; set; }
+        /// <summary>
+        /// Count of downloads.
+        /// Serialized Name: SiteExtensionInfo.properties.download_count
+        /// </summary>
+        [WirePath("properties.download_count")]
+        public int? DownloadCount { get; set; }
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise.
+        /// Serialized Name: SiteExtensionInfo.properties.local_is_latest_version
+        /// </summary>
+        [WirePath("properties.local_is_latest_version")]
+        public bool? LocalIsLatestVersion { get; set; }
+        /// <summary>
+        /// Local path.
+        /// Serialized Name: SiteExtensionInfo.properties.local_path
+        /// </summary>
+        [WirePath("properties.local_path")]
+        public string LocalPath { get; set; }
+        /// <summary>
+        /// Installed timestamp.
+        /// Serialized Name: SiteExtensionInfo.properties.installed_date_time
+        /// </summary>
+        [WirePath("properties.installed_date_time")]
+        public DateTimeOffset? InstalledOn { get; set; }
+        /// <summary>
+        /// Provisioning state.
+        /// Serialized Name: SiteExtensionInfo.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+        /// <summary>
+        /// Site Extension comment.
+        /// Serialized Name: SiteExtensionInfo.properties.comment
+        /// </summary>
+        [WirePath("properties.comment")]
+        public string Comment { get; set; }
     }
 }

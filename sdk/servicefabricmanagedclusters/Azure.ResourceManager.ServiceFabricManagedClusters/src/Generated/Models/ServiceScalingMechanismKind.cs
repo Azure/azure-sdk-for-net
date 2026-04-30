@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     internal readonly partial struct ServiceScalingMechanismKind : IEquatable<ServiceScalingMechanismKind>
     {
         private readonly string _value;
+        /// <summary> Represents a scaling mechanism for adding or removing instances of stateless service partition. The value is 0. </summary>
+        private const string ScalePartitionInstanceCountValue = "ScalePartitionInstanceCount";
+        /// <summary> Represents a scaling mechanism for adding or removing named partitions of a stateless service. The value is 1. </summary>
+        private const string AddRemoveIncrementalNamedPartitionValue = "AddRemoveIncrementalNamedPartition";
 
         /// <summary> Initializes a new instance of <see cref="ServiceScalingMechanismKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceScalingMechanismKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ScalePartitionInstanceCountValue = "ScalePartitionInstanceCount";
-        private const string AddRemoveIncrementalNamedPartitionValue = "AddRemoveIncrementalNamedPartition";
+            _value = value;
+        }
 
         /// <summary> Represents a scaling mechanism for adding or removing instances of stateless service partition. The value is 0. </summary>
         public static ServiceScalingMechanismKind ScalePartitionInstanceCount { get; } = new ServiceScalingMechanismKind(ScalePartitionInstanceCountValue);
+
         /// <summary> Represents a scaling mechanism for adding or removing named partitions of a stateless service. The value is 1. </summary>
         public static ServiceScalingMechanismKind AddRemoveIncrementalNamedPartition { get; } = new ServiceScalingMechanismKind(AddRemoveIncrementalNamedPartitionValue);
+
         /// <summary> Determines if two <see cref="ServiceScalingMechanismKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceScalingMechanismKind left, ServiceScalingMechanismKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceScalingMechanismKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceScalingMechanismKind left, ServiceScalingMechanismKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceScalingMechanismKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceScalingMechanismKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceScalingMechanismKind(string value) => new ServiceScalingMechanismKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceScalingMechanismKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceScalingMechanismKind?(string value) => value == null ? null : new ServiceScalingMechanismKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceScalingMechanismKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceScalingMechanismKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

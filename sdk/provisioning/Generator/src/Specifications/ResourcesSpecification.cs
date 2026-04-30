@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Generator.Specifications;
 public class ResourcesSpecification : Specification
 {
     public ResourcesSpecification() :
-        base("Resources", typeof(ResourcesExtensions))
+        base("Resources", typeof(ResourcesExtensions), serviceDirectory: "provisioning")
     {
         SkipCleaning = true;
     }
@@ -71,17 +71,14 @@ public class ResourcesSpecification : Specification
             p.HideLevel = PropertyHideLevel.HideProperty;
         });
 
+        // Re-introduce enum types that are no longer auto-discovered and
+        // restore the original Name property type to avoid breaking changes.
+        IncludeEnum<DataBoundaryName>();
+        CustomizeProperty<TenantDataBoundaryResource>("Name", p => p.PropertyType = GetEnum<DataBoundaryName>());
+
         // Naming requirements
         AddNameRequirements<ArmDeploymentResource>(min: 1, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
         AddNameRequirements<TemplateSpecResource>(min: 1, max: 90, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
-    }
-
-    private void RemoveProperties<T>(params string[] propertyNames)
-    {
-        foreach (string propertyName in propertyNames)
-        {
-            RemoveProperty<T>(propertyName);
-        }
     }
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -14,68 +15,107 @@ namespace Azure.Developer.DevCenter.Models
     public readonly partial struct DevBoxProvisioningState : IEquatable<DevBoxProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Dev Box was successfully provisioned. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Dev Box failed to provision. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Dev Box provision was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Dev Box is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Dev Box is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Dev Box is updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Dev Box is starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Dev Box is stopping. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Dev Box is provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Dev Box was provisioned with warning. </summary>
+        private const string ProvisionedWithWarningValue = "ProvisionedWithWarning";
+        /// <summary> Dev Box is in grace period. </summary>
+        private const string InGracePeriodValue = "InGracePeriod";
+        /// <summary> Dev Box is not provisioned. </summary>
+        private const string NotProvisionedValue = "NotProvisioned";
 
         /// <summary> Initializes a new instance of <see cref="DevBoxProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevBoxProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string UpdatingValue = "Updating";
-        private const string StartingValue = "Starting";
-        private const string StoppingValue = "Stopping";
-        private const string ProvisioningValue = "Provisioning";
-        private const string ProvisionedWithWarningValue = "ProvisionedWithWarning";
-        private const string InGracePeriodValue = "InGracePeriod";
-        private const string NotProvisionedValue = "NotProvisioned";
+            _value = value;
+        }
 
         /// <summary> Dev Box was successfully provisioned. </summary>
         public static DevBoxProvisioningState Succeeded { get; } = new DevBoxProvisioningState(SucceededValue);
+
         /// <summary> Dev Box failed to provision. </summary>
         public static DevBoxProvisioningState Failed { get; } = new DevBoxProvisioningState(FailedValue);
+
         /// <summary> Dev Box provision was canceled. </summary>
         public static DevBoxProvisioningState Canceled { get; } = new DevBoxProvisioningState(CanceledValue);
+
         /// <summary> Dev Box is being created. </summary>
         public static DevBoxProvisioningState Creating { get; } = new DevBoxProvisioningState(CreatingValue);
+
         /// <summary> Dev Box is being deleted. </summary>
         public static DevBoxProvisioningState Deleting { get; } = new DevBoxProvisioningState(DeletingValue);
+
         /// <summary> Dev Box is updating. </summary>
         public static DevBoxProvisioningState Updating { get; } = new DevBoxProvisioningState(UpdatingValue);
+
         /// <summary> Dev Box is starting. </summary>
         public static DevBoxProvisioningState Starting { get; } = new DevBoxProvisioningState(StartingValue);
+
         /// <summary> Dev Box is stopping. </summary>
         public static DevBoxProvisioningState Stopping { get; } = new DevBoxProvisioningState(StoppingValue);
+
         /// <summary> Dev Box is provisioning. </summary>
         public static DevBoxProvisioningState Provisioning { get; } = new DevBoxProvisioningState(ProvisioningValue);
+
         /// <summary> Dev Box was provisioned with warning. </summary>
         public static DevBoxProvisioningState ProvisionedWithWarning { get; } = new DevBoxProvisioningState(ProvisionedWithWarningValue);
+
         /// <summary> Dev Box is in grace period. </summary>
         public static DevBoxProvisioningState InGracePeriod { get; } = new DevBoxProvisioningState(InGracePeriodValue);
+
         /// <summary> Dev Box is not provisioned. </summary>
         public static DevBoxProvisioningState NotProvisioned { get; } = new DevBoxProvisioningState(NotProvisionedValue);
+
         /// <summary> Determines if two <see cref="DevBoxProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevBoxProvisioningState left, DevBoxProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevBoxProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevBoxProvisioningState left, DevBoxProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevBoxProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevBoxProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevBoxProvisioningState(string value) => new DevBoxProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevBoxProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevBoxProvisioningState?(string value) => value == null ? null : new DevBoxProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevBoxProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevBoxProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

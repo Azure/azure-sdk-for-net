@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of source IP addresses/subnets to be captured. </summary>
+        [WirePath("sources")]
         public IList<string> Sources { get; }
         /// <summary> List of destination IP addresses/subnets to be captured. </summary>
+        [WirePath("destinations")]
         public IList<string> Destinations { get; }
         /// <summary> List of ports to be captured. </summary>
+        [WirePath("destinationPorts")]
         public IList<string> DestinationPorts { get; }
     }
 }

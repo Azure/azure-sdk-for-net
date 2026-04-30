@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A flag to indicate if the insights are enabled on the policy. </summary>
+        [WirePath("isEnabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Number of days the insights should be enabled on the policy. </summary>
+        [WirePath("retentionDays")]
         public int? RetentionDays { get; set; }
         /// <summary> Workspaces needed to configure the Firewall Policy Insights. </summary>
+        [WirePath("logAnalyticsResources")]
         public FirewallPolicyLogAnalyticsResources LogAnalyticsResources { get; set; }
     }
 }

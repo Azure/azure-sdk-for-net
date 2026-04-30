@@ -6,15 +6,21 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Core.Model
+namespace Specs.Azure.Core.Model
 {
     public partial class ModelClient
     {
         public ModelClient() : this(new Uri("http://localhost:3000"), new ModelClientOptions()) => throw null;
 
-        public ModelClient(Uri endpoint, ModelClientOptions options) => throw null;
+        internal ModelClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ModelClientOptions options) => throw null;
+
+        public ModelClient(Uri endpoint, ModelClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public ModelClient(ModelClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

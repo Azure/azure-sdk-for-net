@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Network.Models
         private const string FalseValue = "False";
         private const string TrueValue = "True";
 
-        /// <summary> False. </summary>
+        /// <summary> BGP route propagation is enabled. </summary>
         public static DisableBgpRoutePropagation False { get; } = new DisableBgpRoutePropagation(FalseValue);
-        /// <summary> True. </summary>
+        /// <summary> BGP route propagation is disabled. </summary>
         public static DisableBgpRoutePropagation True { get; } = new DisableBgpRoutePropagation(TrueValue);
         /// <summary> Determines if two <see cref="DisableBgpRoutePropagation"/> values are the same. </summary>
         public static bool operator ==(DisableBgpRoutePropagation left, DisableBgpRoutePropagation right) => left.Equals(right);

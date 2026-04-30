@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Dell.Storage
 {
-    internal class DellFileSystemOperationSource : IOperationSource<DellFileSystemResource>
+    /// <summary></summary>
+    internal partial class DellFileSystemOperationSource : IOperationSource<DellFileSystemResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DellFileSystemOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DellFileSystemResource IOperationSource<DellFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DellFileSystemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDellStorageContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DellFileSystemData data = DellFileSystemData.DeserializeDellFileSystemData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DellFileSystemResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DellFileSystemResource> IOperationSource<DellFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DellFileSystemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDellStorageContext.Default);
-            return await Task.FromResult(new DellFileSystemResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DellFileSystemData data = DellFileSystemData.DeserializeDellFileSystemData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DellFileSystemResource(_client, data);
         }
     }
 }

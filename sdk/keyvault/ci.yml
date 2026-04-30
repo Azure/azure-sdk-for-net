@@ -12,19 +12,6 @@ trigger:
     exclude:
     - sdk/keyvault/Azure.ResourceManager.KeyVault/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/keyvault/
-    exclude:
-    - sdk/keyvault/Azure.ResourceManager.KeyVault/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -47,7 +34,3 @@ extends:
       safeName: AzureSecurityKeyVaultSecrets
       triggeringPaths:
       - Azure.Security.Keyvault.Shared
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Security.KeyVault.Secrets
-      ExpectedWarningsFilepath: None

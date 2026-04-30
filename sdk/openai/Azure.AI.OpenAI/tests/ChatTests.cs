@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Chat;
 using Azure.AI.OpenAI.Tests.Utils.Config;
@@ -20,7 +21,8 @@ using OpenAI.TestFramework.Mocks;
 using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;
-
+#pragma warning disable AOAI001
+#pragma warning disable SCME0001
 public partial class ChatTests : AoaiTestBase<ChatClient>
 {
     public ChatTests(bool isAsync) : base(isAsync)
@@ -84,18 +86,19 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
                 new Uri("https://my-embedding.com"),
                 DataSourceAuthentication.FromApiKey("embedding-api-key")),
         };
-        dynamic serialized = ModelReaderWriter.Write(source).ToDynamicFromJson();
-        Assert.That(serialized?.type?.ToString(), Is.EqualTo("azure_search"));
-        Assert.That(serialized?.parameters?.authentication?.type?.ToString(), Is.EqualTo("api_key"));
-        Assert.That(serialized?.parameters?.authentication?.key?.ToString(), Does.Contain("test"));
-        Assert.That(serialized?.parameters?.index_name?.ToString(), Is.EqualTo("index-name-here"));
-        Assert.That(serialized?.parameters?.fields_mapping?.content_fields?[0]?.ToString(), Is.EqualTo("hello"));
-        Assert.That(serialized?.parameters?.fields_mapping?.title_field?.ToString(), Is.EqualTo("hi"));
-        Assert.That(bool.TryParse(serialized?.parameters?.allow_partial_result?.ToString(), out bool parsed) && parsed == true);
-        Assert.That(serialized?.parameters?.query_type?.ToString(), Is.EqualTo("simple"));
-        Assert.That(serialized?.parameters?.include_contexts?[0]?.ToString(), Is.EqualTo("citations"));
-        Assert.That(serialized?.parameters?.include_contexts?[1]?.ToString(), Is.EqualTo("all_retrieved_documents"));
-        Assert.That(serialized?.parameters?.embedding_dependency?.type?.ToString(), Is.EqualTo("endpoint"));
+        BinaryData serialized = ModelReaderWriter.Write(source);
+        JsonNode serializedNode = JsonNode.Parse(serialized)!;
+        Assert.That(serializedNode["type"]!.ToString(), Is.EqualTo("azure_search"));
+        Assert.That(serializedNode["parameters"]?["authentication"]?["type"]?.ToString(), Is.EqualTo("api_key"));
+        Assert.That(serializedNode["parameters"]?["authentication"]?["key"]?.ToString(), Does.Contain("test"));
+        Assert.That(serializedNode["parameters"]?["index_name"]?.ToString(), Is.EqualTo("index-name-here"));
+        Assert.That(serializedNode["parameters"]?["fields_mapping"]?["content_fields"]?[0]?.ToString(), Is.EqualTo("hello"));
+        Assert.That(serializedNode["parameters"]?["fields_mapping"]?["title_field"]?.ToString(), Is.EqualTo("hi"));
+        Assert.That(bool.TryParse(serializedNode["parameters"]?["allow_partial_result"]?.ToString(), out bool parsed) && parsed == true);
+        Assert.That(serializedNode["parameters"]?["query_type"]?.ToString(), Is.EqualTo("simple"));
+        Assert.That(serializedNode["parameters"]?["include_contexts"]?[0]?.ToString(), Is.EqualTo("citations"));
+        Assert.That(serializedNode["parameters"]?["include_contexts"]?[1]?.ToString(), Is.EqualTo("all_retrieved_documents"));
+        Assert.That(serializedNode["parameters"]?["embedding_dependency"]?["type"]?.ToString(), Is.EqualTo("endpoint"));
 
         ChatCompletionOptions options = new();
 #if !AZURE_OPENAI_GA
@@ -171,6 +174,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         async Task AssertExpectedSerializationAsync(bool hasOldMaxTokens, bool hasNewMaxCompletionTokens)
         {
             _ = await client.CompleteChatAsync(["Just mocking, no call here"], options);
+            Assert.False(GetSerializedOptionsContains("__EMPTY__"));
             Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
             Assert.That(GetSerializedOptionsContains("max_completion_tokens"), Is.EqualTo(hasNewMaxCompletionTokens));
         }
@@ -189,10 +193,12 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         options.SetNewMaxCompletionTokensPropertyEnabled();
         await AssertExpectedSerializationAsync(false, true);
         await AssertExpectedSerializationAsync(false, true);
+        // Invoking a chat completion call with a null value will
+        // clear the new property usage flag if it was present
         options.MaxOutputTokenCount = null;
         await AssertExpectedSerializationAsync(false, false);
         options.MaxOutputTokenCount = 42;
-        await AssertExpectedSerializationAsync(false, true);
+        await AssertExpectedSerializationAsync(true, false);
 
         options.SetNewMaxCompletionTokensPropertyEnabled(false);
         await AssertExpectedSerializationAsync(true, false);
@@ -324,7 +330,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(observed429Delay!.Value.TotalMilliseconds, Is.LessThan(3 * expectedDelayMilliseconds + 2 * observed200Delay!.Value.TotalMilliseconds));
     }
 
-#endregion
+    #endregion
 
     #region Regular chat completions tests
 
@@ -560,7 +566,6 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         {
             options.SetNewMaxCompletionTokensPropertyEnabled();
         }
-
         ChatCompletion completion = await client.CompleteChatAsync(
             ["Hello, world! Please write a funny haiku to greet me."],
             options);
@@ -575,8 +580,8 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         }
         else
         {
-            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_completion_tokens"));
             Assert.That(serializedOptionsAfterUse, Does.Contain("max_tokens"));
+            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_completion_tokens"));
         }
     }
     #endregion
@@ -779,6 +784,45 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         ChatCompletion completion = await client.CompleteChatAsync([ChatMessage.CreateUserMessage("Hello, world!")]);
         Assert.That(completion, Is.Not.Null);
+    }
+
+    [RecordedTest]
+    public async Task DefaultHeadersAndQueryParametersWork()
+    {
+        IConfiguration testConfig = TestConfig.GetConfig("chat")!;
+        Assert.That(testConfig, Is.Not.Null);
+
+        PipelineRequestHeaders? observedHeaders = null;
+        Uri? observedRequestUri = null;
+
+        TestPipelinePolicy captureRequestDetailsPolicy = new(
+            requestAction: (request) =>
+            {
+                observedHeaders = request.Headers;
+                observedRequestUri = request.Uri;
+            },
+            responseAction: null);
+
+        TestClientOptions options = new()
+        {
+            DefaultHeaders =
+            {
+                ["test_header_key"] = "test_header_value",
+            },
+            DefaultQueryParameters =
+            {
+                ["test_query_parameter_key"] = "test_query_parameter_value",
+            },
+            DisableClientWrapping = true,
+        };
+        options.AddPolicy(captureRequestDetailsPolicy, PipelinePosition.PerTry);
+
+        ChatClient client = GetTestClient(testConfig, options);
+
+        _ = await client.CompleteChatAsync("Hello, world!");
+
+        Assert.That(observedHeaders?.TryGetValue("test_header_key", out string? observedHeaderValue) == true && observedHeaderValue == "test_header_value");
+        Assert.That(observedRequestUri?.AbsoluteUri, Does.Contain("test_query_parameter_key=test_query_parameter_value"));
     }
 
 #if NET

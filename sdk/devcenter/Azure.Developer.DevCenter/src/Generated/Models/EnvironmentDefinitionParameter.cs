@@ -7,59 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an Environment Definition parameter. </summary>
     public partial class EnvironmentDefinitionParameter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameter"/>. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="parameterType">
         /// A string of one of the basic JSON types (number, integer, array, object,
-        /// boolean, string)
+        /// boolean, string).
         /// </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal EnvironmentDefinitionParameter(string id, EnvironmentDefinitionParameterType parameterType, bool required)
+        internal EnvironmentDefinitionParameter(string id, EnvironmentDefinitionParameterType parameterType, bool @required)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
             ParameterType = parameterType;
-            Required = required;
+            Required = @required;
             Allowed = new ChangeTrackingList<string>();
         }
 
@@ -70,7 +39,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="defaultValue"> Default value of the parameter. </param>
         /// <param name="parameterType">
         /// A string of one of the basic JSON types (number, integer, array, object,
-        /// boolean, string)
+        /// boolean, string).
         /// </param>
         /// <param name="readOnly">
         /// Whether or not this parameter is read-only.  If true, default should have a
@@ -78,8 +47,8 @@ namespace Azure.Developer.DevCenter.Models
         /// </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="allowed"> An array of allowed values. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinitionParameter(string id, string name, string description, string defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool required, IReadOnlyList<string> allowed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EnvironmentDefinitionParameter(string id, string name, string description, string defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool @required, IReadOnlyList<string> allowed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -87,36 +56,38 @@ namespace Azure.Developer.DevCenter.Models
             DefaultValue = defaultValue;
             ParameterType = parameterType;
             ReadOnly = readOnly;
-            Required = required;
+            Required = @required;
             Allowed = allowed;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameter"/> for deserialization. </summary>
-        internal EnvironmentDefinitionParameter()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique ID of the parameter. </summary>
         public string Id { get; }
+
         /// <summary> Display name of the parameter. </summary>
         public string Name { get; }
+
         /// <summary> Description of the parameter. </summary>
         public string Description { get; }
+
         /// <summary> Default value of the parameter. </summary>
         public string DefaultValue { get; }
+
         /// <summary>
         /// A string of one of the basic JSON types (number, integer, array, object,
-        /// boolean, string)
+        /// boolean, string).
         /// </summary>
         public EnvironmentDefinitionParameterType ParameterType { get; }
+
         /// <summary>
         /// Whether or not this parameter is read-only.  If true, default should have a
         /// value.
         /// </summary>
         public bool? ReadOnly { get; }
+
         /// <summary> Whether or not this parameter is required. </summary>
         public bool Required { get; }
+
         /// <summary> An array of allowed values. </summary>
         public IReadOnlyList<string> Allowed { get; }
     }

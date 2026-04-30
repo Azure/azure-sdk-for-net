@@ -1,0 +1,25 @@
+# Will output a variable named GH_TOKEN_<Owner> for each owner in TokenOwners if there is only one owner it will just output GH_TOKEN
+
+parameters:
+- name: TokenOwners
+  type: object
+  default: 
+    - Azure
+- name: VariableNamePrefix
+  type: string 
+  default: GH_TOKEN
+- name: ScriptDirectory
+  default: eng/common/scripts
+
+steps:
+- task: AzureCLI@2
+  displayName: "Login to GitHub"
+  inputs:
+    azureSubscription: 'AzureSDKEngKeyVault Secrets'
+    scriptType: pscore
+    scriptLocation: scriptPath
+    scriptPath: ${{ parameters.ScriptDirectory }}/login-to-github.ps1
+    arguments: >
+     -InstallationTokenOwners '${{ join(''',''', parameters.TokenOwners) }}'
+     -VariableNamePrefix '${{ parameters.VariableNamePrefix }}'
+     

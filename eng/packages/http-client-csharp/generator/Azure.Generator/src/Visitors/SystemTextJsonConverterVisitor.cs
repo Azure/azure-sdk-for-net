@@ -103,7 +103,7 @@ namespace Azure.Generator.Visitors
                     bodyStatements:
                         new[]
                         {
-                            UsingDeclare("document", typeof(JsonDocument), Static<JsonDocument>().Invoke(nameof(JsonDocument.ParseValue), readerParameter), out var documentVariable),
+                            UsingDeclare("document", typeof(JsonDocument), Static<JsonDocument>().Invoke(nameof(JsonDocument.ParseValue), readerParameter.AsArgument()), out var documentVariable),
                             Return(Static().Invoke(
                                 $"Deserialize{_serializationProvider.Name}",
                                 documentVariable.Property(nameof(JsonDocument.RootElement)),

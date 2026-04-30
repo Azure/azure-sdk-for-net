@@ -1,17 +1,17 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //#nullable enable
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using Azure.Core.Pipeline;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Text.Json;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Telemetry;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Agents.Persistent
 {
@@ -23,7 +23,7 @@ namespace Azure.AI.Agents.Persistent
         RunStep
     }
 
-    internal class ContinuationTokenPageable<T>: Pageable<T>
+    internal class ContinuationTokenPageable<T> : Pageable<T>
     {
         private readonly ContinuationTokenPageableImpl<T> _impl;
         private readonly ContinuationItemType _itemType;
@@ -117,7 +117,7 @@ namespace Azure.AI.Agents.Persistent
     internal class ContinuationTokenPageableImpl<T>
     {
         private readonly Func<int?, string, HttpMessage> _createPageRequest;
-        private readonly HttpPipeline _pipeline;
+        private readonly HttpPipeline Pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Func<JsonElement, T> _valueFactory;
         private readonly string _scopeName;
@@ -151,7 +151,7 @@ namespace Azure.AI.Agents.Persistent
         {
             _createPageRequest = createPageRequest;
             _valueFactory = valueFactory;
-            _pipeline = pipeline;
+            Pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _scopeName = scopeName;
             _cancellationToken = requestContext?.CancellationToken ?? default;
@@ -263,7 +263,7 @@ namespace Azure.AI.Agents.Persistent
                     diagnosticsScope?.Start();
                     try
                     {
-                        _pipeline.Send(message, _cancellationToken);
+                        Pipeline.Send(message, _cancellationToken);
                         var response = GetResponse(message);
                         genAIScope?.RecordPagedResponse(response);
                         return response;
@@ -308,12 +308,12 @@ namespace Azure.AI.Agents.Persistent
                         if (cancellationToken.CanBeCanceled && _cancellationToken.CanBeCanceled)
                         {
                             using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken);
-                            await _pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
+                            await Pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
                         }
                         else
                         {
                             var ct = cancellationToken.CanBeCanceled ? cancellationToken : _cancellationToken;
-                            await _pipeline.SendAsync(message, ct).ConfigureAwait(false);
+                            await Pipeline.SendAsync(message, ct).ConfigureAwait(false);
                         }
 
                         var response = GetResponse(message);

@@ -1,17 +1,121 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0 (2026-03-01)
 
 ### Other Changes
 
+GA release, see migration guide if migrating from Microsoft.Azure.Batch
+
+### Breaking Changes
+
+Removed Types:
+- Removed `AuthenticationTokenSettings`
+- Removed `BatchAccessScope`
+
+Removed Properties:
+- Removed `AuthenticationTokenSettings` from `BatchJobManagerTask`
+- Removed `AuthenticationTokenSettings` from `BatchTask`
+- Removed `AuthenticationTokenSettings` from `BatchTaskCreateOptions`
+
+Renamed Properties:
+- `BatchJobDisableOptions.DisableTasks` renamed to `BatchJobDisableOptions.JobOption`
+- `BatchJobScheduleConfiguration.DoNotRunUntil` renamed to `BatchJobScheduleConfiguration.DoNotRunBefore`
+- `BatchJobScheduleStatistics.WallClockTime` renamed to `BatchJobScheduleStatistics.Duration`
+- `BatchOsDisk.WriteAcceleratorEnabled` renamed to `BatchOsDisk.IsWriteAcceleratorEnabled`
+- `BatchPoolLifetimeOption.JobSchedule` renamed to `BatchPoolLifetimeOption.JobScheduleOption`
+- `BatchPoolLifetimeOption.Job` renamed to `BatchPoolLifetimeOption.JobOption`
+- `RollingUpgradePolicy.EnableCrossZoneUpgrade` renamed to `RollingUpgradePolicy.IsCrossZoneUpgradeEnabled`
+- `SecurityProfile.EncryptionAtHost` renamed to `SecurityProfile.IsEncryptedAtHost`
+- `VMExtension.AutoUpgradeMinorVersion` renamed to `VMExtension.ShouldAutoUpgradeMinorVersion`
+- `VMExtension.EnableAutomaticUpgrade` renamed to `VMExtension.IsAutomaticUpgradeEnabled`
+- `BatchFileProperties.FileUrl` (type `string`) renamed to `BatchFileProperties.FileUri` (type `Uri`).
+- `DiskCustomerManagedKey.KeyUrl` renamed to `DiskCustomerManagedKey.KeyUri`.
+
+Renamed Types:
+- `NameValuePair` renamed to `BatchNameValuePair`
+- `HostEndpointSettingsModeTypes` renamed to `HostEndpointSettingsModeType`
+
+Renamed Methods (all `BatchClient` methods):
+- `GetJobsFromSchedules` renamed to `GetJobsFromSchedule`
+- `GetJobsFromSchedulesAsync` renamed to `GetJobsFromScheduleAsync`
+
+Renamed Parameters (all `BatchClient` methods):
+- `timeOutInSeconds` renamed to `timeout`
+- `ocpDate` renamed to `requestDate`
+- `maxresults` renamed to `maxResults`
+- `parameters` renamed to `options` (on `TerminateJob`, `DeallocateNode`)
+
+Changed Parameters (all `BatchClient` methods):
+- `StartNode`/`StartNodeAsync`: `RequestContext context` changed to `CancellationToken cancellationToken`
+- `StopPoolResize`/`StopPoolResizeAsync`: `RequestContext context` changed to `CancellationToken cancellationToken`
+
+Changed Property Types:
+- `DiskCustomerManagedKey.KeyUri` changed type from `string` to `Uri`
+
+## 1.0.0-beta.5 (2026-02-01)
+
+### Breaking Changes
+
+- Removed `DataDisk.StorageAccountType`.  Use `DataDisk.ManagedDisk.StorageAccountType` instead
+
+## 1.0.0-beta.4 (2025-09-01)
+
+### Features Added
+
+Added Models:
+- Added `BatchJobDefaultOrder`
+- Added `BatchPoolIdentityReference`
+- Added `DiskCustomerManagedKey`
+- Added `DiskEncryptionSetParameters`
+- Added `HostEndpointSettings`
+- Added `HostEndpointSettingsModeTypes`
+- Added `IPFamily`
+- Added `IpTag`
+- Added `ProxyAgentSettings`
+
+Added Properties:
+- Added `ipv6Address` to `BatchNode`
+- Added `Ipv6RemoteLoginIpAddress` and `Ipv6RemoteLoginPort` to `BatchNodeRemoteLoginSettings`
+- Added `IpFamilies` and `IpTags` to `BatchPublicAddressConfiguration`
+- Added `JobDefaultOder` to `BatchTaskSchedulingPolicy`
+- Added `ManagedDisk` to `DataDisk`
+- Added `CustomerManagedKey` to `DiskEncryptionConfiguration`
+- Added `DiskEncryptionSet` to `ManagedDisk`
+- Added `DiskWithVMGuestStateValue` to `SecurityEncryptionTypes`
+- Added `ProxyAgentSetting` to `SecurityProfile`
+
+
+### Breaking Changes
+
+Removed Certificate API's:
+- Removed `BatchClient.CreateCertificate`
+- Removed `BatchClient.CancelCertificateDeletion`
+- Removed `BatchClient.DeleteCertificate`
+- Removed `BatchClient.GetCertificate`
+- Removed `BatchClient.GetCertificates`
+
+Removed Modes:
+- Removed `BatchCertificate`
+- Removed `BatchCertificateDeleteError`
+- Removed `BatchCertificateFormat`
+- Removed `BatchCertificateReference`
+- Removed `BatchCertificateState`
+- Removed `BatchCertificateStoreLocation`
+- Removed `BatchCertificateVisibility`
+- Removed `BatchNodeCommunicationMode`
+
+Removed Properties:
+- Removed `CertificateReferences` from `BatchNode`
+- Removed `ResourceTags` and `CertificateReferences` from `BatchPool`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolCreateOptions`
+- Removed `CertificateReferences` and `TargetNodeCommunicationMode` from `BatchPoolReplaceOptions`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolSpecifications`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolUpdateOptions`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `ComputeBatchModelFactory`
+
+
 ## 1.0.0-beta.3 (2025-06-19)
- 
+
  Added in Long Running operation support for the following methods:
  - `BatchClient.DeallocateNode`
  - `BatchClient.DeleteCertificate`
@@ -28,7 +132,7 @@
  - `BatchClient.StopPoolResize`
  - `BatchClient.TerminateJob`
  - `BatchClient.TerminateJobSchedule`
- 
+
  Renamed the following models:
 
 - `AffinityInfo` -> `BatchAffinityInfo`
@@ -67,7 +171,7 @@
 - `UefiSettings` -> `BatchUefiSettings`
 - `UploadBatchServiceLogsContent` -> `UploadBatchServiceLogsOptions`
 - `VMDiskSecurityProfile` -> `BatchVMDiskSecurityProfile`
- 
+
 Renamed parameter in the following methods:
 
 - `BatchClient.DisableJob` changed `content` parameter to `disableOptions`.
@@ -121,7 +225,7 @@ Changed the type of the following properties
 
 
 ### Other Changes
- 
+
  Documenation updates.
 
 ## 1.0.0-beta.2 (2025-02-28)

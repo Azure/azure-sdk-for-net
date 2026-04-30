@@ -10,17 +10,80 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnEndpointData : IUtf8JsonSerializable, IJsonModel<CdnEndpointData>
+    /// <summary> CDN endpoint is the entity within a CDN profile containing configuration information such as origin, protocol, content caching and delivery behavior. The CDN endpoint uses the URL format &lt;endpointname&gt;.azureedge.net. </summary>
+    public partial class CdnEndpointData : TrackedResourceData, IJsonModel<CdnEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CdnEndpointData"/> for deserialization. </summary>
+        internal CdnEndpointData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCdnEndpointData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CdnEndpointData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CdnEndpointData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CdnEndpointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CdnEndpointData IPersistableModel<CdnEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CdnEndpointData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CdnEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="cdnEndpointData"> The <see cref="CdnEndpointData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CdnEndpointData cdnEndpointData)
+        {
+            if (cdnEndpointData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(cdnEndpointData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CdnEndpointData"/> from. </param>
+        internal static CdnEndpointData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCdnEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CdnEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,544 +95,135 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdnEndpointData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(OriginPath))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("originPath"u8);
-                writer.WriteStringValue(OriginPath);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(ContentTypesToCompress))
-            {
-                writer.WritePropertyName("contentTypesToCompress"u8);
-                writer.WriteStartArray();
-                foreach (var item in ContentTypesToCompress)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(OriginHostHeader))
-            {
-                writer.WritePropertyName("originHostHeader"u8);
-                writer.WriteStringValue(OriginHostHeader);
-            }
-            if (Optional.IsDefined(IsCompressionEnabled))
-            {
-                writer.WritePropertyName("isCompressionEnabled"u8);
-                writer.WriteBooleanValue(IsCompressionEnabled.Value);
-            }
-            if (Optional.IsDefined(IsHttpAllowed))
-            {
-                writer.WritePropertyName("isHttpAllowed"u8);
-                writer.WriteBooleanValue(IsHttpAllowed.Value);
-            }
-            if (Optional.IsDefined(IsHttpsAllowed))
-            {
-                writer.WritePropertyName("isHttpsAllowed"u8);
-                writer.WriteBooleanValue(IsHttpsAllowed.Value);
-            }
-            if (Optional.IsDefined(QueryStringCachingBehavior))
-            {
-                writer.WritePropertyName("queryStringCachingBehavior"u8);
-                writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(OptimizationType))
-            {
-                if (OptimizationType != null)
-                {
-                    writer.WritePropertyName("optimizationType"u8);
-                    writer.WriteStringValue(OptimizationType.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("optimizationType");
-                }
-            }
-            if (Optional.IsDefined(ProbePath))
-            {
-                writer.WritePropertyName("probePath"u8);
-                writer.WriteStringValue(ProbePath);
-            }
-            if (Optional.IsCollectionDefined(GeoFilters))
-            {
-                writer.WritePropertyName("geoFilters"u8);
-                writer.WriteStartArray();
-                foreach (var item in GeoFilters)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DefaultOriginGroup))
-            {
-                writer.WritePropertyName("defaultOriginGroup"u8);
-                ((IJsonModel<WritableSubResource>)DefaultOriginGroup).Write(writer, options);
-            }
-            if (Optional.IsCollectionDefined(UriSigningKeys))
-            {
-                if (UriSigningKeys != null)
-                {
-                    writer.WritePropertyName("urlSigningKeys"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in UriSigningKeys)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("urlSigningKeys");
-                }
-            }
-            if (Optional.IsDefined(DeliveryPolicy))
-            {
-                if (DeliveryPolicy != null)
-                {
-                    writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue(DeliveryPolicy, options);
-                }
-                else
-                {
-                    writer.WriteNull("deliveryPolicy");
-                }
-            }
-            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
-            {
-                if (WebApplicationFirewallPolicyLink != null)
-                {
-                    writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink, options);
-                }
-                else
-                {
-                    writer.WriteNull("webApplicationFirewallPolicyLink");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
-            {
-                writer.WritePropertyName("hostName"u8);
-                writer.WriteStringValue(HostName);
-            }
-            if (Optional.IsCollectionDefined(Origins))
-            {
-                writer.WritePropertyName("origins"u8);
-                writer.WriteStartArray();
-                foreach (var item in Origins)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(OriginGroups))
-            {
-                writer.WritePropertyName("originGroups"u8);
-                writer.WriteStartArray();
-                foreach (var item in OriginGroups)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DeepCreatedCustomDomains))
-            {
-                writer.WritePropertyName("customDomains"u8);
-                writer.WriteStartArray();
-                foreach (var item in DeepCreatedCustomDomains)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
-            {
-                writer.WritePropertyName("resourceState"u8);
-                writer.WriteStringValue(ResourceState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        CdnEndpointData IJsonModel<CdnEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CdnEndpointData IJsonModel<CdnEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CdnEndpointData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdnEndpointData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCdnEndpointData(document.RootElement, options);
         }
 
-        internal static CdnEndpointData DeserializeCdnEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CdnEndpointData DeserializeCdnEndpointData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string originPath = default;
-            IList<string> contentTypesToCompress = default;
-            string originHostHeader = default;
-            bool? isCompressionEnabled = default;
-            bool? isHttpAllowed = default;
-            bool? isHttpsAllowed = default;
-            QueryStringCachingBehavior? queryStringCachingBehavior = default;
-            OptimizationType? optimizationType = default;
-            string probePath = default;
-            IList<GeoFilter> geoFilters = default;
-            WritableSubResource defaultOriginGroup = default;
-            IList<UriSigningKey> uriSigningKeys = default;
-            EndpointDeliveryPolicy deliveryPolicy = default;
-            EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
-            string hostName = default;
-            IList<DeepCreatedOrigin> origins = default;
-            IList<DeepCreatedOriginGroup> originGroups = default;
-            IReadOnlyList<DeepCreatedCustomDomain> customDomains = default;
-            EndpointResourceState? resourceState = default;
-            CdnEndpointProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            EndpointProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("originPath"u8))
-                        {
-                            originPath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("contentTypesToCompress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            contentTypesToCompress = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("originHostHeader"u8))
-                        {
-                            originHostHeader = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isCompressionEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isCompressionEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isHttpAllowed"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isHttpAllowed = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isHttpsAllowed"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isHttpsAllowed = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("queryStringCachingBehavior"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            queryStringCachingBehavior = property0.Value.GetString().ToQueryStringCachingBehavior();
-                            continue;
-                        }
-                        if (property0.NameEquals("optimizationType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                optimizationType = null;
-                                continue;
-                            }
-                            optimizationType = new OptimizationType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("probePath"u8))
-                        {
-                            probePath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("geoFilters"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<GeoFilter> array = new List<GeoFilter>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(GeoFilter.DeserializeGeoFilter(item, options));
-                            }
-                            geoFilters = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultOriginGroup"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            defaultOriginGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("urlSigningKeys"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                uriSigningKeys = null;
-                                continue;
-                            }
-                            List<UriSigningKey> array = new List<UriSigningKey>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(UriSigningKey.DeserializeUriSigningKey(item, options));
-                            }
-                            uriSigningKeys = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("deliveryPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                deliveryPolicy = null;
-                                continue;
-                            }
-                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                webApplicationFirewallPolicyLink = null;
-                                continue;
-                            }
-                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("hostName"u8))
-                        {
-                            hostName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("origins"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DeepCreatedOrigin> array = new List<DeepCreatedOrigin>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DeepCreatedOrigin.DeserializeDeepCreatedOrigin(item, options));
-                            }
-                            origins = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("originGroups"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DeepCreatedOriginGroup> array = new List<DeepCreatedOriginGroup>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DeepCreatedOriginGroup.DeserializeDeepCreatedOriginGroup(item, options));
-                            }
-                            originGroups = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("customDomains"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DeepCreatedCustomDomain> array = new List<DeepCreatedCustomDomain>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DeepCreatedCustomDomain.DeserializeDeepCreatedCustomDomain(item, options));
-                            }
-                            customDomains = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceState = new EndpointResourceState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new CdnEndpointProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = EndpointProperties.DeserializeEndpointProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CdnEndpointData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                originPath,
-                contentTypesToCompress ?? new ChangeTrackingList<string>(),
-                originHostHeader,
-                isCompressionEnabled,
-                isHttpAllowed,
-                isHttpsAllowed,
-                queryStringCachingBehavior,
-                optimizationType,
-                probePath,
-                geoFilters ?? new ChangeTrackingList<GeoFilter>(),
-                defaultOriginGroup,
-                uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(),
-                deliveryPolicy,
-                webApplicationFirewallPolicyLink,
-                hostName,
-                origins ?? new ChangeTrackingList<DeepCreatedOrigin>(),
-                originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>(),
-                customDomains ?? new ChangeTrackingList<DeepCreatedCustomDomain>(),
-                resourceState,
-                provisioningState,
-                serializedAdditionalRawData);
+                properties);
         }
-
-        BinaryData IPersistableModel<CdnEndpointData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CdnEndpointData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CdnEndpointData IPersistableModel<CdnEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCdnEndpointData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CdnEndpointData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CdnEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

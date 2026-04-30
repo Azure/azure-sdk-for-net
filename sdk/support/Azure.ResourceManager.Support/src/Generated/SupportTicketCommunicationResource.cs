@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A Class representing a SupportTicketCommunication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportTicketCommunicationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSupportTicketCommunicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionSupportTicketResource"/> using the GetSupportTicketCommunication method.
+    /// A class representing a SupportTicketCommunication along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportTicketCommunicationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionSupportTicketResource"/> using the GetSupportTicketCommunications method.
     /// </summary>
     public partial class SupportTicketCommunicationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SupportTicketCommunicationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="supportTicketName"> The supportTicketName. </param>
-        /// <param name="communicationName"> The communicationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string supportTicketName, string communicationName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _supportTicketCommunicationCommunicationsClientDiagnostics;
-        private readonly CommunicationsRestOperations _supportTicketCommunicationCommunicationsRestClient;
+        private readonly ClientDiagnostics _supportTicketCommunicationClientDiagnostics;
+        private readonly SupportTicketCommunication _supportTicketCommunicationRestClient;
         private readonly SupportTicketCommunicationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/communications";
 
-        /// <summary> Initializes a new instance of the <see cref="SupportTicketCommunicationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SupportTicketCommunicationResource for mocking. </summary>
         protected SupportTicketCommunicationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SupportTicketCommunicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SupportTicketCommunicationResource(ArmClient client, SupportTicketCommunicationData data) : this(client, data.Id)
@@ -53,71 +43,92 @@ namespace Azure.ResourceManager.Support
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SupportTicketCommunicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SupportTicketCommunicationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _supportTicketCommunicationCommunicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string supportTicketCommunicationCommunicationsApiVersion);
-            _supportTicketCommunicationCommunicationsRestClient = new CommunicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketCommunicationCommunicationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string supportTicketCommunicationApiVersion);
+            _supportTicketCommunicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
+            _supportTicketCommunicationRestClient = new SupportTicketCommunication(_supportTicketCommunicationClientDiagnostics, Pipeline, Endpoint, supportTicketCommunicationApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SupportTicketCommunicationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="supportTicketName"> The supportTicketName. </param>
+        /// <param name="communicationName"> The communicationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string supportTicketName, string communicationName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Returns communication details for a support ticket.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Communications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Communications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SupportTicketCommunicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SupportTicketCommunicationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SupportTicketCommunicationResource.Get");
+            using DiagnosticScope scope = _supportTicketCommunicationClientDiagnostics.CreateScope("SupportTicketCommunicationResource.Get");
             scope.Start();
             try
             {
-                var response = await _supportTicketCommunicationCommunicationsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketCommunicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SupportTicketCommunicationData> response = Response.FromValue(SupportTicketCommunicationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportTicketCommunicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.Support
         /// Returns communication details for a support ticket.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Communications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Communications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SupportTicketCommunicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SupportTicketCommunicationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SupportTicketCommunicationResource.Get");
+            using DiagnosticScope scope = _supportTicketCommunicationClientDiagnostics.CreateScope("SupportTicketCommunicationResource.Get");
             scope.Start();
             try
             {
-                var response = _supportTicketCommunicationCommunicationsRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketCommunicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SupportTicketCommunicationData> response = Response.FromValue(SupportTicketCommunicationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportTicketCommunicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -168,23 +187,23 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
-        /// Adds a new customer communication to an Azure support ticket.
+        /// Update a SupportTicketCommunication.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Communications_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Communications_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SupportTicketCommunicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,14 +215,27 @@ namespace Azure.ResourceManager.Support
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SupportTicketCommunicationResource.Update");
+            using DiagnosticScope scope = _supportTicketCommunicationClientDiagnostics.CreateScope("SupportTicketCommunicationResource.Update");
             scope.Start();
             try
             {
-                var response = await _supportTicketCommunicationCommunicationsRestClient.CreateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SupportArmOperation<SupportTicketCommunicationResource>(new SupportTicketCommunicationOperationSource(Client), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, _supportTicketCommunicationCommunicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketCommunicationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, SupportTicketCommunicationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SupportArmOperation<SupportTicketCommunicationResource> operation = new SupportArmOperation<SupportTicketCommunicationResource>(
+                    new SupportTicketCommunicationOperationSource(Client),
+                    _supportTicketCommunicationClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,23 +246,23 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
-        /// Adds a new customer communication to an Azure support ticket.
+        /// Update a SupportTicketCommunication.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Communications_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Communications_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SupportTicketCommunicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,14 +274,27 @@ namespace Azure.ResourceManager.Support
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SupportTicketCommunicationResource.Update");
+            using DiagnosticScope scope = _supportTicketCommunicationClientDiagnostics.CreateScope("SupportTicketCommunicationResource.Update");
             scope.Start();
             try
             {
-                var response = _supportTicketCommunicationCommunicationsRestClient.Create(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SupportArmOperation<SupportTicketCommunicationResource>(new SupportTicketCommunicationOperationSource(Client), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, _supportTicketCommunicationCommunicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketCommunicationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, SupportTicketCommunicationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SupportArmOperation<SupportTicketCommunicationResource> operation = new SupportArmOperation<SupportTicketCommunicationResource>(
+                    new SupportTicketCommunicationOperationSource(Client),
+                    _supportTicketCommunicationClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

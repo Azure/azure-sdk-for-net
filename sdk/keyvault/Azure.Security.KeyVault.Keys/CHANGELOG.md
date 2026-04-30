@@ -1,14 +1,26 @@
 # Release History
 
-## 4.9.0-beta.1 (Unreleased)
+## 4.10.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added `KeyProperties.KeySize` to expose the key size in bits.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.9.0 (2026-03-04)
+
+### Bugs Fixed
+
+- Fixed challenge-based authentication to correctly parse tenant ID from DSTSv2 authority URIs.
+
+### Other Changes
+
+- The default service version is now `2025-07-01`.
+- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
 
 ## 4.8.0 (2025-06-27)
 

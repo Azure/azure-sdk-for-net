@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the service for which subnet is being prepared for. </summary>
+        [WirePath("serviceName")]
         public string ServiceName { get; set; }
         /// <summary> A list of NetworkIntentPolicyConfiguration. </summary>
+        [WirePath("networkIntentPolicyConfigurations")]
         public IList<NetworkIntentPolicyConfiguration> NetworkIntentPolicyConfigurations { get; }
     }
 }

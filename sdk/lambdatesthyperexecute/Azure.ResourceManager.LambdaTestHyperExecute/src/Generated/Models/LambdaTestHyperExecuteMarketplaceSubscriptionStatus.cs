@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.LambdaTestHyperExecute;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     public readonly partial struct LambdaTestHyperExecuteMarketplaceSubscriptionStatus : IEquatable<LambdaTestHyperExecuteMarketplaceSubscriptionStatus>
     {
         private readonly string _value;
+        /// <summary> Purchased but not yet activated. </summary>
+        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
+        /// <summary> Marketplace subscription is activated. </summary>
+        private const string SubscribedValue = "Subscribed";
+        /// <summary> This state indicates that a customer's payment for the Marketplace service was not received. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Customer has cancelled the subscription. </summary>
+        private const string UnsubscribedValue = "Unsubscribed";
 
         /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LambdaTestHyperExecuteMarketplaceSubscriptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
-        private const string SubscribedValue = "Subscribed";
-        private const string SuspendedValue = "Suspended";
-        private const string UnsubscribedValue = "Unsubscribed";
+            _value = value;
+        }
 
         /// <summary> Purchased but not yet activated. </summary>
         public static LambdaTestHyperExecuteMarketplaceSubscriptionStatus PendingFulfillmentStart { get; } = new LambdaTestHyperExecuteMarketplaceSubscriptionStatus(PendingFulfillmentStartValue);
+
         /// <summary> Marketplace subscription is activated. </summary>
         public static LambdaTestHyperExecuteMarketplaceSubscriptionStatus Subscribed { get; } = new LambdaTestHyperExecuteMarketplaceSubscriptionStatus(SubscribedValue);
+
         /// <summary> This state indicates that a customer's payment for the Marketplace service was not received. </summary>
         public static LambdaTestHyperExecuteMarketplaceSubscriptionStatus Suspended { get; } = new LambdaTestHyperExecuteMarketplaceSubscriptionStatus(SuspendedValue);
+
         /// <summary> Customer has cancelled the subscription. </summary>
         public static LambdaTestHyperExecuteMarketplaceSubscriptionStatus Unsubscribed { get; } = new LambdaTestHyperExecuteMarketplaceSubscriptionStatus(UnsubscribedValue);
+
         /// <summary> Determines if two <see cref="LambdaTestHyperExecuteMarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LambdaTestHyperExecuteMarketplaceSubscriptionStatus left, LambdaTestHyperExecuteMarketplaceSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LambdaTestHyperExecuteMarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LambdaTestHyperExecuteMarketplaceSubscriptionStatus left, LambdaTestHyperExecuteMarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LambdaTestHyperExecuteMarketplaceSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LambdaTestHyperExecuteMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LambdaTestHyperExecuteMarketplaceSubscriptionStatus(string value) => new LambdaTestHyperExecuteMarketplaceSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LambdaTestHyperExecuteMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LambdaTestHyperExecuteMarketplaceSubscriptionStatus?(string value) => value == null ? null : new LambdaTestHyperExecuteMarketplaceSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LambdaTestHyperExecuteMarketplaceSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LambdaTestHyperExecuteMarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

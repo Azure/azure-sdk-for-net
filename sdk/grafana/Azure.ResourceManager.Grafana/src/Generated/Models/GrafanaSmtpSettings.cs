@@ -16,37 +16,8 @@ namespace Azure.ResourceManager.Grafana.Models
     /// </summary>
     public partial class GrafanaSmtpSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GrafanaSmtpSettings"/>. </summary>
         public GrafanaSmtpSettings()
@@ -74,8 +45,8 @@ namespace Azure.ResourceManager.Grafana.Models
         /// Verify SSL for SMTP server. Default is false
         /// https://pkg.go.dev/crypto/tls#Config
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaSmtpSettings(bool? isEnabled, string host, string user, string password, string fromAddress, string fromName, GrafanaStartTlsPolicy? startTLSPolicy, bool? skipVerify, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaSmtpSettings(bool? isEnabled, string host, string user, string password, string fromAddress, string fromName, GrafanaStartTlsPolicy? startTLSPolicy, bool? skipVerify, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             Host = host;
@@ -85,32 +56,39 @@ namespace Azure.ResourceManager.Grafana.Models
             FromName = fromName;
             StartTLSPolicy = startTLSPolicy;
             SkipVerify = skipVerify;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable this to allow Grafana to send email. Default is false. </summary>
         public bool? IsEnabled { get; set; }
+
         /// <summary> SMTP server hostname with port, e.g. test.email.net:587. </summary>
         public string Host { get; set; }
+
         /// <summary> User of SMTP auth. </summary>
         public string User { get; set; }
+
         /// <summary> Password of SMTP auth. If the password contains # or ;, then you have to wrap it with triple quotes. </summary>
         public string Password { get; set; }
+
         /// <summary>
         /// Address used when sending out emails
         /// https://pkg.go.dev/net/mail#Address
         /// </summary>
         public string FromAddress { get; set; }
+
         /// <summary>
         /// Name to be used when sending out emails. Default is "Azure Managed Grafana Notification"
         /// https://pkg.go.dev/net/mail#Address
         /// </summary>
         public string FromName { get; set; }
+
         /// <summary>
         /// The StartTLSPolicy setting of the SMTP configuration
         /// https://pkg.go.dev/github.com/go-mail/mail#StartTLSPolicy
         /// </summary>
         public GrafanaStartTlsPolicy? StartTLSPolicy { get; set; }
+
         /// <summary>
         /// Verify SSL for SMTP server. Default is false
         /// https://pkg.go.dev/crypto/tls#Config

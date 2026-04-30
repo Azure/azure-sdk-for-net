@@ -1,14 +1,38 @@
 # Release History
 
-## 12.3.0-beta.1 (Unreleased)
+## 12.4.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for snapshot transfers as the source. This includes the ability to copy a snapshot to a new blob, download a snapshot, and pause/resume snapshot transfers.
+- Added support for versioning transfers as the source. This includes the ability to copy a version to a new blob, download a version, and pause/resume version transfers.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where corrupted or truncated checkpoint files could cause unexpected errors during transfer resume.
+- Fixed known issue where passing a `AzureSasCredential` to authenticate the source resource will not properly pass the credential for blob copy operations.
 
 ### Other Changes
+
+## 12.3.0 (2025-10-21)
+
+### Bugs Fixed
+- Resolved memory leak issue with `CancellationTokenSource` usage not being properly disposed, namely in the following areas:
+    - `TransferOperation` disposes the `CancellationTokenSource` after transfer reaches a `Completed` or `Paused` state
+    - `TransferManager` uses a `CancellationTokenSource` also does not link the`CancellationToken` passed to it's methods
+    - Removed usage of `CancellationTokenSource` from handling the chunking of large transfers. This only affects transfers that cannot be completed in one request.
+- Fixed bug where cached referenced `TransferOperation`s from the `TransferManager` were not being cleared on dispose.
+- Fixed bug where referenced `TransferOperation` from the transfers stored in the `TransferManager` after they reach a `Completed` or `Paused` state where not being removed.
+
+## 12.3.0-beta.1 (2025-09-16)
+
+### Features Added
+- This release contains features and bug fixes to improve quality.
+
+## 12.2.2 (2025-09-10)
+
+### Bugs Fixed
+- Fixed an issue on upload transfers where file/directory names on the destination may be incorrect. The issue could occur if the path passed to `LocalFilesStorageResourceProvider.FromDirectory` contained a trailing slash.
 
 ## 12.2.1 (2025-08-06)
 

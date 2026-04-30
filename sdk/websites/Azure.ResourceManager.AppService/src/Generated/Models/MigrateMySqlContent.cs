@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> MySQL migration request. </summary>
+    /// <summary>
+    /// MySQL migration request.
+    /// Serialized Name: MigrateMySqlRequest
+    /// </summary>
     public partial class MigrateMySqlContent : ResourceData
     {
         /// <summary>
@@ -57,9 +60,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="connectionString"> Connection string to the remote MySQL database. </param>
-        /// <param name="migrationType"> The type of migration operation to be done. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="connectionString">
+        /// Connection string to the remote MySQL database.
+        /// Serialized Name: MigrateMySqlRequest.properties.connectionString
+        /// </param>
+        /// <param name="migrationType">
+        /// The type of migration operation to be done
+        /// Serialized Name: MigrateMySqlRequest.properties.migrationType
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MigrateMySqlContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string connectionString, MySqlMigrationType? migrationType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,13 +81,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Connection string to the remote MySQL database. </summary>
+        /// <summary>
+        /// Connection string to the remote MySQL database.
+        /// Serialized Name: MigrateMySqlRequest.properties.connectionString
+        /// </summary>
         [WirePath("properties.connectionString")]
         public string ConnectionString { get; set; }
-        /// <summary> The type of migration operation to be done. </summary>
+        /// <summary>
+        /// The type of migration operation to be done
+        /// Serialized Name: MigrateMySqlRequest.properties.migrationType
+        /// </summary>
         [WirePath("properties.migrationType")]
         public MySqlMigrationType? MigrationType { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

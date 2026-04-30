@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of ApplicationGatewayBackendHealthPool resources. </summary>
+        [WirePath("backendAddressPools")]
         public IReadOnlyList<ApplicationGatewayBackendHealthPool> BackendAddressPools { get; }
     }
 }

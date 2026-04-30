@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("sharingProfile"u8);
                 writer.WriteObjectValue(SharingProfile, options);
             }
+            if (Optional.IsDefined(ReservationType))
+            {
+                writer.WritePropertyName("reservationType"u8);
+                writer.WriteStringValue(ReservationType.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -115,6 +120,7 @@ namespace Azure.ResourceManager.Compute
             IReadOnlyList<SubResource> virtualMachinesAssociated = default;
             CapacityReservationGroupInstanceView instanceView = default;
             ResourceSharingProfile sharingProfile = default;
+            CapacityReservationType? reservationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,6 +237,15 @@ namespace Azure.ResourceManager.Compute
                             sharingProfile = ResourceSharingProfile.DeserializeResourceSharingProfile(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("reservationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            reservationType = new CapacityReservationType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -252,6 +267,7 @@ namespace Azure.ResourceManager.Compute
                 virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
                 instanceView,
                 sharingProfile,
+                reservationType,
                 serializedAdditionalRawData);
         }
 

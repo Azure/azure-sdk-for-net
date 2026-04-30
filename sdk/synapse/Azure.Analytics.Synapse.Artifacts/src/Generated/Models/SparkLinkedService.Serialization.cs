@@ -100,6 +100,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("enableSsl"u8);
                 writer.WriteObjectValue<object>(EnableSsl);
             }
+            if (Optional.IsDefined(EnableServerCertificateValidation))
+            {
+                writer.WritePropertyName("enableServerCertificateValidation"u8);
+                writer.WriteObjectValue<object>(EnableServerCertificateValidation);
+            }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
@@ -155,6 +160,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SecretBase password = default;
             object httpPath = default;
             object enableSsl = default;
+            object enableServerCertificateValidation = default;
             object trustedCertPath = default;
             object useSystemTrustStore = default;
             object allowHostNameCNMismatch = default;
@@ -301,6 +307,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             enableSsl = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("enableServerCertificateValidation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableServerCertificateValidation = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("trustedCertPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -369,6 +384,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 password,
                 httpPath,
                 enableSsl,
+                enableServerCertificateValidation,
                 trustedCertPath,
                 useSystemTrustStore,
                 allowHostNameCNMismatch,

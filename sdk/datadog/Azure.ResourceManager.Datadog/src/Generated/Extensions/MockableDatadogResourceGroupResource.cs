@@ -8,56 +8,50 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Datadog;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Datadog.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDatadogResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDatadogResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDatadogResourceGroupResource for mocking. </summary>
         protected MockableDatadogResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDatadogResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDatadogResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDatadogResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets a collection of DatadogMonitors in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DatadogMonitors and their operations over a DatadogMonitorResource. </returns>
+        public virtual DatadogMonitorCollection GetDatadogMonitors()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DatadogMonitorResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DatadogMonitorResources and their operations over a DatadogMonitorResource. </returns>
-        public virtual DatadogMonitorResourceCollection GetDatadogMonitorResources()
-        {
-            return GetCachedClient(client => new DatadogMonitorResourceCollection(client, Id));
+            return GetCachedClient(client => new DatadogMonitorCollection(client, Id));
         }
 
         /// <summary>
         /// Get the properties of a specific monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatadogMonitorResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,29 +60,27 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatadogMonitorResource>> GetDatadogMonitorResourceAsync(string monitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatadogMonitorResource>> GetDatadogMonitorAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            return await GetDatadogMonitorResources().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            return await GetDatadogMonitors().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the properties of a specific monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatadogMonitorResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +89,11 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatadogMonitorResource> GetDatadogMonitorResource(string monitorName, CancellationToken cancellationToken = default)
+        public virtual Response<DatadogMonitorResource> GetDatadogMonitor(string monitorName, CancellationToken cancellationToken = default)
         {
-            return GetDatadogMonitorResources().Get(monitorName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            return GetDatadogMonitors().Get(monitorName, cancellationToken);
         }
     }
 }

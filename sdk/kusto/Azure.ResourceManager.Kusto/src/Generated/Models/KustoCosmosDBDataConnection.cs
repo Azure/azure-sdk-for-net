@@ -53,22 +53,31 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The case-sensitive name of the existing target table in your cluster. Retrieved data is ingested into this table. </summary>
+        [WirePath("properties.tableName")]
         public string TableName { get; set; }
         /// <summary> The name of an existing mapping rule to use when ingesting the retrieved data. </summary>
+        [WirePath("properties.mappingRuleName")]
         public string MappingRuleName { get; set; }
         /// <summary> The resource ID of a managed system or user-assigned identity. The identity is used to authenticate with Cosmos DB. </summary>
+        [WirePath("properties.managedIdentityResourceId")]
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
         /// <summary> The object ID of the managed identity resource. </summary>
+        [WirePath("properties.managedIdentityObjectId")]
         public Guid? ManagedIdentityObjectId { get; }
         /// <summary> The resource ID of the Cosmos DB account used to create the data connection. </summary>
+        [WirePath("properties.cosmosDbAccountResourceId")]
         public ResourceIdentifier CosmosDBAccountResourceId { get; set; }
         /// <summary> The name of an existing database in the Cosmos DB account. </summary>
+        [WirePath("properties.cosmosDbDatabase")]
         public string CosmosDBDatabase { get; set; }
         /// <summary> The name of an existing container in the Cosmos DB database. </summary>
+        [WirePath("properties.cosmosDbContainer")]
         public string CosmosDBContainer { get; set; }
         /// <summary> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </summary>
+        [WirePath("properties.retrievalStartDate")]
         public DateTimeOffset? RetrievalStartOn { get; set; }
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
     }
 }

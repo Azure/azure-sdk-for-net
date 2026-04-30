@@ -75,18 +75,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The reference to AdvertisedPublicPrefixes. </summary>
+        [WirePath("advertisedPublicPrefixes")]
         public IList<string> AdvertisedPublicPrefixes { get; }
         /// <summary> The communities of bgp peering. Specified for microsoft peering. </summary>
+        [WirePath("advertisedCommunities")]
         public IList<string> AdvertisedCommunities { get; }
         /// <summary> The advertised public prefix state of the Peering resource. </summary>
+        [WirePath("advertisedPublicPrefixesState")]
         public ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? AdvertisedPublicPrefixesState { get; }
         /// <summary> The legacy mode of the peering. </summary>
+        [WirePath("legacyMode")]
         public int? LegacyMode { get; set; }
         /// <summary> The CustomerASN of the peering. </summary>
+        [WirePath("customerASN")]
         public int? CustomerASN { get; set; }
         /// <summary> The RoutingRegistryName of the configuration. </summary>
+        [WirePath("routingRegistryName")]
         public string RoutingRegistryName { get; set; }
         /// <summary> List of Prefix information required to perform validation. </summary>
+        [WirePath("advertisedPublicPrefixInfo")]
         public IList<AdvertisedPublicPrefixProperties> AdvertisedPublicPrefixInfo { get; }
     }
 }

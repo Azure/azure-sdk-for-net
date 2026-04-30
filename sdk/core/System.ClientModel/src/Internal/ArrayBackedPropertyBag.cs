@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace System.ClientModel.Internal;
 
@@ -19,14 +20,9 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
     private (TKey Key, TValue? Value) _second;
     private (TKey Key, TValue? Value)[]? _rest;
     private int _count;
-    private readonly object _lock = new();
 #if DEBUG
     private bool _disposed;
 #endif
-
-    public ArrayBackedPropertyBag()
-    {
-    }
 
     public int Count
     {
@@ -269,17 +265,13 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         _first = default;
         _second = default;
 
-        lock (_lock)
+        var rest = Interlocked.Exchange(ref _rest, default);
+        if (rest == default)
         {
-            if (_rest == default)
-            {
-                return;
-            }
-
-            (TKey Key, TValue? Value)[] rest = _rest;
-            _rest = default;
-            ArrayPool<(TKey Key, TValue? Value)>.Shared.Return(rest, true);
+            return;
         }
+
+        ArrayPool<(TKey Key, TValue? Value)>.Shared.Return(rest, true);
     }
 
     private (TKey Key, TValue? Value)[] GetRest() => _rest ??

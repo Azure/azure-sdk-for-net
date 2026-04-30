@@ -2,12 +2,12 @@
 
 ## Prerequisites:
 
-- Install Visual Studio 2022 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
+- Install Visual Studio 2026 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Install the **.NET desktop development** workload in VisualStudio
   - Need at least .NET Framework 4.6.2 and 4.7.1 development tools 
-- Install **.NET 9.0.102 SDK** for your specific [platform](https://dotnet.microsoft.com/download). (or a higher version within the 9.0.*** band)  
+- Install **.NET 10.0.103 SDK** for your specific [platform](https://dotnet.microsoft.com/download). (or a higher version within the 10.0.*** band)  
 - Install the latest version of git (https://git-scm.com/downloads)
-- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher, if you plan to make public API changes or are working with generated code snippets.
+- Install [PowerShell](https://learn.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (22.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
 - [Fork the repository](https://docs.github.com/get-started/quickstart/fork-a-repo); work will be done on a [topic branch](https://docs.github.com/get-started/quickstart/github-flow#create-a-branch) in your fork and a [pull request opened](https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) against the `main` branch of the Azure SDK for .NET repository when ready for review.
 
@@ -19,7 +19,7 @@
 
 **Path Length :** To account for the **260 characters Path Length Limit** encountered on windows OS, file paths within the repo is keep below 210 characters. This gives you a runway of 49 characters as clone path for your repo. Paths longer that 260 characters will cause the build to break on windows OS and on CI. Assuming you clone to the default VisualStudio location such that the root of your clone is `C:\Users\\**USERNAME**\Source\Repos\azure-sdk-for-net` your username will have to be 9 characters long to avoid build errors caused by long paths. Consider using `C:\git` as you clone path.
 
-**Dependencies :** To ensure that the same versions of dependencies are used for all projects in the repo, package versions are managed from a central location in `eng\Packages.Data.props`. When adding package references you should first ensure that an **Update** reference of the package with the version exist in the **Packages.Data.props** then **Include** the reference without the version in your .csproj. Contact [azuresdkengsysteam@microsoft.com](mailto:azuresdkengsysteam@microsoft.com) if you need to change  versions for packages already present in **Packages.Data.props**
+**Dependencies :** To ensure that the same versions of dependencies are used for all projects in the repo, package versions are managed centrally using [eng/centralpackagemanagement/Directory.Packages.props]<!--(https://github.com/Azure/azure-sdk-for-net/blob/main/eng/centralpackagemanagement/Directory.Packages.props) (see [Central Package Management](https://learn.microsoft.com/nuget/consume-packages/Central-Package-Management))-->. When adding package references, first ensure a `PackageVersion` entry exists in `Directory.Packages.props`, then add a `PackageReference` without a version in your .csproj. Contact [azuresdkengsysteam@microsoft.com](mailto:azuresdkengsysteam@microsoft.com) if you need to change versions for packages already present in **Directory.Packages.props**
 
 **Line Endings :** If working on windows OS ensure git is installed with `Checkout Windows-style, commit Unix-style` option or `core.autocrlf` set to *true* in git config. If working on Unix based Linux or MacOS ensure git is installed with `Checkout as-is, commit Unix-style` option or `core.autocrlf` set to *input* in git config
 
@@ -254,8 +254,25 @@ dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuil
 ### How it works
 Each library needs to provide a `ApiCompatVersion` property which is set to the last GA'ed version of the library that will be used to compare APIs with the current to ensure no breaks have been introduced. Projects with this property set will download the specified package and the ApiCompat (Microsoft.DotNet.ApiCompat) tools package as part of the restore step of the project. Then as a post build step of the project it will run ApiCompat to verify the current APIs are compatible with the last GA'ed version of the APIs. For libraries that wish to disable the APICompat check they can remove the `ApiCompatVersion` property from their project. Our version bump automation will automatically add or increment the `ApiCompatVersion` property to the project when it detects that the version it is changing was a GA version which usually indicates that we just shipped that GA version and so it should be the new baseline for API checks.
 
+### API Compat Baseline Suppressions
+In rare cases, an intentional breaking change may be acceptable (e.g., removing an experimental API, fixing an attribute that was incorrectly applied). When ApiCompat reports errors for such changes, they can be suppressed using baseline files.
+
+**All baseline suppression files are centrally managed** in `eng/apicompatbaselines/` and named after the project (e.g., `eng/apicompatbaselines/Azure.Core.txt`). Local `ApiCompatBaseline.txt` files in package `src/` directories are no longer supported and will produce a build error.
+
+To add or modify baseline suppressions:
+1. Create or edit `eng/apicompatbaselines/<ProjectName>.txt` (the project name matches your `.csproj` filename)
+2. Add suppression entries with a comment explaining why the breaking change is acceptable
+3. Changes to this directory require review from the SDK team (enforced via CODEOWNERS)
+
+Example baseline file format:
+```
+# This constructor was marked as Experimental and was consolidated into the two-parameter overload.
+# It is safe to remove as it was under experimental feature flag SCME0002.
+MembersMustExist : Member 'protected void Azure.Core.ClientOptions..ctor(Microsoft.Extensions.Configuration.IConfigurationSection)' does not exist in the implementation but it does exist in the contract.
+```
+
 ### Releasing a new version of a GA'ed libary
-Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
+Since the [eng/centralpackagemanagement/Directory.Packages.props]<!--(https://github.com/Azure/azure-sdk-for-net/blob/main/eng/centralpackagemanagement/Directory.Packages.props)--> is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
 
 ## NuGet Package Dev Feed
 
@@ -305,6 +322,32 @@ You can add the dev feed to your NuGet.Config file, which can be at the Solution
 ```
 
 > You can place a NuGet.Config file in the root of your solution. Projects within the solution will use the feed defined in that file.
+
+##### Unauthorized access to the feed
+
+If you are getting a 401 error, similar to `401 (Unauthorized - No local versions of package "xyz"; please provide authentication to access versions from upstream that have not yet been saved to your feed.)` it means you are trying 
+to access a package version that is not on the feed but is on the upstream feed `nuget.org` and you don't have permissions to pull that version into the feed. There are two possible solutions to this issue:
+
+1. If you are a member of the team with access and want to update a version of the package in the feed you will need to authenticate to the feed. For local authentication you will want to use [Azure Artifacts Credential Provider](https://github.com/microsoft/artifacts-credprovider#azure-artifacts-credential-provider).
+   If you need to authenticate a pipeline in our teams DevOps org you will want login via the [NuGetAuthenticate](https://learn.microsoft.com/azure/devops/pipelines/tasks/package/nuget-authenticate?view=azure-devops#dotnet) task.
+1. If you are external user and just want to consume packages in the feed you can scope the packages for the feed to just the ones you want by using [packageSourceMapping](https://learn.microsoft.com/nuget/reference/nuget-config-file#packagesource) similar to:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+    <add key="Azure SDK for .NET Dev Feed" value="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" />
+  </packageSources>
+  <disabledPackageSources>
+    <clear />
+  </disabledPackageSources>
+  <packageSourceMapping>
+    <packageSource key="Azure SDK for .NET Dev Feed">
+      <package pattern="Azure.*" />
+    </packageSource>
+</packageSourceMapping>
+</configuration>
+```
 
 ### 2. Find NuGet Package
 

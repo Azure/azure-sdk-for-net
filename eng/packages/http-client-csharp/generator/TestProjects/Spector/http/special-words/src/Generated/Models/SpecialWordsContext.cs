@@ -22,6 +22,7 @@ namespace SpecialWords
     [ModelReaderWriterBuildable(typeof(Continue))]
     [ModelReaderWriterBuildable(typeof(Def))]
     [ModelReaderWriterBuildable(typeof(Del))]
+    [ModelReaderWriterBuildable(typeof(DictMethods))]
     [ModelReaderWriterBuildable(typeof(Elif))]
     [ModelReaderWriterBuildable(typeof(Else))]
     [ModelReaderWriterBuildable(typeof(Except))]
@@ -35,16 +36,17 @@ namespace SpecialWords
     [ModelReaderWriterBuildable(typeof(In))]
     [ModelReaderWriterBuildable(typeof(Is))]
     [ModelReaderWriterBuildable(typeof(Lambda))]
+    [ModelReaderWriterBuildable(typeof(ModelWithList))]
     [ModelReaderWriterBuildable(typeof(Not))]
     [ModelReaderWriterBuildable(typeof(Or))]
     [ModelReaderWriterBuildable(typeof(Pass))]
     [ModelReaderWriterBuildable(typeof(Raise))]
     [ModelReaderWriterBuildable(typeof(Return))]
+    [ModelReaderWriterBuildable(typeof(SameAsModel))]
     [ModelReaderWriterBuildable(typeof(Try))]
     [ModelReaderWriterBuildable(typeof(While))]
     [ModelReaderWriterBuildable(typeof(With))]
     [ModelReaderWriterBuildable(typeof(Yield))]
-    [ModelReaderWriterBuildable(typeof(SameAsModel))]
     public partial class SpecialWordsContext : ModelReaderWriterContext
     {
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageActions;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.StorageActions.Models
     public readonly partial struct StorageTaskProvisioningState : IEquatable<StorageTaskProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageTaskProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageTaskProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ValidateSubscriptionQuotaBeginValue = "ValidateSubscriptionQuotaBegin";
         private const string ValidateSubscriptionQuotaEndValue = "ValidateSubscriptionQuotaEnd";
         private const string AcceptedValue = "Accepted";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.StorageActions.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary> ValidateSubscriptionQuotaBegin. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageTaskProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ValidateSubscriptionQuotaBegin. </summary>
         public static StorageTaskProvisioningState ValidateSubscriptionQuotaBegin { get; } = new StorageTaskProvisioningState(ValidateSubscriptionQuotaBeginValue);
-        /// <summary> ValidateSubscriptionQuotaEnd. </summary>
+
+        /// <summary> Gets the ValidateSubscriptionQuotaEnd. </summary>
         public static StorageTaskProvisioningState ValidateSubscriptionQuotaEnd { get; } = new StorageTaskProvisioningState(ValidateSubscriptionQuotaEndValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> Gets the Accepted. </summary>
         public static StorageTaskProvisioningState Accepted { get; } = new StorageTaskProvisioningState(AcceptedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static StorageTaskProvisioningState Creating { get; } = new StorageTaskProvisioningState(CreatingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static StorageTaskProvisioningState Succeeded { get; } = new StorageTaskProvisioningState(SucceededValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static StorageTaskProvisioningState Deleting { get; } = new StorageTaskProvisioningState(DeletingValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static StorageTaskProvisioningState Canceled { get; } = new StorageTaskProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static StorageTaskProvisioningState Failed { get; } = new StorageTaskProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="StorageTaskProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageTaskProvisioningState left, StorageTaskProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageTaskProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageTaskProvisioningState left, StorageTaskProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageTaskProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageTaskProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageTaskProvisioningState(string value) => new StorageTaskProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageTaskProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageTaskProvisioningState?(string value) => value == null ? null : new StorageTaskProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageTaskProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageTaskProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

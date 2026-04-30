@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,11 +16,14 @@ namespace Client.AlternateApiVersion.Service.Path
 {
     public partial class PathClient
     {
-        protected PathClient() => throw null;
+        public PathClient() : this(new Uri("http://localhost:3000"), new PathClientOptions()) => throw null;
 
-        public PathClient(string version) : this(new Uri("http://localhost:3000"), version, new PathClientOptions()) => throw null;
+        internal PathClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PathClientOptions options) => throw null;
 
-        public PathClient(Uri endpoint, string version, PathClientOptions options) => throw null;
+        public PathClient(Uri endpoint, PathClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public PathClient(PathClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

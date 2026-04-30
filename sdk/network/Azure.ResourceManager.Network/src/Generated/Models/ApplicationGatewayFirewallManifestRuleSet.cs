@@ -86,14 +86,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The type of the web application firewall rule set. </summary>
+        [WirePath("ruleSetType")]
         public string RuleSetType { get; }
         /// <summary> The version of the web application firewall rule set type. </summary>
+        [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; }
         /// <summary> The rule set status. </summary>
+        [WirePath("status")]
         public ApplicationGatewayRuleSetStatusOption? Status { get; }
         /// <summary> Tier of an application gateway that support the rule set. </summary>
+        [WirePath("tiers")]
         public IReadOnlyList<ApplicationGatewayTierType> Tiers { get; }
         /// <summary> The rule groups of the web application firewall rule set. </summary>
+        [WirePath("ruleGroups")]
         public IReadOnlyList<ApplicationGatewayFirewallRuleGroup> RuleGroups { get; }
     }
 }

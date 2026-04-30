@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Description of the rule. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Rule Type. </summary>
         internal FirewallPolicyRuleType RuleType { get; set; }

@@ -167,7 +167,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Update the Personalizer service configuration. </summary>
         /// <param name="config"> The personalizer service configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerServiceProperties >> UpdatePersonalizerPropertiesAsync(PersonalizerServiceProperties config, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerServiceProperties>> UpdatePersonalizerPropertiesAsync(PersonalizerServiceProperties config, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.UpdatePersonalizerProperties");
             scope.Start();
@@ -185,7 +185,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Update the Personalizer service configuration. </summary>
         /// <param name="config"> The personalizer service configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerServiceProperties > UpdatePersonalizerProperties(PersonalizerServiceProperties config, CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerServiceProperties> UpdatePersonalizerProperties(PersonalizerServiceProperties config, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.UpdatePersonalizerProperties");
             scope.Start();
@@ -202,7 +202,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get the Personalizer service configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerServiceProperties >> GetPersonalizerPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerServiceProperties>> GetPersonalizerPropertiesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.GetPersonalizerProperties");
             scope.Start();
@@ -219,7 +219,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get the Personalizer service configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerServiceProperties > GetPersonalizerProperties(CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerServiceProperties> GetPersonalizerProperties(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerAdministrationClient.GetPersonalizerProperties");
             scope.Start();

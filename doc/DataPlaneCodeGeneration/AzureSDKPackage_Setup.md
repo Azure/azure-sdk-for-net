@@ -18,31 +18,40 @@ sdk\<service name>\<package name>\<package name>.sln
 
 ## Create sdk package
 
-We will use the Azure SDK template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to create the initial project skeleton for SDKs generated from TypeSpec.
+You have several options to create the initial project skeleton for SDKs generated from TypeSpec:
 
-You can run `eng\scripts\automation\Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
+### Option 1: Using tsp-client init (Recommended)
 
-```powershell
-eng/scripts/automation/Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -sdkFolder <sdk-folder-path> -typespecSpecDirectory <relativeTypeSpecProjectFolderPath> -commit <commitId> [-repo <specRepo>] [-additionalSubDirectories <relativeFolders>]
+You can use the `tsp-client init` command to initialize the TypeSpec configuration. This tool automatically sets up the correct emitter path for new services. You must pass the `--tsp-config` parameter pointing to the tspconfig.yaml in the spec repo:
+
+```bash
+tsp-client init --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/<commit>/specification/<service>/<typespec-project-folder>/tspconfig.yaml
 ```
 
-e.g.
-Use git url
+**Example:**
 
-```powershell
-pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -sdkFolder /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector -typespecSpecDirectory specification/cognitiveservices/AnomalyDetector -commit ac8e06a2ed0fc1c54663c98f12c8a073f8026b90 -repo Azure/azure-rest-api-specs
+```bash
+tsp-client init --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/c226a37cdb9a3f756aff9edb33435ba7c90a5b91/specification/ai/ContentUnderstanding/tspconfig.yaml
 ```
 
-**Note**:
+This will initialize the `tsp-location.yaml` file with the correct configuration. After running this command, you'll still need to create the project structure and files manually.
 
-- `-sdkFolder` take the address of the sdk folder in azure-sdk-for-net repo. e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector. [Required]
-- `-typespecSpecDirectory` takes the relative path of the typespec project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector [Required]
-- `-additionalSubDirectories` takes the relative paths of the additional directories needed by the typespec project, such as share library folder, separated by semicolon if there is more than one folder. [Optional]
-- `-commit` takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90) [Required]
-- `-repo` takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs), [Optional], default is `Azure/azure-rest-api-specs`
+### Option 2: Copy the Azure.Template project
 
-When you run `eng\scripts\automation\Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1`, it will:
+You can copy the [Azure.Template](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template/Azure.Template) project as a starting point. This template includes the complete project structure with:
 
-- Create a project folder, install template files from `sdk/template/Azure.Template`, and create `.csproj` and `.sln` files for your new library.
+- Project files (`.csproj`, `.sln`)
+- TypeSpec configuration (`tsp-location.yaml`)
+- Test infrastructure
+- Sample structure
+- CI/CD configuration
 
-    These files are created following the guidance for the [Azure SDK Repository Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
+**Steps:**
+1. Copy the `sdk/template/Azure.Template` directory to your new location `sdk/<service name>/<package name>/`
+2. Rename the project files and namespaces to match your service
+3. Update the `tsp-location.yaml` file to point to your TypeSpec specification
+4. Update the package name, version, and other metadata in the `.csproj` file
+
+These files are created following the guidance for the [Azure SDK Repository Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
+
+For more information on code generation, see the [Azure SDK Code Generation Quickstart Tutorial](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKCodeGeneration_DataPlane_Quickstart.md).

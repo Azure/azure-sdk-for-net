@@ -7,66 +7,37 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the certificate source parameters using user's keyvault certificate for enabling SSL.
-    /// Serialized Name: UserManagedHttpsParameters
-    /// </summary>
+    /// <summary> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </summary>
     public partial class UserManagedHttpsContent : CustomDomainHttpsContent
     {
         /// <summary> Initializes a new instance of <see cref="UserManagedHttpsContent"/>. </summary>
-        /// <param name="protocolType">
-        /// Defines the TLS extension protocol that is used for secure delivery.
-        /// Serialized Name: CustomDomainHttpsParameters.protocolType
-        /// </param>
-        /// <param name="certificateSourceParameters">
-        /// Defines the certificate source parameters using user's keyvault certificate for enabling SSL.
-        /// Serialized Name: UserManagedHttpsParameters.certificateSourceParameters
-        /// </param>
+        /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
+        /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
-        public UserManagedHttpsContent(SecureDeliveryProtocolType protocolType, KeyVaultCertificateSource certificateSourceParameters) : base(protocolType)
+        public UserManagedHttpsContent(SecureDeliveryProtocolType protocolType, KeyVaultCertificateSource certificateSourceParameters) : base(CertificateSource.AzureKeyVault, protocolType)
         {
             Argument.AssertNotNull(certificateSourceParameters, nameof(certificateSourceParameters));
 
             CertificateSourceParameters = certificateSourceParameters;
-            CertificateSource = CertificateSource.AzureKeyVault;
         }
 
         /// <summary> Initializes a new instance of <see cref="UserManagedHttpsContent"/>. </summary>
-        /// <param name="certificateSource">
-        /// Defines the source of the SSL certificate.
-        /// Serialized Name: CustomDomainHttpsParameters.certificateSource
-        /// </param>
-        /// <param name="protocolType">
-        /// Defines the TLS extension protocol that is used for secure delivery.
-        /// Serialized Name: CustomDomainHttpsParameters.protocolType
-        /// </param>
-        /// <param name="minimumTlsVersion">
-        /// TLS protocol version that will be used for Https
-        /// Serialized Name: CustomDomainHttpsParameters.minimumTlsVersion
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="certificateSourceParameters">
-        /// Defines the certificate source parameters using user's keyvault certificate for enabling SSL.
-        /// Serialized Name: UserManagedHttpsParameters.certificateSourceParameters
-        /// </param>
-        internal UserManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, KeyVaultCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData)
+        /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
+        /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
+        /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </param>
+        internal UserManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyVaultCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion, additionalBinaryDataProperties)
         {
             CertificateSourceParameters = certificateSourceParameters;
-            CertificateSource = certificateSource;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserManagedHttpsContent"/> for deserialization. </summary>
-        internal UserManagedHttpsContent()
-        {
-        }
-
-        /// <summary>
-        /// Defines the certificate source parameters using user's keyvault certificate for enabling SSL.
-        /// Serialized Name: UserManagedHttpsParameters.certificateSourceParameters
-        /// </summary>
+        /// <summary> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </summary>
+        [WirePath("certificateSourceParameters")]
         public KeyVaultCertificateSource CertificateSourceParameters { get; set; }
     }
 }

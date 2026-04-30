@@ -8,89 +8,76 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The CustomRolloutSpecification. </summary>
     public partial class CustomRolloutSpecification
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomRolloutSpecification"/>. </summary>
-        /// <param name="canary"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="canary"/> is null. </exception>
-        public CustomRolloutSpecification(TrafficRegions canary)
+        public CustomRolloutSpecification()
         {
-            Argument.AssertNotNull(canary, nameof(canary));
-
-            Canary = canary;
+            ReleaseScopes = new ChangeTrackingList<string>();
             ResourceTypeRegistrations = new ChangeTrackingList<ResourceTypeRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomRolloutSpecification"/>. </summary>
-        /// <param name="canary"></param>
-        /// <param name="providerRegistration"></param>
-        /// <param name="resourceTypeRegistrations"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRolloutSpecification(TrafficRegions canary, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="autoProvisionConfig"> The auto provisioning configuration. </param>
+        /// <param name="canary"> The canary region configuration. </param>
+        /// <param name="releaseScopes"> The list of ARM regions scoped for the release. </param>
+        /// <param name="refreshSubscriptionRegistration"> Whether refreshing subscription registration is enabled or disabled. </param>
+        /// <param name="skipReleaseScopeValidation"> Whether release scope validation should be skipped. </param>
+        /// <param name="providerRegistration"> The provider registration. </param>
+        /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CustomRolloutSpecification(CustomRolloutAutoProvisionConfig autoProvisionConfig, TrafficRegions canary, IList<string> releaseScopes, bool? refreshSubscriptionRegistration, bool? skipReleaseScopeValidation, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            AutoProvisionConfig = autoProvisionConfig;
             Canary = canary;
+            ReleaseScopes = releaseScopes;
+            RefreshSubscriptionRegistration = refreshSubscriptionRegistration;
+            SkipReleaseScopeValidation = skipReleaseScopeValidation;
             ProviderRegistration = providerRegistration;
             ResourceTypeRegistrations = resourceTypeRegistrations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomRolloutSpecification"/> for deserialization. </summary>
-        internal CustomRolloutSpecification()
-        {
-        }
+        /// <summary> The auto provisioning configuration. </summary>
+        public CustomRolloutAutoProvisionConfig AutoProvisionConfig { get; set; }
 
-        /// <summary> Gets or sets the canary. </summary>
+        /// <summary> The canary region configuration. </summary>
         internal TrafficRegions Canary { get; set; }
-        /// <summary> Gets the canary regions. </summary>
+
+        /// <summary> The list of ARM regions scoped for the release. </summary>
+        public IList<string> ReleaseScopes { get; }
+
+        /// <summary> Whether refreshing subscription registration is enabled or disabled. </summary>
+        public bool? RefreshSubscriptionRegistration { get; set; }
+
+        /// <summary> Whether release scope validation should be skipped. </summary>
+        public bool? SkipReleaseScopeValidation { get; set; }
+
+        /// <summary> The provider registration. </summary>
+        public ProviderRegistrationData ProviderRegistration { get; set; }
+
+        /// <summary> The resource type registrations. </summary>
+        public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
+
+        /// <summary> Gets the Regions. </summary>
         public IList<AzureLocation> CanaryRegions
         {
             get
             {
                 if (Canary is null)
+                {
                     Canary = new TrafficRegions();
+                }
                 return Canary.Regions;
             }
         }
-
-        /// <summary> Gets or sets the provider registration. </summary>
-        public ProviderRegistrationData ProviderRegistration { get; set; }
-        /// <summary> Gets the resource type registrations. </summary>
-        public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
     }
 }

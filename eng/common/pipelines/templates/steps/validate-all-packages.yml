@@ -1,20 +1,30 @@
 parameters:
-  ArtifactPath: $(Build.ArtifactStagingDirectory)
-  Artifacts: []
-  ConfigFileDir: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: ArtifactPath
+    type: string
+    default: $(Build.ArtifactStagingDirectory)
+  - name: Artifacts
+    type: object
+    default: []
+  - name: ConfigFileDir
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: PackageInfoFiles
+    type: object
+    default: []
 
 steps:
  - ${{ if and(ne(variables['Skip.PackageValidation'], 'true'), and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))) }}:
     - pwsh: |
         echo "##vso[task.setvariable variable=SetAsReleaseBuild]false"
       displayName: "Set as release build"
-      condition: and(succeeded(), eq(variables['SetAsReleaseBuild'], ''))
+      condition: and(succeededOrFailed(), eq(variables['SetAsReleaseBuild'], ''))
 
     - task: AzureCLI@2
       inputs:
         azureSubscription: opensource-api-connection
         scriptType: pscore
         scriptLocation: inlineScript
+        # PackageInfoFiles example: @('a/file1.json','a/file2.json')
         inlineScript: |
           $(Build.SourcesDirectory)/eng/common/scripts/Validate-All-Packages.ps1 `
             -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name) `
@@ -24,7 +34,8 @@ steps:
             -ConfigFileDir '${{ parameters.ConfigFileDir }}' `
             -BuildDefinition $(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(System.DefinitionId) `
             -PipelineUrl $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId) `
-            -IsReleaseBuild $$(SetAsReleaseBuild)
+            -IsReleaseBuild $$(SetAsReleaseBuild) `
+            -PackageInfoFiles @('${{ join(''',''', parameters.PackageInfoFiles) }}')
         workingDirectory: $(Pipeline.Workspace)
       displayName: Validate packages and update work items
       continueOnError: true

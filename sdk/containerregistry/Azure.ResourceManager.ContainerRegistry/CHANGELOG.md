@@ -1,14 +1,39 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.3 (Unreleased)
 
 ### Features Added
+
+- Updated API version to 2026-01-01-preview.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated from AutoRest/Swagger to TypeSpec-based generation.
+- Added support for Archive and ArchiveVersion resources.
+- Added support for ExportPipeline, ImportPipeline and PipelineRun resources.
+- Added missing `[Obsolete]` attribute to `ContainerRegistryAgentPoolPatch` for consistency with other deprecated RegistryTasks types.
+
+## 1.5.0-beta.2 (2026-03-19)
+
+### Features Added
+
+- Upgraded Registry api-version to 2026-01-01-preview.
+
+## 1.5.0-beta.1 (2025-12-10)
+
+### Features Added
+
+- Upgraded RegistryTasks api-version to 2025-03-01-preview.
+
+## 1.4.0 (2025-11-05)
+
+### Features Added
+
+- Upgraded api-version to 2025-11-01.
 
 ## 1.3.1 (2025-08-11)
 

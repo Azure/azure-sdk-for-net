@@ -170,6 +170,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 int childCount = 0;
                 await foreach (BlobHierarchyItem blobHierarchyItem in BlobContainerClient.GetBlobsByHierarchyAsync(
                     traits: BlobTraits.Metadata,
+                    states: BlobStates.None,
                     prefix: currentPath,
                     delimiter: Constants.PathBackSlashDelimiter,
                     cancellationToken: cancellationToken).ConfigureAwait(false))

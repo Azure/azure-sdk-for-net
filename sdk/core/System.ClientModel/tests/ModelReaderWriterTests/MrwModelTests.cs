@@ -30,11 +30,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         [TestCase("J")]
         [TestCase("W")]
-        public void RoundTripWithModelReaderWriter(string format)
-            => RoundTripTest(format, new ModelReaderWriterStrategy<T>());
-
-        [TestCase("J")]
-        [TestCase("W")]
         public void RoundTripWithModelInterface(string format)
             => RoundTripTest(format, new ModelInterfaceStrategy<T>());
 
@@ -106,12 +101,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         internal static Dictionary<string, BinaryData> GetRawData(object model)
         {
             Type modelType = model.GetType();
-            while (modelType.BaseType != typeof(object) && modelType.BaseType != typeof(ValueType))
+            var fieldInfo = modelType.GetField("_serializedAdditionalRawData", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            while (fieldInfo == null &&
+                modelType.BaseType != typeof(object) &&
+                modelType.BaseType != typeof(ValueType))
             {
                 modelType = modelType.BaseType!;
+                fieldInfo = modelType.GetField("_serializedAdditionalRawData", BindingFlags.Instance | BindingFlags.NonPublic);
             }
-            var propertyInfo = modelType.GetField("_rawData", BindingFlags.Instance | BindingFlags.NonPublic);
-            return propertyInfo?.GetValue(model) as Dictionary<string, BinaryData> ?? throw new InvalidOperationException($"unable to get raw data from {model.GetType().Name}");
+
+            return fieldInfo?.GetValue(model) as Dictionary<string, BinaryData> ?? throw new InvalidOperationException($"unable to get raw data from {model.GetType().Name}");
         }
 
         [Test]

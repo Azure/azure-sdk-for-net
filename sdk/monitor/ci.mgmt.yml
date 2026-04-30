@@ -2,18 +2,6 @@
 # This file is generated automatically and any changes will be lost.
 
 trigger: none
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/monitor/ci.mgmt.yml
-    - sdk/monitor/Azure.ResourceManager.Monitor/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -23,3 +11,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Monitor
       safeName: AzureResourceManagerMonitor
+    - name: Azure.Provisioning.Monitor
+      safeName: AzureProvisioningMonitor

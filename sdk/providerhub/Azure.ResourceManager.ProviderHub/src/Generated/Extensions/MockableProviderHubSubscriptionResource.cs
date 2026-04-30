@@ -8,33 +8,39 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ProviderHub;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableProviderHubSubscriptionResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableProviderHubSubscriptionResource"/> class for mocking. </summary>
+        private ClientDiagnostics _providerMonitorSettingsClientDiagnostics;
+        private ProviderMonitorSettings _providerMonitorSettingsRestClient;
+
+        /// <summary> Initializes a new instance of MockableProviderHubSubscriptionResource for mocking. </summary>
         protected MockableProviderHubSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableProviderHubSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableProviderHubSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableProviderHubSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics ProviderMonitorSettingsClientDiagnostics => _providerMonitorSettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ProviderHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of ProviderRegistrationResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of ProviderRegistrationResources and their operations over a ProviderRegistrationResource. </returns>
+        private ProviderMonitorSettings ProviderMonitorSettingsRestClient => _providerMonitorSettingsRestClient ??= new ProviderMonitorSettings(ProviderMonitorSettingsClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
+
+        /// <summary> Gets a collection of ProviderRegistrations in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of ProviderRegistrations and their operations over a ProviderRegistrationResource. </returns>
         public virtual ProviderRegistrationCollection GetProviderRegistrations()
         {
             return GetCachedClient(client => new ProviderRegistrationCollection(client, Id));
@@ -44,20 +50,16 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// Gets the provider registration details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +70,8 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ProviderRegistrationResource>> GetProviderRegistrationAsync(string providerNamespace, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+
             return await GetProviderRegistrations().GetAsync(providerNamespace, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +79,16 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// Gets the provider registration details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +99,65 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         [ForwardsClientCalls]
         public virtual Response<ProviderRegistrationResource> GetProviderRegistration(string providerNamespace, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+
             return GetProviderRegistrations().Get(providerNamespace, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of the provider monitor settings in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerMonitorSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ProviderMonitorSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProviderMonitorSettingResource> GetProviderMonitorSettingsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetBySubscriptionAsyncCollectionResultOfT(ProviderMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProviderHubSubscriptionResource.GetProviderMonitorSettings"), data => new ProviderMonitorSettingResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets the list of the provider monitor settings in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerMonitorSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ProviderMonitorSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProviderMonitorSettingResource> GetProviderMonitorSettings(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetBySubscriptionCollectionResultOfT(ProviderMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProviderHubSubscriptionResource.GetProviderMonitorSettings"), data => new ProviderMonitorSettingResource(Client, data));
         }
     }
 }

@@ -21,25 +21,25 @@ namespace Microsoft.Extensions.Azure
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient, global::Samples.TestClientOptions> AddTestClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint, global::Azure.AzureKeyCredential credential)
+        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient, global::Samples.SamplesClientOptions> AddTestClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint, global::Azure.AzureKeyCredential credential)
             where TBuilder : global::Azure.Core.Extensions.IAzureClientFactoryBuilder
         {
             global::Samples.Argument.AssertNotNull(endpoint, nameof(endpoint));
             global::Samples.Argument.AssertNotNull(credential, nameof(credential));
 
-            return builder.RegisterClientFactory<global::Samples.TestClient, global::Samples.TestClientOptions>(options => new global::Samples.TestClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<global::Samples.TestClient, global::Samples.SamplesClientOptions>(options => new global::Samples.TestClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="TestClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient, global::Samples.TestClientOptions> AddTestClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
+        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient, global::Samples.SamplesClientOptions> AddTestClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : global::Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential
         {
             global::Samples.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            return builder.RegisterClientFactory<global::Samples.TestClient, global::Samples.TestClientOptions>((options, credential) => new global::Samples.TestClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<global::Samples.TestClient, global::Samples.SamplesClientOptions>((options, credential) => new global::Samples.TestClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="TestClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -47,10 +47,10 @@ namespace Microsoft.Extensions.Azure
         /// <param name="configuration"> The configuration to use for the client. </param>
         [global::System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [global::System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient, global::Samples.TestClientOptions> AddTestClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient, global::Samples.SamplesClientOptions> AddTestClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : global::Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<global::Samples.TestClient, global::Samples.TestClientOptions>(configuration);
+            return builder.RegisterClientFactory<global::Samples.TestClient, global::Samples.SamplesClientOptions>(configuration);
         }
 
         /// <summary> Registers a <see cref="TestClient2"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -58,25 +58,25 @@ namespace Microsoft.Extensions.Azure
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient2, global::Samples.TestClient2Options> AddTestClient2<TBuilder>(this TBuilder builder, global::System.Uri endpoint, global::Azure.AzureKeyCredential credential)
+        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient2, global::Samples.SamplesClientOptions> AddTestClient2<TBuilder>(this TBuilder builder, global::System.Uri endpoint, global::Azure.AzureKeyCredential credential)
             where TBuilder : global::Azure.Core.Extensions.IAzureClientFactoryBuilder
         {
             global::Samples.Argument.AssertNotNull(endpoint, nameof(endpoint));
             global::Samples.Argument.AssertNotNull(credential, nameof(credential));
 
-            return builder.RegisterClientFactory<global::Samples.TestClient2, global::Samples.TestClient2Options>(options => new global::Samples.TestClient2(endpoint, credential, options));
+            return builder.RegisterClientFactory<global::Samples.TestClient2, global::Samples.SamplesClientOptions>(options => new global::Samples.TestClient2(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="TestClient2"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="global::System.ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient2, global::Samples.TestClient2Options> AddTestClient2<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
+        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient2, global::Samples.SamplesClientOptions> AddTestClient2<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : global::Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential
         {
             global::Samples.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            return builder.RegisterClientFactory<global::Samples.TestClient2, global::Samples.TestClient2Options>((options, credential) => new global::Samples.TestClient2(endpoint, credential, options));
+            return builder.RegisterClientFactory<global::Samples.TestClient2, global::Samples.SamplesClientOptions>((options, credential) => new global::Samples.TestClient2(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="TestClient2"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -84,10 +84,10 @@ namespace Microsoft.Extensions.Azure
         /// <param name="configuration"> The configuration to use for the client. </param>
         [global::System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [global::System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient2, global::Samples.TestClient2Options> AddTestClient2<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Samples.TestClient2, global::Samples.SamplesClientOptions> AddTestClient2<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : global::Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<global::Samples.TestClient2, global::Samples.TestClient2Options>(configuration);
+            return builder.RegisterClientFactory<global::Samples.TestClient2, global::Samples.SamplesClientOptions>(configuration);
         }
     }
 }

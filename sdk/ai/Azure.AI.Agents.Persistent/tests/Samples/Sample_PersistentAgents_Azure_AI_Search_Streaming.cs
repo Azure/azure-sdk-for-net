@@ -4,6 +4,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -47,8 +50,8 @@ public partial class Sample_PersistentAgents_Azure_AI_Search_Streaming : Samples
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "my-agent",
-           instructions: "You are a helpful agent.",
-           tools: [ new AzureAISearchToolDefinition() ],
+           instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
+           tools: [new AzureAISearchToolDefinition()],
            toolResources: toolResource);
         #endregion
         #region Snippet:AgentsAzureAISearchStreamingExample_CreateThread_Async
@@ -62,7 +65,9 @@ public partial class Sample_PersistentAgents_Azure_AI_Search_Streaming : Samples
             "What is the temperature rating of the cozynights sleeping bag?");
         #endregion
         #region Snippet:AgentsAzureAISearchStreamingExample_PrintMessages_Async
-        await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
+        PersistentAgentsNamedToolChoice toolChoice = new(PersistentAgentsNamedToolChoiceType.AzureAISearch);
+        BinaryData toolChoiceBin = ((IJsonModel<PersistentAgentsNamedToolChoice>)toolChoice).Write(ModelReaderWriterOptions.Json);
+        await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, toolChoice: toolChoiceBin))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
             {
@@ -127,7 +132,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search_Streaming : Samples
         PersistentAgent agent = client.Administration.CreateAgent(
            model: modelDeploymentName,
            name: "my-agent",
-           instructions: "You are a helpful agent.",
+           instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
            tools: [new AzureAISearchToolDefinition()],
            toolResources: toolResource);
         #endregion
@@ -142,7 +147,9 @@ public partial class Sample_PersistentAgents_Azure_AI_Search_Streaming : Samples
             "What is the temperature rating of the cozynights sleeping bag?");
         #endregion
         #region Snippet:AgentsAzureAISearchStreamingExample_PrintMessages
-        foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(thread.Id, agent.Id))
+        PersistentAgentsNamedToolChoice toolChoice = new(PersistentAgentsNamedToolChoiceType.AzureAISearch);
+        BinaryData toolChoiceBin = ((IJsonModel<PersistentAgentsNamedToolChoice>)toolChoice).Write(ModelReaderWriterOptions.Json);
+        foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(thread.Id, agent.Id, toolChoice: toolChoiceBin))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
             {

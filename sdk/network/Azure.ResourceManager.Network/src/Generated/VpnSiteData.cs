@@ -59,10 +59,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The VirtualWAN to which the vpnSite belongs. </summary>
         internal WritableSubResource VirtualWan { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualWan.id")]
         public ResourceIdentifier VirtualWanId
         {
             get => VirtualWan is null ? default : VirtualWan.Id;
@@ -75,24 +77,33 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The device properties. </summary>
+        [WirePath("properties.deviceProperties")]
         public DeviceProperties DeviceProperties { get; set; }
         /// <summary> The ip-address for the vpn-site. </summary>
+        [WirePath("properties.ipAddress")]
         public string IPAddress { get; set; }
         /// <summary> The key for vpn-site that can be used for connections. </summary>
+        [WirePath("properties.siteKey")]
         public string SiteKey { get; set; }
         /// <summary> The AddressSpace that contains an array of IP address ranges. </summary>
+        [WirePath("properties.addressSpace")]
         public VirtualNetworkAddressSpace AddressSpace { get; set; }
         /// <summary> The set of bgp properties. </summary>
+        [WirePath("properties.bgpProperties")]
         public BgpSettings BgpProperties { get; set; }
         /// <summary> The provisioning state of the VPN site resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> IsSecuritySite flag. </summary>
+        [WirePath("properties.isSecuritySite")]
         public bool? IsSecuritySite { get; set; }
         /// <summary> List of all vpn site links. </summary>
+        [WirePath("properties.vpnSiteLinks")]
         public IList<VpnSiteLinkData> VpnSiteLinks { get; }
         /// <summary> Office365 Policy. </summary>
         internal O365PolicyProperties O365Policy { get; set; }
         /// <summary> Office365 breakout categories. </summary>
+        [WirePath("properties.o365Policy.breakOutCategories")]
         public O365BreakOutCategoryPolicies O365BreakOutCategories
         {
             get => O365Policy is null ? default : O365Policy.BreakOutCategories;

@@ -3,12 +3,12 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
-using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
-using System.Collections.Generic;
-using System;
 
 namespace Azure.ResourceManager.NetApp.Models
 {

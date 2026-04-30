@@ -17,10 +17,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
     internal class ShareFileStorageResource : StorageResourceItemInternal
     {
         internal readonly ShareFileStorageResourceOptions _options;
+        private Uri _uri;
 
         internal ShareFileClient ShareFileClient { get; }
 
-        public override Uri Uri => ShareFileClient.Uri;
+        public override Uri Uri => _uri ??= ShareFileClient.Uri.BuildSanitizedUri();
 
         public override string ProviderId => "share";
 
@@ -44,8 +45,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileClient fileClient,
             ShareFileStorageResourceOptions options = default)
         {
-            ShareFileClient = fileClient;
             _options = options ?? new ShareFileStorageResourceOptions();
+
+            fileClient = fileClient.ValidateAndApplySnapshotAndVersionId(
+                fileClient.Uri,
+                options,
+                (c, s) => c.WithSnapshot(s));
+
+            ShareFileClient = fileClient;
         }
 
         /// <summary>
@@ -66,7 +73,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         internal async Task CreateAsync(
             bool overwrite,
             long maxSize,
-            StorageResourceItemProperties properties,
+            StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken)
         {
             if (!overwrite)
@@ -80,14 +87,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     throw Errors.ShareFileAlreadyExists(ShareFileClient.Path);
                 }
             }
-            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(properties?.RawProperties);
-            IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
-            string filePermission = _options?.GetFilePermission(properties);
-            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
-            FilePosixProperties posixProperties = _options?.GetFilePosixProperties(properties);
+            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
+            IDictionary<string, string> metadata = _options?.GetFileMetadata(sourceProperties?.RawProperties);
+            string filePermission = _options?.GetFilePermission(sourceProperties);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
+            FilePosixProperties posixProperties = _options?.GetFilePosixProperties(sourceProperties);
 
             // if transfer is not empty and File Attribute contains ReadOnly, we should not set it before creating the file.
-            if ((properties == null || properties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
+            if ((sourceProperties == null || sourceProperties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
             {
                 smbProperties.FileAttributes = default;
             }
@@ -162,7 +169,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
 
             await ShareFileClient.UploadRangeFromUriAsync(
-                sourceUri: sourceResource.Uri,
+                sourceUri: options?.SourceUri,
                 range: range,
                 sourceRange: range,
                 options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
@@ -219,7 +226,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (completeLength > 0)
             {
                 await ShareFileClient.UploadRangeFromUriAsync(
-                    sourceUri: sourceResource.Uri,
+                    sourceUri: options?.SourceUri,
                     range: new HttpRange(0, completeLength),
                     sourceRange: new HttpRange(0, completeLength),
                     options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
@@ -236,6 +243,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
             return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override Uri GetSasWithUri()
+        {
+            return ShareFileClientInternals.GetSasUri(ShareFileClient);
         }
 
         protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
@@ -257,6 +269,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
             }
+            ResourceProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ShareProtocol, _options?.ShareProtocol ?? ShareProtocol.Smb);
             _isResourcePropertiesFullySet = true;
             return ResourceProperties;
         }
@@ -326,7 +339,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new ShareFileSourceCheckpointDetails(shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
+            // Snapshot is preserved in the URI (from BuildSanitizedUri)
+            // No need to store it separately in checkpoint details
+            return new ShareFileSourceCheckpointDetails(
+                shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
@@ -397,10 +413,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ShareProtocol sourceProtocol = sourceShareFileResource._options?.ShareProtocol ?? ShareProtocol.Smb;
                 ShareProtocol destinationProtocol = _options?.ShareProtocol ?? ShareProtocol.Smb;
-                // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if (destinationProtocol != sourceProtocol)
+                bool destinationFilePermissions = _options?.FilePermissions ?? false;
+                // if NFS <-> SMB and attempting to preserve permissions
+                if (destinationProtocol != sourceProtocol && destinationFilePermissions)
                 {
-                    throw Errors.ShareTransferNotSupported();
+                    throw Errors.HeterogenousTransferPermissionPreservationNotSupported();
                 }
 
                 // Validate the source protocol
@@ -431,6 +448,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public static InvalidOperationException ShareFileAlreadyExists(string pathName)
             => new InvalidOperationException($"Share File `{pathName}` already exists. Cannot overwrite file.");
 
+        public static InvalidOperationException ShareDirectoryAlreadyExists(string pathName)
+            => new InvalidOperationException($"Share Directory `{pathName}` already exists. Cannot overwrite directory.");
+
         public static ArgumentException ProtocolSetMismatch(string endpoint, ShareProtocol setProtocol, ShareProtocol actualProtocol)
             => new ArgumentException($"The Protocol set on the {endpoint} '{setProtocol}' does not match the actual Protocol of the share '{actualProtocol}'.");
 
@@ -438,8 +458,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             => new UnauthorizedAccessException($"Authorization failure on the {endpoint} when validating the Protocol. " +
                 $"To skip this validation, please enable SkipProtocolValidation.", ex);
 
-        public static NotSupportedException ShareTransferNotSupported()
-            => new NotSupportedException("This Share transfer is not supported. " +
-                "Currently only NFS -> NFS and SMB -> SMB Share transfers are supported");
+        public static NotSupportedException HeterogenousTransferPermissionPreservationNotSupported()
+            => new NotSupportedException("Permission preservation is not supported in NFS -> SMB or SMB -> NFS transfers");
     }
 }

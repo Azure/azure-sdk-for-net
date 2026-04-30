@@ -67,7 +67,7 @@ namespace Azure.Core
         /// <param name="content">The <see cref="string"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="string"/>.</returns>
         /// <remarks>The returned content represents the UTF-8 Encoding of the given string.</remarks>
-        public static RequestContent Create(string content) => Create(s_UTF8NoBomEncoding.GetBytes(content));
+        public static RequestContent Create(string content) => new CustomStringContent(content, s_UTF8NoBomEncoding);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryData"/>.
@@ -139,19 +139,43 @@ namespace Azure.Core
         /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
         /// </summary>
         /// <param name="content">The <see cref="string"/> to use.</param>
-        public static implicit operator RequestContent(string content) => Create(content);
+        public static implicit operator RequestContent?(string? content)
+        {
+            if (content is null)
+            {
+                return null;
+            }
+
+            return Create(content);
+        }
 
         /// <summary>
         /// Creates a RequestContent that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
-        public static implicit operator RequestContent(BinaryData content) => Create(content);
+        public static implicit operator RequestContent?(BinaryData? content)
+        {
+            if (content is null)
+            {
+                return null;
+            }
+
+            return Create(content);
+        }
 
         /// <summary>
         /// Creates a RequestContent that wraps a <see cref="DynamicData"/>.
         /// </summary>
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
-        public static implicit operator RequestContent(DynamicData content) => Create(content);
+        public static implicit operator RequestContent?(DynamicData? content)
+        {
+            if (content is null)
+            {
+                return null;
+            }
+
+            return Create(content);
+        }
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
@@ -186,10 +210,15 @@ namespace Azure.Core
 
             private readonly long _origin;
 
+            private bool _disposed;
+
             public StreamContent(Stream stream)
             {
                 if (!stream.CanSeek)
+                {
                     throw new ArgumentException("stream must be seekable", nameof(stream));
+                }
+
                 _origin = stream.Position;
                 _stream = stream;
             }
@@ -221,13 +250,8 @@ namespace Azure.Core
 
             public override bool TryComputeLength(out long length)
             {
-                if (_stream.CanSeek)
-                {
-                    length = _stream.Length - _origin;
-                    return true;
-                }
-                length = 0;
-                return false;
+                length = _stream.Length - _origin;
+                return true;
             }
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
@@ -238,7 +262,11 @@ namespace Azure.Core
 
             public override void Dispose()
             {
-                _stream.Dispose();
+                if (!_disposed)
+                {
+                    _stream.Dispose();
+                    _disposed = true;
+                }
             }
         }
 
@@ -261,7 +289,11 @@ namespace Azure.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
+#if NET6_0_OR_GREATER
+                stream.Write(_bytes.AsSpan(_contentStart, _contentLength));
+#else
                 stream.Write(_bytes, _contentStart, _contentLength);
+#endif
             }
 
             public override bool TryComputeLength(out long length)
@@ -272,9 +304,11 @@ namespace Azure.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
-#pragma warning disable CA1835 // WriteAsync(Memory<>) overload is not available in all targets
+#if NET6_0_OR_GREATER
+                await stream.WriteAsync(_bytes.AsMemory(_contentStart, _contentLength), cancellation).ConfigureAwait(false);
+#else
                 await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
-#pragma warning restore // WriteAsync(Memory<>) overload is not available in all targets
+#endif
             }
         }
 
@@ -289,8 +323,13 @@ namespace Azure.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
+#if NET6_0_OR_GREATER
+                stream.Write(_bytes.Span);
+#else
+
                 byte[] buffer = _bytes.ToArray();
                 stream.Write(buffer, 0, buffer.Length);
+#endif
             }
 
             public override bool TryComputeLength(out long length)
@@ -316,8 +355,15 @@ namespace Azure.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
+#if NET6_0_OR_GREATER
+                foreach (var memory in _bytes)
+                {
+                    stream.Write(memory.Span);
+                }
+#else
                 byte[] buffer = _bytes.ToArray();
                 stream.Write(buffer, 0, buffer.Length);
+#endif
             }
 
             public override bool TryComputeLength(out long length)
@@ -332,15 +378,84 @@ namespace Azure.Core
             }
         }
 
+        private sealed class CustomStringContent : RequestContent
+        {
+            private byte[]? _buffer;
+            private readonly int _actualByteCount;
+
+            public CustomStringContent(string value, Encoding? encoding = null)
+            {
+                encoding ??= Encoding.UTF8;
+#if NET6_0_OR_GREATER
+                var byteCount = encoding.GetMaxByteCount(value.Length);
+                _buffer = ArrayPool<byte>.Shared.Rent(byteCount);
+                _actualByteCount = encoding.GetBytes(value, _buffer);
+#else
+                _buffer  = encoding.GetBytes(value);
+                _actualByteCount = _buffer.Length;
+#endif
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+#if NET6_0_OR_GREATER
+                await stream.WriteAsync(_buffer.AsMemory(0, _actualByteCount), cancellation).ConfigureAwait(false);
+#else
+                await stream.WriteAsync(_buffer, 0, _actualByteCount, cancellation).ConfigureAwait(false);
+#endif
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+#if NET6_0_OR_GREATER
+                stream.Write(_buffer.AsSpan(0, _actualByteCount));
+#else
+                stream.Write(_buffer, 0, _actualByteCount);
+#endif
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = _actualByteCount;
+                return true;
+            }
+
+            public override void Dispose()
+            {
+#if NET6_0_OR_GREATER
+                var bufferToReturn = Interlocked.Exchange(ref _buffer, null);
+                if (bufferToReturn != null)
+                {
+                    try
+                    {
+                        ArrayPool<byte>.Shared.Return(bufferToReturn, clearArray: true);
+                    }
+                    catch
+                    {
+                        // Dispose should not throw, per .NET conventions. Return
+                        // will fail only when the incoming buffer was not rented or
+                        // the runtime is in a bad state. For either of these, there is no
+                        // recovery possible so the exception is ignored.
+                    }
+                }
+#endif
+            }
+        }
+
         private sealed class DynamicDataContent : RequestContent
         {
             private readonly DynamicData _data;
+            private bool _disposed;
 
             public DynamicDataContent(DynamicData data) => _data = data;
 
             public override void Dispose()
             {
-                _data.Dispose();
+                if (!_disposed)
+                {
+                    _data.Dispose();
+                    _disposed = true;
+                }
             }
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
@@ -350,7 +465,7 @@ namespace Azure.Core
 
             public override bool TryComputeLength(out long length)
             {
-                length = default;
+                length = 0;
                 return false;
             }
 
@@ -364,6 +479,7 @@ namespace Azure.Core
         private sealed class PersistableModelRequestContent<T> : RequestContent where T : IPersistableModel<T>
         {
             private readonly BinaryContent _binaryContent;
+            private bool _disposed;
 
             public PersistableModelRequestContent(T model, ModelReaderWriterOptions? options)
             {
@@ -372,7 +488,11 @@ namespace Azure.Core
 
             public override void Dispose()
             {
-                _binaryContent.Dispose();
+                if (!_disposed)
+                {
+                    _binaryContent.Dispose();
+                    _disposed = true;
+                }
             }
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)

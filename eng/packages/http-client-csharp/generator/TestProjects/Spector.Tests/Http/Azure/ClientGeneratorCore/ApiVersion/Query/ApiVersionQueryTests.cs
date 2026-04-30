@@ -12,7 +12,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ApiVersion.Q
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ApiVersion_Query() => Test(async (host) =>
         {
-            var response = await new QueryClient(host, "2025-01-01", null).QueryApiVersionAsync();
+            var response = await new QueryClient(host, null).QueryApiVersionAsync();
             Assert.AreEqual(200, response.Status);
         });
     }

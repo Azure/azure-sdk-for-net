@@ -7,11 +7,11 @@
 
 using Azure.Core.Pipeline;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal static partial class ProviderConstants
     {
         /// <summary> Gets the DefaultProviderNamespace. </summary>
-        public static string DefaultProviderNamespace => ClientDiagnostics.GetResourceProviderNamespace(typeof(ProviderConstants).Assembly);
+        public static string DefaultProviderNamespace { get; } = ClientDiagnostics.GetResourceProviderNamespace(typeof(ProviderConstants).Assembly);
     }
 }

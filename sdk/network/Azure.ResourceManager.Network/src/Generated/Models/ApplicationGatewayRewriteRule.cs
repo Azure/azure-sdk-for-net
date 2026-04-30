@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the rewrite rule that is unique within an Application Gateway. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Rule Sequence of the rewrite rule that determines the order of execution of a particular rule in a RewriteRuleSet. </summary>
+        [WirePath("ruleSequence")]
         public int? RuleSequence { get; set; }
         /// <summary> Conditions based on which the action set execution will be evaluated. </summary>
+        [WirePath("conditions")]
         public IList<ApplicationGatewayRewriteRuleCondition> Conditions { get; }
         /// <summary> Set of actions to be done as part of the rewrite Rule. </summary>
+        [WirePath("actionSet")]
         public ApplicationGatewayRewriteRuleActionSet ActionSet { get; set; }
     }
 }

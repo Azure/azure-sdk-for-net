@@ -32,42 +32,43 @@ namespace Azure.Storage.Blobs.Test
 
         // The container is shared by all tests in this class
         private string _containerName;
-        private BlobContainerResource _container;
+        //private BlobContainerResource _container;
         //private StorageManagementClient _storageManagementClient;
 
         private BlobContainerClient _containerClient;
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                _containerName = Guid.NewGuid().ToString();
-                TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
+        // TODO: Will add back after tests have [PlaybackOnly] removed
+        //[OneTimeSetUp]
+        //public async Task GlobalSetUp()
+        //{
+        //    if (Mode != RecordedTestMode.Playback)
+        //    {
+        //        _containerName = Guid.NewGuid().ToString();
+        //        TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
 
-                try
-                {
-                    ArmClient armClient = new ArmClient(TestEnvironment.Credential);
-                    SubscriptionResource subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{configuration.SubscriptionId}"));
-                    ResourceGroupResource resourceGroup = await subscription.GetResourceGroupAsync(configuration.ResourceGroupName);
-                    StorageAccountResource storageAccount = await resourceGroup.GetStorageAccountAsync(configuration.AccountName);
-                    BlobServiceResource blobService = storageAccount.GetBlobService();
-                    BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-                    BlobContainerData blobContainerData = new BlobContainerData();
-                    blobContainerData.ImmutableStorageWithVersioning = new ImmutableStorageWithVersioning
-                    {
-                        IsEnabled = true
-                    };
-                    ArmOperation<BlobContainerResource> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, blobContainerData);
-                    _container = blobContainerCreateOperation.Value;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-                return;
-            }
-        }
+        //        try
+        //        {
+        //            ArmClient armClient = new ArmClient(TestEnvironment.Credential);
+        //            SubscriptionResource subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{configuration.SubscriptionId}"));
+        //            ResourceGroupResource resourceGroup = await subscription.GetResourceGroupAsync(configuration.ResourceGroupName);
+        //            StorageAccountResource storageAccount = await resourceGroup.GetStorageAccountAsync(configuration.AccountName);
+        //            BlobServiceResource blobService = storageAccount.GetBlobService();
+        //            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
+        //            BlobContainerData blobContainerData = new BlobContainerData();
+        //            blobContainerData.ImmutableStorageWithVersioning = new ImmutableStorageWithVersioning
+        //            {
+        //                IsEnabled = true
+        //            };
+        //            ArmOperation<BlobContainerResource> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, blobContainerData);
+        //            _container = blobContainerCreateOperation.Value;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine(ex.ToString());
+        //        }
+        //        return;
+        //    }
+        //}
 
         [SetUp]
         public void SetUp()
@@ -76,39 +77,46 @@ namespace Azure.Storage.Blobs.Test
             _containerClient = BlobsClientBuilder.GetServiceClient_OAuthAccount_SharedKey().GetBlobContainerClient(_containerName);
         }
 
-        [OneTimeTearDown]
-        public async Task GlobalTearDown()
-        {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
-                BlobContainerClient containerClient = new BlobServiceClient(
-                    new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
-                    new StorageSharedKeyCredential(Tenants.TestConfigOAuth.AccountName,
-                    Tenants.TestConfigOAuth.AccountKey))
-                    .GetBlobContainerClient(_containerName);
-                await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold))
-                {
-                    BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
+        //[OneTimeTearDown]
+        //public async Task GlobalTearDown()
+        //{
+        //    if (Mode != RecordedTestMode.Playback)
+        //    {
+        //        TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
+        //        BlobContainerClient containerClient = new BlobServiceClient(
+        //            new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+        //            new StorageSharedKeyCredential(Tenants.TestConfigOAuth.AccountName,
+        //            Tenants.TestConfigOAuth.AccountKey))
+        //            .GetBlobContainerClient(_containerName);
 
-                    if (blobItem.Properties.HasLegalHold)
-                    {
-                        await blobClient.SetLegalHoldAsync(false);
-                    }
+        //        GetBlobsOptions options = new GetBlobsOptions
+        //        {
+        //            Traits = BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold,
+        //        };
 
-                    if (blobItem.Properties.ImmutabilityPolicy.ExpiresOn != null)
-                    {
-                        await blobClient.DeleteImmutabilityPolicyAsync();
-                    }
+        //        await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(options))
+        //        {
+        //            BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
 
-                    await blobClient.DeleteIfExistsAsync();
-                }
+        //            if (blobItem.Properties.HasLegalHold)
+        //            {
+        //                await blobClient.SetLegalHoldAsync(false);
+        //            }
 
-                await _container.DeleteAsync(WaitUntil.Completed);
-            }
-        }
+        //            if (blobItem.Properties.ImmutabilityPolicy.ExpiresOn != null)
+        //            {
+        //                await blobClient.DeleteImmutabilityPolicyAsync();
+        //            }
+
+        //            await blobClient.DeleteIfExistsAsync();
+        //        }
+
+        //        await _container.DeleteAsync(WaitUntil.Completed);
+        //    }
+        //}
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetImmutibilityPolicyAsync()
         {
@@ -143,7 +151,14 @@ namespace Azure.Storage.Blobs.Test
             // Validate we are correctly deserializing Blob Items.
             // Act
             List<BlobItem> blobItems = new List<BlobItem>();
-            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(traits: BlobTraits.ImmutabilityPolicy, prefix: blob.Name))
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Traits = BlobTraits.ImmutabilityPolicy,
+                Prefix = blob.Name
+            };
+
+            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(options))
             {
                 blobItems.Add(blobItem);
             }
@@ -163,6 +178,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetImmutibilityPolicyAsync_IfModifiedSince()
         {
@@ -194,6 +210,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(nameof(BlobRequestConditions.IfMatch))]
         [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
@@ -245,6 +262,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(AccountSasPermissions.All)]
         [TestCase(AccountSasPermissions.SetImmutabilityPolicy)]
@@ -288,6 +306,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(BlobContainerSasPermissions.All)]
         [TestCase(BlobContainerSasPermissions.SetImmutabilityPolicy)]
@@ -326,6 +345,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(BlobSasPermissions.All)]
         [TestCase(BlobSasPermissions.SetImmutabilityPolicy)]
@@ -366,6 +386,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(SnapshotSasPermissions.All)]
         [TestCase(SnapshotSasPermissions.SetImmutabilityPolicy)]
@@ -423,6 +444,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(BlobVersionSasPermissions.All)]
         [TestCase(BlobVersionSasPermissions.SetImmutabilityPolicy)]
@@ -476,6 +498,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetImmutibilityPolicyAsync_IfModifiedSince_Failed()
         {
@@ -502,6 +525,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetImmutibilityPolicyAsync_Error()
         {
@@ -521,6 +545,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetImmutibilityPolicyAsync_Mutable()
         {
@@ -540,6 +565,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task DeleteImmutibilityPolicyAsync()
         {
@@ -564,6 +590,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetDeleteImmutibilityPolicyAsync_Snapshot()
         {
@@ -607,6 +634,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetDeleteImmutibilityPolicyAsync_BlobVersion()
         {
@@ -650,6 +678,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task DeleteImmutibilityPolicyAsync_Error()
         {
@@ -663,6 +692,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetLegalHoldAsync()
         {
@@ -685,7 +715,14 @@ namespace Azure.Storage.Blobs.Test
             // Validate we are correctly deserializing Blob Items.
             // Act
             List<BlobItem> blobItems = new List<BlobItem>();
-            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(traits: BlobTraits.LegalHold, prefix: blob.Name))
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Traits = BlobTraits.LegalHold,
+                Prefix = blob.Name,
+            };
+
+            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(options))
             {
                 blobItems.Add(blobItem);
             }
@@ -709,6 +746,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetLegalHoldAsync_Snapshot()
         {
@@ -740,6 +778,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetLegalHoldAsync_BlobVersion()
         {
@@ -770,6 +809,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetLegalHoldAsync_Error()
         {
@@ -783,6 +823,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task ContainerImmutableStorageWithVersioning()
         {
@@ -804,6 +845,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task CreateAppendBlob_ImmutableStorageWithVersioning()
         {
@@ -836,6 +878,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task CreatePageBlob_ImmutableStorageWithVersioning()
         {
@@ -868,6 +911,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task CommitBlockList_ImmutableStorageWithVersioning()
         {
@@ -910,6 +954,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(false)]
         [TestCase(true)]
@@ -957,6 +1002,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SyncCopyFromUri_ImmutableStorageWithVersioning()
         {
@@ -992,6 +1038,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task StartCopyFromUri_ImmutableStorageWithVersioning()
         {

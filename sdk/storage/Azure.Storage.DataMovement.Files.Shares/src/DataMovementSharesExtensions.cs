@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
@@ -79,7 +79,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return default;
         }
 
-        public static string GetFilePermission(
+        public static string GetDirectoryPermission(
             this ShareFileStorageResourceOptions options,
             StorageResourceContainerProperties sourceProperties)
         {
@@ -111,12 +111,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public static string GetPermission(
             this IDictionary<string, object> properties)
             => properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
-                ? (string) permission
+                ? (string)permission
                 : default;
 
         public static FileSmbProperties GetFileSmbProperties(
             this ShareFileStorageResourceOptions options,
-            StorageResourceItemProperties properties,
+            StorageResourceItemProperties sourceProperties,
             string destinationPermissionKey)
         {
             string permissionKeyValue = destinationPermissionKey;
@@ -126,8 +126,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 bool setPermissions = options?.FilePermissions ?? false;
 
                 permissionKeyValue = setPermissions
-                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
-                        ? (string) permissionKeyObject
+                    ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
+                        ? (string)permissionKeyObject
                         : default
                     : default;
             }
@@ -139,7 +139,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     _ => GetPropertyValue<NtfsFileAttributes>(
                         options?._isFileAttributesSet ?? false,
                         options?.FileAttributes,
-                        properties?.RawProperties,
+                        sourceProperties?.RawProperties,
                         DataMovementConstants.ResourceProperties.FileAttributes)
                 },
                 FilePermissionKey = options?.ShareProtocol switch
@@ -150,34 +150,30 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 FileCreatedOn = GetPropertyValue<DateTimeOffset>(
                     options?._isFileCreatedOnSet ?? false,
                     options?.FileCreatedOn,
-                    properties?.RawProperties,
+                    sourceProperties?.RawProperties,
                     DataMovementConstants.ResourceProperties.CreationTime),
                 FileLastWrittenOn = GetPropertyValue<DateTimeOffset>(
                     options?._isFileLastWrittenOnSet ?? false,
                     options?.FileLastWrittenOn,
-                    properties?.RawProperties,
+                    sourceProperties?.RawProperties,
                     DataMovementConstants.ResourceProperties.LastWrittenOn),
                 FileChangedOn = options?.ShareProtocol switch
                 {
                     ShareProtocol.Nfs => default,
-                    _ => GetPropertyValue<DateTimeOffset>(
-                        options?._isFileChangedOnSet ?? false,
-                        options?.FileChangedOn,
-                        properties?.RawProperties,
-                        DataMovementConstants.ResourceProperties.ChangedOnTime)
+                    _ => GetChangedOnTime(options, sourceProperties?.RawProperties)
                 }
             };
         }
 
         public static FileSmbProperties GetFileSmbProperties(
             this ShareFileStorageResourceOptions options,
-            StorageResourceContainerProperties properties)
+            StorageResourceContainerProperties sourceProperties)
         {
             // Only set permissions if Copy transfer and FilePermissions is on.
             bool setPermissions = options?.FilePermissions ?? false;
 
             string permissionKeyValue = setPermissions
-                ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
+                ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
                     ? (string)permissionKeyObject
                     : default
                 : default;
@@ -189,7 +185,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     _ => GetPropertyValue<NtfsFileAttributes>(
                         options?._isFileAttributesSet ?? false,
                         options?.FileAttributes,
-                        properties?.RawProperties,
+                        sourceProperties?.RawProperties,
                         DataMovementConstants.ResourceProperties.FileAttributes)
                 },
                 FilePermissionKey = options?.ShareProtocol switch
@@ -200,21 +196,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 FileCreatedOn = GetPropertyValue<DateTimeOffset>(
                     options?._isFileCreatedOnSet ?? false,
                     options?.FileCreatedOn,
-                    properties?.RawProperties,
+                    sourceProperties?.RawProperties,
                     DataMovementConstants.ResourceProperties.CreationTime),
                 FileLastWrittenOn = GetPropertyValue<DateTimeOffset>(
                     options?._isFileLastWrittenOnSet ?? false,
                     options?.FileLastWrittenOn,
-                    properties?.RawProperties,
+                    sourceProperties?.RawProperties,
                     DataMovementConstants.ResourceProperties.LastWrittenOn),
                 FileChangedOn = options?.ShareProtocol switch
                 {
                     ShareProtocol.Nfs => default,
-                    _ => GetPropertyValue<DateTimeOffset>(
-                        options?._isFileChangedOnSet ?? false,
-                        options?.FileChangedOn,
-                        properties?.RawProperties,
-                        DataMovementConstants.ResourceProperties.ChangedOnTime)
+                    _ => GetChangedOnTime(options, sourceProperties?.RawProperties)
                 }
             };
         }
@@ -231,8 +223,32 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
 
             return rawProperties?.TryGetValue(propertyKey, out object value) == true
-                   ? (T?) value
+                   ? (T?)value
                    : default;
+        }
+
+        private static DateTimeOffset? GetChangedOnTime(
+            ShareFileStorageResourceOptions options,
+            IDictionary<string, object> sourceRawProperties)
+        {
+            if (options?._isFileChangedOnSet == true)
+            {
+                return options?.FileChangedOn;
+            }
+
+            ShareProtocol sourceProtocol = sourceRawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ShareProtocol, out object protocol) == true
+                   ? (ShareProtocol)protocol
+                   : ShareProtocol.Smb;
+            // Do not preserve ChangedOnTime for NFS -> SMB transfers
+            // (we will only get here if the destination is SMB)
+            if (sourceProtocol == ShareProtocol.Nfs)
+            {
+                return default;
+            }
+
+            return sourceRawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object time) == true
+                ? (DateTimeOffset?)time
+                : default;
         }
 
         public static FilePosixProperties GetFilePosixProperties(
@@ -327,7 +343,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 SourceAuthentication = sourceAuthorization
             };
 
-        private static void WriteKeyValue(
+        internal static void WriteKeyValue(
             this IDictionary<string, object> properties,
             string key,
             object value)
@@ -649,7 +665,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ContentRange contentRange = !string.IsNullOrWhiteSpace(info?.Details?.ContentRange) ? ContentRange.Parse(info.Details.ContentRange) : default;
             if (contentRange != default)
             {
-                size = contentRange.Size;
+                size = contentRange.TotalResourceLength;
             }
 
             return new StorageResourceReadStreamResult(
@@ -657,7 +673,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 range: ContentRange.ToHttpRange(contentRange),
                 new StorageResourceItemProperties()
                 {
-                    ResourceLength = contentRange.Size,
+                    ResourceLength = contentRange.TotalResourceLength,
                     ETag = info.Details.ETag,
                     LastModifiedTime = info.Details.LastModified,
                     RawProperties = properties
@@ -749,6 +765,45 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 DataMovementFileShareEventSource.Singleton.ProtocolValidationSkipped(transferId, endpoint, resourceUri);
             }
+        }
+
+        internal static T ValidateAndApplySnapshotAndVersionId<T>(
+            this T client,
+            Uri clientUri,
+            ShareFileStorageResourceOptions options,
+            Func<T, string, T> withSnapshot)
+        {
+            if (options == null)
+            {
+                return client;
+            }
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(clientUri);
+
+            if (!string.IsNullOrEmpty(options.Snapshot))
+            {
+                if (!string.IsNullOrEmpty(uriBuilder.Snapshot) &&
+                    options.Snapshot != uriBuilder.Snapshot)
+                {
+                    throw Azure.Storage.Errors.SnapshotMismatch(uriBuilder.Snapshot, options.Snapshot);
+                }
+                if (string.IsNullOrEmpty(uriBuilder.Snapshot))
+                {
+                    client = withSnapshot(client, options.Snapshot);
+                }
+            }
+            return client;
+        }
+
+        internal static Uri BuildSanitizedUri(this Uri uri)
+        {
+            // Strip SAS from URI for security - snapshot is preserved automatically
+            // SAS should not be exposed in events/logs
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
+            {
+                Sas = null
+            };
+            return uriBuilder.ToUri();
         }
     }
 

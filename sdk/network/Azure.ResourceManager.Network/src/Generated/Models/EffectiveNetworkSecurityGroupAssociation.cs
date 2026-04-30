@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ID of the Azure network manager if assigned. </summary>
         internal WritableSubResource NetworkManager { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("networkManager.id")]
         public ResourceIdentifier NetworkManagerId
         {
             get => NetworkManager?.Id;
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ID of the subnet if assigned. </summary>
         internal WritableSubResource Subnet { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("subnet.id")]
         public ResourceIdentifier SubnetId
         {
             get => Subnet?.Id;
@@ -84,6 +86,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ID of the network interface if assigned. </summary>
         internal WritableSubResource NetworkInterface { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("networkInterface.id")]
         public ResourceIdentifier NetworkInterfaceId
         {
             get => NetworkInterface?.Id;

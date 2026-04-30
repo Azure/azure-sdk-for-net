@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Files;
-using Azure.AI.OpenAI.Realtime;
-using Azure.AI.OpenAI.Responses;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI;
 
@@ -48,6 +46,35 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
         }
     }
     private string _userAgentApplicationId;
+
+#if !AZURE_OPENAI_GA
+    [Experimental("AOAI001")]
+    public IDictionary<string, string> DefaultHeaders
+    {
+        get => _defaultHeaders ??= new();
+        set
+        {
+            AssertNotFrozen();
+            _defaultHeaders = new(value);
+        }
+    }
+    private ChangeTrackingDictionary<string, string> _defaultHeaders;
+
+    [Experimental("AOAI001")]
+    public IDictionary<string, string> DefaultQueryParameters
+    {
+        get => _defaultQueryParameters ??= new();
+        set
+        {
+            AssertNotFrozen();
+            _defaultQueryParameters = new(value);
+        }
+    }
+    private ChangeTrackingDictionary<string, string> _defaultQueryParameters;
+#else
+    internal IDictionary<string, string> DefaultHeaders = new ChangeTrackingDictionary<string, string>();
+    internal IDictionary<string, string> DefaultQueryParameters = new ChangeTrackingDictionary<string, string>();
+#endif
 
     /// <summary>
     /// Initializes a new instance of <see cref="AzureOpenAIClientOptions"/>.

@@ -54,9 +54,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             GossipCertificates = new ChangeTrackingList<CassandraCertificate>();
             ExternalSeedNodes = new ChangeTrackingList<CassandraDataCenterSeedNode>();
             SeedNodes = new ChangeTrackingList<CassandraDataCenterSeedNode>();
-            ExternalDataCenters = new ChangeTrackingList<string>();
-            Extensions = new ChangeTrackingList<string>();
-            BackupSchedules = new ChangeTrackingList<CassandraClusterBackupSchedule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CassandraClusterProperties"/>. </summary>
@@ -69,25 +66,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="initialCassandraAdminPassword"> Initial password for clients connecting as admin to the cluster. Should be changed after cluster creation. Returns null on GET. This field only applies when the authenticationMethod field is 'Cassandra'. </param>
         /// <param name="prometheusEndpoint"> Hostname or IP address where the Prometheus endpoint containing data about the managed Cassandra nodes can be reached. </param>
         /// <param name="isRepairEnabled"> Should automatic repairs run on this cluster? If omitted, this is true, and should stay true unless you are running a hybrid cluster where you are already doing your own repairs. </param>
-        /// <param name="autoReplicate"> The form of AutoReplicate that is being used by this cluster. </param>
         /// <param name="clientCertificates"> List of TLS certificates used to authorize clients connecting to the cluster. All connections are TLS encrypted whether clientCertificates is set or not, but if clientCertificates is set, the managed Cassandra cluster will reject all connections not bearing a TLS client certificate that can be validated from one or more of the public certificates in this property. </param>
         /// <param name="externalGossipCertificates"> List of TLS certificates used to authorize gossip from unmanaged data centers. The TLS certificates of all nodes in unmanaged data centers must be verifiable using one of the certificates provided in this property. </param>
         /// <param name="gossipCertificates"> List of TLS certificates that unmanaged nodes must trust for gossip with managed nodes. All managed nodes will present TLS client certificates that are verifiable using one of the certificates provided in this property. </param>
         /// <param name="externalSeedNodes"> List of IP addresses of seed nodes in unmanaged data centers. These will be added to the seed node lists of all managed nodes. </param>
         /// <param name="seedNodes"> List of IP addresses of seed nodes in the managed data centers. These should be added to the seed node lists of all unmanaged nodes. </param>
-        /// <param name="externalDataCenters"> List of the data center names for unmanaged data centers in this cluster to be included in auto-replication. </param>
         /// <param name="hoursBetweenBackups"> (Deprecated) Number of hours to wait between taking a backup of the cluster. </param>
         /// <param name="isDeallocated"> Whether the cluster and associated data centers has been deallocated. </param>
         /// <param name="isCassandraAuditLoggingEnabled"> Whether Cassandra audit logging is enabled. </param>
-        /// <param name="clusterType"> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </param>
         /// <param name="provisionError"> Error related to resource provisioning. </param>
-        /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
-        /// <param name="backupSchedules"> List of backup schedules that define when you want to back up your data. </param>
-        /// <param name="scheduledEventStrategy"> How the nodes in the cluster react to scheduled events. </param>
         /// <param name="azureConnectionMethod"> How to connect to the azure services needed for running the cluster. </param>
-        /// <param name="privateLinkResourceId"> If the Connection Method is Vpn, this is the Id of the private link resource that the datacenters need to connect to. </param>
+        /// <param name="privateLinkResourceId"> If the Connection Method is VPN, this is the Id of the private link resource that the datacenters need to connect to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, CassandraAutoReplicateForm? autoReplicate, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, IList<string> externalDataCenters, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraClusterType? clusterType, CassandraError provisionError, IList<string> extensions, IList<CassandraClusterBackupSchedule> backupSchedules, ScheduledEventStrategy? scheduledEventStrategy, ServiceConnectionType? azureConnectionMethod, ResourceIdentifier privateLinkResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraError provisionError, ServiceConnectionType? azureConnectionMethod, ResourceIdentifier privateLinkResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             RestoreFromBackupId = restoreFromBackupId;
@@ -98,21 +89,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             InitialCassandraAdminPassword = initialCassandraAdminPassword;
             PrometheusEndpoint = prometheusEndpoint;
             IsRepairEnabled = isRepairEnabled;
-            AutoReplicate = autoReplicate;
             ClientCertificates = clientCertificates;
             ExternalGossipCertificates = externalGossipCertificates;
             GossipCertificates = gossipCertificates;
             ExternalSeedNodes = externalSeedNodes;
             SeedNodes = seedNodes;
-            ExternalDataCenters = externalDataCenters;
             HoursBetweenBackups = hoursBetweenBackups;
             IsDeallocated = isDeallocated;
             IsCassandraAuditLoggingEnabled = isCassandraAuditLoggingEnabled;
-            ClusterType = clusterType;
             ProvisionError = provisionError;
-            Extensions = extensions;
-            BackupSchedules = backupSchedules;
-            ScheduledEventStrategy = scheduledEventStrategy;
             AzureConnectionMethod = azureConnectionMethod;
             PrivateLinkResourceId = privateLinkResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -157,9 +142,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Should automatic repairs run on this cluster? If omitted, this is true, and should stay true unless you are running a hybrid cluster where you are already doing your own repairs. </summary>
         [WirePath("repairEnabled")]
         public bool? IsRepairEnabled { get; set; }
-        /// <summary> The form of AutoReplicate that is being used by this cluster. </summary>
-        [WirePath("autoReplicate")]
-        public CassandraAutoReplicateForm? AutoReplicate { get; set; }
         /// <summary> List of TLS certificates used to authorize clients connecting to the cluster. All connections are TLS encrypted whether clientCertificates is set or not, but if clientCertificates is set, the managed Cassandra cluster will reject all connections not bearing a TLS client certificate that can be validated from one or more of the public certificates in this property. </summary>
         [WirePath("clientCertificates")]
         public IList<CassandraCertificate> ClientCertificates { get; }
@@ -175,9 +157,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> List of IP addresses of seed nodes in the managed data centers. These should be added to the seed node lists of all unmanaged nodes. </summary>
         [WirePath("seedNodes")]
         public IReadOnlyList<CassandraDataCenterSeedNode> SeedNodes { get; }
-        /// <summary> List of the data center names for unmanaged data centers in this cluster to be included in auto-replication. </summary>
-        [WirePath("externalDataCenters")]
-        public IList<string> ExternalDataCenters { get; }
         /// <summary> (Deprecated) Number of hours to wait between taking a backup of the cluster. </summary>
         [WirePath("hoursBetweenBackups")]
         public int? HoursBetweenBackups { get; set; }
@@ -187,25 +166,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Whether Cassandra audit logging is enabled. </summary>
         [WirePath("cassandraAuditLoggingEnabled")]
         public bool? IsCassandraAuditLoggingEnabled { get; set; }
-        /// <summary> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </summary>
-        [WirePath("clusterType")]
-        public CassandraClusterType? ClusterType { get; set; }
         /// <summary> Error related to resource provisioning. </summary>
         [WirePath("provisionError")]
         public CassandraError ProvisionError { get; set; }
-        /// <summary> Extensions to be added or updated on cluster. </summary>
-        [WirePath("extensions")]
-        public IList<string> Extensions { get; }
-        /// <summary> List of backup schedules that define when you want to back up your data. </summary>
-        [WirePath("backupSchedules")]
-        public IList<CassandraClusterBackupSchedule> BackupSchedules { get; }
-        /// <summary> How the nodes in the cluster react to scheduled events. </summary>
-        [WirePath("scheduledEventStrategy")]
-        public ScheduledEventStrategy? ScheduledEventStrategy { get; set; }
         /// <summary> How to connect to the azure services needed for running the cluster. </summary>
         [WirePath("azureConnectionMethod")]
         public ServiceConnectionType? AzureConnectionMethod { get; set; }
-        /// <summary> If the Connection Method is Vpn, this is the Id of the private link resource that the datacenters need to connect to. </summary>
+        /// <summary> If the Connection Method is VPN, this is the Id of the private link resource that the datacenters need to connect to. </summary>
         [WirePath("privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId { get; }
     }

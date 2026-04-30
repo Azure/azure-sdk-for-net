@@ -6,33 +6,19 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> Client options for TextAnalysisClient. </summary>
+    /// <summary> Client options for <see cref="TextAnalysisClient"/>. </summary>
     public partial class TextAnalysisClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_15_Preview;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2022-05-01". </summary>
-            V2022_05_01 = 1,
-            /// <summary> Service version "2023-04-01". </summary>
-            V2023_04_01 = 2,
-            /// <summary> Service version "2024-11-01". </summary>
-            V2024_11_01 = 3,
-            /// <summary> Service version "2024-11-15-preview". </summary>
-            V2024_11_15_Preview = 4,
-            /// <summary> Service version "2025-05-15-preview". </summary>
-            V2025_05_15_Preview = 5,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of TextAnalysisClientOptions. </summary>
+        /// <summary> Initializes a new instance of TextAnalysisClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public TextAnalysisClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -40,10 +26,52 @@ namespace Azure.AI.Language.Text
                 ServiceVersion.V2022_05_01 => "2022-05-01",
                 ServiceVersion.V2023_04_01 => "2023-04-01",
                 ServiceVersion.V2024_11_01 => "2024-11-01",
-                ServiceVersion.V2024_11_15_Preview => "2024-11-15-preview",
+                ServiceVersion.V2025_11_01 => "2025-11-01",
                 ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
+                ServiceVersion.V2025_11_15_Preview => "2025-11-15-preview",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of TextAnalysisClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal TextAnalysisClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2025-11-15-preview";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Version 2022-05-01. </summary>
+            V2022_05_01 = 1,
+            /// <summary> Version 2023-04-01. </summary>
+            V2023_04_01 = 2,
+            /// <summary> Version 2024-11-01. </summary>
+            V2024_11_01 = 3,
+            /// <summary> Version 2025-11-01. </summary>
+            V2025_11_01 = 4,
+            /// <summary> Version 2025-05-15-preview. </summary>
+            V2025_05_15_Preview = 5,
+            /// <summary> Version 2025-11-15-preview. </summary>
+            V2025_11_15_Preview = 6
         }
     }
 }

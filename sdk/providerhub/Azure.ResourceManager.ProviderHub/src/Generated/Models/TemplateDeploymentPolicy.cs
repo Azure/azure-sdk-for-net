@@ -13,66 +13,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The TemplateDeploymentPolicy. </summary>
     public partial class TemplateDeploymentPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/>. </summary>
-        /// <param name="capabilities"></param>
-        /// <param name="preflightOptions"></param>
-        internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions)
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="preflightOptions"> The preflight options. </param>
+        public TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions)
         {
             Capabilities = capabilities;
             PreflightOptions = preflightOptions;
         }
 
         /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/>. </summary>
-        /// <param name="capabilities"></param>
-        /// <param name="preflightOptions"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="preflightOptions"> The preflight options. </param>
+        /// <param name="preflightNotifications"> The preflight notifications. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions, TemplateDeploymentPreflightNotification? preflightNotifications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Capabilities = capabilities;
             PreflightOptions = preflightOptions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            PreflightNotifications = preflightNotifications;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/> for deserialization. </summary>
-        internal TemplateDeploymentPolicy()
-        {
-        }
+        /// <summary> The capabilities. </summary>
+        public TemplateDeploymentCapability Capabilities { get; set; }
 
-        /// <summary> Gets the capabilities. </summary>
-        public TemplateDeploymentCapability Capabilities { get; }
-        /// <summary> Gets the preflight options. </summary>
-        public TemplateDeploymentPreflightOption PreflightOptions { get; }
+        /// <summary> The preflight options. </summary>
+        public TemplateDeploymentPreflightOption PreflightOptions { get; set; }
+
+        /// <summary> The preflight notifications. </summary>
+        public TemplateDeploymentPreflightNotification? PreflightNotifications { get; set; }
     }
 }

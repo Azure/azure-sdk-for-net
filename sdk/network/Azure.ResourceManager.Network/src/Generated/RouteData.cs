@@ -45,16 +45,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The destination CIDR to which the route applies. </summary>
+        [WirePath("properties.addressPrefix")]
         public string AddressPrefix { get; set; }
         /// <summary> The type of Azure hop the packet should be sent to. </summary>
+        [WirePath("properties.nextHopType")]
         public RouteNextHopType? NextHopType { get; set; }
         /// <summary> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </summary>
+        [WirePath("properties.nextHopIpAddress")]
         public string NextHopIPAddress { get; set; }
         /// <summary> The provisioning state of the route resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </summary>
+        [WirePath("properties.hasBgpOverride")]
         public bool? HasBgpOverride { get; set; }
     }
 }

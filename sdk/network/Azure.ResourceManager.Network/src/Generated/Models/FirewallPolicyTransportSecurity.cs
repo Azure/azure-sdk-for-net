@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The CA used for intermediate CA generation. </summary>
+        [WirePath("certificateAuthority")]
         public FirewallPolicyCertificateAuthority CertificateAuthority { get; set; }
     }
 }

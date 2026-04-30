@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of available countries. </summary>
+        [WirePath("countries")]
         public IReadOnlyList<AvailableProvidersListCountry> Countries { get; }
     }
 }

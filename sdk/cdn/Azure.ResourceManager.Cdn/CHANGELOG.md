@@ -4,11 +4,19 @@
 
 ### Features Added
 
+- Migrated from AutoRest/Swagger to TypeSpec-based generation
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.1 (2025-11-18)
+
+### Features Added
+
+- Enabled `WirePath` attributes for all properties in this library.
 
 ## 1.5.0 (2025-08-08)
 

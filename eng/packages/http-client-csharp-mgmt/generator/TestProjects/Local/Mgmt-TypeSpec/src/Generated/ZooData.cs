@@ -8,11 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class ZooData : TrackedResourceData
@@ -22,11 +22,8 @@ namespace MgmtTypeSpec
 
         /// <summary> Initializes a new instance of <see cref="ZooData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public ZooData(string location) : base(location)
+        public ZooData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
         }
 
         /// <summary> Initializes a new instance of <see cref="ZooData"/>. </summary>
@@ -39,7 +36,7 @@ namespace MgmtTypeSpec
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        internal ZooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, ZooProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal ZooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ZooProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -47,13 +44,16 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal ZooProperties Properties { get; set; }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> something. </summary>
-        public string ZooSomething
+        [WirePath("properties.something")]
+        public string Something
         {
             get
             {
@@ -66,6 +66,96 @@ namespace MgmtTypeSpec
                     Properties = new ZooProperties();
                 }
                 Properties.Something = value;
+            }
+        }
+
+        /// <summary>
+        /// Required value-type property. Used to validate that required value types
+        ///       flattened from an optional ``properties?:`` parent (default-optional
+        ///       `properties?`) surface as Nullable&lt;T&gt; on the public property while
+        ///       remaining non-nullable T on the inner model and the model factory body.
+        /// </summary>
+        [WirePath("properties.requiredInt")]
+        public int? RequiredInt
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredInt;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ZooProperties();
+                    }
+                    Properties.RequiredInt = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Required fixed (closed) enum. </summary>
+        [WirePath("properties.requiredFixedEnum")]
+        public ZooFixedMode? RequiredFixedEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredFixedEnum;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ZooProperties();
+                    }
+                    Properties.RequiredFixedEnum = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Required extensible enum (union). </summary>
+        [WirePath("properties.requiredExtensibleEnum")]
+        public ZooProvisioningState? RequiredExtensibleEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredExtensibleEnum;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ZooProperties();
+                    }
+                    Properties.RequiredExtensibleEnum = value.Value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Required reference-type property. Used to validate that required reference
+        ///       types flattened from an optional ``properties?:`` parent surface as nullable
+        ///       on the public property under the unified wrapper-optionality rule.
+        /// </summary>
+        [WirePath("properties.requiredString")]
+        public string RequiredString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ZooProperties();
+                }
+                Properties.RequiredString = value;
             }
         }
     }

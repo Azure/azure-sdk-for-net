@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Storage.Models;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
@@ -396,7 +396,8 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsFalse(_blobService.Data.DeleteRetentionPolicy.IsEnabled);
             Assert.IsNull(_blobService.Data.DeleteRetentionPolicy.Days);
             Assert.IsNull(_blobService.Data.DefaultServiceVersion);
-            Assert.AreEqual(0, _blobService.Data.Cors.CorsRules.Count);
+            // TypeSpec migration: use public CorsRules property (internal Cors wrapper removed)
+            Assert.AreEqual(0, _blobService.Data.CorsRules.Count);
             Assert.AreEqual(_blobService.Data.Sku.Name, StorageSkuName.StandardGrs);
 
             //update delete retention policy
@@ -468,7 +469,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //create 2 storage accounts
             string accountName1 = await CreateValidAccountNameAsync("teststoragemgmt");
             string accountName2 = await CreateValidAccountNameAsync("teststoragemgmt");
-            StorageAccountCreateOrUpdateContent createContent = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
+            StorageAccountCreateOrUpdateContent createContent = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.StorageV2, "centralusEUAP");
             StorageAccountResource sourceAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName1, createContent)).Value;
             StorageAccountResource destAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName2, createContent)).Value;
 
@@ -511,6 +512,8 @@ namespace Azure.ResourceManager.Storage.Tests
                 SourceAccount = sourceAccount.Id.Name,
                 DestinationAccount = destAccount.Id.Name,
                 IsMetricsEnabled = true,
+                // TypeSpec migration: use public flattened property (internal PriorityReplication wrapper removed)
+                IsPriorityReplicationEnabled = true,
                 Rules =
                 {
                     new ObjectReplicationPolicyRule(containerName1, containerName2)
@@ -528,6 +531,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
+            Assert.AreEqual(objectReplicationPolicy.Data.IsPriorityReplicationEnabled, true);
 
             //get policy
             List<ObjectReplicationPolicyResource> policies = await objectReplicationPolicyCollection.GetAllAsync().ToEnumerableAsync();
@@ -536,6 +540,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
+            Assert.AreEqual(objectReplicationPolicy.Data.IsPriorityReplicationEnabled, true);
 
             //delete policy
             await objectReplicationPolicy.DeleteAsync(WaitUntil.Completed);
@@ -553,16 +558,14 @@ namespace Azure.ResourceManager.Storage.Tests
                     Days = 300,
                 },
                 DefaultServiceVersion = "2017-04-17",
-                Cors = new StorageCorsRules()
+                // TypeSpec migration: use public CorsRules property (internal Cors wrapper removed)
+                CorsRules =
                 {
-                    CorsRules =
-                    {
-                        new StorageCorsRule(new[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                            new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
-                            100,
-                            new[] { "x-ms-meta-*" },
-                            new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" })
-                    }
+                    new StorageCorsRule(new[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                        new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
+                        100,
+                        new[] { "x-ms-meta-*" },
+                        new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" })
                 }
             };
             _blobService = (await _blobService.CreateOrUpdateAsync(WaitUntil.Completed, blobServiceData)).Value;
@@ -572,11 +575,11 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(blobServiceData.DefaultServiceVersion, _blobService.Data.DefaultServiceVersion);
 
             //validate CORS rules
-            Assert.AreEqual(blobServiceData.Cors.CorsRules.Count, _blobService.Data.Cors.CorsRules.Count);
-            for (int i = 0; i < blobServiceData.Cors.CorsRules.Count; i++)
+            Assert.AreEqual(blobServiceData.CorsRules.Count, _blobService.Data.CorsRules.Count);
+            for (int i = 0; i < blobServiceData.CorsRules.Count; i++)
             {
-                var putRule = blobServiceData.Cors.CorsRules[i];
-                var getRule = _blobService.Data.Cors.CorsRules[i];
+                var putRule = blobServiceData.CorsRules[i];
+                var getRule = _blobService.Data.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -592,11 +595,11 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(blobServiceData.DefaultServiceVersion, _blobService.Data.DefaultServiceVersion);
 
             //validate CORS rules
-            Assert.AreEqual(blobServiceData.Cors.CorsRules.Count, _blobService.Data.Cors.CorsRules.Count);
-            for (int i = 0; i < blobServiceData.Cors.CorsRules.Count; i++)
+            Assert.AreEqual(blobServiceData.CorsRules.Count, _blobService.Data.CorsRules.Count);
+            for (int i = 0; i < blobServiceData.CorsRules.Count; i++)
             {
-                var putRule = blobServiceData.Cors.CorsRules[i];
-                var getRule = _blobService.Data.Cors.CorsRules[i];
+                var putRule = blobServiceData.CorsRules[i];
+                var getRule = _blobService.Data.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);

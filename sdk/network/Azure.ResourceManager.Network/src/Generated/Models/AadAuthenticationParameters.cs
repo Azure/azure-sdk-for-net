@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> AAD Vpn authentication parameter AAD tenant. </summary>
+        [WirePath("aadTenant")]
         public string AadTenant { get; set; }
         /// <summary> AAD Vpn authentication parameter AAD audience. </summary>
+        [WirePath("aadAudience")]
         public string AadAudience { get; set; }
         /// <summary> AAD Vpn authentication parameter AAD issuer. </summary>
+        [WirePath("aadIssuer")]
         public string AadIssuer { get; set; }
     }
 }

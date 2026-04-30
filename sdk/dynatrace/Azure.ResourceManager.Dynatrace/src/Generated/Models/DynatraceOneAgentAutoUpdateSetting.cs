@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public readonly partial struct DynatraceOneAgentAutoUpdateSetting : IEquatable<DynatraceOneAgentAutoUpdateSetting>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DynatraceOneAgentAutoUpdateSetting"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DynatraceOneAgentAutoUpdateSetting(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "ENABLED";
         private const string DisabledValue = "DISABLED";
 
-        /// <summary> ENABLED. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceOneAgentAutoUpdateSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DynatraceOneAgentAutoUpdateSetting(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static DynatraceOneAgentAutoUpdateSetting Enabled { get; } = new DynatraceOneAgentAutoUpdateSetting(EnabledValue);
-        /// <summary> DISABLED. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static DynatraceOneAgentAutoUpdateSetting Disabled { get; } = new DynatraceOneAgentAutoUpdateSetting(DisabledValue);
+
         /// <summary> Determines if two <see cref="DynatraceOneAgentAutoUpdateSetting"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynatraceOneAgentAutoUpdateSetting left, DynatraceOneAgentAutoUpdateSetting right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DynatraceOneAgentAutoUpdateSetting"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynatraceOneAgentAutoUpdateSetting left, DynatraceOneAgentAutoUpdateSetting right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceOneAgentAutoUpdateSetting"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DynatraceOneAgentAutoUpdateSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DynatraceOneAgentAutoUpdateSetting(string value) => new DynatraceOneAgentAutoUpdateSetting(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DynatraceOneAgentAutoUpdateSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DynatraceOneAgentAutoUpdateSetting?(string value) => value == null ? null : new DynatraceOneAgentAutoUpdateSetting(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynatraceOneAgentAutoUpdateSetting other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DynatraceOneAgentAutoUpdateSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

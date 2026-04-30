@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
 
 namespace Azure.Communication.Pipeline
 {
@@ -179,10 +179,10 @@ namespace Azure.Communication.Pipeline
                 policy.Process(_httpMessage, pipelines);
                 _httpPipelinePolicyMock.Verify(p => p.Process(_httpMessage, It.IsAny<ReadOnlyMemory<HttpPipelinePolicy>>()), Times.Once);
             }
-            Assert.AreEqual(successfullResponse, _httpMessage.Response);
+            Assert.That(_httpMessage.Response, Is.EqualTo(successfullResponse));
         }
 
-        private class CustomRequest: MockRequest
+        private class CustomRequest : MockRequest
         {
             public CustomRequest(string authHeader)
             {

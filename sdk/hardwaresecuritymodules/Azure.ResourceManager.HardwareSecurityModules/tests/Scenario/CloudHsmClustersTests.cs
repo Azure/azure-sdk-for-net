@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 CloudHsmClusterSkuFamily.B.ToString(),
                 CloudHsmClusterSkuName.StandardB1.ToString(),
                 new Dictionary<string, string>(cloudHsmClusterBody.Tags));
-                //ManagedServiceIdentityType.UserAssigned);
+            //ManagedServiceIdentityType.UserAssigned);
 
             var getOperation = await collection.GetAsync(resourceName);
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 CloudHsmClusterSkuFamily.B.ToString(),
                 CloudHsmClusterSkuName.StandardB1.ToString(),
                 new Dictionary<string, string>(cloudHsmClusterBody.Tags));
-                //ManagedServiceIdentityType.UserAssigned);
+            //ManagedServiceIdentityType.UserAssigned);
 
             var getAllOperation = collection.GetAllAsync();
             int cloudhsmCount = 0;

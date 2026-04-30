@@ -19,32 +19,32 @@ namespace Azure.Analytics.Purview.DataMap.Tests
         }
 
         [RecordedTest]
-        public void Search()
+        public async Task Search()
         {
             DataMapClient client = GetDataMapClient();
             QueryConfig sg = new QueryConfig();
             sg.Keywords = "Glossary";
             sg.Limit = 1;
-            Response<QueryResult> result = client.GetDiscoveryClient().Query(sg);
-            Assert.AreEqual(200, result.GetRawResponse().Status);
+            Response<QueryResult> result = await client.GetDiscoveryClient().QueryAsync(sg);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
-        public void GetGlossary()
+        public async Task GetGlossary()
         {
             var client = GetDataMapClient().GetGlossaryClient();
-            Response fetchResponse = client.BatchGet(1, null, null, true, new RequestContext());
+            Response fetchResponse = await client.BatchGetAsync(1, null, null, true, new RequestContext());
             // Console.WriteLine(fetchResponse.Content);
-            Assert.AreEqual(200, fetchResponse.Status);
+            Assert.That(fetchResponse.Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
-        public void GetTypes()
+        public async Task GetTypes()
         {
             var client = GetDataMapClient().GetTypeDefinitionClient();
-            Response<AtlasTypeDef> response = client.GetByName("AtlasGlossary");
+            Response<AtlasTypeDef> response = await client.GetByNameAsync("AtlasGlossary");
             // Console.WriteLine(response);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }
     }
 }

@@ -1,14 +1,17 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0 (2026-02-13)
 
 ### Features Added
+- Support handling group presence events.
 
-### Breaking Changes
+## 1.5.0 (2025-09-23)
 
-### Bugs Fixed
+### Features Added
+- Support a custom hub name in `MapWebPubSubHub` extension method.
 
 ### Other Changes
+- Upgrade `Azure.Messaging.WebPubSub` to 1.6.0.
 
 ## 1.4.0 (2024-09-25)
 

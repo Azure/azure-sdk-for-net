@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Number of file count. Default value of count is 10 and maximum number is 10000. </summary>
+        [WirePath("fileCount")]
         public int? FileCount { get; set; }
         /// <summary> Number of bytes captured per packet. Default value in bytes 104857600 (100MB) and maximum in bytes 4294967295 (4GB). </summary>
+        [WirePath("fileSizeInBytes")]
         public long? FileSizeInBytes { get; set; }
         /// <summary> Maximum duration of the capture session in seconds is 604800s (7 days) for a file. Default value in second 86400s (1 day). </summary>
+        [WirePath("sessionTimeLimitInSeconds")]
         public int? SessionTimeLimitInSeconds { get; set; }
     }
 }

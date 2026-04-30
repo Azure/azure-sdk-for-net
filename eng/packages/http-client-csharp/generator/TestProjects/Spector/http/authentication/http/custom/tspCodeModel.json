@@ -12,6 +12,11 @@
       "crossLanguageDefinitionId": "Authentication.Http.Custom.InvalidAuth",
       "usage": "Json,Exception",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InvalidAuth"
+        }
+      },
       "properties": [
         {
           "$id": "2",
@@ -79,7 +84,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.Http.Custom.valid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.Http.Custom"
           },
           "parameters": [],
           "response": {},
@@ -118,7 +124,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.Http.Custom.invalid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.Http.Custom"
           },
           "parameters": [],
           "response": {},
@@ -131,8 +138,9 @@
       "parameters": [
         {
           "$id": "9",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "10",
@@ -140,14 +148,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "11",
@@ -157,12 +161,17 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Authentication.Http.Custom.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.Http.Custom",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {

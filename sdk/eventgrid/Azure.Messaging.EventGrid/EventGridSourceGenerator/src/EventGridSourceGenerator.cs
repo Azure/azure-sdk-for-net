@@ -223,7 +223,7 @@ namespace Azure.Messaging.EventGrid
                 sourceBuilder.AppendIndentedLine(3,
                     $"if (eventTypeSpan.Equals(SystemEventNames.{sysEvent.EventConstantName}.AsSpan(), StringComparison.OrdinalIgnoreCase))");
                 sourceBuilder.AppendIndentedLine(4,
-                    $"return {sysEvent.EventName}.{sysEvent.DeserializeMethod}(data, null);");
+                    $"return {sysEvent.EventName}.{sysEvent.DeserializeMethod}(data, ModelSerializationExtensions.WireOptions);");
             }
             sourceBuilder.AppendIndentedLine(3, "return null;");
             sourceBuilder.AppendIndentedLine(2, "}");

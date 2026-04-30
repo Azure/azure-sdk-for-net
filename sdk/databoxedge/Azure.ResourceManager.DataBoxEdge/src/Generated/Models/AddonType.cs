@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Addon type. </summary>
-    internal readonly partial struct AddonType : IEquatable<AddonType>
+    public readonly partial struct AddonType : IEquatable<AddonType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AddonType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AddonType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IotEdgeValue = "IotEdge";
         private const string ArcForKubernetesValue = "ArcForKubernetes";
 
-        /// <summary> IotEdge. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AddonType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the IotEdge. </summary>
         public static AddonType IotEdge { get; } = new AddonType(IotEdgeValue);
-        /// <summary> ArcForKubernetes. </summary>
+
+        /// <summary> Gets the ArcForKubernetes. </summary>
         public static AddonType ArcForKubernetes { get; } = new AddonType(ArcForKubernetesValue);
+
         /// <summary> Determines if two <see cref="AddonType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AddonType left, AddonType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AddonType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AddonType left, AddonType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AddonType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AddonType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AddonType(string value) => new AddonType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AddonType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AddonType?(string value) => value == null ? null : new AddonType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AddonType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AddonType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

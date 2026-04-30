@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -107,7 +107,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample4_AnalyzeTextAsync_RecognizeEntities_Preview
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2024_11_15_Preview);
+            TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2025_11_15_Preview);
             var client = new TextAnalysisClient(endpoint, credential, options);
 
             string textA =
@@ -214,7 +214,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         }
 
         #region Snippet:Sample4_AnalyzeTextAsync_RecognizeEntities_PrintDateValue
-        public void PrintDateValue(IReadOnlyList<DateValue> dateValues)
+        public void PrintDateValue(IEnumerable<DateValue> dateValues)
         {
             foreach (DateValue date in dateValues)
             {

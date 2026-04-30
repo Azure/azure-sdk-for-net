@@ -1,17 +1,5 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 trigger: none
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/webpubsub/ci.mgmt.yml
-    - sdk/webpubsub/Azure.ResourceManager.WebPubSub/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -20,3 +8,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.WebPubSub
       safeName: AzureResourceManagerWebPubSub
+    - name: Azure.Provisioning.WebPubSub
+      safeName: AzureProvisioningWebPubSub

@@ -365,11 +365,12 @@ namespace Azure.Storage.DataMovement.Blobs
                 CredentialType.None => new BlockBlobClient(blobUri, clientOptions),
                 CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential, clientOptions),
-                CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions    ),
+                CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
-            return new BlockBlobStorageResource(client, options as BlockBlobStorageResourceOptions);
+            return new BlockBlobStorageResource(client, new BlockBlobStorageResourceOptions(options));
         }
+
         #endregion
 
         #region From Client

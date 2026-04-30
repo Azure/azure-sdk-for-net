@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.GraphServices.Models;
-using NUnit.Framework;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.GraphServices.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.GraphServices.Tests.Tests
 {

@@ -49,41 +49,75 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             TypeSymbolKindCache SymbolToKindCache,
             TypeSymbolTypeRefCache SymbolToTypeRefCache) data)
     {
-        if (data.TypesWithAttribute.Length > 1)
-        {
-            var first = data.TypesWithAttribute[0].Context;
+        // Filter to only valid contexts (non-null, not nested types, and inheriting from ModelReaderWriterContext)
+        var validTypes = data.TypesWithAttribute
+            .Where(t => t.Context is not null
+                && t.Context.ContainingType is null
+                && IsModelReaderWriterContext(t.Context))
+            .ToImmutableArray();
 
-            for (int i = 1; i < data.TypesWithAttribute.Length; i++)
+        if (validTypes.Length == 0)
+        {
+            return;
+        }
+
+        if (validTypes.Length == 1)
+        {
+            ProcessContext(context, data, validTypes[0].Context!, validTypes[0].Attributes);
+            return;
+        }
+
+        var first = validTypes[0].Context;
+
+        for (int i = 1; i < validTypes.Length; i++)
+        {
+            if (!SymbolEqualityComparer.Default.Equals(first, validTypes[i].Context))
             {
-                if (!SymbolEqualityComparer.Default.Equals(first, data.TypesWithAttribute[i].Context))
-                {
-                    // If we have multiple contexts, we cannot generate a single context.
-                    context.ReportDiagnostic(Diagnostic.Create(
-                        DiagnosticDescriptors.MultipleContextsNotSupported,
-                        data.TypesWithAttribute[0].Context?.Locations.First(),
-                        data.TypesWithAttribute.Skip(1).Where(s => s.Context is not null).Select(s => s.Context!.Locations.First())));
-                    return;
-                }
+                // Multiple different contexts detected - the MultipleContextAnalyzer will report the diagnostic.
+                return;
             }
         }
-        else if (data.TypesWithAttribute.Length == 0)
+
+        ProcessContext(context, data, first!, validTypes.SelectMany(c => c.Attributes));
+    }
+
+    private bool IsModelReaderWriterContext(INamedTypeSymbol typeSymbol)
+    {
+        var mrwContextSymbol = GetMrwContextSymbol(typeSymbol);
+        return mrwContextSymbol is
         {
-            // nothing to generate
-            return;
-        }
+            Name: "ModelReaderWriterContext",
+            ContainingType: null,
+            ContainingNamespace:
+            {
+                Name: "Primitives",
+                ContainingNamespace:
+                {
+                    Name: "ClientModel",
+                    ContainingNamespace:
+                    {
+                        Name: "System",
+                        ContainingNamespace.IsGlobalNamespace: true
+                    }
+                }
+            }
+        };
+    }
 
-        if (data.TypesWithAttribute[0].Context is null)
-        {
-            return;
-        }
-
-        var contextSymbol = data.TypesWithAttribute[0].Context!;
-
-        var mrwContextSymbol = GetMrwContextSymbol(contextSymbol);
+    private void ProcessContext(
+        SourceProductionContext context,
+        (ImmutableArray<(INamedTypeSymbol? Context,
+            ImmutableArray<AttributeData> Attributes)> TypesWithAttribute,
+            TypeSymbolKindCache SymbolToKindCache,
+            TypeSymbolTypeRefCache SymbolToTypeRefCache) data,
+        INamedTypeSymbol contextSymbol,
+        IEnumerable<AttributeData> allAttributes)
+    {
+        // Note: The caller already validated that contextSymbol inherits from ModelReaderWriterContext
 
         var contextType = data.SymbolToTypeRefCache.Get(contextSymbol, data.SymbolToKindCache);
 
-        var builders = GetTypesFromAttributes(data.TypesWithAttribute[0].Attributes)
+        var builders = GetTypesFromAttributes(allAttributes)
             .SelectMany(typeSymbol => GetRecursiveGenericTypes(typeSymbol, data.SymbolToKindCache))
             .Distinct(SymbolEqualityComparer.Default);
 
@@ -94,7 +128,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         if (!IsPartialClass(contextSymbol))
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.ContextMustBePartial, Location.None));
+            // Not partial - the PartialModifierAnalyzer will report the diagnostic.
             return;
         }
 
@@ -138,7 +172,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         if (!HasAccessibleParameterlessConstructor(typeSymbol, symbolKindCache) && itemType.IsSameAssembly(contextType))
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.TypeMustHaveParameterlessConstructor, typeSymbol.Locations.FirstOrDefault(), type.Name));
+            // No accessible parameterless constructor - the ParameterlessConstructorAnalyzer will report the diagnostic.
             return null;
         }
 
@@ -151,7 +185,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         if (typeSymbol.IsAbstract && proxy is null)
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.AbstractTypeWithoutProxy, typeSymbol.Locations.FirstOrDefault(), type.Name));
+            // Abstract type without proxy - the AbstractTypeWithoutProxyAnalyzer will report the diagnostic.
             return null;
         }
 
@@ -165,7 +199,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         };
     }
 
-    private IEnumerable<ITypeSymbol> GetTypesFromAttributes(ImmutableArray<AttributeData> attributes)
+    private IEnumerable<ITypeSymbol> GetTypesFromAttributes(IEnumerable<AttributeData> attributes)
     {
         foreach (var attr in attributes)
         {

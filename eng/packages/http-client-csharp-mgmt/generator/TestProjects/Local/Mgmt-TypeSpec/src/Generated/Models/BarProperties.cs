@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarProperties. </summary>
     public partial class BarProperties
@@ -39,18 +40,23 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> the service url. </summary>
+        [WirePath("serviceUrl")]
         public Uri ServiceUri { get; set; }
 
         /// <summary> something. </summary>
+        [WirePath("something")]
         public string Something { get; set; }
 
         /// <summary> boolean value. </summary>
+        [WirePath("boolValue")]
         public bool? BoolValue { get; set; }
 
         /// <summary> float value. </summary>
+        [WirePath("floatValue")]
         public float? FloatValue { get; set; }
 
         /// <summary> double value. </summary>
+        [WirePath("doubleValue")]
         public double? DoubleValue { get; set; }
     }
 }

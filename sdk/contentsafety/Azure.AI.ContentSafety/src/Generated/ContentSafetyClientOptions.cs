@@ -6,32 +6,60 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.ContentSafety
 {
-    /// <summary> Client options for Azure.AI.ContentSafety library clients. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class ContentSafetyClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_09_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2023-10-01". </summary>
-            V2023_10_01 = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of ContentSafetyClientOptions. </summary>
+        /// <summary> Initializes a new instance of ContentSafetyClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public ContentSafetyClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
                 ServiceVersion.V2023_10_01 => "2023-10-01",
+                ServiceVersion.V2024_09_01 => "2024-09-01",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of ContentSafetyClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal ContentSafetyClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2024-09-01";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> V2023_10_01. </summary>
+            V2023_10_01 = 1,
+            /// <summary> V2024_09_01. </summary>
+            V2024_09_01 = 2
         }
     }
 }

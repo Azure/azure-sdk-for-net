@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -56,6 +56,7 @@ public class Resource(Specification spec, Type armType)
                 if (FromExpression || GenerateRoleAssignment || GetKeysType is not null) { namespaces.Add("Azure.Provisioning.Expressions"); }
                 if (FromExpression || NameRequirements is not null || GetKeysType is not null || HiddenResourceVersions is not null) { namespaces.Add("System.ComponentModel"); }
                 if (GenerateRoleAssignment) { namespaces.Add("Azure.Provisioning.Authorization"); namespaces.Add("Azure.Provisioning.Roles"); }
+                if (IsExperimental) { namespaces.Add("System.Diagnostics.CodeAnalysis"); }
                 namespaces.Remove(Namespace!);
                 foreach (string ns in namespaces.Order())
                 {
@@ -68,6 +69,10 @@ public class Resource(Specification spec, Type armType)
                 writer.WriteLine($"/// <summary>");
                 writer.WriteWrapped(Description ?? (Name + "."));
                 writer.WriteLine($"/// </summary>");
+                if (IsExperimental)
+                {
+                    writer.WriteLine($"[Experimental(\"AZPROVISION001\")]");
+                }
                 writer.WriteLine($"public partial class {Name} : {(BaseType is not null ? BaseType.Name : "ProvisionableResource")}");
                 using (writer.Scope("{", "}"))
                 {
@@ -190,6 +195,10 @@ public class Resource(Specification spec, Type armType)
                             }
                             writer.Write($"<{property.BicepPropertyTypeReference}>(\"{property.Name}\", ");
                             writer.Write($"[{string.Join(", ", (property.Path ?? [property.Name]).Select(s => $"\"{s}\""))}]");
+                            if (property.PropertyType is Resource r)
+                            {
+                                writer.Write($", new {r.Name}(\"{r.Name.ToCamelCase()}\")");
+                            }
                             if (property.IsRequired) { writer.Write($", isRequired: true"); }
                             if (property.IsReadOnly) { writer.Write($", isOutput: true"); }
                             if (property.IsSecure) { writer.Write($", isSecure: true"); }
@@ -197,14 +206,24 @@ public class Resource(Specification spec, Type armType)
                             if (property.Format is not null) { writer.Write($", format: \"{property.Format}\""); }
                             writer.WriteLine($");");
                         }
+                        if (GeneratePartialPropertyDefinition)
+                        {
+                            writer.WriteLine("DefineAdditionalProperties();");
+                        }
                         if (ParentResource is not null)
                         {
                             writer.WriteLine($"_parent = DefineResource<{ParentResource.Name}>(\"Parent\", [\"parent\"], isRequired: true);");
                         }
                     }
 
+                    if (GeneratePartialPropertyDefinition)
+                    {
+                        writer.WriteLine();
+                        writer.WriteLine("private partial void DefineAdditionalProperties();");
+                    }
+
                     // Add the well known versions
-                    if (ResourceVersions is not null)
+                    if (ResourceVersions is not null && ResourceVersions.Count > 0)
                     {
                         fence = new IndentWriter.Fenceposter();
                         writer.WriteLine();
@@ -378,3 +397,4 @@ public class Resource(Specification spec, Type armType)
             });
     }
 }
+

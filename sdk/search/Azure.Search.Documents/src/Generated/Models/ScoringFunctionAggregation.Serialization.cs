@@ -11,6 +11,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal static partial class ScoringFunctionAggregationExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ScoringFunctionAggregation value) => value switch
         {
             ScoringFunctionAggregation.Sum => "sum",
@@ -18,16 +19,37 @@ namespace Azure.Search.Documents.Indexes.Models
             ScoringFunctionAggregation.Minimum => "minimum",
             ScoringFunctionAggregation.Maximum => "maximum",
             ScoringFunctionAggregation.FirstMatching => "firstMatching",
+            ScoringFunctionAggregation.Product => "product",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionAggregation value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ScoringFunctionAggregation ToScoringFunctionAggregation(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "sum")) return ScoringFunctionAggregation.Sum;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "average")) return ScoringFunctionAggregation.Average;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimum")) return ScoringFunctionAggregation.Minimum;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "maximum")) return ScoringFunctionAggregation.Maximum;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "firstMatching")) return ScoringFunctionAggregation.FirstMatching;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "sum"))
+            {
+                return ScoringFunctionAggregation.Sum;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "average"))
+            {
+                return ScoringFunctionAggregation.Average;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimum"))
+            {
+                return ScoringFunctionAggregation.Minimum;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "maximum"))
+            {
+                return ScoringFunctionAggregation.Maximum;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "firstMatching"))
+            {
+                return ScoringFunctionAggregation.FirstMatching;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "product"))
+            {
+                return ScoringFunctionAggregation.Product;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionAggregation value.");
         }
     }

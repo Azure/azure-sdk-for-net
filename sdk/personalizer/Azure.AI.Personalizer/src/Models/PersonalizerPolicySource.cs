@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> The source of the Learning Settings. </summary>
     [CodeGenModel("PolicySource")]
-    public readonly partial struct PersonalizerPolicySource {}
+    public readonly partial struct PersonalizerPolicySource { }
 }

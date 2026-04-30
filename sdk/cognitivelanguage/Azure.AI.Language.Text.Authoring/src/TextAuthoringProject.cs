@@ -5,9 +5,9 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Text.Authoring
 {
@@ -35,6 +35,8 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenSuppress("GetCopyProjectStatus", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteProjectAsync", typeof(WaitUntil), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteProject", typeof(WaitUntil), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteProjectAsync", typeof(WaitUntil), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteProject", typeof(WaitUntil), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("ExportAsync", typeof(WaitUntil), typeof(string), typeof(StringIndexType), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("Export", typeof(WaitUntil), typeof(string), typeof(StringIndexType), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(TextAuthoringExportedProject), typeof(string), typeof(CancellationToken))]
@@ -102,19 +104,15 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Initializes a new instance of TextAuthoringProject. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="keyCredential"> The key credential to copy. </param>
-        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <param name="projectName"> The name of the project. </param>
-        internal TextAuthoringProject(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion, string projectName)
+        internal TextAuthoringProject(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion, string projectName)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _keyCredential = keyCredential;
-            _tokenCredential = tokenCredential;
+            Pipeline = pipeline;
             _endpoint = endpoint;
             _apiVersion = apiVersion;
             _projectName = projectName; // Added as a member variable
@@ -124,18 +122,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TextAuthoringProjectMetadata>> GetProjectAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetProjectAsync(context).ConfigureAwait(false); // Using the member variable
-            return Response.FromValue(TextAuthoringProjectMetadata.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringProjectMetadata)response, response);
         }
 
         /// <summary> Gets the details of a project. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TextAuthoringProjectMetadata> GetProject(CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetProject(context); // Using the member variable
-            return Response.FromValue(TextAuthoringProjectMetadata.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringProjectMetadata)response, response);
         }
 
         /// <summary> Creates a new deployment or replaces an existing one. </summary>
@@ -149,8 +147,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNull(details, nameof(details));
 
             details.ProjectName = _projectName;
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(details, ModelSerializationExtensions.WireOptions);
+            RequestContext context = cancellationToken.ToRequestContext();
             return await CreateProjectAsync(content, context).ConfigureAwait(false);
         }
 
@@ -165,8 +164,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNull(details, nameof(details));
 
             details.ProjectName = _projectName;
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(details, ModelSerializationExtensions.WireOptions);
+            RequestContext context = cancellationToken.ToRequestContext();
             return CreateProject(content, context);
         }
 
@@ -187,7 +187,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateCreateProjectRequest(_projectName, content, context); // Using member variable
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -213,7 +213,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateCreateProjectRequest(_projectName, content, context); // Using member variable
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -231,9 +231,9 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetExportStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringExportProjectState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringExportProjectState)response, response);
         }
 
         /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
@@ -245,9 +245,9 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetExportStatus(jobId, context);
-            return Response.FromValue(TextAuthoringExportProjectState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringExportProjectState)response, response);
         }
 
         /// <summary> Gets the status for an import. </summary>
@@ -259,9 +259,9 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetImportStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringImportProjectState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringImportProjectState)response, response);
         }
 
         /// <summary> Gets the status for an import. </summary>
@@ -273,9 +273,9 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetImportStatus(jobId, context);
-            return Response.FromValue(TextAuthoringImportProjectState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringImportProjectState)response, response);
         }
 
         /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
@@ -286,9 +286,9 @@ namespace Azure.AI.Language.Text.Authoring
         public virtual async Task<Response<TextAuthoringCopyProjectDetails>> AuthorizeProjectCopyAsync(TextAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AuthorizeProjectCopyAsync(copyProjectAuthorizationRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringCopyProjectDetails.FromResponse(response), response);
+            RequestContext context = cancellationToken.ToRequestContext();
+            Response response = await AuthorizeProjectCopyAsync((RequestContent)copyProjectAuthorizationRequest, context).ConfigureAwait(false);
+            return Response.FromValue((TextAuthoringCopyProjectDetails)response, response);
         }
 
         /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
@@ -299,9 +299,9 @@ namespace Azure.AI.Language.Text.Authoring
         public virtual Response<TextAuthoringCopyProjectDetails> AuthorizeProjectCopy(TextAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AuthorizeProjectCopy(copyProjectAuthorizationRequest.ToRequestContent(), context);
-            return Response.FromValue(TextAuthoringCopyProjectDetails.FromResponse(response), response);
+            RequestContext context = cancellationToken.ToRequestContext();
+            Response response = AuthorizeProjectCopy((RequestContent)copyProjectAuthorizationRequest, context);
+            return Response.FromValue((TextAuthoringCopyProjectDetails)response, response);
         }
 
         /// <summary> Gets the status of an existing copy project job. </summary>
@@ -313,9 +313,9 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetCopyProjectStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringCopyProjectState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringCopyProjectState)response, response);
         }
 
         /// <summary> Gets the status of an existing copy project job. </summary>
@@ -327,9 +327,9 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetCopyProjectStatus(jobId, context);
-            return Response.FromValue(TextAuthoringCopyProjectState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringCopyProjectState)response, response);
         }
 
         /// <summary> [Protocol Method] Deletes a project. </summary>
@@ -345,7 +345,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 using HttpMessage message = CreateDeleteProjectRequest(_projectName, context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(
-                    _pipeline,
+                    Pipeline,
                     message,
                     ClientDiagnostics,
                     "TextAuthoringProject.DeleteProject",
@@ -374,7 +374,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 using HttpMessage message = CreateDeleteProjectRequest(_projectName, context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(
-                    _pipeline,
+                    Pipeline,
                     message,
                     ClientDiagnostics,
                     "TextAuthoringProject.DeleteProject",
@@ -400,7 +400,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return await ExportAsync(waitUntil, stringIndexType.ToString(), assetKind, trainedModelLabel, context).ConfigureAwait(false);
         }
 
@@ -436,7 +436,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateExportRequest(_projectName, stringIndexType, assetKind, trainedModelLabel, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.Export", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.Export", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -477,7 +477,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateExportRequest(_projectName, stringIndexType, assetKind, trainedModelLabel, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -496,7 +496,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return Export(waitUntil, stringIndexType.ToString(), assetKind, trainedModelLabel, context);
         }
 
@@ -510,8 +510,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = body;
+            RequestContext context = cancellationToken.ToRequestContext();
             return await ImportAsync(waitUntil, content, format, context).ConfigureAwait(false);
         }
 
@@ -525,8 +525,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = body;
+            RequestContext context = cancellationToken.ToRequestContext();
             return Import(waitUntil, content, format, context);
         }
 
@@ -547,7 +547,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
 
             using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(projectJson));
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return await ImportAsync(waitUntil, content, format, context).ConfigureAwait(false);
         }
 
@@ -567,8 +567,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
 
-            using RequestContent content = RequestContentHelper.FromObject(projectJson);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = RequestContent.Create(projectJson);
+            RequestContext context = cancellationToken.ToRequestContext();
             return Import(waitUntil, content, format, context);
         }
 
@@ -603,7 +603,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateImportRequest(_projectName, content, format, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -643,7 +643,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateImportRequest(_projectName, content, format, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -660,8 +660,8 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return await CopyProjectAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
@@ -673,8 +673,8 @@ namespace Azure.AI.Language.Text.Authoring
         {
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return CopyProject(waitUntil, content, context);
         }
 
@@ -688,9 +688,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetTrainingStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringTrainingState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringTrainingState)response, response);
         }
 
         /// <summary> Gets the status for a training job. </summary>
@@ -703,9 +703,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetTrainingStatus(jobId, context);
-            return Response.FromValue(TextAuthoringTrainingState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringTrainingState)response, response);
         }
 
         /// <summary> Triggers a training job for a project. </summary>
@@ -720,10 +720,10 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> response = await TrainAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringTrainingJobResultFromTextAuthoringTrainingState, ClientDiagnostics, "TextAuthoringTraining.Train");
+            return ProtocolOperationHelpers.Convert(response, TextAuthoringTrainingJobResult.FromLroResponse, ClientDiagnostics, "TextAuthoringProject.Train");
         }
 
         /// <summary> Triggers a training job for a project. </summary>
@@ -738,10 +738,10 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> response = Train(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringTrainingJobResultFromTextAuthoringTrainingState, ClientDiagnostics, "TextAuthoringTraining.Train");
+            return ProtocolOperationHelpers.Convert(response, TextAuthoringTrainingJobResult.FromLroResponse, ClientDiagnostics, "TextAuthoringProject.Train");
         }
 
         /// <summary> Triggers a cancellation for a running training job. </summary>
@@ -756,9 +756,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> response = await CancelTrainingJobAsync(waitUntil, jobId, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringTrainingJobResultFromTextAuthoringTrainingState, ClientDiagnostics, "TextAuthoringTraining.CancelTrainingJob");
+            return ProtocolOperationHelpers.Convert(response, TextAuthoringTrainingJobResult.FromLroResponse, ClientDiagnostics, "TextAuthoringProject.CancelTrainingJob");
         }
 
         /// <summary> Triggers a cancellation for a running training job. </summary>
@@ -773,9 +773,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> response = CancelTrainingJob(waitUntil, jobId, context);
-            return ProtocolOperationHelpers.Convert(response, FetchTextAuthoringTrainingJobResultFromTextAuthoringTrainingState, ClientDiagnostics, "TextAuthoringTraining.CancelTrainingJob");
+            return ProtocolOperationHelpers.Convert(response, TextAuthoringTrainingJobResult.FromLroResponse, ClientDiagnostics, "TextAuthoringProject.CancelTrainingJob");
         }
 
         /// <summary>
@@ -802,12 +802,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTraining.GetTrainingStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetTrainingStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetTrainingStatusRequest(_projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -840,12 +840,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTraining.GetTrainingStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetTrainingStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetTrainingStatusRequest(_projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -878,12 +878,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTraining.Train");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Train");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateTrainRequest(_projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringTraining.Train", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.Train", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -917,12 +917,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTraining.Train");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.Train");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateTrainRequest(_projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "TextAuthoringTraining.Train", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.Train", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -956,12 +956,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTraining.CancelTrainingJob");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CancelTrainingJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCancelTrainingJobRequest(_projectName, jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringTraining.CancelTrainingJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.CancelTrainingJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -995,12 +995,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringTraining.CancelTrainingJob");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.CancelTrainingJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCancelTrainingJobRequest(_projectName, jobId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "TextAuthoringTraining.CancelTrainingJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.CancelTrainingJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1036,7 +1036,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetProjectRequest(_projectName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1072,7 +1072,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetProjectRequest(_projectName, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1110,7 +1110,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetExportStatusRequest(_projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1148,7 +1148,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetExportStatusRequest(_projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1186,7 +1186,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetImportStatusRequest(_projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1224,7 +1224,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetImportStatusRequest(_projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1262,7 +1262,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateAuthorizeProjectCopyRequest(_projectName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1300,7 +1300,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateAuthorizeProjectCopyRequest(_projectName, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1338,7 +1338,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetCopyProjectStatusRequest(_projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1376,7 +1376,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetCopyProjectStatusRequest(_projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1415,7 +1415,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateCopyProjectRequest(_projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1454,7 +1454,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateCopyProjectRequest(_projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1475,8 +1475,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return await SwapDeploymentsAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
@@ -1492,8 +1492,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return SwapDeployments(waitUntil, content, context);
         }
 
@@ -1524,12 +1524,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeployment.SwapDeployments");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.SwapDeployments");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSwapDeploymentsRequest(_projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1564,12 +1564,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeployment.SwapDeployments");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.SwapDeployments");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSwapDeploymentsRequest(_projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1586,9 +1586,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetSwapDeploymentsStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringSwapDeploymentsState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringSwapDeploymentsState)response, response);
         }
 
         /// <summary> Gets the status of an existing swap deployment job. </summary>
@@ -1599,9 +1599,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetSwapDeploymentsStatus(jobId, context);
-            return Response.FromValue(TextAuthoringSwapDeploymentsState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringSwapDeploymentsState)response, response);
         }
 
         /// <summary>
@@ -1630,12 +1630,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeployment.GetSwapDeploymentsStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetSwapDeploymentsStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetSwapDeploymentsStatusRequest(_projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1670,12 +1670,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeployment.GetSwapDeploymentsStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetSwapDeploymentsStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetSwapDeploymentsStatusRequest(_projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1694,9 +1694,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetAssignDeploymentResourcesStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringDeploymentResourcesState)response, response);
         }
 
         /// <summary> Gets the status of an existing assign deployment resources job. </summary>
@@ -1709,9 +1709,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetAssignDeploymentResourcesStatus(jobId, context);
-            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringDeploymentResourcesState)response, response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -1724,9 +1724,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetUnassignDeploymentResourcesStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringDeploymentResourcesState)response, response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -1739,9 +1739,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetUnassignDeploymentResourcesStatus(jobId, context);
-            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringDeploymentResourcesState)response, response);
         }
 
         /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. </summary>
@@ -1756,8 +1756,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return await AssignDeploymentResourcesAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
@@ -1773,8 +1773,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return AssignDeploymentResources(waitUntil, content, context);
         }
 
@@ -1790,8 +1790,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return await UnassignDeploymentResourcesAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
@@ -1807,8 +1807,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return UnassignDeploymentResources(waitUntil, content, context);
         }
 
@@ -1836,12 +1836,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeploymentResources.GetAssignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetAssignDeploymentResourcesStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetAssignDeploymentResourcesStatusRequest(_projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1874,12 +1874,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeploymentResources.GetAssignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetAssignDeploymentResourcesStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetAssignDeploymentResourcesStatusRequest(_projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1912,12 +1912,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeploymentResources.GetUnassignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetUnassignDeploymentResourcesStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetUnassignDeploymentResourcesStatusRequest(_projectName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1950,12 +1950,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeploymentResources.GetUnassignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetUnassignDeploymentResourcesStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetUnassignDeploymentResourcesStatusRequest(_projectName, jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1989,12 +1989,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeploymentResources.AssignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.AssignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAssignDeploymentResourcesRequest(_projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringDeploymentResources.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2028,12 +2028,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeploymentResources.AssignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.AssignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAssignDeploymentResourcesRequest(_projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringDeploymentResources.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2067,12 +2067,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeploymentResources.UnassignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.UnassignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUnassignDeploymentResourcesRequest(_projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringDeploymentResources.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2106,12 +2106,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringDeploymentResources.UnassignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.UnassignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUnassignDeploymentResourcesRequest(_projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringDeploymentResources.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringProject.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct HDInsightTier : IEquatable<HDInsightTier>
     {
         private readonly string _value;
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Premium. </summary>
+        private const string PremiumValue = "Premium";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
+            _value = value;
+        }
 
         /// <summary> Standard. </summary>
         public static HDInsightTier Standard { get; } = new HDInsightTier(StandardValue);
+
         /// <summary> Premium. </summary>
         public static HDInsightTier Premium { get; } = new HDInsightTier(PremiumValue);
+
         /// <summary> Determines if two <see cref="HDInsightTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightTier left, HDInsightTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightTier left, HDInsightTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightTier(string value) => new HDInsightTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightTier?(string value) => value == null ? null : new HDInsightTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

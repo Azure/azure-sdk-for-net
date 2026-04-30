@@ -3,14 +3,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
     /// <summary> The updatable properties of the FileSystemResource. </summary>
-    [CodeGenModel("FileSystemResourceUpdateProperties")]
+    [CodeGenType("FileSystemResourceUpdateProperties")]
     public partial class DellFileSystemPatchProperties
     {
     }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.15.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,73 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.15.0-beta.1 (2026-04-24)
+
+### Features Added
+
+- Upgraded api-version tag to `package-2025-11-01-with-cloudservice`.
+- Added new resource type `VmScaleSetLifecycleHookEvent` along with its corresponding `VmScaleSetLifecycleHookEventResource`, `VmScaleSetLifecycleHookEventCollection`, and `VmScaleSetLifecycleHookEventData` classes for managing Virtual Machine Scale Set lifecycle hook events.
+- Added new classes to support lifecycle hooks on Virtual Machine Scale Sets: `LifecycleHook`, `LifecycleHooksProfile`, `VmScaleSetLifecycleHookEventProperties`, `VmScaleSetLifecycleHookEventAdditionalContext`, `VirtualMachineScaleSetLifecycleHookEventTarget`, and `VirtualMachineScaleSetLifecycleHookEventPatch`.
+- Added new enums `LifecycleHookAction`, `LifecycleHookActionState`, `VmScaleSetLifecycleHookEventType`, and `VmScaleSetLifecycleHookEventState`.
+- Added new classes `ResiliencyProfile`, `OperationRecoverySettings`, `ReimageRecoveryPolicy`, `RestartRecoveryPolicy`, `StartRecoveryPolicy`, and `ZoneMovement` for configuring VM Scale Set resiliency and recovery behavior.
+- Added new class `ExternalHealthPolicy`.
+- Added new enums `StorageFaultDomainAlignmentType` and `StorageAlignmentStatus`.
+- Added `LifecycleHooks` and `ExternalHealthPolicy` properties to `VirtualMachineScaleSetProperties` class.
+- Added `LifecycleHooks` property to `VirtualMachineScaleSetPatchProperties` class.
+- Added `Placement` property to `VirtualMachineScaleSetPatch` class.
+- Added `VirtualMachineResourceId` read-only property to `VirtualMachineScaleSetVmProperties` class.
+- Added `IsEnabled` property to `VirtualMachineData` and `VirtualMachinePatch` classes.
+- Added `StorageFaultDomainAlignment` property to `VirtualMachineDataDisk`, `VirtualMachineOSDisk`, `VirtualMachineScaleSetDataDisk`, `VirtualMachineScaleSetOSDisk`, and `VirtualMachineScaleSetUpdateOSDisk` classes.
+- Added `EnableFullCaching` property to `DiffDiskSettings` class.
+- Added new `forceDeallocate` optional parameter to the `VirtualMachineResource.Deallocate` and `VirtualMachineResource.DeallocateAsync` methods.
+- Added `BestEffortAligned` value to `ZonalPlatformFaultDomainAlignMode` enum.
+- Added `Standard` value to `SecurityType` enum.
+
+## 1.14.0 (2026-01-16)
+
+### Features Added
+
+- Added new resource type `GalleryScript`.
+- Added `StorageAccountStrategy` property to `GalleryArtifactPublishingProfileBase` class.
+
+## 1.13.0 (2025-11-14)
+
+### Features Added
+
+- Added `SnapshotAccessState` property to `DiskRestorePointInstanceView` class.
+- Added `InstantAccess` property to `RestorePointGroupData` class.
+- Added `InstantAccess` property to `RestorePointGroupPatch` class.
+- Added `InstantAccessDurationMinutes` property to `RestorePointData` class.
+- Added `EnableFips1403Encryption` property to `AdditionalCapabilities` class.
+- Modified `DiskIOPSReadWrite` and `DiskMBpsReadWrite` properties under the `VirtualMachineDataDisk` class to make the properties writable, and expanded the scope of usage from only VMSS to also include Virtual Machines and Flexible VMs.
+
+### Breaking Changes
+
+- `CommunityGallery`, `CommunityGalleryImage`, `CommunityGalleryImageVersion` are no longer ARM resources in the library, their corresponding `*Resource` and `*Collection` classes are now hidden. Please use related methods added in `ComputeExtensions` class instead.
+- `SharedGallery`, `SharedGalleryImage`, `SharedGalleryImageVersion` are no longer ARM resources in the library, their corresponding `*Resource` and `*Collection` classes are now hidden. Please use related methods added in `ComputeExtensions` class instead.
+
+## 1.12.0 (2025-09-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-04-01'
+- Added `VirtualMachineScaleSet.ScaleOut` Operation.
+- Added `Tags` to `VirtualMachineScaleSetNetworkConfiguration`, `VirtualMachineScaleSetIPConfiguration`, `VirtualMachineScaleSetPublicIPAddressConfiguration` and `VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings` classes.
+- Added `Placement` property to `VirtualMachineScaleSet` class.
+- Added `ZoneAllocationPolicy` property to `ResiliencyPolicy` class.
+- Added `MaxInstancePercentPerZonePolicy` property to `AutomaticZoneRebalancingPolicy` class.
+- Added `ReservationType` property to `CapacityReservationGroup` class.
+- Added `ScheduleProfile` property to `CapacityReservation` class.
+- Added `AddProxyAgentExtension` property to `ProxyAgentSettings` class.
+- Added `ScriptShellTypes` enum to `RunCommandScriptSource` class.
+- Added `GalleryScriptReferenceId` property to `RunCommandScriptSource` class.
+- Added `AllInstancesDown` property to `ScheduledEventsPolicy` class.
+- Added `ScheduledEventsApiVersion` property to `EventGridAndResourceGraph` class.
+- Added `AutomaticZoneRebalancing` property to `OrchetrationServiceNames` class.
+- Added `highSpeedInterconnectPlacement` property to `VirtualMachineScaleSetProperties` class.
+- Added `patchNameMasksToInclude` and `patchNameMasksToExclude` properties to `WindowsParameters` class.
+
 
 ## 1.11.0 (2025-08-12)
 
@@ -25,7 +92,7 @@
 
 ### Breaking Changes
 
-- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility. 
+- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility.
 
 ## 1.10.0 (2025-06-30)
 

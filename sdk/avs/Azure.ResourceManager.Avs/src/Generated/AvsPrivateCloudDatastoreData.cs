@@ -10,47 +10,14 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary>
-    /// A class representing the AvsPrivateCloudDatastore data model.
-    /// A datastore resource
-    /// </summary>
+    /// <summary> A datastore resource. </summary>
     public partial class AvsPrivateCloudDatastoreData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudDatastoreData"/>. </summary>
         public AvsPrivateCloudDatastoreData()
@@ -58,58 +25,105 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudDatastoreData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The state of the datastore provisioning. </param>
-        /// <param name="netAppVolume"> An Azure NetApp Files volume. </param>
-        /// <param name="diskPoolVolume"> An iSCSI volume. </param>
-        /// <param name="elasticSanVolume"> An Elastic SAN volume. </param>
-        /// <param name="pureStorageVolume"> A Pure Storage volume. </param>
-        /// <param name="status"> The operational status of the datastore. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, WritableSubResource netAppVolume, DiskPoolVolume diskPoolVolume, ElasticSanVolume elasticSanVolume, AvsPureStorageVolume pureStorageVolume, DatastoreStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DatastoreProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            NetAppVolume = netAppVolume;
-            DiskPoolVolume = diskPoolVolume;
-            ElasticSanVolume = elasticSanVolume;
-            PureStorageVolume = pureStorageVolume;
-            Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal DatastoreProperties Properties { get; set; }
+
         /// <summary> The state of the datastore provisioning. </summary>
-        public AvsPrivateCloudDatastoreProvisioningState? ProvisioningState { get; }
-        /// <summary> An Azure NetApp Files volume. </summary>
-        internal WritableSubResource NetAppVolume { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier NetAppVolumeId
+        public AvsPrivateCloudDatastoreProvisioningState? ProvisioningState
         {
-            get => NetAppVolume is null ? default : NetAppVolume.Id;
-            set
+            get
             {
-                if (NetAppVolume is null)
-                    NetAppVolume = new WritableSubResource();
-                NetAppVolume.Id = value;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
         /// <summary> An iSCSI volume. </summary>
-        public DiskPoolVolume DiskPoolVolume { get; set; }
-        /// <summary> An Elastic SAN volume. </summary>
-        internal ElasticSanVolume ElasticSanVolume { get; set; }
-        /// <summary> Azure resource ID of the Elastic SAN Volume. </summary>
-        public ResourceIdentifier ElasticSanVolumeTargetId
+        public DiskPoolVolume DiskPoolVolume
         {
-            get => ElasticSanVolume is null ? default : ElasticSanVolume.TargetId;
-            set => ElasticSanVolume = new ElasticSanVolume(value);
+            get
+            {
+                return Properties is null ? default : Properties.DiskPoolVolume;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatastoreProperties();
+                }
+                Properties.DiskPoolVolume = value;
+            }
         }
 
         /// <summary> A Pure Storage volume. </summary>
-        public AvsPureStorageVolume PureStorageVolume { get; set; }
+        public AvsPureStorageVolume PureStorageVolume
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PureStorageVolume;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatastoreProperties();
+                }
+                Properties.PureStorageVolume = value;
+            }
+        }
+
         /// <summary> The operational status of the datastore. </summary>
-        public DatastoreStatus? Status { get; }
+        public DatastoreStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> Azure resource ID of the NetApp volume. </summary>
+        public ResourceIdentifier NetAppVolumeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetAppVolumeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatastoreProperties();
+                }
+                Properties.NetAppVolumeId = value;
+            }
+        }
+
+        /// <summary> Azure resource ID of the Elastic SAN Volume. </summary>
+        public ResourceIdentifier ElasticSanVolumeTargetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ElasticSanVolumeTargetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatastoreProperties();
+                }
+                Properties.ElasticSanVolumeTargetId = value;
+            }
+        }
     }
 }

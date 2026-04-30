@@ -8,7 +8,6 @@ $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
-
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -17,7 +16,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
   $outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "package-info-$([System.Guid]::NewGuid()).txt"
-  
+
   Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion /p:OutputProjectInfoListFilePath=""$outputFilePath"" -tl:off"
 
   dotnet msbuild `
@@ -67,26 +66,6 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
     if ($ciProps) {
-      # CheckAOTCompat is opt _in_, so we should default to false if not specified
-      $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
-      if ($null -ne $shouldAot) {
-        $parsedBool = $null
-        if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
-          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
-        }
-
-        # when AOTCompat is true, there is an additional parameter we need to retrieve
-        $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
-        if ($aotArtifacts) {
-          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
-          $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
-        }
-      }
-      else {
-        $pkgProp.CIParameters["CheckAOTCompat"] = $false
-        $pkgProp.CIParameters["AOTTestInputs"] = @()
-      }
-
       # BuildSnippets is opt _out_, so we should default to true if not specified
       $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
       if ($null -ne $shouldSnippet) {
@@ -100,10 +79,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
     }
     # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
-    # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
+    # so that when we are checking the package set for which need to "Build Snippets"
     else {
-      $pkgProp.CIParameters["CheckAOTCompat"] = $false
-      $pkgProp.CIParameters["AOTTestInputs"] = @()
       $pkgProp.CIParameters["BuildSnippets"] = $true
     }
 
@@ -117,38 +94,25 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 {
   $additionalValidationPackages = @()
 
-  $DependencyCalculationPackages = @(
-    "Azure.Core",
-    "Azure.ResourceManager",
-    "System.ClientModel"
-  )
-
-  $TestDependsOnDependencySet = $LocatedPackages | Where-Object { $_.Name -in $DependencyCalculationPackages }
-  $TestDependsOnDependency = $TestDependsOnDependencySet.Name -join " "
+  # Use all directly changed packages for dependency calculation. This ensures that
+  # when any package changes, all cross-service packages that depend on it are included
+  # as indirect packages for validation testing.
+  $TestDependsOnDependencySet = $LocatedPackages | Where-Object { $_.IncludedForValidation -eq $false }
+  $TestDependsOnDependency = ($TestDependsOnDependencySet | ForEach-Object { $_.Name }) -join " "
 
   if (!$TestDependsOnDependency) {
     return $additionalValidationPackages
   }
 
-  Write-Host "Calculating dependencies for $($pkgProp.Name)"
+  Write-Host "Calculating dependencies for: $TestDependsOnDependency"
 
   $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
-  $buildOutputPath = Join-Path $RepoRoot "_dependencylistoutput.txt"
 
-  try {
-    $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+  $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
     "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
-    " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
+    " /p:OutputProjectFilePath=`"$outputFilePath`""
 
-    Invoke-LoggedCommand $command | Out-Null
-  }
-  catch {
-      Write-Host "Failed calculating dependencies for '$TestDependsOnDependency'. Exit code $LASTEXITCODE."
-      Write-Host "Dumping erroring build output."
-      Write-Host (Get-Content -Raw $buildOutputPath)
-
-      return @()
-  }
+  Invoke-LoggedMsbuildCommand $command
 
   if (Test-Path $outputFilePath) {
     $dependentProjects = Get-Content $outputFilePath
@@ -178,33 +142,21 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 # Returns the nuget publish status of a package id and version.
 function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
 {
-  $nugetUri = "https://api.nuget.org/v3-flatcontainer/$($pkgId.ToLowerInvariant())/index.json"
+  $existingVersions = GetExistingPackageVersions -PackageName $pkgId
 
-  try
-  {
-    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -uri $nugetUri -Method "GET"
-    return $nugetVersions.versions.Contains($pkgVersion)
+  # If the feed returned nothing, the package has not been published.
+  if (!$existingVersions) {
+    return $False
   }
-  catch
-  {
-    $statusCode = $_.Exception.Response.StatusCode.value__
-    $statusDescription = $_.Exception.Response.ReasonPhrase
 
-    # if this is 404ing, then this pkg has never been published before
-    if ($statusCode -eq 404) {
-      return $False
-    }
-
-    Write-Host "Nuget Invocation failed:"
-    Write-Host "StatusCode:" $statusCode
-    Write-Host "StatusDescription:" $statusDescription
-    exit(1)
-  }
+  return $existingVersions.Contains($pkgVersion)
 }
 
 # Parse out package publishing information given a nupkg ZIP format.
 function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 {
+  Write-Host "Parsing package file $($pkg.FullName)"
+
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $zipFileLocation = "$workFolder/$($pkg.Basename).zip"
   $releaseNotes = ""
@@ -390,13 +342,15 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 {
   try {
     $PackageName = $PackageName.ToLower()
-    $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
+    $uri = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/flat2/${PackageName}/index.json"
+    $existingVersion = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -Method GET -Uri $uri
     return $existingVersion.versions
   }
   catch {
     if ($_.Exception.Response.StatusCode -ne 404)
     {
       LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
+      throw
     }
     return $null
   }
@@ -584,7 +538,7 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
     # Install autorest locally
     Invoke-LoggedCommand "npm ci --prefix $RepoRoot"
 
-    Write-Host "Running npm ci over emitter-package.json in a temp folder to prime the npm cache"
+    Write-Host "Running npm ci over legacy-emitter-package.json in a temp folder to prime the npm cache"
 
     $tempFolder = New-TemporaryFile
     $tempFolder | Remove-Item -Force
@@ -592,9 +546,9 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 
     Push-Location $tempFolder
     try {
-        Copy-Item "$RepoRoot/eng/emitter-package.json" "package.json"
-        if(Test-Path "$RepoRoot/eng/emitter-package-lock.json") {
-            Copy-Item "$RepoRoot/eng/emitter-package-lock.json" "package-lock.json"
+        Copy-Item "$RepoRoot/eng/legacy-emitter-package.json" "package.json"
+        if(Test-Path "$RepoRoot/eng/legacy-emitter-package-lock.json") {
+            Copy-Item "$RepoRoot/eng/legacy-emitter-package-lock.json" "package-lock.json"
             Invoke-LoggedCommand "npm ci"
         } else {
           Invoke-LoggedCommand "npm install"
@@ -617,6 +571,15 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 }
 
 function Get-dotnet-ApiviewStatusCheckRequirement($packageInfo) {
+  $version = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
+  if ($null -eq $version) {
+    return $false
+  }
+  # Do not check APIView status for prerelease mgmt plane packages
+  if ($packageInfo.SdkType -eq "mgmt" -and $version.IsPrerelease) {
+    return $false
+  }
+
   if ($packageInfo.IsNewSdk -and ($packageInfo.SdkType -eq "client" -or $packageInfo.SdkType -eq "mgmt")) {
     return $true
   }

@@ -29,13 +29,13 @@ try
 {
     using (var eventBatch = await producer.CreateBatchAsync())
     {
-      var eventBody = new BinaryData("This is an event body");
-      var eventData = new EventData(eventBody);
+        var eventBody = new BinaryData("This is an event body");
+        var eventData = new EventData(eventBody);
 
-      if (!eventBatch.TryAdd(eventData))
-      {
-          throw new Exception($"The event could not be added.");
-      }
+        if (!eventBatch.TryAdd(eventData))
+        {
+            throw new Exception($"The event could not be added.");
+        }
     }
 }
 finally
@@ -82,7 +82,7 @@ try
                 string readFromPartition = partitionEvent.Partition.PartitionId;
                 byte[] eventBodyBytes = partitionEvent.Data.EventBody.ToArray();
 
-                Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
+                Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {readFromPartition}");
                 eventsRead++;
 
                 if (eventsRead >= maximumEvents)

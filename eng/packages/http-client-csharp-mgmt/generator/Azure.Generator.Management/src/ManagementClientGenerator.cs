@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
 using System;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Management
 {
@@ -53,13 +54,48 @@ namespace Azure.Generator.Management
             // renaming should come first
             AddVisitor(new NameVisitor());
             AddVisitor(new SerializationVisitor());
-            AddVisitor(new SafeFlattenVisitor());
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
-            AddVisitor(new SystemObjectModelVisitor());
+            AddVisitor(new InheritableSystemObjectModelVisitor());
+            AddVisitor(new FlattenPropertyVisitor());
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new PaginationVisitor());
             AddVisitor(new ModelFactoryVisitor());
+            AddVisitor(new ManagedIdentityV3Visitor());
+            if (IsWirePathEnabled())
+            {
+                AddVisitor(new WirePathVisitor());
+            }
         }
+
+        private const string EnableWirePathFeatureFlag = "enable-wire-path-attribute";
+        private const string SkipApiVersionOverrideFlag = "skip-api-version-override";
+
+        private bool IsWirePathEnabled()
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(EnableWirePathFeatureFlag, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return false;
+        }
+
+        // TODO: This is a temporary workaround until the api-version override issue is properly resolved in Azure.Core.
+        // Once Azure.Core handles api-version correctly during LRO polling, this flag and related logic should be removed.
+        internal bool IsSkipApiVersionOverrideEnabled()
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(SkipApiVersionOverrideFlag, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Management plane SDKs do not need ConfigurationSchema.json generation.
+        /// </summary>
+        public override Task WriteAdditionalFiles(string outputPath) => Task.CompletedTask;
     }
 }

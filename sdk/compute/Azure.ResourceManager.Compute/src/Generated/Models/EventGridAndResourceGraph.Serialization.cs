@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class EventGridAndResourceGraph : IUtf8JsonSerializable, IJsonModel<EventGridAndResourceGraph>
+    public partial class EventGridAndResourceGraph : IUtf8JsonSerializable, IJsonModel<EventGridAndResourceGraph>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridAndResourceGraph>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -34,10 +34,15 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(EventGridAndResourceGraph)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Enable))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
-                writer.WriteBooleanValue(Enable.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (Optional.IsDefined(ScheduledEventsApiVersion))
+            {
+                writer.WritePropertyName("scheduledEventsApiVersion"u8);
+                writer.WriteStringValue(ScheduledEventsApiVersion);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool? enable = default;
+            string scheduledEventsApiVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +96,18 @@ namespace Azure.ResourceManager.Compute.Models
                     enable = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("scheduledEventsApiVersion"u8))
+                {
+                    scheduledEventsApiVersion = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EventGridAndResourceGraph(enable, serializedAdditionalRawData);
+            return new EventGridAndResourceGraph(enable, scheduledEventsApiVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridAndResourceGraph>.Write(ModelReaderWriterOptions options)

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -16,7 +18,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_6;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2025_07_01;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client library.
@@ -55,9 +57,14 @@ namespace Azure.Security.KeyVault.Secrets
             V7_5 = 5,
 
             /// <summary>
-            /// The Key Vault API version 7.6-preview.2.
+            /// The Key Vault API version 7.6.
             /// </summary>
             V7_6 = 6,
+
+            /// <summary>
+            /// The Key Vault API version 2025-07-01.
+            /// </summary>
+            V2025_07_01 = 7,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -82,6 +89,20 @@ namespace Azure.Security.KeyVault.Secrets
             this.ConfigureLogging();
         }
 
+        [Experimental("SCME0002")]
+        internal SecretClientOptions(IConfigurationSection section)
+            : base(section, null)
+        {
+            Version = LatestVersion;
+
+            if (bool.TryParse(section["DisableChallengeResourceVerification"], out bool disableChallengeResourceVerification))
+            {
+                DisableChallengeResourceVerification = disableChallengeResourceVerification;
+            }
+
+            this.ConfigureLogging();
+        }
+
         /// <summary>
         /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault domain.
         /// </summary>
@@ -98,6 +119,7 @@ namespace Azure.Security.KeyVault.Secrets
                 ServiceVersion.V7_4 => "7.4",
                 ServiceVersion.V7_5 => "7.5",
                 ServiceVersion.V7_6 => "7.6",
+                ServiceVersion.V2025_07_01 => "2025-07-01",
                 _ => throw new ArgumentException(Version.ToString()),
             };
         }

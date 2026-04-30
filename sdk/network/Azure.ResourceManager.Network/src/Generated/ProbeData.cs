@@ -55,24 +55,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The load balancer rules that use this probe. </summary>
+        [WirePath("properties.loadBalancingRules")]
         public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; }
         /// <summary> The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </summary>
+        [WirePath("properties.protocol")]
         public ProbeProtocol? Protocol { get; set; }
         /// <summary> The port for communicating the probe. Possible values range from 1 to 65535, inclusive. </summary>
+        [WirePath("properties.port")]
         public int? Port { get; set; }
         /// <summary> The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly less than half the allocated timeout period (in seconds) which allows two full probes before taking the instance out of rotation. The default value is 15, the minimum value is 5. </summary>
+        [WirePath("properties.intervalInSeconds")]
         public int? IntervalInSeconds { get; set; }
         /// <summary> Determines how new connections are handled by the load balancer when all backend instances are probed down. </summary>
+        [WirePath("properties.noHealthyBackendsBehavior")]
         public ProbeNoHealthyBackendsBehavior? NoHealthyBackendsBehavior { get; set; }
         /// <summary> The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints to be taken out of rotation faster or slower than the typical times used in Azure. </summary>
+        [WirePath("properties.numberOfProbes")]
         public int? NumberOfProbes { get; set; }
         /// <summary> The number of consecutive successful or failed probes in order to allow or deny traffic from being delivered to this endpoint. After failing the number of consecutive probes equal to this value, the endpoint will be taken out of rotation and require the same number of successful consecutive probes to be placed back in rotation. </summary>
+        [WirePath("properties.probeThreshold")]
         public int? ProbeThreshold { get; set; }
         /// <summary> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </summary>
+        [WirePath("properties.requestPath")]
         public string RequestPath { get; set; }
         /// <summary> The provisioning state of the probe resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

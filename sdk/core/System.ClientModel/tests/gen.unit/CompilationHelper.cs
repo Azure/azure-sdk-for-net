@@ -8,8 +8,10 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 
 namespace System.ClientModel.SourceGeneration.Tests.Unit
@@ -44,6 +46,16 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             CSharpParseOptions? parseOptions = null,
             string contextName = "LocalContext",
             HashSet<string>? additionalSuppress = null)
+            => CreateCompilation([source], additionalReferences, assemblyName, includeSTJ, parseOptions, contextName, additionalSuppress);
+
+        public static Compilation CreateCompilation(
+            IEnumerable<string> sources,
+            MetadataReference[]? additionalReferences = null,
+            string assemblyName = "TestAssembly",
+            bool includeSTJ = true,
+            CSharpParseOptions? parseOptions = null,
+            string contextName = "LocalContext",
+            HashSet<string>? additionalSuppress = null)
         {
             List<MetadataReference> references =
             [
@@ -70,10 +82,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                 }
             }
 
-            SyntaxTree[] syntaxTrees =
-            [
-                CSharpSyntaxTree.ParseText(source, parseOptions),
-            ];
+            SyntaxTree[] syntaxTrees = sources.Select(source => CSharpSyntaxTree.ParseText(source, parseOptions)).ToArray();
 
             var compilation = CSharpCompilation.Create(
                 assemblyName,
@@ -169,6 +178,13 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                     parseOptions: parseOptions,
                     driverOptions: new GeneratorDriverOptions(
                         disabledOutputs: IncrementalGeneratorOutputKind.None));
+        }
+
+        public static async Task<ImmutableArray<Diagnostic>> GetAnalyzerDiagnosticsAsync(Compilation compilation, DiagnosticAnalyzer analyzer)
+        {
+            var analyzers = ImmutableArray.Create(analyzer);
+            var compilationWithAnalyzers = compilation.WithAnalyzers(analyzers);
+            return await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync();
         }
     }
 }

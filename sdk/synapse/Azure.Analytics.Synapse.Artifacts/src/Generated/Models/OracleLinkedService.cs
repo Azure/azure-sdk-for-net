@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -14,13 +13,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class OracleLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of <see cref="OracleLinkedService"/>. </summary>
-        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only used for Version 1.0. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public OracleLinkedService(object connectionString)
+        public OracleLinkedService()
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-
-            ConnectionString = connectionString;
             Type = "Oracle";
         }
 

@@ -15,16 +15,16 @@ namespace Samples
     {
         private static global::Azure.Core.ResponseClassifier _pipelineMessageClassifier200;
 
-        private static global::Azure.Core.ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new global::Azure.Core.StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static global::Azure.Core.ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new global::Azure.Core.StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         internal global::Azure.Core.HttpMessage CreateFooRequest(global::Azure.ETag? ifNoneMatch, global::Azure.RequestContext context)
         {
-            global::Azure.Core.HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            global::Azure.Core.Request request = message.Request;
-            request.Method = global::Azure.Core.RequestMethod.Get;
             global::Azure.Core.RawRequestUriBuilder uri = new global::Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            global::Azure.Core.HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            global::Azure.Core.Request request = message.Request;
             request.Uri = uri;
+            request.Method = global::Azure.Core.RequestMethod.Get;
             if ((ifNoneMatch != null))
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch.Value);

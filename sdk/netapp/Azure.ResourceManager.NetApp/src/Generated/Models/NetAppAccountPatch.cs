@@ -88,14 +88,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Azure lifecycle management. </summary>
-        public string ProvisioningState { get; }
         /// <summary> Active Directories. </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
         /// <summary> Encryption settings. </summary>
         public NetAppAccountEncryption Encryption { get; set; }
-        /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
-        public bool? DisableShowmount { get; }
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
         public string NfsV4IdDomain { get; set; }
         /// <summary> MultiAD Status for the account. </summary>

@@ -7,15 +7,18 @@ To enable your Agent to use Model Context Protocol (MCP) tools, you use `MCPTool
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var mcpServerUrl = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL");
+var mcpServerUrl2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL2");
 var mcpServerLabel = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL");
+var mcpServerLabel2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL2");
 PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
-2. We will create the MCP tool definition and configure allowed tools.
+2. We will create the MCP tool definitions and configure allowed tools.
 
 ```C# Snippet:AgentsMCPStreamingAsync_CreateMCPTool
-// Create MCP tool definition
+// Create MCP tool definitions
 MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);
+MCPToolDefinition mcpTool2 = new(mcpServerLabel2, mcpServerUrl2);
 
 // Configure allowed tools (optional)
 string searchApiCode = "search_azure_rest_api_code";
@@ -30,7 +33,7 @@ PersistentAgent agent = agentClient.Administration.CreateAgent(
    model: modelDeploymentName,
    name: "my-mcp-agent",
    instructions: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
-   tools: [mcpTool]);
+   tools: [mcpTool, mcpTool2]);
 ```
 
 Asynchronous sample:
@@ -39,7 +42,7 @@ PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-mcp-agent",
    instructions: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
-   tools: [mcpTool]
+   tools: [mcpTool, mcpTool2]
    );
 ```
 
@@ -54,11 +57,12 @@ PersistentAgentThread thread = agentClient.Threads.CreateThread();
 PersistentThreadMessage message = agentClient.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
-    "Please summarize the Azure REST API specifications Readme");
+    "Please summarize the Azure REST API specifications Readme and give the basic information on TypeSpec.");
 
 MCPToolResource mcpToolResource = new(mcpServerLabel);
 mcpToolResource.UpdateHeader("SuperSecret", "123456");
 ToolResources toolResources = mcpToolResource.ToToolResources();
+toolResources.Mcp.Add(new MCPToolResource(mcpServerLabel2));
 CreateRunStreamingOptions options = new()
 {
     ToolResources = toolResources
@@ -73,18 +77,52 @@ PersistentAgentThread thread = await agentClient.Threads.CreateThreadAsync();
 PersistentThreadMessage message = await agentClient.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
-    "Please summarize the Azure REST API specifications Readme");
+    "Please summarize the Azure REST API specifications Readme and give the basic information on TypeSpec.");
 
 MCPToolResource mcpToolResource = new(mcpServerLabel);
 mcpToolResource.UpdateHeader("SuperSecret", "123456");
 ToolResources toolResources = mcpToolResource.ToToolResources();
+toolResources.Mcp.Add(new MCPToolResource(mcpServerLabel2));
 CreateRunStreamingOptions options = new()
 {
     ToolResources = toolResources
 };
 ```
 
-5 Start the streaming update loop. When asked, we will approve using tool.
+5. To simplify the code we will use `PrintActivityStep` to display functions called and along with their parameters.
+
+```C# Snippet:AgentsMCPStreaming_PrintActivityStep
+private static void PrintActivityStep(RunStep step)
+{
+    if (step.StepDetails is RunStepActivityDetails activityDetails)
+    {
+        foreach (RunStepDetailsActivity activity in activityDetails.Activities)
+        {
+            foreach (KeyValuePair<string, ActivityFunctionDefinition> activityFunction in activity.Tools)
+            {
+                Console.WriteLine($"The function {activityFunction.Key} with description \"{activityFunction.Value.Description}\" will be called.");
+                if (activityFunction.Value.Parameters.Properties.Count > 0)
+                {
+                    Console.WriteLine("Function parameters:");
+                    foreach (KeyValuePair<string, FunctionArgument> arg in activityFunction.Value.Parameters.Properties)
+                    {
+                        Console.WriteLine($"\t{arg.Key}");
+                        Console.WriteLine($"\t\tType: {arg.Value.Type}");
+                        if (!string.IsNullOrEmpty(arg.Value.Description))
+                            Console.WriteLine($"\t\tDescription: {arg.Value.Description}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("This function has no parameters");
+                }
+            }
+        }
+    }
+}
+```
+
+6. Start the streaming update loop. When asked, we will approve using tool.
 
 Synchronous sample:
 ```C# Snippet:AgentsMCPStreaming_UpdateCycle
@@ -112,6 +150,10 @@ do
         else if (streamingUpdate is MessageContentUpdate contentUpdate)
         {
             Console.Write(contentUpdate.Text);
+        }
+        else if (streamingUpdate is RunStepUpdate runStepUpdate)
+        {
+            PrintActivityStep(runStepUpdate.Value);
         }
         else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
         {
@@ -157,6 +199,10 @@ do
         else if (streamingUpdate is MessageContentUpdate contentUpdate)
         {
             Console.Write(contentUpdate.Text);
+        }
+        else if (streamingUpdate is RunStepUpdate runStepUpdate)
+        {
+            PrintActivityStep(runStepUpdate.Value);
         }
         else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
         {

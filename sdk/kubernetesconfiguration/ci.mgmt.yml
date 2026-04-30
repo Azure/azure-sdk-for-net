@@ -1,18 +1,6 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/kubernetesconfiguration/ci.mgmt.yml
-    - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -21,3 +9,9 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.KubernetesConfiguration
       safeName: AzureResourceManagerKubernetesConfiguration
+    - name: Azure.Provisioning.KubernetesConfiguration
+      safeName: AzureProvisioningKubernetesConfiguration
+    - name: Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
+      safeName: AzureResourceManagerKubernetesConfigurationPrivateLinkScopes
+    - name: Azure.ResourceManager.KubernetesConfiguration.Extensions
+      safeName: AzureResourceManagerKubernetesConfigurationExtensions

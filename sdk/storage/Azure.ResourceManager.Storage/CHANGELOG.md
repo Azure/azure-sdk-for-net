@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,37 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.2 (2026-04-02)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.52.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+- Migrated from AutoRest/Swagger to TypeSpec-based generation.
+
+## 1.6.1 (2026-03-10)
+
+### Bugs Fixed
+
+- Fixed `ActiveDirectoryDomainGuid` deserialization to handle empty string values returned by the service ([#56903](https://github.com/Azure/azure-sdk-for-net/issues/56903))
+
+## 1.6.0 (2025-10-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-01' to 'package-2025-06'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/1e7684349abdacee94cbf89200f319cd49e323f2/specification/storage/resource-manager/readme.md.
+    - Supported new property GeoPriorityReplicationStatus.IsBlobEnabled on Storage accounts.
+    - Supported new ObjectReplicationPolicy Properties: PriorityReplication.Enabled.
+
+## 1.5.0 (2025-09-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-01' to 'package-2025-01'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/9e8f84cab64ffb562abbb0790f2b1e7a707b5ad6/specification/storage/resource-manager/readme.md.
+    - Supported new property isSmbOauth on Storage accounts.
+    - Supported new properties Zone and ZonePlacementPolicy on Storage accounts.
+    - Supported new property EncryptionInTransit in NFS and SMB settings.
 
 ## 1.4.4 (2025-07-28)
 
@@ -330,21 +361,21 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
 ```
 ```C# Snippet:Create_Storage_Account
-string accountName = "myaccount";
-string resourceGroupName = "myResourceGroup";
-ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
-StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
-StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+        string accountName = "myaccount";
+        string resourceGroupName = "myResourceGroup";
+        ArmClient client = new ArmClient(new DefaultAzureCredential());
+        ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+        StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
+        StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
+        StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+        {
+            Tags =
 {
-    Tags =
-    {
-        ["key1"] = "value1",
-        ["key2"] = "value2"
-    }
-};
-StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
+    ["key1"] = "value1",
+    ["key2"] = "value2"
+}
+        };
+        StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
 ```
 
 #### Object Model Changes

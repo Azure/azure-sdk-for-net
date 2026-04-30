@@ -2,13 +2,25 @@
 
 ## 7.21.0-beta.1 (Unreleased)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed a race condition in `AmqpSender` where concurrent calls to `CreateMessageBatchAsync` during initial AMQP link creation could observe an inconsistent `MaxBatchSize`, causing a spurious `ArgumentOutOfRangeException`. ([#56301](https://github.com/Azure/azure-sdk-for-net/issues/56301))
+
+- The sender now reads the `com.microsoft:max-message-batch-size` vendor property from the AMQP link to correctly limit batch size on Premium large-message entities, where `max-message-size` can be up to 100 MB but the batch limit is 1 MB. The 4,500 message count cap on batches has been removed as the service does not enforce a count limit. ([#44914](https://github.com/Azure/azure-sdk-for-net/issues/44914))
+
 ### Other Changes
+
+- Several areas of the AMQP transport integration have been cleaned up, modernized, and made more efficient.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 7.20.1 (2025-06-12)
 
@@ -246,6 +258,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ## 7.13.0 (2023-03-08)
 
 ### Acknowledgments
+
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_

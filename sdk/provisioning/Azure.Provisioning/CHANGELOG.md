@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.6.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,79 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0-beta.1 (2026-03-11)
+
+### Features Added
+
+- Added `Condition` property to `ResourceBicepMetadata` to support conditional resource deployment. The condition generates Bicep `if (condition)` syntax and accepts literal boolean values, parameter references, or complex expressions.
+
+## 1.5.0 (2026-03-04)
+
+### Features Added
+
+- Regenerated from the latest `Azure.ResourceManager` (1.14.0).
+- Added `IsolationScope` property to `UserAssignedIdentity` resource to support regional restrictions on identity assignment.
+- Added `ResourceVersions` to `SubscriptionPolicyDefinition` and `SubscriptionPolicySetDefinition` resources.
+- Updated default API versions for `ArmDeployment` (2023-07-01 → 2025-04-01), `Subscription` (2019-10-01 → 2022-12-01), `SubscriptionPolicyDefinition`, and `SubscriptionPolicySetDefinition` resources.
+- Added `ResourceBicepMetadata` class (renamed from `BicepMetadata` introduced in 1.5.0-beta.1) that provides a clean, type-safe way to set Bicep metadata on resources.
+
+
+## 1.5.0-beta.1 (2026-01-23)
+
+### Features Added
+
+- Added `BicepMetadata` class that provides a clean, type-safe way to set Bicep metadata on resources:
+    - Description - Adds `@description('...')` decorator
+    - BatchSize - Adds `@batchSize(n)` decorator for loop deployments
+    - OnlyIfNotExists - Adds `@onlyIfNotExists()` decorator
+- Added `BicepMetadata` property on `ProvisionableResource`
+
+### Bugs Fixed
+
+- Fixed `PropertyName` in `Self` reference for `IBicepValue` instances of collection items to include its index (for list) or its key (for dictionary) to avoid colliding with its enclosing collection's property name. (#54802)
+
+## 1.4.0 (2025-12-10)
+
+### Features Added
+
+- Added extension method `BicepValueExtensions.ToBicepExpression` which converts any `IBicepValue` into `BicepExpression` to build up complex expressions in bicep. For more details, please refer to the documents in `README`.
+
+### Bugs Fixed
+
+- Enabled the ability to assign expressions into a property with type of a `ProvisionableConstruct` via low level APIs.
+- Fixed exception when output variable has a type of array or object.
+- Fixed bug when indexing output list or dictionary, a `KeyNotFoundException` was always thrown. ([#48491](https://github.com/Azure/azure-sdk-for-net/issues/48491))
+
+## 1.4.0-beta.3 (2025-11-26)
+
+### Bugs Fixed
+
+- Fixed bug when assigning property to a collection throwing exceptions. ([#53862](https://github.com/Azure/azure-sdk-for-net/issues/53862))
+
+## 1.4.0-beta.2 (2025-11-10)
+
+### Features Added
+
+- Added extension method `BicepValueExtensions.ToBicepExpression` which converts any `IBicepValue` into `BicepExpression` to build up complex expressions in bicep. For more details, please refer to the documents in `README`.
+- Added `BicepFunction.GetResourceId` corresponding to bicep built-in function `resourceId`.
+- Added `BicepFunction.GetExtensionResourceId` corresponding to bicep built-in function `extensionResourceId`.
+
+### Bugs Fixed
+
+- Enabled the ability to assign expressions into a property with type of a `ProvisionableConstruct` via low level APIs.
+- Fixed exception when output variable has a type of array or object.
+- Fixed bug when indexing output list or dictionary, a `KeyNotFoundException` was always thrown. ([#48491](https://github.com/Azure/azure-sdk-for-net/issues/48491))
+
+### Other Changes
+
+- Now collection types (`BicepList<T>` and `BicepDictionary<T>`) would be able to force to be empty. ([#53346](https://github.com/Azure/azure-sdk-for-net/issues/53346))
+
+## 1.4.0-beta.1 (2025-09-03)
+
+### Features Added
+
+- Added a new protected API in `ProvisionableConstruct` to support a `ProvisionableResource` as property of another `ProvisionableConstruct`.
 
 ## 1.3.0 (2025-08-01)
 

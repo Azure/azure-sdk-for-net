@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.IotOperations;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotOperations.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableIotOperationsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableIotOperationsResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableIotOperationsResourceGroupResource for mocking. </summary>
         protected MockableIotOperationsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableIotOperationsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableIotOperationsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableIotOperationsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of IotOperationsInstanceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IotOperationsInstanceResources and their operations over a IotOperationsInstanceResource. </returns>
+        /// <summary> Gets a collection of IotOperationsInstances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of IotOperationsInstances and their operations over a IotOperationsInstanceResource. </returns>
         public virtual IotOperationsInstanceCollection GetIotOperationsInstances()
         {
             return GetCachedClient(client => new IotOperationsInstanceCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instance_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<IotOperationsInstanceResource>> GetIotOperationsInstanceAsync(string instanceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+
             return await GetIotOperationsInstances().GetAsync(instanceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instance_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         [ForwardsClientCalls]
         public virtual Response<IotOperationsInstanceResource> GetIotOperationsInstance(string instanceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+
             return GetIotOperationsInstances().Get(instanceName, cancellationToken);
         }
     }

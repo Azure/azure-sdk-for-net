@@ -1,14 +1,100 @@
 # Release History
 
-## 1.48.0-beta.1 (Unreleased)
+## 1.55.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Added `AzureLocation.DenmarkEast` for the Denmark East Azure region.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed `AzureDeveloperCliCredential` to correctly parse error messages from Azure Developer CLI v1.23.7 and later, which previously caused raw JSON to surface in `AuthenticationFailedException` instead of the underlying error text.
+
 ### Other Changes
+
+## 1.54.0 (2026-04-23)
+
+### Bugs Fixed
+
+- Removed duplicate top-level `required: ["CredentialSource"]` from the `credential` definition in `ConfigurationSchema.json` to prevent duplicate entries when the schema is merged with `System.ClientModel`'s schema.
+
+## 1.53.0 (2026-04-09)
+
+### Other Changes
+
+- `Azure.Identity` credential types are now included in `Azure.Core`, enabling SDK libraries to provide configuration-driven DI extensions (e.g., `AddAzureSecretClient`) without requiring a direct dependency on `Azure.Identity`.
+
+## 1.52.0 (2026-03-23)
+
+### Features Added
+
+- Added `IndonesiaCentral`, `NewZealandNorth`, and `MalaysiaWest` locations to `AzureLocation` struct.
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for `AzureClients` configuration in `appsettings.json`, including `Retry` and `Diagnostics` options.
+
+### Bugs Fixed
+
+- Fixed implicit conversion operators to not throw exceptions on null inputs per Framework Design Guidelines. Operators now return safe defaults: `null` for reference types, `default` for value types.
+- Fixed `RequestContent.Dispose()` to be idempotent and thread-safe, preventing `ArrayPool` buffers from being returned multiple times when disposed concurrently or repeatedly.
+- Fixed `HttpClientTransport` to correctly set the `Host` header on outgoing requests when explicitly specified, rather than falling through to `TryAddWithoutValidation`.
+
+### Breaking Changes
+
+- Added nullability annotations to implicit conversion operator parameters for `Response<T>`, `AzureLocation`, `ContentType`, `ResourceType`, `RequestContent`, and `DynamicData` to indicate that null is a valid input. This change was made because throwing exceptions from implicit conversions violates the [Framework Design Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/operator-overloads).
+- Updated `RequestContent` implicit conversion operators to return nullable `RequestContent?` to accurately reflect that null inputs produce null outputs.
+
+## 1.51.1 (2026-02-04)
+
+### Features Added
+
+- Update the APIs for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection to enable Azure.Identity use cases.
+- Updated BCL dependencies to 10.x.
+
+## 1.51.0 (2026-01-29)
+
+### Features Added
+
+- Added core support for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection.
+- Implements support for client certificate rotation in the Azure.Core transport layer to enable dynamic token binding scenarios. The changes allow transport instances to be updated with new client certificate configurations at runtime without requiring full pipeline reconstruction.
+
+### Bugs Fixed
+
+- Fixed `NullReferenceException` when calling `GetHashCode()` on `default(AzureLocation)`.
+
+## 1.50.0 (2025-11-05)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Azure.Core library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- Adopt System.ClientModel 1.8.0
+
+### Other Changes
+
+- Several performance and efficiency improvements were made to how request content is created and managed.   _([#52488](https://github.com/Azure/azure-sdk-for-net/pull/52488), a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 1.49.0 (2025-09-22)
+
+### Features Added
+
+- Adopt System.ClientModel 1.7.0
+
+## 1.48.0 (2025-09-09)
+
+### Bugs Fixed
+
+- Fixed an issue that prevented unbranded generated clients from utilizing an instance of `TokenCredential` with APIs that accept `AuthenticationTokenProvider`.
+
+## 1.47.3 (2025-08-20)
+
+### Features Added
+
+- Adopt System.ClientModel 1.6.1
 
 ## 1.47.2 (2025-08-11)
 

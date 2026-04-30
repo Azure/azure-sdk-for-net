@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal class ContainerServiceTrustedAccessRoleBindingOperationSource : IOperationSource<ContainerServiceTrustedAccessRoleBindingResource>
+    /// <summary></summary>
+    internal partial class ContainerServiceTrustedAccessRoleBindingOperationSource : IOperationSource<ContainerServiceTrustedAccessRoleBindingResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ContainerServiceTrustedAccessRoleBindingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ContainerServiceTrustedAccessRoleBindingResource IOperationSource<ContainerServiceTrustedAccessRoleBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ContainerServiceTrustedAccessRoleBindingData data = ContainerServiceTrustedAccessRoleBindingData.DeserializeContainerServiceTrustedAccessRoleBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ContainerServiceTrustedAccessRoleBindingResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ContainerServiceTrustedAccessRoleBindingResource> IOperationSource<ContainerServiceTrustedAccessRoleBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
-            return await Task.FromResult(new ContainerServiceTrustedAccessRoleBindingResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ContainerServiceTrustedAccessRoleBindingData data = ContainerServiceTrustedAccessRoleBindingData.DeserializeContainerServiceTrustedAccessRoleBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerServiceTrustedAccessRoleBindingResource(_client, data);
         }
     }
 }

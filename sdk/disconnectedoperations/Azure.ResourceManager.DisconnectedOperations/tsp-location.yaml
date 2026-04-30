@@ -1,0 +1,6 @@
+directory: specification/edge/Microsoft.Edge.DisconnectedOperations.Management
+commit: 35275d315efee7fa79b6661c29cb3f1c05e86b76
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+- specification/edge/Microsoft.Edge.Shared
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

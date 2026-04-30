@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of an application gateway SKU. </summary>
+        [WirePath("name")]
         public ApplicationGatewaySkuName? Name { get; set; }
         /// <summary> Tier of an application gateway. </summary>
+        [WirePath("tier")]
         public ApplicationGatewayTier? Tier { get; set; }
         /// <summary> Capacity (instance count) of an application gateway. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
         /// <summary> Family of an application gateway SKU. </summary>
+        [WirePath("family")]
         public ApplicationGatewaySkuFamily? Family { get; set; }
     }
 }

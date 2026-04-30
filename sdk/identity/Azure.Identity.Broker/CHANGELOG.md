@@ -1,16 +1,55 @@
 # Release History
 
-## 1.3.0-beta.5 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Deprecated `SharedTokenCacheCredentialBrokerOptions`. The supporting credential (`SharedTokenCacheCredential`) was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2026-04-14)
+
+### Other Changes
+
+- Updated dependency from `Azure.Identity` to `Azure.Core` directly, as the `Azure.Identity` types moved to `Azure.Core`.
+- **This version is required when using `Azure.Identity` 1.21.0 or later (or `Azure.Core` 1.53.0 or later).** Older `Azure.Identity.Broker` versions are not compatible with the type consolidation. See the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/MigrationGuide.md#azureidentitybroker-compatibility) for details.
+
+## 1.5.0 (2026-04-02)
+
+### Features Added
+
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for Azure.Identity.Broker credential configuration in `appsettings.json`.
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.83.3.
+
+## 1.4.0 (2026-02-26)
+
+### Features Added
+
+- Added experimental `Microsoft.Extensions.Configuration` and `Microsoft.Extensions.DependencyInjection` integration for Azure SDK clients. For details, see the [Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md) documentation.
+
+## 1.3.1 (2025-11-19)
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.78.0
+- Updated `Azure.Identity` dependency to version 1.17.1
+
+## 1.3.0 (2025-09-04)
+
+### Breaking Changes
+
+- Deprecated `SharedTokenCacheCredentialBrokerOptions`. The supporting credential (`SharedTokenCacheCredential`) was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead.
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.76.0
+- Updated `Azure.Identity` dependency to version 1.15.0
 
 ## 1.3.0-beta.4 (2025-07-11)
 

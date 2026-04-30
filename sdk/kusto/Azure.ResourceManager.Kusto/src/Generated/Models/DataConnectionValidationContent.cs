@@ -66,12 +66,14 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The name of the data connection. </summary>
+        [WirePath("dataConnectionName")]
         public string DataConnectionName { get; set; }
         /// <summary>
         /// The data connection properties to validate.
         /// Please note <see cref="KustoDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="KustoCosmosDBDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoEventHubDataConnection"/> and <see cref="KustoIotHubDataConnection"/>.
         /// </summary>
+        [WirePath("properties")]
         public KustoDataConnectionData Properties { get; set; }
     }
 }

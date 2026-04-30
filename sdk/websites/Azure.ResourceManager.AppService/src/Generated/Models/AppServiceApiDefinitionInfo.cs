@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Information about the formal API definition for the app. </summary>
+    /// <summary>
+    /// Information about the formal API definition for the app.
+    /// Serialized Name: ApiDefinitionInfo
+    /// </summary>
     internal partial class AppServiceApiDefinitionInfo
     {
         /// <summary>
@@ -51,16 +54,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceApiDefinitionInfo"/>. </summary>
-        /// <param name="uri"> The URL of the API definition. </param>
+        /// <param name="apiDefinitionUriStringValue">
+        /// The URL of the API definition.
+        /// Serialized Name: ApiDefinitionInfo.url
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceApiDefinitionInfo(Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppServiceApiDefinitionInfo(string apiDefinitionUriStringValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Uri = uri;
+            ApiDefinitionUriStringValue = apiDefinitionUriStringValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The URL of the API definition. </summary>
-        [WirePath("url")]
-        public Uri Uri { get; set; }
+        /// <summary>
+        /// The URL of the API definition.
+        /// Serialized Name: ApiDefinitionInfo.url
+        /// </summary>
+        public string ApiDefinitionUriStringValue { get; set; }
     }
 }

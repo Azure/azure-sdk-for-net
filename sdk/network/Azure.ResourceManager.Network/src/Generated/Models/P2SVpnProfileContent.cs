@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> VPN client authentication method. </summary>
+        [WirePath("authenticationMethod")]
         public NetworkAuthenticationMethod? AuthenticationMethod { get; set; }
     }
 }

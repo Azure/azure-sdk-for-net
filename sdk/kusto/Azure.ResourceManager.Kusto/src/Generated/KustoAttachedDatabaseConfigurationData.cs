@@ -87,22 +87,31 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
         /// <summary> The name of the database which you would like to attach, use * if you want to follow all current and future databases. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> The resource id of the cluster where the databases you would like to attach reside. </summary>
+        [WirePath("properties.clusterResourceId")]
         public ResourceIdentifier ClusterResourceId { get; set; }
         /// <summary> The list of databases from the clusterResourceId which are currently attached to the cluster. </summary>
+        [WirePath("properties.attachedDatabaseNames")]
         public IReadOnlyList<string> AttachedDatabaseNames { get; }
         /// <summary> The default principals modification kind. </summary>
+        [WirePath("properties.defaultPrincipalsModificationKind")]
         public KustoDatabaseDefaultPrincipalsModificationKind? DefaultPrincipalsModificationKind { get; set; }
         /// <summary> Table level sharing specifications. </summary>
+        [WirePath("properties.tableLevelSharingProperties")]
         public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; set; }
         /// <summary> Overrides the original database name. Relevant only when attaching to a specific database. </summary>
+        [WirePath("properties.databaseNameOverride")]
         public string DatabaseNameOverride { get; set; }
         /// <summary> Adds a prefix to the attached databases name. When following an entire cluster, that prefix would be added to all of the databases original names from leader cluster. </summary>
+        [WirePath("properties.databaseNamePrefix")]
         public string DatabaseNamePrefix { get; set; }
     }
 }

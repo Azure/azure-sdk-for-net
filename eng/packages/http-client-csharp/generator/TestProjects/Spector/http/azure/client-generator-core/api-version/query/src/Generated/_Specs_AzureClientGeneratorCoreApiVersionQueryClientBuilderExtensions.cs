@@ -14,7 +14,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class _Specs_AzureClientGeneratorCoreApiVersionQueryClientBuilderExtensions
     {
-        public static IAzureClientBuilder<QueryClient, QueryClientOptions> AddQueryClient<TBuilder>(this TBuilder builder, Uri endpoint, string version)
+        public static IAzureClientBuilder<QueryClient, QueryClientOptions> AddQueryClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]

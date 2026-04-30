@@ -11,19 +11,6 @@ trigger:
     exclude:
     - sdk/purview/Azure.ResourceManager.Purview/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/purview/
-    exclude:
-    - sdk/purview/Azure.ResourceManager.Purview/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -38,23 +25,7 @@ extends:
       safeName: AzureAnalyticsPurviewWorkflows
       triggeringPaths:
       - Azure.Analytics.Purview.Shared
-    - name: Azure.Analytics.Purview.Account
-      safeName: AzureAnalyticsPurviewAccount
-      triggeringPaths:
-      - Azure.Analytics.Purview.Shared
-    - name: Azure.Analytics.Purview.Administration
-      safeName: AzureAnalyticsPurviewAdministration
-      triggeringPaths:
-      - Azure.Analytics.Purview.Shared
-    - name: Azure.Analytics.Purview.Catalog
-      safeName: AzureAnalyticsPurviewCatalog
-      triggeringPaths:
-      - Azure.Analytics.Purview.Shared
     - name: Azure.Analytics.Purview.DataMap
       safeName: AzureAnalyticsPurviewDataMap
-      triggeringPaths:
-      - Azure.Analytics.Purview.Shared
-    - name: Azure.Analytics.Purview.Scanning
-      safeName: AzureAnalyticsPurviewScanning
       triggeringPaths:
       - Azure.Analytics.Purview.Shared

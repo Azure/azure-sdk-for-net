@@ -10,48 +10,14 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary>
-    /// A class representing the FrontDoorOrigin data model.
-    /// Azure Front Door origin is the source of the content being delivered via Azure Front Door. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
-    /// Serialized Name: AFDOrigin
-    /// </summary>
+    /// <summary> Azure Front Door origin is the source of the content being delivered via Azure Front Door. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins. </summary>
     public partial class FrontDoorOriginData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginData"/>. </summary>
         public FrontDoorOriginData()
@@ -59,151 +25,248 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="originGroupName">
-        /// The name of the origin group which contains this origin.
-        /// Serialized Name: AFDOrigin.properties.originGroupName
-        /// </param>
-        /// <param name="origin">
-        /// Resource reference to the Azure origin resource.
-        /// Serialized Name: AFDOrigin.properties.azureOrigin
-        /// </param>
-        /// <param name="hostName">
-        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
-        /// Serialized Name: AFDOrigin.properties.hostName
-        /// </param>
-        /// <param name="httpPort">
-        /// The value of the HTTP port. Must be between 1 and 65535.
-        /// Serialized Name: AFDOrigin.properties.httpPort
-        /// </param>
-        /// <param name="httpsPort">
-        /// The value of the HTTPS port. Must be between 1 and 65535.
-        /// Serialized Name: AFDOrigin.properties.httpsPort
-        /// </param>
-        /// <param name="originHostHeader">
-        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
-        /// Serialized Name: AFDOrigin.properties.originHostHeader
-        /// </param>
-        /// <param name="priority">
-        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
-        /// Serialized Name: AFDOrigin.properties.priority
-        /// </param>
-        /// <param name="weight">
-        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
-        /// Serialized Name: AFDOrigin.properties.weight
-        /// </param>
-        /// <param name="sharedPrivateLinkResource">
-        /// The properties of the private link resource for private origin.
-        /// Serialized Name: AFDOrigin.properties.sharedPrivateLinkResource
-        /// </param>
-        /// <param name="enabledState">
-        /// Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool.
-        /// Serialized Name: AFDOrigin.properties.enabledState
-        /// </param>
-        /// <param name="enforceCertificateNameCheck">
-        /// Whether to enable certificate name check at origin level
-        /// Serialized Name: AFDOrigin.properties.enforceCertificateNameCheck
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status
-        /// Serialized Name: AFDOrigin.properties.provisioningState
-        /// </param>
-        /// <param name="deploymentStatus"> Serialized Name: AFDOrigin.properties.deploymentStatus. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string originGroupName, WritableSubResource origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The JSON object that contains the properties of the origin. </param>
+        internal FrontDoorOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorOriginProperties properties) : base(id, name, resourceType, systemData)
         {
-            OriginGroupName = originGroupName;
-            Origin = origin;
-            HostName = hostName;
-            HttpPort = httpPort;
-            HttpsPort = httpsPort;
-            OriginHostHeader = originHostHeader;
-            Priority = priority;
-            Weight = weight;
-            SharedPrivateLinkResource = sharedPrivateLinkResource;
-            EnabledState = enabledState;
-            EnforceCertificateNameCheck = enforceCertificateNameCheck;
-            ProvisioningState = provisioningState;
-            DeploymentStatus = deploymentStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// The name of the origin group which contains this origin.
-        /// Serialized Name: AFDOrigin.properties.originGroupName
-        /// </summary>
-        public string OriginGroupName { get; }
-        /// <summary>
-        /// Resource reference to the Azure origin resource.
-        /// Serialized Name: AFDOrigin.properties.azureOrigin
-        /// </summary>
-        internal WritableSubResource Origin { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier OriginId
+        /// <summary> The JSON object that contains the properties of the origin. </summary>
+        [WirePath("properties")]
+        internal FrontDoorOriginProperties Properties { get; set; }
+
+        /// <summary> The name of the origin group which contains this origin. </summary>
+        [WirePath("properties.originGroupName")]
+        public string OriginGroupName
         {
-            get => Origin is null ? default : Origin.Id;
-            set
+            get
             {
-                if (Origin is null)
-                    Origin = new WritableSubResource();
-                Origin.Id = value;
+                return Properties is null ? default : Properties.OriginGroupName;
             }
         }
 
-        /// <summary>
-        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
-        /// Serialized Name: AFDOrigin.properties.hostName
-        /// </summary>
-        public string HostName { get; set; }
-        /// <summary>
-        /// The value of the HTTP port. Must be between 1 and 65535.
-        /// Serialized Name: AFDOrigin.properties.httpPort
-        /// </summary>
-        public int? HttpPort { get; set; }
-        /// <summary>
-        /// The value of the HTTPS port. Must be between 1 and 65535.
-        /// Serialized Name: AFDOrigin.properties.httpsPort
-        /// </summary>
-        public int? HttpsPort { get; set; }
-        /// <summary>
-        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
-        /// Serialized Name: AFDOrigin.properties.originHostHeader
-        /// </summary>
-        public string OriginHostHeader { get; set; }
-        /// <summary>
-        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
-        /// Serialized Name: AFDOrigin.properties.priority
-        /// </summary>
-        public int? Priority { get; set; }
-        /// <summary>
-        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
-        /// Serialized Name: AFDOrigin.properties.weight
-        /// </summary>
-        public int? Weight { get; set; }
-        /// <summary>
-        /// The properties of the private link resource for private origin.
-        /// Serialized Name: AFDOrigin.properties.sharedPrivateLinkResource
-        /// </summary>
-        public SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get; set; }
-        /// <summary>
-        /// Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool.
-        /// Serialized Name: AFDOrigin.properties.enabledState
-        /// </summary>
-        public EnabledState? EnabledState { get; set; }
-        /// <summary>
-        /// Whether to enable certificate name check at origin level
-        /// Serialized Name: AFDOrigin.properties.enforceCertificateNameCheck
-        /// </summary>
-        public bool? EnforceCertificateNameCheck { get; set; }
-        /// <summary>
-        /// Provisioning status
-        /// Serialized Name: AFDOrigin.properties.provisioningState
-        /// </summary>
-        public FrontDoorProvisioningState? ProvisioningState { get; }
-        /// <summary> Serialized Name: AFDOrigin.properties.deploymentStatus. </summary>
-        public FrontDoorDeploymentStatus? DeploymentStatus { get; }
+        /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
+        [WirePath("properties.hostName")]
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.HostName = value;
+            }
+        }
+
+        /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
+        [WirePath("properties.httpPort")]
+        public int? HttpPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.HttpPort = value;
+            }
+        }
+
+        /// <summary> The value of the HTTPS port. Must be between 1 and 65535. </summary>
+        [WirePath("properties.httpsPort")]
+        public int? HttpsPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpsPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.HttpsPort = value;
+            }
+        }
+
+        /// <summary> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </summary>
+        [WirePath("properties.originHostHeader")]
+        public string OriginHostHeader
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginHostHeader;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.OriginHostHeader = value;
+            }
+        }
+
+        /// <summary> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </summary>
+        [WirePath("properties.priority")]
+        public int? Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.Priority = value;
+            }
+        }
+
+        /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
+        [WirePath("properties.weight")]
+        public int? Weight
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Weight;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.Weight = value;
+            }
+        }
+
+        /// <summary> The properties of the private link resource for private origin. </summary>
+        [WirePath("properties.sharedPrivateLinkResource")]
+        public SharedPrivateLinkResourceProperties SharedPrivateLinkResource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SharedPrivateLinkResource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.SharedPrivateLinkResource = value;
+            }
+        }
+
+        /// <summary> Origin capacity settings for an origin. </summary>
+        [WirePath("properties.originCapacityResource")]
+        public FrontDoorOriginCapacitySettings OriginCapacityResource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginCapacityResource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.OriginCapacityResource = value;
+            }
+        }
+
+        /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
+        [WirePath("properties.enabledState")]
+        public EnabledState? EnabledState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.EnabledState = value;
+            }
+        }
+
+        /// <summary> Whether to enable certificate name check at origin level. </summary>
+        [WirePath("properties.enforceCertificateNameCheck")]
+        public bool? EnforceCertificateNameCheck
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnforceCertificateNameCheck;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.EnforceCertificateNameCheck = value;
+            }
+        }
+
+        /// <summary> Provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
+        public FrontDoorProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("properties.deploymentStatus")]
+        public FrontDoorDeploymentStatus? DeploymentStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentStatus;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.azureOrigin.id")]
+        public ResourceIdentifier OriginId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.OriginId = value;
+            }
+        }
     }
 }

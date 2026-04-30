@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Azure.Developer.Playwright.MSTest;
 
 /// <summary>
-/// MSTest setup fixture to initialize Playwright Service.
+/// MSTest setup fixture to initialize Playwright Workspaces.
 /// </summary>
 public class PlaywrightServiceBrowserMSTest : PlaywrightServiceBrowserClient
 {

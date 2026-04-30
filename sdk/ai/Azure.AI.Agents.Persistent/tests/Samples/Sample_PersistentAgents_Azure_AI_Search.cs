@@ -4,11 +4,11 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using System.Threading;
 
 namespace Azure.AI.Agents.Persistent.Tests;
 
@@ -48,8 +48,8 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "my-agent",
-           instructions: "You are a helpful agent.",
-           tools: [ new AzureAISearchToolDefinition() ],
+           instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
+           tools: [new AzureAISearchToolDefinition()],
            toolResources: toolResource);
         #endregion
         #region Snippet:AgentsAzureAISearchExample_CreateRun
@@ -158,7 +158,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         PersistentAgent agent = client.Administration.CreateAgent(
            model: modelDeploymentName,
            name: "my-agent",
-           instructions: "You are a helpful agent.",
+           instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
            tools: [new AzureAISearchToolDefinition()],
            toolResources: toolResource);
         #endregion

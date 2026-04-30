@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +10,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetApp.Models;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
-using FluentAssertions;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Polly.Contrib.WaitAndRetry;
-using Polly;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TestFramework;
+using FluentAssertions;
+using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using System.Collections;
+using Polly;
+using Polly.Contrib.WaitAndRetry;
 
 namespace Azure.ResourceManager.NetApp.Tests.Helpers
 {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             return capactiyPoolResource1;
         }
 
-        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "", string volumeType = "")
+        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "", string volumeType = "", string growPool = "")
         {
             location = string.IsNullOrEmpty(location) ? DefaultLocationString : location;
             if (volumeCollection == null)
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             }
             if (subnetId == null)
             {
-                subnetId =  DefaultSubnetId;
+                subnetId = DefaultSubnetId;
             }
             usageThreshold ??= _defaultUsageThreshold;
 
@@ -340,6 +340,12 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             {
                 volumeData.VolumeType = volumeType;
             }
+
+            if (!string.IsNullOrWhiteSpace(growPool))
+            {
+                volumeData.AcceptGrowCapacityPoolForShortTermCloneSplit = growPool;
+            }
+
             volumeData.Tags.InitializeFrom(DefaultTags);
             NetAppVolumeResource volumeResource = (await volumeCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, volumeData)).Value;
             return volumeResource;
@@ -354,13 +360,14 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             if (vnetName == null)
             {
                 vnetName = Recording.GenerateAssetName("vnet-");
-            };
+            }
+            ;
             if (string.IsNullOrWhiteSpace(location))
             {
                 location = DefaultLocationString;
             }
             location ??= DefaultLocationString;
-            ServiceDelegation delegation =  new() { Name = "netAppVolumes", ServiceName = "Microsoft.Netapp/volumes" } ;
+            ServiceDelegation delegation = new() { Name = "netAppVolumes", ServiceName = "Microsoft.Netapp/volumes" };
             var vnet = new VirtualNetworkData()
             {
                 Location = location,

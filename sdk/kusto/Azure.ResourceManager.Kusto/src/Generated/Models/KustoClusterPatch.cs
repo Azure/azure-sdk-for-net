@@ -139,38 +139,54 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The SKU of the cluster. </summary>
+        [WirePath("sku")]
         public KustoSku Sku { get; set; }
         /// <summary> The availability zones of the cluster. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> The identity of the cluster, if configured. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The state of the resource. </summary>
+        [WirePath("properties.state")]
         public KustoClusterState? State { get; }
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
         /// <summary> The cluster URI. </summary>
+        [WirePath("properties.uri")]
         public Uri Uri { get; }
         /// <summary> The cluster data ingestion URI. </summary>
+        [WirePath("properties.dataIngestionUri")]
         public Uri DataIngestionUri { get; }
         /// <summary> The reason for the cluster's current state. </summary>
+        [WirePath("properties.stateReason")]
         public string StateReason { get; }
         /// <summary> The cluster's external tenants. </summary>
+        [WirePath("properties.trustedExternalTenants")]
         public IList<KustoClusterTrustedExternalTenant> TrustedExternalTenants { get; }
         /// <summary> Optimized auto scale definition. </summary>
+        [WirePath("properties.optimizedAutoscale")]
         public OptimizedAutoscale OptimizedAutoscale { get; set; }
         /// <summary> A boolean value that indicates if the cluster's disks are encrypted. </summary>
+        [WirePath("properties.enableDiskEncryption")]
         public bool? IsDiskEncryptionEnabled { get; set; }
         /// <summary> A boolean value that indicates if the streaming ingest is enabled. </summary>
+        [WirePath("properties.enableStreamingIngest")]
         public bool? IsStreamingIngestEnabled { get; set; }
         /// <summary> Virtual network definition. </summary>
+        [WirePath("properties.virtualNetworkConfiguration")]
         public KustoClusterVirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
         /// <summary> KeyVault properties for the cluster encryption. </summary>
+        [WirePath("properties.keyVaultProperties")]
         public KustoKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> A boolean value that indicates if the purge operations are enabled. </summary>
+        [WirePath("properties.enablePurge")]
         public bool? IsPurgeEnabled { get; set; }
         /// <summary> List of the cluster's language extensions. </summary>
         internal KustoLanguageExtensionList LanguageExtensions { get; set; }
         /// <summary> The list of language extensions. </summary>
+        [WirePath("properties.languageExtensions.value")]
         public IList<KustoLanguageExtension> LanguageExtensionsValue
         {
             get
@@ -182,32 +198,46 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> A boolean value that indicates if double encryption is enabled. </summary>
+        [WirePath("properties.enableDoubleEncryption")]
         public bool? IsDoubleEncryptionEnabled { get; set; }
         /// <summary> Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public KustoClusterPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The list of ips in the format of CIDR allowed to connect to the cluster. </summary>
+        [WirePath("properties.allowedIpRangeList")]
         public IList<string> AllowedIPRangeList { get; }
         /// <summary> The engine type. </summary>
+        [WirePath("properties.engineType")]
         public KustoClusterEngineType? EngineType { get; set; }
         /// <summary> The cluster's accepted audiences. </summary>
+        [WirePath("properties.acceptedAudiences")]
         public IList<AcceptedAudience> AcceptedAudiences { get; }
         /// <summary> A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days). </summary>
+        [WirePath("properties.enableAutoStop")]
         public bool? IsAutoStopEnabled { get; set; }
         /// <summary> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.restrictOutboundNetworkAccess")]
         public KustoClusterNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
         /// <summary> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </summary>
+        [WirePath("properties.allowedFqdnList")]
         public IList<string> AllowedFqdnList { get; }
         /// <summary> List of callout policies for egress from Cluster. </summary>
+        [WirePath("properties.calloutPolicies")]
         public IList<KustoCalloutPolicy> CalloutPolicies { get; }
         /// <summary> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </summary>
+        [WirePath("properties.publicIPType")]
         public KustoClusterPublicIPType? PublicIPType { get; set; }
         /// <summary> Virtual Cluster graduation properties. </summary>
+        [WirePath("properties.virtualClusterGraduationProperties")]
         public string VirtualClusterGraduationProperties { get; set; }
         /// <summary> A list of private endpoint connections. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<KustoPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Properties of the peer cluster involved in a migration to/from this cluster. </summary>
+        [WirePath("properties.migrationCluster")]
         public MigrationClusterProperties MigrationCluster { get; }
         /// <summary> Indicates whether the cluster is zonal or non-zonal. </summary>
+        [WirePath("properties.zoneStatus")]
         public KustoClusterZoneStatus? ZoneStatus { get; }
     }
 }

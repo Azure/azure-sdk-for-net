@@ -13,43 +13,14 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> Mqtt endpoint Authentication properties. NOTE - only authentication property is allowed per entry. </summary>
     public partial class DataflowEndpointMqttAuthentication
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointMqttAuthentication"/>. </summary>
         /// <param name="method"> Mode of Authentication. </param>
-        public DataflowEndpointMqttAuthentication(MqttAuthMethod method)
+        public DataflowEndpointMqttAuthentication(MqttAuthMethod @method)
         {
-            Method = method;
+            Method = @method;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointMqttAuthentication"/>. </summary>
@@ -58,56 +29,73 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="userAssignedManagedIdentitySettings"> User-assigned managed identity authentication. </param>
         /// <param name="serviceAccountTokenSettings"> Kubernetes service account token authentication. Default audience if not set is aio-internal. </param>
         /// <param name="x509CertificateSettings"> X.509 certificate authentication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointMqttAuthentication(MqttAuthMethod method, DataflowEndpointAuthenticationSystemAssignedManagedIdentity systemAssignedManagedIdentitySettings, DataflowEndpointAuthenticationUserAssignedManagedIdentity userAssignedManagedIdentitySettings, DataflowEndpointAuthenticationServiceAccountToken serviceAccountTokenSettings, DataflowEndpointAuthenticationX509 x509CertificateSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataflowEndpointMqttAuthentication(MqttAuthMethod @method, DataflowEndpointAuthenticationSystemAssignedManagedIdentity systemAssignedManagedIdentitySettings, DataflowEndpointAuthenticationUserAssignedManagedIdentity userAssignedManagedIdentitySettings, DataflowEndpointAuthenticationServiceAccountToken serviceAccountTokenSettings, DataflowEndpointAuthenticationX509 x509CertificateSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Method = method;
+            Method = @method;
             SystemAssignedManagedIdentitySettings = systemAssignedManagedIdentitySettings;
             UserAssignedManagedIdentitySettings = userAssignedManagedIdentitySettings;
             ServiceAccountTokenSettings = serviceAccountTokenSettings;
             X509CertificateSettings = x509CertificateSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowEndpointMqttAuthentication"/> for deserialization. </summary>
-        internal DataflowEndpointMqttAuthentication()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Mode of Authentication. </summary>
         public MqttAuthMethod Method { get; set; }
+
         /// <summary> System-assigned managed identity authentication. </summary>
         internal DataflowEndpointAuthenticationSystemAssignedManagedIdentity SystemAssignedManagedIdentitySettings { get; set; }
+
+        /// <summary> User-assigned managed identity authentication. </summary>
+        public DataflowEndpointAuthenticationUserAssignedManagedIdentity UserAssignedManagedIdentitySettings { get; set; }
+
+        /// <summary> Kubernetes service account token authentication. Default audience if not set is aio-internal. </summary>
+        internal DataflowEndpointAuthenticationServiceAccountToken ServiceAccountTokenSettings { get; set; }
+
+        /// <summary> X.509 certificate authentication. </summary>
+        internal DataflowEndpointAuthenticationX509 X509CertificateSettings { get; set; }
+
         /// <summary> Audience of the service to authenticate against. Optional; defaults to the audience for Service host configuration. </summary>
         public string SystemAssignedManagedIdentityAudience
         {
-            get => SystemAssignedManagedIdentitySettings is null ? default : SystemAssignedManagedIdentitySettings.Audience;
+            get
+            {
+                return SystemAssignedManagedIdentitySettings is null ? default : SystemAssignedManagedIdentitySettings.Audience;
+            }
             set
             {
                 if (SystemAssignedManagedIdentitySettings is null)
+                {
                     SystemAssignedManagedIdentitySettings = new DataflowEndpointAuthenticationSystemAssignedManagedIdentity();
+                }
                 SystemAssignedManagedIdentitySettings.Audience = value;
             }
         }
 
-        /// <summary> User-assigned managed identity authentication. </summary>
-        public DataflowEndpointAuthenticationUserAssignedManagedIdentity UserAssignedManagedIdentitySettings { get; set; }
-        /// <summary> Kubernetes service account token authentication. Default audience if not set is aio-internal. </summary>
-        internal DataflowEndpointAuthenticationServiceAccountToken ServiceAccountTokenSettings { get; set; }
         /// <summary> Audience of the service account. Optional, defaults to the broker internal service account audience. </summary>
         public string ServiceAccountTokenAudience
         {
-            get => ServiceAccountTokenSettings is null ? default : ServiceAccountTokenSettings.Audience;
-            set => ServiceAccountTokenSettings = new DataflowEndpointAuthenticationServiceAccountToken(value);
+            get
+            {
+                return ServiceAccountTokenSettings is null ? default : ServiceAccountTokenSettings.Audience;
+            }
+            set
+            {
+                ServiceAccountTokenSettings = new DataflowEndpointAuthenticationServiceAccountToken(value);
+            }
         }
 
-        /// <summary> X.509 certificate authentication. </summary>
-        internal DataflowEndpointAuthenticationX509 X509CertificateSettings { get; set; }
         /// <summary> Secret reference of the X.509 certificate. </summary>
         public string X509CertificateSecretRef
         {
-            get => X509CertificateSettings is null ? default : X509CertificateSettings.SecretRef;
-            set => X509CertificateSettings = new DataflowEndpointAuthenticationX509(value);
+            get
+            {
+                return X509CertificateSettings is null ? default : X509CertificateSettings.SecretRef;
+            }
+            set
+            {
+                X509CertificateSettings = new DataflowEndpointAuthenticationX509(value);
+            }
         }
     }
 }

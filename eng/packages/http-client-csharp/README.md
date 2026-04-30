@@ -10,6 +10,17 @@ npm install @azure-typespec/http-client-csharp
 
 ## Usage
 
+### Prerequisite
+
+- Install [Node.js](https://nodejs.org/download/) 20 or above. (Verify by running `node --version`)
+- Install [**.NET 10.0 SDK**](https://dotnet.microsoft.com/download/dotnet/10.0) for your specific platform. (or a higher version within the 10.0.\* band)
+
+### Customizing Generated Code
+
+For detailed instructions on how to customize the generated C# code, see the [Customization Guide](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md).
+
+## Emitter usage
+
 1. Via the command line
 
 ```bash
@@ -114,11 +125,11 @@ The name of the generator. By default this is set to `ScmCodeModelGenerator`. Ge
 
 Allows emitter authors to specify the path to a custom emitter package, allowing you to extend the emitter behavior. This should be set to `import.meta.url` if you are using a custom emitter.
 
-### `update-code-model`
+### `plugins`
 
-**Type:** `object`
+**Type:** `array`
 
-Allows emitter authors to specify a custom function to modify the generated code model before emitting. This is useful for modifying the code model before it is passed to the generator.
+Paths to generator plugin assemblies (DLLs) or directories containing plugin assemblies. Each plugin must contain a class that extends GeneratorPlugin.
 
 ### `license`
 

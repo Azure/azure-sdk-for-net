@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OracleDatabase.Models;
 
@@ -13,9 +14,8 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseActionContent))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseBackupData))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseBackupListResult))]
@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseCrossRegionDisasterRecoveryProperties))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseData))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseFromBackupTimestampProperties))]
+    [ModelReaderWriterBuildable(typeof(AutonomousDatabaseLifecycleAction))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseListResult))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseNationalCharacterSetData))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseNationalCharacterSetListResult))]
@@ -74,13 +75,17 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(CloudVmClusterVirtualNetworkAddressData))]
     [ModelReaderWriterBuildable(typeof(CloudVmClusterVirtualNetworkAddressProperties))]
     [ModelReaderWriterBuildable(typeof(CloudVmClusterVirtualNetworkAddressResource))]
+    [ModelReaderWriterBuildable(typeof(ConfigureExascaleCloudExadataInfrastructureDetails))]
     [ModelReaderWriterBuildable(typeof(DBIormConfig))]
     [ModelReaderWriterBuildable(typeof(DBNodeAction))]
     [ModelReaderWriterBuildable(typeof(DBNodeDetails))]
     [ModelReaderWriterBuildable(typeof(DbNodeListResult))]
     [ModelReaderWriterBuildable(typeof(DbServerListResult))]
     [ModelReaderWriterBuildable(typeof(DBServerPatchingDetails))]
+    [ModelReaderWriterBuildable(typeof(DbSystemListResult))]
     [ModelReaderWriterBuildable(typeof(DbSystemShapeListResult))]
+    [ModelReaderWriterBuildable(typeof(DbSystemUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(DbVersionListResult))]
     [ModelReaderWriterBuildable(typeof(DefinedFileSystemConfiguration))]
     [ModelReaderWriterBuildable(typeof(DiagnosticCollectionConfig))]
     [ModelReaderWriterBuildable(typeof(DisasterRecoveryConfigurationDetails))]
@@ -95,6 +100,7 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(ExadbVmClusterResource))]
     [ModelReaderWriterBuildable(typeof(ExadbVmClusterStorageDetails))]
     [ModelReaderWriterBuildable(typeof(ExadbVmClusterUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ExascaleConfigDetails))]
     [ModelReaderWriterBuildable(typeof(ExascaleDBNodeActionResult))]
     [ModelReaderWriterBuildable(typeof(ExascaleDBNodeData))]
     [ModelReaderWriterBuildable(typeof(ExascaleDbNodeListResult))]
@@ -114,6 +120,9 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(GiVersionListResult))]
     [ModelReaderWriterBuildable(typeof(LongTermBackUpScheduleDetails))]
     [ModelReaderWriterBuildable(typeof(MaintenanceMonth))]
+    [ModelReaderWriterBuildable(typeof(NetworkAnchorDnsForwardingRule))]
+    [ModelReaderWriterBuildable(typeof(NetworkAnchorListResult))]
+    [ModelReaderWriterBuildable(typeof(NetworkAnchorUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(OracleApexDetailsType))]
     [ModelReaderWriterBuildable(typeof(OracleAzureSubscriptionsContent))]
     [ModelReaderWriterBuildable(typeof(OracleCustomerContact))]
@@ -123,9 +132,18 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(OracleDBServerData))]
     [ModelReaderWriterBuildable(typeof(OracleDBServerProperties))]
     [ModelReaderWriterBuildable(typeof(OracleDBServerResource))]
+    [ModelReaderWriterBuildable(typeof(OracleDBSystemBaseProperties))]
+    [ModelReaderWriterBuildable(typeof(OracleDBSystemData))]
+    [ModelReaderWriterBuildable(typeof(OracleDBSystemOptions))]
+    [ModelReaderWriterBuildable(typeof(OracleDBSystemPatch))]
+    [ModelReaderWriterBuildable(typeof(OracleDBSystemProperties))]
+    [ModelReaderWriterBuildable(typeof(OracleDBSystemResource))]
     [ModelReaderWriterBuildable(typeof(OracleDBSystemShapeData))]
     [ModelReaderWriterBuildable(typeof(OracleDBSystemShapeProperties))]
     [ModelReaderWriterBuildable(typeof(OracleDBSystemShapeResource))]
+    [ModelReaderWriterBuildable(typeof(OracleDBVersionData))]
+    [ModelReaderWriterBuildable(typeof(OracleDBVersionProperties))]
+    [ModelReaderWriterBuildable(typeof(OracleDBVersionResource))]
     [ModelReaderWriterBuildable(typeof(OracleDnsPrivateViewData))]
     [ModelReaderWriterBuildable(typeof(OracleDnsPrivateViewProperties))]
     [ModelReaderWriterBuildable(typeof(OracleDnsPrivateViewResource))]
@@ -141,8 +159,15 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(OracleGIVersionData))]
     [ModelReaderWriterBuildable(typeof(OracleGIVersionProperties))]
     [ModelReaderWriterBuildable(typeof(OracleGIVersionResource))]
+    [ModelReaderWriterBuildable(typeof(OracleNetworkAnchorData))]
+    [ModelReaderWriterBuildable(typeof(OracleNetworkAnchorPatch))]
+    [ModelReaderWriterBuildable(typeof(OracleNetworkAnchorProperties))]
+    [ModelReaderWriterBuildable(typeof(OracleNetworkAnchorResource))]
+    [ModelReaderWriterBuildable(typeof(OracleResourceAnchorData))]
+    [ModelReaderWriterBuildable(typeof(OracleResourceAnchorPatch))]
+    [ModelReaderWriterBuildable(typeof(OracleResourceAnchorProperties))]
+    [ModelReaderWriterBuildable(typeof(OracleResourceAnchorResource))]
     [ModelReaderWriterBuildable(typeof(OracleSubscriptionData))]
-    [ModelReaderWriterBuildable(typeof(OracleSubscriptionListResult))]
     [ModelReaderWriterBuildable(typeof(OracleSubscriptionPatch))]
     [ModelReaderWriterBuildable(typeof(OracleSubscriptionProperties))]
     [ModelReaderWriterBuildable(typeof(OracleSubscriptionResource))]
@@ -153,6 +178,7 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(PrivateIPAddressesContent))]
     [ModelReaderWriterBuildable(typeof(PrivateIPAddressResult))]
     [ModelReaderWriterBuildable(typeof(RemoveVirtualMachineFromExadbVmClusterDetails))]
+    [ModelReaderWriterBuildable(typeof(ResourceAnchorListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreAutonomousDatabaseDetails))]
     [ModelReaderWriterBuildable(typeof(SaasSubscriptionDetails))]
@@ -161,6 +187,7 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(SystemVersionListResult))]
     [ModelReaderWriterBuildable(typeof(UnknownAutonomousDatabaseBaseProperties))]
+    [ModelReaderWriterBuildable(typeof(UnknownOracleDBSystemBaseProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkAddressListResult))]
     public partial class AzureResourceManagerOracleDatabaseContext : ModelReaderWriterContext
     {

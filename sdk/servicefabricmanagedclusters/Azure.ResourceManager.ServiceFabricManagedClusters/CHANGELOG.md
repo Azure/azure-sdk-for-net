@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.4 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,37 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2026-03-13)
+
+### Features Added
+- Upgraded to API version 2026-02-01 (stable).
+- Added `SkipManagedNsgAssignment` property to `ServiceFabricManagedClusterData`.
+- Added `EnableResilientEphemeralOsDisk` property to `ServiceFabricManagedNodeTypeData`
+
+### Breaking Changes
+- Removed preview-only fault simulation types (`NodeTypeFaultSimulation`, `FaultSimulationStatus`, `SfmcOperationStatus`).
+
+## 1.3.0-beta.5 (2025-11-19)
+
+### Features Added
+
+- Upgraded to api-version 2025-10-01-preview.
+
+## 1.3.0-beta.4 (2025-10-16)
+
+### Features Added
+
+- Upgraded to api-version 2025-06-01-preview.
+
+Cluster features
+- EnableOutboundOnlyNodeTypes
+
+Nodetype features
+- IsOutboundOnly
+
+Service Endpoint
+- NetworkIdentifier
 
 ## 1.3.0-beta.3 (2025-06-23)
 

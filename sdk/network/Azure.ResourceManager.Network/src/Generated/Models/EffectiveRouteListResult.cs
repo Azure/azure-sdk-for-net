@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of effective routes. </summary>
+        [WirePath("value")]
         public IReadOnlyList<EffectiveRoute> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

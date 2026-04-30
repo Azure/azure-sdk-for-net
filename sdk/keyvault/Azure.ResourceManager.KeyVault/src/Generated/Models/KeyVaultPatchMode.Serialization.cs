@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     internal static partial class KeyVaultPatchModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this KeyVaultPatchMode value) => value switch
         {
             KeyVaultPatchMode.Default => "default",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultPatchMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static KeyVaultPatchMode ToKeyVaultPatchMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default")) return KeyVaultPatchMode.Default;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recover")) return KeyVaultPatchMode.Recover;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default"))
+            {
+                return KeyVaultPatchMode.Default;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recover"))
+            {
+                return KeyVaultPatchMode.Recover;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultPatchMode value.");
         }
     }

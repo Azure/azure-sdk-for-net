@@ -1,15 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
+using System.Xml.Linq;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using Azure.Core;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // Get after account create
             var service = (await _fileService.GetAsync()).Value;
-            Assert.AreEqual(0, service.Data.Cors.CorsRules.Count);
+            Assert.AreEqual(0, service.Data.CorsRules.Count);
 
             //Set and validated
             var data = new FileServiceData()
             {
-                ProtocolSettings = new ProtocolSettings()
+                ProtocolSettings = new FileServiceProtocolSettings()
                 {
                     SmbSetting = new SmbSetting()
                     {
@@ -440,27 +440,23 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             FileServiceData properties1 = _fileService.Data;
             FileServiceData properties2 = new FileServiceData();
-            properties2.Cors = new StorageCorsRules()
-            {
-                CorsRules =
-                {
-                    new StorageCorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                        new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
-                        100,
-                        new string[] { "x-ms-meta-*" },
-                        new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" })
-                }
-            };
+            // TypeSpec migration: use public CorsRules property (internal Cors wrapper removed)
+            properties2.CorsRules.Add(
+                new StorageCorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                    new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
+                    100,
+                    new string[] { "x-ms-meta-*" },
+                    new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }));
 
             _fileService = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, properties2)).Value;
             FileServiceData properties3 = _fileService.Data;
 
             //validate CORS rules
-            Assert.AreEqual(properties2.Cors.CorsRules.Count, properties3.Cors.CorsRules.Count);
-            for (int i = 0; i < properties2.Cors.CorsRules.Count; i++)
+            Assert.AreEqual(properties2.CorsRules.Count, properties3.CorsRules.Count);
+            for (int i = 0; i < properties2.CorsRules.Count; i++)
             {
-                var putRule = properties2.Cors.CorsRules[i];
-                var getRule = properties3.Cors.CorsRules[i];
+                var putRule = properties2.CorsRules[i];
+                var getRule = properties3.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -474,11 +470,11 @@ namespace Azure.ResourceManager.Storage.Tests
             FileServiceData properties4 = _fileService.Data;
 
             //validate CORS rules
-            Assert.AreEqual(properties2.Cors.CorsRules.Count, properties4.Cors.CorsRules.Count);
-            for (int i = 0; i < properties2.Cors.CorsRules.Count; i++)
+            Assert.AreEqual(properties2.CorsRules.Count, properties4.CorsRules.Count);
+            for (int i = 0; i < properties2.CorsRules.Count; i++)
             {
-                var putRule = properties2.Cors.CorsRules[i];
-                var getRule = properties4.Cors.CorsRules[i];
+                var putRule = properties2.CorsRules[i];
+                var getRule = properties4.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -501,7 +497,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     sku: new StorageSku(StorageSkuName.StandardV2Lrs),
                     StorageKind.FileStorage,
                     AzureLocation.WestUS2)))
-                    //"eastus2euap")))
+                //"eastus2euap")))
                 .Value;
             _fileService = _storageAccount.GetFileService();
             _fileService = await _fileService.GetAsync();

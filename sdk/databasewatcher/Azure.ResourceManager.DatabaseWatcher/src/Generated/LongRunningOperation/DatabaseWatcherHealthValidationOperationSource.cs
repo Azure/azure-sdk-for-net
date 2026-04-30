@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DatabaseWatcher
 {
-    internal class DatabaseWatcherHealthValidationOperationSource : IOperationSource<DatabaseWatcherHealthValidationResource>
+    /// <summary></summary>
+    internal partial class DatabaseWatcherHealthValidationOperationSource : IOperationSource<DatabaseWatcherHealthValidationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DatabaseWatcherHealthValidationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DatabaseWatcherHealthValidationResource IOperationSource<DatabaseWatcherHealthValidationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatabaseWatcherHealthValidationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatabaseWatcherContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DatabaseWatcherHealthValidationData data = DatabaseWatcherHealthValidationData.DeserializeDatabaseWatcherHealthValidationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DatabaseWatcherHealthValidationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DatabaseWatcherHealthValidationResource> IOperationSource<DatabaseWatcherHealthValidationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatabaseWatcherHealthValidationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatabaseWatcherContext.Default);
-            return await Task.FromResult(new DatabaseWatcherHealthValidationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DatabaseWatcherHealthValidationData data = DatabaseWatcherHealthValidationData.DeserializeDatabaseWatcherHealthValidationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DatabaseWatcherHealthValidationResource(_client, data);
         }
     }
 }

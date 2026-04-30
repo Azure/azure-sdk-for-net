@@ -30,9 +30,12 @@ public static partial class AzureFileExtensions
     [Experimental("AOAI001")]
     public static AzureOpenAIFileStatus ToAzureOpenAIFileStatus(this FileStatus fileStatus)
     {
-        if (fileStatus == FileStatus.Uploaded) return AzureOpenAIFileStatus.Uploaded;
-        if (fileStatus == FileStatus.Processed) return AzureOpenAIFileStatus.Processed;
-        if (fileStatus == FileStatus.Error) return AzureOpenAIFileStatus.Error;
+        if (fileStatus == FileStatus.Uploaded)
+            return AzureOpenAIFileStatus.Uploaded;
+        if (fileStatus == FileStatus.Processed)
+            return AzureOpenAIFileStatus.Processed;
+        if (fileStatus == FileStatus.Error)
+            return AzureOpenAIFileStatus.Error;
 
         List<AzureOpenAIFileStatus> otherEncodedStatuses =
             [
@@ -71,7 +74,7 @@ public static partial class AzureFileExtensions
             Purpose = purpose,
             SerializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>
             {
-                ["expires_after"] = ModelReaderWriter.Write(expirationOptions),
+                ["expires_after"] = ModelReaderWriter.Write(expirationOptions, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default),
             }
         };
 
@@ -98,7 +101,7 @@ public static partial class AzureFileExtensions
             Purpose = purpose,
             SerializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>
             {
-                ["expires_after"] = ModelReaderWriter.Write(expirationOptions),
+                ["expires_after"] = ModelReaderWriter.Write(expirationOptions, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default),
             }
         };
 

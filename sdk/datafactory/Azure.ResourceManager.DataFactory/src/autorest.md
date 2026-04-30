@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/02bfa79faeb81e07b80a6d23125a6ed747775bae/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9cc7633f842575274f715cc02e37c5769ac2742d/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -72,6 +72,7 @@ acronym-mapping:
   VNet: Vnet
   Bw: BW
   SQL: Sql
+  HDInsightOndemand: HDInsightOnDemand
 
 keep-plural-enums:
   - ActivityOnInactiveMarkAs

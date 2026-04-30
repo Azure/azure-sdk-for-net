@@ -14,210 +14,262 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary>
-    /// A class representing the FrontDoorRoute data model.
-    /// Friendly Routes name mapping to the any Routes or secret related information.
-    /// Serialized Name: Route
-    /// </summary>
+    /// <summary> Friendly Routes name mapping to the any Routes or secret related information. </summary>
     public partial class FrontDoorRouteData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRouteData"/>. </summary>
         public FrontDoorRouteData()
         {
-            CustomDomains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
-            RuleSets = new ChangeTrackingList<WritableSubResource>();
-            SupportedProtocols = new ChangeTrackingList<FrontDoorEndpointProtocol>();
-            PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRouteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="endpointName">
-        /// The name of the endpoint which holds the route.
-        /// Serialized Name: Route.properties.endpointName
-        /// </param>
-        /// <param name="customDomains">
-        /// Domains referenced by this endpoint.
-        /// Serialized Name: Route.properties.customDomains
-        /// </param>
-        /// <param name="originGroup">
-        /// A reference to the origin group.
-        /// Serialized Name: Route.properties.originGroup
-        /// </param>
-        /// <param name="originPath">
-        /// A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
-        /// Serialized Name: Route.properties.originPath
-        /// </param>
-        /// <param name="ruleSets">
-        /// rule sets referenced by this endpoint.
-        /// Serialized Name: Route.properties.ruleSets
-        /// </param>
-        /// <param name="supportedProtocols">
-        /// List of supported protocols for this route.
-        /// Serialized Name: Route.properties.supportedProtocols
-        /// </param>
-        /// <param name="patternsToMatch">
-        /// The route patterns of the rule.
-        /// Serialized Name: Route.properties.patternsToMatch
-        /// </param>
-        /// <param name="cacheConfiguration">
-        /// The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.
-        /// Serialized Name: Route.properties.cacheConfiguration
-        /// </param>
-        /// <param name="forwardingProtocol">
-        /// Protocol this rule will use when forwarding traffic to backends.
-        /// Serialized Name: Route.properties.forwardingProtocol
-        /// </param>
-        /// <param name="linkToDefaultDomain">
-        /// whether this route will be linked to the default endpoint domain.
-        /// Serialized Name: Route.properties.linkToDefaultDomain
-        /// </param>
-        /// <param name="httpsRedirect">
-        /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
-        /// Serialized Name: Route.properties.httpsRedirect
-        /// </param>
-        /// <param name="enabledState">
-        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
-        /// Serialized Name: Route.properties.enabledState
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status
-        /// Serialized Name: Route.properties.provisioningState
-        /// </param>
-        /// <param name="deploymentStatus"> Serialized Name: Route.properties.deploymentStatus. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The JSON object that contains the properties of the Routes to create. </param>
+        internal FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnRouteProperties properties) : base(id, name, resourceType, systemData)
         {
-            EndpointName = endpointName;
-            CustomDomains = customDomains;
-            OriginGroup = originGroup;
-            OriginPath = originPath;
-            RuleSets = ruleSets;
-            SupportedProtocols = supportedProtocols;
-            PatternsToMatch = patternsToMatch;
-            CacheConfiguration = cacheConfiguration;
-            ForwardingProtocol = forwardingProtocol;
-            LinkToDefaultDomain = linkToDefaultDomain;
-            HttpsRedirect = httpsRedirect;
-            EnabledState = enabledState;
-            ProvisioningState = provisioningState;
-            DeploymentStatus = deploymentStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// The name of the endpoint which holds the route.
-        /// Serialized Name: Route.properties.endpointName
-        /// </summary>
-        public string EndpointName { get; }
-        /// <summary>
-        /// Domains referenced by this endpoint.
-        /// Serialized Name: Route.properties.customDomains
-        /// </summary>
-        public IList<FrontDoorActivatedResourceInfo> CustomDomains { get; }
-        /// <summary>
-        /// A reference to the origin group.
-        /// Serialized Name: Route.properties.originGroup
-        /// </summary>
-        internal WritableSubResource OriginGroup { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier OriginGroupId
+        /// <summary> The JSON object that contains the properties of the Routes to create. </summary>
+        [WirePath("properties")]
+        internal CdnRouteProperties Properties { get; set; }
+
+        /// <summary> The name of the endpoint which holds the route. </summary>
+        [WirePath("properties.endpointName")]
+        public string EndpointName
         {
-            get => OriginGroup is null ? default : OriginGroup.Id;
-            set
+            get
             {
-                if (OriginGroup is null)
-                    OriginGroup = new WritableSubResource();
-                OriginGroup.Id = value;
+                return Properties is null ? default : Properties.EndpointName;
             }
         }
 
-        /// <summary>
-        /// A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
-        /// Serialized Name: Route.properties.originPath
-        /// </summary>
-        public string OriginPath { get; set; }
-        /// <summary>
-        /// rule sets referenced by this endpoint.
-        /// Serialized Name: Route.properties.ruleSets
-        /// </summary>
-        public IList<WritableSubResource> RuleSets { get; }
-        /// <summary>
-        /// List of supported protocols for this route.
-        /// Serialized Name: Route.properties.supportedProtocols
-        /// </summary>
-        public IList<FrontDoorEndpointProtocol> SupportedProtocols { get; }
-        /// <summary>
-        /// The route patterns of the rule.
-        /// Serialized Name: Route.properties.patternsToMatch
-        /// </summary>
-        public IList<string> PatternsToMatch { get; }
-        /// <summary>
-        /// The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.
-        /// Serialized Name: Route.properties.cacheConfiguration
-        /// </summary>
-        public FrontDoorRouteCacheConfiguration CacheConfiguration { get; set; }
-        /// <summary>
-        /// Protocol this rule will use when forwarding traffic to backends.
-        /// Serialized Name: Route.properties.forwardingProtocol
-        /// </summary>
-        public ForwardingProtocol? ForwardingProtocol { get; set; }
-        /// <summary>
-        /// whether this route will be linked to the default endpoint domain.
-        /// Serialized Name: Route.properties.linkToDefaultDomain
-        /// </summary>
-        public LinkToDefaultDomain? LinkToDefaultDomain { get; set; }
-        /// <summary>
-        /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
-        /// Serialized Name: Route.properties.httpsRedirect
-        /// </summary>
-        public HttpsRedirect? HttpsRedirect { get; set; }
-        /// <summary>
-        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
-        /// Serialized Name: Route.properties.enabledState
-        /// </summary>
-        public EnabledState? EnabledState { get; set; }
-        /// <summary>
-        /// Provisioning status
-        /// Serialized Name: Route.properties.provisioningState
-        /// </summary>
-        public FrontDoorProvisioningState? ProvisioningState { get; }
-        /// <summary> Serialized Name: Route.properties.deploymentStatus. </summary>
-        public FrontDoorDeploymentStatus? DeploymentStatus { get; }
+        /// <summary> Domains referenced by this endpoint. </summary>
+        [WirePath("properties.customDomains")]
+        public IList<FrontDoorActivatedResourceInfo> CustomDomains
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                return Properties.CustomDomains;
+            }
+        }
+
+        /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
+        [WirePath("properties.originPath")]
+        public string OriginPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                Properties.OriginPath = value;
+            }
+        }
+
+        /// <summary> rule sets referenced by this endpoint. </summary>
+        [WirePath("properties.ruleSets")]
+        public IList<WritableSubResource> RuleSets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                return Properties.RuleSets;
+            }
+        }
+
+        /// <summary> List of supported protocols for this route. </summary>
+        [WirePath("properties.supportedProtocols")]
+        public IList<FrontDoorEndpointProtocol> SupportedProtocols
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                return Properties.SupportedProtocols;
+            }
+        }
+
+        /// <summary> The route patterns of the rule. </summary>
+        [WirePath("properties.patternsToMatch")]
+        public IList<string> PatternsToMatch
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                return Properties.PatternsToMatch;
+            }
+        }
+
+        /// <summary> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </summary>
+        [WirePath("properties.cacheConfiguration")]
+        public FrontDoorRouteCacheConfiguration CacheConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CacheConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                Properties.CacheConfiguration = value;
+            }
+        }
+
+        /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
+        [WirePath("properties.forwardingProtocol")]
+        public ForwardingProtocol? ForwardingProtocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForwardingProtocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                Properties.ForwardingProtocol = value;
+            }
+        }
+
+        /// <summary> whether this route will be linked to the default endpoint domain. </summary>
+        [WirePath("properties.linkToDefaultDomain")]
+        public LinkToDefaultDomain? LinkToDefaultDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkToDefaultDomain;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                Properties.LinkToDefaultDomain = value;
+            }
+        }
+
+        /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
+        [WirePath("properties.httpsRedirect")]
+        public HttpsRedirect? HttpsRedirect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpsRedirect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                Properties.HttpsRedirect = value;
+            }
+        }
+
+        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.enabledState")]
+        public EnabledState? EnabledState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                Properties.EnabledState = value;
+            }
+        }
+
+        /// <summary> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.grpcState")]
+        public FrontDoorRouteGrpcState? GrpcState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GrpcState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                Properties.GrpcState = value;
+            }
+        }
+
+        /// <summary> Provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
+        public FrontDoorProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("properties.deploymentStatus")]
+        public FrontDoorDeploymentStatus? DeploymentStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentStatus;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.originGroup.id")]
+        public ResourceIdentifier OriginGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRouteProperties();
+                }
+                Properties.OriginGroupId = value;
+            }
+        }
     }
 }

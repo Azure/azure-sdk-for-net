@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.InformaticaDataManagement;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     public readonly partial struct InformaticaProvisioningState : IEquatable<InformaticaProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Organization resource creation request accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Organization resource creation started. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Organization resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Organization resource deletion started. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Organization resource creation successful. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Organization resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Organization resource creation canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Organization resource is deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> Organization resource state is unknown. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
 
         /// <summary> Initializes a new instance of <see cref="InformaticaProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InformaticaProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AcceptedValue = "Accepted";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string DeletedValue = "Deleted";
-        private const string NotSpecifiedValue = "NotSpecified";
+            _value = value;
+        }
 
         /// <summary> Organization resource creation request accepted. </summary>
         public static InformaticaProvisioningState Accepted { get; } = new InformaticaProvisioningState(AcceptedValue);
+
         /// <summary> Organization resource creation started. </summary>
         public static InformaticaProvisioningState Creating { get; } = new InformaticaProvisioningState(CreatingValue);
+
         /// <summary> Organization resource is being updated. </summary>
         public static InformaticaProvisioningState Updating { get; } = new InformaticaProvisioningState(UpdatingValue);
+
         /// <summary> Organization resource deletion started. </summary>
         public static InformaticaProvisioningState Deleting { get; } = new InformaticaProvisioningState(DeletingValue);
+
         /// <summary> Organization resource creation successful. </summary>
         public static InformaticaProvisioningState Succeeded { get; } = new InformaticaProvisioningState(SucceededValue);
+
         /// <summary> Organization resource creation failed. </summary>
         public static InformaticaProvisioningState Failed { get; } = new InformaticaProvisioningState(FailedValue);
+
         /// <summary> Organization resource creation canceled. </summary>
         public static InformaticaProvisioningState Canceled { get; } = new InformaticaProvisioningState(CanceledValue);
+
         /// <summary> Organization resource is deleted. </summary>
         public static InformaticaProvisioningState Deleted { get; } = new InformaticaProvisioningState(DeletedValue);
+
         /// <summary> Organization resource state is unknown. </summary>
         public static InformaticaProvisioningState NotSpecified { get; } = new InformaticaProvisioningState(NotSpecifiedValue);
+
         /// <summary> Determines if two <see cref="InformaticaProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InformaticaProvisioningState left, InformaticaProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InformaticaProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InformaticaProvisioningState left, InformaticaProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InformaticaProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InformaticaProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InformaticaProvisioningState(string value) => new InformaticaProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InformaticaProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InformaticaProvisioningState?(string value) => value == null ? null : new InformaticaProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InformaticaProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InformaticaProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -66,7 +66,9 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var blobEndpoint = new Uri("https://127.0.0.1/" + accountName);
             BlobClient blob1 = InstrumentClient(new BlobClient(blobEndpoint));
-            BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new DefaultAzureCredential()));
+#pragma warning disable CS0618 // Type or member is obsolete
+            BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new SharedTokenCacheCredential()));
+#pragma warning restore CS0618 // Type or member is obsolete
 
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);
@@ -371,6 +373,30 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual("Cold", response.Value.AccessTier);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task UploadAsync_Stream_AccessTier_Smart()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                AccessTier = AccessTier.Smart
+            };
+
+            // Act
+            await blob.UploadAsync(stream, options);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Smart.ToString(), response.Value.AccessTier);
+            Assert.NotNull(response.Value.SmartAccessTier);
         }
 
         [RecordedTest]
@@ -1395,7 +1421,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Create a CancellationToken that times out after 60s
-                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+                using CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
                 CancellationToken token = source.Token;
 
                 // Keep uploading a GB
@@ -1447,7 +1473,7 @@ namespace Azure.Storage.Blobs.Test
                 // Create a CancellationToken that times out after .01s
                 // Intentionally not delaying here, as DownloadToAsync operation should always cancel
                 // since it buffers the full response.
-                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
+                using CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
                 CancellationToken token = source.Token;
 
                 // Verifying DownloadTo will cancel

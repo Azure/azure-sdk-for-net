@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> A list of the service's callout policies. </summary>
+        [WirePath("value")]
         public IList<KustoCalloutPolicy> Value { get; }
         /// <summary> The URL to get the next set of callout policies list results if there are any. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; set; }
     }
 }

@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network security perimeter identifier. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> List of tags for Network Security Perimeter. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

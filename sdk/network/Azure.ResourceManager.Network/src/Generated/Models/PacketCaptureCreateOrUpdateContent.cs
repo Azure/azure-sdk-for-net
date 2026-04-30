@@ -92,24 +92,34 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </summary>
+        [WirePath("properties.target")]
         public string Target { get; }
         /// <summary> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </summary>
+        [WirePath("properties.scope")]
         public PacketCaptureMachineScope Scope { get; set; }
         /// <summary> Target type of the resource provided. </summary>
+        [WirePath("properties.targetType")]
         public PacketCaptureTargetType? TargetType { get; set; }
         /// <summary> Number of bytes captured per packet, the remaining bytes are truncated. </summary>
+        [WirePath("properties.bytesToCapturePerPacket")]
         public long? BytesToCapturePerPacket { get; set; }
         /// <summary> Maximum size of the capture output. </summary>
+        [WirePath("properties.totalBytesPerSession")]
         public long? TotalBytesPerSession { get; set; }
         /// <summary> Maximum duration of the capture session in seconds. </summary>
+        [WirePath("properties.timeLimitInSeconds")]
         public int? TimeLimitInSeconds { get; set; }
         /// <summary> The storage location for a packet capture session. </summary>
+        [WirePath("properties.storageLocation")]
         public PacketCaptureStorageLocation StorageLocation { get; }
         /// <summary> A list of packet capture filters. </summary>
+        [WirePath("properties.filters")]
         public IList<PacketCaptureFilter> Filters { get; }
         /// <summary> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </summary>
+        [WirePath("properties.continuousCapture")]
         public bool? IsContinuousCapture { get; set; }
         /// <summary> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </summary>
+        [WirePath("properties.captureSettings")]
         public PacketCaptureSettings CaptureSettings { get; set; }
     }
 }

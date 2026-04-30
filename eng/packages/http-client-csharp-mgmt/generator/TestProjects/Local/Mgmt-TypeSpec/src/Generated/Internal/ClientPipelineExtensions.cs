@@ -11,16 +11,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal static partial class ClientPipelineExtensions
     {
         public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
-            (CancellationToken userCancellationToken, ErrorOptions statusOption) = context.Parse();
+            (CancellationToken userCancellationToken, ErrorOptions errorOptions) = context.Parse();
             await pipeline.SendAsync(message, userCancellationToken).ConfigureAwait(false);
 
-            if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+            if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
                 throw new RequestFailedException(message.Response);
             }
@@ -30,10 +30,10 @@ namespace MgmtTypeSpec
 
         public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
-            (CancellationToken userCancellationToken, ErrorOptions statusOption) = context.Parse();
+            (CancellationToken userCancellationToken, ErrorOptions errorOptions) = context.Parse();
             pipeline.Send(message, userCancellationToken);
 
-            if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+            if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
                 throw new RequestFailedException(message.Response);
             }

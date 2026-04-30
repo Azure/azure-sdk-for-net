@@ -8,66 +8,99 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PineconeVectorDB;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPineconeVectorDBModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="PineconeVectorDB.PineconeVectorDBOrganizationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="PineconeVectorDB.PineconeVectorDBOrganizationData"/> instance for mocking. </returns>
-        public static PineconeVectorDBOrganizationData PineconeVectorDBOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PineconeVectorDBOrganizationProperties properties = null, ManagedServiceIdentity identity = null)
+        public static PineconeVectorDBOrganizationData PineconeVectorDBOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PineconeVectorDBOrganizationProperties properties = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new PineconeVectorDBOrganizationData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                identity,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PineconeVectorDBOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="partnerDisplayName"> partner properties. </param>
+        /// <param name="partnerDisplayName"> Pinecone Organization Name. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
         /// <returns> A new <see cref="Models.PineconeVectorDBOrganizationProperties"/> instance for mocking. </returns>
-        public static PineconeVectorDBOrganizationProperties PineconeVectorDBOrganizationProperties(PineconeVectorDBMarketplaceDetails marketplace = null, PineconeVectorDBUserDetails user = null, PineconeVectorDBProvisioningState? provisioningState = null, string partnerDisplayName = null, PineconeVectorDBSingleSignOnPropertiesV2 singleSignOnProperties = null)
+        public static PineconeVectorDBOrganizationProperties PineconeVectorDBOrganizationProperties(PineconeVectorDBMarketplaceDetails marketplace = default, PineconeVectorDBUserDetails user = default, PineconeVectorDBProvisioningState? provisioningState = default, string partnerDisplayName = default, PineconeVectorDBSingleSignOnPropertiesV2 singleSignOnProperties = default)
         {
             return new PineconeVectorDBOrganizationProperties(
                 marketplace,
                 user,
                 provisioningState,
-                partnerDisplayName != null ? new PineconeVectorDBPartnerProperties(partnerDisplayName, serializedAdditionalRawData: null) : null,
+                partnerDisplayName is null ? default : new PineconeVectorDBPartnerProperties(partnerDisplayName, null),
                 singleSignOnProperties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PineconeVectorDBMarketplaceDetails"/>. </summary>
+        /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.PineconeVectorDBMarketplaceDetails"/> instance for mocking. </returns>
-        public static PineconeVectorDBMarketplaceDetails PineconeVectorDBMarketplaceDetails(string subscriptionId = null, PineconeVectorDBMarketplaceSubscriptionStatus? subscriptionStatus = null, PineconeVectorDBOfferDetails offerDetails = null)
+        public static PineconeVectorDBMarketplaceDetails PineconeVectorDBMarketplaceDetails(string subscriptionId = default, PineconeVectorDBMarketplaceSubscriptionStatus? subscriptionStatus = default, PineconeVectorDBOfferDetails offerDetails = default)
         {
-            return new PineconeVectorDBMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
+            return new PineconeVectorDBMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties specific to Single Sign On Resource. </summary>
+        /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
+        /// <param name="state"> State of the Single Sign On for the resource. </param>
+        /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
+        /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
+        /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
+        /// <returns> A new <see cref="Models.PineconeVectorDBSingleSignOnPropertiesV2"/> instance for mocking. </returns>
+        public static PineconeVectorDBSingleSignOnPropertiesV2 PineconeVectorDBSingleSignOnPropertiesV2(PineconeVectorDBSingleSignOnType @type = default, PineconeVectorDBSingleSignOnState? state = default, string enterpriseAppId = default, string uri = default, IEnumerable<string> aadDomains = default)
+        {
+            aadDomains ??= new ChangeTrackingList<string>();
+
+            return new PineconeVectorDBSingleSignOnPropertiesV2(
+                @type,
+                state,
+                enterpriseAppId,
+                uri,
+                aadDomains.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the Organization Resource. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Models.PineconeVectorDBOrganizationPatch"/> instance for mocking. </returns>
+        public static PineconeVectorDBOrganizationPatch PineconeVectorDBOrganizationPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PineconeVectorDBOrganizationPatch(tags, identity, additionalBinaryDataProperties: null);
         }
     }
 }
