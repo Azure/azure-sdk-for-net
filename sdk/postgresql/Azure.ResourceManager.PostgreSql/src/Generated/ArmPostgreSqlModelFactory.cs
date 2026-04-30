@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dbDetails"></param>
         /// <param name="validationDetails"></param>
         /// <returns> A new <see cref="Models.PostgreSqlMigrationSubStateDetails"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = default, IDictionary<string, DbMigrationStatus> dbDetails = default, PostgreSqlFlexibleServersValidationDetails validationDetails = default)
+        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = default, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = default, PostgreSqlFlexibleServersValidationDetails validationDetails = default)
         {
             dbDetails ??= new ChangeTrackingDictionary<string, DbMigrationStatus>();
 

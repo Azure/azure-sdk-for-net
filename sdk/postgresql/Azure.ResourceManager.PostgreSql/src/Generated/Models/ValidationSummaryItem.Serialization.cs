@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Messages))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Messages))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string validationSummaryItemType = default;
             PostgreSqlFlexibleServersValidationState? state = default;
-            IList<PostgreSqlFlexibleServersValidationMessage> messages = default;
+            IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> messages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

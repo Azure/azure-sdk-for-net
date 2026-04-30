@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("indexName"u8);
                 writer.WriteStringValue(IndexName);
             }
-            if (Optional.IsCollectionDefined(IndexColumns))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IndexColumns))
             {
                 writer.WritePropertyName("indexColumns"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedColumns))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IncludedColumns))
             {
                 writer.WritePropertyName("includedColumns"u8);
                 writer.WriteStartArray();
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string table = default;
             string indexType = default;
             string indexName = default;
-            IList<string> indexColumns = default;
-            IList<string> includedColumns = default;
+            IReadOnlyList<string> indexColumns = default;
+            IReadOnlyList<string> includedColumns = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

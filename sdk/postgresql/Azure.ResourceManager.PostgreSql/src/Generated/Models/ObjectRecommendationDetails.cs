@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="indexColumns"> Index columns. </param>
         /// <param name="includedColumns"> Index included columns. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectRecommendationDetails(string databaseName, string schema, string table, string indexType, string indexName, IList<string> indexColumns, IList<string> includedColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectRecommendationDetails(string databaseName, string schema, string table, string indexType, string indexName, IReadOnlyList<string> indexColumns, IReadOnlyList<string> includedColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             Schema = schema;
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Index columns. </summary>
         [WirePath("indexColumns")]
-        public IList<string> IndexColumns { get; }
+        public IReadOnlyList<string> IndexColumns { get; }
 
         /// <summary> Index included columns. </summary>
         [WirePath("includedColumns")]
-        public IList<string> IncludedColumns { get; }
+        public IReadOnlyList<string> IncludedColumns { get; }
     }
 }

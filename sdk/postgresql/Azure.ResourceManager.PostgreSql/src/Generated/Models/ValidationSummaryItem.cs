@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="state"> Validation status for migration. </param>
         /// <param name="messages"> Validation messages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationSummaryItem(string validationSummaryItemType, PostgreSqlFlexibleServersValidationState? state, IList<PostgreSqlFlexibleServersValidationMessage> messages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidationSummaryItem(string validationSummaryItemType, PostgreSqlFlexibleServersValidationState? state, IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> messages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidationSummaryItemType = validationSummaryItemType;
             State = state;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Validation messages. </summary>
         [WirePath("messages")]
-        public IList<PostgreSqlFlexibleServersValidationMessage> Messages { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> Messages { get; }
     }
 }
