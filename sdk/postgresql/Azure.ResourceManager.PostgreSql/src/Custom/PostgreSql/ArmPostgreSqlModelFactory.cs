@@ -11,9 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     // Preserves the previous model factory overload for long-term-retention backup content.
-    // Suppresses generated factory methods that would expose internal implementation types.
+    // Suppresses generated factory methods that would expose internal implementation types or duplicate existing custom API.
     [CodeGenSuppress("PostgreSqlMigrationPatch", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(MigrationSecretParametersForPatch), typeof(IEnumerable<string>), typeof(PostgreSqlMigrationLogicalReplicationOnSourceDb?), typeof(PostgreSqlMigrationOverwriteDbsInTarget?), typeof(DateTimeOffset?), typeof(MigrateRolesEnum?), typeof(PostgreSqlMigrationStartDataMigration?), typeof(PostgreSqlMigrationTriggerCutover?), typeof(IEnumerable<string>), typeof(PostgreSqlMigrationCancel?), typeof(IEnumerable<string>), typeof(PostgreSqlMigrationMode?), typeof(IDictionary<string, string>))]
-    [CodeGenSuppress("PostgreSqlFlexibleServerUserAssignedIdentity", typeof(IDictionary<string, UserIdentity>), typeof(Guid?), typeof(PostgreSqlFlexibleServerIdentityType), typeof(Guid?))]
     [CodeGenSuppress("PostgreSqlFlexibleServerLtrBackupContent", typeof(string), typeof(IEnumerable<string>))]
     [CodeGenSuppress("PostgreSqlFlexibleServerNameAvailabilityResult", typeof(bool?), typeof(PostgreSqlFlexibleServerNameUnavailableReason?), typeof(string), typeof(string), typeof(ResourceType?))]
     [CodeGenSuppress("PostgreSqlFlexibleServerNameAvailabilityResponse", typeof(bool?), typeof(PostgreSqlFlexibleServerNameUnavailableReason?), typeof(string))]

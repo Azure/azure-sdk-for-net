@@ -418,8 +418,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = null)
         {
-            var converted = userAssignedIdentities?.ToDictionary(kvp => kvp.Key, kvp => new UserIdentity());
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(converted, default, identityType, tenantId, additionalBinaryDataProperties: null);
+            return ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, default, identityType, tenantId);
         }
 
         // ===== Backward-compatible factory methods =====
@@ -695,8 +694,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId)
         {
-            var converted = userAssignedIdentities?.ToDictionary(kvp => kvp.Key, kvp => new UserIdentity());
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(converted, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
+            return ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, principalId, identityType, tenantId);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/>. </summary>

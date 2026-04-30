@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
@@ -80,14 +82,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerUserAssignedIdentity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentitiesInternal))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
-                foreach (var item in UserAssignedIdentitiesInternal)
+                foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -145,7 +152,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IDictionary<string, UserIdentity> userAssignedIdentitiesInternal = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             Guid? principalId = default;
             PostgreSqlFlexibleServerIdentityType identityType = default;
             Guid? tenantId = default;
@@ -158,12 +165,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    Dictionary<string, UserIdentity> dictionary = new Dictionary<string, UserIdentity>();
+                    Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, UserIdentity.DeserializeUserIdentity(prop0.Value, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop0.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPostgreSqlContext.Default));
+                        }
                     }
-                    userAssignedIdentitiesInternal = dictionary;
+                    userAssignedIdentities = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("principalId"u8))
@@ -194,7 +208,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentitiesInternal ?? new ChangeTrackingDictionary<string, UserIdentity>(), principalId, identityType, tenantId, additionalBinaryDataProperties);
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), principalId, identityType, tenantId, additionalBinaryDataProperties);
         }
     }
 }

@@ -377,6 +377,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 groupIds is null && privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null));
         }
 
+        /// <summary> Identities associated with a server. </summary>
+        /// <param name="userAssignedIdentities"> Map of user assigned managed identities. </param>
+        /// <param name="principalId"> Identifier of the object of the service principal associated to the user assigned managed identity. </param>
+        /// <param name="identityType"> Types of identities associated with a server. </param>
+        /// <param name="tenantId"> Identifier of the tenant of a server. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default, Guid? principalId = default, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = default)
+        {
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="sku"> Compute tier and size of a server. </param>
         /// <param name="identity"> Describes the identity of the application. </param>
         /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
