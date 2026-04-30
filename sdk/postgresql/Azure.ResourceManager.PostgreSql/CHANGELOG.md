@@ -5,8 +5,7 @@
 ### Features Added
 
 - Upgraded API version to `2026-01-01-preview`.
-- Migrated from AutoRest to TypeSpec-based generation (management plane generator).
-- Added new models and operations for tuning options, virtual endpoints, network migration, and enhanced backup capabilities.
+- Migrated from AutoRest to TypeSpec-based generation while preserving compatibility with the previously shipped public API surface.
 
 ## 1.4.2 (2026-04-28)
 

@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             get => Properties is null ? default : Properties.ReplicaCapacity;
             set
             {
-                // Setter is preserved for binary compatibility; replicaCapacity is service-readonly in the generated model.
+                // Previous GA exposed this setter, but replicaCapacity is service-readonly in the TypeSpec model.
+                // Keep the setter for compatibility; there is no generated backing setter to forward to.
             }
         }
     }
