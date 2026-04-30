@@ -41,13 +41,6 @@
         $(MSBuildProjectName) == 'Azure.AI.Vision.Face.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.Vision.ImageAnalysis.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.VoiceLive.Tests' or
-        $(MSBuildProjectName) == 'Azure.Analytics.Defender.Easm.Tests' or
-        $(MSBuildProjectName) == 'Azure.Analytics.OnlineExperimentation.Tests' or
-        $(MSBuildProjectName) == 'Azure.Analytics.PlanetaryComputer.Tests' or
-        $(MSBuildProjectName) == 'Azure.Analytics.Purview.DataMap.Tests' or
-        $(MSBuildProjectName) == 'Azure.Analytics.Purview.Sharing.Tests' or
-        $(MSBuildProjectName) == 'Azure.Analytics.Purview.Workflows.Tests' or
-        $(MSBuildProjectName) == 'Azure.Analytics.Synapse.Artifacts.Tests' or
         $(MSBuildProjectName) == 'Azure.Compute.Batch.Tests' or
         $(MSBuildProjectName) == 'Azure.Containers.ContainerRegistry.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Amqp.Tests' or
@@ -257,14 +250,12 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.NewRelicObservability.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Nginx.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.NotificationHubs.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.OnlineExperimentation.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.OperationalInsights.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.OracleDatabase.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Orbital.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Peering.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.PineconeVectorDB.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.PlanetaryComputer.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Playwright.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.PolicyInsights.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.PortalServicesCopilot.Tests' or
@@ -273,7 +264,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.PrivateDns.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.ProviderHub.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.PureStorageBlock.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.Purview.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Quantum.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Qumulo.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Quota.Tests' or
@@ -325,8 +315,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.StreamAnalytics.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Subscription.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Support.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.Synapse.Samples' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.Synapse.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Terraform.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.TrafficManager.Tests' or

@@ -1,16 +1,15 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2026-04-29)
 
 ### Features Added
 
 - Upgraded API version to `2025-08-01-preview`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.54.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.2.0 (2025-06-13)
 
@@ -30,7 +29,6 @@
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Enable Bicep serialization.
-
 
 ## 1.1.0 (2023-11-30)
 

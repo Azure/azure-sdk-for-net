@@ -1,4 +1,4 @@
 directory: specification/mongocluster/resource-manager/Microsoft.DocumentDB/MongoCluster
-commit: 8eadf99fd9ee230fce389a197334aff4ef6e9c81
+commit: b6df04b2856ad2378a7239e64d8f4ff73d52b81d
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath:  eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -28,6 +28,8 @@ Renamed Properties:
 - `SecurityProfile.EncryptionAtHost` renamed to `SecurityProfile.IsEncryptedAtHost`
 - `VMExtension.AutoUpgradeMinorVersion` renamed to `VMExtension.ShouldAutoUpgradeMinorVersion`
 - `VMExtension.EnableAutomaticUpgrade` renamed to `VMExtension.IsAutomaticUpgradeEnabled`
+- `BatchFileProperties.FileUrl` (type `string`) renamed to `BatchFileProperties.FileUri` (type `Uri`).
+- `DiskCustomerManagedKey.KeyUrl` renamed to `DiskCustomerManagedKey.KeyUri`.
 
 Renamed Types:
 - `NameValuePair` renamed to `BatchNameValuePair`
@@ -48,7 +50,7 @@ Changed Parameters (all `BatchClient` methods):
 - `StopPoolResize`/`StopPoolResizeAsync`: `RequestContext context` changed to `CancellationToken cancellationToken`
 
 Changed Property Types:
-- `DiskCustomerManagedKey.KeyUrl` changed type from `string` to `Uri`
+- `DiskCustomerManagedKey.KeyUri` changed type from `string` to `Uri`
 
 ## 1.0.0-beta.5 (2026-02-01)
 

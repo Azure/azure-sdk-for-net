@@ -1,0 +1,20 @@
+id: apiview-basic-001
+name: Retrieve and Review APIView Comments
+description: |
+  Test that the skill retrieves APIView comments for an SDK package
+  and presents them organized by priority.
+tags:
+  - basic
+  - happy-path
+inputs:
+  prompt: "My Python SDK PR has APIView comments that I need to address. Can you help me retrieve and resolve them?"
+expected:
+  output_contains:
+    - "APIView"
+    - "comment"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_apiview_get_comments
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

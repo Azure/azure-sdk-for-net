@@ -1,0 +1,16 @@
+id: release-plan-link-001
+name: Link SDK PRs to Release Plan
+description: |
+  Test that the skill links SDK pull requests to an existing release plan.
+tags:
+  - basic
+  - linking
+inputs:
+  prompt: "I have release plan 67890 and SDK PRs for Python (PR #100) and .NET (PR #200) in the azure-sdk repos. Link them to the release plan."
+expected:
+  output_contains:
+    - "link"
+    - "release plan"
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000
