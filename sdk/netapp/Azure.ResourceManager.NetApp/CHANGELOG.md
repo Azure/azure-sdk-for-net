@@ -11,11 +11,6 @@
 - Added `NetAppSecretPassword` model and Key Vault-backed credential models (e.g., `CertificateKeyVaultDetails`, `CredentialsKeyVaultDetails`, `EntraIdKeyVaultConfig`, `EntraIdKeyVaultConfigPatch`).
 - Added `NetAppDayOfWeek` enum and additional supporting models and enums (e.g., file system user, NFS user, SMB settings, peering passphrases, origin cluster information, change-zone content; policy/encryption/credential/breakthrough/volume-size/snapshot/Kerberos/global-file-locking/large-volume/SMB-encryption/CIFS-change-notify/write-back/LDAP/certificate-conflict/snapshot-directory-visibility/external-replication enums).
 
-### Other Changes
-
-- Upgraded dependent `Azure.Core` to 1.51.1.
-- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
-
 ## 1.16.0-beta.2 (2026-03-26)
 
 ### Breaking Changes
