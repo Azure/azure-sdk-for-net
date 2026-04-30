@@ -5,6 +5,7 @@
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous SecretParameters property type while adapting to the generated patch-only wire model.
     public partial class PostgreSqlMigrationPatch
     {
         /// <summary> Migration secret parameters. </summary>

@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    // Preserves the previous ConnectionState property name over the generated privateLinkServiceConnectionState member.
     [CodeGenSuppress("PrivateLinkServiceConnectionState")]
     public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData
     {

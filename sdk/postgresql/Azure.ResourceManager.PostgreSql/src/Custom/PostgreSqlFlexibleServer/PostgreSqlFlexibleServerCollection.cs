@@ -10,6 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    // Preserves previous collection-level replica listing overloads by forwarding to the server resource.
     public partial class PostgreSqlFlexibleServerCollection
     {
         /// <summary> List all the replicas for a given server. </summary>

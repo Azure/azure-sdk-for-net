@@ -7,6 +7,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous convenience constructor that accepted the resource name.
     public partial class PostgreSqlFlexibleServerNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNameAvailabilityContent"/>. </summary>

@@ -9,6 +9,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.PostgreSql
 {
+    // Bridges generated legacy PostgreSql custom code to the shared pageable helper implementation.
     internal static class GeneratorPageableHelpers
     {
         public static AsyncPageable<T> CreateAsyncPageable<T>(Func<int?, HttpMessage> createFirstPageRequest, Func<int?, string, HttpMessage> createNextPageRequest, Func<JsonElement, T> valueFactory, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string scopeName, string itemPropertyName, string nextLinkPropertyName, CancellationToken cancellationToken) where T : notnull

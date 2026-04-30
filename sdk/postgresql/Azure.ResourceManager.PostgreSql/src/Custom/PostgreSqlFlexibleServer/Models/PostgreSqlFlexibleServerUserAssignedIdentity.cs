@@ -11,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous ARM shared UserAssignedIdentity dictionary surface over the generated UserIdentity model.
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity
     {
         /// <summary> Represents user assigned identities map. </summary>

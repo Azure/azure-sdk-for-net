@@ -11,6 +11,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    // Preserves previous flattened properties and setter signatures on the server data model.
     /// <summary>
     /// A class representing the PostgreSqlFlexibleServer data model.
     /// Represents a server.

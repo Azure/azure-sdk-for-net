@@ -5,6 +5,7 @@
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous settable encryption-key status properties while the generated members remain readonly.
     public partial class PostgreSqlFlexibleServerDataEncryption
     {
         private PostgreSqlKeyStatus? _primaryEncryptionKeyStatusOverride;

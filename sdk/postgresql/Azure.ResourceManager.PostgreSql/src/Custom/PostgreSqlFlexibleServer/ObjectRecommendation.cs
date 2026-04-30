@@ -7,6 +7,7 @@ using System;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous flattened recommendation properties.
     public partial class ObjectRecommendation
     {
         private DateTimeOffset? _initialRecommendedOnOverride;

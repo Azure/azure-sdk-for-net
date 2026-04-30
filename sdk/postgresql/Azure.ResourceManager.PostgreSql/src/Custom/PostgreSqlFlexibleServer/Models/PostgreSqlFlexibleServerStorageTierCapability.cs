@@ -5,6 +5,7 @@
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous capability properties that were flattened from the service response.
     /// <summary> Represents capability of a storage tier. </summary>
     public partial class PostgreSqlFlexibleServerStorageTierCapability : PostgreSqlBaseCapability
     {

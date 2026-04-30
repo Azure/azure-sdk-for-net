@@ -10,6 +10,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    // Preserves previous configuration update overloads that accepted the resource data model.
     public partial class PostgreSqlFlexibleServerConfigurationResource
     {
         /// <summary> Update a configuration. </summary>

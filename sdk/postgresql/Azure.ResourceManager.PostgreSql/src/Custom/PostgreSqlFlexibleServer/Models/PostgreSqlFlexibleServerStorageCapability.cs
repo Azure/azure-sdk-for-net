@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous capability properties that were flattened from the service response.
     /// <summary> storage size in MB capability. </summary>
     public partial class PostgreSqlFlexibleServerStorageCapability : PostgreSqlBaseCapability
     {

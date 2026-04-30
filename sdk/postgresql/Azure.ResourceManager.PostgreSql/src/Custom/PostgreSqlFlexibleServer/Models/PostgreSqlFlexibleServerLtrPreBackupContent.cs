@@ -8,7 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // The new emitter flattens `backupSettings.backupName` into a `string backupName` ctor parameter,
+    // Preserves the previous backupSettings-based constructor. The new emitter flattens `backupSettings.backupName` into a `string backupName` ctor parameter,
     // but the base class (PostgreSqlBackupContent) only has constructors taking
     // PostgreSqlFlexibleServerBackupSettings, causing CS1503. Suppress the flattened ctor and
     // provide the legacy backupSettings-based ctor for backward compatibility.

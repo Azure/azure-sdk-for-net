@@ -7,6 +7,7 @@ using System;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous flattened LTR backup result properties.
     public partial class PostgreSqlFlexibleServerLtrBackupResult
     {
         /// <summary> Service-set extensible enum indicating the status of operation. </summary>

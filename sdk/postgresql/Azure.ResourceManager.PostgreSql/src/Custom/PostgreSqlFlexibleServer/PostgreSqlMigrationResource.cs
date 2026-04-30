@@ -13,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    // Preserves previous Delete overloads by routing them to the service's cancel migration operation.
     [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class PostgreSqlMigrationResource

@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous patch-model members that are flattened or readonly in the generated TypeSpec model.
     /// <summary> Represents a server to be updated. </summary>
     public partial class PostgreSqlFlexibleServerPatch
     {
