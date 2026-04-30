@@ -316,7 +316,9 @@ class AzureEngSemanticVersion : IComparable {
     $ret = $thisPrereleaseNumber.CompareTo($otherPrereleaseNumber)
     if ($ret) { return $ret }
 
-    $ret = ([int] $this.BuildNumber).CompareTo([int] $other.BuildNumber)
+    $thisBuildNumber = if ($this.BuildNumber) { [int] $this.BuildNumber } else { 0 }
+    $otherBuildNumber = if ($other.BuildNumber) { [int] $other.BuildNumber } else { 0 }
+    $ret = $thisBuildNumber.CompareTo($otherBuildNumber)
     if ($ret) { return $ret }
 
     # Post-release versions sort after their base version
