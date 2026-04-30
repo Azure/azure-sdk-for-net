@@ -6,7 +6,7 @@
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
-    /// Options for <see cref="LlmInputHelper.ToLlmInput(AnalysisResult, IDictionary{string, object}, LlmInputOptions)"/>.
+    /// Options for <see cref="LlmInputHelper.ToLlmInput(AnalysisResult, System.Collections.Generic.IDictionary{string, object}, LlmInputOptions)"/>.
     /// </summary>
     public class LlmInputOptions
     {
