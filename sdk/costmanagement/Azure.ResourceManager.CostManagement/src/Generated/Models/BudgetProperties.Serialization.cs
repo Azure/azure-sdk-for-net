@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 throw new FormatException($"The model {nameof(BudgetProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("category"u8);
-            writer.WriteStringValue(Category.ToString());
+            writer.WriteStringValue(BudgetCategory.ToString());
             if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
             writer.WritePropertyName("timeGrain"u8);
-            writer.WriteStringValue(TimeGrain.ToString());
+            writer.WriteStringValue(BudgetTimeGrain.ToString());
             writer.WritePropertyName("timePeriod"u8);
             writer.WriteObjectValue(TimePeriod, options);
             if (Optional.IsDefined(Filter))
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            CategoryType category = default;
+            CategoryType budgetCategory = default;
             float? amount = default;
-            TimeGrainType timeGrain = default;
+            TimeGrainType budgetTimeGrain = default;
             BudgetTimePeriod timePeriod = default;
             BudgetFilter filter = default;
             CurrentSpend currentSpend = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 if (prop.NameEquals("category"u8))
                 {
-                    category = new CategoryType(prop.Value.GetString());
+                    budgetCategory = new CategoryType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("amount"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (prop.NameEquals("timeGrain"u8))
                 {
-                    timeGrain = new TimeGrainType(prop.Value.GetString());
+                    budgetTimeGrain = new TimeGrainType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timePeriod"u8))
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             return new BudgetProperties(
-                category,
+                budgetCategory,
                 amount,
-                timeGrain,
+                budgetTimeGrain,
                 timePeriod,
                 filter,
                 currentSpend,

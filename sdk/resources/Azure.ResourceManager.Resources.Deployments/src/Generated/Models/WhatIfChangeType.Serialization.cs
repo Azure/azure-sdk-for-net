@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal static partial class WhatIfChangeTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WhatIfChangeType value) => value switch
         {
             WhatIfChangeType.Create => "Create",
@@ -23,15 +24,37 @@ namespace Azure.ResourceManager.Resources.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WhatIfChangeType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WhatIfChangeType ToWhatIfChangeType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Create")) return WhatIfChangeType.Create;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete")) return WhatIfChangeType.Delete;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ignore")) return WhatIfChangeType.Ignore;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deploy")) return WhatIfChangeType.Deploy;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoChange")) return WhatIfChangeType.NoChange;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Modify")) return WhatIfChangeType.Modify;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unsupported")) return WhatIfChangeType.Unsupported;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Create"))
+            {
+                return WhatIfChangeType.Create;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete"))
+            {
+                return WhatIfChangeType.Delete;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ignore"))
+            {
+                return WhatIfChangeType.Ignore;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deploy"))
+            {
+                return WhatIfChangeType.Deploy;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoChange"))
+            {
+                return WhatIfChangeType.NoChange;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Modify"))
+            {
+                return WhatIfChangeType.Modify;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unsupported"))
+            {
+                return WhatIfChangeType.Unsupported;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WhatIfChangeType value.");
         }
     }

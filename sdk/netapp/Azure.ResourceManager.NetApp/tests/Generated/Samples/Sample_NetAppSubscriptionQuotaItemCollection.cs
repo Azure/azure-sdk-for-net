@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/NetAppResourceQuotaLimitsAccount_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/NetAppResourceQuotaLimitsAccount_Get.json
             // this example is just showing the usage of "NetAppResourceQuotaLimitsAccount_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppAccountResource created on azure
             // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "myAccount";
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/NetAppResourceQuotaLimitsAccount_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/NetAppResourceQuotaLimitsAccount_List.json
             // this example is just showing the usage of "NetAppResourceQuotaLimitsAccount_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppAccountResource created on azure
             // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "myAccount";
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/NetAppResourceQuotaLimitsAccount_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/NetAppResourceQuotaLimitsAccount_Get.json
             // this example is just showing the usage of "NetAppResourceQuotaLimitsAccount_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppAccountResource created on azure
             // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "myAccount";
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/NetAppResourceQuotaLimitsAccount_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/NetAppResourceQuotaLimitsAccount_Get.json
             // this example is just showing the usage of "NetAppResourceQuotaLimitsAccount_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppAccountResource created on azure
             // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "myAccount";
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

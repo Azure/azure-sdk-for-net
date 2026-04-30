@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new ShareProperties();
                 }
-                Properties.DataPolicy = value.Value;
+                Properties.DataPolicy = value;
             }
         }
     }

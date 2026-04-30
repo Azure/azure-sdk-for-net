@@ -43,6 +43,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Evaluation with Application Insights](#evaluation-with-application-insights)
     - [Evaluating responses](#evaluating-responses)
     - [Evaluation rules](#evaluation-rules)
+    - [Evaluation insights](#evaluation-insights)
   - [Red teams](#red-teams)
   - [Schedules](#schedules)
   - [Toolboxes](#toolboxes)
@@ -590,6 +591,14 @@ For more information about memory stores please refer [this article](https://lea
 Evaluation in Azure AI Project client library provides quantitative, AI-assisted quality and safety metrics to asses
 performance and Evaluate LLM Models, GenAI Application and Agents. Metrics are defined as evaluators. Built-in or
 custom evaluators can provide comprehensive evaluation insights.
+The evaluations in `Azure.AI.Projects` are based of `OpenAI` package's `EvaluationClient`. To initialize it please run the code:
+
+```C# Snippet:Sample_CreateClients_Evaluations
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
+```
 
 #### Agent evaluation
 
@@ -738,11 +747,12 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -759,6 +769,10 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);
@@ -861,9 +875,30 @@ evaluator has been created and uploaded to catalog, it can be used as a regular 
 Create a prompt-based evaluator.
 
 ```C# Snippet:Sample_PromptEvaluator_EvaluationsCatalogPromptBased
-private EvaluatorVersion promptVersion = new(
+private EvaluatorVersion GetPromptVersion()
+{
+    EvaluatorMetric customMetric = new()
+    {
+        Type = EvaluatorMetricType.Ordinal,
+        DesirableDirection = EvaluatorMetricDirection.Increase,
+        MinValue = 0.0f,
+        MaxValue = 1.0f
+    };
+    EvaluatorVersion promptVersion = new(
     categories: [EvaluatorCategory.Quality],
     definition: new PromptBasedEvaluatorDefinition(
+        initParameters: BinaryData.FromObjectAsJson(
+            new
+            {
+                required = new[] { "deployment_name", "threshold" },
+                type = "object",
+                properties = new
+                {
+                    deployment_name = new { type = "string" },
+                    threshold = new { type = "number" }
+                }
+            }
+        ),
         promptText: """
             You are a Groundedness Evaluator.
 
@@ -899,14 +934,31 @@ private EvaluatorVersion promptVersion = new(
                 "result": <integer from 1 to 5>,
                 "reason": "<brief explanation for the score>"
             }
-            """
-    ),
-    evaluatorType: EvaluatorType.Custom
-)
-{
-    DisplayName = "Custom prompt evaluator example",
-    Description = "Custom evaluator for groundedness",
-};
+            """,
+            dataSchema: BinaryData.FromObjectAsJson(
+                new
+                {
+                    required = new[] { "query", "response", "ground_truth" },
+                    type ="object",
+                    properties = new {
+                        query = new { type = "string" },
+                        response = new { type = "string" },
+                        ground_truth = new { type = "string" },
+                    },
+                }
+            ),
+            metrics: new Dictionary<string, EvaluatorMetric> {
+                { "custom_prompt", customMetric }
+            }
+        ),
+        evaluatorType: EvaluatorType.Custom
+    )
+    {
+        DisplayName = "Custom prompt evaluator example",
+        Description = "Custom evaluator for groundedness",
+    };
+    return promptVersion;
+}
 ```
 
 Upload evaluator to Azure.
@@ -914,7 +966,7 @@ Upload evaluator to Azure.
 ```C# Snippet:Sample_CreateEvaluator_EvaluationsCatalogPromptBased_Async
 EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
     name: "myCustomEvaluatorPrompt",
-    evaluatorVersion: promptVersion
+    evaluatorVersion: GetPromptVersion()
 );
 Console.WriteLine($"Created evaluator {promptEvaluator.Id}");
 ```
@@ -1165,6 +1217,126 @@ EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOr
     evaluationRule: continuousRule
 );
 Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
+```
+
+### Evaluation insights
+
+To further analyze the evaluation runs the `ProjectInsights` can be used. They allow to cluster and compare the evaluation
+runs against baseline.
+
+To perform clustering analysis, create the `ProjectsInsight` object
+
+```C# Snippet:Sample_GenerateInsight_EvaluationClusterInsight_Async
+ProjectsInsight clusterInsight = await projectClient.Insights.GenerateAsync(
+    insight: new ProjectsInsight(
+        displayName: "Cluster analysis",
+        request: new EvaluationRunClusterInsightRequest(
+            evalId: evaluationId,
+            runIds: [ runId ])
+        {
+            ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
+        }));
+Console.WriteLine($"Started insight generation (id: {clusterInsight.Id})");
+```
+
+Wait for analysis to be completed.
+
+```C# Snippet:Sample_WaitForInsight_EvaluationClusterInsight_Async
+Console.WriteLine("Waiting for insight to be generated...");
+while (clusterInsight.State != OperationStatus.Succeeded && clusterInsight.State != OperationStatus.Failed)
+{
+    await Task.Delay(TimeSpan.FromSeconds(5));
+    clusterInsight = await projectClient.Insights.GetAsync(id: clusterInsight.Id);
+    Console.WriteLine($"Insight status: {clusterInsight.State}");
+}
+ParseClusterResults(clusterInsight);
+```
+
+Parse the clustering results:
+
+```C# Snippet:Sample_ParseClusterResults_EvaluationClusterInsight
+private static void ParseClusterResults(ProjectsInsight clusterInsight)
+{
+    if (clusterInsight.State == OperationStatus.Succeeded)
+    {
+        Console.WriteLine("Cluster insights generated successfully!");
+        Console.WriteLine($"Insight ID: {clusterInsight.Id}");
+        Console.WriteLine($"Display Name: {clusterInsight.DisplayName}");
+        if (clusterInsight.Result is EvaluationRunClusterInsightResult runResult)
+        {
+            Console.WriteLine($"The results were clustered using {runResult.ClusterInsight.Summary.MethodName} method.");
+            Console.WriteLine($"The number of clusters is {runResult.ClusterInsight.Summary.UniqueClusterCount}.");
+        }
+        else
+        {
+            throw new InvalidOperationException($"The cluster insights generation has succeeded, but the result of type {clusterInsight.Result.GetType()} is unexpected.");
+        }
+    }
+    else
+    {
+        throw new InvalidOperationException("Cluster insight generation failed.");
+    }
+}
+```
+
+The evaluation comparison can be performed similarly, however, in this case we will need at least
+two evaluation runs: baseline and one or more treatment runs.
+
+```C# Snippet:Sample_GenerateInsight_EvaluationCompareInsight_Async
+ProjectsInsight compareInsight = await projectClient.Insights.GenerateAsync(
+    insight: new ProjectsInsight(
+        displayName: "Comparison of Evaluation Runs",
+        request: new EvaluationComparisonInsightRequest(
+            evalId: evaluationId,
+            baselineRunId: run1Id,
+            treatmentRunIds: [run2Id])));
+Console.WriteLine($"Started insight generation (id: {compareInsight.Id})");
+```
+
+Again, we will need to wait for analysis to complete:
+
+```C# Snippet:Sample_WaitForInsight_EvaluationCompareInsight_Async
+while (compareInsight.State != OperationStatus.Succeeded && compareInsight.State != OperationStatus.Failed)
+{
+    await Task.Delay(TimeSpan.FromSeconds(5));
+    compareInsight = await projectClient.Insights.GetAsync(id: compareInsight.Id);
+    Console.WriteLine($"Insight status: {compareInsight.State}");
+}
+ParseCompareResults(compareInsight);
+```
+
+And parse the comparison results:
+
+```C# Snippet:Sample_ParseCompareResults_EvaluationCompareInsight
+private static void ParseCompareResults(ProjectsInsight compareInsight)
+{
+    if (compareInsight.State == OperationStatus.Succeeded)
+    {
+        Console.WriteLine("Evaluation comparison generated successfully!");
+        Console.WriteLine($"Insight ID: {compareInsight.Id}");
+        Console.WriteLine($"Display Name: {compareInsight.DisplayName}");
+        if (compareInsight.Result is EvaluationComparisonInsightResult runResult)
+        {
+            Console.WriteLine("Comparison results:");
+            foreach (EvalRunResultComparison comparison in runResult.Comparisons)
+            {
+                Console.WriteLine($"    Evaluator name {comparison.EvaluatorName}, Testing criteria {comparison.TestingCriteria}, average metric value {comparison.BaselineRunSummary.Average}, SD: {comparison.BaselineRunSummary.StandardDeviation}.");
+                foreach (EvalRunResultCompareItem item in comparison.CompareItems)
+                {
+                    Console.WriteLine($"        Treatment RunID: \"{item.TreatmentRunId}\", p-value: {item.PValue}, {item.TreatmentEffect}");
+                }
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException($"Evaluation comparison generation has succeeded, but the result of type {compareInsight.Result.GetType()} is unexpected.");
+        }
+    }
+    else
+    {
+        throw new InvalidOperationException("Evaluation comparison generation failed.");
+    }
+}
 ```
 
 ### Red teams

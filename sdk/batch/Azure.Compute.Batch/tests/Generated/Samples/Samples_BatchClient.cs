@@ -1902,7 +1902,7 @@ value = "myvalue",
                     Extensions = {new VMExtension("batchextension1", "Microsoft.Azure.KeyVault", "KeyVaultForLinux")
 {
 TypeHandlerVersion = "2.0",
-ShouldAutoUpgradeMinorVersion = true,
+IsMinorVersionAutoUpgradeEnabled = true,
 IsAutomaticUpgradeEnabled = true,
 Settings =
 {
@@ -1943,7 +1943,7 @@ Settings =
                     Extensions = {new VMExtension("batchextension1", "Microsoft.Azure.KeyVault", "KeyVaultForLinux")
 {
 TypeHandlerVersion = "2.0",
-ShouldAutoUpgradeMinorVersion = true,
+IsMinorVersionAutoUpgradeEnabled = true,
 IsAutomaticUpgradeEnabled = true,
 Settings =
 {
@@ -7316,7 +7316,7 @@ new BatchTaskCreateOptions("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetJobsFromSchedules("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
+            foreach (BinaryData item in client.GetJobsFromSchedule("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -7338,7 +7338,7 @@ new BatchTaskCreateOptions("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetJobsFromSchedulesAsync("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
+            await foreach (BinaryData item in client.GetJobsFromScheduleAsync("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -7360,7 +7360,7 @@ new BatchTaskCreateOptions("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            foreach (BatchJob item in client.GetJobsFromSchedules("jobScheduleId"))
+            foreach (BatchJob item in client.GetJobsFromSchedule("jobScheduleId"))
             {
             }
         }
@@ -7373,7 +7373,7 @@ new BatchTaskCreateOptions("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            await foreach (BatchJob item in client.GetJobsFromSchedulesAsync("jobScheduleId"))
+            await foreach (BatchJob item in client.GetJobsFromScheduleAsync("jobScheduleId"))
             {
             }
         }

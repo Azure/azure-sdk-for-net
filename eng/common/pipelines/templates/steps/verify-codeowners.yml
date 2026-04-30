@@ -2,6 +2,9 @@ parameters:
   - name: ArtifactPath
     type: string
     default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: Artifacts
+    type: object
+    default: []
   - name: Repo
     type: string
     default: $(Build.Repository.Name)
@@ -29,4 +32,5 @@ steps:
         -AzsdkPath '$(AZSDK)'
         -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
         -SdkTypes ${{ join(',', parameters.SdkTypes) }}
+        -ArtifactsJson '${{ convertToJson(parameters.Artifacts) }}'
         -Repo '${{ parameters.Repo }}'

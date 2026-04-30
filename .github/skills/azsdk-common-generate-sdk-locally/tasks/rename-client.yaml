@@ -1,0 +1,23 @@
+id: sdk-local-rename-client-001
+name: Rename SDK Client via TypeSpec Customization
+description: |
+  Test that the skill triggers TypeSpec customization when user
+  requests renaming a client or model for a specific language SDK.
+tags:
+  - customization
+  - user-prompt
+  - typespec
+inputs:
+  prompt: "Rename the AIProjectConnectionEntraIDCredential model to use 'Id' instead of 'ID' in the .NET SDK. This was flagged in API review."
+expected:
+  output_contains:
+    - "clientName"
+    - "client.tsp"
+  output_excludes:
+    - "cannot help"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_customized_code_update
+  behavior:
+    max_tool_calls: 10
+    max_response_time_ms: 60000

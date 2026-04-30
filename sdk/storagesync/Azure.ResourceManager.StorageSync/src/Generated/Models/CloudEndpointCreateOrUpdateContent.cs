@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new CloudEndpointCreateParametersProperties();
                 }
-                Properties.StorageAccountTenantId = value.Value;
+                Properties.StorageAccountTenantId = value;
             }
         }
 

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Error response indicates Logic service is not able to process the incoming request. The error property contains the error details. </summary>
+    /// <summary>
+    /// Error response indicates Logic service is not able to process the incoming request. The error property contains the error details.
+    /// Serialized Name: ErrorResponse
+    /// </summary>
     internal partial class WebAppErrorResponse
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppErrorResponse"/>. </summary>
-        /// <param name="errorInfo"> The error properties. </param>
+        /// <param name="errorInfo">
+        /// The error properties.
+        /// Serialized Name: ErrorResponse.error
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppErrorResponse(WebAppErrorProperties errorInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The error properties. </summary>
+        /// <summary>
+        /// The error properties.
+        /// Serialized Name: ErrorResponse.error
+        /// </summary>
         [WirePath("error")]
         public WebAppErrorProperties ErrorInfo { get; set; }
     }

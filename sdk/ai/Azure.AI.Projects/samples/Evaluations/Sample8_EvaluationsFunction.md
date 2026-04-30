@@ -186,7 +186,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
 {
     Dictionary<string, string> results = [];
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
     {
         foreach (string key in expectedProperties)
@@ -303,7 +303,7 @@ private static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     string code = default;
     string message = default;
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
@@ -372,7 +372,7 @@ if (runStatus == "failed")
 private static string GetResultsCounts(ClientResult result)
 {
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     StringBuilder sbFormattedCounts = new("{\n");
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
     {
@@ -404,12 +404,12 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
-        List<string> data = [];
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -426,6 +426,10 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);
@@ -439,11 +443,12 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -460,6 +465,10 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);

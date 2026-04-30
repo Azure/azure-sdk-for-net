@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     Properties = new ServerPropertiesForUpdate();
                 }
-                Properties.Version = value.Value;
+                Properties.Version = value;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     Properties = new ServerPropertiesForUpdate();
                 }
-                Properties.ReplicationRole = value.Value;
+                Properties.ReplicationRole = value;
             }
         }
 
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     Properties = new ServerPropertiesForUpdate();
                 }
-                Properties.MaintenancePatchStrategy = value.Value;
+                Properties.MaintenancePatchStrategy = value;
             }
         }
     }

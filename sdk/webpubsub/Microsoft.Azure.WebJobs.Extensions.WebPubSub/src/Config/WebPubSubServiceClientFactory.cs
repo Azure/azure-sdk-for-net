@@ -21,11 +21,11 @@ internal class WebPubSubServiceClientFactory(
     /// <summary>
     /// Creates a WebPubSubServiceClient with fallback connection and hub resolution.
     /// Priority for connection:
-    ///   1. attributeConnection (can be connection string or config section name)
+    ///   1. attributeConnection (config section name)
     ///   2. options (identity-based connection prioritized over connection string)
     /// Priority for hub: attributeHub > options.Hub.
     /// </summary>
-    /// <param name="attributeConnection">Connection from the attribute (can be connection string or config section name).</param>
+    /// <param name="attributeConnection">Connection from the attribute (config section name).</param>
     /// <param name="attributeHub">Hub from the attribute (highest priority).</param>
     /// <returns>A configured WebPubSubServiceClient instance.</returns>
     public WebPubSubServiceClient Create(string attributeConnection, string attributeHub)

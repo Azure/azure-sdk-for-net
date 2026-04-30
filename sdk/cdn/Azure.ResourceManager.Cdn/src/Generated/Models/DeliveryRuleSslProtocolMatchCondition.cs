@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,44 +16,40 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/>. </summary>
         /// <param name="sslProtocolOperator"> Describes operator to be matched. </param>
-        public DeliveryRuleSslProtocolMatchCondition(SslProtocolOperator sslProtocolOperator)
+        public DeliveryRuleSslProtocolMatchCondition(SslProtocolOperator sslProtocolOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleSslProtocolConditionParameters)
         {
             SslProtocolOperator = sslProtocolOperator;
             MatchValues = new ChangeTrackingList<DeliveryRuleSslProtocol>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleSslProtocolConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/>. </summary>
         /// <param name="typeName"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sslProtocolOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal DeliveryRuleSslProtocolMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, SslProtocolOperator sslProtocolOperator, bool? negateCondition, IList<DeliveryRuleSslProtocol> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal DeliveryRuleSslProtocolMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, SslProtocolOperator sslProtocolOperator, bool? negateCondition, IList<DeliveryRuleSslProtocol> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
             SslProtocolOperator = sslProtocolOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
-            TypeName = typeName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/> for deserialization. </summary>
-        internal DeliveryRuleSslProtocolMatchCondition()
-        {
         }
 
         /// <summary> Describes operator to be matched. </summary>
         [WirePath("operator")]
         public SslProtocolOperator SslProtocolOperator { get; set; }
+
         /// <summary> Describes if this is negate condition or not. </summary>
         [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
+
         /// <summary> The match value for the condition of the delivery rule. </summary>
         [WirePath("matchValues")]
         public IList<DeliveryRuleSslProtocol> MatchValues { get; }
+
         /// <summary> List of transforms. </summary>
         [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
