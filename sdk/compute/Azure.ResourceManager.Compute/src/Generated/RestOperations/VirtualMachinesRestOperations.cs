@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string vmName, RequestContext context)
+        internal HttpMessage CreatePowerOnRequest(string subscriptionId, string resourceGroupName, string vmName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateMigrateToVMScaleSetRequest(string subscriptionId, string resourceGroupName, string vmName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateMigrateToVirtualMachineScaleSetRequest(string subscriptionId, string resourceGroupName, string vmName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

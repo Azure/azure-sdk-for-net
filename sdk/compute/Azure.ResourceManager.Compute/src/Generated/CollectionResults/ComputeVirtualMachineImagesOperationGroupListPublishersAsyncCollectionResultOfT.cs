@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -17,7 +18,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersCollectionResultOfT : Pageable<VirtualMachineImageBase>
+    internal partial class ComputeVirtualMachineImagesOperationGroupListPublishersAsyncCollectionResultOfT : AsyncPageable<VirtualMachineImageBase>
     {
         private readonly VirtualMachineImagesOperationGroup _client;
         private readonly string _subscriptionId;
@@ -25,13 +26,13 @@ namespace Azure.ResourceManager.Compute
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ComputeVirtualMachineImagesOperationGroupListPublishersAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineImagesOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersCollectionResultOfT(VirtualMachineImagesOperationGroup client, string subscriptionId, string location, RequestContext context, string diagnosticScope)
+        public ComputeVirtualMachineImagesOperationGroupListPublishersAsyncCollectionResultOfT(VirtualMachineImagesOperationGroup client, string subscriptionId, string location, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,13 +41,13 @@ namespace Azure.ResourceManager.Compute
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ComputeVirtualMachineImagesOperationGroupListPublishersAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VirtualMachineImageBase>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ComputeVirtualMachineImagesOperationGroupListPublishersAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<VirtualMachineImageBase>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
+            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
@@ -58,14 +59,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetVirtualMachineImagePublishersRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

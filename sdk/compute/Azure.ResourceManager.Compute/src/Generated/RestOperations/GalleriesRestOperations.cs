@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetByArtifactNameRequest(string subscriptionId, string resourceGroupName, string galleryName, string artifactType, string artifactName, RequestContext context)
+        internal HttpMessage CreateGetSoftDeletedResourcesByArtifactNameRequest(string subscriptionId, string resourceGroupName, string galleryName, string artifactType, string artifactName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateNextGetByArtifactNameRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string galleryName, string artifactType, string artifactName, RequestContext context)
+        internal HttpMessage CreateNextGetSoftDeletedResourcesByArtifactNameRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string galleryName, string artifactType, string artifactName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGallerySharingProfileUpdateRequest(string subscriptionId, string resourceGroupName, string galleryName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateSharingProfileRequest(string subscriptionId, string resourceGroupName, string galleryName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, RequestContext context)
+        internal HttpMessage CreatePowerOnRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

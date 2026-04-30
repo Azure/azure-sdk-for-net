@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, RequestContent content, RequestContext context)
+        internal HttpMessage CreatePowerOnRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateStartExtensionUpgradeRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, RequestContext context)
+        internal HttpMessage CreateStartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, RequestContext context)
+        internal HttpMessage CreateCancelVirtualMachineScaleSetRollingUpgradeRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

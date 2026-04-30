@@ -32,8 +32,6 @@ namespace Azure.ResourceManager.Compute
         private readonly string _location;
         /// <summary> The publisherName. </summary>
         private readonly string _publisherName;
-        /// <summary> The type. </summary>
-        private readonly string _type;
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionImageCollection for mocking. </summary>
         protected VirtualMachineExtensionImageCollection()
@@ -45,13 +43,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="publisherName"> The publisherName for the resource. </param>
-        /// <param name="type"> The type for the resource. </param>
-        internal VirtualMachineExtensionImageCollection(ArmClient client, ResourceIdentifier id, string location, string publisherName, string @type) : base(client, id)
+        internal VirtualMachineExtensionImageCollection(ArmClient client, ResourceIdentifier id, string location, string publisherName) : base(client, id)
         {
             TryGetApiVersion(VirtualMachineExtensionImageResource.ResourceType, out string virtualMachineExtensionImageApiVersion);
             _location = location;
             _publisherName = publisherName;
-            _type = @type;
             _virtualMachineExtensionImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineExtensionImageResource.ResourceType.Namespace, Diagnostics);
             _virtualMachineExtensionImagesRestClient = new VirtualMachineExtensionImages(_virtualMachineExtensionImagesClientDiagnostics, Pipeline, Endpoint, virtualMachineExtensionImageApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
@@ -84,12 +80,14 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="type"></param>
         /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VirtualMachineExtensionImageResource>> GetAsync(string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VirtualMachineExtensionImageResource>> GetAsync(string @type, string version, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(@type, nameof(@type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Get");
@@ -100,7 +98,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineExtensionImageData> response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -133,12 +131,14 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="type"></param>
         /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VirtualMachineExtensionImageResource> Get(string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VirtualMachineExtensionImageResource> Get(string @type, string version, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(@type, nameof(@type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Get");
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineExtensionImageData> response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -163,6 +163,74 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine extension image types.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_ListTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new ComputeVirtualMachineExtensionImagesListTypesAsyncCollectionResultOfT(
+                _virtualMachineExtensionImagesRestClient,
+                Id.SubscriptionId,
+                _location,
+                _publisherName,
+                context,
+                "VirtualMachineExtensionImageCollection.GetAll"), data => new VirtualMachineExtensionImageResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine extension image types.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_ListTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new ComputeVirtualMachineExtensionImagesListTypesCollectionResultOfT(
+                _virtualMachineExtensionImagesRestClient,
+                Id.SubscriptionId,
+                _location,
+                _publisherName,
+                context,
+                "VirtualMachineExtensionImageCollection.GetAll"), data => new VirtualMachineExtensionImageResource(Client, data));
         }
 
         /// <summary>
@@ -182,23 +250,28 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="type"></param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"></param>
         /// <param name="orderby"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string @type, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(@type, nameof(@type));
+
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new VirtualMachineExtensionImageCollectionGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new ComputeVirtualMachineExtensionImagesListVersionsAsyncCollectionResultOfT(
                 _virtualMachineExtensionImagesRestClient,
                 Id.SubscriptionId,
                 _location,
                 _publisherName,
-                _type,
+                @type,
                 filter,
                 top,
                 @orderby,
@@ -223,23 +296,28 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="type"></param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"></param>
         /// <param name="orderby"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string @type, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(@type, nameof(@type));
+
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT(
+            return new PageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new ComputeVirtualMachineExtensionImagesListVersionsCollectionResultOfT(
                 _virtualMachineExtensionImagesRestClient,
                 Id.SubscriptionId,
                 _location,
                 _publisherName,
-                _type,
+                @type,
                 filter,
                 top,
                 @orderby,
@@ -264,12 +342,14 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="type"></param>
         /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string @type, string version, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(@type, nameof(@type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Exists");
@@ -280,7 +360,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionImageData> response = default;
@@ -321,12 +401,14 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="type"></param>
         /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string @type, string version, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(@type, nameof(@type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Exists");
@@ -337,7 +419,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionImageData> response = default;
@@ -378,12 +460,14 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="type"></param>
         /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<VirtualMachineExtensionImageResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<VirtualMachineExtensionImageResource>> GetIfExistsAsync(string @type, string version, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(@type, nameof(@type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetIfExists");
@@ -394,7 +478,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionImageData> response = default;
@@ -439,12 +523,14 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="type"></param>
         /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<VirtualMachineExtensionImageResource> GetIfExists(string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<VirtualMachineExtensionImageResource> GetIfExists(string @type, string version, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(@type, nameof(@type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetIfExists");
@@ -455,7 +541,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionImageData> response = default;

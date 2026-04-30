@@ -13,60 +13,49 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT : Pageable<VirtualMachineExtensionImageData>
+    internal partial class ComputeVirtualMachineImagesOperationGroupListOffersCollectionResultOfT : Pageable<VirtualMachineImageBase>
     {
-        private readonly VirtualMachineExtensionImages _client;
+        private readonly VirtualMachineImagesOperationGroup _client;
         private readonly string _subscriptionId;
         private readonly string _location;
         private readonly string _publisherName;
-        private readonly string _type;
-        private readonly string _filter;
-        private readonly int? _top;
-        private readonly string _orderby;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The VirtualMachineExtensionImages client used to send requests. </param>
+        /// <summary> Initializes a new instance of ComputeVirtualMachineImagesOperationGroupListOffersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The VirtualMachineImagesOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
-        /// <param name="publisherName"></param>
-        /// <param name="type"></param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="top"></param>
-        /// <param name="orderby"></param>
+        /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT(VirtualMachineExtensionImages client, string subscriptionId, string location, string publisherName, string @type, string filter, int? top, string @orderby, RequestContext context, string diagnosticScope)
+        public ComputeVirtualMachineImagesOperationGroupListOffersCollectionResultOfT(VirtualMachineImagesOperationGroup client, string subscriptionId, string location, string publisherName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _publisherName = publisherName;
-            _type = @type;
-            _filter = filter;
-            _top = top;
-            _orderby = @orderby;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ComputeVirtualMachineImagesOperationGroupListOffersCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VirtualMachineExtensionImageData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ComputeVirtualMachineImagesOperationGroupListOffersCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<VirtualMachineImageBase>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<VirtualMachineExtensionImageData> result = ParseArrayFromResponse(response);
-            yield return Page<VirtualMachineExtensionImageData>.FromValues(result, null, response);
+            IReadOnlyList<VirtualMachineImageBase> result = ParseArrayFromResponse(response);
+            yield return Page<VirtualMachineImageBase>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -74,7 +63,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetVersionsRequest(_subscriptionId, _location, _publisherName, _type, _filter, _top, _orderby, _context);
+            HttpMessage message = _client.CreateGetVirtualMachineImageOffersRequest(_subscriptionId, _location, _publisherName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -91,14 +80,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<VirtualMachineExtensionImageData> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<VirtualMachineImageBase> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<VirtualMachineExtensionImageData> result = new List<VirtualMachineExtensionImageData>();
+            List<VirtualMachineImageBase> result = new List<VirtualMachineImageBase>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<VirtualMachineExtensionImageData>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                result.Add(ModelReaderWriter.Read<VirtualMachineImageBase>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
             }
             return result;
         }

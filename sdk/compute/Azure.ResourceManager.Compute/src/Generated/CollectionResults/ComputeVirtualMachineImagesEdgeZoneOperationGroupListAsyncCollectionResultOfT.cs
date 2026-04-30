@@ -18,39 +18,54 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT : AsyncPageable<VirtualMachineImageBase>
+    internal partial class ComputeVirtualMachineImagesEdgeZoneOperationGroupListAsyncCollectionResultOfT : AsyncPageable<VirtualMachineImageBase>
     {
         private readonly VirtualMachineImagesEdgeZoneOperationGroup _client;
         private readonly string _subscriptionId;
         private readonly string _location;
         private readonly string _edgeZone;
         private readonly string _publisherName;
+        private readonly string _offer;
+        private readonly string _skus;
+        private readonly string _expand;
+        private readonly int? _top;
+        private readonly string _orderby;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ComputeVirtualMachineImagesEdgeZoneOperationGroupListAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineImagesEdgeZoneOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="skus"> A valid image SKU. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
+        /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, string location, string edgeZone, string publisherName, RequestContext context, string diagnosticScope)
+        public ComputeVirtualMachineImagesEdgeZoneOperationGroupListAsyncCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, string location, string edgeZone, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _edgeZone = edgeZone;
             _publisherName = publisherName;
+            _offer = offer;
+            _skus = skus;
+            _expand = expand;
+            _top = top;
+            _orderby = @orderby;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ComputeVirtualMachineImagesEdgeZoneOperationGroupListAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ComputeVirtualMachineImagesEdgeZoneOperationGroupListAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<VirtualMachineImageBase>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
@@ -67,7 +82,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetOffersVirtualMachineImagesEdgeZonesRequest(_subscriptionId, _location, _edgeZone, _publisherName, _context);
+            HttpMessage message = _client.CreateGetVirtualMachineImagesEdgeZonesRequest(_subscriptionId, _location, _edgeZone, _publisherName, _offer, _skus, _expand, _top, _orderby, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -1478,20 +1478,19 @@ namespace Azure.ResourceManager.Compute
         /// Gets a collection of VirtualMachineExtensionImages in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineExtensionImages(string, string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineExtensionImages(string, string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="publisherName"> The publisherName for the resource. </param>
-        /// <param name="type"> The type for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of VirtualMachineExtensionImages and their operations over a VirtualMachineExtensionImageResource. </returns>
-        public static VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(this SubscriptionResource subscriptionResource, string location, string publisherName, string @type)
+        public static VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(this SubscriptionResource subscriptionResource, string location, string publisherName)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineExtensionImages(location, publisherName, @type);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineExtensionImages(location, publisherName);
         }
 
         /// <summary>
@@ -1504,7 +1503,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="publisherName"> The publisherName for the resource. </param>
-        /// <param name="type"> The type for the resource. </param>
+        /// <param name="type"></param>
         /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -1526,7 +1525,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="publisherName"> The publisherName for the resource. </param>
-        /// <param name="type"> The type for the resource. </param>
+        /// <param name="type"></param>
         /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

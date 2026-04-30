@@ -434,11 +434,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
-        public virtual async Task<ArmOperation<SharingUpdate>> GallerySharingProfileUpdateAsync(WaitUntil waitUntil, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SharingUpdate>> UpdateSharingProfileAsync(WaitUntil waitUntil, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sharingUpdate, nameof(sharingUpdate));
 
-            using DiagnosticScope scope = _galleriesClientDiagnostics.CreateScope("GalleryResource.GallerySharingProfileUpdate");
+            using DiagnosticScope scope = _galleriesClientDiagnostics.CreateScope("GalleryResource.UpdateSharingProfile");
             scope.Start();
             try
             {
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateGallerySharingProfileUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SharingUpdate.ToRequestContent(sharingUpdate), context);
+                HttpMessage message = _galleriesRestClient.CreateUpdateSharingProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SharingUpdate.ToRequestContent(sharingUpdate), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<SharingUpdate> operation = new ComputeArmOperation<SharingUpdate>(
                     new SharingUpdateOperationSource(),
@@ -493,11 +493,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
-        public virtual ArmOperation<SharingUpdate> GallerySharingProfileUpdate(WaitUntil waitUntil, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SharingUpdate> UpdateSharingProfile(WaitUntil waitUntil, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sharingUpdate, nameof(sharingUpdate));
 
-            using DiagnosticScope scope = _galleriesClientDiagnostics.CreateScope("GalleryResource.GallerySharingProfileUpdate");
+            using DiagnosticScope scope = _galleriesClientDiagnostics.CreateScope("GalleryResource.UpdateSharingProfile");
             scope.Start();
             try
             {
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateGallerySharingProfileUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SharingUpdate.ToRequestContent(sharingUpdate), context);
+                HttpMessage message = _galleriesRestClient.CreateUpdateSharingProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SharingUpdate.ToRequestContent(sharingUpdate), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<SharingUpdate> operation = new ComputeArmOperation<SharingUpdate>(
                     new SharingUpdateOperationSource(),
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="GallerySoftDeletedResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GallerySoftDeletedResourceDetails> GetByArtifactNameAsync(string artifactType, string artifactName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GallerySoftDeletedResourceDetails> GetSoftDeletedResourcesByArtifactNameAsync(string artifactType, string artifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactType, nameof(artifactType));
             Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new GalleriesGetByArtifactNameAsyncCollectionResultOfT(
+            return new GalleriesGetSoftDeletedResourcesByArtifactNameAsyncCollectionResultOfT(
                 _galleriesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Compute
                 artifactType,
                 artifactName,
                 context,
-                "GalleryResource.GetByArtifactName");
+                "GalleryResource.GetSoftDeletedResourcesByArtifactName");
         }
 
         /// <summary>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="GallerySoftDeletedResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GallerySoftDeletedResourceDetails> GetByArtifactName(string artifactType, string artifactName, CancellationToken cancellationToken = default)
+        public virtual Pageable<GallerySoftDeletedResourceDetails> GetSoftDeletedResourcesByArtifactName(string artifactType, string artifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactType, nameof(artifactType));
             Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new GalleriesGetByArtifactNameCollectionResultOfT(
+            return new GalleriesGetSoftDeletedResourcesByArtifactNameCollectionResultOfT(
                 _galleriesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.Compute
                 artifactType,
                 artifactName,
                 context,
-                "GalleryResource.GetByArtifactName");
+                "GalleryResource.GetSoftDeletedResourcesByArtifactName");
         }
 
         /// <summary> Add a tag to the current resource. </summary>
