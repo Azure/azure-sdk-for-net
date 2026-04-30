@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string administratorLoginPassword = default;
             PostgreSqlFlexibleServerVersion? version = default;
             PostgreSqlFlexibleServerStorage storage = default;
-            BackupForPatch backup = default;
-            HighAvailabilityForPatch highAvailability = default;
-            MaintenanceWindowForPatch maintenanceWindow = default;
-            AuthConfigForPatch authConfig = default;
+            PostgreSqlFlexibleServerBackupProperties backup = default;
+            PostgreSqlFlexibleServerHighAvailability highAvailability = default;
+            PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
+            PostgreSqlFlexibleServerAuthConfig authConfig = default;
             PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
             string availabilityZone = default;
             PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    backup = BackupForPatch.DeserializeBackupForPatch(prop.Value, options);
+                    backup = PostgreSqlFlexibleServerBackupProperties.DeserializePostgreSqlFlexibleServerBackupProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("highAvailability"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    highAvailability = HighAvailabilityForPatch.DeserializeHighAvailabilityForPatch(prop.Value, options);
+                    highAvailability = PostgreSqlFlexibleServerHighAvailability.DeserializePostgreSqlFlexibleServerHighAvailability(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("maintenanceWindow"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    maintenanceWindow = MaintenanceWindowForPatch.DeserializeMaintenanceWindowForPatch(prop.Value, options);
+                    maintenanceWindow = PostgreSqlFlexibleServerMaintenanceWindow.DeserializePostgreSqlFlexibleServerMaintenanceWindow(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("authConfig"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    authConfig = AuthConfigForPatch.DeserializeAuthConfigForPatch(prop.Value, options);
+                    authConfig = PostgreSqlFlexibleServerAuthConfig.DeserializePostgreSqlFlexibleServerAuthConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataEncryption"u8))

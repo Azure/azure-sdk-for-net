@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SkuInternal))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(SkuInternal, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            SkuForPatch skuInternal = default;
+            PostgreSqlFlexibleServerSku sku = default;
             PostgreSqlFlexibleServerUserAssignedIdentity identity = default;
             ServerPropertiesForPatch properties = default;
             IDictionary<string, string> tags = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    skuInternal = SkuForPatch.DeserializeSkuForPatch(prop.Value, options);
+                    sku = PostgreSqlFlexibleServerSku.DeserializePostgreSqlFlexibleServerSku(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PostgreSqlFlexibleServerPatch(skuInternal, identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new PostgreSqlFlexibleServerPatch(sku, identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -24,19 +24,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPatch"/>. </summary>
-        /// <param name="skuInternal"> Compute tier and size of a server. </param>
+        /// <param name="sku"> Compute tier and size of a server. </param>
         /// <param name="identity"> Describes the identity of the application. </param>
         /// <param name="properties"> Properties of the server. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerPatch(SkuForPatch skuInternal, PostgreSqlFlexibleServerUserAssignedIdentity identity, ServerPropertiesForPatch properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, ServerPropertiesForPatch properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SkuInternal = skuInternal;
+            Sku = sku;
             Identity = identity;
             Properties = properties;
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Compute tier and size of a server. </summary>
+        [WirePath("sku")]
+        public PostgreSqlFlexibleServerSku Sku { get; set; }
 
         /// <summary> Describes the identity of the application. </summary>
         [WirePath("identity")]
@@ -101,6 +105,78 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     Properties = new ServerPropertiesForPatch();
                 }
                 Properties.Storage = value;
+            }
+        }
+
+        /// <summary> Backup properties of a server. </summary>
+        [WirePath("properties.backup")]
+        public PostgreSqlFlexibleServerBackupProperties Backup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Backup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerPropertiesForPatch();
+                }
+                Properties.Backup = value;
+            }
+        }
+
+        /// <summary> High availability properties of a server. </summary>
+        [WirePath("properties.highAvailability")]
+        public PostgreSqlFlexibleServerHighAvailability HighAvailability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HighAvailability;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerPropertiesForPatch();
+                }
+                Properties.HighAvailability = value;
+            }
+        }
+
+        /// <summary> Maintenance window properties of a server. </summary>
+        [WirePath("properties.maintenanceWindow")]
+        public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceWindow;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerPropertiesForPatch();
+                }
+                Properties.MaintenanceWindow = value;
+            }
+        }
+
+        /// <summary> Authentication configuration properties of a server. </summary>
+        [WirePath("properties.authConfig")]
+        public PostgreSqlFlexibleServerAuthConfig AuthConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerPropertiesForPatch();
+                }
+                Properties.AuthConfig = value;
             }
         }
 

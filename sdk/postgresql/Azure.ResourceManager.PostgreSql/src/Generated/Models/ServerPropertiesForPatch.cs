@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
         /// <param name="cluster"> Cluster properties of a server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerPropertiesForPatch(string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, BackupForPatch backup, HighAvailabilityForPatch highAvailability, MaintenanceWindowForPatch maintenanceWindow, AuthConfigForPatch authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, string availabilityZone, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerClusterProperties cluster, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerPropertiesForPatch(string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, string availabilityZone, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerClusterProperties cluster, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -77,19 +77,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Backup properties of a server. </summary>
         [WirePath("backup")]
-        public BackupForPatch Backup { get; set; }
+        public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
 
         /// <summary> High availability properties of a server. </summary>
         [WirePath("highAvailability")]
-        public HighAvailabilityForPatch HighAvailability { get; set; }
+        public PostgreSqlFlexibleServerHighAvailability HighAvailability { get; set; }
 
         /// <summary> Maintenance window properties of a server. </summary>
         [WirePath("maintenanceWindow")]
-        public MaintenanceWindowForPatch MaintenanceWindow { get; set; }
+        public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
 
         /// <summary> Authentication configuration properties of a server. </summary>
         [WirePath("authConfig")]
-        public AuthConfigForPatch AuthConfig { get; set; }
+        public PostgreSqlFlexibleServerAuthConfig AuthConfig { get; set; }
 
         /// <summary> Data encryption properties of a server. </summary>
         [WirePath("dataEncryption")]
