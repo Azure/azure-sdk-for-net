@@ -1,9 +1,10 @@
 # Release History
 
-## 1.0.0-beta.3 (2026-04-28)
+## 1.0.0 (2026-04-29)
 
 ### Features Added
 
+- General Availability release of `Azure.ResourceManager.FileShares`.
 - Upgraded API version to `2026-06-01`
 - Added new type `NfsProtocolProperties` with `RootSquash` and `EncryptionInTransitRequired` properties
 - Added new extensible enum `EncryptionInTransitRequired` with values `Enabled` and `Disabled`
