@@ -90,13 +90,23 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
             IDictionary<string, string> metadata = _options?.GetFileMetadata(sourceProperties?.RawProperties);
             string filePermission = _options?.GetFilePermission(sourceProperties);
-            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
             FilePosixProperties posixProperties = _options?.GetFilePosixProperties(sourceProperties);
 
-            // if transfer is not empty and File Attribute contains ReadOnly, we should not set it before creating the file.
-            if ((sourceProperties == null || sourceProperties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
+            FileSmbProperties smbProperties;
+            // For non-empty files, do not set SMB properties (attributes, timestamps)
+            // during creation. These will be set in CompleteTransferAsync after all data
+            // has been written. This matches v2 behavior and prevents Azure File Sync
+            // from picking up incomplete files during upload.
+            if (sourceProperties == null || sourceProperties.ResourceLength > 0)
             {
-                smbProperties.FileAttributes = default;
+                smbProperties = new FileSmbProperties
+                {
+                    FilePermissionKey = _options?.GetFilePermissionKey(sourceProperties, _destinationPermissionKey)
+                };
+            }
+            else
+            {
+                smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
             }
 
             ShareFileCreateOptions options = new ShareFileCreateOptions()
@@ -115,11 +125,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        private bool IsReadOnlySet(NtfsFileAttributes? fileAttributes)
-        {
-            return fileAttributes?.HasFlag(NtfsFileAttributes.ReadOnly) ?? false;
-        }
-
         protected override async Task CompleteTransferAsync(
             bool overwrite,
             StorageResourceCompleteTransferOptions completeTransferOptions,
@@ -129,13 +134,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
-            // Call Set Properties
-            // if transfer is not empty and original File Attribute contains ReadOnly
-            // or if FileChangedOn is to be preserved or manually set
-            if (((sourceProperties == null || sourceProperties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
-                    || (_options?._isFileChangedOnSet == false || _options?.FileChangedOn != null))
+            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
+
+            // Always set final SMB properties for non-empty files. SMB properties were
+            // intentionally deferred from CreateAsync so that Azure File Sync does not
+            // pick up the file until the upload is complete (matching v2 behavior).
+            // For empty files, SMB properties are already set during CreateAsync, so
+            // this call is only needed if the user explicitly configured FileChangedOn.
+            if ((sourceProperties == null || sourceProperties.ResourceLength > 0)
+                    || (_options?._isFileChangedOnSet == true || _options?.FileChangedOn != null))
             {
-                ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
                 await ShareFileClient.SetHttpHeadersAsync(new()
                 {
                     HttpHeaders = httpHeaders,
