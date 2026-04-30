@@ -33,7 +33,7 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08
     features: {
       searchVersion: 1
       legacy: 0
-      enableLogAccessUsingOnlyResourcePermissions: 'true'
+      enableLogAccessUsingOnlyResourcePermissions: true
     }
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
