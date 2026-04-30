@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     [CodeGenSuppress("PostgreSqlFlexibleServerNameAvailabilityResult", typeof(bool?), typeof(PostgreSqlFlexibleServerNameUnavailableReason?), typeof(string), typeof(string), typeof(ResourceType?))]
     [CodeGenSuppress("PostgreSqlFlexibleServerNameAvailabilityResponse", typeof(bool?), typeof(PostgreSqlFlexibleServerNameUnavailableReason?), typeof(string))]
     [CodeGenSuppress("PostgreSqlMigrationPatch", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(MigrationSecretParametersForPatch), typeof(IEnumerable<string>), typeof(PostgreSqlMigrationLogicalReplicationOnSourceDb?), typeof(PostgreSqlMigrationOverwriteDbsInTarget?), typeof(DateTimeOffset?), typeof(MigrateRolesEnum?), typeof(PostgreSqlMigrationStartDataMigration?), typeof(PostgreSqlMigrationTriggerCutover?), typeof(IEnumerable<string>), typeof(PostgreSqlMigrationCancel?), typeof(IEnumerable<string>), typeof(PostgreSqlMigrationMode?), typeof(IDictionary<string, string>))]
+    [CodeGenSuppress("PostgreSqlFlexibleServersPrivateEndpointConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IEnumerable<string>), typeof(PostgreSqlFlexibleServersPrivateLinkServiceConnectionState), typeof(PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState?), typeof(ResourceIdentifier))]
     public static partial class ArmPostgreSqlFlexibleServersModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
@@ -613,7 +614,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPrivateEndpointConnectionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionData PostgreSqlFlexibleServersPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, PostgreSqlFlexibleServersPrivateLinkServiceConnectionState connectionState = null, PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = null)
-            => PostgreSqlFlexibleServersPrivateEndpointConnectionData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupIds: groupIds, privateLinkServiceConnectionState: connectionState, provisioningState: provisioningState, privateEndpointId: privateEndpointId);
+            => PostgreSqlFlexibleServersPrivateEndpointConnectionData(id, name, resourceType, systemData, groupIds, connectionState, provisioningState, privateEndpointId);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPrivateEndpointConnectionData"/>. </summary>
+        public static PostgreSqlFlexibleServersPrivateEndpointConnectionData PostgreSqlFlexibleServersPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, PostgreSqlFlexibleServersPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null)
+            => new PostgreSqlFlexibleServersPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                groupIds is null && privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null));
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPrivateLinkResourceData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

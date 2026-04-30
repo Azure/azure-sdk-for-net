@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     // The merged TypeSpec models patch secretParameters with the patch-only MigrationSecretParametersForPatch type.
@@ -12,7 +10,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public partial class PostgreSqlMigrationPatch
     {
         /// <summary> Migration secret parameters. </summary>
-        [CodeGenMember("SecretParameters")]
         public PostgreSqlMigrationSecretParameters SecretParameters { get; set; }
     }
 }
