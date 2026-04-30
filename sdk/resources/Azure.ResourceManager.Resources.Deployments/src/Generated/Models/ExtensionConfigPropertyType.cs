@@ -7,60 +7,90 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The ExtensionConfigPropertyType. </summary>
+    /// <summary></summary>
     public readonly partial struct ExtensionConfigPropertyType : IEquatable<ExtensionConfigPropertyType>
     {
         private readonly string _value;
+        /// <summary> Property type representing a string value. </summary>
+        private const string StringValue = "String";
+        /// <summary> Property type representing an integer value. </summary>
+        private const string IntValue = "Int";
+        /// <summary> Property type representing a boolean value. </summary>
+        private const string BoolValue = "Bool";
+        /// <summary> Property type representing an array value. </summary>
+        private const string ArrayValue = "Array";
+        /// <summary> Property type representing an object value. </summary>
+        private const string ObjectValue = "Object";
+        /// <summary> Property type representing a secure string value. </summary>
+        private const string SecureStringValue = "SecureString";
+        /// <summary> Property type representing a secure object value. </summary>
+        private const string SecureObjectValue = "SecureObject";
 
         /// <summary> Initializes a new instance of <see cref="ExtensionConfigPropertyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExtensionConfigPropertyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StringValue = "String";
-        private const string IntValue = "Int";
-        private const string BoolValue = "Bool";
-        private const string ArrayValue = "Array";
-        private const string ObjectValue = "Object";
-        private const string SecureStringValue = "SecureString";
-        private const string SecureObjectValue = "SecureObject";
+            _value = value;
+        }
 
         /// <summary> Property type representing a string value. </summary>
         public static ExtensionConfigPropertyType String { get; } = new ExtensionConfigPropertyType(StringValue);
+
         /// <summary> Property type representing an integer value. </summary>
         public static ExtensionConfigPropertyType Int { get; } = new ExtensionConfigPropertyType(IntValue);
+
         /// <summary> Property type representing a boolean value. </summary>
         public static ExtensionConfigPropertyType Bool { get; } = new ExtensionConfigPropertyType(BoolValue);
+
         /// <summary> Property type representing an array value. </summary>
         public static ExtensionConfigPropertyType Array { get; } = new ExtensionConfigPropertyType(ArrayValue);
+
         /// <summary> Property type representing an object value. </summary>
         public static ExtensionConfigPropertyType Object { get; } = new ExtensionConfigPropertyType(ObjectValue);
+
         /// <summary> Property type representing a secure string value. </summary>
         public static ExtensionConfigPropertyType SecureString { get; } = new ExtensionConfigPropertyType(SecureStringValue);
+
         /// <summary> Property type representing a secure object value. </summary>
         public static ExtensionConfigPropertyType SecureObject { get; } = new ExtensionConfigPropertyType(SecureObjectValue);
+
         /// <summary> Determines if two <see cref="ExtensionConfigPropertyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExtensionConfigPropertyType left, ExtensionConfigPropertyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExtensionConfigPropertyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExtensionConfigPropertyType left, ExtensionConfigPropertyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExtensionConfigPropertyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExtensionConfigPropertyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExtensionConfigPropertyType(string value) => new ExtensionConfigPropertyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExtensionConfigPropertyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExtensionConfigPropertyType?(string value) => value == null ? null : new ExtensionConfigPropertyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExtensionConfigPropertyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExtensionConfigPropertyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
