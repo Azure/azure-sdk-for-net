@@ -194,7 +194,7 @@ The markdown returned by Content Understanding can be directly consumed by large
 
 ```C# Snippet:ContentUnderstandingConvertToLlmInput
 // The markdown above can be consumed directly by LLMs. For convenience, the SDK
-// provides `.ToLlmInput()` which packages the result into a single
+// provides .ToLlmInput() which packages the result into a single
 // text block with YAML front matter (content type, pages, fields, optional metadata)
 // followed by the markdown body — ready for LLM prompts, vector stores, or agentic tools.
 string llmText = result.ToLlmInput();
