@@ -138,6 +138,19 @@ namespace Azure.Generator.Visitors
             return constructor;
         }
 
+        protected override MethodProvider? VisitMethod(MethodProvider method)
+        {
+            if (method.EnclosingType is CollectionResultDefinition collectionResult
+                && collectionResult.GetType() == typeof(CollectionResultDefinition)
+                && method.Signature.Name is "GetNextResponse" or "GetNextResponseAsync")
+            {
+                WrapCollectionResultMethodWithTracing(method, collectionResult);
+                return method;
+            }
+
+            return base.VisitMethod(method);
+        }
+
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
             if (ShouldSkipType(method.EnclosingType) || ShouldSkipMethodForTracing(method))
@@ -211,6 +224,40 @@ namespace Azure.Generator.Visitors
                 "scope",
                 DiagnosticScopeType,
                 clientDiagnosticsProperty.Invoke("CreateScope", [Literal(scopeName)], false, false),
+                out var scope);
+            // start scope
+            var scopeStart = scope.Invoke("Start").Terminate();
+            // wrap existing statements in try / catch
+            var tryStatement = new TryExpression
+            (
+                method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!)
+            );
+
+            var catchBlock = new CatchExpression(
+                Declare("e", typeof(Exception), out var exception),
+                scope.Invoke("Failed", [exception]).Terminate(),
+                Throw());
+            var tryCatchRequestBlock = new TryCatchFinallyStatement(tryStatement, catchBlock);
+            List<MethodBodyStatement> updatedBodyStatements = [scopeDeclaration, scopeStart, tryCatchRequestBlock];
+
+            method.Update(bodyStatements: updatedBodyStatements);
+        }
+
+        private void WrapCollectionResultMethodWithTracing(MethodProvider method, CollectionResultDefinition collectionResult)
+        {
+            if (method.BodyStatements == null && method.BodyExpression == null)
+            {
+                return;
+            }
+
+            var clientField = collectionResult.Fields.First(f => f.Name == "_client");
+            var scopeName = GetCollectionResultScopeName(collectionResult);
+
+            // declare scope
+            var scopeDeclaration = UsingDeclare(
+                "scope",
+                DiagnosticScopeType,
+                ((MemberExpression)clientField).Property(ClientDiagnosticsPropertyName).Invoke("CreateScope", [Literal(scopeName)]),
                 out var scope);
             // start scope
             var scopeStart = scope.Invoke("Start").Terminate();
@@ -311,6 +358,37 @@ namespace Azure.Generator.Visitors
             return typeProvider is not ClientProvider ||
                 !typeProvider.CanonicalView.Properties
                     .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+        }
+
+        /// TODO: replace with collectionResult.ScopeName when available
+        private static string GetCollectionResultScopeName(CollectionResultDefinition collectionResult)
+        {
+            // The CollectionResultDefinition.Name follows the pattern:
+            // "{ClientName}{OperationName}{Async?}CollectionResult{OfT?}"
+            // We need to extract "{ClientName}.{OperationName}".
+            var name = collectionResult.Name;
+
+            // Strip trailing suffixes: "OfT", "CollectionResult", "Async"
+            if (name.EndsWith("OfT"))
+                name = name[..^3];
+            if (name.EndsWith("CollectionResult"))
+                name = name[..^"CollectionResult".Length];
+            if (name.EndsWith("Async"))
+                name = name[..^5];
+
+            // Find the client name by looking at the client field's type name
+            var clientField = collectionResult.Fields.FirstOrDefault(f => f.Name == "_client");
+            if (clientField != null)
+            {
+                var clientName = clientField.Type.Name;
+                if (name.StartsWith(clientName))
+                {
+                    var operationName = name[clientName.Length..];
+                    return $"{clientName}.{operationName}";
+                }
+            }
+
+            return name;
         }
 
         private static bool IsSubClientFactoryMethod(ScmMethodProvider method)
