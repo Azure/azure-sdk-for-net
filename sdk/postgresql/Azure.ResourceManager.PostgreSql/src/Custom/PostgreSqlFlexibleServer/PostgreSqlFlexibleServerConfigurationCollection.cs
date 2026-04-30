@@ -11,6 +11,9 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    // The generated PUT overload must keep PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent because that
+    // request-content type is part of the previous GA API. These hidden overloads preserve the previous
+    // PostgreSqlFlexibleServerConfigurationData convenience overloads as well.
     public partial class PostgreSqlFlexibleServerConfigurationCollection
     {
         /// <summary>
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
-        // Add this overload for api consistency
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<PostgreSqlFlexibleServerConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, PostgreSqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
@@ -82,7 +84,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
-        // Add this overload for api consistency
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<PostgreSqlFlexibleServerConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, PostgreSqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
