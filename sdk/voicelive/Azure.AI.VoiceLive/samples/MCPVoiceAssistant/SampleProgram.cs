@@ -227,7 +227,7 @@ namespace Azure.AI.VoiceLive.Samples
 
         private static bool IsWebSocketUnauthorized(Exception ex)
         {
-            if (ex is WebSocketException wsex && wsex.Message.Contains("status code '401'", StringComparison.OrdinalIgnoreCase))
+            if (ex is WebSocketException webSocketException && webSocketException.Message.Contains("status code '401'", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
