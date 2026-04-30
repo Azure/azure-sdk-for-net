@@ -40,10 +40,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [WirePath("currentSubState")]
         public PostgreSqlMigrationSubState? CurrentSubState { get; }
 
-        /// <summary> Gets the DbDetails. </summary>
-        [WirePath("dbDetails")]
-        public IReadOnlyDictionary<string, DbMigrationStatus> DbDetails { get; }
-
         /// <summary> Gets the ValidationDetails. </summary>
         [WirePath("validationDetails")]
         public PostgreSqlFlexibleServersValidationDetails ValidationDetails { get; }

@@ -49,9 +49,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> End time of a database level validation. </summary>
         [WirePath("endedOn")]
         public DateTimeOffset? EndedOn { get; }
-
-        /// <summary> Summary of database level validations. </summary>
-        [WirePath("summary")]
-        public IReadOnlyList<ValidationSummaryItem> Summary { get; }
     }
 }

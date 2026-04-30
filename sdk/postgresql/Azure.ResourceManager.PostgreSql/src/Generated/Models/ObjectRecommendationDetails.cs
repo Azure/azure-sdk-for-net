@@ -64,13 +64,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Index name. </summary>
         [WirePath("indexName")]
         public string IndexName { get; }
-
-        /// <summary> Index columns. </summary>
-        [WirePath("indexColumns")]
-        public IReadOnlyList<string> IndexColumns { get; }
-
-        /// <summary> Index included columns. </summary>
-        [WirePath("includedColumns")]
-        public IReadOnlyList<string> IncludedColumns { get; }
     }
 }

@@ -52,13 +52,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> End time (UTC) for validation. </summary>
         [WirePath("validationEndTimeInUtc")]
         public DateTimeOffset? ValidationEndTimeInUtc { get; }
-
-        /// <summary> Details of server level validations. </summary>
-        [WirePath("serverLevelValidationDetails")]
-        public IReadOnlyList<ValidationSummaryItem> ServerLevelValidationDetails { get; }
-
-        /// <summary> Details of server level validations. </summary>
-        [WirePath("dbLevelValidationDetails")]
-        public IReadOnlyList<DbLevelValidationStatus> DbLevelValidationDetails { get; }
     }
 }

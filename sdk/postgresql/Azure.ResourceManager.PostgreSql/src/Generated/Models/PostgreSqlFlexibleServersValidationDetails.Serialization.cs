@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("validationEndTimeInUtc"u8);
                 writer.WriteStringValue(ValidationEndTimeInUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ServerLevelValidationDetails))
+            if (Optional.IsCollectionDefined(ServerLevelValidationDetails))
             {
                 writer.WritePropertyName("serverLevelValidationDetails"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DbLevelValidationDetails))
+            if (Optional.IsCollectionDefined(DbLevelValidationDetails))
             {
                 writer.WritePropertyName("dbLevelValidationDetails"u8);
                 writer.WriteStartArray();

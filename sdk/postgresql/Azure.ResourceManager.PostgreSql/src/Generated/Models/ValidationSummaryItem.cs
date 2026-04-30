@@ -43,9 +43,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Validation status for migration. </summary>
         [WirePath("state")]
         public PostgreSqlFlexibleServersValidationState? State { get; }
-
-        /// <summary> Validation messages. </summary>
-        [WirePath("messages")]
-        public IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> Messages { get; }
     }
 }

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("indexName"u8);
                 writer.WriteStringValue(IndexName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IndexColumns))
+            if (Optional.IsCollectionDefined(IndexColumns))
             {
                 writer.WritePropertyName("indexColumns"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IncludedColumns))
+            if (Optional.IsCollectionDefined(IncludedColumns))
             {
                 writer.WritePropertyName("includedColumns"u8);
                 writer.WriteStartArray();

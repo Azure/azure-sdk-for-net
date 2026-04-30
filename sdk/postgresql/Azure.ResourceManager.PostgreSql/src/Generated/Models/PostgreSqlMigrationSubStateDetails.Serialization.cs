@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("currentSubState"u8);
                 writer.WriteStringValue(CurrentSubState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DbDetails))
+            if (Optional.IsCollectionDefined(DbDetails))
             {
                 writer.WritePropertyName("dbDetails"u8);
                 writer.WriteStartObject();
