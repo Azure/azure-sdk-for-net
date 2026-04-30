@@ -44,7 +44,8 @@ namespace Azure.AI.AgentServer.Core.Tests
         private static readonly TimeSpan s_maxIngestionWait = TimeSpan.FromMinutes(6);
         private static readonly TimeSpan s_pollInterval = TimeSpan.FromSeconds(30);
 
-        private static readonly AgentServerTestEnvironment s_testEnvironment = new();
+        private static AgentServerTestEnvironment TestEnvironment => s_lazyEnv.Value;
+        private static readonly Lazy<AgentServerTestEnvironment> s_lazyEnv = new(() => new AgentServerTestEnvironment());
 
         /// <summary>
         /// Runs InvocationsServer.Run exactly like the HelloWorld BYO sample,
@@ -62,7 +63,7 @@ namespace Azure.AI.AgentServer.Core.Tests
             Environment.SetEnvironmentVariable("PORT", port.ToString());
             Environment.SetEnvironmentVariable(
                 "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                s_testEnvironment.ApplicationInsightsConnectionString);
+                TestEnvironment.ApplicationInsightsConnectionString);
 
             try
             {
@@ -138,7 +139,7 @@ namespace Azure.AI.AgentServer.Core.Tests
                 });
             var logsClient = new LogsQueryClient(credential);
             var traceId = TelemetryTestHandler.CapturedTraceId!;
-            var resourceId = new ResourceIdentifier(s_testEnvironment.ApplicationInsightsResourceId);
+            var resourceId = new ResourceIdentifier(TestEnvironment.ApplicationInsightsResourceId);
 
             // Query for all spans in the trace — requests table has Server spans,
             // dependencies table has Internal/Client spans.
