@@ -558,7 +558,7 @@ namespace Azure.AI.VoiceLive.Telemetry
                 // Agent ID and thread ID are only present for agent sessions (Agent v2 / MCP).
                 if (session.TryGetProperty("agent", out var agent))
                 {
-                    if (agent.TryGetProperty("id", out var agentId) && agentId.ValueKind == JsonValueKind.String)
+                    if (agent.TryGetProperty("agent_id", out var agentId) && agentId.ValueKind == JsonValueKind.String)
                         connectActivity.SetTag(Keys.GenAiAgentId, agentId.GetString());
 
                     if (agent.TryGetProperty("thread_id", out var threadId) && threadId.ValueKind == JsonValueKind.String)
