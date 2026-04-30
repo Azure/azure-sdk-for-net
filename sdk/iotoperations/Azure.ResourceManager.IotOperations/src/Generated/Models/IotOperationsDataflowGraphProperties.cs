@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             get
             {
-                return Status.HealthState;
+                return Status is null ? default : Status.HealthState;
             }
         }
     }
