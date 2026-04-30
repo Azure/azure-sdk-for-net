@@ -6,12 +6,6 @@
 
 - Upgraded api-version to 2026-02-01.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.5.0-beta.1 (2026-04-03)
 
 ### Features Added
