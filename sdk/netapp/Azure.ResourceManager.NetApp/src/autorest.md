@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/fc2f9170853d49a99881dcc18377f47c2599a9fc//specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
-tag: package-preview-2025-09-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/c5044e9d381c2bf1b3119011b4696e777f819f76/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
+tag: package-2026-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,7 +20,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-# mgmt-debug:
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -69,33 +69,44 @@ override-operation-name:
   NetAppResourceQuotaLimits_Get: GetNetAppQuotaLimit
   NetAppResourceQuotaLimits_List: GetNetAppQuotaLimits
   Volumes_ReplicationStatus: GetReplicationStatus
-  Backups_GetStatus: GetBackupStatus
-  Backups_GetVolumeRestoreStatus: GetRestoreStatus
   VolumeGroups_ListByNetAppAccount: GetVolumeGroups
-  QueryRegionInfoNetAppResource: QueryRegionInfoNetApp
+  Buckets_GenerateAkvCredentials: GenerateKeyVaultCredentials
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
-  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/quotaLimits/{quotaLimitName}
 
 prepend-rp-prefix:
+  - ActiveDirectoryConfig
+  - ActiveDirectoryConfigProperties
   - Backup
   - BackupType
   - BackupPolicy
+  - Bucket
+  - BucketPermissions
+  - BucketPatchPermissions
+  - BucketServerProperties
+  - BucketServerPatchProperties
+  - Cache
+  - CacheProperties
+  - CacheProvisioningState
   - EndpointType
+  - EntraIdConfig
+  - EntraIdConfigPatch
+  - LdapConfiguration
+  - LdapConfigurationPatch
   - Volume
   - VolumeQuotaRule
-  - Vault
   - RestoreStatus
   - ApplicationType
   - AvsDataStore
   - ChownMode
   - EncryptionKeySource
   - MirrorState
-  - RelationshipStatus
-  - ProvisioningState
   - ReplicationObject
   - ReplicationSchedule
+  - SecretPassword
+  - SecretPasswordIdentity
+  - SecretPasswordKeyVaultProperties
   - VolumeStorageToNetworkProximity
   - AccountEncryption
   - KeySource
@@ -110,24 +121,20 @@ prepend-rp-prefix:
   - KeyVaultPrivateEndpoint
   - ReplicationType
   - VolumeLanguage
-  - Bucket
+  - ManagedServiceIdentityType
   - BucketCredentialsExpiry
   - BucketGenerateCredentials
-  - BucketPatch
-  - BucketList
-  - BucketServerProperties
-  - BucketServerPatchProperties
-  - BucketPermissions
-  - BucketPatchPermissions
-  - BucketCredentialStatus
-  - BucketFileSystemUser
-  - BucketNfsUser
-  - Cache
-  - CacheList
-  - CacheUpdateProperties
-  - CacheProperties
+  - CacheMountTargetProperties
+  - CacheLifeCycleState
 
 rename-mapping:
+  AzureKeyVaultDetails: NetAppKeyVaultDetails
+  AzureKeyVaultDetails.certificateAkvDetails: CertificateKeyVaultDetails
+  AzureKeyVaultDetails.credentialsAkvDetails: CredentialsKeyVaultDetails
+  Bucket.properties.akvDetails: KeyVaultDetails
+  BucketPatch.properties.akvDetails: KeyVaultDetails
+  EntraIdConfig.entraIdAkvConfig: EntraIdKeyVaultConfig
+  EntraIdConfigPatch.entraIdAkvConfig: EntraIdKeyVaultConfig
   CapacityPool.properties.poolId: -|uuid
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
@@ -200,9 +207,7 @@ rename-mapping:
   ReplicationObject.remoteVolumeResourceId: -|arm-id
   VolumeBackupProperties.backupPolicyId: -|arm-id
   VolumeBackupProperties.policyEnforced: IsPolicyEnforced
-  VolumeBackupProperties.vaultId: -|arm-id
   VolumeBackupProperties.backupVaultId: -|arm-id
-  VolumeBackupProperties.backupEnabled: IsBackupEnabled
   VolumeGroupDetails: NetAppVolumeGroup
   QosType: CapacityPoolQosType
   ServiceLevel: NetAppFileServiceLevel
@@ -217,8 +222,9 @@ rename-mapping:
   CheckQuotaNameResourceTypes: NetAppQuotaAvailabilityResourceType
   QuotaAvailabilityRequest: NetAppQuotaAvailabilityContent
   InAvailabilityReasonType: NetAppNameUnavailableReason
+  Exclude: ExcludeReplicationsFilter
   Snapshot: NetAppVolumeSnapshot
-  SubscriptionQuotaItem: NetAppSubscriptionQuotaItem
+  QuotaItem: NetAppSubscriptionQuotaItem
   SubvolumeInfo: NetAppSubvolumeInfo
   Replication: NetAppVolumeReplication
   BackupStatus: NetAppVolumeBackupStatus
@@ -228,7 +234,6 @@ rename-mapping:
   BreakReplicationRequest: NetAppVolumeBreakReplicationContent
   DailySchedule: SnapshotPolicyDailySchedule
   EnableSubvolumes: EnableNetAppSubvolume
-  EncryptionType: CapacityPoolEncryptionType
   ExportPolicyRule: NetAppVolumeExportPolicyRule
   HourlySchedule: SnapshotPolicyHourlySchedule
   MonthlySchedule: SnapshotPolicyMonthlySchedule
@@ -240,12 +245,19 @@ rename-mapping:
   PoolChangeRequest: NetAppVolumePoolChangeContent
   ReestablishReplicationRequest: NetAppVolumeReestablishReplicationContent
   ReplicationStatus: NetAppVolumeReplicationStatus
+  PoolPropertiesEncryptionType: CapacityPoolEncryptionType
+  CapacityPool.properties.customThroughputMibps: CustomThroughputMibpsInt
+  CapacityPoolPatch.properties.customThroughputMibps: CustomThroughputMibpsInt
+  BackupStatus.relationshipStatus: VolumeBackupRelationshipStatus
+  RestoreStatus.relationshipStatus: VolumeRestoreRelationshipStatus
   ReplicationStatus.relationshipStatus: VolumeReplicationRelationshipStatus
-  ReplicationStatus.RelationshipStatus: VolumeReplicationRelationshipStatus
+  NetAppProvisioningState: NetAppVolumeQuotaRuleProvisioningState
+  VolumeQuotaRule.properties.provisioningState: VolumeQuotaRuleProvisioningState
+  VolumeQuotaRulePatch.properties.provisioningState: VolumeQuotaRuleProvisioningState
   SecurityStyle: NetAppVolumeSecurityStyle
   SnapshotRestoreFiles: NetAppVolumeSnapshotRestoreFilesContent
   SubvolumeModel: NetAppSubvolumeMetadata
-  Type: NetAppVolumeQuotaType
+  QuotaType: NetAppVolumeQuotaType
   VolumePatchPropertiesDataProtection: NetAppVolumePatchDataProtection
   VolumePropertiesDataProtection: NetAppVolumeDataProtection
   VolumeRevert: NetAppVolumeRevertContent
@@ -277,19 +289,46 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
-  QuotaItem: NetAppSubscriptionQuotaItem
-  NfsUser: NetAppBucketNfsUser
-  FileSystemUser: NetAppBucketFileSystemUser
-  CredentialsStatus: NetAppBucketCredentialStatus
-  CapacityPool.properties.customThroughputMibps: CustomThroughputMibpsInt
-  CapacityPoolPatch.properties.customThroughputMibps: CustomThroughputMibpsInt
-  PoolPropertiesEncryptionType: CapacityPoolEncryptionType
-  RestoreStatus.relationshipStatus: VolumeRestoreRelationshipStatus
-  BackupStatus.relationshipStatus: VolumeBackupRelationshipStatus
-  ListReplicationsRequest.exclude: ExcludeReplicationsFilter
-  Exclude: ExcludeReplicationsFilter
-  CheckElasticResourceAvailabilityResponse: CheckElasticResourceAvailabilityResult
-
+  BreakthroughMode: NetAppBreakthroughMode
+  CertificateAkvDetails: CertificateKeyVaultDetails
+  CifsChangeNotifyState: NetAppCifsChangeNotifyState
+  CredentialsAkvDetails: CredentialsKeyVaultDetails
+  CredentialsStatus: NetAppCredentialsStatus
+  DayOfWeek: NetAppDayOfWeek
+  EnableWriteBackState: NetAppEnableWriteBackState
+  EncryptionState: NetAppEncryptionState
+  EntraIdAkvConfig: EntraIdKeyVaultConfig
+  EntraIdAkvConfigPatch: EntraIdKeyVaultConfigPatch
+  ExternalReplicationSetupStatus: NetAppExternalReplicationSetupStatus
+  FileSystemUser: NetAppFileSystemUser
+  GlobalFileLockingState: NetAppGlobalFileLockingState
+  KerberosState: NetAppKerberosState
+  LargeVolumeType: NetAppLargeVolumeType
+  LdapServerType: NetAppLdapServerType
+  LdapState: NetAppLdapState
+  NfsUser: NetAppNfsUser
+  OnCertificateConflictAction: NetAppOnCertificateConflictAction
+  OriginClusterInformation: NetAppOriginClusterInformation
+  PeeringPassphrases: NetAppPeeringPassphrases
+  PolicyStatus: NetAppPolicyStatus
+  SmbEncryptionState: NetAppSmbEncryptionState
+  SmbSettings: NetAppSmbSettings
+  SnapshotDirectoryVisibility: NetAppSnapshotDirectoryVisibility
+  SnapshotUsage: NetAppSnapshotUsage
+  VolumeSize: NetAppBackupVolumeSize
+  BucketGenerateCredentials.keyPairExpiry: KeyPairExpiresOn
+  ChangeZoneRequest: ElasticCapacityPoolChangeZoneContent
+  ElasticProtocolType: NetAppElasticProtocolType
+  ElasticProtocolType.NFSv3: Nfsv3
+  ElasticProtocolType.NFSv4: Nfsv4
+  ElasticProtocolType.SMB: Smb
+  ProtocolTypes: NetAppProtocolType
+  ProtocolTypes.NFSv3: Nfsv3
+  ProtocolTypes.NFSv4: Nfsv4
+  ProtocolTypes.SMB: Smb
+  SecretPasswordUpdate: NetAppSecretPasswordPatch
+  LdapConfiguration.ldapOverTLS: IsLdapOverTlsEnabled
+  LdapConfigurationPatch.ldapOverTLS: IsLdapOverTlsEnabled
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
@@ -301,13 +340,4 @@ directive:
   # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
 
-  # # assigning formats
-  # # Fix ProvisioningState
-  - from: netapp.json
-    where: $.definitions
-    transform: >
-        $.replicationStatus.properties.relationshipStatus['x-ms-enum'] = {
-            "name": "VolumeReplicationRelationshipStatus",
-            "modelAsString": true
-          }
 ```

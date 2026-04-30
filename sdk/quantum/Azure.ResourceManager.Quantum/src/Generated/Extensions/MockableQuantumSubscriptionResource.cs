@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new QuantumWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuantumSubscriptionResource.GetQuantumWorkspaces"), data => new QuantumWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new QuantumWorkspaceResource(Client, data));
+            return new PageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuantumSubscriptionResource.GetQuantumWorkspaces"), data => new QuantumWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SuiteOffersGetSuiteOfferAsyncCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new SuiteOffersGetSuiteOfferAsyncCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuantumSubscriptionResource.GetSuiteOffer");
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SuiteOffersGetSuiteOfferCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new SuiteOffersGetSuiteOfferCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuantumSubscriptionResource.GetSuiteOffer");
         }
 
         /// <summary>
@@ -289,7 +289,13 @@ namespace Azure.ResourceManager.Quantum.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OfferingsGetProviderOfferingsAsyncCollectionResultOfT(OfferingsRestClient, Guid.Parse(Id.SubscriptionId), locationName, filter, context);
+            return new OfferingsGetProviderOfferingsAsyncCollectionResultOfT(
+                OfferingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                locationName,
+                filter,
+                context,
+                "MockableQuantumSubscriptionResource.GetProviderOfferings");
         }
 
         /// <summary>
@@ -319,7 +325,13 @@ namespace Azure.ResourceManager.Quantum.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OfferingsGetProviderOfferingsCollectionResultOfT(OfferingsRestClient, Guid.Parse(Id.SubscriptionId), locationName, filter, context);
+            return new OfferingsGetProviderOfferingsCollectionResultOfT(
+                OfferingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                locationName,
+                filter,
+                context,
+                "MockableQuantumSubscriptionResource.GetProviderOfferings");
         }
     }
 }

@@ -83,12 +83,12 @@ namespace Azure.Compute.Batch
         /// <param name="displayName"> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="vmSize"> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available VM sizes for Pools using Images from the Virtual Machines Marketplace (pools created with virtualMachineConfiguration), see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
         /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified. </param>
-        /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This timeout applies only to manual scaling; it has no effect when enableAutoScale is set to true. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
+        /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This timeout applies only to manual scaling; it has no effect when enableAutoScale is set to true. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
         /// <param name="targetDedicatedNodes"> The desired number of dedicated Compute Nodes in the Pool. This property must not be specified if enableAutoScale is set to true. If enableAutoScale is set to false, then you must set either targetDedicatedNodes, targetLowPriorityNodes, or both. </param>
         /// <param name="targetLowPriorityNodes"> The desired number of Spot/Low-priority Compute Nodes in the Pool. This property must not be specified if enableAutoScale is set to true. If enableAutoScale is set to false, then you must set either targetDedicatedNodes, targetLowPriorityNodes, or both. </param>
         /// <param name="enableAutoScale"> Whether the Pool size should automatically adjust over time. If false, at least one of targetDedicatedNodes and targetLowPriorityNodes must be specified. If true, the autoScaleFormula property is required and the Pool automatically resizes according to the formula. The default value is false. </param>
         /// <param name="autoScaleFormula"> A formula for the desired number of Compute Nodes in the Pool. This property must not be specified if enableAutoScale is set to false. It is required if enableAutoScale is set to true. The formula is checked for validity before the Pool is created. If the formula is not valid, the Batch service rejects the request with detailed error information. For more information about specifying this formula, see 'Automatically scale Compute Nodes in an Azure Batch Pool' (https://learn.microsoft.com/azure/batch/batch-automatic-scaling). </param>
-        /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. The default value is 15 minutes. The minimum and maximum value are 5 minutes and 168 hours respectively. If you specify a value less than 5 minutes or greater than 168 hours, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
+        /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. The default value is 15 minutes. The minimum and maximum value are 5 minutes and 168 hours respectively. If you specify a value less than 5 minutes or greater than 168 hours, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
         /// <param name="enableInterNodeCommunication"> Whether the Pool permits direct communication between Compute Nodes. Enabling inter-node communication limits the maximum size of the Pool due to deployment restrictions on the Compute Nodes of the Pool. This may result in the Pool not reaching its desired size. The default value is false. </param>
         /// <param name="networkConfiguration"> The network configuration for the Pool. </param>
         /// <param name="startTask"> A Task specified to run on each Compute Node as it joins the Pool. The Task runs when the Compute Node is added to the Pool or when the Compute Node is restarted. </param>
@@ -306,12 +306,12 @@ namespace Azure.Compute.Batch
 
         /// <summary> The Customer Managed Key reference to encrypt the Disk. </summary>
         /// <param name="identityReference"> The reference of one of the pool identities to encrypt Disk. This identity will be used to access the KeyVault. </param>
-        /// <param name="keyUrl"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
+        /// <param name="keyUri"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of the Disk Encryption to the latest key version. Default is false. </param>
         /// <returns> A new <see cref="Batch.DiskCustomerManagedKey"/> instance for mocking. </returns>
-        public static DiskCustomerManagedKey DiskCustomerManagedKey(BatchPoolIdentityReference identityReference = default, string keyUrl = default, bool? rotationToLatestKeyVersionEnabled = default)
+        public static DiskCustomerManagedKey DiskCustomerManagedKey(BatchPoolIdentityReference identityReference = default, Uri keyUri = default, bool? rotationToLatestKeyVersionEnabled = default)
         {
-            return new DiskCustomerManagedKey(identityReference, keyUrl, rotationToLatestKeyVersionEnabled, additionalBinaryDataProperties: null);
+            return new DiskCustomerManagedKey(identityReference, keyUri, rotationToLatestKeyVersionEnabled, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The reference of one of the pool identities to encrypt Disk. This identity will be used to access the key vault. </summary>
@@ -339,13 +339,13 @@ namespace Azure.Compute.Batch
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> The type of the extension. </param>
         /// <param name="typeHandlerVersion"> The version of script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="isMinorVersionAutoUpgradeEnabled"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="settings"> JSON formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisionAfterExtensions"> The collection of extension names. Collection of extension names after which this extension needs to be provisioned. </param>
         /// <returns> A new <see cref="Batch.VMExtension"/> instance for mocking. </returns>
-        public static VMExtension VMExtension(string name = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, IDictionary<string, string> settings = default, IDictionary<string, string> protectedSettings = default, IEnumerable<string> provisionAfterExtensions = default)
+        public static VMExtension VMExtension(string name = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? isMinorVersionAutoUpgradeEnabled = default, bool? isAutomaticUpgradeEnabled = default, IDictionary<string, string> settings = default, IDictionary<string, string> protectedSettings = default, IEnumerable<string> provisionAfterExtensions = default)
         {
             settings ??= new ChangeTrackingDictionary<string, string>();
             protectedSettings ??= new ChangeTrackingDictionary<string, string>();
@@ -356,8 +356,8 @@ namespace Azure.Compute.Batch
                 publisher,
                 @type,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                enableAutomaticUpgrade,
+                isMinorVersionAutoUpgradeEnabled,
+                isAutomaticUpgradeEnabled,
                 settings,
                 protectedSettings,
                 provisionAfterExtensions.ToList(),
@@ -369,16 +369,16 @@ namespace Azure.Compute.Batch
         /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The default values are: None for Standard storage. ReadOnly for Premium storage. </param>
         /// <param name="diskSizeGB"> The initial disk size in GB when creating new OS disk. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <returns> A new <see cref="Batch.BatchOsDisk"/> instance for mocking. </returns>
-        public static BatchOsDisk BatchOsDisk(BatchDiffDiskSettings ephemeralOSDiskSettings = default, CachingType? caching = default, int? diskSizeGB = default, ManagedDisk managedDisk = default, bool? writeAcceleratorEnabled = default)
+        public static BatchOsDisk BatchOsDisk(BatchDiffDiskSettings ephemeralOSDiskSettings = default, CachingType? caching = default, int? diskSizeGB = default, ManagedDisk managedDisk = default, bool? isWriteAcceleratorEnabled = default)
         {
             return new BatchOsDisk(
                 ephemeralOSDiskSettings,
                 caching,
                 diskSizeGB,
                 managedDisk,
-                writeAcceleratorEnabled,
+                isWriteAcceleratorEnabled,
                 additionalBinaryDataProperties: null);
         }
 
@@ -394,14 +394,14 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Specifies the security profile settings for the virtual machine or virtual machine scale set. </summary>
-        /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. For more information on encryption at host requirements, please refer to https://learn.microsoft.com/azure/virtual-machines/disk-encryption#supported-vm-sizes. </param>
+        /// <param name="isEncryptedAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. For more information on encryption at host requirements, please refer to https://learn.microsoft.com/azure/virtual-machines/disk-encryption#supported-vm-sizes. </param>
         /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. </param>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </param>
         /// <returns> A new <see cref="Batch.SecurityProfile"/> instance for mocking. </returns>
-        public static SecurityProfile SecurityProfile(bool? encryptionAtHost = default, ProxyAgentSettings proxyAgentSettings = default, SecurityTypes? securityType = default, BatchUefiSettings uefiSettings = default)
+        public static SecurityProfile SecurityProfile(bool? isEncryptedAtHost = default, ProxyAgentSettings proxyAgentSettings = default, SecurityTypes? securityType = default, BatchUefiSettings uefiSettings = default)
         {
-            return new SecurityProfile(encryptionAtHost, proxyAgentSettings, securityType, uefiSettings, additionalBinaryDataProperties: null);
+            return new SecurityProfile(isEncryptedAtHost, proxyAgentSettings, securityType, uefiSettings, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies ProxyAgent settings while creating the virtual machine. </summary>
@@ -418,7 +418,7 @@ namespace Azure.Compute.Batch
         /// <param name="inVmAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <param name="mode"> Specifies the access control policy execution mode. </param>
         /// <returns> A new <see cref="Batch.HostEndpointSettings"/> instance for mocking. </returns>
-        public static HostEndpointSettings HostEndpointSettings(string inVmAccessControlProfileReferenceId = default, HostEndpointSettingsModeTypes? mode = default)
+        public static HostEndpointSettings HostEndpointSettings(string inVmAccessControlProfileReferenceId = default, HostEndpointSettingsModeType? mode = default)
         {
             return new HostEndpointSettings(inVmAccessControlProfileReferenceId, mode, additionalBinaryDataProperties: null);
         }
@@ -810,7 +810,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> The configuration parameters used for performing automatic OS upgrade. </summary>
         /// <param name="disableAutomaticRollback"> Whether OS image rollback feature should be disabled. </param>
-        /// <param name="enableAutomaticOsUpgrade"> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. &lt;br /&gt;&lt;br /&gt; If this is set to true for Windows based pools, [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/rest/api/batchservice/pool/add?tabs=HTTP#windowsconfiguration) cannot be set to true. </param>
+        /// <param name="enableAutomaticOsUpgrade"> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. &lt;br /&gt;&lt;br /&gt; If this is set to true for Windows based pools, [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/rest/api/batchservice/pools/create-pool#windowsconfiguration) cannot be set to true. </param>
         /// <param name="useRollingUpgradePolicy"> Indicates whether rolling upgrade policy should be used during Auto OS Upgrade. Auto OS Upgrade will fallback to the default policy if no policy is defined on the VMSS. </param>
         /// <param name="osRollingUpgradeDeferral"> Defer OS upgrades on the TVMs if they are running tasks. </param>
         /// <returns> A new <see cref="Batch.AutomaticOsUpgradePolicy"/> instance for mocking. </returns>
@@ -820,18 +820,18 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The configuration parameters used while performing a rolling upgrade. </summary>
-        /// <param name="enableCrossZoneUpgrade"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. This field is able to be set to true or false only when using NodePlacementConfiguration as Zonal. </param>
+        /// <param name="isCrossZoneUpgradeEnabled"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. This field is able to be set to true or false only when using NodePlacementConfiguration as Zonal. </param>
         /// <param name="maxBatchInstancePercent"> The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. As this is a maximum, unhealthy instances in previous or future batches can cause the percentage of instances in a batch to decrease to ensure higher reliability. The value of this field should be between 5 and 100, inclusive. If both maxBatchInstancePercent and maxUnhealthyInstancePercent are assigned with value, the value of maxBatchInstancePercent should not be more than maxUnhealthyInstancePercent. </param>
         /// <param name="maxUnhealthyInstancePercent"> The maximum percentage of the total virtual machine instances in the scale set that can be simultaneously unhealthy, either as a result of being upgraded, or by being found in an unhealthy state by the virtual machine health checks before the rolling upgrade aborts. This constraint will be checked prior to starting any batch. The value of this field should be between 5 and 100, inclusive. If both maxBatchInstancePercent and maxUnhealthyInstancePercent are assigned with value, the value of maxBatchInstancePercent should not be more than maxUnhealthyInstancePercent. </param>
         /// <param name="maxUnhealthyUpgradedInstancePercent"> The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. This check will happen after each batch is upgraded. If this percentage is ever exceeded, the rolling update aborts. The value of this field should be between 0 and 100, inclusive. </param>
-        /// <param name="pauseTimeBetweenBatches"> The wait time between completing the update for all virtual machines in one batch and starting the next batch. The time duration should be specified in ISO 8601 format.. </param>
+        /// <param name="pauseTimeBetweenBatches"> The wait time between completing the update for all virtual machines in one batch and starting the next batch. The time duration is specified in ISO 8601 format. </param>
         /// <param name="prioritizeUnhealthyInstances"> Upgrade all unhealthy instances in a scale set before any healthy instances. </param>
         /// <param name="rollbackFailedInstancesOnPolicyBreach"> Rollback failed instances to previous model if the Rolling Upgrade policy is violated. </param>
         /// <returns> A new <see cref="Batch.RollingUpgradePolicy"/> instance for mocking. </returns>
-        public static RollingUpgradePolicy RollingUpgradePolicy(bool? enableCrossZoneUpgrade = default, int? maxBatchInstancePercent = default, int? maxUnhealthyInstancePercent = default, int? maxUnhealthyUpgradedInstancePercent = default, TimeSpan? pauseTimeBetweenBatches = default, bool? prioritizeUnhealthyInstances = default, bool? rollbackFailedInstancesOnPolicyBreach = default)
+        public static RollingUpgradePolicy RollingUpgradePolicy(bool? isCrossZoneUpgradeEnabled = default, int? maxBatchInstancePercent = default, int? maxUnhealthyInstancePercent = default, int? maxUnhealthyUpgradedInstancePercent = default, TimeSpan? pauseTimeBetweenBatches = default, bool? prioritizeUnhealthyInstances = default, bool? rollbackFailedInstancesOnPolicyBreach = default)
         {
             return new RollingUpgradePolicy(
-                enableCrossZoneUpgrade,
+                isCrossZoneUpgradeEnabled,
                 maxBatchInstancePercent,
                 maxUnhealthyInstancePercent,
                 maxUnhealthyUpgradedInstancePercent,
@@ -854,7 +854,7 @@ namespace Azure.Compute.Batch
         /// <param name="allocationStateTransitionTime"> The time at which the Pool entered its current allocation state. </param>
         /// <param name="vmSize"> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified. </param>
-        /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This is the timeout for the most recent resize operation. (The initial sizing when the Pool is created counts as a resize.) The default value is 15 minutes. </param>
+        /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This is the timeout for the most recent resize operation. (The initial sizing when the Pool is created counts as a resize.) The default value is 15 minutes. The time duration is specified in ISO 8601 format. </param>
         /// <param name="resizeErrors"> A list of errors encountered while performing the last resize on the Pool. This property is set only if one or more errors occurred during the last Pool resize, and only when the Pool allocationState is Steady. </param>
         /// <param name="currentDedicatedNodes"> The number of dedicated Compute Nodes currently in the Pool. </param>
         /// <param name="currentLowPriorityNodes"> The number of Spot/Low-priority Compute Nodes currently in the Pool. Spot/Low-priority Compute Nodes which have been preempted are included in this count. </param>
@@ -862,7 +862,7 @@ namespace Azure.Compute.Batch
         /// <param name="targetLowPriorityNodes"> The desired number of Spot/Low-priority Compute Nodes in the Pool. </param>
         /// <param name="enableAutoScale"> Whether the Pool size should automatically adjust over time. If false, at least one of targetDedicatedNodes and targetLowPriorityNodes must be specified. If true, the autoScaleFormula property is required and the Pool automatically resizes according to the formula. The default value is false. </param>
         /// <param name="autoScaleFormula"> A formula for the desired number of Compute Nodes in the Pool. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. </param>
-        /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. </param>
+        /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. The time duration is specified in ISO 8601 format. </param>
         /// <param name="autoScaleRun"> The results and errors from the last execution of the autoscale formula. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. </param>
         /// <param name="enableInterNodeCommunication"> Whether the Pool permits direct communication between Compute Nodes. Enabling inter-node communication limits the maximum size of the Pool due to deployment restrictions on the Compute Nodes of the Pool. This may result in the Pool not reaching its desired size. The default value is false. </param>
         /// <param name="networkConfiguration"> The network configuration for the Pool. </param>
@@ -928,9 +928,9 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Pool resize error, intended to be suitable for display in a user interface. </param>
         /// <param name="values"> A list of additional error details related to the Pool resize error. </param>
         /// <returns> A new <see cref="Batch.ResizeError"/> instance for mocking. </returns>
-        public static ResizeError ResizeError(string code = default, string message = default, IEnumerable<NameValuePair> values = default)
+        public static ResizeError ResizeError(string code = default, string message = default, IEnumerable<BatchNameValuePair> values = default)
         {
-            values ??= new ChangeTrackingList<NameValuePair>();
+            values ??= new ChangeTrackingList<BatchNameValuePair>();
 
             return new ResizeError(code, message, values.ToList(), additionalBinaryDataProperties: null);
         }
@@ -938,10 +938,10 @@ namespace Azure.Compute.Batch
         /// <summary> Represents a name-value pair. </summary>
         /// <param name="name"> The name in the name-value pair. </param>
         /// <param name="value"> The value in the name-value pair. </param>
-        /// <returns> A new <see cref="Batch.NameValuePair"/> instance for mocking. </returns>
-        public static NameValuePair NameValuePair(string name = default, string value = default)
+        /// <returns> A new <see cref="Batch.BatchNameValuePair"/> instance for mocking. </returns>
+        public static BatchNameValuePair BatchNameValuePair(string name = default, string value = default)
         {
-            return new NameValuePair(name, value, additionalBinaryDataProperties: null);
+            return new BatchNameValuePair(name, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The results and errors from an execution of a Pool autoscale formula. </summary>
@@ -959,9 +959,9 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the autoscale error, intended to be suitable for display in a user interface. </param>
         /// <param name="values"> A list of additional error details related to the autoscale error. </param>
         /// <returns> A new <see cref="Batch.AutoScaleRunError"/> instance for mocking. </returns>
-        public static AutoScaleRunError AutoScaleRunError(string code = default, string message = default, IEnumerable<NameValuePair> values = default)
+        public static AutoScaleRunError AutoScaleRunError(string code = default, string message = default, IEnumerable<BatchNameValuePair> values = default)
         {
-            values ??= new ChangeTrackingList<NameValuePair>();
+            values ??= new ChangeTrackingList<BatchNameValuePair>();
 
             return new AutoScaleRunError(code, message, values.ToList(), additionalBinaryDataProperties: null);
         }
@@ -987,7 +987,7 @@ namespace Azure.Compute.Batch
         /// <summary> Statistics related to Pool usage information. </summary>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
-        /// <param name="dedicatedCoreTime"> The aggregated wall-clock time of the dedicated Compute Node cores being part of the Pool. </param>
+        /// <param name="dedicatedCoreTime"> The aggregated wall-clock time of the dedicated Compute Node cores being part of the Pool. The time duration is specified in ISO 8601 format. </param>
         /// <returns> A new <see cref="Batch.BatchPoolUsageStatistics"/> instance for mocking. </returns>
         public static BatchPoolUsageStatistics BatchPoolUsageStatistics(DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan dedicatedCoreTime = default)
         {
@@ -1090,7 +1090,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Parameters for enabling automatic scaling on an Azure Batch Pool. </summary>
         /// <param name="autoScaleFormula"> The formula for the desired number of Compute Nodes in the Pool. The default value is 15 minutes. The minimum and maximum value are 5 minutes and 168 hours respectively. If you specify a value less than 5 minutes or greater than 168 hours, the Batch service rejects the request with an invalid property value error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). If you specify a new interval, then the existing autoscale evaluation schedule will be stopped and a new autoscale evaluation schedule will be started, with its starting time being the time when this request was issued. </param>
-        /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. The default value is 15 minutes. The minimum and maximum value are 5 minutes and 168 hours respectively. If you specify a value less than 5 minutes or greater than 168 hours, the Batch service rejects the request with an invalid property value error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). If you specify a new interval, then the existing autoscale evaluation schedule will be stopped and a new autoscale evaluation schedule will be started, with its starting time being the time when this request was issued. </param>
+        /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. The default value is 15 minutes. The minimum and maximum value are 5 minutes and 168 hours respectively. If you specify a value less than 5 minutes or greater than 168 hours, the Batch service rejects the request with an invalid property value error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). If you specify a new interval, then the existing autoscale evaluation schedule will be stopped and a new autoscale evaluation schedule will be started, with its starting time being the time when this request was issued. The time duration is specified in ISO 8601 format. </param>
         /// <returns> A new <see cref="Batch.BatchPoolEnableAutoScaleOptions"/> instance for mocking. </returns>
         public static BatchPoolEnableAutoScaleOptions BatchPoolEnableAutoScaleOptions(string autoScaleFormula = default, TimeSpan? autoScaleEvaluationInterval = default)
         {
@@ -1108,7 +1108,7 @@ namespace Azure.Compute.Batch
         /// <summary> Parameters for changing the size of an Azure Batch Pool. </summary>
         /// <param name="targetDedicatedNodes"> The desired number of dedicated Compute Nodes in the Pool. </param>
         /// <param name="targetLowPriorityNodes"> The desired number of Spot/Low-priority Compute Nodes in the Pool. </param>
-        /// <param name="resizeTimeout"> The timeout for allocation of Nodes to the Pool or removal of Compute Nodes from the Pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
+        /// <param name="resizeTimeout"> The timeout for allocation of Nodes to the Pool or removal of Compute Nodes from the Pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
         /// <param name="nodeDeallocationOption"> Determines what to do with a Compute Node and its running task(s) if the Pool size is decreasing. The default value is requeue. </param>
         /// <returns> A new <see cref="Batch.BatchPoolResizeOptions"/> instance for mocking. </returns>
         public static BatchPoolResizeOptions BatchPoolResizeOptions(int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, TimeSpan? resizeTimeout = default, BatchNodeDeallocationOption? nodeDeallocationOption = default)
@@ -1131,7 +1131,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Parameters for removing nodes from an Azure Batch Pool. </summary>
         /// <param name="nodeIds"> A list containing the IDs of the Compute Nodes to be removed from the specified Pool. A maximum of 100 nodes may be removed per request. </param>
-        /// <param name="resizeTimeout"> The timeout for removal of Compute Nodes to the Pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
+        /// <param name="resizeTimeout"> The timeout for removal of Compute Nodes to the Pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
         /// <param name="nodeDeallocationOption"> Determines what to do with a Compute Node and its running task(s) after it has been selected for deallocation. The default value is requeue. </param>
         /// <returns> A new <see cref="Batch.BatchNodeRemoveOptions"/> instance for mocking. </returns>
         public static BatchNodeRemoveOptions BatchNodeRemoveOptions(IEnumerable<string> nodeIds = default, TimeSpan? resizeTimeout = default, BatchNodeDeallocationOption? nodeDeallocationOption = default)
@@ -1193,9 +1193,9 @@ namespace Azure.Compute.Batch
         /// <param name="deallocated"> The number of Compute Nodes in the deallocated state. </param>
         /// <param name="deallocating"> The number of Compute Nodes in the deallocating state. </param>
         /// <param name="total"> The total number of Compute Nodes. </param>
-        /// <param name="upgradingOs"> The number of Compute Nodes in the upgradingOS state. </param>
+        /// <param name="upgradingOS"> The number of Compute Nodes in the upgradingOS state. </param>
         /// <returns> A new <see cref="Batch.BatchNodeCounts"/> instance for mocking. </returns>
-        public static BatchNodeCounts BatchNodeCounts(int creating = default, int idle = default, int offline = default, int preempted = default, int rebooting = default, int reimaging = default, int running = default, int starting = default, int startTaskFailed = default, int leavingPool = default, int unknown = default, int unusable = default, int waitingForStartTask = default, int deallocated = default, int deallocating = default, int total = default, int upgradingOs = default)
+        public static BatchNodeCounts BatchNodeCounts(int creating = default, int idle = default, int offline = default, int preempted = default, int rebooting = default, int reimaging = default, int running = default, int starting = default, int startTaskFailed = default, int leavingPool = default, int unknown = default, int unusable = default, int waitingForStartTask = default, int deallocated = default, int deallocating = default, int total = default, int upgradingOS = default)
         {
             return new BatchNodeCounts(
                 creating,
@@ -1214,7 +1214,7 @@ namespace Azure.Compute.Batch
                 deallocated,
                 deallocating,
                 total,
-                upgradingOs,
+                upgradingOS,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1282,7 +1282,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The execution constraints for a Job. </summary>
-        /// <param name="maxWallClockTime"> The maximum elapsed time that the Job may run, measured from the time the Job is created. If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. </param>
+        /// <param name="maxWallClockTime"> The maximum elapsed time that the Job may run, measured from the time the Job is created. If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. The time duration is specified in ISO 8601 format. </param>
         /// <param name="maxTaskRetryCount"> The maximum number of times each Task may be retried. The Batch service retries a Task if its exit code is nonzero. Note that this value specifically controls the number of retries. The Batch service will try each Task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries a Task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry Tasks. If the maximum retry count is -1, the Batch service retries Tasks without limit. The default value is 0 (no retries). </param>
         /// <returns> A new <see cref="Batch.BatchJobConstraints"/> instance for mocking. </returns>
         public static BatchJobConstraints BatchJobConstraints(TimeSpan? maxWallClockTime = default, int? maxTaskRetryCount = default)
@@ -1337,10 +1337,9 @@ namespace Azure.Compute.Batch
         /// Package cannot be installed, for example because the package has been deleted
         /// or because download failed, the Task fails.
         /// </param>
-        /// <param name="authenticationTokenSettings"> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </param>
         /// <param name="allowLowPriorityNode"> Whether the Job Manager Task may run on a Spot/Low-priority Compute Node. The default value is true. </param>
         /// <returns> A new <see cref="Batch.BatchJobManagerTask"/> instance for mocking. </returns>
-        public static BatchJobManagerTask BatchJobManagerTask(string id = default, string displayName = default, string commandLine = default, BatchTaskContainerSettings containerSettings = default, IEnumerable<ResourceFile> resourceFiles = default, IEnumerable<OutputFile> outputFiles = default, IEnumerable<EnvironmentSetting> environmentSettings = default, BatchTaskConstraints constraints = default, int? requiredSlots = default, bool? killJobOnCompletion = default, UserIdentity userIdentity = default, bool? runExclusive = default, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = default, AuthenticationTokenSettings authenticationTokenSettings = default, bool? allowLowPriorityNode = default)
+        public static BatchJobManagerTask BatchJobManagerTask(string id = default, string displayName = default, string commandLine = default, BatchTaskContainerSettings containerSettings = default, IEnumerable<ResourceFile> resourceFiles = default, IEnumerable<OutputFile> outputFiles = default, IEnumerable<EnvironmentSetting> environmentSettings = default, BatchTaskConstraints constraints = default, int? requiredSlots = default, bool? killJobOnCompletion = default, UserIdentity userIdentity = default, bool? runExclusive = default, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = default, bool? allowLowPriorityNode = default)
         {
             resourceFiles ??= new ChangeTrackingList<ResourceFile>();
             outputFiles ??= new ChangeTrackingList<OutputFile>();
@@ -1361,7 +1360,6 @@ namespace Azure.Compute.Batch
                 userIdentity,
                 runExclusive,
                 applicationPackageReferences.ToList(),
-                authenticationTokenSettings,
                 allowLowPriorityNode,
                 additionalBinaryDataProperties: null);
         }
@@ -1418,26 +1416,13 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Execution constraints to apply to a Task. </summary>
-        /// <param name="maxWallClockTime"> The maximum elapsed time that the Task may run, measured from the time the Task starts. If the Task does not complete within the time limit, the Batch service terminates it. If this is not specified, there is no time limit on how long the Task may run. </param>
-        /// <param name="retentionTime"> The minimum time to retain the Task directory on the Compute Node where it ran, from the time it completes execution. After this time, the Batch service may delete the Task directory and all its contents. The default is 7 days, i.e. the Task directory will be retained for 7 days unless the Compute Node is removed or the Job is deleted. </param>
+        /// <param name="maxWallClockTime"> The maximum elapsed time that the Task may run, measured from the time the Task starts. If the Task does not complete within the time limit, the Batch service terminates it. If this is not specified, there is no time limit on how long the Task may run. The time duration is specified in ISO 8601 format. </param>
+        /// <param name="retentionTime"> The minimum time to retain the Task directory on the Compute Node where it ran, from the time it completes execution. After this time, the Batch service may delete the Task directory and all its contents. The default is 7 days, i.e. the Task directory will be retained for 7 days unless the Compute Node is removed or the Job is deleted. The time duration is specified in ISO 8601 format. </param>
         /// <param name="maxTaskRetryCount"> The maximum number of times the Task may be retried. The Batch service retries a Task if its exit code is nonzero. Note that this value specifically controls the number of retries for the Task executable due to a nonzero exit code. The Batch service will try the Task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries the Task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry the Task after the first attempt. If the maximum retry count is -1, the Batch service retries the Task without limit, however this is not recommended for a start task or any task. The default value is 0 (no retries). </param>
         /// <returns> A new <see cref="Batch.BatchTaskConstraints"/> instance for mocking. </returns>
         public static BatchTaskConstraints BatchTaskConstraints(TimeSpan? maxWallClockTime = default, TimeSpan? retentionTime = default, int? maxTaskRetryCount = default)
         {
             return new BatchTaskConstraints(maxWallClockTime, retentionTime, maxTaskRetryCount, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The settings for an authentication token that the Task can use to perform Batch
-        /// service operations.
-        /// </summary>
-        /// <param name="access"> The Batch resources to which the token grants access. The authentication token grants access to a limited set of Batch service operations. Currently the only supported value for the access property is 'job', which grants access to all operations related to the Job which contains the Task. </param>
-        /// <returns> A new <see cref="Batch.AuthenticationTokenSettings"/> instance for mocking. </returns>
-        public static AuthenticationTokenSettings AuthenticationTokenSettings(IEnumerable<BatchAccessScope> access = default)
-        {
-            access ??= new ChangeTrackingList<BatchAccessScope>();
-
-            return new AuthenticationTokenSettings(access.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1519,8 +1504,8 @@ namespace Azure.Compute.Batch
         /// <param name="containerSettings"> The settings for the container under which the Job Release Task runs. When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are mapped into the container, all Task environment variables are mapped into the container, and the Task command line is executed in the container. Files produced in the container outside of AZ_BATCH_NODE_ROOT_DIR might not be reflected to the host disk, meaning that Batch file APIs will not be able to access those files. </param>
         /// <param name="resourceFiles"> A list of files that the Batch service will download to the Compute Node before running the command line.  There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. Files listed under this element are located in the Task's working directory. </param>
         /// <param name="environmentSettings"> A list of environment variable settings for the Job Release Task. </param>
-        /// <param name="maxWallClockTime"> The maximum elapsed time that the Job Release Task may run on a given Compute Node, measured from the time the Task starts. If the Task does not complete within the time limit, the Batch service terminates it. The default value is 15 minutes. You may not specify a timeout longer than 15 minutes. If you do, the Batch service rejects it with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
-        /// <param name="retentionTime"> The minimum time to retain the Task directory for the Job Release Task on the Compute Node. After this time, the Batch service may delete the Task directory and all its contents. The default is 7 days, i.e. the Task directory will be retained for 7 days unless the Compute Node is removed or the Job is deleted. </param>
+        /// <param name="maxWallClockTime"> The maximum elapsed time that the Job Release Task may run on a given Compute Node, measured from the time the Task starts. If the Task does not complete within the time limit, the Batch service terminates it. The default value is 15 minutes. You may not specify a timeout longer than 15 minutes. If you do, the Batch service rejects it with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
+        /// <param name="retentionTime"> The minimum time to retain the Task directory for the Job Release Task on the Compute Node. After this time, the Batch service may delete the Task directory and all its contents. The default is 7 days, i.e. the Task directory will be retained for 7 days unless the Compute Node is removed or the Job is deleted. The time duration is specified in ISO 8601 format. </param>
         /// <param name="userIdentity"> The user identity under which the Job Release Task runs. If omitted, the Task runs as a non-administrative user unique to the Task. </param>
         /// <returns> A new <see cref="Batch.BatchJobReleaseTask"/> instance for mocking. </returns>
         public static BatchJobReleaseTask BatchJobReleaseTask(string id = default, string commandLine = default, BatchTaskContainerSettings containerSettings = default, IEnumerable<ResourceFile> resourceFiles = default, IEnumerable<EnvironmentSetting> environmentSettings = default, TimeSpan? maxWallClockTime = default, TimeSpan? retentionTime = default, UserIdentity userIdentity = default)
@@ -1569,12 +1554,12 @@ namespace Azure.Compute.Batch
         /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified. </param>
         /// <param name="taskSlotsPerNode"> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
         /// <param name="taskSchedulingPolicy"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
-        /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This timeout applies only to manual scaling; it has no effect when enableAutoScale is set to true. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service rejects the request with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
+        /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This timeout applies only to manual scaling; it has no effect when enableAutoScale is set to true. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service rejects the request with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
         /// <param name="targetDedicatedNodes"> The desired number of dedicated Compute Nodes in the Pool. This property must not be specified if enableAutoScale is set to true. If enableAutoScale is set to false, then you must set either targetDedicatedNodes, targetLowPriorityNodes, or both. </param>
         /// <param name="targetLowPriorityNodes"> The desired number of Spot/Low-priority Compute Nodes in the Pool. This property must not be specified if enableAutoScale is set to true. If enableAutoScale is set to false, then you must set either targetDedicatedNodes, targetLowPriorityNodes, or both. </param>
         /// <param name="enableAutoScale"> Whether the Pool size should automatically adjust over time. If false, at least one of targetDedicatedNodes and targetLowPriorityNodes must be specified. If true, the autoScaleFormula element is required. The Pool automatically resizes according to the formula. The default value is false. </param>
         /// <param name="autoScaleFormula"> The formula for the desired number of Compute Nodes in the Pool. This property must not be specified if enableAutoScale is set to false. It is required if enableAutoScale is set to true. The formula is checked for validity before the Pool is created. If the formula is not valid, the Batch service rejects the request with detailed error information. </param>
-        /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. The default value is 15 minutes. The minimum and maximum value are 5 minutes and 168 hours respectively. If you specify a value less than 5 minutes or greater than 168 hours, the Batch service rejects the request with an invalid property value error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
+        /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. The default value is 15 minutes. The minimum and maximum value are 5 minutes and 168 hours respectively. If you specify a value less than 5 minutes or greater than 168 hours, the Batch service rejects the request with an invalid property value error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
         /// <param name="enableInterNodeCommunication"> Whether the Pool permits direct communication between Compute Nodes. Enabling inter-node communication limits the maximum size of the Pool due to deployment restrictions on the Compute Nodes of the Pool. This may result in the Pool not reaching its desired size. The default value is false. </param>
         /// <param name="networkConfiguration"> The network configuration for the Pool. </param>
         /// <param name="startTask"> A Task to run on each Compute Node as it joins the Pool. The Task runs when the Compute Node is added to the Pool or when the Compute Node is restarted. </param>
@@ -1647,9 +1632,9 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Job scheduling error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> A list of additional error details related to the scheduling error. </param>
         /// <returns> A new <see cref="Batch.BatchJobSchedulingError"/> instance for mocking. </returns>
-        public static BatchJobSchedulingError BatchJobSchedulingError(BatchErrorSourceCategory category = default, string code = default, string message = default, IEnumerable<NameValuePair> details = default)
+        public static BatchJobSchedulingError BatchJobSchedulingError(BatchErrorSourceCategory category = default, string code = default, string message = default, IEnumerable<BatchNameValuePair> details = default)
         {
-            details ??= new ChangeTrackingList<NameValuePair>();
+            details ??= new ChangeTrackingList<BatchNameValuePair>();
 
             return new BatchJobSchedulingError(category, code, message, details.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1658,9 +1643,9 @@ namespace Azure.Compute.Batch
         /// <param name="uri"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
-        /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </param>
-        /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </param>
-        /// <param name="wallClockTime"> The total wall clock time of all Tasks in the Job.  The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </param>
+        /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. The time duration is specified in ISO 8601 format. </param>
+        /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. The time duration is specified in ISO 8601 format. </param>
+        /// <param name="wallClockTime"> The total wall clock time of all Tasks in the Job.  The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. The time duration is specified in ISO 8601 format. </param>
         /// <param name="readIops"> The total number of disk read operations made by all Tasks in the Job. </param>
         /// <param name="writeIops"> The total number of disk write operations made by all Tasks in the Job. </param>
         /// <param name="readIoGiB"> The total amount of data in GiB read from disk by all Tasks in the Job. </param>
@@ -1668,7 +1653,7 @@ namespace Azure.Compute.Batch
         /// <param name="succeededTasksCount"> The total number of Tasks successfully completed in the Job during the given time range. A Task completes successfully if it returns exit code 0. </param>
         /// <param name="failedTasksCount"> The total number of Tasks in the Job that failed during the given time range. A Task fails if it exhausts its maximum retry count without returning exit code 0. </param>
         /// <param name="taskRetriesCount"> The total number of retries on all the Tasks in the Job during the given time range. </param>
-        /// <param name="waitTime"> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </param>
+        /// <param name="waitTime"> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. The time duration is specified in ISO 8601 format. </param>
         /// <returns> A new <see cref="Batch.BatchJobStatistics"/> instance for mocking. </returns>
         public static BatchJobStatistics BatchJobStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = default, long writeIops = default, float readIoGiB = default, float writeIoGiB = default, long succeededTasksCount = default, long failedTasksCount = default, long taskRetriesCount = default, TimeSpan waitTime = default)
         {
@@ -1717,11 +1702,11 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Parameters for disabling an Azure Batch Job. </summary>
-        /// <param name="disableTasks"> What to do with active Tasks associated with the Job. </param>
+        /// <param name="jobOption"> What to do with active Tasks associated with the Job. </param>
         /// <returns> A new <see cref="Batch.BatchJobDisableOptions"/> instance for mocking. </returns>
-        public static BatchJobDisableOptions BatchJobDisableOptions(DisableBatchJobOption disableTasks = default)
+        public static BatchJobDisableOptions BatchJobDisableOptions(DisableBatchJobOption jobOption = default)
         {
-            return new BatchJobDisableOptions(disableTasks, additionalBinaryDataProperties: null);
+            return new BatchJobDisableOptions(jobOption, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters for terminating an Azure Batch Job. </summary>
@@ -1842,9 +1827,9 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Task error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> A list of additional details related to the error. </param>
         /// <returns> A new <see cref="Batch.BatchTaskFailureInfo"/> instance for mocking. </returns>
-        public static BatchTaskFailureInfo BatchTaskFailureInfo(BatchErrorSourceCategory category = default, string code = default, string message = default, IEnumerable<NameValuePair> details = default)
+        public static BatchTaskFailureInfo BatchTaskFailureInfo(BatchErrorSourceCategory category = default, string code = default, string message = default, IEnumerable<BatchNameValuePair> details = default)
         {
-            details ??= new ChangeTrackingList<NameValuePair>();
+            details ??= new ChangeTrackingList<BatchNameValuePair>();
 
             return new BatchTaskFailureInfo(category, code, message, details.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1970,14 +1955,14 @@ namespace Azure.Compute.Batch
         /// The schedule according to which Jobs will be created. All times are fixed
         /// respective to UTC and are not impacted by daylight saving time.
         /// </summary>
-        /// <param name="doNotRunUntil"> The earliest time at which any Job may be created under this Job Schedule. If you do not specify a doNotRunUntil time, the schedule becomes ready to create Jobs immediately. </param>
+        /// <param name="doNotRunBefore"> The earliest time at which any Job may be created under this Job Schedule. If you do not specify a doNotRunUntil time, the schedule becomes ready to create Jobs immediately. </param>
         /// <param name="doNotRunAfter"> A time after which no Job will be created under this Job Schedule. The schedule will move to the completed state as soon as this deadline is past and there is no active Job under this Job Schedule. If you do not specify a doNotRunAfter time, and you are creating a recurring Job Schedule, the Job Schedule will remain active until you explicitly terminate it. </param>
-        /// <param name="startWindow"> The time interval, starting from the time at which the schedule indicates a Job should be created, within which a Job must be created. If a Job is not created within the startWindow interval, then the 'opportunity' is lost; no Job will be created until the next recurrence of the schedule. If the schedule is recurring, and the startWindow is longer than the recurrence interval, then this is equivalent to an infinite startWindow, because the Job that is 'due' in one recurrenceInterval is not carried forward into the next recurrence interval. The default is infinite. The minimum value is 1 minute. If you specify a lower value, the Batch service rejects the schedule with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
-        /// <param name="recurrenceInterval"> The time interval between the start times of two successive Jobs under the Job Schedule. A Job Schedule can have at most one active Job under it at any given time. Because a Job Schedule can have at most one active Job under it at any given time, if it is time to create a new Job under a Job Schedule, but the previous Job is still running, the Batch service will not create the new Job until the previous Job finishes. If the previous Job does not finish within the startWindow period of the new recurrenceInterval, then no new Job will be scheduled for that interval. For recurring Jobs, you should normally specify a jobManagerTask in the jobSpecification. If you do not use jobManagerTask, you will need an external process to monitor when Jobs are created, add Tasks to the Jobs and terminate the Jobs ready for the next recurrence. The default is that the schedule does not recur: one Job is created, within the startWindow after the doNotRunUntil time, and the schedule is complete as soon as that Job finishes. The minimum value is 1 minute. If you specify a lower value, the Batch service rejects the schedule with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
+        /// <param name="startWindow"> The time interval, starting from the time at which the schedule indicates a Job should be created, within which a Job must be created. If a Job is not created within the startWindow interval, then the 'opportunity' is lost; no Job will be created until the next recurrence of the schedule. If the schedule is recurring, and the startWindow is longer than the recurrence interval, then this is equivalent to an infinite startWindow, because the Job that is 'due' in one recurrenceInterval is not carried forward into the next recurrence interval. The default is infinite. The minimum value is 1 minute. If you specify a lower value, the Batch service rejects the schedule with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
+        /// <param name="recurrenceInterval"> The time interval between the start times of two successive Jobs under the Job Schedule. A Job Schedule can have at most one active Job under it at any given time. Because a Job Schedule can have at most one active Job under it at any given time, if it is time to create a new Job under a Job Schedule, but the previous Job is still running, the Batch service will not create the new Job until the previous Job finishes. If the previous Job does not finish within the startWindow period of the new recurrenceInterval, then no new Job will be scheduled for that interval. For recurring Jobs, you should normally specify a jobManagerTask in the jobSpecification. If you do not use jobManagerTask, you will need an external process to monitor when Jobs are created, add Tasks to the Jobs and terminate the Jobs ready for the next recurrence. The default is that the schedule does not recur: one Job is created, within the startWindow after the doNotRunUntil time, and the schedule is complete as soon as that Job finishes. The minimum value is 1 minute. If you specify a lower value, the Batch service rejects the schedule with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). The time duration is specified in ISO 8601 format. </param>
         /// <returns> A new <see cref="Batch.BatchJobScheduleConfiguration"/> instance for mocking. </returns>
-        public static BatchJobScheduleConfiguration BatchJobScheduleConfiguration(DateTimeOffset? doNotRunUntil = default, DateTimeOffset? doNotRunAfter = default, TimeSpan? startWindow = default, TimeSpan? recurrenceInterval = default)
+        public static BatchJobScheduleConfiguration BatchJobScheduleConfiguration(DateTimeOffset? doNotRunBefore = default, DateTimeOffset? doNotRunAfter = default, TimeSpan? startWindow = default, TimeSpan? recurrenceInterval = default)
         {
-            return new BatchJobScheduleConfiguration(doNotRunUntil, doNotRunAfter, startWindow, recurrenceInterval, additionalBinaryDataProperties: null);
+            return new BatchJobScheduleConfiguration(doNotRunBefore, doNotRunAfter, startWindow, recurrenceInterval, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies details of the Jobs to be created on a schedule. </summary>
@@ -2047,9 +2032,9 @@ namespace Azure.Compute.Batch
         /// <param name="uri"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
-        /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in all Jobs created under the schedule. </param>
-        /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in all Jobs created under the schedule. </param>
-        /// <param name="wallClockTime"> The total wall clock time of all the Tasks in all the Jobs created under the schedule. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </param>
+        /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in all Jobs created under the schedule. The time duration is specified in ISO 8601 format. </param>
+        /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in all Jobs created under the schedule. The time duration is specified in ISO 8601 format. </param>
+        /// <param name="duration"> The total wall clock time of all the Tasks in all the Jobs created under the schedule. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. The time duration is specified in ISO 8601 format. </param>
         /// <param name="readIops"> The total number of disk read operations made by all Tasks in all Jobs created under the schedule. </param>
         /// <param name="writeIops"> The total number of disk write operations made by all Tasks in all Jobs created under the schedule. </param>
         /// <param name="readIoGiB"> The total gibibytes read from disk by all Tasks in all Jobs created under the schedule. </param>
@@ -2057,9 +2042,9 @@ namespace Azure.Compute.Batch
         /// <param name="succeededTasksCount"> The total number of Tasks successfully completed during the given time range in Jobs created under the schedule. A Task completes successfully if it returns exit code 0. </param>
         /// <param name="failedTasksCount"> The total number of Tasks that failed during the given time range in Jobs created under the schedule. A Task fails if it exhausts its maximum retry count without returning exit code 0. </param>
         /// <param name="taskRetriesCount"> The total number of retries during the given time range on all Tasks in all Jobs created under the schedule. </param>
-        /// <param name="waitTime"> The total wait time of all Tasks in all Jobs created under the schedule. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </param>
+        /// <param name="waitTime"> The total wait time of all Tasks in all Jobs created under the schedule. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. The time duration is specified in ISO 8601 format. </param>
         /// <returns> A new <see cref="Batch.BatchJobScheduleStatistics"/> instance for mocking. </returns>
-        public static BatchJobScheduleStatistics BatchJobScheduleStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = default, long writeIops = default, float readIoGiB = default, float writeIoGiB = default, long succeededTasksCount = default, long failedTasksCount = default, long taskRetriesCount = default, TimeSpan waitTime = default)
+        public static BatchJobScheduleStatistics BatchJobScheduleStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan duration = default, long readIops = default, long writeIops = default, float readIoGiB = default, float writeIoGiB = default, long succeededTasksCount = default, long failedTasksCount = default, long taskRetriesCount = default, TimeSpan waitTime = default)
         {
             return new BatchJobScheduleStatistics(
                 uri,
@@ -2067,7 +2052,7 @@ namespace Azure.Compute.Batch
                 lastUpdateTime,
                 userCpuTime,
                 kernelCpuTime,
-                wallClockTime,
+                duration,
                 readIops,
                 writeIops,
                 readIoGiB,
@@ -2127,9 +2112,8 @@ namespace Azure.Compute.Batch
         /// <param name="multiInstanceSettings"> An object that indicates that the Task is a multi-instance Task, and contains information about how to run the multi-instance Task. </param>
         /// <param name="dependsOn"> The Tasks that this Task depends on. This Task will not be scheduled until all Tasks that it depends on have completed successfully. If any of those Tasks fail and exhaust their retry counts, this Task will never be scheduled. If the Job does not have usesTaskDependencies set to true, and this element is present, the request fails with error code TaskDependenciesNotSpecifiedOnJob. </param>
         /// <param name="applicationPackageReferences"> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </param>
-        /// <param name="authenticationTokenSettings"> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </param>
         /// <returns> A new <see cref="Batch.BatchTaskCreateOptions"/> instance for mocking. </returns>
-        public static BatchTaskCreateOptions BatchTaskCreateOptions(string id = default, string displayName = default, ExitConditions exitConditions = default, string commandLine = default, BatchTaskContainerSettings containerSettings = default, IEnumerable<ResourceFile> resourceFiles = default, IEnumerable<OutputFile> outputFiles = default, IEnumerable<EnvironmentSetting> environmentSettings = default, BatchAffinityInfo affinityInfo = default, BatchTaskConstraints constraints = default, int? requiredSlots = default, UserIdentity userIdentity = default, MultiInstanceSettings multiInstanceSettings = default, BatchTaskDependencies dependsOn = default, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = default, AuthenticationTokenSettings authenticationTokenSettings = default)
+        public static BatchTaskCreateOptions BatchTaskCreateOptions(string id = default, string displayName = default, ExitConditions exitConditions = default, string commandLine = default, BatchTaskContainerSettings containerSettings = default, IEnumerable<ResourceFile> resourceFiles = default, IEnumerable<OutputFile> outputFiles = default, IEnumerable<EnvironmentSetting> environmentSettings = default, BatchAffinityInfo affinityInfo = default, BatchTaskConstraints constraints = default, int? requiredSlots = default, UserIdentity userIdentity = default, MultiInstanceSettings multiInstanceSettings = default, BatchTaskDependencies dependsOn = default, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = default)
         {
             resourceFiles ??= new ChangeTrackingList<ResourceFile>();
             outputFiles ??= new ChangeTrackingList<OutputFile>();
@@ -2152,7 +2136,6 @@ namespace Azure.Compute.Batch
                 multiInstanceSettings,
                 dependsOn,
                 applicationPackageReferences.ToList(),
-                authenticationTokenSettings,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2161,9 +2144,9 @@ namespace Azure.Compute.Batch
         /// <param name="exitCodeRanges"> A list of Task exit code ranges and how the Batch service should respond to them. </param>
         /// <param name="preProcessingError"> How the Batch service should respond if the Task fails to start due to an error. </param>
         /// <param name="fileUploadError"> How the Batch service should respond if a file upload error occurs. If the Task exited with an exit code that was specified via exitCodes or exitCodeRanges, and then encountered a file upload error, then the action specified by the exit code takes precedence. </param>
-        /// <param name="default"> How the Batch service should respond if the Task fails with an exit condition not covered by any of the other properties. This value is used if the Task exits with any nonzero exit code not listed in the exitCodes or exitCodeRanges collection, with a pre-processing error if the preProcessingError property is not present, or with a file upload error if the fileUploadError property is not present. If you want non-default behavior on exit code 0, you must list it explicitly using the exitCodes or exitCodeRanges collection. </param>
+        /// <param name="defaultExitOptions"> How the Batch service should respond if the Task fails with an exit condition not covered by any of the other properties. This value is used if the Task exits with any nonzero exit code not listed in the exitCodes or exitCodeRanges collection, with a pre-processing error if the preProcessingError property is not present, or with a file upload error if the fileUploadError property is not present. If you want non-default behavior on exit code 0, you must list it explicitly using the exitCodes or exitCodeRanges collection. </param>
         /// <returns> A new <see cref="Batch.ExitConditions"/> instance for mocking. </returns>
-        public static ExitConditions ExitConditions(IEnumerable<ExitCodeMapping> exitCodes = default, IEnumerable<ExitCodeRangeMapping> exitCodeRanges = default, ExitOptions preProcessingError = default, ExitOptions fileUploadError = default, ExitOptions @default = default)
+        public static ExitConditions ExitConditions(IEnumerable<ExitCodeMapping> exitCodes = default, IEnumerable<ExitCodeRangeMapping> exitCodeRanges = default, ExitOptions preProcessingError = default, ExitOptions fileUploadError = default, ExitOptions defaultExitOptions = default)
         {
             exitCodes ??= new ChangeTrackingList<ExitCodeMapping>();
             exitCodeRanges ??= new ChangeTrackingList<ExitCodeRangeMapping>();
@@ -2173,7 +2156,7 @@ namespace Azure.Compute.Batch
                 exitCodeRanges.ToList(),
                 preProcessingError,
                 fileUploadError,
-                @default,
+                defaultExitOptions,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2304,9 +2287,8 @@ namespace Azure.Compute.Batch
         /// <param name="taskStatistics"> Resource usage statistics for the Task. </param>
         /// <param name="dependsOn"> The Tasks that this Task depends on. This Task will not be scheduled until all Tasks that it depends on have completed successfully. If any of those Tasks fail and exhaust their retry counts, this Task will never be scheduled. </param>
         /// <param name="applicationPackageReferences"> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </param>
-        /// <param name="authenticationTokenSettings"> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </param>
         /// <returns> A new <see cref="Batch.BatchTask"/> instance for mocking. </returns>
-        public static BatchTask BatchTask(string id = default, string displayName = default, Uri uri = default, ETag eTag = default, DateTimeOffset lastModified = default, DateTimeOffset creationTime = default, ExitConditions exitConditions = default, BatchTaskState state = default, DateTimeOffset stateTransitionTime = default, BatchTaskState? previousState = default, DateTimeOffset? previousStateTransitionTime = default, string commandLine = default, BatchTaskContainerSettings containerSettings = default, IEnumerable<ResourceFile> resourceFiles = default, IEnumerable<OutputFile> outputFiles = default, IEnumerable<EnvironmentSetting> environmentSettings = default, BatchAffinityInfo affinityInfo = default, BatchTaskConstraints constraints = default, int? requiredSlots = default, UserIdentity userIdentity = default, BatchTaskExecutionInfo executionInfo = default, BatchNodeInfo nodeInfo = default, MultiInstanceSettings multiInstanceSettings = default, BatchTaskStatistics taskStatistics = default, BatchTaskDependencies dependsOn = default, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = default, AuthenticationTokenSettings authenticationTokenSettings = default)
+        public static BatchTask BatchTask(string id = default, string displayName = default, Uri uri = default, ETag eTag = default, DateTimeOffset lastModified = default, DateTimeOffset creationTime = default, ExitConditions exitConditions = default, BatchTaskState state = default, DateTimeOffset stateTransitionTime = default, BatchTaskState? previousState = default, DateTimeOffset? previousStateTransitionTime = default, string commandLine = default, BatchTaskContainerSettings containerSettings = default, IEnumerable<ResourceFile> resourceFiles = default, IEnumerable<OutputFile> outputFiles = default, IEnumerable<EnvironmentSetting> environmentSettings = default, BatchAffinityInfo affinityInfo = default, BatchTaskConstraints constraints = default, int? requiredSlots = default, UserIdentity userIdentity = default, BatchTaskExecutionInfo executionInfo = default, BatchNodeInfo nodeInfo = default, MultiInstanceSettings multiInstanceSettings = default, BatchTaskStatistics taskStatistics = default, BatchTaskDependencies dependsOn = default, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = default)
         {
             resourceFiles ??= new ChangeTrackingList<ResourceFile>();
             outputFiles ??= new ChangeTrackingList<OutputFile>();
@@ -2340,7 +2322,6 @@ namespace Azure.Compute.Batch
                 taskStatistics,
                 dependsOn,
                 applicationPackageReferences.ToList(),
-                authenticationTokenSettings,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2396,14 +2377,14 @@ namespace Azure.Compute.Batch
         /// <param name="uri"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
-        /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </param>
-        /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </param>
-        /// <param name="wallClockTime"> The total wall clock time of the Task. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If the Task was retried, this includes the wall clock time of all the Task retries. </param>
+        /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. The time duration is specified in ISO 8601 format. </param>
+        /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. The time duration is specified in ISO 8601 format. </param>
+        /// <param name="wallClockTime"> The total wall clock time of the Task. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If the Task was retried, this includes the wall clock time of all the Task retries. The time duration is specified in ISO 8601 format. </param>
         /// <param name="readIops"> The total number of disk read operations made by the Task. </param>
         /// <param name="writeIops"> The total number of disk write operations made by the Task. </param>
         /// <param name="readIoGiB"> The total gibibytes read from disk by the Task. </param>
         /// <param name="writeIoGiB"> The total gibibytes written to disk by the Task. </param>
-        /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). </param>
+        /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). The time duration is specified in ISO 8601 format. </param>
         /// <returns> A new <see cref="Batch.BatchTaskStatistics"/> instance for mocking. </returns>
         public static BatchTaskStatistics BatchTaskStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = default, long writeIops = default, float readIoGiB = default, float writeIoGiB = default, TimeSpan waitTime = default)
         {
@@ -2423,23 +2404,23 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> A collection of Azure Batch Tasks to add. </summary>
-        /// <param name="values"> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </param>
+        /// <param name="tasks"> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </param>
         /// <returns> A new <see cref="Batch.BatchTaskGroup"/> instance for mocking. </returns>
-        public static BatchTaskGroup BatchTaskGroup(IEnumerable<BatchTaskCreateOptions> values = default)
+        public static BatchTaskGroup BatchTaskGroup(IEnumerable<BatchTaskCreateOptions> tasks = default)
         {
-            values ??= new ChangeTrackingList<BatchTaskCreateOptions>();
+            tasks ??= new ChangeTrackingList<BatchTaskCreateOptions>();
 
-            return new BatchTaskGroup(values.ToList(), additionalBinaryDataProperties: null);
+            return new BatchTaskGroup(tasks.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The result of creating a collection of Tasks to a Job. </summary>
-        /// <param name="values"> The results of the create Task collection operation. </param>
+        /// <param name="results"> The results of the create Task collection operation. </param>
         /// <returns> A new <see cref="Batch.BatchCreateTaskCollectionResult"/> instance for mocking. </returns>
-        public static BatchCreateTaskCollectionResult BatchCreateTaskCollectionResult(IEnumerable<BatchTaskCreateResult> values = default)
+        public static BatchCreateTaskCollectionResult BatchCreateTaskCollectionResult(IEnumerable<BatchTaskCreateResult> results = default)
         {
-            values ??= new ChangeTrackingList<BatchTaskCreateResult>();
+            results ??= new ChangeTrackingList<BatchTaskCreateResult>();
 
-            return new BatchCreateTaskCollectionResult(values.ToList(), additionalBinaryDataProperties: null);
+            return new BatchCreateTaskCollectionResult(results.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result for a single Task created as part of an add Task collection operation. </summary>
@@ -2659,9 +2640,9 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Compute Node error, intended to be suitable for display in a user interface. </param>
         /// <param name="errorDetails"> The list of additional error details related to the Compute Node error. </param>
         /// <returns> A new <see cref="Batch.BatchNodeError"/> instance for mocking. </returns>
-        public static BatchNodeError BatchNodeError(string code = default, string message = default, IEnumerable<NameValuePair> errorDetails = default)
+        public static BatchNodeError BatchNodeError(string code = default, string message = default, IEnumerable<BatchNameValuePair> errorDetails = default)
         {
-            errorDetails ??= new ChangeTrackingList<NameValuePair>();
+            errorDetails ??= new ChangeTrackingList<BatchNameValuePair>();
 
             return new BatchNodeError(code, message, errorDetails.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2680,17 +2661,17 @@ namespace Azure.Compute.Batch
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="publicIpAddress"> The public IP address of the Compute Node. </param>
-        /// <param name="publicFQDN"> The public fully qualified domain name for the Compute Node. </param>
+        /// <param name="publicFqdn"> The public fully qualified domain name for the Compute Node. </param>
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
         /// <returns> A new <see cref="Batch.InboundEndpoint"/> instance for mocking. </returns>
-        public static InboundEndpoint InboundEndpoint(string name = default, InboundEndpointProtocol protocol = default, IPAddress publicIpAddress = default, string publicFQDN = default, int frontendPort = default, int backendPort = default)
+        public static InboundEndpoint InboundEndpoint(string name = default, InboundEndpointProtocol protocol = default, IPAddress publicIpAddress = default, string publicFqdn = default, int frontendPort = default, int backendPort = default)
         {
             return new InboundEndpoint(
                 name,
                 protocol,
                 publicIpAddress,
-                publicFQDN,
+                publicFqdn,
                 frontendPort,
                 backendPort,
                 additionalBinaryDataProperties: null);

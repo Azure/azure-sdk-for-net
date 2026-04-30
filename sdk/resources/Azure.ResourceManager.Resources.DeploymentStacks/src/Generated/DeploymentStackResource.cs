@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateDeleteRequest(Id.Parent, Id.Name, unmanageActionResources?.ToString(), unmanageActionResourceGroups?.ToString(), unmanageActionManagementGroups?.ToString(), unmanageActionResourcesWithoutDeleteSupport?.ToString(), bypassStackOutOfSyncError, context);
+                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, unmanageActionResources?.ToString(), unmanageActionResourceGroups?.ToString(), unmanageActionManagementGroups?.ToString(), unmanageActionResourcesWithoutDeleteSupport?.ToString(), bypassStackOutOfSyncError, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentStacksArmOperation operation = new DeploymentStacksArmOperation(_deploymentStacksAtScopeClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateDeleteRequest(Id.Parent, Id.Name, unmanageActionResources?.ToString(), unmanageActionResourceGroups?.ToString(), unmanageActionManagementGroups?.ToString(), unmanageActionResourcesWithoutDeleteSupport?.ToString(), bypassStackOutOfSyncError, context);
+                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, unmanageActionResources?.ToString(), unmanageActionResourceGroups?.ToString(), unmanageActionManagementGroups?.ToString(), unmanageActionResourcesWithoutDeleteSupport?.ToString(), bypassStackOutOfSyncError, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentStacksArmOperation operation = new DeploymentStacksArmOperation(_deploymentStacksAtScopeClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateExportTemplateRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateExportTemplateRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeploymentStackTemplateExportResult> response = Response.FromValue(DeploymentStackTemplateExportResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateExportTemplateRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateExportTemplateRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeploymentStackTemplateExportResult> response = Response.FromValue(DeploymentStackTemplateExportResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateValidateStackRequest(Id.Parent, Id.Name, DeploymentStackData.ToRequestContent(data), context);
+                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateValidateStackRequest(Id.Parent.ToString(), Id.Name, DeploymentStackData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentStacksArmOperation<DeploymentStackValidateResult> operation = new DeploymentStacksArmOperation<DeploymentStackValidateResult>(
                     new DeploymentStackValidateResultOperationSource(),
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateValidateStackRequest(Id.Parent, Id.Name, DeploymentStackData.ToRequestContent(data), context);
+                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateValidateStackRequest(Id.Parent.ToString(), Id.Name, DeploymentStackData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentStacksArmOperation<DeploymentStackValidateResult> operation = new DeploymentStacksArmOperation<DeploymentStackValidateResult>(
                     new DeploymentStackValidateResultOperationSource(),
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, DeploymentStackData.ToRequestContent(data), context);
+                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, DeploymentStackData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentStacksArmOperation<DeploymentStackResource> operation = new DeploymentStacksArmOperation<DeploymentStackResource>(
                     new DeploymentStackOperationSource(Client),
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, DeploymentStackData.ToRequestContent(data), context);
+                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, DeploymentStackData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentStacksArmOperation<DeploymentStackResource> operation = new DeploymentStacksArmOperation<DeploymentStackResource>(
                     new DeploymentStackOperationSource(Client),
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());

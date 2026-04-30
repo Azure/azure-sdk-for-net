@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServiceNetworkMode : IEquatable<ContainerServiceNetworkMode>
     {
         private readonly string _value;
+        /// <summary> No bridge is created. Intra-VM Pod to Pod communication is through IP routes created by Azure CNI. See [Transparent Mode](https://docs.microsoft.com/azure/aks/faq#transparent-mode) for more information. </summary>
+        private const string TransparentValue = "transparent";
+        /// <summary> This is no longer supported. </summary>
+        private const string BridgeValue = "bridge";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceNetworkMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TransparentValue = "transparent";
-        private const string BridgeValue = "bridge";
+            _value = value;
+        }
 
         /// <summary> No bridge is created. Intra-VM Pod to Pod communication is through IP routes created by Azure CNI. See [Transparent Mode](https://docs.microsoft.com/azure/aks/faq#transparent-mode) for more information. </summary>
         public static ContainerServiceNetworkMode Transparent { get; } = new ContainerServiceNetworkMode(TransparentValue);
+
         /// <summary> This is no longer supported. </summary>
         public static ContainerServiceNetworkMode Bridge { get; } = new ContainerServiceNetworkMode(BridgeValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceNetworkMode left, ContainerServiceNetworkMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceNetworkMode left, ContainerServiceNetworkMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceNetworkMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceNetworkMode(string value) => new ContainerServiceNetworkMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceNetworkMode?(string value) => value == null ? null : new ContainerServiceNetworkMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceNetworkMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceNetworkMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

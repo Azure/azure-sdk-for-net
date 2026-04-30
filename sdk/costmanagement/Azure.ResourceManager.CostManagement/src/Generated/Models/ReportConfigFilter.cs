@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The filter expression to be used in the report. </summary>
     public partial class ReportConfigFilter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReportConfigFilter"/>. </summary>
         public ReportConfigFilter()
@@ -57,22 +29,25 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="or"> The logical "OR" expression. Must have at least 2 items. </param>
         /// <param name="dimensions"> Has comparison expression for a dimension. </param>
         /// <param name="tags"> Has comparison expression for a tag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReportConfigFilter(IList<ReportConfigFilter> and, IList<ReportConfigFilter> or, ReportConfigComparisonExpression dimensions, ReportConfigComparisonExpression tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReportConfigFilter(IList<ReportConfigFilter> @and, IList<ReportConfigFilter> @or, ReportConfigComparisonExpression dimensions, ReportConfigComparisonExpression tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            And = and;
-            Or = or;
+            And = @and;
+            Or = @or;
             Dimensions = dimensions;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The logical "AND" expression. Must have at least 2 items. </summary>
         public IList<ReportConfigFilter> And { get; }
+
         /// <summary> The logical "OR" expression. Must have at least 2 items. </summary>
         public IList<ReportConfigFilter> Or { get; }
+
         /// <summary> Has comparison expression for a dimension. </summary>
         public ReportConfigComparisonExpression Dimensions { get; set; }
+
         /// <summary> Has comparison expression for a tag. </summary>
         public ReportConfigComparisonExpression Tags { get; set; }
     }

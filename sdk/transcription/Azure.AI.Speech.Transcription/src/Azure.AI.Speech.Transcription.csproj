@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Microsoft Azure client library for Azure AI Speech Transcription service.</Description>
     <AssemblyTitle>Azure AI Speech Transcription Client Library</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <PackageTags>Azure.AI.Speech.Transcription</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -17,6 +17,7 @@
   <!-- Import Azure.Core shared source for attributes -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 </Project>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Peering
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeerAsnData, PeerAsnResource>(new PeerAsnsGetBySubscriptionAsyncCollectionResultOfT(_peerAsnsRestClient, Id.SubscriptionId, context), data => new PeerAsnResource(Client, data));
+            return new AsyncPageableWrapper<PeerAsnData, PeerAsnResource>(new PeerAsnsGetBySubscriptionAsyncCollectionResultOfT(_peerAsnsRestClient, Id.SubscriptionId, context, "PeerAsnCollection.GetAll"), data => new PeerAsnResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeerAsnData, PeerAsnResource>(new PeerAsnsGetBySubscriptionCollectionResultOfT(_peerAsnsRestClient, Id.SubscriptionId, context), data => new PeerAsnResource(Client, data));
+            return new PageableWrapper<PeerAsnData, PeerAsnResource>(new PeerAsnsGetBySubscriptionCollectionResultOfT(_peerAsnsRestClient, Id.SubscriptionId, context, "PeerAsnCollection.GetAll"), data => new PeerAsnResource(Client, data));
         }
 
         /// <summary>

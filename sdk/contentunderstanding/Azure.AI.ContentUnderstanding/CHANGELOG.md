@@ -1,16 +1,31 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2026-04-30)
 
 ### Features Added
 
-### Breaking Changes
+- Added `ToLlmInput` extension method that converts `AnalysisResult` into LLM-friendly text with YAML front matter and markdown content. Supports documents, audio/video, and classification hierarchies.
+
+## 1.1.0 (2026-04-21)
+
+### Features Added
+
+- Added `ContentUnderstandingClientSettings` to support creating a `ContentUnderstandingClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `AnalyzeUsageDetails` class and `AnalyzeOperationExtensions.GetUsage()` extension method to surface billing and token consumption details (`AnalyzeUsageDetails`) returned by the REST API.
+
+## 1.0.2 (2026-03-11)
 
 ### Bugs Fixed
 
+- Fixed `GetRehydrationToken()` returning `null` on operations started with `WaitUntil.Started`, preventing cross-process operation handoff ([#56840](https://github.com/Azure/azure-sdk-for-net/issues/56840))
+
+## 1.0.1 (2026-03-06)
+
 ### Other Changes
 
-## 1.0.0 (2026-02-11)
+- Set the default initial polling interval to 3 seconds for `Analyze`, `AnalyzeAsync`, `AnalyzeBinary`, and `AnalyzeBinaryAsync` to optimize polling efficiency.
+
+## 1.0.0 (2026-02-27)
 
 ### Features Added
 

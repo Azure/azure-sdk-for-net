@@ -12,7 +12,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -27,7 +26,7 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
     {
         string error = "";
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         string code = default;
         string message = default;
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
@@ -70,7 +69,7 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
     private static string GetResultsCounts(ClientResult result)
     {
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         StringBuilder sbFormattedCounts = new("{\n");
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
         {
@@ -98,7 +97,7 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
     {
         Dictionary<string, string> results = [];
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
         {
             foreach (string key in expectedProperties)
@@ -131,11 +130,12 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
     {
         List<string> resultJsons = [];
         bool hasMore = false;
+        string after = default;
         do
         {
-            ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+            ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
             {
@@ -153,6 +153,10 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
                         }
                     }
                 }
+                else if (topProperty.NameEquals("last_id"u8))
+                {
+                    after = topProperty.Value.GetString();
+                }
             }
         } while (hasMore);
         return resultJsons;
@@ -163,11 +167,12 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
     {
         List<string> resultJsons = [];
         bool hasMore = false;
+        string after = default;
         do
         {
-            ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+            ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
             List<string> data = [];
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
@@ -186,6 +191,10 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
                         }
                     }
                 }
+                else if (topProperty.NameEquals("last_id"u8))
+                {
+                    after = topProperty.Value.GetString();
+                }
             }
         } while (hasMore);
         return resultJsons;
@@ -198,16 +207,16 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
     {
         #region Snippet:Sample_CreateClients_EvaluationsWithDataSetID
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("STORAGE_CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_CreateData_EvaluationsWithDataSetID
         object[] testingCriteria = [
@@ -342,16 +351,16 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
     public void EvaluationsExampleSync()
     {
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("STORAGE_CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         object[] testingCriteria = [
             new {
                 type = "azure_ai_evaluator",

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Relay
 {
+    /// <summary></summary>
     public partial class WcfRelayResource : IJsonModel<WcfRelayData>
     {
-        private static WcfRelayData s_dataDeserializationInstance;
-        private static WcfRelayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WcfRelayData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WcfRelayData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WcfRelayData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WcfRelayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WcfRelayData>)Data).Write(writer, options);
 
-        WcfRelayData IJsonModel<WcfRelayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WcfRelayData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WcfRelayData IJsonModel<WcfRelayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WcfRelayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WcfRelayData>(Data, options, AzureResourceManagerRelayContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WcfRelayData IPersistableModel<WcfRelayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WcfRelayData>(data, options, AzureResourceManagerRelayContext.Default);
 
-        string IPersistableModel<WcfRelayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WcfRelayData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WcfRelayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

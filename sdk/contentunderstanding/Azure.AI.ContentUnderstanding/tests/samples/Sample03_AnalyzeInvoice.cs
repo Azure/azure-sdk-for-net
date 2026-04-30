@@ -37,6 +37,30 @@ namespace Azure.AI.ContentUnderstanding.Samples
             AnalysisResult result = operation.Value;
             #endregion
 
+            #region Snippet:ContentUnderstandingGetUsage
+            // Get usage details (token consumption, page counts) from the completed operation.
+            AnalyzeUsageDetails? usage = operation.GetUsage();
+            if (usage != null)
+            {
+                Console.WriteLine($"Document pages (standard): {usage.DocumentPagesStandard}");
+                Console.WriteLine($"Contextualization tokens: {usage.ContextualizationTokens}");
+                foreach (var kvp in usage.Tokens)
+                {
+                    Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+                }
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingGetUsage
+            // Usage may not be present in old playback recordings captured before this feature.
+            // In live/record mode, usage should always be available.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.IsNotNull(usage, "Usage details should be available after a completed analysis");
+                Assert.IsNotNull(usage!.Tokens, "Tokens dictionary should not be null");
+            }
+            #endregion
+
             #region Assertion:ContentUnderstandingAnalyzeInvoice
             Assert.IsNotNull(invoiceUrl, "Invoice URL should not be null");
             Assert.IsTrue(invoiceUrl.IsAbsoluteUri, "Invoice URL should be absolute");
@@ -332,6 +356,23 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Assert.IsTrue(itemAmount >= 0, $"Line item {i + 1} amount should be >= 0, but was {itemAmount}");
                 }
             }
+            #endregion
+
+            #region Snippet:ContentUnderstandingInvoiceToLlmInput
+            // The fields above can also be packaged into a single LLM-ready text block.
+            // ToLlmInput renders all extracted fields as YAML front matter followed by
+            // the markdown body, so an LLM can consume both structured data and document text
+            // in one shot. For advanced options, see Sample_Advanced_ToLlmInput.
+            string llmText = result.ToLlmInput();
+            Console.WriteLine(llmText);
+            #endregion
+
+            #region Assertion:ContentUnderstandingInvoiceToLlmInput
+            Assert.IsNotNull(llmText, "LLM input text should not be null");
+            Assert.That(llmText, Does.StartWith("---\n"));
+            Assert.That(llmText, Does.Contain("contentType: document"));
+            Assert.That(llmText, Does.Contain("fields:"));
+            Console.WriteLine($"Invoice LLM input text generated ({llmText.Length} characters)");
             #endregion
         }
     }

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class HciClusterUpdateRunCollection : ArmCollection, IEnumerable<HciClusterUpdateRunResource>, IAsyncEnumerable<HciClusterUpdateRunResource>
     {
-        private readonly ClientDiagnostics _hciClusterUpdateRunUpdateRunsClientDiagnostics;
-        private readonly UpdateRunsRestOperations _hciClusterUpdateRunUpdateRunsRestClient;
+        private readonly ClientDiagnostics _updateRunsClientDiagnostics;
+        private readonly UpdateRuns _updateRunsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HciClusterUpdateRunCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciClusterUpdateRunCollection for mocking. </summary>
         protected HciClusterUpdateRunCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciClusterUpdateRunCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterUpdateRunCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciClusterUpdateRunCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciClusterUpdateRunUpdateRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterUpdateRunResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HciClusterUpdateRunResource.ResourceType, out string hciClusterUpdateRunUpdateRunsApiVersion);
-            _hciClusterUpdateRunUpdateRunsRestClient = new UpdateRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterUpdateRunUpdateRunsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HciClusterUpdateRunResource.ResourceType, out string hciClusterUpdateRunApiVersion);
+            _updateRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterUpdateRunResource.ResourceType.Namespace, Diagnostics);
+            _updateRunsRestClient = new UpdateRuns(_updateRunsClientDiagnostics, Pipeline, Endpoint, hciClusterUpdateRunApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HciClusterUpdateResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HciClusterUpdateResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciClusterUpdateResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Put Update runs for a specified update
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Put</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Put. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.Hci
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="data"> Properties of the updateRuns object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HciClusterUpdateRunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateRunName, HciClusterUpdateRunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hciClusterUpdateRunUpdateRunsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _hciClusterUpdateRunUpdateRunsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new HciArmOperation<HciClusterUpdateRunResource>(Response.FromValue(new HciClusterUpdateRunResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, HciClusterUpdateRunData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                HciArmOperation<HciClusterUpdateRunResource> operation = new HciArmOperation<HciClusterUpdateRunResource>(Response.FromValue(new HciClusterUpdateRunResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.Hci
         /// Put Update runs for a specified update
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Put</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Put. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.Hci
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="data"> Properties of the updateRuns object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HciClusterUpdateRunResource> CreateOrUpdate(WaitUntil waitUntil, string updateRunName, HciClusterUpdateRunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hciClusterUpdateRunUpdateRunsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, data, cancellationToken);
-                var uri = _hciClusterUpdateRunUpdateRunsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new HciArmOperation<HciClusterUpdateRunResource>(Response.FromValue(new HciClusterUpdateRunResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, HciClusterUpdateRunData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                HciArmOperation<HciClusterUpdateRunResource> operation = new HciArmOperation<HciClusterUpdateRunResource>(Response.FromValue(new HciClusterUpdateRunResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.Hci
         /// Get the Update run for a specified update
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HciClusterUpdateRunResource>> GetAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.Get");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hciClusterUpdateRunUpdateRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciClusterUpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.Hci
         /// Get the Update run for a specified update
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HciClusterUpdateRunResource> Get(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.Get");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.Get");
             scope.Start();
             try
             {
-                var response = _hciClusterUpdateRunUpdateRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciClusterUpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,51 @@ namespace Azure.ResourceManager.Hci
         /// List all Update runs for a specified update
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciClusterUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciClusterUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciClusterUpdateRunResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciClusterUpdateRunUpdateRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciClusterUpdateRunUpdateRunsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciClusterUpdateRunResource(Client, HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(e)), _hciClusterUpdateRunUpdateRunsClientDiagnostics, Pipeline, "HciClusterUpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciClusterUpdateRunData, HciClusterUpdateRunResource>(new UpdateRunsGetAllAsyncCollectionResultOfT(
+                _updateRunsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "HciClusterUpdateRunCollection.GetAll"), data => new HciClusterUpdateRunResource(Client, data));
         }
 
         /// <summary>
         /// List all Update runs for a specified update
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +318,68 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="HciClusterUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciClusterUpdateRunResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciClusterUpdateRunUpdateRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciClusterUpdateRunUpdateRunsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciClusterUpdateRunResource(Client, HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(e)), _hciClusterUpdateRunUpdateRunsClientDiagnostics, Pipeline, "HciClusterUpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciClusterUpdateRunData, HciClusterUpdateRunResource>(new UpdateRunsGetAllCollectionResultOfT(
+                _updateRunsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "HciClusterUpdateRunCollection.GetAll"), data => new HciClusterUpdateRunResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.Exists");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hciClusterUpdateRunUpdateRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciClusterUpdateRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciClusterUpdateRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +393,50 @@ namespace Azure.ResourceManager.Hci
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.Exists");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hciClusterUpdateRunUpdateRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciClusterUpdateRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciClusterUpdateRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +450,54 @@ namespace Azure.ResourceManager.Hci
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HciClusterUpdateRunResource>> GetIfExistsAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.GetIfExists");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hciClusterUpdateRunUpdateRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciClusterUpdateRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciClusterUpdateRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciClusterUpdateRunResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciClusterUpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +511,54 @@ namespace Azure.ResourceManager.Hci
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HciClusterUpdateRunResource> GetIfExists(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.GetIfExists");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hciClusterUpdateRunUpdateRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciClusterUpdateRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciClusterUpdateRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciClusterUpdateRunResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciClusterUpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +578,7 @@ namespace Azure.ResourceManager.Hci
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HciClusterUpdateRunResource> IAsyncEnumerable<HciClusterUpdateRunResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

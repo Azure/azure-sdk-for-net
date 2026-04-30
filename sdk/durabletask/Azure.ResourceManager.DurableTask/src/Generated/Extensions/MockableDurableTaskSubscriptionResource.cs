@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
 
         private ClientDiagnostics SchedulersClientDiagnostics => _schedulersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DurableTask.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Schedulers SchedulersRestClient => _schedulersRestClient ??= new Schedulers(SchedulersClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private Schedulers SchedulersRestClient => _schedulersRestClient ??= new Schedulers(SchedulersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         /// <summary>
         /// List Schedulers by subscription
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionAsyncCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DurableTaskSchedulerResource(Client, data));
+            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionAsyncCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers"), data => new DurableTaskSchedulerResource(Client, data));
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DurableTaskSchedulerResource(Client, data));
+            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers"), data => new DurableTaskSchedulerResource(Client, data));
         }
     }
 }

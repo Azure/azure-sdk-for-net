@@ -230,11 +230,21 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             VariableExpression resultVar;
             if (_isPatch) // patch case
             {
+                // The patch type's parameterless ctor is the internal deserialization ctor,
+                // which leaves required collections like `Tags` uninitialized (null). Resolve
+                // the public initialization constructor and forward each required argument
+                // from `current` so collections are initialized via the public
+                // [InitializationConstructor]. For ResourceData-derived (untracked) patches
+                // the init ctor takes no parameters, so this naturally falls back to
+                // `new TPatch()`. For TrackedResourceData-derived patches it forwards
+                // `current.Location`, etc.
+                ValueExpression patchCtorCall = BuildPatchCtorCall(updateParam.Type, resourceDataVar);
+
                 // Create a new instance of the update patch type
                 statements.Add(Declare(
                     "patch",
                     updateParam.Type,
-                    New.Instance(updateParam.Type),
+                    patchCtorCall,
                     out var patchVar));
 
                 if (copyExistingTags)
@@ -319,6 +329,44 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 tagMethodProvider._signature,
                 tagMethodProvider._bodyStatements,
                 tagMethodProvider._enclosingType);
+        }
+
+        /// <summary>
+        /// Builds a constructor invocation for the patch type using its public
+        /// initialization constructor. Each required parameter is forwarded from
+        /// <paramref name="currentVar"/> by matching the constructor parameter to
+        /// its source property. If the patch type's initialization constructor
+        /// has no parameters (e.g. untracked <c>ResourceData</c>), falls back to
+        /// <c>new TPatch()</c>.
+        /// </summary>
+        private static ValueExpression BuildPatchCtorCall(CSharpType patchType, VariableExpression currentVar)
+        {
+            // Patch models for tag methods are always generated TypeSpec models (ModelProvider) —
+            // they originate from PopulateUpdateMethod() on the resource.
+            var patchModel = (ModelProvider)ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[patchType]!;
+
+            // The "initialization constructor" is the public ctor with required-property
+            // parameters. The public mocking ctor (parameterless) is filtered out by the
+            // parameter-count check; if the only public ctor is the mocking one (no required
+            // properties), we fall back to `new TPatch()`.
+            var initCtor = patchModel.Constructors
+                .FirstOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                    && c.Signature.Parameters.Count > 0);
+            if (initCtor is null)
+            {
+                return New.Instance(patchType);
+            }
+
+            var args = new ValueExpression[initCtor.Signature.Parameters.Count];
+            for (int i = 0; i < initCtor.Signature.Parameters.Count; i++)
+            {
+                var param = initCtor.Signature.Parameters[i];
+                // ParameterProvider.Property points back to the originating PropertyProvider;
+                // fall back to the parameter name (Pascal-cased) if unavailable.
+                var propertyName = param.Property?.Name ?? char.ToUpperInvariant(param.Name[0]) + param.Name.Substring(1);
+                args[i] = currentVar.Property(propertyName);
+            }
+            return New.Instance(patchType, args);
         }
     }
 }

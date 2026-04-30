@@ -4,11 +4,24 @@
 
 ### Features Added
 
+- Upgraded API version to 2025-08-01 and 2026-01-01-preview.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Migrated from AutoRest to TypeSpec-based code generation.
 
 ### Other Changes
+
+## 1.3.1 (2026-03-20)
+
+### Features Added
+
+- Make `Azure.ResourceManager.RecoveryServicesBackup` AOT-compatible.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.51.1.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.3.0 (2025-04-24)
 

@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.Advisor
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroup;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ConfigurationsGetAdvisorConfigurationsByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Configurations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroup"> The name of the Azure resource group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConfigurationsGetAdvisorConfigurationsByResourceGroupAsyncCollectionResultOfT(Configurations client, Guid subscriptionId, string resourceGroup, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ConfigurationsGetAdvisorConfigurationsByResourceGroupAsyncCollectionResultOfT(Configurations client, Guid subscriptionId, string resourceGroup, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroup = resourceGroup;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ConfigurationsGetAdvisorConfigurationsByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Advisor
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAdvisorConfigurationsByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroup, _context) : _client.CreateGetAdvisorConfigurationsByResourceGroupRequest(_subscriptionId, _resourceGroup, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAdvisorResourceGroupResource.GetAdvisorConfigurationsByResourceGroup");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

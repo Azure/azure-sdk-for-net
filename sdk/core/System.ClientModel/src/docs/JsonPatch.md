@@ -5,7 +5,8 @@ or for dealing with raw UTF8 JSON directly.  The examples in this document show 
 of being attached to a model for simplicity.
 
 There are 5 main APIs for library users, `Set`, `Append`, `Get`, `Remove`, `SetNull`.  Each of these have overloads for different
-value types to get in and out of the JsonPatch object.
+value types to get in and out of the JsonPatch object.  Additionally, `ToBinaryData` returns the UTF-8 binary representation
+directly as a `BinaryData`, which is more efficient than `ToString` when the result will be passed to APIs like `ModelReaderWriter.Read`.
 
 All of these APIs take in `ReadOnlySpan<byte>` which should be UTF8 representation of a single target JSON Path following [RFC 9535](https://www.rfc-editor.org/rfc/rfc9535).
 Even if a filter selector results in single target they are currently not supported such as `$.x.y[?@.name='foo']` where the array at y only contains one element with the name foo.
@@ -104,4 +105,21 @@ JsonPatch jp = new("{\"x\":{\"y\":[null,null,{\"z\":5}]}}"u8.ToArray());
 jp.SetNull("$.x.y[2]"u8);
 Console.WriteLine(jp); // [{"op":"replace","path":"/x/y/2","value":null}]
 Console.WriteLine(jp.ToString("J")); // {"x":{"y":[null,null,null]}}
+```
+
+### ToBinaryData
+
+Returns the binary UTF-8 JSON representation as a `BinaryData`, avoiding the overhead of converting
+to and from a string when the result will be used with APIs that accept `BinaryData` (such as `ModelReaderWriter.Read`).
+
+The default format is "JP" (JSON Patch), matching `ToString()`. Use "J" for the merged JSON representation.
+
+```c#
+// Get merged JSON as BinaryData — efficient, no string roundtrip
+JsonPatch jp = new("{\"id\":\"file1\",\"bytes\":null}"u8.ToArray());
+jp.Remove("$.bytes"u8);
+BinaryData result = jp.ToBinaryData("J"); // {"id":"file1"}
+
+// Use directly with ModelReaderWriter
+var model = ModelReaderWriter.Read<MyModel>(jp.ToBinaryData("J"), ModelReaderWriterOptions.Json);
 ```

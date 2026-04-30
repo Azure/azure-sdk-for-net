@@ -35,7 +35,7 @@ namespace OpenAI
         }
 
         /// <summary> The type of location approximation. Always `approximate`. </summary>
-        public string Type { get; } = "approximate";
+        internal string Type { get; } = "approximate";
 
         /// <summary> Gets or sets the Country. </summary>
         public string Country { get; set; }

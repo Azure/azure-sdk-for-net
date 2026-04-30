@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,9 +18,18 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyPar
     {
         protected IndividuallyParentNestedWithQueryClient() => throw null;
 
+        internal IndividuallyParentNestedWithQueryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string blobName) => throw null;
+
         public IndividuallyParentNestedWithQueryClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyParentClientOptions()) => throw null;
 
-        public IndividuallyParentNestedWithQueryClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) => throw null;
+        public IndividuallyParentNestedWithQueryClient(string blobName, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+
+        internal IndividuallyParentNestedWithQueryClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyParentClientOptions options) => throw null;
+
+        public IndividuallyParentNestedWithQueryClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public IndividuallyParentNestedWithQueryClient(IndividuallyParentNestedWithQueryClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

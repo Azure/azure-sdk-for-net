@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A Class representing an AgentPoolUpgradeProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AgentPoolUpgradeProfileResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAgentPoolUpgradeProfileResource method.
+    /// A class representing a AgentPoolUpgradeProfile along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AgentPoolUpgradeProfileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ContainerServiceAgentPoolResource"/> using the GetAgentPoolUpgradeProfile method.
     /// </summary>
     public partial class AgentPoolUpgradeProfileResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AgentPoolUpgradeProfileResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        /// <param name="agentPoolName"> The agentPoolName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _agentPoolUpgradeProfileAgentPoolsClientDiagnostics;
-        private readonly AgentPoolsRestOperations _agentPoolUpgradeProfileAgentPoolsRestClient;
+        private readonly ClientDiagnostics _agentPoolUpgradeProfilesClientDiagnostics;
+        private readonly AgentPoolUpgradeProfiles _agentPoolUpgradeProfilesRestClient;
         private readonly AgentPoolUpgradeProfileData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles";
 
-        /// <summary> Initializes a new instance of the <see cref="AgentPoolUpgradeProfileResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AgentPoolUpgradeProfileResource for mocking. </summary>
         protected AgentPoolUpgradeProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AgentPoolUpgradeProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AgentPoolUpgradeProfileResource(ArmClient client, AgentPoolUpgradeProfileData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.ContainerService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AgentPoolUpgradeProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AgentPoolUpgradeProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _agentPoolUpgradeProfileAgentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string agentPoolUpgradeProfileAgentPoolsApiVersion);
-            _agentPoolUpgradeProfileAgentPoolsRestClient = new AgentPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agentPoolUpgradeProfileAgentPoolsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string agentPoolUpgradeProfileApiVersion);
+            _agentPoolUpgradeProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
+            _agentPoolUpgradeProfilesRestClient = new AgentPoolUpgradeProfiles(_agentPoolUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, agentPoolUpgradeProfileApiVersion ?? "2026-01-02-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AgentPoolUpgradeProfileData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="agentPoolName"> The agentPoolName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the upgrade profile for an agent pool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AgentPools_GetUpgradeProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> AgentPoolUpgradeProfiles_GetUpgradeProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AgentPoolUpgradeProfileResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AgentPoolUpgradeProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AgentPoolUpgradeProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _agentPoolUpgradeProfileAgentPoolsClientDiagnostics.CreateScope("AgentPoolUpgradeProfileResource.Get");
+            using DiagnosticScope scope = _agentPoolUpgradeProfilesClientDiagnostics.CreateScope("AgentPoolUpgradeProfileResource.Get");
             scope.Start();
             try
             {
-                var response = await _agentPoolUpgradeProfileAgentPoolsRestClient.GetUpgradeProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _agentPoolUpgradeProfilesRestClient.CreateGetUpgradeProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AgentPoolUpgradeProfileData> response = Response.FromValue(AgentPoolUpgradeProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AgentPoolUpgradeProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.ContainerService
         /// Gets the upgrade profile for an agent pool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AgentPools_GetUpgradeProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> AgentPoolUpgradeProfiles_GetUpgradeProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AgentPoolUpgradeProfileResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AgentPoolUpgradeProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AgentPoolUpgradeProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _agentPoolUpgradeProfileAgentPoolsClientDiagnostics.CreateScope("AgentPoolUpgradeProfileResource.Get");
+            using DiagnosticScope scope = _agentPoolUpgradeProfilesClientDiagnostics.CreateScope("AgentPoolUpgradeProfileResource.Get");
             scope.Start();
             try
             {
-                var response = _agentPoolUpgradeProfileAgentPoolsRestClient.GetUpgradeProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _agentPoolUpgradeProfilesRestClient.CreateGetUpgradeProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AgentPoolUpgradeProfileData> response = Response.FromValue(AgentPoolUpgradeProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AgentPoolUpgradeProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

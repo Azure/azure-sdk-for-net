@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.CloudHealth
         private readonly string _resourceGroupName;
         private readonly string _healthModelName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AuthenticationSettingsGetByHealthModelCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AuthenticationSettings client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="healthModelName"> Name of health model resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AuthenticationSettingsGetByHealthModelCollectionResultOfT(AuthenticationSettings client, Guid subscriptionId, string resourceGroupName, string healthModelName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AuthenticationSettingsGetByHealthModelCollectionResultOfT(AuthenticationSettings client, Guid subscriptionId, string resourceGroupName, string healthModelName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _healthModelName = healthModelName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AuthenticationSettingsGetByHealthModelCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.CloudHealth
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByHealthModelRequest(nextLink, _subscriptionId, _resourceGroupName, _healthModelName, _context) : _client.CreateGetByHealthModelRequest(_subscriptionId, _resourceGroupName, _healthModelName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

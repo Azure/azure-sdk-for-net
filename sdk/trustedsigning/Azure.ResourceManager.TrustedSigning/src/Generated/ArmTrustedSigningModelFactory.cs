@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                accountUri is null && provisioningState is null && skuName is null ? default : new CodeSigningAccountProperties(accountUri, new TrustedSigningAccountSku(skuName.Value, null), provisioningState, null));
+                accountUri is null && provisioningState is null && skuName is null ? default : new CodeSigningAccountProperties(accountUri, new TrustedSigningAccountSku(skuName.GetValueOrDefault(), null), provisioningState, null));
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 profileType is null && includeStreetAddress is null && includeCity is null && includeState is null && includeCountry is null && includePostalCode is null && identityValidationId is null && provisioningState is null && status is null && certificates is null ? default : new CertificateProfileProperties(
-                    profileType.Value,
+                    profileType.GetValueOrDefault(),
                     includeStreetAddress,
                     includeCity,
                     includeState,

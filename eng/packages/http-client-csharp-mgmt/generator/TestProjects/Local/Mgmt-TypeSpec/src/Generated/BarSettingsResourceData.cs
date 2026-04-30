@@ -150,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FlattenedNestedProperty = new BarNestedQuotaProperties();
                 }
-                FlattenedNestedProperty.InnerProp1 = value.Value;
+                FlattenedNestedProperty.InnerProp1 = value;
             }
         }
 

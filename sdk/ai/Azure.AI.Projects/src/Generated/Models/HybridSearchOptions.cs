@@ -34,9 +34,9 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The weight of the embedding in the reciprocal ranking fusion. </summary>
-        public double EmbeddingWeight { get; set; }
+        public double EmbeddingWeight { get; }
 
         /// <summary> The weight of the text in the reciprocal ranking fusion. </summary>
-        public double TextWeight { get; set; }
+        public double TextWeight { get; }
     }
 }

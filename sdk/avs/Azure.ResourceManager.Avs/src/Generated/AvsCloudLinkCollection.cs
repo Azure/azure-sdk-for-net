@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsCloudLinkData, AvsCloudLinkResource>(new CloudLinksGetAllAsyncCollectionResultOfT(_cloudLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsCloudLinkResource(Client, data));
+            return new AsyncPageableWrapper<AvsCloudLinkData, AvsCloudLinkResource>(new CloudLinksGetAllAsyncCollectionResultOfT(
+                _cloudLinksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsCloudLinkCollection.GetAll"), data => new AvsCloudLinkResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsCloudLinkData, AvsCloudLinkResource>(new CloudLinksGetAllCollectionResultOfT(_cloudLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsCloudLinkResource(Client, data));
+            return new PageableWrapper<AvsCloudLinkData, AvsCloudLinkResource>(new CloudLinksGetAllCollectionResultOfT(
+                _cloudLinksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsCloudLinkCollection.GetAll"), data => new AvsCloudLinkResource(Client, data));
         }
 
         /// <summary>

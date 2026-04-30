@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Azure.AI.Projects;
 
 namespace OpenAI
 {
@@ -17,7 +18,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalCompoundFilter"/>. </summary>
         /// <param name="type"> Type of operation: `and` or `or`. </param>
         /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
-        public InternalCompoundFilter(CompoundFilterType @type, IEnumerable<BinaryData> filters)
+        public InternalCompoundFilter(FileSearchToolFiltersType1 @type, IEnumerable<BinaryData> filters)
         {
             Type = @type;
             Filters = filters.ToList();
@@ -27,7 +28,7 @@ namespace OpenAI
         /// <param name="type"> Type of operation: `and` or `or`. </param>
         /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCompoundFilter(CompoundFilterType @type, IList<BinaryData> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalCompoundFilter(FileSearchToolFiltersType1 @type, IList<BinaryData> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Filters = filters;
@@ -35,7 +36,7 @@ namespace OpenAI
         }
 
         /// <summary> Type of operation: `and` or `or`. </summary>
-        public CompoundFilterType Type { get; set; }
+        public FileSearchToolFiltersType1 Type { get; }
 
         /// <summary>
         /// Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`.

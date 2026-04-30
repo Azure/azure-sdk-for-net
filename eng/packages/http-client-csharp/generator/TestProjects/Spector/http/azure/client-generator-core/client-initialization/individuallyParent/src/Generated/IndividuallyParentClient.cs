@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
@@ -14,20 +15,25 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyPar
     {
         public IndividuallyParentClient() : this(new Uri("http://localhost:3000"), new IndividuallyParentClientOptions()) => throw null;
 
-        public IndividuallyParentClient(Uri endpoint, IndividuallyParentClientOptions options) => throw null;
+        internal IndividuallyParentClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, IndividuallyParentClientOptions options) => throw null;
+
+        public IndividuallyParentClient(Uri endpoint, IndividuallyParentClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public IndividuallyParentClient(IndividuallyParentClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual IndividuallyParentNestedWithPathClient GetIndividuallyParentNestedWithPathClient() => throw null;
+        public virtual IndividuallyParentNestedWithPathClient GetIndividuallyParentNestedWithPathClient(string blobName) => throw null;
 
-        public virtual IndividuallyParentNestedWithQueryClient GetIndividuallyParentNestedWithQueryClient() => throw null;
+        public virtual IndividuallyParentNestedWithQueryClient GetIndividuallyParentNestedWithQueryClient(string blobName) => throw null;
 
-        public virtual IndividuallyParentNestedWithHeaderClient GetIndividuallyParentNestedWithHeaderClient() => throw null;
+        public virtual IndividuallyParentNestedWithHeaderClient GetIndividuallyParentNestedWithHeaderClient(string name) => throw null;
 
-        public virtual IndividuallyParentNestedWithMultipleClient GetIndividuallyParentNestedWithMultipleClient() => throw null;
+        public virtual IndividuallyParentNestedWithMultipleClient GetIndividuallyParentNestedWithMultipleClient(string name, string region) => throw null;
 
-        public virtual IndividuallyParentNestedWithMixedClient GetIndividuallyParentNestedWithMixedClient() => throw null;
+        public virtual IndividuallyParentNestedWithMixedClient GetIndividuallyParentNestedWithMixedClient(string name) => throw null;
 
-        public virtual IndividuallyParentNestedWithParamAliasClient GetIndividuallyParentNestedWithParamAliasClient() => throw null;
+        public virtual IndividuallyParentNestedWithParamAliasClient GetIndividuallyParentNestedWithParamAliasClient(string blobName) => throw null;
     }
 }

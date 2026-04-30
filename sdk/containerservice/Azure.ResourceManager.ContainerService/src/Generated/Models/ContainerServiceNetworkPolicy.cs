@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServiceNetworkPolicy : IEquatable<ContainerServiceNetworkPolicy>
     {
         private readonly string _value;
+        /// <summary> Network policies will not be enforced. This is the default value when NetworkPolicy is not specified. </summary>
+        private const string NoneValue = "none";
+        /// <summary> Use Calico network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
+        private const string CalicoValue = "calico";
+        /// <summary> Use Azure network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
+        private const string AzureValue = "azure";
+        /// <summary> Use Cilium to enforce network policies. This requires networkDataplane to be 'cilium'. </summary>
+        private const string CiliumValue = "cilium";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceNetworkPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "none";
-        private const string CalicoValue = "calico";
-        private const string AzureValue = "azure";
-        private const string CiliumValue = "cilium";
+            _value = value;
+        }
 
         /// <summary> Network policies will not be enforced. This is the default value when NetworkPolicy is not specified. </summary>
         public static ContainerServiceNetworkPolicy None { get; } = new ContainerServiceNetworkPolicy(NoneValue);
+
         /// <summary> Use Calico network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
         public static ContainerServiceNetworkPolicy Calico { get; } = new ContainerServiceNetworkPolicy(CalicoValue);
+
         /// <summary> Use Azure network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
         public static ContainerServiceNetworkPolicy Azure { get; } = new ContainerServiceNetworkPolicy(AzureValue);
+
         /// <summary> Use Cilium to enforce network policies. This requires networkDataplane to be 'cilium'. </summary>
         public static ContainerServiceNetworkPolicy Cilium { get; } = new ContainerServiceNetworkPolicy(CiliumValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceNetworkPolicy left, ContainerServiceNetworkPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceNetworkPolicy left, ContainerServiceNetworkPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceNetworkPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceNetworkPolicy(string value) => new ContainerServiceNetworkPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceNetworkPolicy?(string value) => value == null ? null : new ContainerServiceNetworkPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceNetworkPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceNetworkPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

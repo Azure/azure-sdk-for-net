@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,11 +19,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
     {
         protected MixedParamsClient() => throw null;
 
-        public MixedParamsClient(string name) : this(new Uri("http://localhost:3000"), name, new MixedParamsClientOptions()) => throw null;
+        public MixedParamsClient(string name) : this(new Uri("http://localhost:3000"), name, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
 
-        public MixedParamsClient(string name, MixedParamsClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
+        public MixedParamsClient(string name, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
 
-        public MixedParamsClient(Uri endpoint, string name, MixedParamsClientOptions options) => throw null;
+        internal MixedParamsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
+
+        public MixedParamsClient(Uri endpoint, string name, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, name, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public MixedParamsClient(MixedParamsClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Functions host level keys. </summary>
+    /// <summary>
+    /// Functions host level keys.
+    /// Serialized Name: HostKeys
+    /// </summary>
     public partial class FunctionAppHostKeys
     {
         /// <summary>
@@ -53,9 +56,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppHostKeys"/>. </summary>
-        /// <param name="masterKey"> Secret key. </param>
-        /// <param name="functionKeys"> Host level function keys. </param>
-        /// <param name="systemKeys"> System keys. </param>
+        /// <param name="masterKey">
+        /// Secret key.
+        /// Serialized Name: HostKeys.masterKey
+        /// </param>
+        /// <param name="functionKeys">
+        /// Host level function keys.
+        /// Serialized Name: HostKeys.functionKeys
+        /// </param>
+        /// <param name="systemKeys">
+        /// System keys.
+        /// Serialized Name: HostKeys.systemKeys
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionAppHostKeys(string masterKey, IReadOnlyDictionary<string, string> functionKeys, IReadOnlyDictionary<string, string> systemKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +77,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Secret key. </summary>
+        /// <summary>
+        /// Secret key.
+        /// Serialized Name: HostKeys.masterKey
+        /// </summary>
         [WirePath("masterKey")]
         public string MasterKey { get; }
-        /// <summary> Host level function keys. </summary>
+        /// <summary>
+        /// Host level function keys.
+        /// Serialized Name: HostKeys.functionKeys
+        /// </summary>
         [WirePath("functionKeys")]
         public IReadOnlyDictionary<string, string> FunctionKeys { get; }
-        /// <summary> System keys. </summary>
+        /// <summary>
+        /// System keys.
+        /// Serialized Name: HostKeys.systemKeys
+        /// </summary>
         [WirePath("systemKeys")]
         public IReadOnlyDictionary<string, string> SystemKeys { get; }
     }

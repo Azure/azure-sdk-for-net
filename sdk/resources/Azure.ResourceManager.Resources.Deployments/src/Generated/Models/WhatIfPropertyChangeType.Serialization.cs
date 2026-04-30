@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal static partial class WhatIfPropertyChangeTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WhatIfPropertyChangeType value) => value switch
         {
             WhatIfPropertyChangeType.Create => "Create",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.Resources.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WhatIfPropertyChangeType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WhatIfPropertyChangeType ToWhatIfPropertyChangeType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Create")) return WhatIfPropertyChangeType.Create;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete")) return WhatIfPropertyChangeType.Delete;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Modify")) return WhatIfPropertyChangeType.Modify;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Array")) return WhatIfPropertyChangeType.Array;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoEffect")) return WhatIfPropertyChangeType.NoEffect;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Create"))
+            {
+                return WhatIfPropertyChangeType.Create;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete"))
+            {
+                return WhatIfPropertyChangeType.Delete;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Modify"))
+            {
+                return WhatIfPropertyChangeType.Modify;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Array"))
+            {
+                return WhatIfPropertyChangeType.Array;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoEffect"))
+            {
+                return WhatIfPropertyChangeType.NoEffect;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WhatIfPropertyChangeType value.");
         }
     }

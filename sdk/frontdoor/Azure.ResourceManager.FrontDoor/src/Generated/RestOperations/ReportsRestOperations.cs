@@ -6,39 +6,44 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    internal partial class ReportsRestOperations
+    internal partial class Reports
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ReportsRestOperations. </summary>
+        /// <summary> Initializes a new instance of Reports for mocking. </summary>
+        protected Reports()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Reports. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ReportsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Reports(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2019-11-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetLatencyScorecardsRequestUri(string subscriptionId, string resourceGroupName, string profileName, string experimentName, LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn, string country)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetLatencyScorecardsReportRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, string aggregationInterval, DateTimeOffset? endOn, string country, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -48,123 +53,31 @@ namespace Azure.ResourceManager.FrontDoor
             uri.AppendPath(profileName, true);
             uri.AppendPath("/Experiments/", false);
             uri.AppendPath(experimentName, true);
-            uri.AppendPath("/LatencyScorecard", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/latencyScorecard", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (endOn != null)
             {
-                uri.AppendQuery("endDateTimeUTC", endOn.Value, "O", true);
+                uri.AppendQuery("endDateTimeUTC", TypeFormatters.ConvertToString(endOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (country != null)
             {
                 uri.AppendQuery("country", country, true);
             }
-            uri.AppendQuery("aggregationInterval", aggregationInterval.ToString(), true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetLatencyScorecardsRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn, string country)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/NetworkExperimentProfiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/Experiments/", false);
-            uri.AppendPath(experimentName, true);
-            uri.AppendPath("/LatencyScorecard", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (endOn != null)
-            {
-                uri.AppendQuery("endDateTimeUTC", endOn.Value, "O", true);
-            }
-            if (country != null)
-            {
-                uri.AppendQuery("country", country, true);
-            }
-            uri.AppendQuery("aggregationInterval", aggregationInterval.ToString(), true);
+            uri.AppendQuery("aggregationInterval", aggregationInterval, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets a Latency Scorecard for a given Experiment. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
-        /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
-        /// <param name="aggregationInterval"> The aggregation interval of the Latency Scorecard. </param>
-        /// <param name="endOn"> The end DateTime of the Latency Scorecard in UTC. </param>
-        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LatencyScorecard>> GetLatencyScorecardsAsync(string subscriptionId, string resourceGroupName, string profileName, string experimentName, LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetTimeSeriesReportRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startOn, DateTimeOffset endOn, string aggregationInterval, string timeSeriesType, string endpoint, string country, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-
-            using var message = CreateGetLatencyScorecardsRequest(subscriptionId, resourceGroupName, profileName, experimentName, aggregationInterval, endOn, country);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        LatencyScorecard value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = LatencyScorecard.DeserializeLatencyScorecard(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a Latency Scorecard for a given Experiment. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
-        /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
-        /// <param name="aggregationInterval"> The aggregation interval of the Latency Scorecard. </param>
-        /// <param name="endOn"> The end DateTime of the Latency Scorecard in UTC. </param>
-        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LatencyScorecard> GetLatencyScorecards(string subscriptionId, string resourceGroupName, string profileName, string experimentName, LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-
-            using var message = CreateGetLatencyScorecardsRequest(subscriptionId, resourceGroupName, profileName, experimentName, aggregationInterval, endOn, country);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        LatencyScorecard value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = LatencyScorecard.DeserializeLatencyScorecard(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetTimeSeriesRequestUri(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint, string country)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -174,12 +87,15 @@ namespace Azure.ResourceManager.FrontDoor
             uri.AppendPath(profileName, true);
             uri.AppendPath("/Experiments/", false);
             uri.AppendPath(experimentName, true);
-            uri.AppendPath("/Timeseries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("startDateTimeUTC", startOn, "O", true);
-            uri.AppendQuery("endDateTimeUTC", endOn, "O", true);
-            uri.AppendQuery("aggregationInterval", aggregationInterval.ToString(), true);
-            uri.AppendQuery("timeseriesType", timeSeriesType.ToString(), true);
+            uri.AppendPath("/timeseries", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            uri.AppendQuery("startDateTimeUTC", TypeFormatters.ConvertToString(startOn, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("endDateTimeUTC", TypeFormatters.ConvertToString(endOn, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("aggregationInterval", aggregationInterval, true);
+            uri.AppendQuery("timeseriesType", timeSeriesType, true);
             if (endpoint != null)
             {
                 uri.AppendQuery("endpoint", endpoint, true);
@@ -188,116 +104,12 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 uri.AppendQuery("country", country, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateGetTimeSeriesRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint, string country)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/NetworkExperimentProfiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/Experiments/", false);
-            uri.AppendPath(experimentName, true);
-            uri.AppendPath("/Timeseries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("startDateTimeUTC", startOn, "O", true);
-            uri.AppendQuery("endDateTimeUTC", endOn, "O", true);
-            uri.AppendQuery("aggregationInterval", aggregationInterval.ToString(), true);
-            uri.AppendQuery("timeseriesType", timeSeriesType.ToString(), true);
-            if (endpoint != null)
-            {
-                uri.AppendQuery("endpoint", endpoint, true);
-            }
-            if (country != null)
-            {
-                uri.AppendQuery("country", country, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Gets a Timeseries for a given Experiment. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
-        /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
-        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
-        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
-        /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
-        /// <param name="timeSeriesType"> The type of Timeseries. </param>
-        /// <param name="endpoint"> The specific endpoint. </param>
-        /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FrontDoorTimeSeriesInfo>> GetTimeSeriesAsync(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-
-            using var message = CreateGetTimeSeriesRequest(subscriptionId, resourceGroupName, profileName, experimentName, startOn, endOn, aggregationInterval, timeSeriesType, endpoint, country);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        FrontDoorTimeSeriesInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FrontDoorTimeSeriesInfo.DeserializeFrontDoorTimeSeriesInfo(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a Timeseries for a given Experiment. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
-        /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
-        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
-        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
-        /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
-        /// <param name="timeSeriesType"> The type of Timeseries. </param>
-        /// <param name="endpoint"> The specific endpoint. </param>
-        /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FrontDoorTimeSeriesInfo> GetTimeSeries(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-
-            using var message = CreateGetTimeSeriesRequest(subscriptionId, resourceGroupName, profileName, experimentName, startOn, endOn, aggregationInterval, timeSeriesType, endpoint, country);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        FrontDoorTimeSeriesInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FrontDoorTimeSeriesInfo.DeserializeFrontDoorTimeSeriesInfo(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Simple_AutoPolling_Async
 
-            Assert.False(string.IsNullOrEmpty(operationId));
+            Assert.That(string.IsNullOrEmpty(operationId), Is.False);
         }
 
         [RecordedTest]
@@ -136,7 +136,7 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_With_MoreOptions_Async
 
-            Assert.False(string.IsNullOrEmpty(operationId));
+            Assert.That(string.IsNullOrEmpty(operationId), Is.False);
         }
 
         [Test]
@@ -223,7 +223,7 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Multiple_Recipients_Async
 
-            Assert.False(string.IsNullOrEmpty(operationId));
+            Assert.That(string.IsNullOrEmpty(operationId), Is.False);
         }
 
         [Test]

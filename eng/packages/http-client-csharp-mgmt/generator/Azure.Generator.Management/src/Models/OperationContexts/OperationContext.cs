@@ -130,8 +130,10 @@ internal class OperationContext
         }
         else if (current.Count == 1 && !current[0].IsConstant) // Extension resource case: single variable segment. Here we assume the extension resource's requestPathPattern start with one and only one variable segment
         {
-            // Extension resource case: single variable segment
-            parameterStack.Push(new ContextualParameter(current[0].VariableName, current[0].VariableName, id => BuildParentInvocation(parentLayerCount, id)));
+            // Extension resource case: single variable segment.
+            // BuildParentInvocation returns a ResourceIdentifier expression. The consumer (PopulateArguments)
+            // is responsible for converting to the target REST parameter type (string or ResourceIdentifier).
+            parameterStack.Push(new ContextualParameter(current[0].VariableName, current[0].VariableName, id => BuildParentInvocation(parentLayerCount, id), typeof(ResourceIdentifier)));
         }
         else
         {
@@ -149,11 +151,13 @@ internal class OperationContext
                     // Handle the case when key is a variable
                     // we have to reassign the value of parentLayerCount to a local variable to avoid the closure to wrap the parentLayerCount variable which changes during recursion.
                     int currentParentCount = parentLayerCount;
-                    parameterStack.Push(new ContextualParameter(key.VariableName, key.VariableName, id => BuildParentInvocation(currentParentCount, id).ResourceType().Type()));
+                    // Push value (Name) before key (ResourceType.Type) because the stack is LIFO —
+                    // when popped, key (ResourceType.Type) will come out first, matching the positional order in the operation path.
                     if (!value.IsConstant)
                     {
                         parameterStack.Push(new ContextualParameter(value.VariableName, value.VariableName, id => BuildParentInvocation(currentParentCount, id).Name()));
                     }
+                    parameterStack.Push(new ContextualParameter(key.VariableName, key.VariableName, id => BuildParentInvocation(currentParentCount, id).ResourceType().Type()));
                     appendParent = true;
                 }
                 else if (!value.IsConstant)
@@ -295,21 +299,112 @@ internal class OperationContext
     /// Parameters are matched based on the position of their variable segments within the shared
     /// prefix between the operation path and the contextual (and secondary contextual) paths.
     /// </summary>
+    /// <remarks>
+    /// For resources expanded from dynamic parent types, the operation path may use a variable
+    /// segment (e.g., {parentType}) at a position where the resource's <see cref="ContextualPath"/>
+    /// has been substituted to a constant (e.g., "topics"). To make segment matching work in that
+    /// scenario, the operation path is first rewritten by walking it against the contextual path:
+    /// any operation variable whose corresponding contextual segment is a constant is replaced
+    /// with that constant value, and a literal mapping is emitted for the original variable name.
+    /// This mirrors the behavior of autorest.csharp's RequestPath.ApplyHint.
+    /// </remarks>
     /// <param name="operationPath">The operation's request path.</param>
     /// <returns>A parameter mapping that maps operation parameter names to contextual parameters.</returns>
     public ParameterContextRegistry BuildParameterMapping(RequestPathPattern operationPath)
     {
+        // Rewrite operation path variables that the contextual path has already pinned to a
+        // constant value. This allows the segment matching below to align operation segments
+        // with contextual segments even after dynamic-parent-type expansion.
+        var (effectiveOperationPath, constantMappings) = SubstituteConstantsFromContextualPath(operationPath, ContextualPath);
+
         // we need to find the sharing part between contextual path and the incoming path
-        var sharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(ContextualPath, operationPath);
+        var sharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(ContextualPath, effectiveOperationPath);
 
         // then find the sharing part between secondary contextual path and the incoming path
         int secondarySharedSegmentsCount = 0;
         if (SecondaryContextualPath != null)
         {
-            secondarySharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(SecondaryContextualPath, operationPath);
+            secondarySharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(SecondaryContextualPath, effectiveOperationPath);
         }
 
-        return new ParameterContextRegistry(BuildParameterMappingCore(ContextualPathParameters, SecondaryContextualPathParameters, operationPath, sharedSegmentsCount, secondarySharedSegmentsCount));
+        var mappings = BuildParameterMappingCore(ContextualPathParameters, SecondaryContextualPathParameters, effectiveOperationPath, sharedSegmentsCount, secondarySharedSegmentsCount);
+
+        return new ParameterContextRegistry([.. mappings, .. constantMappings]);
+    }
+
+    /// <summary>
+    /// Walks the operation path against the contextual path. Whenever the operation path has
+    /// a variable segment at the same index where the contextual path has a constant segment,
+    /// the operation segment is replaced with that constant value and a literal contextual
+    /// mapping is emitted for the original variable name.
+    /// </summary>
+    /// <remarks>
+    /// Substitution only runs while the operation path stays "aligned" with the contextual
+    /// path — that is, while every preceding segment either matches exactly (constant ==
+    /// constant), is a variable on both sides, or has just been substituted from a contextual
+    /// constant. Once a divergence is observed (e.g. operation has <c>providers</c> where the
+    /// contextual path has <c>resourceGroups</c>), no further substitution happens. Without
+    /// this guard, an unrelated constant later in the contextual path could leak into an
+    /// operation variable that happens to share its index — for example, replacing
+    /// <c>{raiPolicyName}</c> with <c>"Microsoft.CognitiveServices"</c> when the contextual
+    /// path is the wrong parent.
+    /// </remarks>
+    private static (RequestPathPattern Path, IReadOnlyList<ParameterContextMapping> Mappings) SubstituteConstantsFromContextualPath(
+        RequestPathPattern operationPath,
+        RequestPathPattern contextualPath)
+    {
+        var segments = new List<RequestPathSegment>(operationPath.Count);
+        var mappings = new List<ParameterContextMapping>();
+        bool anySubstituted = false;
+        bool aligned = true;
+
+        for (int i = 0; i < operationPath.Count; i++)
+        {
+            var segment = operationPath[i];
+            if (!aligned || i >= contextualPath.Count)
+            {
+                segments.Add(segment);
+                aligned = false;
+                continue;
+            }
+
+            var contextualSegment = contextualPath[i];
+            if (segment.IsConstant && contextualSegment.IsConstant)
+            {
+                // Aligned only if the constants match.
+                segments.Add(segment);
+                if (!string.Equals(segment.Value, contextualSegment.Value, StringComparison.OrdinalIgnoreCase))
+                {
+                    aligned = false;
+                }
+            }
+            else if (!segment.IsConstant && contextualSegment.IsConstant)
+            {
+                // Substitute the operation variable with the contextual constant; alignment
+                // is preserved because the resulting path matches the contextual path here.
+                var constantValue = contextualSegment.Value;
+                segments.Add(new RequestPathSegment(constantValue));
+                anySubstituted = true;
+                mappings.Add(new ParameterContextMapping(
+                    segment.VariableName,
+                    new ContextualParameter(constantValue, segment.VariableName, _ => Snippet.Literal(constantValue))));
+            }
+            else if (!segment.IsConstant && !contextualSegment.IsConstant)
+            {
+                // Both variables — alignment preserved, nothing to substitute.
+                segments.Add(segment);
+            }
+            else
+            {
+                // Operation has a constant where the contextual path has a variable. Treat
+                // this as a divergence so we don't substitute later operation variables
+                // against unrelated contextual constants.
+                segments.Add(segment);
+                aligned = false;
+            }
+        }
+
+        return (anySubstituted ? new RequestPathPattern(segments) : operationPath, mappings);
     }
 
     private static IReadOnlyList<ParameterContextMapping> BuildParameterMappingCore(

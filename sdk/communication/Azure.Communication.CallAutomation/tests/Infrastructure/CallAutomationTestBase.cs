@@ -134,34 +134,34 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected void verifyCallConnectionProperties(CallConnectionProperties callConnectionProperties, bool isConnectApi = false)
         {
-            Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
-            Assert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
+            Assert.That(callConnectionProperties.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(callConnectionProperties.ServerCallId, Is.EqualTo(ServerCallId));
             if (!isConnectApi)
             {
                 var sourceUser = (CommunicationUserIdentifier)callConnectionProperties.Source;
-                Assert.AreEqual(SourceId, sourceUser.Id);
-                Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
+                Assert.That(sourceUser.Id, Is.EqualTo(SourceId));
+                Assert.That(callConnectionProperties.Targets.Count, Is.EqualTo(1));
                 var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
-                Assert.AreEqual(TargetId, targetUser.Id);
-                Assert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
+                Assert.That(targetUser.Id, Is.EqualTo(TargetId));
+                Assert.That(callConnectionProperties.SourceDisplayName, Is.EqualTo(DisplayName));
             }
 
-            Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
+            Assert.That(callConnectionProperties.CallConnectionState, Is.EqualTo(CallConnectionState.Connecting));
+            Assert.That(callConnectionProperties.CallbackUri.ToString(), Is.EqualTo(CallBackUri));
         }
 
         protected void verifyOPSCallConnectionProperties(CallConnectionProperties callConnectionProperties)
         {
-            Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
-            Assert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
+            Assert.That(callConnectionProperties.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(callConnectionProperties.ServerCallId, Is.EqualTo(ServerCallId));
             var teamsAppSourceUser = (MicrosoftTeamsAppIdentifier)callConnectionProperties.Source;
-            Assert.AreEqual(SourceId, teamsAppSourceUser.AppId);
-            Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
+            Assert.That(teamsAppSourceUser.AppId, Is.EqualTo(SourceId));
+            Assert.That(callConnectionProperties.Targets.Count, Is.EqualTo(1));
             var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
-            Assert.AreEqual(TargetId, targetUser.Id);
-            Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
-            Assert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
+            Assert.That(targetUser.Id, Is.EqualTo(TargetId));
+            Assert.That(callConnectionProperties.CallConnectionState, Is.EqualTo(CallConnectionState.Connecting));
+            Assert.That(callConnectionProperties.CallbackUri.ToString(), Is.EqualTo(CallBackUri));
+            Assert.That(callConnectionProperties.SourceDisplayName, Is.EqualTo(DisplayName));
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 {
                     Properties = new QuotaBucketRequestProperties();
                 }
-                Properties.CurrentUsage = value.Value;
+                Properties.CurrentUsage = value;
             }
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 {
                     Properties = new QuotaBucketRequestProperties();
                 }
-                Properties.CurrentQuota = value.Value;
+                Properties.CurrentQuota = value;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 {
                     Properties = new QuotaBucketRequestProperties();
                 }
-                Properties.NewQuota = value.Value;
+                Properties.NewQuota = value;
             }
         }
 

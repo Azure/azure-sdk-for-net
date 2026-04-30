@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Static Site Custom Domain Request Properties ARM resource. </summary>
+    /// <summary>
+    /// Static Site Custom Domain Request Properties ARM resource.
+    /// Serialized Name: StaticSiteCustomDomainRequestPropertiesARMResource
+    /// </summary>
     public partial class StaticSiteCustomDomainContent : ResourceData
     {
         /// <summary>
@@ -57,8 +60,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="validationMethod"> Validation method for adding a custom domain. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="validationMethod">
+        /// Validation method for adding a custom domain
+        /// Serialized Name: StaticSiteCustomDomainRequestPropertiesARMResource.properties.validationMethod
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteCustomDomainContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string validationMethod, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -67,10 +76,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Validation method for adding a custom domain. </summary>
+        /// <summary>
+        /// Validation method for adding a custom domain
+        /// Serialized Name: StaticSiteCustomDomainRequestPropertiesARMResource.properties.validationMethod
+        /// </summary>
         [WirePath("properties.validationMethod")]
         public string ValidationMethod { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

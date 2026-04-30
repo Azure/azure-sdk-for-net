@@ -9,7 +9,7 @@ using Generator.Model;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class StorageSpecification() :
-    Specification("Storage", typeof(StorageExtensions))
+    Specification("Storage", typeof(StorageExtensions), serviceDirectory: "storage")
 {
     protected override void Customize()
     {

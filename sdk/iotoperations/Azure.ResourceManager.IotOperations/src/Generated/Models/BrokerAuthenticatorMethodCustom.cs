@@ -64,7 +64,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                Auth = new BrokerAuthenticatorCustomAuth(value);
+                if (Auth is null)
+                {
+                    Auth = new BrokerAuthenticatorCustomAuth();
+                }
+                Auth.X509SecretRef = value;
             }
         }
     }

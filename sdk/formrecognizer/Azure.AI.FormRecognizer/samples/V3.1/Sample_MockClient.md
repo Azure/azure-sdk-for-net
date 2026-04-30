@@ -10,7 +10,7 @@ private static async Task<bool> IsExpensiveAsync(string modelId, Uri documentUri
 {
     RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, documentUri);
 
-    Response<RecognizedFormCollection> response =  await operation.WaitForCompletionAsync();
+    Response<RecognizedFormCollection> response = await operation.WaitForCompletionAsync();
     RecognizedForm form = response.Value[0];
 
     if (form.Fields.TryGetValue("totalPrice", out FormField totalPriceField)

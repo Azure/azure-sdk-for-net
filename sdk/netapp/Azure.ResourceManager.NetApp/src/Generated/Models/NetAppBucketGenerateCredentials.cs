@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppBucketGenerateCredentials"/>. </summary>
         /// <param name="accessKey"> The Access Key that is required along with the Secret Key to access the bucket. </param>
         /// <param name="secretKey"> The Secret Key that is required along with the Access Key to access the bucket. </param>
-        /// <param name="keyPairExpiry"> The bucket's Access and Secret key pair expiry date and time (in UTC). </param>
+        /// <param name="keyPairExpiresOn"> The bucket's Access and Secret key pair expiry date and time (in UTC). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBucketGenerateCredentials(string accessKey, string secretKey, DateTimeOffset? keyPairExpiry, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBucketGenerateCredentials(string accessKey, string secretKey, DateTimeOffset? keyPairExpiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessKey = accessKey;
             SecretKey = secretKey;
-            KeyPairExpiry = keyPairExpiry;
+            KeyPairExpiresOn = keyPairExpiresOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The Secret Key that is required along with the Access Key to access the bucket. </summary>
         public string SecretKey { get; }
         /// <summary> The bucket's Access and Secret key pair expiry date and time (in UTC). </summary>
-        public DateTimeOffset? KeyPairExpiry { get; }
+        public DateTimeOffset? KeyPairExpiresOn { get; }
     }
 }

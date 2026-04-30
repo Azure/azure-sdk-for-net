@@ -9,7 +9,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Azure.Monitor.Query.Logs;
 using Azure.Monitor.Query.Logs.Models;
@@ -26,7 +25,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
     {
         string error = "";
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         string code = default;
         string message = default;
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
@@ -60,7 +59,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
     private static string GetResultsCounts(ClientResult result)
     {
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         StringBuilder sbFormattedCounts = new("{\n");
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
         {
@@ -88,7 +87,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
     {
         Dictionary<string, string> results = [];
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
         {
             foreach (string key in expectedProperties)
@@ -121,11 +120,12 @@ public class Sample_EvaluationsMonitor : SamplesBase
     {
         List<string> resultJsons = [];
         bool hasMore = false;
+        string after = default;
         do
         {
-            ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+            ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
             {
@@ -143,6 +143,10 @@ public class Sample_EvaluationsMonitor : SamplesBase
                         }
                     }
                 }
+                else if (topProperty.NameEquals("last_id"u8))
+                {
+                    after = topProperty.Value.GetString();
+                }
             }
         } while (hasMore);
         return resultJsons;
@@ -153,11 +157,12 @@ public class Sample_EvaluationsMonitor : SamplesBase
     {
         List<string> resultJsons = [];
         bool hasMore = false;
+        string after = default;
         do
         {
-            ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+            ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
             List<string> data = [];
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
@@ -175,6 +180,10 @@ public class Sample_EvaluationsMonitor : SamplesBase
                             resultJsons.Add(dataElement.ToString());
                         }
                     }
+                }
+                else if (topProperty.NameEquals("last_id"u8))
+                {
+                    after = topProperty.Value.GetString();
                 }
             }
         } while (hasMore);
@@ -282,21 +291,21 @@ public class Sample_EvaluationsMonitor : SamplesBase
     {
         #region Snippet:Sample_CreateClients_EvaluationsMonitor
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var applicationInsightsResourceId = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_RESOURCE_ID");
-        var agentId = System.Environment.GetEnvironmentVariable("AGENT_ID");
+        var agentId = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         var lookbackHours = int.Parse(System.Environment.GetEnvironmentVariable("TRACE_LOOKBACK_HOURS"));
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var applicationInsightsResourceId = TestEnvironment.APPLICATIONINSIGHTS_RESOURCE_ID;
-        var agentId = TestEnvironment.AGENT_ID;
+        var agentId = TestEnvironment.FOUNDRY_AGENT_ID;
         var lookbackHours = int.Parse(TestEnvironment.TRACE_LOOKBACK_HOURS);
 #endif
         DateTimeOffset endTime = DateTimeOffset.Now;
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_GetTraceIDs_EvaluationsMonitor_Async
         List<string> traceIDs = await GetOperationIdsAsync(applicationInsightsResourceId, agentId, lookbackHours, endTime);
@@ -379,21 +388,21 @@ public class Sample_EvaluationsMonitor : SamplesBase
     public void EvaluationsMonitorExampleSync()
     {
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var applicationInsightsResourceId = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_RESOURCE_ID");
-        var agentId = System.Environment.GetEnvironmentVariable("AGENT_ID");
+        var agentId = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         var lookbackHours = int.Parse(System.Environment.GetEnvironmentVariable("TRACE_LOOKBACK_HOURS"));
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var applicationInsightsResourceId = TestEnvironment.APPLICATIONINSIGHTS_RESOURCE_ID;
-        var agentId = TestEnvironment.AGENT_ID;
+        var agentId = TestEnvironment.FOUNDRY_AGENT_ID;
         var lookbackHours = int.Parse(TestEnvironment.TRACE_LOOKBACK_HOURS);
 #endif
         DateTimeOffset endTime = DateTimeOffset.Now;
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #region Snippet:Sample_GetTraceIDs_EvaluationsMonitor_Sync
         List<string> traceIDs = GetOperationIds(applicationInsightsResourceId, agentId, lookbackHours, endTime);
         Console.WriteLine($"Found {traceIDs.Count} operation IDs:");

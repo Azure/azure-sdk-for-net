@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Define a match condition. </summary>
     public partial class RulesEngineMatchCondition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RulesEngineMatchCondition"/>. </summary>
         /// <param name="rulesEngineMatchVariable"> Match Variable. </param>
@@ -68,8 +40,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="isNegateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="rulesEngineMatchValue"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RulesEngineMatchCondition(RulesEngineMatchVariable rulesEngineMatchVariable, string selector, RulesEngineOperator rulesEngineOperator, bool? isNegateCondition, IList<string> rulesEngineMatchValue, IList<RulesEngineMatchTransform> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RulesEngineMatchCondition(RulesEngineMatchVariable rulesEngineMatchVariable, string selector, RulesEngineOperator rulesEngineOperator, bool? isNegateCondition, IList<string> rulesEngineMatchValue, IList<RulesEngineMatchTransform> transforms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RulesEngineMatchVariable = rulesEngineMatchVariable;
             Selector = selector;
@@ -77,29 +49,29 @@ namespace Azure.ResourceManager.FrontDoor.Models
             IsNegateCondition = isNegateCondition;
             RulesEngineMatchValue = rulesEngineMatchValue;
             Transforms = transforms;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RulesEngineMatchCondition"/> for deserialization. </summary>
-        internal RulesEngineMatchCondition()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Match Variable. </summary>
         [WirePath("rulesEngineMatchVariable")]
         public RulesEngineMatchVariable RulesEngineMatchVariable { get; set; }
+
         /// <summary> Name of selector in RequestHeader or RequestBody to be matched. </summary>
         [WirePath("selector")]
         public string Selector { get; set; }
+
         /// <summary> Describes operator to apply to the match condition. </summary>
         [WirePath("rulesEngineOperator")]
         public RulesEngineOperator RulesEngineOperator { get; set; }
+
         /// <summary> Describes if this is negate condition or not. </summary>
         [WirePath("negateCondition")]
         public bool? IsNegateCondition { get; set; }
+
         /// <summary> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </summary>
         [WirePath("rulesEngineMatchValue")]
         public IList<string> RulesEngineMatchValue { get; }
+
         /// <summary> List of transforms. </summary>
         [WirePath("transforms")]
         public IList<RulesEngineMatchTransform> Transforms { get; }

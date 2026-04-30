@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(ispCustomerData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(ispCustomerData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IspCustomerData"/> from. </param>

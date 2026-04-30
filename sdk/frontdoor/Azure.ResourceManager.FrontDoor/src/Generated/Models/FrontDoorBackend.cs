@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Backend address of a frontDoor load balancer. </summary>
     public partial class FrontDoorBackend
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorBackend"/>. </summary>
         public FrontDoorBackend()
@@ -64,8 +36,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="priority"> Priority to use for load balancing. Higher priorities will not be used for load balancing if any lower priority backend is healthy. </param>
         /// <param name="weight"> Weight of this endpoint for load balancing purposes. </param>
         /// <param name="backendHostHeader"> The value to use as the host header sent to the backend. If blank or unspecified, this defaults to the incoming host. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorBackend(string address, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, AzureLocation? privateLinkLocation, BackendPrivateEndpointStatus? privateEndpointStatus, string privateLinkApprovalMessage, int? httpPort, int? httpsPort, BackendEnabledState? enabledState, int? priority, int? weight, string backendHostHeader, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorBackend(string address, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, AzureLocation? privateLinkLocation, BackendPrivateEndpointStatus? privateEndpointStatus, string privateLinkApprovalMessage, int? httpPort, int? httpsPort, BackendEnabledState? enabledState, int? priority, int? weight, string backendHostHeader, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Address = address;
             PrivateLinkAlias = privateLinkAlias;
@@ -79,42 +51,53 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Priority = priority;
             Weight = weight;
             BackendHostHeader = backendHostHeader;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Location of the backend (IP address or FQDN). </summary>
         [WirePath("address")]
         public string Address { get; set; }
+
         /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
         [WirePath("privateLinkAlias")]
         public string PrivateLinkAlias { get; set; }
+
         /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
         [WirePath("privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
+
         /// <summary> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </summary>
         [WirePath("privateLinkLocation")]
         public AzureLocation? PrivateLinkLocation { get; set; }
+
         /// <summary> The Approval status for the connection to the Private Link. </summary>
         [WirePath("privateEndpointStatus")]
         public BackendPrivateEndpointStatus? PrivateEndpointStatus { get; }
+
         /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>
         [WirePath("privateLinkApprovalMessage")]
         public string PrivateLinkApprovalMessage { get; set; }
+
         /// <summary> The HTTP TCP port number. Must be between 1 and 65535. </summary>
         [WirePath("httpPort")]
         public int? HttpPort { get; set; }
+
         /// <summary> The HTTPS TCP port number. Must be between 1 and 65535. </summary>
         [WirePath("httpsPort")]
         public int? HttpsPort { get; set; }
+
         /// <summary> Whether to enable use of this backend. Permitted values are 'Enabled' or 'Disabled'. </summary>
         [WirePath("enabledState")]
         public BackendEnabledState? EnabledState { get; set; }
+
         /// <summary> Priority to use for load balancing. Higher priorities will not be used for load balancing if any lower priority backend is healthy. </summary>
         [WirePath("priority")]
         public int? Priority { get; set; }
+
         /// <summary> Weight of this endpoint for load balancing purposes. </summary>
         [WirePath("weight")]
         public int? Weight { get; set; }
+
         /// <summary> The value to use as the host header sent to the backend. If blank or unspecified, this defaults to the incoming host. </summary>
         [WirePath("backendHostHeader")]
         public string BackendHostHeader { get; set; }

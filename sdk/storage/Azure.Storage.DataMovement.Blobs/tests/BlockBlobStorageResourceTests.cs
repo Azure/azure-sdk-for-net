@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 extern alias BaseBlobs;
@@ -31,6 +31,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
         private AccessTier DefaultAccessTier = AccessTier.Cold;
+        private static readonly Uri _mockSourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+        private static readonly Uri _mockDestinationUri = new Uri("https://storageaccount.blob.core.windows.net/container/destination");
 
         public BlockBlobStorageResourceTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
                : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
@@ -241,8 +243,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             // Arrange
             Mock<BlockBlobClient> mock = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/blob"),
+                _mockSourceUri,
                 new BlobClientOptions());
+            mock.Setup(b => b.Uri).Returns(_mockSourceUri);
             using var fileContentStream = new MemoryStream();
             mock.Setup(b => b.UploadAsync(It.IsAny<Stream>(), It.IsAny<BlobUploadOptions>(), It.IsAny<CancellationToken>()))
                 .Callback<Stream, BlobUploadOptions, CancellationToken>(
@@ -316,6 +319,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mock.VerifyNoOtherCalls();
         }
 
@@ -351,6 +355,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mock.VerifyNoOtherCalls();
         }
 
@@ -392,6 +397,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mock.VerifyNoOtherCalls();
         }
 
@@ -427,6 +433,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mock.VerifyNoOtherCalls();
         }
 
@@ -452,9 +459,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceClient.Uri
+            };
 
             // Act
-            await destinationResource.CopyFromUriAsync(sourceResource, false, length);
+            await destinationResource.CopyFromUriAsync(
+                sourceResource,
+                false,
+                length,
+                options);
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -490,7 +505,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 SourceAuthentication = new HttpAuthorization(
                     scheme: "Bearer",
-                    parameter: sourceBearerToken)
+                    parameter: sourceBearerToken),
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -532,7 +548,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             HttpAuthorization authorization = await sourceResource.GetCopyAuthorizationHeaderAsync();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
-                SourceAuthentication = authorization
+                SourceAuthentication = authorization,
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -560,10 +577,18 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             long length = Constants.KB;
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceClient.Uri
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
+                destinationResource.CopyFromUriAsync(
+                    sourceResource: sourceResource,
+                    overwrite: false,
+                    completeLength: length,
+                    options: options),
                 e =>
                 {
                     Assert.IsTrue(e.Message.StartsWith("Server failed to authenticate the request. "));
@@ -582,8 +607,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             mockSource.Setup(b => b.Uri).Returns(sourceUri);
 
             Mock<BlockBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mockDestination.Setup(b => b.Uri).Returns(_mockDestinationUri);
             int length = 1024;
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
@@ -628,7 +654,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = sourceProperties
-                }
+                },
+                SourceUri = sourceUri
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource: sourceResource,
@@ -668,13 +695,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata.SequenceEqual(expectedMetadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
         [Test]
         public async Task CopyFromUriAsync_PropertiesDefault()
         {
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Metadata metadata = DataProvider.BuildMetadata();
             Mock<BlockBlobClient> mockDestination = await CopyFromUriInternalPreserveAsync(
                 default,
@@ -690,13 +718,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
         [Test]
         public async Task CopyFromUriAsync_PropertiesPreserve()
         {
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new();
             Mock<BlockBlobClient> mockDestination = await CopyFromUriInternalPreserveAsync(
@@ -713,13 +742,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
         [Test]
         public async Task CopyFromUriAsync_NoPreserveContentType()
         {
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
@@ -739,7 +769,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Test]
         public async Task CopyFromUriAsync_NoPreserveContentDisposition()
         {
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
@@ -759,7 +789,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Test]
         public async Task CopyFromUriAsync_NoPreserveContentLanguage()
         {
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
@@ -779,7 +809,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Test]
         public async Task CopyFromUriAsync_NoPreserveCacheControl()
         {
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
@@ -799,7 +829,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Test]
         public async Task CopyFromUriAsync_NoPreserveMetadata()
         {
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
@@ -823,13 +853,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
         [Test]
         public async Task CopyFromUriAsync_SetAccessTier()
         {
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Metadata metadata = DataProvider.BuildMetadata();
             AccessTier newTierValue = AccessTier.Archive;
             BlockBlobStorageResourceOptions resourceOptions = new()
@@ -850,13 +881,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
         [Test]
         public async Task CopyFromUriAsync_PropertiesNoPreserve()
         {
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
@@ -886,6 +918,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -893,15 +926,16 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_SetProperties()
         {
             // Arrange
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Mock<BlockBlobClient> mockSource = new(
                 sourceUri,
                 new BlobClientOptions());
             mockSource.Setup(b => b.Uri).Returns(sourceUri);
 
             Mock<BlockBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mockDestination.Setup(b => b.Uri).Returns(_mockDestinationUri);
             int length = 1024;
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
@@ -946,7 +980,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ResourceLength = length,
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1)
-                }
+                },
+                SourceUri = sourceUri
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource: sourceResource,
@@ -968,6 +1003,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -994,13 +1030,18 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceClient.Uri
+            };
 
             // Act
             await destinationResource.CopyBlockFromUriAsync(
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
-                completeLength: length);
+                completeLength: length,
+                options: options);
 
             // Commit the block
             await destinationResource.CompleteTransferAsync(false);
@@ -1038,7 +1079,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 SourceAuthentication = new HttpAuthorization(
                     scheme: "Bearer",
-                    parameter: sourceBearerToken)
+                    parameter: sourceBearerToken),
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -1087,7 +1129,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 SourceAuthentication = new HttpAuthorization(
                     scheme: "Bearer",
-                    parameter: accessToken.Token)
+                    parameter: accessToken.Token),
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -1134,7 +1177,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             HttpAuthorization authorization = await sourceResource.GetCopyAuthorizationHeaderAsync();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
-                SourceAuthentication = authorization
+                SourceAuthentication = authorization,
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -1165,10 +1209,19 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceClient.Uri
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), overwrite: false, completeLength: Constants.KB),
+                destinationResource.CopyBlockFromUriAsync(
+                    sourceResource,
+                    new HttpRange(0, Constants.KB),
+                    overwrite: false,
+                    completeLength: Constants.KB,
+                    options: options),
                 e =>
                 {
                     Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource");
@@ -1225,6 +1278,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<BlockBlobClient> mock = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/file"),
                 new BlobClientOptions());
+            mock.Setup(b => b.Uri).Returns(new Uri("https://storageaccount.file.core.windows.net/container/file"));
 
             long length = 1024;
             ETag eTag = new ETag("etag");
@@ -1275,6 +1329,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(metadata, Is.EqualTo(metadataResult));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mock.VerifyNoOtherCalls();
         }
 
@@ -1285,6 +1340,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<BlockBlobClient> mock = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/file"),
                 new BlobClientOptions());
+            mock.Setup(b => b.Uri).Returns(new Uri("https://storageaccount.file.core.windows.net/container/file"));
 
             long length = 1024;
             ETag eTag = new ETag("etag");
@@ -1318,6 +1374,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(rawProperties, Is.EqualTo(result.RawProperties));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Never());
+            mock.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mock.VerifyNoOtherCalls();
         }
 
@@ -1387,14 +1444,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyFromUriAsync_DefaultMetadata()
         {
             // Arrange
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Uri sourceUri = _mockSourceUri;
             Mock<BlockBlobClient> mockSource = new(
                 sourceUri,
                 new BlobClientOptions());
             mockSource.Setup(b => b.Uri).Returns(sourceUri);
             Mock<BlockBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mockDestination.Setup(b => b.Uri).Returns(_mockDestinationUri);
             int length = 1024;
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
@@ -1434,7 +1492,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = rawProperties
-                }
+                },
+                SourceUri = sourceUri
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource,
@@ -1454,6 +1513,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<BlobRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Never());
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -1467,8 +1527,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var data = GetRandomBuffer(completeLength);
             using var stream = new MemoryStream(data);
             Mock<BlockBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                _mockDestinationUri,
                 new BlobClientOptions());
+            mockDestination.Setup(b => b.Uri).Returns(_mockDestinationUri);
             mockDestination.Setup(b => b.StageBlockAsync(It.IsAny<string>(), It.IsAny<Stream>(), It.IsAny<BlockBlobStageBlockOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     BlobsModelFactory.BlockInfo(
@@ -1559,6 +1620,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<BlockBlobStageBlockOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -1594,6 +1656,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<BlockBlobStageBlockOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -1638,6 +1701,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<BlockBlobStageBlockOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -1682,6 +1746,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<BlockBlobStageBlockOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
+            mockDestination.VerifyGet(b => b.Uri, Times.AtLeastOnce());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -1739,5 +1804,68 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.NotNull(authorization.Scheme);
             Assert.NotNull(authorization.Parameter);
         }
+
+        [Test]
+        public void Uri_StripsSas()
+        {
+            // Arrange
+            string baseUrl = "https://storageaccount.blob.core.windows.net/container/blob";
+            string sasToken = "sv=2023-01-03&ss=b&srt=o&sp=r&se=2024-12-31T23:59:59Z&st=2024-01-01T00:00:00Z&spr=https&sig=fakesignature";
+            Uri uriWithSas = new Uri($"{baseUrl}?{sasToken}");
+
+            // Create client with SAS
+            BlockBlobClient blobClient = new BlockBlobClient(uriWithSas);
+            BlockBlobStorageResource storageResource = new(blobClient);
+
+            // Assert - Uri property should return base URI without SAS
+            Assert.AreEqual(baseUrl, storageResource.Uri.AbsoluteUri);
+            Assert.IsFalse(storageResource.Uri.Query.Contains("sig"));
+            Assert.IsFalse(storageResource.Uri.Query.Contains("sv"));
+        }
+
+        #region Snapshot and Version Option Tests
+
+        /// <summary>
+        /// Tests that when options specify a snapshot, the constructor updates the internal client
+        /// to include the snapshot parameter in its URI.
+        /// </summary>
+        [Test]
+        public void Ctor_WithSnapshotInOptions_UpdatesClientUri()
+        {
+            // Arrange
+            Uri baseUri = _mockSourceUri;
+            string snapshotId = "2024-01-01T00:00:00.0000000Z";
+            BlockBlobClient blobClient = new BlockBlobClient(baseUri);
+
+            // Act: Pass client without snapshot but options with snapshot
+            var options = new BlockBlobStorageResourceOptions { Snapshot = snapshotId };
+            var resource = new BlockBlobStorageResource(blobClient, options);
+
+            // Assert: Internal client should now have snapshot in URI
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(resource.BlobClient.Uri);
+            Assert.AreEqual(snapshotId, uriBuilder.Snapshot);
+        }
+
+        /// <summary>
+        /// Tests that when options specify a version, the constructor updates the internal client
+        /// to include the version parameter in its URI.
+        /// </summary>
+        [Test]
+        public void Ctor_WithVersionInOptions_UpdatesClientUri()
+        {
+            // Arrange
+            Uri baseUri = _mockSourceUri;
+            string versionId = "2024-01-02T00:00:00.0000000Z";
+            BlockBlobClient blobClient = new BlockBlobClient(baseUri);
+
+            // Act: Pass client without version but options with version
+            var options = new BlockBlobStorageResourceOptions { VersionId = versionId };
+            var resource = new BlockBlobStorageResource(blobClient, options);
+
+            // Assert: Internal client should now have version in URI
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(resource.BlobClient.Uri);
+            Assert.AreEqual(versionId, uriBuilder.VersionId);
+        }
+        #endregion
     }
 }

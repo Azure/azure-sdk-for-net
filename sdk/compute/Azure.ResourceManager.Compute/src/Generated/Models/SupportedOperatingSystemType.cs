@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The Operating System type. </summary>
+    /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: **Windows,** **Linux.**. </summary>
     public enum SupportedOperatingSystemType
     {
         /// <summary> Windows. </summary>

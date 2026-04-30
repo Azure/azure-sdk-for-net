@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct RuleMatchActionType : IEquatable<RuleMatchActionType>
     {
         private readonly string _value;
+        /// <summary> Allow. </summary>
+        private const string AllowValue = "Allow";
+        /// <summary> Block. </summary>
+        private const string BlockValue = "Block";
+        /// <summary> Log. </summary>
+        private const string LogValue = "Log";
+        /// <summary> Redirect. </summary>
+        private const string RedirectValue = "Redirect";
+        /// <summary> AnomalyScoring. </summary>
+        private const string AnomalyScoringValue = "AnomalyScoring";
+        /// <summary> JSChallenge. </summary>
+        private const string JSChallengeValue = "JSChallenge";
+        /// <summary> CAPTCHA. </summary>
+        private const string CaptchaValue = "CAPTCHA";
 
         /// <summary> Initializes a new instance of <see cref="RuleMatchActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RuleMatchActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowValue = "Allow";
-        private const string BlockValue = "Block";
-        private const string LogValue = "Log";
-        private const string RedirectValue = "Redirect";
-        private const string AnomalyScoringValue = "AnomalyScoring";
-        private const string JSChallengeValue = "JSChallenge";
-        private const string CaptchaValue = "CAPTCHA";
+            _value = value;
+        }
 
         /// <summary> Allow. </summary>
         public static RuleMatchActionType Allow { get; } = new RuleMatchActionType(AllowValue);
+
         /// <summary> Block. </summary>
         public static RuleMatchActionType Block { get; } = new RuleMatchActionType(BlockValue);
+
         /// <summary> Log. </summary>
         public static RuleMatchActionType Log { get; } = new RuleMatchActionType(LogValue);
+
         /// <summary> Redirect. </summary>
         public static RuleMatchActionType Redirect { get; } = new RuleMatchActionType(RedirectValue);
+
         /// <summary> AnomalyScoring. </summary>
         public static RuleMatchActionType AnomalyScoring { get; } = new RuleMatchActionType(AnomalyScoringValue);
+
         /// <summary> JSChallenge. </summary>
         public static RuleMatchActionType JSChallenge { get; } = new RuleMatchActionType(JSChallengeValue);
+
         /// <summary> CAPTCHA. </summary>
         public static RuleMatchActionType Captcha { get; } = new RuleMatchActionType(CaptchaValue);
+
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RuleMatchActionType left, RuleMatchActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RuleMatchActionType left, RuleMatchActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleMatchActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RuleMatchActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RuleMatchActionType(string value) => new RuleMatchActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RuleMatchActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RuleMatchActionType?(string value) => value == null ? null : new RuleMatchActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RuleMatchActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RuleMatchActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

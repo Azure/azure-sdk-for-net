@@ -56,6 +56,21 @@ namespace Azure.AI.ContentUnderstanding
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.AnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.AnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public static partial class AnalyzeOperationExtensions
+    {
+        public static Azure.AI.ContentUnderstanding.AnalyzeUsageDetails? GetUsage(this Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> operation) { throw null; }
+    }
+    public partial class AnalyzeUsageDetails
+    {
+        internal AnalyzeUsageDetails() { }
+        public float? AudioHours { get { throw null; } }
+        public int? ContextualizationTokens { get { throw null; } }
+        public int? DocumentPagesBasic { get { throw null; } }
+        public int? DocumentPagesMinimal { get { throw null; } }
+        public int? DocumentPagesStandard { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, int> Tokens { get { throw null; } }
+        public float? VideoHours { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AnnotationFormat : System.IEquatable<Azure.AI.ContentUnderstanding.AnnotationFormat>
     {
@@ -499,6 +514,8 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ContentUnderstandingClient
     {
         protected ContentUnderstandingClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public ContentUnderstandingClient(Azure.AI.ContentUnderstanding.ContentUnderstandingClientSettings settings) { }
         public ContentUnderstandingClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ContentUnderstandingClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions options) { }
         public ContentUnderstandingClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -565,6 +582,14 @@ namespace Azure.AI.ContentUnderstanding
             V2025_11_01 = 1,
         }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class ContentUnderstandingClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ContentUnderstandingClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class ContentUnderstandingDefaults : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ContentUnderstandingDefaults>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ContentUnderstandingDefaults>
     {
         internal ContentUnderstandingDefaults() { }
@@ -585,6 +610,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.AnalysisContent AnalysisContent(string kind = null, string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.AnalysisInput AnalysisInput(System.Uri uri = null, System.BinaryData data = null, string name = null, string mimeType = null, string contentRangeValue = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.AnalysisResult AnalysisResult(string analyzerId = null, string apiVersion = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, string stringEncoding = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisContent> contents = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.AnalyzeUsageDetails AnalyzeUsageDetails(int? documentPagesMinimal = default(int?), int? documentPagesBasic = default(int?), int? documentPagesStandard = default(int?), float? audioHours = default(float?), float? videoHours = default(float?), int? contextualizationTokens = default(int?), System.Collections.Generic.IDictionary<string, int>? tokens = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.AudioVisualContent AudioVisualContent(string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null, long startTimeMsValue = (long)0, long endTimeMsValue = (long)0, int? width = default(int?), int? height = default(int?), System.Collections.Generic.IEnumerable<long> cameraShotTimesMsValues = null, System.Collections.Generic.IEnumerable<long> keyFrameTimesMsValues = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptPhrase> transcriptPhrases = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AudioVisualContentSegment> segments = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.AudioVisualContentSegment AudioVisualContentSegment(string segmentId = null, string category = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, long startTimeMsValue = (long)0, long endTimeMsValue = (long)0) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentAnalyzer ContentAnalyzer(string analyzerId = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.AI.ContentUnderstanding.ContentAnalyzerStatus status = default(Azure.AI.ContentUnderstanding.ContentAnalyzerStatus), System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedAt = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, string baseAnalyzerId = null, Azure.AI.ContentUnderstanding.ContentAnalyzerConfig config = null, Azure.AI.ContentUnderstanding.ContentFieldSchema fieldSchema = null, bool? hasDynamicFieldSchema = default(bool?), Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.KnowledgeSource> knowledgeSources = null, System.Collections.Generic.IDictionary<string, string> models = null, Azure.AI.ContentUnderstanding.SupportedModels supportedModels = null) { throw null; }
@@ -1157,6 +1183,16 @@ namespace Azure.AI.ContentUnderstanding
         public static implicit operator Azure.AI.ContentUnderstanding.LengthUnit? (string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentUnderstanding.LengthUnit left, Azure.AI.ContentUnderstanding.LengthUnit right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public static partial class LlmInputHelper
+    {
+        public static string ToLlmInput(this Azure.AI.ContentUnderstanding.AnalysisResult result, System.Collections.Generic.IDictionary<string, object>? metadata = null, Azure.AI.ContentUnderstanding.LlmInputOptions? options = null) { throw null; }
+    }
+    public partial class LlmInputOptions
+    {
+        public LlmInputOptions() { }
+        public bool IncludeFields { get { throw null; } set { } }
+        public bool IncludeMarkdown { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProcessingLocation : System.IEquatable<Azure.AI.ContentUnderstanding.ProcessingLocation>

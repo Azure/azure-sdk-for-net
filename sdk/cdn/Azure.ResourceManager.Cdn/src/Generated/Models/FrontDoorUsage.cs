@@ -8,54 +8,23 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes resource usage. </summary>
     public partial class FrontDoorUsage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorUsage"/>. </summary>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal FrontDoorUsage(FrontDoorUsageUnit unit, long currentValue, long limit, FrontDoorUsageResourceName name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
@@ -68,34 +37,33 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorUsage(ResourceIdentifier id, FrontDoorUsageUnit unit, long currentValue, long limit, FrontDoorUsageResourceName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorUsage(ResourceIdentifier id, FrontDoorUsageUnit unit, long currentValue, long limit, FrontDoorUsageResourceName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FrontDoorUsage"/> for deserialization. </summary>
-        internal FrontDoorUsage()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource identifier. </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; }
+
         /// <summary> An enum describing the unit of measurement. </summary>
         [WirePath("unit")]
         public FrontDoorUsageUnit Unit { get; }
+
         /// <summary> The current value of the usage. </summary>
         [WirePath("currentValue")]
         public long CurrentValue { get; }
+
         /// <summary> The limit of usage. </summary>
         [WirePath("limit")]
         public long Limit { get; }
+
         /// <summary> The name of the type of usage. </summary>
         [WirePath("name")]
         public FrontDoorUsageResourceName Name { get; }
