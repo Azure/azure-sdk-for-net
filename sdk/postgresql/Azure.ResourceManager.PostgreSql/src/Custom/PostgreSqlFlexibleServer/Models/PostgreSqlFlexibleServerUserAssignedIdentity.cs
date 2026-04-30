@@ -12,7 +12,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Preserve the previous GA type for the identity dictionary values.
+    // TypeSpec models userAssignedIdentities as Record<UserIdentity>, but GA exposed the shared ARM
+    // UserAssignedIdentity type. Preserve that property type and deserialize through a hook.
     [CodeGenSerialization(nameof(UserAssignedIdentities), DeserializationValueHook = nameof(ReadUserAssignedIdentities))]
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity
     {

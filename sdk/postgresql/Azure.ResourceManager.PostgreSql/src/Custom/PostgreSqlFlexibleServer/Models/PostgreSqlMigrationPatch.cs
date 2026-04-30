@@ -7,7 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Preserve the previous GA type for migration patch secret parameters.
+    // The merged TypeSpec models patch secretParameters with the patch-only MigrationSecretParametersForPatch type.
+    // Preserve the previous GA PostgreSqlMigrationSecretParameters property type on PostgreSqlMigrationPatch.
     public partial class PostgreSqlMigrationPatch
     {
         /// <summary> Migration secret parameters. </summary>
