@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<ManualScaleProfile> VirtualMachinesScaleManual
         {
-            get => VirtualMachinesScale?.Manual;
+            get => Properties?.VirtualMachinesProfile?.ScaleManual;
         }
 
         /// <summary> The type of Agent Pool. </summary>

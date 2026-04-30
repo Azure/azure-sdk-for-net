@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, ifMatch, default(bool?), cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a managed cluster.
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch, CancellationToken cancellationToken)
-            => Delete(waitUntil, ifMatch, default(bool?), cancellationToken);
+            => Delete(waitUntil, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Updates tags on a managed cluster.
