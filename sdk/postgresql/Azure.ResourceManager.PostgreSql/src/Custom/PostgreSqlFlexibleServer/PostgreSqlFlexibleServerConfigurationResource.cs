@@ -11,8 +11,10 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     // TypeSpec models configuration PUT/PATCH with ConfigurationForUpdate, so generation uses
-    // PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent for the request body. Preserve
-    // previous GA resource-level Update overloads that accepted PostgreSqlFlexibleServerConfigurationData.
+    // PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent for the request body. A C# alternateType on the
+    // operation parameter can generate PostgreSqlFlexibleServerConfigurationData overloads instead, but it removes
+    // the previous GA request-content type and content overloads, which would require more custom code to restore.
+    // Keep the generated content surface and preserve the previous GA data overloads with these small adapters.
     public partial class PostgreSqlFlexibleServerConfigurationResource
     {
         /// <summary> Update a configuration. </summary>

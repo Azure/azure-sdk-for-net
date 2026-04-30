@@ -12,8 +12,10 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     // The generated PUT overload must keep PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent because that
-    // request-content type is part of the previous GA API. These hidden overloads preserve the previous
-    // PostgreSqlFlexibleServerConfigurationData convenience overloads as well.
+    // request-content type and its overloads are part of the previous GA API. A C# alternateType on the operation
+    // parameter can generate PostgreSqlFlexibleServerConfigurationData overloads instead, but it removes the content
+    // type and content overloads, which would require more custom code to restore. Keep the generated content
+    // surface and preserve the previous GA data overloads with these small adapters.
     public partial class PostgreSqlFlexibleServerConfigurationCollection
     {
         /// <summary>
