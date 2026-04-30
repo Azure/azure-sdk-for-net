@@ -1,10 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.2 (2026-04-30)
 
 ### Bugs Fixed
 
@@ -13,8 +9,6 @@
   `FrontDoorRoute` so generated Bicep names use each resource's actual
   Azure length limit instead of the default 24-character cap
   ([#58181](https://github.com/Azure/azure-sdk-for-net/issues/58181)).
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2026-03-13)
 
