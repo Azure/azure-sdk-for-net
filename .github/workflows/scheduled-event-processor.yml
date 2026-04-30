@@ -4,21 +4,21 @@ on:
   schedule:
     # These are generated/confirmed using https://crontab.cronhub.io/
     # Close stale issues, runs every day at 1am - CloseStaleIssues
-    - cron: '0 1 * * *'
+    - cron: "0 1 * * *"
     # Identify stale pull requests, every Friday at 5am - IdentifyStalePullRequests
-    - cron: '0 5 * * FRI'
+    - cron: "0 5 * * FRI"
     # Close stale pull requests, every 6 hours at 02:30 AM, 08:30 AM, 02:30 PM and 08:30 PM - CloseStalePullRequests
-    - cron: '30 2,8,14,20 * * *'
+    - cron: "30 2,8,14,20 * * *"
     # Identify stale issues, every 6 hours at 03:30 AM, 09:30 AM, 03:30 PM and 09:30 PM - IdentifyStaleIssues
-    - cron: '30 3,9,15,21 * * *'
+    - cron: "30 3,9,15,21 * * *"
     # Close addressed issues, every 6 hours at 04:30 AM, 10:30 AM, 04:30 PM and 10:30 PM - CloseAddressedIssues
-    - cron: '30 4,10,16,22 * * *'
+    - cron: "30 4,10,16,22 * * *"
     # Lock closed issues, every 6 hours at 05:30 AM, 11:30 AM, 05:30 PM and 11:30 PM - LockClosedIssues
-    - cron: '30 5,11,17,23 * * *'
+    - cron: "30 5,11,17,23 * * *"
     # Enforce max life of issues, every M,W,F at 10:00 AM PST - EnforceMaxLifeOfIssues
     # Note: GitHub uses UTC, to run at 10am PST, the cron task needs to be 6pm (1800 hours) UTC
     #       When scheduling for multiple days the numeric days 0-6 (0=Sunday) must be used.
-    - cron: '0 18 * * 1,3,5'
+    - cron: "0 18 * * 1,3,5"
 # This removes all unnecessary permissions, the ones needed will be set below.
 # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
 permissions: {}

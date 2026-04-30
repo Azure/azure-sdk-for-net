@@ -31,15 +31,15 @@ jobs:
     name: Handle ${{ github.event_name }} ${{ github.event.action }} event with azure login
     runs-on: ubuntu-latest
     steps:
-      - name: 'Az CLI login'
+      - name: "Az CLI login"
         uses: azure/login@v3
         if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
         with:
-            client-id: a6dd2dfe-7352-41a7-9020-05301c3bca1a
-            tenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-            allow-no-subscriptions: true
+          client-id: a6dd2dfe-7352-41a7-9020-05301c3bca1a
+          tenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+          allow-no-subscriptions: true
 
-      - name: 'Run Azure CLI commands'
+      - name: "Run Azure CLI commands"
         if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
         run: |
           LABEL_SERVICE_API_KEY=$(az keyvault secret show \
