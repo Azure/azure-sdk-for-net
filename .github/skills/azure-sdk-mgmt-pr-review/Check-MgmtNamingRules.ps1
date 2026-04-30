@@ -157,8 +157,8 @@ for ($i = 0; $i -lt $totalLines; $i++) {
         continue
     }
 
-    # Match type declarations: public partial class Foo : Bar, IBaz
-    if ($line -match '^\s*public\s+(?:partial\s+|abstract\s+|static\s+|sealed\s+)*(?<kind>class|struct|enum|interface)\s+(?<name>\w+)(?:<[^>]+>)?\s*(?::\s*(?<bases>.+?))?\s*$') {
+    # Match type declarations: public [readonly] [partial|abstract|static|sealed]* class/struct/enum Foo : Bar
+    if ($line -match '^\s*public\s+(?:readonly\s+)?(?:partial\s+|abstract\s+|static\s+|sealed\s+)*(?<kind>class|struct|enum|interface)\s+(?<name>\w+)(?:<[^>]+>)?\s*(?::\s*(?<bases>.+?))?\s*$') {
         $shortName = $Matches['name']
         $kind = $Matches['kind']
         $bases = if ($Matches['bases']) { $Matches['bases'].Trim() } else { '' }
@@ -447,10 +447,10 @@ $acronymPatterns = @(
     @{ AllCaps = 'SSH';   PascalCase = 'Ssh';   Id = 'ACRONYM001' }
     @{ AllCaps = 'SQL';   PascalCase = 'Sql';   Id = 'ACRONYM001' }
     @{ AllCaps = 'AAD';   PascalCase = 'Aad';   Id = 'ACRONYM001' }
+    # VM is a 2-letter acronym with a mandatory exception: always use Vm (never VM) in type/member names.
+    # This differs from IO/OS which stay uppercase when standalone; Vm follows the Id pattern.
+    @{ AllCaps = 'VM';    PascalCase = 'Vm';    Id = 'ACRONYM001' }
 )
-
-# NOTE: Potential future enhancement: consider enforcing "ID" -> "Id" and "VM" -> "Vm"
-#       with appropriate exceptions (e.g., when standalone or after a lowercase letter).
 
 foreach ($typeName in $typeInfos.Keys) {
     $info = $typeInfos[$typeName]
@@ -482,7 +482,7 @@ $currentTypeName = ''
 for ($i = 0; $i -lt $totalLines; $i++) {
     $line = $lines[$i]
 
-    if ($line -match '^\s*public\s+(?:partial\s+|abstract\s+|static\s+|sealed\s+)*(?:class|struct|enum)\s+(\w+)') {
+    if ($line -match '^\s*public\s+(?:readonly\s+)?(?:partial\s+|abstract\s+|static\s+|sealed\s+)*(?:class|struct|enum)\s+(\w+)') {
         $currentTypeName = $Matches[1]
         continue
     }

@@ -66,7 +66,7 @@ To determine the review scope:
    The scanner currently emits these rule families (see "API Review Checklist" for details):
    - `SUFFIX001`–`SUFFIX010` – forbidden type-name suffixes (Parameters, Request, Options, Response, Data, Definition, Operation, Collection, **Update**, …)
    - `RESINFIX001` – `Resource` infix in `*Data`/`*Collection` model names (with PrivateLinkResource exception)
-   - `ACRONYM001` – curated acronyms in wrong casing (HTTP/TCP/SSL/TLS/…)
+   - `ACRONYM001` – curated acronyms in wrong casing (HTTP/TCP/SSL/TLS/VM/…); includes `VM` → `Vm` which must always use mixed case in type and member names
    - `ACRONYM002` – generic 3+ letter all-caps run inside a name (NNI, IPV, BFD, …)
    - `ARMCOMMON001` – type duplicates an Azure.ResourceManager/Azure.Core common type (`OperationStatusResult`, `ManagedServiceIdentity*`, `TagsUpdate`, `ErrorResponse`, …)
    - `BOOL001` / `DATETIME001` / `TTL001` – property naming
