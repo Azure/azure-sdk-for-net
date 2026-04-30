@@ -5,12 +5,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    [CodeGenSuppress("Status")]
-    [CodeGenSuppress("StartOn")]
     public partial class PostgreSqlFlexibleServerLtrBackupResult
     {
         /// <summary> Service-set extensible enum indicating the status of operation. </summary>

@@ -4,12 +4,9 @@
 #nullable disable
 
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    [CodeGenSuppress("PrimaryEncryptionKeyStatus")]
-    [CodeGenSuppress("GeoBackupEncryptionKeyStatus")]
     public partial class PostgreSqlFlexibleServerDataEncryption
     {
         private PostgreSqlKeyStatus? _primaryEncryptionKeyStatusOverride;

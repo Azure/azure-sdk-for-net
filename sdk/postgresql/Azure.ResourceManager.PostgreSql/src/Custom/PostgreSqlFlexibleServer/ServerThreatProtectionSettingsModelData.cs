@@ -5,12 +5,10 @@
 
 using System.ComponentModel;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     // Preserves the previous flattened threat-protection State property.
-    [CodeGenSuppress("State")]
     public partial class ServerThreatProtectionSettingsModelData
     {
         /// <summary> Specifies the state of the advanced threat protection. </summary>

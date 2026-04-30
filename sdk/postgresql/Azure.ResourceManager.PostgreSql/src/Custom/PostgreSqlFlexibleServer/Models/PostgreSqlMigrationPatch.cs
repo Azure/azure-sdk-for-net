@@ -4,11 +4,9 @@
 #nullable disable
 
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    [CodeGenSuppress("SecretParameters")]
     public partial class PostgreSqlMigrationPatch
     {
         /// <summary> Migration secret parameters. </summary>

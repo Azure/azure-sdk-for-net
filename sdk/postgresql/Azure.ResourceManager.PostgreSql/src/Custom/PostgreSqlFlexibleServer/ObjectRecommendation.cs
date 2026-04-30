@@ -5,18 +5,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    [CodeGenSuppress("InitialRecommendedOn")]
-    [CodeGenSuppress("LastRecommendedOn")]
-    [CodeGenSuppress("TimesRecommended")]
-    [CodeGenSuppress("RecommendationReason")]
-    [CodeGenSuppress("CurrentState")]
-    [CodeGenSuppress("RecommendationType")]
-    [CodeGenSuppress("ImplementationDetails")]
-    [CodeGenSuppress("AnalyzedWorkload")]
     public partial class ObjectRecommendation
     {
         private DateTimeOffset? _initialRecommendedOnOverride;

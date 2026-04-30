@@ -6,13 +6,10 @@
 using System;
 using System.ComponentModel;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     // Preserves previous flattened LTR backup operation properties.
-    [CodeGenSuppress("Status")]
-    [CodeGenSuppress("StartOn")]
     public partial class PostgreSqlLtrServerBackupOperationData
     {
         /// <summary> Service-set extensible enum indicating the status of operation. </summary>

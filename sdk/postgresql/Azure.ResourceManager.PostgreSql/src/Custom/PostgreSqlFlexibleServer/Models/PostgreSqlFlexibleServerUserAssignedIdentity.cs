@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    [CodeGenSuppress("UserAssignedIdentities")]
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity
     {
         /// <summary> Represents user assigned identities map. </summary>
