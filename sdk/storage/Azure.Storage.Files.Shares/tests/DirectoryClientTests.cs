@@ -669,6 +669,86 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_12_06)]
+        public async Task GetFilesAndDirectoriesAsync_NFS()
+        {
+            // Arrange — premium NFS share + parent directory
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+            ShareDirectoryClient parent = test.Directory;
+
+            string owner = "345";
+            string group = "123";
+            string fileMode = "7777";
+
+            // Child file with POSIX properties
+            string fileName = GetNewFileName();
+            ShareFileClient file = InstrumentClient(parent.GetFileClient(fileName));
+            await file.CreateAsync(
+                maxSize: Constants.MB,
+                options: new ShareFileCreateOptions
+                {
+                    PosixProperties = new FilePosixProperties
+                    {
+                        Owner = owner,
+                        Group = group,
+                        FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                    }
+                });
+
+            // Child subdirectory with POSIX properties
+            string subdirName = GetNewDirectoryName();
+            ShareDirectoryClient subdir = InstrumentClient(parent.GetSubdirectoryClient(subdirName));
+            await subdir.CreateAsync(
+                options: new ShareDirectoryCreateOptions
+                {
+                    PosixProperties = new FilePosixProperties
+                    {
+                        Owner = owner,
+                        Group = group,
+                        FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                    }
+                });
+
+            // Act — request all NFS-applicable traits
+            ShareDirectoryGetFilesAndDirectoriesOptions options = new ShareDirectoryGetFilesAndDirectoriesOptions
+            {
+                Traits = ShareFileTraits.Timestamps
+                    | ShareFileTraits.ETag
+                    | ShareFileTraits.Permissions
+                    | ShareFileTraits.LinkCount
+                    | ShareFileTraits.NfsAttributes,
+                IncludeExtendedInfo = true
+            };
+
+            List<ShareFileItem> items = new List<ShareFileItem>();
+            await foreach (ShareFileItem item in parent.GetFilesAndDirectoriesAsync(options))
+            {
+                items.Add(item);
+            }
+
+            // Assert
+            Assert.AreEqual(2, items.Count);
+
+            ShareFileItem fileItem = items.Single(i => !i.IsDirectory && i.Name == fileName);
+            Assert.AreEqual(NfsFileType.Regular, fileItem.FileType);
+            Assert.IsNotNull(fileItem.LinkCount);
+            Assert.IsNotNull(fileItem.Properties);
+            Assert.AreEqual(owner, fileItem.Properties.Owner);
+            Assert.AreEqual(group, fileItem.Properties.Group);
+            Assert.IsNotNull(fileItem.Properties.FileMode);
+            Assert.AreEqual(fileMode, fileItem.Properties.FileMode.ToOctalFileMode());
+
+            ShareFileItem dirItem = items.Single(i => i.IsDirectory && i.Name == subdirName);
+            Assert.AreEqual(NfsFileType.Directory, dirItem.FileType);
+            Assert.IsNotNull(dirItem.LinkCount);
+            Assert.IsNotNull(dirItem.Properties);
+            Assert.AreEqual(owner, dirItem.Properties.Owner);
+            Assert.AreEqual(group, dirItem.Properties.Group);
+            Assert.IsNotNull(dirItem.Properties.FileMode);
+            Assert.AreEqual(fileMode, dirItem.Properties.FileMode.ToOctalFileMode());
+        }
+
         [TestCase(true)]
         [TestCase(false)]
         [RecordedTest]
