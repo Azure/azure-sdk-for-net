@@ -1184,9 +1184,20 @@ namespace Azure.AI.ContentUnderstanding
         public static bool operator !=(Azure.AI.ContentUnderstanding.LengthUnit left, Azure.AI.ContentUnderstanding.LengthUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class LlmInputOptions
+    {
+        public LlmInputOptions() { }
+        public bool IncludeFields { get { throw null; } set { } }
+        public bool IncludeMarkdown { get { throw null; } set { } }
+    }
     public static partial class LlmInputHelper
     {
-        public static string ToLlmInput(Azure.AI.ContentUnderstanding.AnalysisResult result, bool includeFields = true, bool includeMarkdown = true, System.Collections.Generic.IDictionary<string, object>? metadata = null) { throw null; }
+        public static string ToLlmInput(this Azure.AI.ContentUnderstanding.AnalysisResult result, System.Collections.Generic.IDictionary<string, object>? metadata = null, Azure.AI.ContentUnderstanding.LlmInputOptions? options = null) { throw null; }
+    }
+    public static partial class LlmInputHelper
+    {
+        public static string ToLlmInput(this Azure.AI.ContentUnderstanding.AnalysisResult result, Azure.AI.ContentUnderstanding.LlmInputOptions? options = null) { throw null; }
+        public static string ToLlmInput(this Azure.AI.ContentUnderstanding.AnalysisResult result, System.Collections.Generic.IDictionary<string, object> metadata) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProcessingLocation : System.IEquatable<Azure.AI.ContentUnderstanding.ProcessingLocation>

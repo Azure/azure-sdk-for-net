@@ -8,7 +8,7 @@ One of the key values of Content Understanding is taking a content file and extr
 
 ## Using results with LLMs
 
-The markdown returned by Content Understanding can be directly consumed by large language models (LLMs) for summarization, question answering, and other generative AI tasks. To make this even easier, the SDK provides a convenient `LlmInputHelper.ToLlmInput()` helper that converts an `AnalysisResult` into a single text block with YAML front matter (content type, page numbers, extracted fields) followed by the markdown body — ready for injection into LLM prompts, vector databases, or agentic tool outputs. For advanced usage (output options, content ranges, video/audio, metadata), see [Advanced ToLlmInput sample][sample-advanced-to-llm-input].
+The markdown returned by Content Understanding can be directly consumed by large language models (LLMs) for summarization, question answering, and other generative AI tasks. To make this even easier, the SDK provides a convenient `.ToLlmInput()` helper that converts an `AnalysisResult` into a single text block with YAML front matter (content type, page numbers, extracted fields) followed by the markdown body — ready for injection into LLM prompts, vector databases, or agentic tool outputs. For advanced usage (output options, content ranges, video/audio, metadata), see [Advanced ToLlmInput sample][sample-advanced-to-llm-input].
 
 This sample focuses on **document analysis**. For prebuilt RAG analyzers covering images, audio, and video, see [Sample 02: Analyze content from URLs][sample02-analyze-url].
 
@@ -190,14 +190,14 @@ if (content is DocumentContent documentContent)
 
 ## Convert results to LLM-ready text
 
-The markdown returned by Content Understanding can be directly consumed by large language models (LLMs) for summarization, question answering, and other generative AI tasks. The SDK provides `LlmInputHelper.ToLlmInput()` which packages the result into a single text block with YAML front matter (content type, page numbers, extracted fields) followed by the markdown body — ready for LLM prompts, vector databases, or agentic tool outputs.
+The markdown returned by Content Understanding can be directly consumed by large language models (LLMs) for summarization, question answering, and other generative AI tasks. The SDK provides `.ToLlmInput()` which packages the result into a single text block with YAML front matter (content type, page numbers, extracted fields) followed by the markdown body — ready for LLM prompts, vector databases, or agentic tool outputs.
 
 ```C# Snippet:ContentUnderstandingConvertToLlmInput
 // The markdown above can be consumed directly by LLMs. For convenience, the SDK
-// provides LlmInputHelper.ToLlmInput() which packages the result into a single
+// provides `.ToLlmInput()` which packages the result into a single
 // text block with YAML front matter (content type, pages, fields, optional metadata)
 // followed by the markdown body — ready for LLM prompts, vector stores, or agentic tools.
-string llmText = LlmInputHelper.ToLlmInput(result);
+string llmText = result.ToLlmInput();
 Console.WriteLine(llmText);
 ```
 

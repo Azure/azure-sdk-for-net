@@ -41,7 +41,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             AnalysisResult result = operation.Value;
 
             // Convert to LLM-ready text (YAML front matter + markdown)
-            string text = LlmInputHelper.ToLlmInput(result);
+            string text = result.ToLlmInput();
             Console.WriteLine("Default output (fields + markdown):");
             Console.WriteLine(text);
             #endregion
@@ -58,21 +58,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Snippet:ContentUnderstandingToLlmInputOptions
             // Fields-only mode — smaller token footprint when you only need structured data.
             // Useful for agentic workflows where the LLM only needs extracted values.
-            string fieldsOnly = LlmInputHelper.ToLlmInput(result, includeMarkdown: false);
+            string fieldsOnly = result.ToLlmInput(options: new LlmInputOptions { IncludeMarkdown = false });
             Console.WriteLine("\n--- Fields only (includeMarkdown: false) ---");
             Console.WriteLine(fieldsOnly);
 
             // Markdown-only mode — when you only need the document text.
             // Useful for summarization or when fields are not relevant.
-            string markdownOnly = LlmInputHelper.ToLlmInput(result, includeFields: false);
+            string markdownOnly = result.ToLlmInput(options: new LlmInputOptions { IncludeFields = false });
             Console.WriteLine("\n--- Markdown only (includeFields: false) ---");
             Console.WriteLine(markdownOnly);
 
             // Custom metadata — add your own key-value pairs to the YAML front matter.
             // Useful for RAG pipelines to track document source, department, batch, etc.
-            string withMetadata = LlmInputHelper.ToLlmInput(
-                result,
-                metadata: new Dictionary<string, object>
+            string withMetadata = result.ToLlmInput(
+                new Dictionary<string, object>
                 {
                     ["source"] = "invoice.pdf",
                     ["department"] = "finance"
@@ -126,7 +125,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 });
 
             AnalysisResult multiPageResult = multiPageOperation.Value;
-            string multiPageText = LlmInputHelper.ToLlmInput(multiPageResult);
+            string multiPageText = multiPageResult.ToLlmInput();
             Console.WriteLine("\n--- Multi-page PDF with content range ---");
             Console.WriteLine(multiPageText);
             #endregion
@@ -168,7 +167,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 inputs: new[] { new AnalysisInput { Uri = videoUrl } });
 
             AnalysisResult videoResult = videoOperation.Value;
-            string videoText = LlmInputHelper.ToLlmInput(videoResult);
+            string videoText = videoResult.ToLlmInput();
             Console.WriteLine($"\nVideo produced {videoResult.Contents!.Count} segment(s)");
             Console.WriteLine("\n--- Multi-segment video ---");
             Console.WriteLine(videoText);
@@ -206,9 +205,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             AnalysisResult audioResult = audioOperation.Value;
 
             // Include metadata to track the source file in RAG pipelines
-            string audioText = LlmInputHelper.ToLlmInput(
-                audioResult,
-                metadata: new Dictionary<string, object> { ["source"] = "callCenterRecording.mp3" });
+            string audioText = audioResult.ToLlmInput(
+                new Dictionary<string, object> { ["source"] = "callCenterRecording.mp3" });
             Console.WriteLine("\n--- Audio with content range and metadata ---");
             Console.WriteLine(audioText);
             #endregion

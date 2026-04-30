@@ -187,7 +187,7 @@ The samples demonstrate:
 * **Document Content Extraction** - Extract structured markdown content from PDFs and images using `prebuilt-documentSearch`, optimized for RAG (Retrieval-Augmented Generation) applications
 * **Multi-Modal Content Analysis** - Analyze content from URLs across all modalities: extract markdown and summaries from documents, images, audio, and video using `prebuilt-documentSearch`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, and `prebuilt-videoSearch`
 * **Domain-Specific Analysis** - Extract structured fields from invoices using `prebuilt-invoice`
-* **LLM Integration** - Convert analysis results to LLM-ready text with `LlmInputHelper.ToLlmInput()`
+* **LLM Integration** - Convert analysis results to LLM-ready text with `.ToLlmInput()`
 * **Advanced Document Features** - Extract charts, hyperlinks, formulas, and annotations from documents
 * **Custom Analyzers** - Create custom analyzers with field schemas for specialized extraction needs
 * **Document Classification** - Create and use classifiers to categorize documents
@@ -198,7 +198,7 @@ See the [samples directory][samples_directory] for complete examples.
 
 ### Convert results to LLM-ready text
 
-Use `LlmInputHelper.ToLlmInput()` to convert any analysis result into a text format that LLMs can consume directly — YAML front matter with extracted fields followed by the markdown body. This works with all content types (documents, images, audio, video) and handles multi-segment results and classification hierarchies automatically.
+Use `.ToLlmInput()` to convert any analysis result into a text format that LLMs can consume directly — YAML front matter with extracted fields followed by the markdown body. This works with all content types (documents, images, audio, video) and handles multi-segment results and classification hierarchies automatically.
 
 ```csharp
 using Azure.AI.ContentUnderstanding;
@@ -216,7 +216,7 @@ Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
 AnalysisResult result = operation.Value;
 
 // One line to get LLM-ready text
-string text = LlmInputHelper.ToLlmInput(result);
+string text = result.ToLlmInput();
 Console.WriteLine(text);
 // Output:
 //   ---

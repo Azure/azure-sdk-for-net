@@ -1,10 +1,10 @@
 # Convert analysis results to LLM-friendly text
 
-This sample demonstrates advanced usage of `LlmInputHelper.ToLlmInput()`. For a basic introduction to `ToLlmInput`, see [Sample 01: Analyze binary][sample01-analyze-binary] (document analysis), [Sample 03: Analyze invoice][sample03-analyze-invoice] (field extraction), and [Sample 05: Create classifier][sample05-create-classifier] (classification).
+This sample demonstrates advanced usage of `.ToLlmInput()`. For a basic introduction to `ToLlmInput`, see [Sample 01: Analyze binary][sample01-analyze-binary] (document analysis), [Sample 03: Analyze invoice][sample03-analyze-invoice] (field extraction), and [Sample 05: Create classifier][sample05-create-classifier] (classification).
 
 ## About `ToLlmInput`
 
-The `LlmInputHelper.ToLlmInput` method converts a CU `AnalysisResult` into a formatted text string (YAML front matter + markdown body) suitable for injecting into LLM prompts, storing in vector databases, or returning as tool output in agentic workflows.
+The `.ToLlmInput` method converts a CU `AnalysisResult` into a formatted text string (YAML front matter + markdown body) suitable for injecting into LLM prompts, storing in vector databases, or returning as tool output in agentic workflows.
 
 When using Content Understanding with large language models, you typically need to convert the structured `AnalysisResult` into a text format that an LLM can consume. The `ToLlmInput` helper handles this conversion automatically:
 
@@ -53,7 +53,7 @@ Operation<AnalysisResult> operation = await client.AnalyzeAsync(
 AnalysisResult result = operation.Value;
 
 // Convert to LLM-ready text (YAML front matter + markdown)
-string text = LlmInputHelper.ToLlmInput(result);
+string text = result.ToLlmInput();
 Console.WriteLine("Default output (fields + markdown):");
 Console.WriteLine(text);
 ```
@@ -65,21 +65,21 @@ Control what's included in the output:
 ```C# Snippet:ContentUnderstandingToLlmInputOptions
 // Fields-only mode — smaller token footprint when you only need structured data.
 // Useful for agentic workflows where the LLM only needs extracted values.
-string fieldsOnly = LlmInputHelper.ToLlmInput(result, includeMarkdown: false);
+string fieldsOnly = result.ToLlmInput(options: new LlmInputOptions { IncludeMarkdown = false });
 Console.WriteLine("\n--- Fields only (includeMarkdown: false) ---");
 Console.WriteLine(fieldsOnly);
 
 // Markdown-only mode — when you only need the document text.
 // Useful for summarization or when fields are not relevant.
-string markdownOnly = LlmInputHelper.ToLlmInput(result, includeFields: false);
+string markdownOnly = result.ToLlmInput(options: new LlmInputOptions { IncludeFields = false });
 Console.WriteLine("\n--- Markdown only (includeFields: false) ---");
 Console.WriteLine(markdownOnly);
 
 // Custom metadata — add your own key-value pairs to the YAML front matter.
 // Useful for RAG pipelines to track document source, department, batch, etc.
-string withMetadata = LlmInputHelper.ToLlmInput(
+string withMetadata = result.ToLlmInput(
     result,
-    metadata: new Dictionary<string, object>
+    new Dictionary<string, object>
     {
         ["source"] = "invoice.pdf",
         ["department"] = "finance"
@@ -112,7 +112,7 @@ Operation<AnalysisResult> multiPageOperation = await client.AnalyzeAsync(
     });
 
 AnalysisResult multiPageResult = multiPageOperation.Value;
-string multiPageText = LlmInputHelper.ToLlmInput(multiPageResult);
+string multiPageText = multiPageResult.ToLlmInput();
 Console.WriteLine("\n--- Multi-page PDF with content range ---");
 Console.WriteLine(multiPageText);
 ```
@@ -133,7 +133,7 @@ Operation<AnalysisResult> videoOperation = await client.AnalyzeAsync(
     inputs: new[] { new AnalysisInput { Uri = videoUrl } });
 
 AnalysisResult videoResult = videoOperation.Value;
-string videoText = LlmInputHelper.ToLlmInput(videoResult);
+string videoText = videoResult.ToLlmInput();
 Console.WriteLine($"\nVideo produced {videoResult.Contents!.Count} segment(s)");
 Console.WriteLine("\n--- Multi-segment video ---");
 Console.WriteLine(videoText);
@@ -163,9 +163,9 @@ Operation<AnalysisResult> audioOperation = await client.AnalyzeAsync(
 AnalysisResult audioResult = audioOperation.Value;
 
 // Include metadata to track the source file in RAG pipelines
-string audioText = LlmInputHelper.ToLlmInput(
+string audioText = audioResult.ToLlmInput(
     audioResult,
-    metadata: new Dictionary<string, object> { ["source"] = "callCenterRecording.mp3" });
+    new Dictionary<string, object> { ["source"] = "callCenterRecording.mp3" });
 Console.WriteLine("\n--- Audio with content range and metadata ---");
 Console.WriteLine(audioText);
 ```

@@ -1,6 +1,6 @@
 # Analyze an invoice using prebuilt analyzer
 
-This sample demonstrates how to analyze an invoice from a URL using the `prebuilt-invoice` analyzer, extract structured fields, and convert field results to LLM-friendly text with `LlmInputHelper.ToLlmInput()`.
+This sample demonstrates how to analyze an invoice from a URL using the `prebuilt-invoice` analyzer, extract structured fields, and convert field results to LLM-friendly text with `.ToLlmInput()`.
 
 ## About analyzing invoices
 
@@ -279,14 +279,14 @@ For more details about `DocumentContent` and all available document elements (pa
 
 ## Convert invoice results to LLM-ready text
 
-The extracted fields can also be packaged into a single LLM-ready text block. `LlmInputHelper.ToLlmInput()` renders all extracted fields as YAML front matter followed by the markdown body, so an LLM can consume both structured data and document text in one shot.
+The extracted fields can also be packaged into a single LLM-ready text block. `.ToLlmInput()` renders all extracted fields as YAML front matter followed by the markdown body, so an LLM can consume both structured data and document text in one shot.
 
 ```C# Snippet:ContentUnderstandingInvoiceToLlmInput
 // The fields above can also be packaged into a single LLM-ready text block.
 // ToLlmInput renders all extracted fields as YAML front matter followed by
 // the markdown body, so an LLM can consume both structured data and document text
 // in one shot. For advanced options, see Sample_Advanced_ToLlmInput.
-string llmText = LlmInputHelper.ToLlmInput(result);
+string llmText = result.ToLlmInput();
 Console.WriteLine(llmText);
 ```
 

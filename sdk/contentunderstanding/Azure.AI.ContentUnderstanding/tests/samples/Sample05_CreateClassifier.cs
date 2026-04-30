@@ -421,7 +421,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // ToLlmInput automatically detects classification results: it expands the parent
                 // into per-segment blocks, each with its category label in the YAML front matter.
                 // Segments are separated by a ***** divider.
-                string llmText = LlmInputHelper.ToLlmInput(analyzeResult);
+                string llmText = analyzeResult.ToLlmInput();
                 Console.WriteLine(llmText);
                 #endregion
 

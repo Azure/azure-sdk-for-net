@@ -41,17 +41,27 @@ namespace Azure.AI.ContentUnderstanding
         /// </para>
         /// </summary>
         /// <param name="result">The <see cref="AnalysisResult"/> from a Content Understanding analyze operation.</param>
-        /// <param name="includeFields">Whether to include structured fields in the output. Defaults to <c>true</c>.</param>
-        /// <param name="includeMarkdown">Whether to include markdown content in the output. Defaults to <c>true</c>.</param>
-        /// <param name="metadata">Optional user-supplied key-value pairs to include in the YAML front matter. Keys must not conflict with helper-generated front matter keys.</param>
+        /// <param name="metadata">Optional user-supplied key-value pairs to include in the YAML front matter.
+        /// Keys must not conflict with helper-generated front matter keys
+        /// (<c>contentType</c>, <c>timeRange</c>, <c>category</c>, <c>pages</c>, <c>fields</c>, <c>rai_warnings</c>).</param>
+        /// <param name="options">Optional rendering options controlling field/markdown inclusion.</param>
         /// <returns>A formatted text string with YAML front matter followed by markdown content.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="result"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="metadata"/> contains a reserved front matter key.</exception>
         public static string ToLlmInput(
+            this AnalysisResult result,
+            IDictionary<string, object>? metadata = null,
+            LlmInputOptions? options = null)
+        {
+            options ??= new LlmInputOptions();
+            return ToLlmInputCore(result, options.IncludeFields, options.IncludeMarkdown, metadata);
+        }
+
+        private static string ToLlmInputCore(
             AnalysisResult result,
-            bool includeFields = true,
-            bool includeMarkdown = true,
-            IDictionary<string, object>? metadata = null)
+            bool includeFields,
+            bool includeMarkdown,
+            IDictionary<string, object>? metadata)
         {
             Argument.AssertNotNull(result, nameof(result));
             ValidateMetadata(metadata);

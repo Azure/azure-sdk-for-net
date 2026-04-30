@@ -1,6 +1,6 @@
 # Create and use a classifier
 
-This sample demonstrates how to create a classifier analyzer to categorize documents, use it to analyze documents with and without automatic segmentation, and convert classification results to LLM-friendly text with `LlmInputHelper.ToLlmInput()`.
+This sample demonstrates how to create a classifier analyzer to categorize documents, use it to analyze documents with and without automatic segmentation, and convert classification results to LLM-friendly text with `.ToLlmInput()`.
 
 Alternatively, you can create classification workflows using [Content Understanding Studio][content-understanding-studio-classification-docs], a web-based UI that provides a convenient way to build and test classification workflows in the same interface. Content Understanding Studio allows you to create custom categories and routing rules that route your data to specific analyzers, ensuring your data is always routed to the best analyzer for processing.
 
@@ -170,14 +170,14 @@ Console.WriteLine($"Classifier '{analyzerId}' deleted successfully.");
 
 ## Convert classification results to LLM-ready text
 
-`LlmInputHelper.ToLlmInput()` automatically detects classification results: it expands the parent into per-segment blocks, each with its category label in the YAML front matter. Segments are separated by a `*****` divider.
+`.ToLlmInput()` automatically detects classification results: it expands the parent into per-segment blocks, each with its category label in the YAML front matter. Segments are separated by a `*****` divider.
 
 ```C# Snippet:ContentUnderstandingClassifierToLlmInput
 // Convert classification results to LLM-friendly text.
 // ToLlmInput automatically detects classification results: it expands the parent
 // into per-segment blocks, each with its category label in the YAML front matter.
 // Segments are separated by a ***** divider.
-string llmText = LlmInputHelper.ToLlmInput(analyzeResult);
+string llmText = analyzeResult.ToLlmInput();
 Console.WriteLine(llmText);
 ```
 

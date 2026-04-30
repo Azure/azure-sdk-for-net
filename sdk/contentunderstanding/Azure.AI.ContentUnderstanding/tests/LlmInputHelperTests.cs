@@ -33,7 +33,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new List<AnalysisContent>());
 
-            Assert.AreEqual(string.Empty, LlmInputHelper.ToLlmInput(result));
+            Assert.AreEqual(string.Empty, result.ToLlmInput());
         }
 
         // ---------------------------------------------------------------
@@ -59,7 +59,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("contentType: document"));
             Assert.That(output, Does.Contain("VendorName: CONTOSO LTD."));
@@ -87,7 +87,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result, includeMarkdown: false);
+            string output = result.ToLlmInput(options: new LlmInputOptions { IncludeMarkdown = false });
 
             Assert.That(output, Does.Contain("VendorName: CONTOSO LTD."));
             Assert.That(output, Does.Not.Contain("Some markdown"));
@@ -111,7 +111,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result, includeFields: false);
+            string output = result.ToLlmInput(options: new LlmInputOptions { IncludeFields = false });
 
             Assert.That(output, Does.Not.Contain("VendorName"));
             Assert.That(output, Does.Contain("Some markdown"));
@@ -139,7 +139,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 ["department"] = "finance"
             };
 
-            string output = LlmInputHelper.ToLlmInput(result, metadata: metadata);
+            string output = result.ToLlmInput(metadata);
 
             Assert.That(output, Does.Contain("source: invoice.pdf"));
             Assert.That(output, Does.Contain("department: finance"));
@@ -171,7 +171,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 [reservedKey] = "custom"
             };
 
-            ArgumentException? ex = Assert.Throws<ArgumentException>(() => LlmInputHelper.ToLlmInput(result, metadata: metadata));
+            ArgumentException? ex = Assert.Throws<ArgumentException>(() => result.ToLlmInput(metadata));
 
             Assert.That(ex!.ParamName, Is.EqualTo("metadata"));
             Assert.That(ex.Message, Does.Contain("reserved front matter key"));
@@ -194,7 +194,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("pages: 1-2"));
             Assert.That(output, Does.Contain("<!-- page 1 -->"));
@@ -224,7 +224,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("<!-- page 1 -->"));
             Assert.That(output, Does.Contain("<!-- page 2 -->"));
@@ -253,7 +253,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("contentType: audioVisual"));
             Assert.That(output, Does.Contain("Summary: A short call."));
@@ -279,7 +279,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new AnalysisContent[] { seg1, seg2 });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("timeRange: 00:00 \u2013 00:23"));
             Assert.That(output, Does.Contain("timeRange: 00:24 \u2013 00:43"));
@@ -304,7 +304,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new AnalysisContent[] { seg1, seg2 });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output.IndexOf("Input first, later in time.", StringComparison.Ordinal),
                 Is.LessThan(output.IndexOf("Input second, earlier in time.", StringComparison.Ordinal)));
@@ -352,7 +352,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new AnalysisContent[] { parent, child1, child2 });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Not.Contain("Full document text (should be skipped)"));
             Assert.That(output, Does.Contain("category: Invoice"));
@@ -501,7 +501,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("Data:"));
             Assert.That(output, Does.Contain("key: val"));
@@ -618,7 +618,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 contents: new[] { content },
                 warnings: warnings);
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("rai_warnings:"));
             Assert.That(output, Does.Contain("code: hate"));
@@ -647,7 +647,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 contents: new[] { content },
                 warnings: warnings);
 
-            string output = LlmInputHelper.ToLlmInput(result, includeFields: false, includeMarkdown: false);
+            string output = result.ToLlmInput(options: new LlmInputOptions { IncludeFields = false, IncludeMarkdown = false });
 
             Assert.That(output, Does.Contain("rai_warnings:"));
             Assert.That(output, Does.Contain("code: hate"));
@@ -671,7 +671,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("contentType: document"));
             Assert.That(output, Does.Not.Contain("fields:"));
@@ -694,7 +694,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("fields:"));
             Assert.That(output, Does.Contain("Name: Test"));
@@ -720,7 +720,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result, includeFields: false, includeMarkdown: false);
+            string output = result.ToLlmInput(options: new LlmInputOptions { IncludeFields = false, IncludeMarkdown = false });
 
             Assert.That(output, Does.Contain("contentType: document"));
             Assert.That(output, Does.Contain("pages: 1"));
@@ -758,7 +758,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("TotalAmount:"));
             Assert.That(output, Does.Contain("Amount: 165"));
@@ -789,7 +789,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("Topics:"));
             Assert.That(output, Does.Contain("- Topic A"));
@@ -860,7 +860,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new AnalysisContent[] { parent, child });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("ChildField: present"));
             Assert.That(output, Does.Not.Contain("ParentField"));
@@ -883,7 +883,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("pages: 3"));
         }
@@ -904,7 +904,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             // Should start with --- and end front matter with ---
             Assert.That(output, Does.StartWith("---\n"));
@@ -935,7 +935,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new AnalysisContent[] { content1, content2 });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("\n\n*****\n\n"));
         }
@@ -958,7 +958,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new AnalysisContent[] { content1, content2 });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output.IndexOf("Page two content appears first in service order.", StringComparison.Ordinal),
                 Is.LessThan(output.IndexOf("Page one content appears second in service order.", StringComparison.Ordinal)));
@@ -993,7 +993,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new AnalysisContent[] { parent });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("category: Invoice"));
             Assert.That(output, Does.Contain("category: BankStatement"));
@@ -1039,7 +1039,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new AnalysisContent[] { parent, routedInvoice });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             string[] blocks = output.Split(new[] { "*****" }, StringSplitOptions.None);
             Assert.AreEqual(2, blocks.Length);
@@ -1092,7 +1092,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new AnalysisContent[] { parent, routed });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             string[] blocks = output.Split(new[] { "*****" }, StringSplitOptions.None);
             Assert.AreEqual(3, blocks.Length);
@@ -1140,7 +1140,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new AnalysisContent[] { parent, routed });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             string[] blocks = output.Split(new[] { "*****" }, StringSplitOptions.None);
             // Should have 2 blocks: routed segment1 (with fields) + expanded segment2 (no fields)
@@ -1201,7 +1201,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            string output = LlmInputHelper.ToLlmInput(result);
+            string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("pages: 2-3, 5"));
         }

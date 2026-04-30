@@ -363,7 +363,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // ToLlmInput renders all extracted fields as YAML front matter followed by
             // the markdown body, so an LLM can consume both structured data and document text
             // in one shot. For advanced options, see Sample_Advanced_ToLlmInput.
-            string llmText = LlmInputHelper.ToLlmInput(result);
+            string llmText = result.ToLlmInput();
             Console.WriteLine(llmText);
             #endregion
 
