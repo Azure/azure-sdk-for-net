@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             ResourceIdentifier sourceDbServerResourceId = default;
             string sourceDbServerFullyQualifiedDomainName = default;
             string targetDbServerFullyQualifiedDomainName = default;
-            PostgreSqlMigrationSecretParameters secretParameters = default;
+            MigrationSecretParametersForPatch secretParameters = default;
             IList<string> dbsToMigrate = default;
             PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default;
             PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(prop.Value, options);
+                    secretParameters = MigrationSecretParametersForPatch.DeserializeMigrationSecretParametersForPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dbsToMigrate"u8))

@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TuningOptionsList))]
     [ModelReaderWriterBuildable(typeof(TuningOptionsProperties))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(UserIdentity))]
     [ModelReaderWriterBuildable(typeof(ValidationSummaryItem))]
     [ModelReaderWriterBuildable(typeof(VirtualEndpointResource))]
     [ModelReaderWriterBuildable(typeof(VirtualEndpointResourceData))]

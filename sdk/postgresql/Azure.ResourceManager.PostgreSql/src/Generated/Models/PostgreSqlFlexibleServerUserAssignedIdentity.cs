@@ -41,10 +41,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Map of user assigned managed identities. </summary>
-        [WirePath("userAssignedIdentities")]
-        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
-
         /// <summary> Identifier of the object of the service principal associated to the user assigned managed identity. </summary>
         [WirePath("principalId")]
         public Guid? PrincipalId { get; set; }

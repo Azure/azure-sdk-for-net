@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(ConnectionState, options);
+            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             IReadOnlyList<string> groupIds = default;
             PrivateEndpoint privateEndpoint = default;
-            PostgreSqlFlexibleServersPrivateLinkServiceConnectionState connectionState = default;
+            PostgreSqlFlexibleServersPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    connectionState = PostgreSqlFlexibleServersPrivateLinkServiceConnectionState.DeserializePostgreSqlFlexibleServersPrivateLinkServiceConnectionState(prop.Value, options);
+                    privateLinkServiceConnectionState = PostgreSqlFlexibleServersPrivateLinkServiceConnectionState.DeserializePostgreSqlFlexibleServersPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, connectionState, provisioningState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
         }
     }
 }
