@@ -117,8 +117,8 @@ namespace Azure.AI.VoiceLive.Samples
 
         private static async Task RunVoiceAssistantAsync(
                 string? apiKey,
-            string endpoint,
-            string model,
+                string endpoint,
+                string model,
                 string voice,
                 string instructions,
                 bool useTokenCredential,
