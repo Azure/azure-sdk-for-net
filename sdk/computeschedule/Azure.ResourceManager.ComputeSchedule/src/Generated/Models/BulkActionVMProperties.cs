@@ -12,17 +12,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Describes the properties of a Virtual Machine for create. </summary>
-    public partial class BulkActionVMProperties
+    public partial class BulkActionVmProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionVMProperties"/>. </summary>
-        public BulkActionVMProperties()
+        /// <summary> Initializes a new instance of <see cref="BulkActionVmProperties"/>. </summary>
+        public BulkActionVmProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionVMProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionVmProperties"/>. </summary>
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum compute api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionVMProperties(ScheduledEventsPolicy scheduledEventsPolicy, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, HardwareProfile hardwareProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVmProperties(ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineHardwareProfile hardwareProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledEventsPolicy = scheduledEventsPolicy;
             StorageProfile = storageProfile;
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public StorageProfile StorageProfile { get; set; }
+        public VirtualMachineStorageProfile StorageProfile { get; set; }
 
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public OSProfile OsProfile { get; set; }
+        public VirtualMachineOSProfile OsProfile { get; set; }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        public VirtualMachineNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> Specifies the hardware profile for the virtual machine. </summary>
-        public HardwareProfile HardwareProfile { get; set; }
+        public VirtualMachineHardwareProfile HardwareProfile { get; set; }
 
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
         public SecurityProfile SecurityProfile { get; set; }

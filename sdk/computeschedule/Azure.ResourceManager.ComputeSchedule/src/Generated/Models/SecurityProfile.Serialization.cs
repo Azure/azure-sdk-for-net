@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             UefiSettings uefiSettings = default;
             bool? encryptionAtHost = default;
-            SecurityTypes? securityType = default;
+            SecurityType? securityType = default;
             EncryptionIdentity encryptionIdentity = default;
             ProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    securityType = new SecurityTypes(prop.Value.GetString());
+                    securityType = new SecurityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryptionIdentity"u8))

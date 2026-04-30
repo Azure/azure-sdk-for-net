@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             string domainNameLabel = default;
-            DomainNameLabelScopeTypes? domainNameLabelScope = default;
+            DomainNameLabelScopeType? domainNameLabelScope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    domainNameLabelScope = new DomainNameLabelScopeTypes(prop.Value.GetString());
+                    domainNameLabelScope = new DomainNameLabelScopeType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

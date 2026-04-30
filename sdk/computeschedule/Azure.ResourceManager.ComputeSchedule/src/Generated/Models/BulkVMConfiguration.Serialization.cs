@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 writer.WritePropertyName("vmExtensions"u8);
                 writer.WriteStartArray();
-                foreach (BulkActionVMExtension item in VmExtensions)
+                foreach (BulkActionVmExtension item in VmExtensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -209,8 +209,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ExtendedLocation extendedLocation = default;
             Placement placement = default;
             IDictionary<string, string> tags = default;
-            BulkActionVMProperties properties = default;
-            IList<BulkActionVMExtension> vmExtensions = default;
+            BulkActionVmProperties properties = default;
+            IList<BulkActionVmExtension> vmExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    properties = BulkActionVMProperties.DeserializeBulkActionVMProperties(prop.Value, options);
+                    properties = BulkActionVmProperties.DeserializeBulkActionVmProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vmExtensions"u8))
@@ -322,10 +322,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<BulkActionVMExtension> array = new List<BulkActionVMExtension>();
+                    List<BulkActionVmExtension> array = new List<BulkActionVmExtension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BulkActionVMExtension.DeserializeBulkActionVMExtension(item, options));
+                        array.Add(BulkActionVmExtension.DeserializeBulkActionVmExtension(item, options));
                     }
                     vmExtensions = array;
                     continue;
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 placement,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties,
-                vmExtensions ?? new ChangeTrackingList<BulkActionVMExtension>(),
+                vmExtensions ?? new ChangeTrackingList<BulkActionVmExtension>(),
                 additionalBinaryDataProperties);
         }
     }

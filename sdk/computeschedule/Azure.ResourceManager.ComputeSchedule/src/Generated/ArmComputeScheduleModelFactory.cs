@@ -252,11 +252,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="properties"> Specifies the properties of the virtual machine to be created. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
         /// <returns> A new <see cref="Models.BulkVMConfiguration"/> instance for mocking. </returns>
-        public static BulkVMConfiguration BulkVMConfiguration(string name = default, string computeApiVersion = default, string resourceGroupName = default, IEnumerable<string> zones = default, ArmPlan plan = default, VirtualMachineIdentity identity = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, BulkActionVMProperties properties = default, IEnumerable<BulkActionVMExtension> vmExtensions = default)
+        public static BulkVMConfiguration BulkVMConfiguration(string name = default, string computeApiVersion = default, string resourceGroupName = default, IEnumerable<string> zones = default, ArmPlan plan = default, VirtualMachineIdentity identity = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, BulkActionVmProperties properties = default, IEnumerable<BulkActionVmExtension> vmExtensions = default)
         {
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
-            vmExtensions ??= new ChangeTrackingList<BulkActionVMExtension>();
+            vmExtensions ??= new ChangeTrackingList<BulkActionVmExtension>();
 
             return new BulkVMConfiguration(
                 name,
@@ -313,12 +313,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="diskControllerType"> Specifies the disk controller type configured for the VM. <b>Note:</b> This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </param>
-        /// <returns> A new <see cref="Models.StorageProfile"/> instance for mocking. </returns>
-        public static StorageProfile StorageProfile(ImageReference imageReference = default, OSDisk osDisk = default, IEnumerable<DataDisk> dataDisks = default, DiskControllerTypes? diskControllerType = default)
+        /// <returns> A new <see cref="Models.VirtualMachineStorageProfile"/> instance for mocking. </returns>
+        public static VirtualMachineStorageProfile VirtualMachineStorageProfile(ImageReference imageReference = default, VirtualMachineOSDisk osDisk = default, IEnumerable<VirtualMachineDataDisk> dataDisks = default, DiskControllerType? diskControllerType = default)
         {
-            dataDisks ??= new ChangeTrackingList<DataDisk>();
+            dataDisks ??= new ChangeTrackingList<VirtualMachineDataDisk>();
 
-            return new StorageProfile(imageReference, osDisk, dataDisks.ToList(), diskControllerType, additionalBinaryDataProperties: null);
+            return new VirtualMachineStorageProfile(imageReference, osDisk, dataDisks.ToList(), diskControllerType, additionalBinaryDataProperties: null);
         }
 
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </param>
@@ -333,10 +333,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. For an ephemeral OS Disk, the default value is set to Delete. The user cannot change the delete option for an ephemeral OS Disk. </param>
-        /// <returns> A new <see cref="Models.OSDisk"/> instance for mocking. </returns>
-        public static OSDisk OSDisk(OperatingSystemTypes? osType = default, DiskEncryptionSettings encryptionSettings = default, string name = default, Uri vhdUri = default, Uri imageUri = default, CachingTypes? caching = default, bool? writeAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, DiskCreateOptionTypes createOption = default, int? diskSizeGB = default, ComputeScheduleManagedDiskConfig managedDisk = default, DiskDeleteOptionTypes? deleteOption = default)
+        /// <returns> A new <see cref="Models.VirtualMachineOSDisk"/> instance for mocking. </returns>
+        public static VirtualMachineOSDisk VirtualMachineOSDisk(OperatingSystemType? osType = default, DiskEncryptionSettings encryptionSettings = default, string name = default, Uri vhdUri = default, Uri imageUri = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, DiskCreateOptionType createOption = default, int? diskSizeGB = default, ComputeScheduleManagedDiskConfig managedDisk = default, DiskDeleteOptionType? deleteOption = default)
         {
-            return new OSDisk(
+            return new VirtualMachineOSDisk(
                 osType,
                 encryptionSettings,
                 name,
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="toBeDetached"> Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset. </param>
         /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: ForceDetach. This feature is still in preview. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. </param>
-        /// <returns> A new <see cref="Models.DataDisk"/> instance for mocking. </returns>
-        public static DataDisk DataDisk(int lun = default, string name = default, Uri vhdUri = default, Uri imageUri = default, CachingTypes? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionTypes createOption = default, int? diskSizeGB = default, ComputeScheduleManagedDiskConfig managedDisk = default, ResourceIdentifier sourceResourceId = default, bool? toBeDetached = default, DiskDetachOptionTypes? detachOption = default, DiskDeleteOptionTypes? deleteOption = default)
+        /// <returns> A new <see cref="Models.VirtualMachineDataDisk"/> instance for mocking. </returns>
+        public static VirtualMachineDataDisk VirtualMachineDataDisk(int lun = default, string name = default, Uri vhdUri = default, Uri imageUri = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionType createOption = default, int? diskSizeGB = default, ComputeScheduleManagedDiskConfig managedDisk = default, ResourceIdentifier sourceResourceId = default, bool? toBeDetached = default, DiskDetachOptionType? detachOption = default, DiskDeleteOptionType? deleteOption = default)
         {
-            return new DataDisk(
+            return new VirtualMachineDataDisk(
                 lun,
                 name,
                 vhdUri is null ? default : new VirtualHardDisk(vhdUri, null),
@@ -411,12 +411,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
         /// <param name="allowExtensionOperations"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
         /// <param name="requireGuestProvisionSignal"> Optional property which must either be set to True or omitted. </param>
-        /// <returns> A new <see cref="Models.OSProfile"/> instance for mocking. </returns>
-        public static OSProfile OSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, WindowsConfiguration windowsConfiguration = default, LinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? allowExtensionOperations = default, bool? requireGuestProvisionSignal = default)
+        /// <returns> A new <see cref="Models.VirtualMachineOSProfile"/> instance for mocking. </returns>
+        public static VirtualMachineOSProfile VirtualMachineOSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, WindowsConfiguration windowsConfiguration = default, LinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? allowExtensionOperations = default, bool? requireGuestProvisionSignal = default)
         {
             secrets ??= new ChangeTrackingList<VaultSecretGroup>();
 
-            return new OSProfile(
+            return new VirtualMachineOSProfile(
                 computerName,
                 adminUsername,
                 adminPassword,
@@ -464,13 +464,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </param>
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
         /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
-        /// <returns> A new <see cref="Models.NetworkProfile"/> instance for mocking. </returns>
-        public static NetworkProfile NetworkProfile(IEnumerable<NetworkInterfaceReference> networkInterfaces = default, NetworkApiVersion? networkApiVersion = default, IEnumerable<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default)
+        /// <returns> A new <see cref="Models.VirtualMachineNetworkProfile"/> instance for mocking. </returns>
+        public static VirtualMachineNetworkProfile VirtualMachineNetworkProfile(IEnumerable<VirtualMachineNetworkInterfaceReference> networkInterfaces = default, NetworkApiVersion? networkApiVersion = default, IEnumerable<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default)
         {
-            networkInterfaces ??= new ChangeTrackingList<NetworkInterfaceReference>();
+            networkInterfaces ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>();
             networkInterfaceConfigurations ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>();
 
-            return new NetworkProfile(networkInterfaces.ToList(), networkApiVersion, networkInterfaceConfigurations.ToList(), additionalBinaryDataProperties: null);
+            return new VirtualMachineNetworkProfile(networkInterfaces.ToList(), networkApiVersion, networkInterfaceConfigurations.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes a virtual machine network interface configurations. </summary>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
         /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(ResourceIdentifier subnetId = default, bool? primary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersions? privateIPAddressVersion = default, IEnumerable<SubResource> applicationSecurityGroups = default, IEnumerable<SubResource> applicationGatewayBackendAddressPools = default, IEnumerable<SubResource> loadBalancerBackendAddressPools = default)
+        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(ResourceIdentifier subnetId = default, bool? primary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, IEnumerable<SubResource> applicationSecurityGroups = default, IEnumerable<SubResource> applicationGatewayBackendAddressPools = default, IEnumerable<SubResource> loadBalancerBackendAddressPools = default)
         {
             applicationSecurityGroups ??= new ChangeTrackingList<SubResource>();
             applicationGatewayBackendAddressPools ??= new ChangeTrackingList<SubResource>();
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteOptions? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIpTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, IPVersions? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
+        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteOptions? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIpTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, IPVersion? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
         {
             ipTags ??= new ChangeTrackingList<VirtualMachineIpTag>();
 
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="domainNameLabel"> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </param>
         /// <param name="domainNameLabelScope"> The Domain name label scope of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the hashed domain name label with policy according to the domain name label scope and vm network profile unique ID. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressDnsSettingsConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachinePublicIPAddressDnsSettingsConfiguration VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel = default, DomainNameLabelScopeTypes? domainNameLabelScope = default)
+        public static VirtualMachinePublicIPAddressDnsSettingsConfiguration VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel = default, DomainNameLabelScopeType? domainNameLabelScope = default)
         {
             return new VirtualMachinePublicIPAddressDnsSettingsConfiguration(domainNameLabel, domainNameLabelScope, additionalBinaryDataProperties: null);
         }
@@ -620,10 +620,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Defines a virtual machine extension. </summary>
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="properties"> Properties of the virtual machine extension. </param>
-        /// <returns> A new <see cref="Models.BulkActionVMExtension"/> instance for mocking. </returns>
-        public static BulkActionVMExtension BulkActionVMExtension(string name = default, BulkActionVmExtensionProperties properties = default)
+        /// <returns> A new <see cref="Models.BulkActionVmExtension"/> instance for mocking. </returns>
+        public static BulkActionVmExtension BulkActionVmExtension(string name = default, BulkActionVmExtensionProperties properties = default)
         {
-            return new BulkActionVMExtension(name, properties, additionalBinaryDataProperties: null);
+            return new BulkActionVmExtension(name, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes the properties of a Virtual Machine Extension. </summary>

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             Zones = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
-            VmExtensions = new ChangeTrackingList<BulkActionVMExtension>();
+            VmExtensions = new ChangeTrackingList<BulkActionVmExtension>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkVMConfiguration"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="properties"> Specifies the properties of the virtual machine to be created. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkVMConfiguration(string name, string computeApiVersion, string resourceGroupName, IList<string> zones, ArmPlan plan, VirtualMachineIdentity identity, ExtendedLocation extendedLocation, Placement placement, IDictionary<string, string> tags, BulkActionVMProperties properties, IList<BulkActionVMExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkVMConfiguration(string name, string computeApiVersion, string resourceGroupName, IList<string> zones, ArmPlan plan, VirtualMachineIdentity identity, ExtendedLocation extendedLocation, Placement placement, IDictionary<string, string> tags, BulkActionVmProperties properties, IList<BulkActionVmExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ComputeApiVersion = computeApiVersion;
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Specifies the properties of the virtual machine to be created. </summary>
-        public BulkActionVMProperties Properties { get; set; }
+        public BulkActionVmProperties Properties { get; set; }
 
         /// <summary> Virtual Machine Extensions Array to be applied to the Virtual Machines. </summary>
-        public IList<BulkActionVMExtension> VmExtensions { get; }
+        public IList<BulkActionVmExtension> VmExtensions { get; }
     }
 }

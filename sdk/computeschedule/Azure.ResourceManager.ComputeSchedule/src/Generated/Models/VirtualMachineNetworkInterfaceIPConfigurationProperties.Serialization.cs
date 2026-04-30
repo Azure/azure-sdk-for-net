@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             SubResource subnet = default;
             bool? primary = default;
             VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default;
-            IPVersions? privateIPAddressVersion = default;
+            IPVersion? privateIPAddressVersion = default;
             IList<SubResource> applicationSecurityGroups = default;
             IList<SubResource> applicationGatewayBackendAddressPools = default;
             IList<SubResource> loadBalancerBackendAddressPools = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    privateIPAddressVersion = new IPVersions(prop.Value.GetString());
+                    privateIPAddressVersion = new IPVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("applicationSecurityGroups"u8))

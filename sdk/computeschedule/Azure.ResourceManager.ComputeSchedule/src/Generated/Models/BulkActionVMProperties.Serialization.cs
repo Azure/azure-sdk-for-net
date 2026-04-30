@@ -14,51 +14,51 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Describes the properties of a Virtual Machine for create. </summary>
-    public partial class BulkActionVMProperties : IJsonModel<BulkActionVMProperties>
+    public partial class BulkActionVmProperties : IJsonModel<BulkActionVmProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkActionVMProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BulkActionVmProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVmProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBulkActionVMProperties(document.RootElement, options);
+                        return DeserializeBulkActionVmProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BulkActionVMProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionVmProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVmProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BulkActionVMProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionVmProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BulkActionVMProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BulkActionVmProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkActionVMProperties IPersistableModel<BulkActionVMProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BulkActionVmProperties IPersistableModel<BulkActionVmProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BulkActionVMProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BulkActionVmProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BulkActionVMProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BulkActionVmProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVmProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkActionVMProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionVmProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ScheduledEventsPolicy))
             {
@@ -163,35 +163,35 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkActionVMProperties IJsonModel<BulkActionVMProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BulkActionVmProperties IJsonModel<BulkActionVmProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkActionVMProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BulkActionVmProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVmProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkActionVMProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionVmProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBulkActionVMProperties(document.RootElement, options);
+            return DeserializeBulkActionVmProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BulkActionVMProperties DeserializeBulkActionVMProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static BulkActionVmProperties DeserializeBulkActionVmProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ScheduledEventsPolicy scheduledEventsPolicy = default;
-            StorageProfile storageProfile = default;
+            VirtualMachineStorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
-            OSProfile osProfile = default;
-            NetworkProfile networkProfile = default;
-            HardwareProfile hardwareProfile = default;
+            VirtualMachineOSProfile osProfile = default;
+            VirtualMachineNetworkProfile networkProfile = default;
+            VirtualMachineHardwareProfile hardwareProfile = default;
             SecurityProfile securityProfile = default;
             DiagnosticsProfile diagnosticsProfile = default;
             string licenseType = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfile.DeserializeStorageProfile(prop.Value, options);
+                    storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("additionalCapabilities"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfile.DeserializeOSProfile(prop.Value, options);
+                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfile.DeserializeNetworkProfile(prop.Value, options);
+                    networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hardwareProfile"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(prop.Value, options);
+                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("securityProfile"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkActionVMProperties(
+            return new BulkActionVmProperties(
                 scheduledEventsPolicy,
                 storageProfile,
                 additionalCapabilities,

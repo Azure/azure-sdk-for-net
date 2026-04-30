@@ -12,16 +12,16 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Defines a virtual machine extension. </summary>
-    public partial class BulkActionVMExtension
+    public partial class BulkActionVmExtension
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionVMExtension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionVmExtension"/>. </summary>
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="properties"> Properties of the virtual machine extension. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public BulkActionVMExtension(string name, BulkActionVmExtensionProperties properties)
+        public BulkActionVmExtension(string name, BulkActionVmExtensionProperties properties)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionVMExtension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionVmExtension"/>. </summary>
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="properties"> Properties of the virtual machine extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionVMExtension(string name, BulkActionVmExtensionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVmExtension(string name, BulkActionVmExtensionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;

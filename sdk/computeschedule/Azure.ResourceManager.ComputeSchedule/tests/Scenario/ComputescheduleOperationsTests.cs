@@ -479,10 +479,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             {
                 ResourceGroupName = rgName,
                 ComputeApiVersion = "2023-09-01",
-                Properties = new BulkActionVMProperties
+                Properties = new BulkActionVmProperties
                 {
-                    HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
-                    StorageProfile = new StorageProfile
+                    HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    StorageProfile = new VirtualMachineStorageProfile
                     {
                         ImageReference = new ImageReference
                         {
@@ -491,20 +491,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                             Sku = "2022-datacenter-azure-edition",
                             Version = "latest"
                         },
-                        OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
                         {
-                            OSType = OperatingSystemTypes.Windows,
-                            Caching = CachingTypes.ReadWrite,
+                            OSType = OperatingSystemType.Windows,
+                            Caching = CachingType.ReadWrite,
                             ManagedDisk = new ComputeScheduleManagedDiskConfig
                             {
-                                StorageAccountType = StorageAccountTypes.StandardLRS
+                                StorageAccountType = StorageAccountType.StandardLRS
                             },
-                            DeleteOption = DiskDeleteOptionTypes.Detach,
+                            DeleteOption = DiskDeleteOptionType.Detach,
                             DiskSizeGB = 127
                         },
-                        DiskControllerType = DiskControllerTypes.SCSI
+                        DiskControllerType = DiskControllerType.SCSI
                     },
-                    NetworkProfile = new NetworkProfile
+                    NetworkProfile = new VirtualMachineNetworkProfile
                     {
                         NetworkInterfaceConfigurations =
                         {
@@ -540,10 +540,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             var vmOverride = new BulkVMConfiguration
             {
                 Name = "testflexvm0",
-                Properties = new BulkActionVMProperties
+                Properties = new BulkActionVmProperties
                 {
-                    HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
-                    OsProfile = new OSProfile
+                    HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    OsProfile = new VirtualMachineOSProfile
                     {
                         ComputerName = "testflexvm",
                         AdminUsername = "testadmin",
@@ -600,10 +600,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             {
                 ResourceGroupName = rgName,
                 ComputeApiVersion = "2023-09-01",
-                Properties = new BulkActionVMProperties
+                Properties = new BulkActionVmProperties
                 {
-                    HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
-                    StorageProfile = new StorageProfile
+                    HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    StorageProfile = new VirtualMachineStorageProfile
                     {
                         ImageReference = new ImageReference
                         {
@@ -612,20 +612,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                             Sku = "2022-datacenter-azure-edition",
                             Version = "latest"
                         },
-                        OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
                         {
-                            OSType = OperatingSystemTypes.Windows,
-                            Caching = CachingTypes.ReadWrite,
+                            OSType = OperatingSystemType.Windows,
+                            Caching = CachingType.ReadWrite,
                             ManagedDisk = new ComputeScheduleManagedDiskConfig
                             {
-                                StorageAccountType = StorageAccountTypes.StandardLRS
+                                StorageAccountType = StorageAccountType.StandardLRS
                             },
-                            DeleteOption = DiskDeleteOptionTypes.Detach,
+                            DeleteOption = DiskDeleteOptionType.Detach,
                             DiskSizeGB = 127
                         },
-                        DiskControllerType = DiskControllerTypes.SCSI
+                        DiskControllerType = DiskControllerType.SCSI
                     },
-                    NetworkProfile = new NetworkProfile
+                    NetworkProfile = new VirtualMachineNetworkProfile
                     {
                         NetworkInterfaceConfigurations =
                         {
@@ -661,10 +661,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             var vmOverride = new BulkVMConfiguration
             {
                 Name = "testcreatevm0",
-                Properties = new BulkActionVMProperties
+                Properties = new BulkActionVmProperties
                 {
-                    HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
-                    OsProfile = new OSProfile
+                    HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    OsProfile = new VirtualMachineOSProfile
                     {
                         ComputerName = "testcreatevm",
                         AdminUsername = "testadmin",

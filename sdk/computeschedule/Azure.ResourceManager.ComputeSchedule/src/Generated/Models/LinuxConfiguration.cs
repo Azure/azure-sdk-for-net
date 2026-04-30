@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public bool? IsVmAgentPlatformUpdatesEnabled { get; set; }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<SshPublicKey> SshPublicKeys
+        public IList<SshPublicKeyConfiguration> SshPublicKeys
         {
             get
             {

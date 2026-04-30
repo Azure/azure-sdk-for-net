@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            StorageAccountTypes? storageAccountType = default;
+            StorageAccountType? storageAccountType = default;
             ComputeScheduleDiskEncryptionSetConfig diskEncryptionSet = default;
             VMDiskSecurityProfile securityProfile = default;
             foreach (var prop in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    storageAccountType = new StorageAccountTypes(prop.Value.GetString());
+                    storageAccountType = new StorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))
