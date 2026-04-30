@@ -9,7 +9,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Preserve the previous GA IReadOnlyList types for these output-only collection properties.
+    // The TypeSpec properties are output-only, but marking them with @visibility(Lifecycle.Read) would be unscoped
+    // and affect all emitters. Use CodeGenMember to preserve the previous GA IReadOnlyList types in C# only.
     public partial class PostgreSqlFlexibleServersValidationDetails
     {
         /// <summary> Details of server level validations. </summary>

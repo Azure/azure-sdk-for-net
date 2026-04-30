@@ -9,7 +9,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Preserve the previous GA IReadOnlyDictionary type for this output-only dictionary property.
+    // The TypeSpec property is output-only, but marking it with @visibility(Lifecycle.Read) would be unscoped
+    // and affect all emitters. Use CodeGenMember to preserve the previous GA IReadOnlyDictionary type in C# only.
     public partial class PostgreSqlMigrationSubStateDetails
     {
         /// <summary> Gets the DbDetails. </summary>
