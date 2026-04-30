@@ -10,7 +10,9 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    // Preserves previous configuration update overloads that accepted the resource data model.
+    // TypeSpec models configuration PUT/PATCH with ConfigurationForUpdate, so generation uses
+    // PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent for the request body. Preserve
+    // previous GA resource-level Update overloads that accepted PostgreSqlFlexibleServerConfigurationData.
     public partial class PostgreSqlFlexibleServerConfigurationResource
     {
         /// <summary> Update a configuration. </summary>
