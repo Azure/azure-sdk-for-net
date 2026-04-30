@@ -8,31 +8,32 @@ This sample demonstrates how to use the Azure VoiceLive SDK to connect to an **A
 - An Azure subscription with VoiceLive access
 - An Azure AI Foundry project with a deployed agent
 - Azure CLI logged in (`az login`) or a managed identity
+- Microphone and speakers/headphones
 
-## Configuration
+## Setup
 
-Agent sessions require `DefaultAzureCredential` — API key authentication is not supported.
+1. **Install dependencies**:
+   ```bash
+   dotnet restore
+   ```
 
-Set the following environment variables before running:
+2. **Configure credentials**:
+   
+   Agent sessions require `DefaultAzureCredential`. Ensure you're logged in:
+   ```bash
+   az login
+   ```
 
-| Variable | Required | Description |
-|---|---|---|
-| `AZURE_VOICELIVE_ENDPOINT` | Yes | Azure VoiceLive endpoint URL |
-| `AGENT_NAME` | Yes | Azure AI Foundry agent name |
-| `AGENT_PROJECT_NAME` | Yes | Azure AI Foundry project name |
-| `AGENT_VERSION` | No | Specific agent version (defaults to latest) |
-| `AGENT_VOICE` | No | Voice name (default: `en-US-AvaNeural`) |
-| `FOUNDRY_RESOURCE_OVERRIDE` | No | Override Foundry resource endpoint |
-| `AGENT_AUTH_IDENTITY_CLIENT_ID` | No | Managed identity client ID |
+3. **Set required environment variables**:
+   ```bash
+   export AZURE_VOICELIVE_ENDPOINT="https://<your-resource>.services.ai.azure.com/"
+   export AGENT_NAME="my-agent"
+   export AGENT_PROJECT_NAME="my-project"
+   ```
 
 ## Running the Sample
 
 ```bash
-# Set required variables
-export AZURE_VOICELIVE_ENDPOINT="https://<your-resource>.services.ai.azure.com/"
-export AGENT_NAME="my-agent"
-export AGENT_PROJECT_NAME="my-project"
-
 dotnet run
 ```
 
@@ -41,8 +42,27 @@ Or pass values via command line:
 ```bash
 dotnet run -- --endpoint https://<your-resource>.services.ai.azure.com/ \
               --agent-name my-agent \
+              --agent-project my-project
+```
+
+## Command Line Options
+
+Available options:
+- `--endpoint <url>`: VoiceLive service endpoint (required)
+- `--agent-name <name>`: Azure AI Foundry agent name (required)
+- `--agent-project <name>`: Azure AI Foundry project name (required)
+- `--agent-version <version>`: Specific agent version (defaults to latest)
+- `--voice <voice>`: Voice name (default: `en-US-AvaNeural`)
+- `--foundry-resource <url>`: Override Foundry resource endpoint
+- `--client-id <id>`: Managed identity client ID
+- `--verbose`: Enable detailed logging
+
+Example:
+```bash
+dotnet run -- --agent-name my-agent \
               --agent-project my-project \
-              --voice en-US-AvaNeural
+              --voice "en-US-JennyNeural" \
+              --verbose
 ```
 
 ## Key Concepts

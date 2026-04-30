@@ -7,34 +7,49 @@ This sample demonstrates how to use the Azure VoiceLive SDK with **MCP (Model Co
 - .NET 8.0 or later
 - An Azure subscription with VoiceLive access
 - A VoiceLive endpoint and API key (or Azure credential)
+- Microphone and speakers/headphones
 
-## Configuration
+## Setup
 
-Set the following environment variables before running:
+1. **Install dependencies**:
+   ```bash
+   dotnet restore
+   ```
 
-| Variable | Required | Description |
-|---|---|---|
-| `AZURE_VOICELIVE_ENDPOINT` | Yes | Azure VoiceLive endpoint URL |
-| `AZURE_VOICELIVE_MODEL` | Yes | Model to use (e.g., `gpt-realtime`) |
-| `AZURE_VOICELIVE_API_KEY` | No* | API key for authentication |
-| `AZURE_VOICELIVE_VOICE` | No | Voice name (default: `en-US-AvaNeural`) |
-
-\* Either `AZURE_VOICELIVE_API_KEY` or `--use-token-credential` is required.
+2. **Configure credentials**:
+   
+   Option 1: Environment variables
+   ```bash
+   export AZURE_VOICELIVE_ENDPOINT="https://<your-resource>.services.ai.azure.com/"
+   export AZURE_VOICELIVE_API_KEY="<your-api-key>"
+   export AZURE_VOICELIVE_MODEL="gpt-realtime"
+   ```
+   
+   Option 2: Update `appsettings.json` or use `--use-token-credential` with `az login`
 
 ## Running the Sample
 
 ```bash
-export AZURE_VOICELIVE_ENDPOINT="https://<your-resource>.services.ai.azure.com/"
-export AZURE_VOICELIVE_API_KEY="<your-api-key>"
-export AZURE_VOICELIVE_MODEL="gpt-realtime"
-
+# With API key
 dotnet run
+
+# Or with Azure credentials
+dotnet run -- --use-token-credential
 ```
 
-Or with DefaultAzureCredential:
+## Command Line Options
 
+Available options:
+- `--api-key <key>`: Azure VoiceLive API key
+- `--endpoint <url>`: VoiceLive service endpoint
+- `--model <model>`: Model to use (default: `gpt-realtime`)
+- `--voice <voice>`: Voice name (default: `en-US-AvaNeural`)
+- `--use-token-credential`: Use DefaultAzureCredential instead of API key
+- `--verbose`: Enable detailed logging
+
+Example:
 ```bash
-dotnet run -- --use-token-credential
+dotnet run -- --voice "en-US-JennyNeural" --verbose
 ```
 
 ## MCP Servers
