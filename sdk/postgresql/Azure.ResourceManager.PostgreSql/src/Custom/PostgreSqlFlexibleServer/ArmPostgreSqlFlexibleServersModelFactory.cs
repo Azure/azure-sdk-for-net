@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPrivateEndpointConnectionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionData PostgreSqlFlexibleServersPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, PostgreSqlFlexibleServersPrivateLinkServiceConnectionState connectionState = null, PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = null)
-            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServersPrivateEndpointConnectionData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupIds: groupIds, privateLinkServiceConnectionState: connectionState, provisioningState: provisioningState, privateEndpointId: privateEndpointId);
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServersPrivateEndpointConnectionData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupIds: groupIds, connectionState: connectionState, provisioningState: provisioningState, privateEndpointId: privateEndpointId);
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPrivateLinkResourceData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
