@@ -649,7 +649,7 @@ fi
 # These are already handled by the config loading, but some snippets have them inline
 sed -i 's|"<endpoint>"|_endpoint|g' "$RUNNER_DIR/Program.cs"
 sed -i 's|"<apiKey>"|_apiKey|g' "$RUNNER_DIR/Program.cs"
-sed -i 's|"<document_url>"|"https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf"|g' "$RUNNER_DIR/Program.cs"
+sed -i 's|"<document_url>"|"https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_invoices.pdf"|g' "$RUNNER_DIR/Program.cs"
 
 # Sample00: Replace model deployment name placeholders
 sed -i "s|<your-gpt-4.1-deployment-name>|$GPT41_DEPLOYMENT|g" "$RUNNER_DIR/Program.cs"
@@ -688,9 +688,10 @@ fi
 # For samples that need a local file but none provided, download a test file
 if grep -q '<localDocumentFilePath>\|<filePath>\|<file_path>' "$RUNNER_DIR/Program.cs" 2>/dev/null; then
     if [ -z "$LOCAL_FILE" ]; then
-        print_warning "⚠ Sample requires a local file. Downloading a test PDF..."
+        # Use a 10-page PDF so multi-page ContentRange snippets (e.g. PagesFrom(9)) work.
+        print_warning "⚠ Sample requires a local file. Downloading a 10-page test PDF..."
         TEST_FILE="$RUNNER_DIR/test_document.pdf"
-        curl -sL "https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf" -o "$TEST_FILE"
+        curl -sL "https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_invoices.pdf" -o "$TEST_FILE"
         ESCAPED_TEST=$(echo "$TEST_FILE" | sed 's/\\/\\\\/g')
         sed -i "s|<localDocumentFilePath>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
         sed -i "s|<filePath>|$ESCAPED_TEST|g" "$RUNNER_DIR/Program.cs"
