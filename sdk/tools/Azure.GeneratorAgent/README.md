@@ -26,6 +26,54 @@ Start the MCP server over stdio transport:
 dotnet run --project src/Azure.GeneratorAgent.csproj
 ```
 
+### Run as a CLI (for CI)
+
+For non-interactive use (e.g., CI pipelines that can't host an LLM), the binary
+also exposes a CLI subcommand that wraps the same deterministic fix tools.
+
+```bash
+dotnet run --project src/Azure.GeneratorAgent.csproj -- generate-and-fix \
+  --project <abs-path-to-sdk-project> \
+  [--specs-path <abs-path-to-local-specs>] \
+  [--max-iterations 10] \
+  [--skip-generation]
+```
+
+Workflow:
+
+1. Run `dotnet build /t:generateCode`.
+2. Snapshot the contents of `Generated/`.
+3. Loop (capped by `--max-iterations`, default 10):
+   build → classify errors → apply deterministic fixes (in customization code only) → rebuild,
+   exiting as soon as the build is clean.
+4. Verify `Generated/` is unchanged; auto-revert any modifications via `git checkout`.
+
+Output contract:
+
+- Progress lines go to **stderr**.
+- A JSON summary (iterations, fixes per tool, remaining errors, generated violations) goes to **stdout** at the end.
+
+Exit codes:
+
+| Code | Meaning |
+|------|---------|
+| `0` | Build is clean and `Generated/` is unchanged. |
+| `1` | Build still has errors after the fix loop, or non-deterministic errors remain. |
+| `2` | Code generation failed. |
+| `3` | Files in `Generated/` were modified during the fix loop and could not be reverted. |
+| `4` | Invalid arguments / usage error. |
+
+Example pipeline step:
+
+```yaml
+- pwsh: |
+    dotnet run --project sdk/tools/Azure.GeneratorAgent/src/Azure.GeneratorAgent.csproj -- `
+      generate-and-fix --project $(Build.SourcesDirectory)/sdk/<service>/<library>
+  displayName: Regenerate and auto-fix SDK
+```
+
+Run `dotnet run --project src/Azure.GeneratorAgent.csproj -- --help` for the full option list.
+
 #### Register in VS Code (GitHub Copilot)
 
 Add the server to your VS Code `settings.json` under `mcp.servers`:
