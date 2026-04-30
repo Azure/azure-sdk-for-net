@@ -9,28 +9,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public partial class PostgreSqlFlexibleServerDataEncryption
     {
         private PostgreSqlKeyStatus? _primaryEncryptionKeyStatusOverride;
-        private bool _primaryEncryptionKeyStatusSet;
         private PostgreSqlKeyStatus? _geoBackupEncryptionKeyStatusOverride;
-        private bool _geoBackupEncryptionKeyStatusSet;
 
         /// <summary> Primary encryption key status. </summary>
         [WirePath("primaryEncryptionKeyStatus")]
         public PostgreSqlKeyStatus? PrimaryEncryptionKeyStatus
         {
-            get => _primaryEncryptionKeyStatusSet ? _primaryEncryptionKeyStatusOverride : PrimaryEncryptionKeyStatusInternal;
-            set { _primaryEncryptionKeyStatusOverride = value; _primaryEncryptionKeyStatusSet = true; }
+            get => _primaryEncryptionKeyStatusOverride;
+            set => _primaryEncryptionKeyStatusOverride = value;
         }
-
-        internal PostgreSqlKeyStatus? PrimaryEncryptionKeyStatusInternal { get; }
 
         /// <summary> Geo-backup encryption key status. </summary>
         [WirePath("geoBackupEncryptionKeyStatus")]
         public PostgreSqlKeyStatus? GeoBackupEncryptionKeyStatus
         {
-            get => _geoBackupEncryptionKeyStatusSet ? _geoBackupEncryptionKeyStatusOverride : GeoBackupEncryptionKeyStatusInternal;
-            set { _geoBackupEncryptionKeyStatusOverride = value; _geoBackupEncryptionKeyStatusSet = true; }
+            get => _geoBackupEncryptionKeyStatusOverride;
+            set => _geoBackupEncryptionKeyStatusOverride = value;
         }
-
-        internal PostgreSqlKeyStatus? GeoBackupEncryptionKeyStatusInternal { get; }
     }
 }
