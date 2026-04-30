@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves the previous model factory overload for long-term-retention backup content.
     public static partial class ArmPostgreSqlModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
