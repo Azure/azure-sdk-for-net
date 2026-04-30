@@ -23,7 +23,11 @@ internal static class CredentialSectionOverlay
         {
             CopySection(original, data, string.Empty);
         }
-        return new MutableSection(data, string.Empty, key: original?.Key ?? string.Empty);
+        return new MutableSection(
+            data,
+            relativePath: string.Empty,
+            key: original?.Key ?? string.Empty,
+            externalRoot: original?.Path ?? string.Empty);
     }
 
     private static void CopySection(IConfigurationSection section, Dictionary<string, string?> target, string path)
@@ -45,17 +49,33 @@ internal static class CredentialSectionOverlay
     {
         private readonly Dictionary<string, string?> _data;
         private readonly string _path;
+        private readonly string _externalRoot;
 
-        public MutableSection(Dictionary<string, string?> data, string path, string key)
+        public MutableSection(Dictionary<string, string?> data, string relativePath, string key, string externalRoot)
         {
             _data = data;
-            _path = path;
+            _path = relativePath;
+            _externalRoot = externalRoot;
             Key = key;
         }
 
         public string Key { get; }
 
-        public string Path => _path;
+        // Path is contractually the full colon-delimited path from the
+        // configuration root. The overlay anchors itself at the original
+        // section's Path (_externalRoot) and appends the relative position
+        // (_path) inside the overlay's in-memory dictionary.
+        public string Path
+        {
+            get
+            {
+                if (_externalRoot.Length == 0)
+                {
+                    return _path;
+                }
+                return _path.Length == 0 ? _externalRoot : _externalRoot + ":" + _path;
+            }
+        }
 
         public string? Value
         {
@@ -120,7 +140,7 @@ internal static class CredentialSectionOverlay
                 }
                 if (seen.Add(segment))
                 {
-                    yield return new MutableSection(_data, Combine(_path, segment), segment);
+                    yield return new MutableSection(_data, Combine(_path, segment), segment, _externalRoot);
                 }
             }
         }
@@ -128,7 +148,14 @@ internal static class CredentialSectionOverlay
         public IChangeToken GetReloadToken() => NullChangeToken.Singleton;
 
         public IConfigurationSection GetSection(string key)
-            => new MutableSection(_data, Combine(_path, key), key);
+        {
+            // Per IConfiguration contract, the Key of a section is the last
+            // segment of its colon-delimited path (ConfigurationPath.GetSectionKey).
+            // So GetSection("Inner:Foo") yields a section whose Key == "Foo".
+            string fullRelative = Combine(_path, key);
+            string sectionKey = ConfigurationPath.GetSectionKey(fullRelative);
+            return new MutableSection(_data, fullRelative, sectionKey, _externalRoot);
+        }
 
         private static string Combine(string parent, string key)
             => parent.Length == 0 ? key : parent + ":" + key;
