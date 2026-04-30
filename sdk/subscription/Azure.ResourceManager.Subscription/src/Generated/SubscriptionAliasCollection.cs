@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Subscription.Models;
 
@@ -26,73 +27,84 @@ namespace Azure.ResourceManager.Subscription
     /// </summary>
     public partial class SubscriptionAliasCollection : ArmCollection, IEnumerable<SubscriptionAliasResource>, IAsyncEnumerable<SubscriptionAliasResource>
     {
-        private readonly ClientDiagnostics _subscriptionAliasAliasClientDiagnostics;
-        private readonly AliasRestOperations _subscriptionAliasAliasRestClient;
+        private readonly ClientDiagnostics _aliasClientDiagnostics;
+        private readonly Alias _aliasRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionAliasCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SubscriptionAliasCollection for mocking. </summary>
         protected SubscriptionAliasCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionAliasCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SubscriptionAliasCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionAliasAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", SubscriptionAliasResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SubscriptionAliasResource.ResourceType, out string subscriptionAliasAliasApiVersion);
-            _subscriptionAliasAliasRestClient = new AliasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionAliasAliasApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SubscriptionAliasResource.ResourceType, out string subscriptionAliasApiVersion);
+            _aliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", SubscriptionAliasResource.ResourceType.Namespace, Diagnostics);
+            _aliasRestClient = new Alias(_aliasClientDiagnostics, Pipeline, Endpoint, subscriptionAliasApiVersion ?? "2025-11-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create Alias Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
-        /// <param name="content"> The <see cref="SubscriptionAliasCreateOrUpdateContent"/> to use. </param>
+        /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SubscriptionAliasResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string aliasName, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _subscriptionAliasAliasRestClient.CreateAsync(aliasName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SubscriptionArmOperation<SubscriptionAliasResource>(new SubscriptionAliasOperationSource(Client), _subscriptionAliasAliasClientDiagnostics, Pipeline, _subscriptionAliasAliasRestClient.CreateCreateRequest(aliasName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _aliasRestClient.CreateCreateRequest(aliasName, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
+                    new SubscriptionAliasOperationSource(Client),
+                    _aliasClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,42 +118,51 @@ namespace Azure.ResourceManager.Subscription
         /// Create Alias Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
-        /// <param name="content"> The <see cref="SubscriptionAliasCreateOrUpdateContent"/> to use. </param>
+        /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SubscriptionAliasResource> CreateOrUpdate(WaitUntil waitUntil, string aliasName, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _subscriptionAliasAliasRestClient.Create(aliasName, content, cancellationToken);
-                var operation = new SubscriptionArmOperation<SubscriptionAliasResource>(new SubscriptionAliasOperationSource(Client), _subscriptionAliasAliasClientDiagnostics, Pipeline, _subscriptionAliasAliasRestClient.CreateCreateRequest(aliasName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _aliasRestClient.CreateCreateRequest(aliasName, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
+                    new SubscriptionAliasOperationSource(Client),
+                    _aliasClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -155,38 +176,42 @@ namespace Azure.ResourceManager.Subscription
         /// Get Alias Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SubscriptionAliasResource>> GetAsync(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Get");
+            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionAliasAliasRestClient.GetAsync(aliasName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SubscriptionAliasData> response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,38 +225,42 @@ namespace Azure.ResourceManager.Subscription
         /// Get Alias Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SubscriptionAliasResource> Get(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Get");
+            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionAliasAliasRestClient.Get(aliasName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SubscriptionAliasData> response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,49 +274,44 @@ namespace Azure.ResourceManager.Subscription
         /// List Alias Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionAliasResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAliasAliasRestClient.CreateListRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SubscriptionAliasData, SubscriptionAliasResource>(new AliasGetAllAsyncCollectionResultOfT(_aliasRestClient, context, "SubscriptionAliasCollection.GetAll"), data => new SubscriptionAliasResource(Client, data));
         }
 
         /// <summary>
         /// List Alias Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,44 +319,61 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> A collection of <see cref="SubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionAliasResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAliasAliasRestClient.CreateListRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SubscriptionAliasData, SubscriptionAliasResource>(new AliasGetAllCollectionResultOfT(_aliasRestClient, context, "SubscriptionAliasCollection.GetAll"), data => new SubscriptionAliasResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Exists");
+            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _subscriptionAliasAliasRestClient.GetAsync(aliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SubscriptionAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SubscriptionAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +387,50 @@ namespace Azure.ResourceManager.Subscription
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Exists");
+            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Exists");
             scope.Start();
             try
             {
-                var response = _subscriptionAliasAliasRestClient.Get(aliasName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SubscriptionAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SubscriptionAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +444,54 @@ namespace Azure.ResourceManager.Subscription
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SubscriptionAliasResource>> GetIfExistsAsync(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.GetIfExists");
+            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _subscriptionAliasAliasRestClient.GetAsync(aliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SubscriptionAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SubscriptionAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SubscriptionAliasResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +505,54 @@ namespace Azure.ResourceManager.Subscription
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SubscriptionAliasResource> GetIfExists(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.GetIfExists");
+            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _subscriptionAliasAliasRestClient.Get(aliasName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SubscriptionAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SubscriptionAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SubscriptionAliasResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +572,7 @@ namespace Azure.ResourceManager.Subscription
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SubscriptionAliasResource> IAsyncEnumerable<SubscriptionAliasResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

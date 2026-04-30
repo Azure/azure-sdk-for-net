@@ -6,44 +6,39 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription
 {
     /// <summary>
-    /// A Class representing a TenantPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantPolicyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetTenantPolicyResource method.
+    /// A class representing a TenantPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantPolicy method.
     /// </summary>
     public partial class TenantPolicyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="TenantPolicyResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier()
-        {
-            var resourceId = $"/providers/Microsoft.Subscription/policies/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _tenantPolicySubscriptionPolicyClientDiagnostics;
-        private readonly SubscriptionPolicyRestOperations _tenantPolicySubscriptionPolicyRestClient;
+        private readonly ClientDiagnostics _subscriptionPolicyClientDiagnostics;
+        private readonly SubscriptionPolicy _subscriptionPolicyRestClient;
+        private readonly ClientDiagnostics _tenantPoliciesClientDiagnostics;
+        private readonly TenantPolicies _tenantPoliciesRestClient;
         private readonly TenantPolicyData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Subscription/policies";
 
-        /// <summary> Initializes a new instance of the <see cref="TenantPolicyResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of TenantPolicyResource for mocking. </summary>
         protected TenantPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantPolicyResource(ArmClient client, TenantPolicyData data) : this(client, data.Id)
@@ -52,117 +47,49 @@ namespace Azure.ResourceManager.Subscription
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TenantPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tenantPolicySubscriptionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string tenantPolicySubscriptionPolicyApiVersion);
-            _tenantPolicySubscriptionPolicyRestClient = new SubscriptionPolicyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantPolicySubscriptionPolicyApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string tenantPolicyApiVersion);
+            _subscriptionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
+            _subscriptionPolicyRestClient = new SubscriptionPolicy(_subscriptionPolicyClientDiagnostics, Pipeline, Endpoint, tenantPolicyApiVersion ?? "2025-11-01-preview");
+            _tenantPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
+            _tenantPoliciesRestClient = new TenantPolicies(_tenantPoliciesClientDiagnostics, Pipeline, Endpoint, tenantPolicyApiVersion ?? "2025-11-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual TenantPolicyData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier()
+        {
+            string resourceId = $"/providers/Microsoft.Subscription/policies/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Get the subscription tenant policy for the user's tenant.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/policies/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubscriptionPolicy_GetPolicyForTenant</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TenantPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _tenantPolicySubscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _tenantPolicySubscriptionPolicyRestClient.GetPolicyForTenantAsync(cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the subscription tenant policy for the user's tenant.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/policies/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubscriptionPolicy_GetPolicyForTenant</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TenantPolicyResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _tenantPolicySubscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _tenantPolicySubscriptionPolicyRestClient.GetPolicyForTenant(cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -170,41 +97,49 @@ namespace Azure.ResourceManager.Subscription
         /// Create or Update Subscription tenant policy for user's tenant.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/policies/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/policies/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubscriptionPolicy_AddUpdatePolicyForTenant</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetTenantPolicyResponses_AddUpdatePolicyForTenant. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantPolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TenantPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The <see cref="TenantPolicyCreateOrUpdateContent"/> to use. </param>
+        /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<TenantPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TenantPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _tenantPolicySubscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
+            using DiagnosticScope scope = _subscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _tenantPolicySubscriptionPolicyRestClient.AddUpdatePolicyForTenantAsync(content, cancellationToken).ConfigureAwait(false);
-                var uri = _tenantPolicySubscriptionPolicyRestClient.CreateAddUpdatePolicyForTenantRequestUri(content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionPolicyRestClient.CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SubscriptionArmOperation<TenantPolicyResource> operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -218,42 +153,146 @@ namespace Azure.ResourceManager.Subscription
         /// Create or Update Subscription tenant policy for user's tenant.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/policies/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/policies/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubscriptionPolicy_AddUpdatePolicyForTenant</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetTenantPolicyResponses_AddUpdatePolicyForTenant. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantPolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TenantPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The <see cref="TenantPolicyCreateOrUpdateContent"/> to use. </param>
+        /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<TenantPolicyResource> CreateOrUpdate(WaitUntil waitUntil, TenantPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _tenantPolicySubscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
+            using DiagnosticScope scope = _subscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _tenantPolicySubscriptionPolicyRestClient.AddUpdatePolicyForTenant(content, cancellationToken);
-                var uri = _tenantPolicySubscriptionPolicyRestClient.CreateAddUpdatePolicyForTenantRequestUri(content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionPolicyRestClient.CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SubscriptionArmOperation<TenantPolicyResource> operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the subscription tenant policy for the user's tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/policies/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GetTenantPolicyResponses_GetPolicyForTenant. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TenantPolicyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<TenantPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _subscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionPolicyRestClient.CreateGetPolicyForTenantRequest(context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new TenantPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the subscription tenant policy for the user's tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/policies/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GetTenantPolicyResponses_GetPolicyForTenant. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TenantPolicyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<TenantPolicyResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _subscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionPolicyRestClient.CreateGetPolicyForTenantRequest(context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new TenantPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

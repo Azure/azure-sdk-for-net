@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Subscription
 {
+    /// <summary></summary>
     public partial class TenantPolicyResource : IJsonModel<TenantPolicyData>
     {
-        private static TenantPolicyData s_dataDeserializationInstance;
-        private static TenantPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<TenantPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<TenantPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TenantPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TenantPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TenantPolicyData>)Data).Write(writer, options);
 
-        TenantPolicyData IJsonModel<TenantPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TenantPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TenantPolicyData IJsonModel<TenantPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TenantPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TenantPolicyData>(Data, options, AzureResourceManagerSubscriptionContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TenantPolicyData IPersistableModel<TenantPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantPolicyData>(data, options, AzureResourceManagerSubscriptionContext.Default);
 
-        string IPersistableModel<TenantPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TenantPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TenantPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

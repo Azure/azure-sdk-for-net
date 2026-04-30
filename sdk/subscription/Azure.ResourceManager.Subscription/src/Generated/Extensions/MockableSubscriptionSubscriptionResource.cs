@@ -8,64 +8,100 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Subscription;
 using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableSubscriptionSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _subscriptionClientDiagnostics;
-        private SubscriptionRestOperations _subscriptionRestClient;
+        private ClientDiagnostics _subscriptionActionClientDiagnostics;
+        private SubscriptionAction _subscriptionActionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSubscriptionSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSubscriptionSubscriptionResource for mocking. </summary>
         protected MockableSubscriptionSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSubscriptionSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSubscriptionSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSubscriptionSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SubscriptionClientDiagnostics => _subscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SubscriptionRestOperations SubscriptionRestClient => _subscriptionRestClient ??= new SubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SubscriptionActionClientDiagnostics => _subscriptionActionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private SubscriptionAction SubscriptionActionRestClient => _subscriptionActionRestClient ??= new SubscriptionAction(SubscriptionActionClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+
+        /// <summary>
+        /// The operation to view Initiator Subscription Changed Request
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/changeTenantRequest/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TargetDirectoryResults_GetTargetDirectory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TargetDirectoryResultResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="TargetDirectoryResultResource"/> object. </returns>
+        public virtual TargetDirectoryResultResource GetTargetDirectoryResult()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return new TargetDirectoryResultResource(Client, Id.AppendProviderResource("Microsoft.Subscription", "changeTenantRequest", "default"));
         }
 
         /// <summary>
         /// The operation to cancel a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_Cancel</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationGroup_Cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CanceledSubscriptionId>> CancelSubscriptionAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CanceledSubscriptionId>> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.CancelSubscription");
+            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Cancel");
             scope.Start();
             try
             {
-                var response = await SubscriptionRestClient.CancelAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionActionRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CanceledSubscriptionId> response = Response.FromValue(CanceledSubscriptionId.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -79,27 +115,37 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// The operation to cancel a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_Cancel</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationGroup_Cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CanceledSubscriptionId> CancelSubscription(CancellationToken cancellationToken = default)
+        public virtual Response<CanceledSubscriptionId> Cancel(CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.CancelSubscription");
+            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Cancel");
             scope.Start();
             try
             {
-                var response = SubscriptionRestClient.Cancel(Id.SubscriptionId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionActionRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CanceledSubscriptionId> response = Response.FromValue(CanceledSubscriptionId.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -113,31 +159,41 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// The operation to rename a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_Rename</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationGroup_Rename. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> Subscription Name. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<RenamedSubscriptionId>> RenameSubscriptionAsync(SubscriptionName body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RenamedSubscriptionId>> RenameAsync(SubscriptionName body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.RenameSubscription");
+            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Rename");
             scope.Start();
             try
             {
-                var response = await SubscriptionRestClient.RenameAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionActionRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), SubscriptionName.ToRequestContent(body), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RenamedSubscriptionId> response = Response.FromValue(RenamedSubscriptionId.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -151,31 +207,41 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// The operation to rename a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_Rename</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationGroup_Rename. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> Subscription Name. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<RenamedSubscriptionId> RenameSubscription(SubscriptionName body, CancellationToken cancellationToken = default)
+        public virtual Response<RenamedSubscriptionId> Rename(SubscriptionName body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.RenameSubscription");
+            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Rename");
             scope.Start();
             try
             {
-                var response = SubscriptionRestClient.Rename(Id.SubscriptionId, body, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionActionRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), SubscriptionName.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RenamedSubscriptionId> response = Response.FromValue(RenamedSubscriptionId.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -189,27 +255,37 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// The operation to enable a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_Enable</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationGroup_Enable. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EnabledSubscriptionId>> EnableSubscriptionAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnabledSubscriptionId>> EnableAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.EnableSubscription");
+            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Enable");
             scope.Start();
             try
             {
-                var response = await SubscriptionRestClient.EnableAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionActionRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EnabledSubscriptionId> response = Response.FromValue(EnabledSubscriptionId.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -223,27 +299,37 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// The operation to enable a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_Enable</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationGroup_Enable. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EnabledSubscriptionId> EnableSubscription(CancellationToken cancellationToken = default)
+        public virtual Response<EnabledSubscriptionId> Enable(CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.EnableSubscription");
+            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Enable");
             scope.Start();
             try
             {
-                var response = SubscriptionRestClient.Enable(Id.SubscriptionId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionActionRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EnabledSubscriptionId> response = Response.FromValue(EnabledSubscriptionId.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

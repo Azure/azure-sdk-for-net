@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> The parameters required to create a new subscription. </summary>
     public partial class SubscriptionAliasCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionAliasCreateOrUpdateContent"/>. </summary>
         public SubscriptionAliasCreateOrUpdateContent()
@@ -51,45 +22,15 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionAliasCreateOrUpdateContent"/>. </summary>
-        /// <param name="displayName"> The friendly name of the subscription. </param>
-        /// <param name="workload"> The workload type of the subscription. It can be either Production or DevTest. </param>
-        /// <param name="billingScope">
-        /// Billing scope of the subscription.
-        /// For CustomerLed and FieldLed - /billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}
-        /// For PartnerLed - /billingAccounts/{billingAccountName}/customers/{customerName}
-        /// For Legacy EA - /billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}
-        /// </param>
-        /// <param name="subscriptionId"> This parameter can be used to create alias for existing subscription Id. </param>
-        /// <param name="resellerId"> Reseller Id. </param>
-        /// <param name="additionalProperties"> Put alias request additional properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionAliasCreateOrUpdateContent(string displayName, SubscriptionWorkload? workload, string billingScope, string subscriptionId, string resellerId, SubscriptionAliasAdditionalProperties additionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Put alias request properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionAliasCreateOrUpdateContent(SubscriptionAliasCreateOrUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DisplayName = displayName;
-            Workload = workload;
-            BillingScope = billingScope;
-            SubscriptionId = subscriptionId;
-            ResellerId = resellerId;
-            AdditionalProperties = additionalProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The friendly name of the subscription. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> The workload type of the subscription. It can be either Production or DevTest. </summary>
-        public SubscriptionWorkload? Workload { get; set; }
-        /// <summary>
-        /// Billing scope of the subscription.
-        /// For CustomerLed and FieldLed - /billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}
-        /// For PartnerLed - /billingAccounts/{billingAccountName}/customers/{customerName}
-        /// For Legacy EA - /billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}
-        /// </summary>
-        public string BillingScope { get; set; }
-        /// <summary> This parameter can be used to create alias for existing subscription Id. </summary>
-        public string SubscriptionId { get; set; }
-        /// <summary> Reseller Id. </summary>
-        public string ResellerId { get; set; }
-        /// <summary> Put alias request additional properties. </summary>
-        public SubscriptionAliasAdditionalProperties AdditionalProperties { get; set; }
+        /// <summary> Put alias request properties. </summary>
+        public SubscriptionAliasCreateOrUpdateProperties Properties { get; set; }
     }
 }

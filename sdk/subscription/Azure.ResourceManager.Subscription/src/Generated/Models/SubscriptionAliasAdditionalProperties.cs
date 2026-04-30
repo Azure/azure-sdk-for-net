@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
     /// <summary> Put subscription additional properties. </summary>
     public partial class SubscriptionAliasAdditionalProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionAliasAdditionalProperties"/>. </summary>
         public SubscriptionAliasAdditionalProperties()
@@ -56,22 +28,25 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="subscriptionTenantId"> Tenant Id of the subscription. </param>
         /// <param name="subscriptionOwnerId"> Owner Id of the subscription. </param>
         /// <param name="tags"> Tags for the subscription. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionAliasAdditionalProperties(string managementGroupId, Guid? subscriptionTenantId, string subscriptionOwnerId, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionAliasAdditionalProperties(string managementGroupId, string subscriptionTenantId, string subscriptionOwnerId, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagementGroupId = managementGroupId;
             SubscriptionTenantId = subscriptionTenantId;
             SubscriptionOwnerId = subscriptionOwnerId;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Management group Id for the subscription. </summary>
         public string ManagementGroupId { get; set; }
+
         /// <summary> Tenant Id of the subscription. </summary>
-        public Guid? SubscriptionTenantId { get; set; }
+        public string SubscriptionTenantId { get; set; }
+
         /// <summary> Owner Id of the subscription. </summary>
         public string SubscriptionOwnerId { get; set; }
+
         /// <summary> Tags for the subscription. </summary>
         public IDictionary<string, string> Tags { get; }
     }

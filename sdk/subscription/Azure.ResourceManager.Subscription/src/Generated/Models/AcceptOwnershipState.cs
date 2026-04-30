@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Subscription.Models
     public readonly partial struct AcceptOwnershipState : IEquatable<AcceptOwnershipState>
     {
         private readonly string _value;
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
 
         /// <summary> Initializes a new instance of <see cref="AcceptOwnershipState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcceptOwnershipState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string CompletedValue = "Completed";
-        private const string ExpiredValue = "Expired";
+            _value = value;
+        }
 
         /// <summary> Pending. </summary>
         public static AcceptOwnershipState Pending { get; } = new AcceptOwnershipState(PendingValue);
+
         /// <summary> Completed. </summary>
         public static AcceptOwnershipState Completed { get; } = new AcceptOwnershipState(CompletedValue);
+
         /// <summary> Expired. </summary>
         public static AcceptOwnershipState Expired { get; } = new AcceptOwnershipState(ExpiredValue);
+
         /// <summary> Determines if two <see cref="AcceptOwnershipState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcceptOwnershipState left, AcceptOwnershipState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcceptOwnershipState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcceptOwnershipState left, AcceptOwnershipState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcceptOwnershipState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcceptOwnershipState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcceptOwnershipState(string value) => new AcceptOwnershipState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcceptOwnershipState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcceptOwnershipState?(string value) => value == null ? null : new AcceptOwnershipState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcceptOwnershipState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcceptOwnershipState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Billing account service tenant. </summary>
     public partial class ServiceTenant
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceTenant"/>. </summary>
         internal ServiceTenant()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Initializes a new instance of <see cref="ServiceTenant"/>. </summary>
         /// <param name="tenantId"> Service tenant id. </param>
         /// <param name="tenantName"> Service tenant name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceTenant(Guid? tenantId, string tenantName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceTenant(string tenantId, string tenantName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             TenantName = tenantName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Service tenant id. </summary>
-        public Guid? TenantId { get; }
+        public string TenantId { get; }
+
         /// <summary> Service tenant name. </summary>
         public string TenantName { get; }
     }

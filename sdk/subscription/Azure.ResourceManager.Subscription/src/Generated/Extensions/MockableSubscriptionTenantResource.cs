@@ -8,41 +8,52 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Subscription;
 using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableSubscriptionTenantResource : ArmResource
     {
-        private ClientDiagnostics _subscriptionClientDiagnostics;
-        private SubscriptionRestOperations _subscriptionRestClient;
+        private ClientDiagnostics _subscriptionActionClientDiagnostics;
+        private SubscriptionAction _subscriptionActionRestClient;
+        private ClientDiagnostics _subscriptionOperationClientDiagnostics;
+        private SubscriptionOperation _subscriptionOperationRestClient;
+        private ClientDiagnostics _subscriptionsClientDiagnostics;
+        private Subscriptions _subscriptionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSubscriptionTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSubscriptionTenantResource for mocking. </summary>
         protected MockableSubscriptionTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSubscriptionTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSubscriptionTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSubscriptionTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SubscriptionClientDiagnostics => _subscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SubscriptionRestOperations SubscriptionRestClient => _subscriptionRestClient ??= new SubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SubscriptionActionClientDiagnostics => _subscriptionActionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private SubscriptionAction SubscriptionActionRestClient => _subscriptionActionRestClient ??= new SubscriptionAction(SubscriptionActionClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
-        /// <summary> Gets a collection of SubscriptionAliasResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of SubscriptionAliasResources and their operations over a SubscriptionAliasResource. </returns>
+        private ClientDiagnostics SubscriptionOperationClientDiagnostics => _subscriptionOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SubscriptionOperation SubscriptionOperationRestClient => _subscriptionOperationRestClient ??= new SubscriptionOperation(SubscriptionOperationClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+
+        private ClientDiagnostics SubscriptionsClientDiagnostics => _subscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Subscriptions SubscriptionsRestClient => _subscriptionsRestClient ??= new Subscriptions(SubscriptionsClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+
+        /// <summary> Gets a collection of SubscriptionAliases in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionAliases and their operations over a SubscriptionAliasResource. </returns>
         public virtual SubscriptionAliasCollection GetSubscriptionAliases()
         {
             return GetCachedClient(client => new SubscriptionAliasCollection(client, Id));
@@ -52,20 +63,16 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// Get Alias Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,6 +83,8 @@ namespace Azure.ResourceManager.Subscription.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionAliasResource>> GetSubscriptionAliasAsync(string aliasName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+
             return await GetSubscriptionAliases().GetAsync(aliasName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -83,20 +92,16 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// Get Alias Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/aliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,121 +112,81 @@ namespace Azure.ResourceManager.Subscription.Mocking
         [ForwardsClientCalls]
         public virtual Response<SubscriptionAliasResource> GetSubscriptionAlias(string aliasName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+
             return GetSubscriptionAliases().Get(aliasName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a TenantPolicyResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <summary>
+        /// Get the subscription tenant policy for the user's tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/policies/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GetTenantPolicyResponses_GetPolicyForTenant. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TenantPolicyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public virtual TenantPolicyResource GetTenantPolicy()
         {
             return new TenantPolicyResource(Client, Id.AppendProviderResource("Microsoft.Subscription", "policies", "default"));
         }
 
-        /// <summary> Gets a collection of BillingAccountPolicyResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of BillingAccountPolicyResources and their operations over a BillingAccountPolicyResource. </returns>
-        public virtual BillingAccountPolicyCollection GetBillingAccountPolicies()
-        {
-            return GetCachedClient(client => new BillingAccountPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get Billing Account Policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccount_GetPolicy</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingAccountId"> Billing Account Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingAccountPolicyResource>> GetBillingAccountPolicyAsync(string billingAccountId, CancellationToken cancellationToken = default)
-        {
-            return await GetBillingAccountPolicies().GetAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Billing Account Policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccount_GetPolicy</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingAccountId"> Billing Account Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BillingAccountPolicyResource> GetBillingAccountPolicy(string billingAccountId, CancellationToken cancellationToken = default)
-        {
-            return GetBillingAccountPolicies().Get(billingAccountId, cancellationToken);
-        }
-
         /// <summary>
         /// Accept subscription ownership.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_AcceptOwnership</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationGroup_AcceptOwnership. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="content"> The <see cref="AcceptOwnershipContent"/> to use. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> AcceptSubscriptionOwnershipAsync(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> AcceptOwnershipAsync(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptSubscriptionOwnership");
+            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnership");
             scope.Start();
             try
             {
-                var response = await SubscriptionRestClient.AcceptOwnershipAsync(subscriptionId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SubscriptionArmOperation(SubscriptionClientDiagnostics, Pipeline, SubscriptionRestClient.CreateAcceptOwnershipRequest(subscriptionId, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionActionRestClient.CreateAcceptOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SubscriptionArmOperation operation = new SubscriptionArmOperation(SubscriptionActionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -235,38 +200,45 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// Accept subscription ownership.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_AcceptOwnership</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationGroup_AcceptOwnership. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="content"> The <see cref="AcceptOwnershipContent"/> to use. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation AcceptSubscriptionOwnership(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation AcceptOwnership(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptSubscriptionOwnership");
+            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnership");
             scope.Start();
             try
             {
-                var response = SubscriptionRestClient.AcceptOwnership(subscriptionId, content, cancellationToken);
-                var operation = new SubscriptionArmOperation(SubscriptionClientDiagnostics, Pipeline, SubscriptionRestClient.CreateAcceptOwnershipRequest(subscriptionId, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionActionRestClient.CreateAcceptOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SubscriptionArmOperation operation = new SubscriptionArmOperation(SubscriptionActionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -280,32 +252,42 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// Accept subscription ownership status.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationGroup_AcceptOwnershipStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual async Task<Response<AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AcceptOwnershipStatus>> AcceptOwnershipStatusAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.GetAcceptOwnershipStatus");
+            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnershipStatus");
             scope.Start();
             try
             {
-                var response = await SubscriptionRestClient.AcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionActionRestClient.CreateAcceptOwnershipStatusRequest(subscriptionId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AcceptOwnershipStatus> response = Response.FromValue(Models.AcceptOwnershipStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -319,32 +301,326 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// Accept subscription ownership status.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationGroup_AcceptOwnershipStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual Response<AcceptOwnershipStatus> GetAcceptOwnershipStatus(string subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AcceptOwnershipStatus> AcceptOwnershipStatus(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.GetAcceptOwnershipStatus");
+            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnershipStatus");
             scope.Start();
             try
             {
-                var response = SubscriptionRestClient.AcceptOwnershipStatus(subscriptionId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionActionRestClient.CreateAcceptOwnershipStatusRequest(subscriptionId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AcceptOwnershipStatus> response = Response.FromValue(Models.AcceptOwnershipStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the status of the pending Microsoft.Subscription API operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/subscriptionOperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SubscriptionCreationResult>> GetAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = SubscriptionOperationClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionOperationRestClient.CreateGetRequest(operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SubscriptionCreationResult> response = Response.FromValue(SubscriptionCreationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the status of the pending Microsoft.Subscription API operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/subscriptionOperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionOperationOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SubscriptionCreationResult> Get(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = SubscriptionOperationClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionOperationRestClient.CreateGetRequest(operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SubscriptionCreationResult> response = Response.FromValue(SubscriptionCreationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to accept Subscription Changed Request
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptChangeTenant. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionsOperationGroup_AcceptTargetDirectory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionId"> Subscription Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AcceptTargetDirectoryAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using DiagnosticScope scope = SubscriptionsClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptTargetDirectory");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionsRestClient.CreateAcceptTargetDirectoryRequest(subscriptionId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to accept Subscription Changed Request
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptChangeTenant. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionsOperationGroup_AcceptTargetDirectory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionId"> Subscription Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AcceptTargetDirectory(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using DiagnosticScope scope = SubscriptionsClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptTargetDirectory");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionsRestClient.CreateAcceptTargetDirectoryRequest(subscriptionId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation for Acceptor to view the accepted request
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/changeTenantStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionsOperationGroup_TargetDirectoryStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionId"> Subscription Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<TargetDirectoryResultProperties>> TargetDirectoryStatusAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using DiagnosticScope scope = SubscriptionsClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.TargetDirectoryStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionsRestClient.CreateTargetDirectoryStatusRequest(subscriptionId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TargetDirectoryResultProperties> response = Response.FromValue(TargetDirectoryResultProperties.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation for Acceptor to view the accepted request
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/changeTenantStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionsOperationGroup_TargetDirectoryStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionId"> Subscription Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<TargetDirectoryResultProperties> TargetDirectoryStatus(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using DiagnosticScope scope = SubscriptionsClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.TargetDirectoryStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionsRestClient.CreateTargetDirectoryStatusRequest(subscriptionId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TargetDirectoryResultProperties> response = Response.FromValue(TargetDirectoryResultProperties.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Subscription
 {
     /// <summary>
-    /// A Class representing a BillingAccountPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingAccountPolicyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingAccountPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingAccountPolicy method.
+    /// A class representing a BillingAccountPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingAccountPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetBillingAccountPolicy method.
     /// </summary>
     public partial class BillingAccountPolicyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingAccountPolicyResource"/> instance. </summary>
-        /// <param name="billingAccountId"> The billingAccountId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountId)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingAccountPolicyBillingAccountClientDiagnostics;
-        private readonly BillingAccountRestOperations _billingAccountPolicyBillingAccountRestClient;
+        private readonly ClientDiagnostics _billingAccountClientDiagnostics;
+        private readonly BillingAccount _billingAccountRestClient;
         private readonly BillingAccountPolicyData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Subscription/policies";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingAccountPolicyResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingAccountPolicyResource for mocking. </summary>
         protected BillingAccountPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingAccountPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingAccountPolicyResource(ArmClient client, BillingAccountPolicyData data) : this(client, data.Id)
@@ -52,71 +43,90 @@ namespace Azure.ResourceManager.Subscription
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingAccountPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingAccountPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingAccountPolicyBillingAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingAccountPolicyBillingAccountApiVersion);
-            _billingAccountPolicyBillingAccountRestClient = new BillingAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountPolicyBillingAccountApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingAccountPolicyApiVersion);
+            _billingAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
+            _billingAccountRestClient = new BillingAccount(_billingAccountClientDiagnostics, Pipeline, Endpoint, billingAccountPolicyApiVersion ?? "2025-11-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingAccountPolicyData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountId"> The billingAccountId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountId)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get Billing Account Policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccount_GetPolicy</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccountPoliciesResponses_GetPolicy. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingAccountPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingAccountPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingAccountPolicyBillingAccountClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
+            using DiagnosticScope scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingAccountPolicyBillingAccountRestClient.GetPolicyAsync(Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingAccountRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +140,41 @@ namespace Azure.ResourceManager.Subscription
         /// Get Billing Account Policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccount_GetPolicy</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccountPoliciesResponses_GetPolicy. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingAccountPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingAccountPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingAccountPolicyBillingAccountClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
+            using DiagnosticScope scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = _billingAccountPolicyBillingAccountRestClient.GetPolicy(Id.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingAccountRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
