@@ -78,7 +78,6 @@ Console.WriteLine(markdownOnly);
 // Custom metadata — add your own key-value pairs to the YAML front matter.
 // Useful for RAG pipelines to track document source, department, batch, etc.
 string withMetadata = result.ToLlmInput(
-    result,
     new Dictionary<string, object>
     {
         ["source"] = "invoice.pdf",
@@ -164,7 +163,6 @@ AnalysisResult audioResult = audioOperation.Value;
 
 // Include metadata to track the source file in RAG pipelines
 string audioText = audioResult.ToLlmInput(
-    audioResult,
     new Dictionary<string, object> { ["source"] = "callCenterRecording.mp3" });
 Console.WriteLine("\n--- Audio with content range and metadata ---");
 Console.WriteLine(audioText);
