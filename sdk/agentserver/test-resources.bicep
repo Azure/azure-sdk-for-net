@@ -52,5 +52,6 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02-preview' 
 }
 
 // Outputs consumed by TestEnvironment via env vars
-output APPLICATIONINSIGHTS_CONNECTION_STRING string = applicationInsights.properties.ConnectionString
-output APPLICATIONINSIGHTS_RESOURCE_ID string = applicationInsights.id
+// Use short names (same pattern as sdk/monitor) so pipeline variable propagation works correctly.
+output CONNECTION_STRING string = applicationInsights.properties.ConnectionString
+output RESOURCE_ID string = applicationInsights.id

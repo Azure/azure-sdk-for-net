@@ -30,8 +30,8 @@ namespace Azure.AI.AgentServer.Core.Tests
     /// correct parent-child hierarchy.
     ///
     /// Required environment variables (provisioned by test-resources.bicep):
-    /// - APPLICATIONINSIGHTS_CONNECTION_STRING
-    /// - APPLICATIONINSIGHTS_RESOURCE_ID (App Insights resource ID for querying)
+    /// - AGENTSERVER_CONNECTION_STRING (or CONNECTION_STRING)
+    /// - AGENTSERVER_RESOURCE_ID (or RESOURCE_ID — App Insights resource ID for querying)
     /// - Azure credentials (DefaultAzureCredential via test framework)
     ///
     /// Excluded from normal CI via [Category("Live")].

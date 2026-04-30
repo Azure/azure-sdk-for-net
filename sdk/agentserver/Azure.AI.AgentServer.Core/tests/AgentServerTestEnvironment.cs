@@ -17,12 +17,12 @@ namespace Azure.AI.AgentServer.Core.Tests
         /// Application Insights connection string for exporting traces.
         /// </summary>
         public string ApplicationInsightsConnectionString =>
-            GetVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+            GetVariable("CONNECTION_STRING");
 
         /// <summary>
         /// Application Insights resource ID for querying traces.
         /// </summary>
         public string ApplicationInsightsResourceId =>
-            GetVariable("APPLICATIONINSIGHTS_RESOURCE_ID");
+            GetVariable("RESOURCE_ID");
     }
 }
