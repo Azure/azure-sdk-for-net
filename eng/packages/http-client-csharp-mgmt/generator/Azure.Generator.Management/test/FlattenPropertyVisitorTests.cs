@@ -700,6 +700,50 @@ namespace Azure.Generator.Mgmt.Tests
                 $"Base initializer should pass the flattened 'wrapperValue'. Args: [{string.Join(", ", initializerArgNames)}]");
         }
 
+        [Test]
+        public void TestSafeFlattenAddsSerializationConstructorWhenNoParameterlessCtorExists()
+        {
+            // Mirrors PostgreSQL BackupRequestBase: the base model has a required single-property
+            // wrapper that is safe-flattened, and derived serialization constructors need base().
+            var settingsName = InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name");
+            var settingsModel = InputFactory.Model(
+                "SettingsModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [settingsName]);
+
+            var settingsProperty = InputFactory.Property("settings", settingsModel, isRequired: true, serializedName: "settings");
+            var baseModel = InputFactory.Model(
+                "BaseContent",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [settingsProperty]);
+
+            var derivedModel = InputFactory.Model(
+                "DerivedContent",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                baseModel: baseModel,
+                properties: []);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [settingsModel, baseModel, derivedModel]);
+
+            var baseModelProvider = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            Assert.That(baseModelProvider.Constructors.Any(c => !c.Signature.Parameters.Any()), Is.False);
+
+            var visitor = new FlattenPropertyVisitor();
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            visitTypeCore!.Invoke(visitor, [baseModelProvider]);
+
+            var parameterlessSerializationCtor = baseModelProvider.SerializationProviders
+                .SelectMany(p => p.Constructors)
+                .SingleOrDefault(c => !c.Signature.Parameters.Any());
+            Assert.That(parameterlessSerializationCtor, Is.Not.Null);
+            Assert.That(parameterlessSerializationCtor!.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
+        }
+
         /// <summary>
         /// Verifies that <see cref="FlattenPropertyVisitor.FilterAttributesForFlatten"/> drops any
         /// WirePath attribute attached to the inner property while preserving other attributes.

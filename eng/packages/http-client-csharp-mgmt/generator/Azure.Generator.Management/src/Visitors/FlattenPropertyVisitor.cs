@@ -708,6 +708,7 @@ namespace Azure.Generator.Management.Visitors
                 model.Update(properties: [.. model.Properties, .. flattenedProperties]);
                 _flattenedModelTypes.Add(model.Type, propertyNameMap);
                 UpdatePublicConstructor(model, propertyNameMap);
+                EnsureParameterlessSerializationConstructor(model);
             }
             else if (model.BaseModelProvider is ModelProvider flattenedBase && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
             {
@@ -716,6 +717,25 @@ namespace Azure.Generator.Management.Visitors
                 // ExportDeliveryInfo param became ExportDeliveryDestination), so update this
                 // model's public constructor params and base initializer call to match.
                 UpdatePublicConstructor(model, basePropertyNameMap);
+            }
+        }
+
+        private static void EnsureParameterlessSerializationConstructor(ModelProvider model)
+        {
+            var hasParameterlessConstructor = model.Constructors.Any(c => !c.Signature.Parameters.Any())
+                || model.SerializationProviders.SelectMany(p => p.Constructors).Any(c => !c.Signature.Parameters.Any());
+            if (hasParameterlessConstructor)
+            {
+                return;
+            }
+
+            foreach (var serializationType in model.SerializationProviders)
+            {
+                var constructor = new ConstructorProvider(
+                    new ConstructorSignature(model.Type, $"Initializes a new instance of {model.Name} for deserialization.", MethodSignatureModifiers.Internal, []),
+                    new MethodBodyStatement[] { MethodBodyStatement.Empty },
+                    serializationType);
+                serializationType.Update(constructors: [.. serializationType.Constructors, constructor]);
             }
         }
 
