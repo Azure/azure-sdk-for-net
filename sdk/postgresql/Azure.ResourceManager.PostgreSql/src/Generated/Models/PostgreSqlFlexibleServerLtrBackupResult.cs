@@ -75,6 +75,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
+        /// <summary> Service-set extensible enum indicating the status of operation. </summary>
+        [WirePath("properties.status")]
+        public PostgreSqlExecutionStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> Start time of the operation. </summary>
+        [WirePath("properties.startTime")]
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
         /// <summary> End time of the operation. </summary>
         [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn

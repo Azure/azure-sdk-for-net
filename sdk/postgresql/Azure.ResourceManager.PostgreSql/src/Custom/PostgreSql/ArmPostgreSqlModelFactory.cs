@@ -3,17 +3,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     // Preserves the previous model factory overload for long-term-retention backup content.
+    // Suppresses generated factory methods that would expose internal implementation types.
+    [CodeGenSuppress("PostgreSqlMigrationPatch", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(MigrationSecretParametersForPatch), typeof(IEnumerable<string>), typeof(PostgreSqlMigrationLogicalReplicationOnSourceDb?), typeof(PostgreSqlMigrationOverwriteDbsInTarget?), typeof(DateTimeOffset?), typeof(MigrateRolesEnum?), typeof(PostgreSqlMigrationStartDataMigration?), typeof(PostgreSqlMigrationTriggerCutover?), typeof(IEnumerable<string>), typeof(PostgreSqlMigrationCancel?), typeof(IEnumerable<string>), typeof(PostgreSqlMigrationMode?), typeof(IDictionary<string, string>))]
+    [CodeGenSuppress("PostgreSqlFlexibleServerUserAssignedIdentity", typeof(IDictionary<string, UserIdentity>), typeof(Guid?), typeof(PostgreSqlFlexibleServerIdentityType), typeof(Guid?))]
+    [CodeGenSuppress("PostgreSqlFlexibleServerLtrBackupContent", typeof(string), typeof(IEnumerable<string>))]
+    [CodeGenSuppress("PostgreSqlFlexibleServerNameAvailabilityResult", typeof(bool?), typeof(PostgreSqlFlexibleServerNameUnavailableReason?), typeof(string), typeof(string), typeof(ResourceType?))]
+    [CodeGenSuppress("PostgreSqlFlexibleServerNameAvailabilityResponse", typeof(bool?), typeof(PostgreSqlFlexibleServerNameUnavailableReason?), typeof(string))]
     public static partial class ArmPostgreSqlModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <param name="targetDetailsSasUriList"> List of SAS uri of storage containers where backup data is to be streamed/copied. </param>
-        /// <returns> A new <see cref="PostgreSqlFlexibleServerLtrBackupContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerLtrBackupContent"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrBackupContent PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings = null, IEnumerable<string> targetDetailsSasUriList = null)
         {
             PostgreSqlFlexibleServerBackupStoreDetails targetDetails = targetDetailsSasUriList is null
