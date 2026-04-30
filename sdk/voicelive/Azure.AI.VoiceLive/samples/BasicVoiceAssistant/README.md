@@ -57,7 +57,7 @@ These methods eliminate the need to manually construct and populate `ClientEvent
      "VoiceLive": {
        "ApiKey": "your-api-key",
        "Endpoint": "wss://api.voicelive.com/v1",
-       "Model": "gpt-4o-realtime-preview",
+      "Model": "gpt-realtime",
        "Voice": "en-US-AvaNeural",
        "Instructions": "You are a helpful AI assistant. Respond naturally and conversationally."
      }
@@ -84,7 +84,7 @@ dotnet run -- --help
 Available options:
 - `--api-key <key>`: Azure VoiceLive API key
 - `--endpoint <url>`: VoiceLive service endpoint
-- `--model <model>`: Model to use (default: gpt-4o-realtime-preview)
+- `--model <model>`: Model to use (default: gpt-realtime)
 - `--voice <voice>`: Voice for the assistant (default: en-US-AvaNeural)
 - `--instructions <text>`: System instructions for the AI
 - `--use-token-credential`: Use Azure authentication instead of API key

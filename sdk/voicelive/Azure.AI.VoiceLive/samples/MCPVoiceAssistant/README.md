@@ -15,7 +15,7 @@ Set the following environment variables before running:
 | Variable | Required | Description |
 |---|---|---|
 | `AZURE_VOICELIVE_ENDPOINT` | Yes | Azure VoiceLive endpoint URL |
-| `AZURE_VOICELIVE_MODEL` | Yes | Model to use (e.g., `gpt-4o-realtime-preview`) |
+| `AZURE_VOICELIVE_MODEL` | Yes | Model to use (e.g., `gpt-realtime`) |
 | `AZURE_VOICELIVE_API_KEY` | No* | API key for authentication |
 | `AZURE_VOICELIVE_VOICE` | No | Voice name (default: `en-US-AvaNeural`) |
 
@@ -26,7 +26,7 @@ Set the following environment variables before running:
 ```bash
 export AZURE_VOICELIVE_ENDPOINT="https://<your-resource>.services.ai.azure.com/"
 export AZURE_VOICELIVE_API_KEY="<your-api-key>"
-export AZURE_VOICELIVE_MODEL="gpt-4o-realtime-preview"
+export AZURE_VOICELIVE_MODEL="gpt-realtime"
 
 dotnet run
 ```
@@ -52,7 +52,7 @@ Both servers are configured with `RequireApproval = Never` so tool calls proceed
 
 - **`VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW`**: Required API version for MCP support.
 - **`VoiceLiveMcpServerDefinition`**: Registers an MCP server with the session. Provide a label, URL, optional `AllowedTools` list, and `RequireApproval`.
-- **`MCPApprovalType.Never`**: Set on `RequireApproval` to allow all tool calls without prompting.
+- **`RequireApproval = BinaryData.FromString("\"never\"")`**: Sends the exact JSON string value required by the service to allow tool calls without prompting.
 - **`VoiceLiveSessionOptions.Tools`**: Add `VoiceLiveMcpServerDefinition` instances here before calling `ConfigureSessionAsync`.
 - **MCP lifecycle events**: `SessionUpdateMcpListToolsInProgress/Completed/Failed` fire during tool discovery; `SessionUpdateResponseMcpCallInProgress/Completed/Failed` fire during tool calls.
 

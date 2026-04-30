@@ -43,13 +43,13 @@ namespace Azure.AI.VoiceLive.Samples
             try
             {
                 // Start a session - connection will be logged
-                var session = await client.StartSessionAsync("gpt-4o-realtime-preview").ConfigureAwait(false);
+                var session = await client.StartSessionAsync("gpt-realtime").ConfigureAwait(false);
                 ;
 
                 // Send a message - will be logged as sent content
                 var sessionConfig = new VoiceLiveSessionOptions()
                 {
-                    Model = "gpt-4o-realtime-preview"
+                    Model = "gpt-realtime"
                 };
                 await session.ConfigureSessionAsync(sessionConfig).ConfigureAwait(false);
 
