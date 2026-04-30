@@ -1,5 +1,27 @@
 # Release History
 
+## 12.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added support for `2026-05-01-preview` service version.
+- Added MCP server knowledge source types: `McpServerKnowledgeSource`, `McpServerKnowledgeSourceParameters`, `McpServerAuthentication`, `McpServerFoundryConnectionAuthentication`, `McpServerStoredHeadersAuthentication`, `McpServerHeaders`, `McpServerTool`, `McpServerToolInclusionMode`, `McpServerOutputParsing`, `McpServerAutoOutputParsing`, `McpServerJsonOutputParsing`, `McpServerSplitOutputParsing`, `McpServerNoneOutputParsing`, and related configuration models.
+- Added knowledge source types: `FabricDataAgentKnowledgeSource`, `FabricOntologyKnowledgeSource`, `FileKnowledgeSource`, `IndexedSqlKnowledgeSource`, and `WorkIQKnowledgeSource` with associated parameters and retrieval params.
+- Added knowledge base reference types: `KnowledgeBaseFabricDataAgentReference`, `KnowledgeBaseFabricOntologyReference`, and `KnowledgeBaseWorkIQReference`.
+- Added `FreshnessPolicy` for freshness-based document policies.
+- Added `ContentColumnMapping` and `EmbeddingColumnMapping` for column mapping configuration.
+- Added `SharePointConnectorAppRegistration` for SharePoint connector authentication.
+- Added `PurviewSensitivityLabelInfo` for Purview sensitivity label support.
+- Added `WorkIQAttribution` for WorkIQ attribution tracking.
+- Added `AssetStore` for asset store configuration.
+- Added `KnowledgeSourceSynchronizationError` for knowledge source sync error reporting.
+- Added `failOnError`, `maxOutputDocuments`, and `enableImageServing` properties to `KnowledgeSourceParams`.
+- Added `KnowledgeBaseImageContent` with public constructor and settable `Url` property.
+
+### Breaking Changes
+
+### Other Changes
+
 ## 12.0.0 (2026-04-14)
 
 ### Features Added

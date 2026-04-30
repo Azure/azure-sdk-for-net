@@ -6,6 +6,17 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
+  <!--Mirror the AZURE_SEARCH_PREVIEW constant from the src project so test code can
+      conditionally compile preview-only test fixtures and ServiceVersion references.
+      We read the version from the src .csproj because the test project has its own version.-->
+  <Choose>
+    <When Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$([System.IO.File]::ReadAllText($(MSBuildThisFileDirectory)..\src\Azure.Search.Documents.csproj))', '&lt;Version&gt;[^&lt;]*-beta'))">
+      <PropertyGroup>
+        <DefineConstants>$(DefineConstants);AZURE_SEARCH_PREVIEW</DefineConstants>
+      </PropertyGroup>
+    </When>
+  </Choose>
+
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>

@@ -23,6 +23,7 @@ namespace Azure.Search.Documents
         {
             Facets = new ChangeTrackingList<string>();
             ScoringParameters = new ChangeTrackingList<string>();
+            SemanticFields = new ChangeTrackingList<string>();
             VectorQueries = new ChangeTrackingList<VectorQuery>();
         }
 
@@ -110,7 +111,7 @@ namespace Azure.Search.Documents
         /// Encapsulates the state required to fetch the next page of search
         /// results from the index.
         /// </param>
-        internal SearchOptions(string continuationToken) =>
+        internal SearchOptions(string continuationToken) : this() =>
             Copy(SearchContinuationToken.Deserialize(continuationToken), this);
 
         /// <summary>

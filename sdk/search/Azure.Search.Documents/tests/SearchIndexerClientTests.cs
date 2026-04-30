@@ -663,6 +663,7 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(WebApiSkill) => new WebApiSkill(inputs, outputs, "https://microsoft.com"),
                     Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint), ApiKey = TestEnvironment.OpenAIKey, DeploymentName = "text-embedding-3-large", ModelName = "text-embedding-3-large" },
                     Type _ when t == typeof(ChatCompletionSkill) => new ChatCompletionSkill(inputs, outputs, new Uri(TestEnvironment.OpenAIEndpoint)) { ApiKey = TestEnvironment.OpenAIKey },
+                    Type _ when t == typeof(VisionVectorizeSkill) => new VisionVectorizeSkill(inputs, outputs, "2024-02-01"),
                     _ => (SearchIndexerSkill)Activator.CreateInstance(t, new object[] { inputs, outputs }),
                 };
             }
@@ -692,6 +693,8 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(ChatCompletionSkill) => CreateSkill(t, new[] { "userMessage", "systemMessage" }, new[] { "response" }),
                     // ContentUnderstandingSkill requires a customer-provided AI Foundry-created AI Services resource, skip for now.
                     Type _ when t == typeof(ContentUnderstandingSkill) => null,
+                    Type _ when t == typeof(AzureMachineLearningSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
+                    Type _ when t == typeof(VisionVectorizeSkill) => CreateSkill(t, new[] { "image" }, new[] { "vector" }),
                     _ => throw new NotSupportedException($"{t.FullName}"),
                 })
                 .Where(skill => skill != null)

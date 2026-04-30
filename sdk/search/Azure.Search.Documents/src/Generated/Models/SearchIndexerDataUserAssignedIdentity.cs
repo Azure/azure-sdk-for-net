@@ -17,9 +17,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="odataType"> A URI fragment specifying the type of identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceId"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
-        internal SearchIndexerDataUserAssignedIdentity(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string resourceId) : base(odataType, additionalBinaryDataProperties)
+        /// <param name="federatedIdentityClientId"> Multi-tenant User-Assigned Managed Identity Support: The client id of the multi-tentant App that has been configured to federate with the user-assigned managed identity. </param>
+        internal SearchIndexerDataUserAssignedIdentity(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string resourceId, string federatedIdentityClientId) : base(odataType, additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
+            FederatedIdentityClientId = federatedIdentityClientId;
         }
+
+        /// <summary> Multi-tenant User-Assigned Managed Identity Support: The client id of the multi-tentant App that has been configured to federate with the user-assigned managed identity. </summary>
+        public string FederatedIdentityClientId { get; set; }
     }
 }
