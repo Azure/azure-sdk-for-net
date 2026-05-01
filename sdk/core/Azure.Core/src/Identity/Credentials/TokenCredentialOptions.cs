@@ -67,6 +67,14 @@ namespace Azure.Identity
         public bool IsUnsafeSupportLoggingEnabled { get; set; }
 
         /// <summary>
+        /// Gets or sets extra query parameters that will be appended to the authentication request sent to Microsoft Entra.
+        /// Each entry maps a parameter name to its value and a flag that controls whether the parameter is part of the token-cache key.
+        /// This property is only honored by MSAL-backed credentials.
+        /// </summary>
+        [Experimental("AZID5001")]
+        public IDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get; set; }
+
+        /// <summary>
         /// Gets or sets whether this credential is part of a chained credential.
         /// </summary>
         internal bool IsChainedCredential { get; set; }
@@ -82,6 +90,14 @@ namespace Azure.Identity
             clone.AuthorityHost = AuthorityHost;
 
             clone.IsUnsafeSupportLoggingEnabled = IsUnsafeSupportLoggingEnabled;
+
+            // copy AdditionalQueryParameters (deep copy to avoid shared mutable state)
+#pragma warning disable AZID5001 // AdditionalQueryParameters is experimental
+            if (AdditionalQueryParameters != null)
+            {
+                clone.AdditionalQueryParameters = new Dictionary<string, (string Value, bool IncludeInCacheKey)>(AdditionalQueryParameters);
+            }
+#pragma warning restore AZID5001
 
             // copy TokenCredentialDiagnosticsOptions specific options
             clone.Diagnostics.IsAccountIdentifierLoggingEnabled = Diagnostics.IsAccountIdentifierLoggingEnabled;
