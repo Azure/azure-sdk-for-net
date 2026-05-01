@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Virtual Network route contract used to pass routing information for a Virtual Network. </summary>
+    /// <summary>
+    /// Virtual Network route contract used to pass routing information for a Virtual Network.
+    /// Serialized Name: VnetRoute
+    /// </summary>
     public partial class AppServiceVirtualNetworkRoute : ResourceData
     {
         /// <summary>
@@ -57,8 +60,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startAddress"> The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified. </param>
-        /// <param name="endAddress"> The ending address for this route. If the start address is specified in CIDR notation, this must be omitted. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: VnetRoute.kind
+        /// </param>
+        /// <param name="startAddress">
+        /// The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified.
+        /// Serialized Name: VnetRoute.properties.startAddress
+        /// </param>
+        /// <param name="endAddress">
+        /// The ending address for this route. If the start address is specified in CIDR notation, this must be omitted.
+        /// Serialized Name: VnetRoute.properties.endAddress
+        /// </param>
         /// <param name="routeType">
         /// The type of route this is:
         /// DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
@@ -66,22 +79,34 @@ namespace Azure.ResourceManager.AppService.Models
         /// STATIC - Static route set on the app only
         ///
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
+        /// Serialized Name: VnetRoute.properties.routeType
         /// </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceVirtualNetworkRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceVirtualNetworkRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             StartAddress = startAddress;
             EndAddress = endAddress;
             RouteType = routeType;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: VnetRoute.kind
+        /// </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary>
+        /// The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified.
+        /// Serialized Name: VnetRoute.properties.startAddress
+        /// </summary>
         [WirePath("properties.startAddress")]
         public string StartAddress { get; set; }
-        /// <summary> The ending address for this route. If the start address is specified in CIDR notation, this must be omitted. </summary>
+        /// <summary>
+        /// The ending address for this route. If the start address is specified in CIDR notation, this must be omitted.
+        /// Serialized Name: VnetRoute.properties.endAddress
+        /// </summary>
         [WirePath("properties.endAddress")]
         public string EndAddress { get; set; }
         /// <summary>
@@ -91,11 +116,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// STATIC - Static route set on the app only
         ///
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
+        /// Serialized Name: VnetRoute.properties.routeType
         /// </summary>
         [WirePath("properties.routeType")]
         public AppServiceVirtualNetworkRouteType? RouteType { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

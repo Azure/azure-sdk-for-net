@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     ContainerProperties = new ContainerProperties();
                 }
-                ContainerProperties.PreventEncryptionScopeOverride = value.Value;
+                ContainerProperties.PreventEncryptionScopeOverride = value;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     ContainerProperties = new ContainerProperties();
                 }
-                ContainerProperties.PublicAccess = value.Value;
+                ContainerProperties.PublicAccess = value;
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     ContainerProperties = new ContainerProperties();
                 }
-                ContainerProperties.EnableNfsV3RootSquash = value.Value;
+                ContainerProperties.EnableNfsV3RootSquash = value;
             }
         }
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     ContainerProperties = new ContainerProperties();
                 }
-                ContainerProperties.EnableNfsV3AllSquash = value.Value;
+                ContainerProperties.EnableNfsV3AllSquash = value;
             }
         }
     }

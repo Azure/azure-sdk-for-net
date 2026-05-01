@@ -14,7 +14,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Custom Authentication properties. </summary>
-    public partial class BrokerAuthenticatorCustomAuth : IJsonModel<BrokerAuthenticatorCustomAuth>
+    internal partial class BrokerAuthenticatorCustomAuth : IJsonModel<BrokerAuthenticatorCustomAuth>
     {
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/> for deserialization. </summary>
         internal BrokerAuthenticatorCustomAuth()

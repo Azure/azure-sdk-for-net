@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A domain name that a service is reached at, including details of the current connection status. </summary>
+    /// <summary>
+    /// A domain name that a service is reached at, including details of the current connection status.
+    /// Serialized Name: EndpointDependency
+    /// </summary>
     public partial class AppServiceEndpointDependency
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceEndpointDependency"/>. </summary>
-        /// <param name="domainName"> The domain name of the dependency. </param>
-        /// <param name="endpointDetails"> The IP Addresses and Ports used when connecting to DomainName. </param>
+        /// <param name="domainName">
+        /// The domain name of the dependency.
+        /// Serialized Name: EndpointDependency.domainName
+        /// </param>
+        /// <param name="endpointDetails">
+        /// The IP Addresses and Ports used when connecting to DomainName.
+        /// Serialized Name: EndpointDependency.endpointDetails
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceEndpointDependency(string domainName, IReadOnlyList<AppServiceEndpointDetail> endpointDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +71,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The domain name of the dependency. </summary>
+        /// <summary>
+        /// The domain name of the dependency.
+        /// Serialized Name: EndpointDependency.domainName
+        /// </summary>
         [WirePath("domainName")]
         public string DomainName { get; }
-        /// <summary> The IP Addresses and Ports used when connecting to DomainName. </summary>
+        /// <summary>
+        /// The IP Addresses and Ports used when connecting to DomainName.
+        /// Serialized Name: EndpointDependency.endpointDetails
+        /// </summary>
         [WirePath("endpointDetails")]
         public IReadOnlyList<AppServiceEndpointDetail> EndpointDetails { get; }
     }

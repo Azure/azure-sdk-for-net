@@ -20,9 +20,30 @@ EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluat
 2. Define the `EvaluatorVersion` object, which contains evaluation prompt.
 
 ```C# Snippet:Sample_PromptEvaluator_EvaluationsCatalogPromptBased
-private EvaluatorVersion promptVersion = new(
+private EvaluatorVersion GetPromptVersion()
+{
+    EvaluatorMetric customMetric = new()
+    {
+        Type = EvaluatorMetricType.Ordinal,
+        DesirableDirection = EvaluatorMetricDirection.Increase,
+        MinValue = 0.0f,
+        MaxValue = 1.0f
+    };
+    EvaluatorVersion promptVersion = new(
     categories: [EvaluatorCategory.Quality],
     definition: new PromptBasedEvaluatorDefinition(
+        initParameters: BinaryData.FromObjectAsJson(
+            new
+            {
+                required = new[] { "deployment_name", "threshold" },
+                type = "object",
+                properties = new
+                {
+                    deployment_name = new { type = "string" },
+                    threshold = new { type = "number" }
+                }
+            }
+        ),
         promptText: """
             You are a Groundedness Evaluator.
 
@@ -58,14 +79,31 @@ private EvaluatorVersion promptVersion = new(
                 "result": <integer from 1 to 5>,
                 "reason": "<brief explanation for the score>"
             }
-            """
-    ),
-    evaluatorType: EvaluatorType.Custom
-)
-{
-    DisplayName = "Custom prompt evaluator example",
-    Description = "Custom evaluator for groundedness",
-};
+            """,
+            dataSchema: BinaryData.FromObjectAsJson(
+                new
+                {
+                    required = new[] { "query", "response", "ground_truth" },
+                    type ="object",
+                    properties = new {
+                        query = new { type = "string" },
+                        response = new { type = "string" },
+                        ground_truth = new { type = "string" },
+                    },
+                }
+            ),
+            metrics: new Dictionary<string, EvaluatorMetric> {
+                { "custom_prompt", customMetric }
+            }
+        ),
+        evaluatorType: EvaluatorType.Custom
+    )
+    {
+        DisplayName = "Custom prompt evaluator example",
+        Description = "Custom evaluator for groundedness",
+    };
+    return promptVersion;
+}
 ```
 
 3. Upload the `EvaluatorVersion` object to Azure.
@@ -74,7 +112,7 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateEvaluator_EvaluationsCatalogPromptBased_Sync
 EvaluatorVersion promptEvaluator = projectClient.Evaluators.CreateVersion(
     name: "myCustomEvaluatorPrompt",
-    evaluatorVersion: promptVersion
+    evaluatorVersion: GetPromptVersion()
 );
 Console.WriteLine($"Created evaluator {promptEvaluator.Id}");
 ```
@@ -83,7 +121,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateEvaluator_EvaluationsCatalogPromptBased_Async
 EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
     name: "myCustomEvaluatorPrompt",
-    evaluatorVersion: promptVersion
+    evaluatorVersion: GetPromptVersion()
 );
 Console.WriteLine($"Created evaluator {promptEvaluator.Id}");
 ```
@@ -137,12 +175,12 @@ BinaryData evaluationData = BinaryData.FromObjectAsJson(
 
 5. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use it to get evaluation name and ID.
 
-```C# Snippet:Sample_GetStringValues_EvaluationsCatalogPromptBased
-private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+```C# Snippet:Sample_ParseClientResult_EvaluationSampleBase
+protected static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
     {
         foreach (string key in expectedProperties)
@@ -153,7 +191,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
             }
         }
     }
-    List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
+    List<string> notFoundItems = [.. expectedProperties.Where((key) => !results.ContainsKey(key))];
     if (notFoundItems.Count > 0)
     {
         StringBuilder sbNotFound = new();
@@ -273,17 +311,17 @@ Console.WriteLine($"Evaluation run created (id: {runId})");
 
 9. Define the method to get the error message and code from the response if any.
 
-```C# Snippet:Sample_GetError_EvaluationsCatalogPromptBased
-private static string GetErrorMessageOrEmpty(ClientResult result)
+```C# Snippet:Sample_GetErrorMessageOrEmpty_EvaluationSampleBase
+protected static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     string code = default;
     string message = default;
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
     {
-        if (prop.NameEquals("error"u8) && prop.Value.ValueKind != JsonValueKind.Null && prop.Value.ValueKind != JsonValueKind.Null && prop.Value is JsonElement countsElement)
+        if (prop.NameEquals("error"u8) && prop.Value.ValueKind != JsonValueKind.Null && prop.Value is JsonElement countsElement)
         {
             foreach (JsonProperty errorNode in countsElement.EnumerateObject())
             {
@@ -343,11 +381,11 @@ if (runStatus == "failed")
 
 10. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
 
-```C# Snippet:Sample_GetResultCounts_EvaluationsCatalogPromptBased
-private static string GetResultsCounts(ClientResult result)
+```C# Snippet:Sample_GetResultCounts_EvaluationSampleBase
+protected static string GetResultsCounts(ClientResult result)
 {
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     StringBuilder sbFormattedCounts = new("{\n");
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
     {
@@ -374,17 +412,17 @@ private static string GetResultsCounts(ClientResult result)
 11. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
 
 Synchronous sample:
-```C# Snippet:Sample_GetResultsList_EvaluationsCatalogPromptBased_Sync
-private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsList_EvaluationSampleBase
+protected static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
-        List<string> data = [];
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -401,6 +439,10 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);
@@ -409,16 +451,17 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_GetResultsList_EvaluationsCatalogPromptBased_Async
-private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsListAsync_EvaluationSampleBase
+protected static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -435,6 +478,10 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);

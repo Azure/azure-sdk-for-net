@@ -1,0 +1,23 @@
+skill: azsdk-common-sdk-release
+should_trigger_prompts:
+  - prompt: "release my SDK package"
+    reason: "Should activate skill"
+  - prompt: "how to publish a new SDK version"
+    reason: "Should activate skill"
+  - prompt: "walk me through SDK release process"
+    reason: "Should activate skill"
+  - prompt: "release a new version of azure-sdk"
+    reason: "Should activate skill"
+  - prompt: "SDK release checklist"
+    reason: "Should activate skill"
+should_not_trigger_prompts:
+  - prompt: "write unit tests"
+    reason: "Unrelated to skill scope"
+  - prompt: "fix my pipeline build error"
+    reason: "Unrelated to skill scope"
+  - prompt: "create a new TypeSpec definition"
+    reason: "Unrelated to skill scope"
+  - prompt: "optimize markdown tokens"
+    reason: "Unrelated to skill scope"
+  - prompt: "resolve APIView feedback"
+    reason: "Unrelated to skill scope"

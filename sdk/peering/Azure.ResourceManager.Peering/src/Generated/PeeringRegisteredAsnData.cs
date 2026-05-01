@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     Properties = new PeeringRegisteredAsnProperties();
                 }
-                Properties.Asn = value.Value;
+                Properties.Asn = value;
             }
         }
 

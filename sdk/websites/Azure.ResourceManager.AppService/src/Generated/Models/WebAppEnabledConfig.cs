@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Enabled configuration. </summary>
+    /// <summary>
+    /// Enabled configuration.
+    /// Serialized Name: EnabledConfig
+    /// </summary>
     internal partial class WebAppEnabledConfig
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppEnabledConfig"/>. </summary>
-        /// <param name="enabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
+        /// <param name="enabled">
+        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
+        /// Serialized Name: EnabledConfig.enabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppEnabledConfig(bool? enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        /// <summary>
+        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
+        /// Serialized Name: EnabledConfig.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool? Enabled { get; set; }
     }

@@ -44,7 +44,7 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = await mockRoomsClient.Object.CreateRoomAsync(validFrom, validUntil, createRoomParticipants, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.CreateRoomAsync(validFrom, validUntil, createRoomParticipants, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Theory]
@@ -89,7 +89,7 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = await mockRoomsClient.Object.CreateRoomAsync(createRoomOptions, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.CreateRoomAsync(createRoomOptions, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.CreateRoom(validFrom, validUntil, createRoomParticipants, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.CreateRoom(validFrom, validUntil, createRoomParticipants, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Theory]
@@ -150,7 +150,7 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.CreateRoom(createRoomOptions, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.CreateRoom(createRoomOptions, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = await mockRoomsClient.Object.UpdateRoomAsync(roomId, validFrom, validUntil, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoomAsync(roomId, validFrom, validUntil, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Theory]
@@ -199,7 +199,7 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = await mockRoomsClient.Object.UpdateRoomAsync(roomId, roomUpdateOptions, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoomAsync(roomId, roomUpdateOptions, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -220,7 +220,7 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.UpdateRoom(roomId, validFrom, validUntil, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoom(roomId, validFrom, validUntil, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Theory]
@@ -248,7 +248,7 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.UpdateRoom(roomId, roomUpdateOptions, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoom(roomId, roomUpdateOptions, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -266,7 +266,7 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = await mockRoomsClient.Object.GetRoomAsync(roomId, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.GetRoomAsync(roomId, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -284,7 +284,7 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.GetRoom(roomId, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.GetRoom(roomId, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -301,7 +301,7 @@ namespace Azure.Communication.Rooms.Tests
             AsyncPageable<CommunicationRoom> actualResponse = mockRoomsClient.Object.GetRoomsAsync(cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.GetRoomsAsync(cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -318,7 +318,7 @@ namespace Azure.Communication.Rooms.Tests
             Pageable<CommunicationRoom> actualResponse = mockRoomsClient.Object.GetRooms(cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.GetRooms(cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -336,7 +336,7 @@ namespace Azure.Communication.Rooms.Tests
             Response actualResponse = await mockRoomsClient.Object.DeleteRoomAsync(roomId, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.DeleteRoomAsync(roomId, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -354,7 +354,7 @@ namespace Azure.Communication.Rooms.Tests
             Response actualResponse = mockRoomsClient.Object.DeleteRoom(roomId, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.DeleteRoom(roomId, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -389,7 +389,7 @@ namespace Azure.Communication.Rooms.Tests
             Response actualResponse = await mockRoomsClient.Object.AddOrUpdateParticipantsAsync(roomId, participants, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.AddOrUpdateParticipantsAsync(roomId, participants, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResult));
         }
 
         [Test]
@@ -425,7 +425,7 @@ namespace Azure.Communication.Rooms.Tests
             Response actualResponse = mockRoomsClient.Object.AddOrUpdateParticipants(roomId, communicationUsers, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.AddOrUpdateParticipants(roomId, communicationUsers, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
         [Test]
         public async Task RemoveParticipantsAsyncShouldSucceed()
@@ -450,7 +450,7 @@ namespace Azure.Communication.Rooms.Tests
             Response actualResponse = await mockRoomsClient.Object.RemoveParticipantsAsync(roomId, communicationUsers, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.RemoveParticipantsAsync(roomId, communicationUsers, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResult));
         }
 
         [Test]
@@ -474,7 +474,7 @@ namespace Azure.Communication.Rooms.Tests
             Response actualResponse = mockRoomsClient.Object.RemoveParticipants(roomId, communicationUsers, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.RemoveParticipants(roomId, communicationUsers, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResult));
         }
 
         [Test]
@@ -492,7 +492,7 @@ namespace Azure.Communication.Rooms.Tests
             AsyncPageable<RoomParticipant> actualResponse = mockRoomsClient.Object.GetParticipantsAsync(roomId, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.GetParticipantsAsync(roomId, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
 
         [Test]
@@ -511,7 +511,7 @@ namespace Azure.Communication.Rooms.Tests
             Pageable<RoomParticipant> actualResponse = mockRoomsClient.Object.GetParticipants(roomId, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.GetParticipants(roomId, cancellationToken), Times.Once());
-            Assert.AreEqual(expectedRoomResult, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedRoomResult));
         }
     }
 }

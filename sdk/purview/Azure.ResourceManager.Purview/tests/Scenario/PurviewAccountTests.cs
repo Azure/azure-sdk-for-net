@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
 
             // Exist
             var flag = await _purviewAccountCollection.ExistsAsync(purviewAccountName);
-            Assert.IsTrue(flag);
+            Assert.That(flag.Value, Is.True);
 
             // Get
             var getPurviewAccount = await _purviewAccountCollection.GetAsync(purviewAccountName);
@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
 
             // GetAll
             var list = await _purviewAccountCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePurviewAccount(list.FirstOrDefault().Data, purviewAccountName);
 
             // Delete
             await purviewAccount.DeleteAsync(WaitUntil.Completed);
             flag = await _purviewAccountCollection.ExistsAsync(purviewAccountName);
-            Assert.IsFalse(flag);
+            Assert.That(flag.Value, Is.False);
         }
 
         // The current api-version 2022-09 does donot support use GetTagResource().CreateOrUpdate()
@@ -90,25 +90,25 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
             // AddTag
             await purviewAccount.AddTagAsync("addtagkey", "addtagvalue");
             purviewAccount = await _purviewAccountCollection.GetAsync(purviewAccountName);
-            Assert.AreEqual(1, purviewAccount.Data.Tags.Count);
+            Assert.That(purviewAccount.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = purviewAccount.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await purviewAccount.RemoveTagAsync("addtagkey");
             purviewAccount = await _purviewAccountCollection.GetAsync(purviewAccountName);
-            Assert.AreEqual(0, purviewAccount.Data.Tags.Count);
+            Assert.That(purviewAccount.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidatePurviewAccount(PurviewAccountData purviewAccount, string purviewAccountName)
         {
-            Assert.IsNotNull(purviewAccount);
-            Assert.IsNotEmpty(purviewAccount.Id);
-            Assert.AreEqual(purviewAccountName, purviewAccount.Name);
-            Assert.AreEqual(DefaultLocation, purviewAccount.Location);
-            Assert.AreEqual("Standard", purviewAccount.Sku.Name.ToString());
-            Assert.AreEqual("SystemAssigned", purviewAccount.Identity.ManagedServiceIdentityType.ToString());
+            Assert.That(purviewAccount, Is.Not.Null);
+            Assert.That(purviewAccount.Id.ToString(), Is.Not.Empty);
+            Assert.That(purviewAccount.Name, Is.EqualTo(purviewAccountName));
+            Assert.That(purviewAccount.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(purviewAccount.Sku.Name.ToString(), Is.EqualTo("Standard"));
+            Assert.That(purviewAccount.Identity.ManagedServiceIdentityType.ToString(), Is.EqualTo("SystemAssigned"));
         }
     }
 }

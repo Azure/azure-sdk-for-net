@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedServiceIdentities;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     public readonly partial struct IsolationScope : IEquatable<IsolationScope>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="IsolationScope"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IsolationScope(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string RegionalValue = "Regional";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="IsolationScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IsolationScope(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static IsolationScope None { get; } = new IsolationScope(NoneValue);
-        /// <summary> Regional. </summary>
+
+        /// <summary> Gets the Regional. </summary>
         public static IsolationScope Regional { get; } = new IsolationScope(RegionalValue);
+
         /// <summary> Determines if two <see cref="IsolationScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IsolationScope left, IsolationScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IsolationScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IsolationScope left, IsolationScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IsolationScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IsolationScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IsolationScope(string value) => new IsolationScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IsolationScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IsolationScope?(string value) => value == null ? null : new IsolationScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IsolationScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IsolationScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

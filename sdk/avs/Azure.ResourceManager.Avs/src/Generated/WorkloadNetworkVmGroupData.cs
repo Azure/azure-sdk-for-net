@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     Properties = new WorkloadNetworkVmGroupProperties();
                 }
-                Properties.Revision = value.Value;
+                Properties.Revision = value;
             }
         }
     }

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.CompositionType = value.Value;
+                Properties.CompositionType = value;
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.RetentionPeriod = value.Value;
+                Properties.RetentionPeriod = value;
             }
         }
 

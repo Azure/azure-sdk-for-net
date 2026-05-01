@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <param name="liveSharesFileShareCount"> The number of active file shares. </param>
         /// <returns> A new <see cref="Models.FileShareUsageDataResult"/> instance for mocking. </returns>
-        public static FileShareUsageDataResult FileShareUsageDataResult(int? liveSharesFileShareCount = default)
+        public static FileShareUsageDataResult FileShareUsageDataResult(int liveSharesFileShareCount = default)
         {
-            return new FileShareUsageDataResult(liveSharesFileShareCount is null ? default : new FileShareUsageDataProperties(new LiveSharesUsageData(liveSharesFileShareCount.Value, null), null), additionalBinaryDataProperties: null);
+            return new FileShareUsageDataResult(new FileShareUsageDataProperties(new LiveSharesUsageData(liveSharesFileShareCount, null), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response structure for file share limits API. </summary>
@@ -242,9 +242,9 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <param name="fileShareProvisioningRecommendationInputProvisionedStorageInGiB"> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </param>
         /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationContent"/> instance for mocking. </returns>
-        public static FileShareProvisioningRecommendationContent FileShareProvisioningRecommendationContent(int? fileShareProvisioningRecommendationInputProvisionedStorageInGiB = default)
+        public static FileShareProvisioningRecommendationContent FileShareProvisioningRecommendationContent(int fileShareProvisioningRecommendationInputProvisionedStorageInGiB = default)
         {
-            return new FileShareProvisioningRecommendationContent(fileShareProvisioningRecommendationInputProvisionedStorageInGiB is null ? default : new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB.Value, null), additionalBinaryDataProperties: null);
+            return new FileShareProvisioningRecommendationContent(new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response structure for file share provisioning parameters recommendation API. </summary>
