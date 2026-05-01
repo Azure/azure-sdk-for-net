@@ -5,8 +5,6 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Evaluation;
@@ -17,77 +15,8 @@ using OpenAI.Evals;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
-public class Sample_EvaluationCompareInsight : SamplesBase
+public class Sample_EvaluationCompareInsight : EvaluationSampleBase
 {
-    #region Snippet:Sample_GetError_EvaluationCompareInsight
-    private static string GetErrorMessageOrEmpty(ClientResult result)
-    {
-        string error = "";
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        string code = default;
-        string message = default;
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            if (prop.NameEquals("error"u8) && prop.Value.ValueKind != JsonValueKind.Null && prop.Value is JsonElement countsElement)
-            {
-                foreach (JsonProperty errorNode in countsElement.EnumerateObject())
-                {
-                    if (errorNode.Value.ValueKind == JsonValueKind.String)
-                    {
-                        if (errorNode.NameEquals("code"u8))
-                        {
-                            code = errorNode.Value.GetString();
-                        }
-                        else if (errorNode.NameEquals("message"u8))
-                        {
-                            message = errorNode.Value.GetString();
-                        }
-                    }
-                }
-            }
-        }
-        if (!string.IsNullOrEmpty(message))
-        {
-            error = $"Message: {message}, Code: {code ?? "<None>"}";
-        }
-        return error;
-    }
-    #endregion
-    #region Snippet:Sample_GetStringValues_EvaluationCompareInsight
-    private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
-    {
-        Dictionary<string, string> results = [];
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            foreach (string key in expectedProperties)
-            {
-                if (prop.NameEquals(Encoding.UTF8.GetBytes(key)) && prop.Value.ValueKind == JsonValueKind.String)
-                {
-                    results[key] = prop.Value.GetString();
-                }
-            }
-        }
-        List<string> notFoundItems = [..expectedProperties.Where((key) => !results.ContainsKey(key))];
-        if (notFoundItems.Count > 0)
-        {
-            StringBuilder sbNotFound = new();
-            foreach (string value in notFoundItems)
-            {
-                sbNotFound.Append($"{value}, ");
-            }
-            if (sbNotFound.Length > 2)
-            {
-                sbNotFound.Remove(sbNotFound.Length - 2, 2);
-            }
-            throw new InvalidOperationException($"The next keys were not found in returned result: {sbNotFound}.");
-        }
-        return results;
-    }
-    #endregion
-
     #region Snippet:Sample_ParseCompareResults_EvaluationCompareInsight
     private static void ParseCompareResults(ProjectsInsight compareInsight)
     {

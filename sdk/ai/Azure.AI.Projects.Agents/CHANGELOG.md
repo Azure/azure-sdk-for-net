@@ -4,6 +4,8 @@
 
 ### Features Added
 - Added `FabricIQPreviewTool`.
+- Added `ToolboxSearchPreviewTool` for discovering deferred tools via `search_tools` queries at runtime.
+- Added `Name` and `Description` properties to tool classes (`A2APreviewTool`, `AzureAISearchTool`, `BingCustomSearchPreviewTool`, `BingGroundingTool`, `BrowserAutomationPreviewTool`, `MemorySearchPreviewTool`, `MicrosoftFabricPreviewTool`, `SharepointPreviewTool`).
 
 ### Breaking Changes
 

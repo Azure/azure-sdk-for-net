@@ -8,8 +8,16 @@ parameters:
   ScriptDirectory: eng/common/scripts
   NpmConfigUserConfig: ''
   NpmConfigRegistry: ''
+  AuthToken: $(azuresdk-github-pat)
 
 steps:
+- ${{ if eq(parameters.AuthToken, '') }}:
+  - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+    parameters:
+      TokenOwners:
+        - ${{ split(parameters.RepoId, '/')[0] }}
+      ScriptDirectory: ${{ parameters.ScriptDirectory }}
+
 - task: PowerShell@2
   displayName: 'Verify Package Tags and Create Git Releases'
   inputs:
@@ -24,7 +32,7 @@ steps:
     pwsh: true
   timeoutInMinutes: 5
   env:
-    GH_TOKEN: $(azuresdk-github-pat)
+    GH_TOKEN: ${{ coalesce(parameters.AuthToken, '$(GH_TOKEN)') }}
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     ${{ if ne(parameters.NpmConfigUserConfig, '') }}:
       npm_config_userconfig: ${{ parameters.NpmConfigUserConfig }}

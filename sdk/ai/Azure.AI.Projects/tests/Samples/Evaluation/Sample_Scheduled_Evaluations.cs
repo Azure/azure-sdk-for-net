@@ -7,10 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
@@ -23,7 +20,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
-public class Sample_ScheduledEvaluations : SamplesBase
+public class Sample_ScheduledEvaluations : EvaluationSampleBase
 {
     #region Snippet:Sample_GetFile_ScheduledEvaluations
     private static string GetFile([CallerFilePath] string pth = "")
@@ -33,39 +30,6 @@ public class Sample_ScheduledEvaluations : SamplesBase
     }
     #endregion
 
-    #region Snippet:Sample_GetStringValues_ScheduledEvaluations
-    private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
-    {
-        Dictionary<string, string> results = [];
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            foreach (string key in expectedProperties)
-            {
-                if (prop.NameEquals(Encoding.UTF8.GetBytes(key)) && prop.Value.ValueKind == JsonValueKind.String)
-                {
-                    results[key] = prop.Value.GetString();
-                }
-            }
-        }
-        List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
-        if (notFoundItems.Count > 0)
-        {
-            StringBuilder sbNotFound = new();
-            foreach (string value in notFoundItems)
-            {
-                sbNotFound.Append($"{value}, ");
-            }
-            if (sbNotFound.Length > 2)
-            {
-                sbNotFound.Remove(sbNotFound.Length - 2, 2);
-            }
-            throw new InvalidOperationException($"The next keys were not found in returned result: {sbNotFound}.");
-        }
-        return results;
-    }
-    #endregion
     #region Snippet:Sample_GetData_ScheduledEvaluations
     private static BinaryData GetDataEvaluationConfig(string modelDeploymentName)
     {

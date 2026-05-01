@@ -150,6 +150,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(TelemetryEndpointAuth))]
     [ModelReaderWriterBuildable(typeof(ToolboxPolicies))]
     [ModelReaderWriterBuildable(typeof(ToolboxRecord))]
+    [ModelReaderWriterBuildable(typeof(ToolboxSearchPreviewTool))]
     [ModelReaderWriterBuildable(typeof(ToolboxVersion))]
     [ModelReaderWriterBuildable(typeof(ToolChoiceAllowed))]
     [ModelReaderWriterBuildable(typeof(ToolChoiceCodeInterpreter))]

@@ -742,8 +742,8 @@ if (runStatus == "failed")
 
 Get the results using `GetResultsListAsync` method. It calls `GetEvaluationRunOutputItemsAsync` on the `EvaluationClient` returning the object representing `ClientResult`, which contains binary encoded JSON response that can be retrieved using `GetRawResponse()`.
 
-```C# Snippet:Sample_GetResultsList_Evaluations_Async
-private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsListAsync_EvaluationSampleBase
+protected static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;

@@ -4,8 +4,8 @@ This sample demonstrates how to generate cluster insights from evaluation runs u
 
 1. First, we define helper methods for parsing protocol-level responses. The `ParseClientResult` method extracts string values from the JSON response.
 
-```C# Snippet:Sample_GetStringValues_EvaluationClusterInsight
-private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+```C# Snippet:Sample_ParseClientResult_EvaluationSampleBase
+protected static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -20,7 +20,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
             }
         }
     }
-    List<string> notFoundItems = [..expectedProperties.Where((key) => !results.ContainsKey(key))];
+    List<string> notFoundItems = [.. expectedProperties.Where((key) => !results.ContainsKey(key))];
     if (notFoundItems.Count > 0)
     {
         StringBuilder sbNotFound = new();
@@ -40,8 +40,8 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
 
 2. Define a helper to extract error messages from the response.
 
-```C# Snippet:Sample_GetError_EvaluationClusterInsight
-private static string GetErrorMessageOrEmpty(ClientResult result)
+```C# Snippet:Sample_GetErrorMessageOrEmpty_EvaluationSampleBase
+protected static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -78,8 +78,8 @@ private static string GetErrorMessageOrEmpty(ClientResult result)
 
 3. Define a helper to format result counts from the evaluation run response.
 
-```C# Snippet:Sample_GetResultCounts_EvaluationClusterInsight
-private static string GetResultsCounts(ClientResult result)
+```C# Snippet:Sample_GetResultCounts_EvaluationSampleBase
+protected static string GetResultsCounts(ClientResult result)
 {
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
     using JsonDocument document = JsonDocument.ParseValue(ref reader);

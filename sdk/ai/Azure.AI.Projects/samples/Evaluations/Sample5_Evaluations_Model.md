@@ -51,8 +51,8 @@ BinaryData evaluationData = BinaryData.FromObjectAsJson(
 
 3. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use it to get evaluation name and ID.
 
-```C# Snippet:Sample_GetStringValues_EvaluationsModel
-private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+```C# Snippet:Sample_ParseClientResult_EvaluationSampleBase
+protected static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -67,7 +67,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
             }
         }
     }
-    List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
+    List<string> notFoundItems = [.. expectedProperties.Where((key) => !results.ContainsKey(key))];
     if (notFoundItems.Count > 0)
     {
         StringBuilder sbNotFound = new();
@@ -177,8 +177,8 @@ Console.WriteLine($"Evaluation run created (id: {runId})");
 
 8. Define the method to get the error message and code from the response if any.
 
-```C# Snippet:Sample_GetError_EvaluationsModel
-private static string GetErrorMessageOrEmpty(ClientResult result)
+```C# Snippet:Sample_GetErrorMessageOrEmpty_EvaluationSampleBase
+protected static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -247,8 +247,8 @@ if (runStatus == "failed")
 
 10. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
 
-```C# Snippet:Sample_GetResultCounts_EvaluationsModel
-private static string GetResultsCounts(ClientResult result)
+```C# Snippet:Sample_GetResultCounts_EvaluationSampleBase
+protected static string GetResultsCounts(ClientResult result)
 {
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
     using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -278,8 +278,8 @@ private static string GetResultsCounts(ClientResult result)
 11. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
 
 Synchronous sample:
-```C# Snippet:Sample_GetResultsList_EvaluationsModel_Sync
-private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsList_EvaluationSampleBase
+protected static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
@@ -317,8 +317,8 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_GetResultsList_EvaluationsModel_Async
-private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsListAsync_EvaluationSampleBase
+protected static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
