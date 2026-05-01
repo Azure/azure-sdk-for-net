@@ -473,6 +473,45 @@ The custom file uses `[CodeGenType("DocumentsModelFactory")]`. See [customizatio
 Tests use `Azure.Core.TestFramework`. Live tests run against a real service; recorded tests play back from `assets.json`.
 Tests use `Azure.Core.TestFramework`. Live tests run against a real service; recorded tests play back from `assets.json`.
 
+### Service version test matrix
+
+The `[ClientTestFixture]` attribute is declared **only on `SearchTestBase`** with the latest GA and latest preview versions. All derived test classes inherit it automatically via NUnit attribute inheritance (`Inherited = true`). This means when a new API version is added, **only `SearchTestBase` needs to be updated**.
+
+```csharp
+// SearchTestBase.cs — single source of truth for test versions
+[ClientTestFixture(
+    SearchClientOptions.ServiceVersion.V2026_04_01,          // latest GA
+    SearchClientOptions.ServiceVersion.V2026_05_01_Preview)] // latest preview
+public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
+```
+
+**Do NOT** add `[ClientTestFixture]` to derived classes unless they need a *different* set of versions (e.g., testing only against older versions). If a derived class declares its own `[ClientTestFixture]`, it **shadows** the base class's attribute.
+
+### Gating tests to specific versions
+
+Use `[ServiceVersion]` to restrict individual tests or classes to a version range:
+
+```csharp
+// Runs only on V2026_04_01 and later (skipped on older versions in the fixture)
+[ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+public void TestNewFeature() { ... }
+
+// Runs only on preview versions
+[ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
+public void TestPreviewOnlyFeature() { ... }
+
+// Class-level: all tests in the class require V2026_04_01+
+[ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+public partial class Sample01_HelloWorld : SearchTestBase { ... }
+```
+
+### Updating versions after regeneration
+
+When a new `ServiceVersion` enum value is added to `SearchClientOptions`:
+1. Update `SearchTestBase`'s `[ClientTestFixture]` — set the latest GA and latest preview.
+2. No changes needed in derived test classes (they inherit).
+3. Add `[ServiceVersion(Min = ...)]` to any tests that use features only available in the new version.
+
 ```
 tests/
 ├── Batching/               # SearchIndexingBufferedSender tests

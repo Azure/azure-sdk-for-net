@@ -14,7 +14,6 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2026_04_01)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -664,6 +663,7 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint), ApiKey = TestEnvironment.OpenAIKey, DeploymentName = "text-embedding-3-large", ModelName = "text-embedding-3-large" },
                     Type _ when t == typeof(ChatCompletionSkill) => new ChatCompletionSkill(inputs, outputs, new Uri(TestEnvironment.OpenAIEndpoint)) { ApiKey = TestEnvironment.OpenAIKey },
                     Type _ when t == typeof(VisionVectorizeSkill) => new VisionVectorizeSkill(inputs, outputs, "2024-02-01"),
+                    Type _ when t == typeof(AzureMachineLearningSkill) => new AzureMachineLearningSkill(inputs, outputs) { ScoringUri = new Uri("https://microsoft.com") },
                     _ => (SearchIndexerSkill)Activator.CreateInstance(t, new object[] { inputs, outputs }),
                 };
             }

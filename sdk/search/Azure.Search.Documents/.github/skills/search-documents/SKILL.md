@@ -257,11 +257,12 @@ azsdk_package_update_metadata
 7. Check for deleted types and apply backward compat rules per [architecture.md](./references/architecture.md#backwards-compatibility-for-removed-api-version-types).
 8. Run `Export-API.ps1 search`. Run `dotnet pack src/` to verify ApiCompat.
 9. Run `dotnet format` on src and tests projects.
-10. Run `Update-Snippets.ps1 search`.
-11. Run `azsdk_package_run_tests` and `azsdk_package_run_check`.
-12. Update `CHANGELOG.md` per [Tool 7](#7-azsdk_package_update_changelog_content--changelog).
-13. Update `src/Azure.Search.Documents.csproj` `<Version>` (use `-beta.N` suffix for preview). Run `Prepare-Release.ps1` and `azsdk_package_update_metadata`.
-14. Final gate: re-run Export-API if `src/` changed after step 8; re-run snippets if `*.md` changed after step 10; confirm `git status` is clean.
+10. Update `SearchTestBase`'s `[ClientTestFixture]` to include the new API version (latest GA + latest preview). Do NOT add `[ClientTestFixture]` to derived classes — they inherit from `SearchTestBase`. See [architecture.md](./references/architecture.md#service-version-test-matrix).
+11. Run `Update-Snippets.ps1 search`.
+12. Run `azsdk_package_run_tests` and `azsdk_package_run_check`.
+13. Update `CHANGELOG.md` per [Tool 7](#7-azsdk_package_update_changelog_content--changelog).
+14. Update `src/Azure.Search.Documents.csproj` `<Version>` (use `-beta.N` suffix for preview). Run `Prepare-Release.ps1` and `azsdk_package_update_metadata`.
+15. Final gate: re-run Export-API if `src/` changed after step 8; re-run snippets if `*.md` changed after step 11; confirm `git status` is clean.
 
 ---
 

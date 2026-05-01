@@ -17,7 +17,6 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2026_04_01)]
     public class SearchIndexClientTests : SearchTestBase
     {
         public SearchIndexClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -121,6 +120,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.Counters);
+            Assert.IsNotNull(response.Value.Counters.AliasCounter);
             Assert.IsNotNull(response.Value.Counters.DataSourceCounter);
             Assert.IsNotNull(response.Value.Counters.DocumentCounter);
             Assert.IsNotNull(response.Value.Counters.IndexCounter);

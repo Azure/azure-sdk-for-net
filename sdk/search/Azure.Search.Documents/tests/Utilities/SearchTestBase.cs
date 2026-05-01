@@ -16,6 +16,7 @@ using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using Microsoft.Spatial;
 using NUnit.Framework;
+using static Azure.Search.Documents.SearchClientOptions.ServiceVersion;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Tests
     /// Base class for Search unit tests that adds shared infrastructure on top
     /// of the Azure.Core testing framework.
     /// </summary>
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01)]
+    [ClientTestFixture(V2026_04_01, V2026_05_01_Preview)]
     public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
         /// <summary>
