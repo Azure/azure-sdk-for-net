@@ -14,29 +14,29 @@ namespace Azure.AI.Language.Documents
     /// Contains the AnalyzeDocuments long running operation result object.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PiiEntityRecognitionOperationResult"/> and <see cref="AbstractiveSummarizationOperationResult"/>.
     /// </summary>
-    public abstract partial class AnalyzeDocumentsLROResult
+    public abstract partial class AnalyzeDocumentsOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentsLROResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentsOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="kind"> Kind of the task. </param>
-        private protected AnalyzeDocumentsLROResult(DateTimeOffset lastUpdateDateTime, DocumentActionState status, AnalyzeDocumentsOperationResultsKind kind)
+        private protected AnalyzeDocumentsOperationResult(DateTimeOffset lastUpdateDateTime, DocumentActionState status, AnalyzeDocumentsOperationResultsKind kind)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentsLROResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentsOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeDocumentsLROResult(DateTimeOffset lastUpdateDateTime, DocumentActionState status, string taskName, AnalyzeDocumentsOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeDocumentsOperationResult(DateTimeOffset lastUpdateDateTime, DocumentActionState status, string taskName, AnalyzeDocumentsOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;

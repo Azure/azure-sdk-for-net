@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Documents
             Failed = failed;
             InProgress = inProgress;
             Total = total;
-            Items = new ChangeTrackingList<AnalyzeDocumentsLROResult>();
+            Items = new ChangeTrackingList<AnalyzeDocumentsOperationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentActions"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="total"> Count of total tasks. </param>
         /// <param name="items"> Enumerable of Analyze documents job results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentActions(int completed, int failed, int inProgress, int total, IList<AnalyzeDocumentsLROResult> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentActions(int completed, int failed, int inProgress, int total, IList<AnalyzeDocumentsOperationResult> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Completed = completed;
             Failed = failed;
@@ -60,6 +60,6 @@ namespace Azure.AI.Language.Documents
         public int Total { get; }
 
         /// <summary> Enumerable of Analyze documents job results. </summary>
-        public IList<AnalyzeDocumentsLROResult> Items { get; }
+        public IList<AnalyzeDocumentsOperationResult> Items { get; }
     }
 }

@@ -91,9 +91,9 @@ namespace Azure.AI.Language.Documents
         /// <param name="total"> Count of total tasks. </param>
         /// <param name="items"> Enumerable of Analyze documents job results. </param>
         /// <returns> A new <see cref="Documents.DocumentActions"/> instance for mocking. </returns>
-        public static DocumentActions DocumentActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeDocumentsLROResult> items = default)
+        public static DocumentActions DocumentActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeDocumentsOperationResult> items = default)
         {
-            items ??= new ChangeTrackingList<AnalyzeDocumentsLROResult>();
+            items ??= new ChangeTrackingList<AnalyzeDocumentsOperationResult>();
 
             return new DocumentActions(
                 completed,
@@ -112,10 +112,10 @@ namespace Azure.AI.Language.Documents
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
-        /// <returns> A new <see cref="Documents.AnalyzeDocumentsLROResult"/> instance for mocking. </returns>
-        public static AnalyzeDocumentsLROResult AnalyzeDocumentsLROResult(DateTimeOffset lastUpdateDateTime = default, DocumentActionState status = default, string taskName = default, string kind = default)
+        /// <returns> A new <see cref="Documents.AnalyzeDocumentsOperationResult"/> instance for mocking. </returns>
+        public static AnalyzeDocumentsOperationResult AnalyzeDocumentsOperationResult(DateTimeOffset lastUpdateDateTime = default, DocumentActionState status = default, string taskName = default, string kind = default)
         {
-            return new UnknownAnalyzeDocumentsLROResult(lastUpdateDateTime, status, taskName, new AnalyzeDocumentsOperationResultsKind(kind), additionalBinaryDataProperties: null);
+            return new UnknownAnalyzeDocumentsOperationResult(lastUpdateDateTime, status, taskName, new AnalyzeDocumentsOperationResultsKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains the PII LRO results. </summary>

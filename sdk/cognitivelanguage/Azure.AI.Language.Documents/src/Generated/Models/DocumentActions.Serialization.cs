@@ -90,7 +90,7 @@ namespace Azure.AI.Language.Documents
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
-                foreach (AnalyzeDocumentsLROResult item in Items)
+                foreach (AnalyzeDocumentsOperationResult item in Items)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -142,7 +142,7 @@ namespace Azure.AI.Language.Documents
             int failed = default;
             int inProgress = default;
             int total = default;
-            IList<AnalyzeDocumentsLROResult> items = default;
+            IList<AnalyzeDocumentsOperationResult> items = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,10 +172,10 @@ namespace Azure.AI.Language.Documents
                     {
                         continue;
                     }
-                    List<AnalyzeDocumentsLROResult> array = new List<AnalyzeDocumentsLROResult>();
+                    List<AnalyzeDocumentsOperationResult> array = new List<AnalyzeDocumentsOperationResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeDocumentsLROResult.DeserializeAnalyzeDocumentsLROResult(item, options));
+                        array.Add(AnalyzeDocumentsOperationResult.DeserializeAnalyzeDocumentsOperationResult(item, options));
                     }
                     items = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.AI.Language.Documents
                 failed,
                 inProgress,
                 total,
-                items ?? new ChangeTrackingList<AnalyzeDocumentsLROResult>(),
+                items ?? new ChangeTrackingList<AnalyzeDocumentsOperationResult>(),
                 additionalBinaryDataProperties);
         }
     }
