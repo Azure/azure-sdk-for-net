@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="HorizonDbReplicaPropertiesForPatchUpdate"/>. </summary>
         /// <param name="role"> Role of the replica. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbReplicaPropertiesForPatchUpdate(ReplicaRole? role, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbReplicaPropertiesForPatchUpdate(HorizonDbReplicaRole? role, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Role of the replica. </summary>
-        public ReplicaRole? Role { get; set; }
+        public HorizonDbReplicaRole? Role { get; set; }
     }
 }

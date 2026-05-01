@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string startIpAddress = default;
             string endIpAddress = default;
             string description = default;
-            ProvisioningState? provisioningState = default;
+            HorizonDbProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new HorizonDbProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

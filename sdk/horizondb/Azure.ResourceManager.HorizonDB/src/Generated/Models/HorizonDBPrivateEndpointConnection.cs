@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        internal HorizonDBPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal HorizonDBPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HorizonDbPrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The private endpoint connection properties. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; }
+        public HorizonDbPrivateEndpointConnectionProperties Properties { get; }
     }
 }

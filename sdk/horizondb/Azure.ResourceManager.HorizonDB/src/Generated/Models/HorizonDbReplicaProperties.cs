@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="availabilityZone"> The availability zone of the replica. </param>
         /// <param name="provisioningState"> The provisioning state of the replica. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbReplicaProperties(ReplicaRole? role, State? status, string fullyQualifiedDomainName, string availabilityZone, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbReplicaProperties(HorizonDbReplicaRole? role, HorizonDbClusterState? status, string fullyQualifiedDomainName, string availabilityZone, HorizonDbProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             Status = status;
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Role of the replica. </summary>
-        public ReplicaRole? Role { get; set; }
+        public HorizonDbReplicaRole? Role { get; set; }
 
         /// <summary> Current status of the replica. </summary>
-        public State? Status { get; }
+        public HorizonDbClusterState? Status { get; }
 
         /// <summary> The fully qualified domain name of the replica. </summary>
         public string FullyQualifiedDomainName { get; }
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string AvailabilityZone { get; set; }
 
         /// <summary> The provisioning state of the replica. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HorizonDbProvisioningState? ProvisioningState { get; }
     }
 }

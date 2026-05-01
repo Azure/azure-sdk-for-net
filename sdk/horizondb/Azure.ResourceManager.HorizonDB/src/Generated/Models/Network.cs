@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="Network"/>. </summary>
         /// <param name="publicNetworkAccess"> The flag indicating whether public ip is requested. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Network(PublicNetworkAccessState? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Network(HorizonDbPublicNetworkAccessState? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicNetworkAccess = publicNetworkAccess;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The flag indicating whether public ip is requested. </summary>
-        public PublicNetworkAccessState? PublicNetworkAccess { get; }
+        public HorizonDbPublicNetworkAccessState? PublicNetworkAccess { get; }
     }
 }

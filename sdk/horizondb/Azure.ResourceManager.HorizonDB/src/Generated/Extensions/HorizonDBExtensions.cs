@@ -111,21 +111,21 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HorizonDbPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBArmClient.GetHorizonDbPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDbPrivateEndpointConnectionResource"/> object. </returns>
+        public static HorizonDbPrivateEndpointConnectionResource GetHorizonDbPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHorizonDBArmClient(client).GetPrivateEndpointConnectionResource(id);
+            return GetMockableHorizonDBArmClient(client).GetHorizonDbPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -278,40 +278,40 @@ namespace Azure.ResourceManager.HorizonDB
         /// Updates a private endpoint connection.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHorizonDBResourceGroupResource.UpdateAsync(WaitUntil, string, PrivateEndpointConnectionUpdate, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBResourceGroupResource.UpdateAsync(WaitUntil, string, HorizonDbPrivateEndpointConnectionPatch, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<HorizonDBPrivateEndpointConnection>> UpdateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateEndpointConnectionName, PrivateEndpointConnectionUpdate properties, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<HorizonDBPrivateEndpointConnection>> UpdateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateEndpointConnectionName, HorizonDbPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHorizonDBResourceGroupResource(resourceGroupResource).UpdateAsync(waitUntil, privateEndpointConnectionName, properties, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHorizonDBResourceGroupResource(resourceGroupResource).UpdateAsync(waitUntil, privateEndpointConnectionName, patch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Updates a private endpoint connection.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHorizonDBResourceGroupResource.Update(WaitUntil, string, PrivateEndpointConnectionUpdate, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBResourceGroupResource.Update(WaitUntil, string, HorizonDbPrivateEndpointConnectionPatch, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<HorizonDBPrivateEndpointConnection> Update(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateEndpointConnectionName, PrivateEndpointConnectionUpdate properties, CancellationToken cancellationToken = default)
+        public static ArmOperation<HorizonDBPrivateEndpointConnection> Update(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateEndpointConnectionName, HorizonDbPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHorizonDBResourceGroupResource(resourceGroupResource).Update(waitUntil, privateEndpointConnectionName, properties, cancellationToken);
+            return GetMockableHorizonDBResourceGroupResource(resourceGroupResource).Update(waitUntil, privateEndpointConnectionName, patch, cancellationToken);
         }
 
         /// <summary>

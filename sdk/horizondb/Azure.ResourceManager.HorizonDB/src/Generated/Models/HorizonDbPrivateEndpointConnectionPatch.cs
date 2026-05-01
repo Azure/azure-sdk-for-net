@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> PATCH model for private endpoint connections. </summary>
-    public partial class PrivateEndpointConnectionUpdate
+    public partial class HorizonDbPrivateEndpointConnectionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionUpdate"/>. </summary>
-        public PrivateEndpointConnectionUpdate()
+        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateEndpointConnectionPatch"/>. </summary>
+        public HorizonDbPrivateEndpointConnectionPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateEndpointConnectionPatch"/>. </summary>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionUpdate(OptionalPropertiesUpdateableProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbPrivateEndpointConnectionPatch(OptionalPropertiesUpdateableProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

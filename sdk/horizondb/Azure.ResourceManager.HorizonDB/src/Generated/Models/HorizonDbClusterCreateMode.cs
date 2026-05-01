@@ -12,7 +12,7 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The mode to create a new HorizonDb cluster. </summary>
-    public readonly partial struct CreateModeCluster : IEquatable<CreateModeCluster>
+    public readonly partial struct HorizonDbClusterCreateMode : IEquatable<HorizonDbClusterCreateMode>
     {
         private readonly string _value;
         /// <summary> Create a new cluster. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Create cluster from point-in-time restore. </summary>
         private const string PointInTimeRestoreValue = "PointInTimeRestore";
 
-        /// <summary> Initializes a new instance of <see cref="CreateModeCluster"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CreateModeCluster(string value)
+        public HorizonDbClusterCreateMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Create a new cluster. </summary>
-        public static CreateModeCluster Create { get; } = new CreateModeCluster(CreateValue);
+        public static HorizonDbClusterCreateMode Create { get; } = new HorizonDbClusterCreateMode(CreateValue);
 
         /// <summary> Update an existing cluster. </summary>
-        public static CreateModeCluster Update { get; } = new CreateModeCluster(UpdateValue);
+        public static HorizonDbClusterCreateMode Update { get; } = new HorizonDbClusterCreateMode(UpdateValue);
 
         /// <summary> Create cluster from point-in-time restore. </summary>
-        public static CreateModeCluster PointInTimeRestore { get; } = new CreateModeCluster(PointInTimeRestoreValue);
+        public static HorizonDbClusterCreateMode PointInTimeRestore { get; } = new HorizonDbClusterCreateMode(PointInTimeRestoreValue);
 
-        /// <summary> Determines if two <see cref="CreateModeCluster"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDbClusterCreateMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(CreateModeCluster left, CreateModeCluster right) => left.Equals(right);
+        public static bool operator ==(HorizonDbClusterCreateMode left, HorizonDbClusterCreateMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CreateModeCluster"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDbClusterCreateMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(CreateModeCluster left, CreateModeCluster right) => !left.Equals(right);
+        public static bool operator !=(HorizonDbClusterCreateMode left, HorizonDbClusterCreateMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CreateModeCluster"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDbClusterCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CreateModeCluster(string value) => new CreateModeCluster(value);
+        public static implicit operator HorizonDbClusterCreateMode(string value) => new HorizonDbClusterCreateMode(value);
 
-        /// <summary> Converts a string to a <see cref="CreateModeCluster"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDbClusterCreateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CreateModeCluster?(string value) => value == null ? null : new CreateModeCluster(value);
+        public static implicit operator HorizonDbClusterCreateMode?(string value) => value == null ? null : new HorizonDbClusterCreateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CreateModeCluster other && Equals(other);
+        public override bool Equals(object obj) => obj is HorizonDbClusterCreateMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(CreateModeCluster other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HorizonDbClusterCreateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

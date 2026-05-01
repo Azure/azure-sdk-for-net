@@ -13,26 +13,26 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of the private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionProperties
+    public partial class HorizonDbPrivateEndpointConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal PrivateEndpointConnectionProperties(HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        internal HorizonDbPrivateEndpointConnectionProperties(HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
             GroupIds = new ChangeTrackingList<string>();
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, PrivateEndpoint privateEndpoint, HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState, HorizonDBPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbPrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, PrivateEndpoint privateEndpoint, HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState, HorizonDBPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;

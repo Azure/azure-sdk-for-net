@@ -12,7 +12,7 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Current states. </summary>
-    public readonly partial struct State : IEquatable<State>
+    public readonly partial struct HorizonDbClusterState : IEquatable<HorizonDbClusterState>
     {
         private readonly string _value;
         /// <summary> Is ready and operational. </summary>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Is healthy. </summary>
         private const string HealthyValue = "Healthy";
 
-        /// <summary> Initializes a new instance of <see cref="State"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public State(string value)
+        public HorizonDbClusterState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -43,53 +43,53 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Is ready and operational. </summary>
-        public static State Ready { get; } = new State(ReadyValue);
+        public static HorizonDbClusterState Ready { get; } = new HorizonDbClusterState(ReadyValue);
 
         /// <summary> Is being dropped/deleted. </summary>
-        public static State Dropping { get; } = new State(DroppingValue);
+        public static HorizonDbClusterState Dropping { get; } = new HorizonDbClusterState(DroppingValue);
 
         /// <summary> Is disabled. </summary>
-        public static State Disabled { get; } = new State(DisabledValue);
+        public static HorizonDbClusterState Disabled { get; } = new HorizonDbClusterState(DisabledValue);
 
         /// <summary> Is starting up. </summary>
-        public static State Starting { get; } = new State(StartingValue);
+        public static HorizonDbClusterState Starting { get; } = new HorizonDbClusterState(StartingValue);
 
         /// <summary> Is stopping. </summary>
-        public static State Stopping { get; } = new State(StoppingValue);
+        public static HorizonDbClusterState Stopping { get; } = new HorizonDbClusterState(StoppingValue);
 
         /// <summary> Is stopped. </summary>
-        public static State Stopped { get; } = new State(StoppedValue);
+        public static HorizonDbClusterState Stopped { get; } = new HorizonDbClusterState(StoppedValue);
 
         /// <summary> Is being updated. </summary>
-        public static State Updating { get; } = new State(UpdatingValue);
+        public static HorizonDbClusterState Updating { get; } = new HorizonDbClusterState(UpdatingValue);
 
         /// <summary> Is healthy. </summary>
-        public static State Healthy { get; } = new State(HealthyValue);
+        public static HorizonDbClusterState Healthy { get; } = new HorizonDbClusterState(HealthyValue);
 
-        /// <summary> Determines if two <see cref="State"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDbClusterState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(State left, State right) => left.Equals(right);
+        public static bool operator ==(HorizonDbClusterState left, HorizonDbClusterState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="State"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDbClusterState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(State left, State right) => !left.Equals(right);
+        public static bool operator !=(HorizonDbClusterState left, HorizonDbClusterState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="State"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDbClusterState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator State(string value) => new State(value);
+        public static implicit operator HorizonDbClusterState(string value) => new HorizonDbClusterState(value);
 
-        /// <summary> Converts a string to a <see cref="State"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDbClusterState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator State?(string value) => value == null ? null : new State(value);
+        public static implicit operator HorizonDbClusterState?(string value) => value == null ? null : new HorizonDbClusterState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is State other && Equals(other);
+        public override bool Equals(object obj) => obj is HorizonDbClusterState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(State other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HorizonDbClusterState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

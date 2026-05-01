@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of a HorizonDb parameters. </summary>
-    public partial class ParameterProperties
+    public partial class HorizonDbParameterProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ParameterProperties"/>. </summary>
-        public ParameterProperties()
+        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterProperties"/>. </summary>
+        public HorizonDbParameterProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ParameterProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterProperties"/>. </summary>
         /// <param name="name"> The name of the parameter. </param>
         /// <param name="description"> The description of the parameter. </param>
         /// <param name="value"> The value of the configuration. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="documentationLink"> Link to parameter documentation. </param>
         /// <param name="unit"> The unit of measurement for the parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ParameterProperties(string name, string description, string value, string dataType, string allowedValues, bool? isDynamic, bool? isReadOnly, Uri documentationLink, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbParameterProperties(string name, string description, string value, string dataType, string allowedValues, bool? isDynamic, bool? isReadOnly, Uri documentationLink, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

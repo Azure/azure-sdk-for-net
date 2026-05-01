@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
-                foreach (ParameterProperties item in Parameters)
+                foreach (HorizonDbParameterProperties item in Parameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            IList<ParameterProperties> parameters = default;
+            IList<HorizonDbParameterProperties> parameters = default;
             string description = default;
             bool? applyImmediately = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    List<ParameterProperties> array = new List<ParameterProperties>();
+                    List<HorizonDbParameterProperties> array = new List<HorizonDbParameterProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ParameterProperties.DeserializeParameterProperties(item, options));
+                        array.Add(HorizonDbParameterProperties.DeserializeHorizonDbParameterProperties(item, options));
                     }
                     parameters = array;
                     continue;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDbParameterGroupPropertiesForPatchUpdate(parameters ?? new ChangeTrackingList<ParameterProperties>(), description, applyImmediately, additionalBinaryDataProperties);
+            return new HorizonDbParameterGroupPropertiesForPatchUpdate(parameters ?? new ChangeTrackingList<HorizonDbParameterProperties>(), description, applyImmediately, additionalBinaryDataProperties);
         }
     }
 }

@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             AzureLocation? location = default;
-            State? state = default;
+            HorizonDbClusterState? state = default;
             int? replicaCount = default;
             string version = default;
-            CreateModePool? createMode = default;
-            ProvisioningState? provisioningState = default;
+            HorizonDbPoolCreateMode? createMode = default;
+            HorizonDbProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    state = new State(prop.Value.GetString());
+                    state = new HorizonDbClusterState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("replicaCount"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    createMode = new CreateModePool(prop.Value.GetString());
+                    createMode = new HorizonDbPoolCreateMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new HorizonDbProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

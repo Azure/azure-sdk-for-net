@@ -15,7 +15,7 @@ using Azure.ResourceManager.HorizonDB.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT : AsyncPageable<PrivateEndpointConnectionResourceData>
+    internal partial class HorizonDbPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT : AsyncPageable<HorizonDbPrivateEndpointConnectionData>
     {
         private readonly HorizonDbPrivateEndpointConnections _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of HorizonDbPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<PrivateEndpointConnectionResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<HorizonDbPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HorizonDB
                     yield break;
                 }
                 PrivateEndpointConnectionResourceListResult result = PrivateEndpointConnectionResourceListResult.FromResponse(response);
-                yield return Page<PrivateEndpointConnectionResourceData>.FromValues((IReadOnlyList<PrivateEndpointConnectionResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HorizonDbPrivateEndpointConnectionData>.FromValues((IReadOnlyList<HorizonDbPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HorizonDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDbPrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

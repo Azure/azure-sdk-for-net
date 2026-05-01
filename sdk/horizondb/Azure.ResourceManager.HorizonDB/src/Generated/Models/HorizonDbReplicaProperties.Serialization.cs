@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            ReplicaRole? role = default;
-            State? status = default;
+            HorizonDbReplicaRole? role = default;
+            HorizonDbClusterState? status = default;
             string fullyQualifiedDomainName = default;
             string availabilityZone = default;
-            ProvisioningState? provisioningState = default;
+            HorizonDbProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    role = new ReplicaRole(prop.Value.GetString());
+                    role = new HorizonDbReplicaRole(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    status = new State(prop.Value.GetString());
+                    status = new HorizonDbClusterState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("fullyQualifiedDomainName"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new HorizonDbProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

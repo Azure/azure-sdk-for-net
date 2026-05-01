@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            ReplicaRole? role = default;
+            HorizonDbReplicaRole? role = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    role = new ReplicaRole(prop.Value.GetString());
+                    role = new HorizonDbReplicaRole(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

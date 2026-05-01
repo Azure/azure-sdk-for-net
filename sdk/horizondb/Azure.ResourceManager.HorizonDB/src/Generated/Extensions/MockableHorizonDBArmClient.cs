@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             return new HorizonDbFirewallRuleResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDbPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDbPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual HorizonDbPrivateEndpointConnectionResource GetHorizonDbPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            HorizonDbPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new HorizonDbPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HorizonDbPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>

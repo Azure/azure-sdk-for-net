@@ -712,11 +712,11 @@ namespace Azure.ResourceManager.HorizonDB
             return GetHorizonDbPools().Get(poolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the <see cref="HorizonDbClusterResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionResourceCollection GetPrivateEndpointConnectionResources()
+        /// <summary> Gets a collection of HorizonDbPrivateEndpointConnections in the <see cref="HorizonDbClusterResource"/>. </summary>
+        /// <returns> An object representing collection of HorizonDbPrivateEndpointConnections and their operations over a HorizonDbPrivateEndpointConnectionResource. </returns>
+        public virtual HorizonDbPrivateEndpointConnectionCollection GetHorizonDbPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new PrivateEndpointConnectionResourceCollection(client, Id));
+            return GetCachedClient(client => new HorizonDbPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Gets a private endpoint connection. </summary>
@@ -725,11 +725,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionResourceAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDbPrivateEndpointConnectionResource>> GetHorizonDbPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetPrivateEndpointConnectionResources().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetHorizonDbPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a private endpoint connection. </summary>
@@ -738,11 +738,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnectionResource(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDbPrivateEndpointConnectionResource> GetHorizonDbPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetPrivateEndpointConnectionResources().Get(privateEndpointConnectionName, cancellationToken);
+            return GetHorizonDbPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HorizonDbPrivateLinkResources in the <see cref="HorizonDbClusterResource"/>. </summary>

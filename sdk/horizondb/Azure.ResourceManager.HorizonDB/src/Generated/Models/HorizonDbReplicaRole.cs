@@ -12,7 +12,7 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Role of the replica. </summary>
-    public readonly partial struct ReplicaRole : IEquatable<ReplicaRole>
+    public readonly partial struct HorizonDbReplicaRole : IEquatable<HorizonDbReplicaRole>
     {
         private readonly string _value;
         /// <summary> Read-only replica. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> ReadWrite replica. </summary>
         private const string ReadWriteValue = "ReadWrite";
 
-        /// <summary> Initializes a new instance of <see cref="ReplicaRole"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDbReplicaRole"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReplicaRole(string value)
+        public HorizonDbReplicaRole(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Read-only replica. </summary>
-        public static ReplicaRole Read { get; } = new ReplicaRole(ReadValue);
+        public static HorizonDbReplicaRole Read { get; } = new HorizonDbReplicaRole(ReadValue);
 
         /// <summary> ReadWrite replica. </summary>
-        public static ReplicaRole ReadWrite { get; } = new ReplicaRole(ReadWriteValue);
+        public static HorizonDbReplicaRole ReadWrite { get; } = new HorizonDbReplicaRole(ReadWriteValue);
 
-        /// <summary> Determines if two <see cref="ReplicaRole"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDbReplicaRole"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ReplicaRole left, ReplicaRole right) => left.Equals(right);
+        public static bool operator ==(HorizonDbReplicaRole left, HorizonDbReplicaRole right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ReplicaRole"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDbReplicaRole"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ReplicaRole left, ReplicaRole right) => !left.Equals(right);
+        public static bool operator !=(HorizonDbReplicaRole left, HorizonDbReplicaRole right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ReplicaRole"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDbReplicaRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReplicaRole(string value) => new ReplicaRole(value);
+        public static implicit operator HorizonDbReplicaRole(string value) => new HorizonDbReplicaRole(value);
 
-        /// <summary> Converts a string to a <see cref="ReplicaRole"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDbReplicaRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReplicaRole?(string value) => value == null ? null : new ReplicaRole(value);
+        public static implicit operator HorizonDbReplicaRole?(string value) => value == null ? null : new HorizonDbReplicaRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ReplicaRole other && Equals(other);
+        public override bool Equals(object obj) => obj is HorizonDbReplicaRole other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ReplicaRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HorizonDbReplicaRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

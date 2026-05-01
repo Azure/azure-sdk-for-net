@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="createMode"> The create mode for the pool. </param>
         /// <param name="provisioningState"> The provisioning state of the pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbPoolProperties(AzureLocation? location, State? state, int? replicaCount, string version, CreateModePool? createMode, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbPoolProperties(AzureLocation? location, HorizonDbClusterState? state, int? replicaCount, string version, HorizonDbPoolCreateMode? createMode, HorizonDbProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             State = state;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public AzureLocation? Location { get; }
 
         /// <summary> Current state of the pool. </summary>
-        public State? State { get; }
+        public HorizonDbClusterState? State { get; }
 
         /// <summary> Number of replicas in the pool. </summary>
         public int? ReplicaCount { get; }
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string Version { get; }
 
         /// <summary> The create mode for the pool. </summary>
-        public CreateModePool? CreateMode { get; }
+        public HorizonDbPoolCreateMode? CreateMode { get; }
 
         /// <summary> The provisioning state of the pool. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HorizonDbProvisioningState? ProvisioningState { get; }
     }
 }

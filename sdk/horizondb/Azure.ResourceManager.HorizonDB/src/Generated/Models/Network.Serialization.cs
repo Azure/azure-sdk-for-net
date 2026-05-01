@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            PublicNetworkAccessState? publicNetworkAccess = default;
+            HorizonDbPublicNetworkAccessState? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccessState(prop.Value.GetString());
+                    publicNetworkAccess = new HorizonDbPublicNetworkAccessState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

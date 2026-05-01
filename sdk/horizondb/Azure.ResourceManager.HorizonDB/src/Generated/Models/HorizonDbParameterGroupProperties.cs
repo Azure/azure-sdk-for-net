@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupProperties"/>. </summary>
         public HorizonDbParameterGroupProperties()
         {
-            Parameters = new ChangeTrackingList<ParameterProperties>();
+            Parameters = new ChangeTrackingList<HorizonDbParameterProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupProperties"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="provisioningState"> The provisioning state of the parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbParameterGroupProperties(IList<ParameterProperties> parameters, string description, int? pgVersion, int? version, bool? applyImmediately, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbParameterGroupProperties(IList<HorizonDbParameterProperties> parameters, string description, int? pgVersion, int? version, bool? applyImmediately, HorizonDbProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Description = description;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Parameters in the parameter group. </summary>
-        public IList<ParameterProperties> Parameters { get; }
+        public IList<HorizonDbParameterProperties> Parameters { get; }
 
         /// <summary> Description of the parameter group. </summary>
         public string Description { get; set; }
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public bool? ApplyImmediately { get; set; }
 
         /// <summary> The provisioning state of the parameter group. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HorizonDbProvisioningState? ProvisioningState { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupPropertiesForPatchUpdate"/>. </summary>
         public HorizonDbParameterGroupPropertiesForPatchUpdate()
         {
-            Parameters = new ChangeTrackingList<ParameterProperties>();
+            Parameters = new ChangeTrackingList<HorizonDbParameterProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupPropertiesForPatchUpdate"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="description"> Description of the parameter group. </param>
         /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbParameterGroupPropertiesForPatchUpdate(IList<ParameterProperties> parameters, string description, bool? applyImmediately, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbParameterGroupPropertiesForPatchUpdate(IList<HorizonDbParameterProperties> parameters, string description, bool? applyImmediately, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Description = description;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Parameters in the parameter group. </summary>
-        public IList<ParameterProperties> Parameters { get; }
+        public IList<HorizonDbParameterProperties> Parameters { get; }
 
         /// <summary> Description of the parameter group. </summary>
         public string Description { get; set; }

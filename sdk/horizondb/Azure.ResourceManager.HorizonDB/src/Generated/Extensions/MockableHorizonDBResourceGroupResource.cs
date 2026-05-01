@@ -189,14 +189,14 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="properties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<HorizonDBPrivateEndpointConnection>> UpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateEndpointConnectionUpdate properties, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HorizonDBPrivateEndpointConnection>> UpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, HorizonDbPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = HorizonDbPrivateEndpointConnectionsClientDiagnostics.CreateScope("MockableHorizonDBResourceGroupResource.Update");
             scope.Start();
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = HorizonDbPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateEndpointConnectionName, PrivateEndpointConnectionUpdate.ToRequestContent(properties), context);
+                HttpMessage message = HorizonDbPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateEndpointConnectionName, HorizonDbPrivateEndpointConnectionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBPrivateEndpointConnection> operation = new HorizonDBArmOperation<HorizonDBPrivateEndpointConnection>(
                     new HorizonDBPrivateEndpointConnectionOperationSource(),
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="properties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<HorizonDBPrivateEndpointConnection> Update(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateEndpointConnectionUpdate properties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HorizonDBPrivateEndpointConnection> Update(WaitUntil waitUntil, string privateEndpointConnectionName, HorizonDbPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = HorizonDbPrivateEndpointConnectionsClientDiagnostics.CreateScope("MockableHorizonDBResourceGroupResource.Update");
             scope.Start();
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = HorizonDbPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateEndpointConnectionName, PrivateEndpointConnectionUpdate.ToRequestContent(properties), context);
+                HttpMessage message = HorizonDbPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateEndpointConnectionName, HorizonDbPrivateEndpointConnectionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBPrivateEndpointConnection> operation = new HorizonDBArmOperation<HorizonDBPrivateEndpointConnection>(
                     new HorizonDBPrivateEndpointConnectionOperationSource(),

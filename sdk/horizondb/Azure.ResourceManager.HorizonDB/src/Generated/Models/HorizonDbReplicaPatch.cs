@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         internal HorizonDbReplicaPropertiesForPatchUpdate Properties { get; set; }
 
         /// <summary> Role of the replica. </summary>
-        public ReplicaRole? HorizonDbReplicaPropertiesForPatchUpdateRole
+        public HorizonDbReplicaRole? HorizonDbReplicaPropertiesForPatchUpdateRole
         {
             get
             {

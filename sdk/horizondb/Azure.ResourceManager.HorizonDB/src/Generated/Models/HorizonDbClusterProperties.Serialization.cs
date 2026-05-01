@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(PointInTimeUTC))
+            if (Optional.IsDefined(PointInTimeUtc))
             {
                 writer.WritePropertyName("pointInTimeUTC"u8);
-                writer.WriteStringValue(PointInTimeUTC.Value, "O");
+                writer.WriteStringValue(PointInTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(SourceClusterResourceId))
             {
@@ -207,19 +207,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string administratorLogin = default;
             string administratorLoginPassword = default;
             string version = default;
-            CreateModeCluster? createMode = default;
-            DateTimeOffset? pointInTimeUTC = default;
+            HorizonDbClusterCreateMode? createMode = default;
+            DateTimeOffset? pointInTimeUtc = default;
             ResourceIdentifier sourceClusterResourceId = default;
             string poolName = default;
             int? replicaCount = default;
             int? vCores = default;
             string processorType = default;
             Network network = default;
-            State? state = default;
+            HorizonDbClusterState? state = default;
             string fullyQualifiedDomainName = default;
             string readonlyEndpoint = default;
-            ProvisioningState? provisioningState = default;
-            ZonePlacementPolicy? zonePlacementPolicy = default;
+            HorizonDbProvisioningState? provisioningState = default;
+            HorizonDbZonePlacementPolicy? zonePlacementPolicy = default;
             HorizonDbClusterParameterGroupConnectionProperties parameterGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    createMode = new CreateModeCluster(prop.Value.GetString());
+                    createMode = new HorizonDbClusterCreateMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("pointInTimeUTC"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    pointInTimeUTC = prop.Value.GetDateTimeOffset("O");
+                    pointInTimeUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceClusterResourceId"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    state = new State(prop.Value.GetString());
+                    state = new HorizonDbClusterState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("fullyQualifiedDomainName"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new HorizonDbProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("zonePlacementPolicy"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    zonePlacementPolicy = new ZonePlacementPolicy(prop.Value.GetString());
+                    zonePlacementPolicy = new HorizonDbZonePlacementPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parameterGroup"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 administratorLoginPassword,
                 version,
                 createMode,
-                pointInTimeUTC,
+                pointInTimeUtc,
                 sourceClusterResourceId,
                 poolName,
                 replicaCount,
