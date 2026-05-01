@@ -8,6 +8,8 @@
 - Added `Name` and `Description` properties to tool classes (`A2APreviewTool`, `AzureAISearchTool`, `BingCustomSearchPreviewTool`, `BingGroundingTool`, `BrowserAutomationPreviewTool`, `MemorySearchPreviewTool`, `MicrosoftFabricPreviewTool`, `SharepointPreviewTool`).
 
 ### Breaking Changes
+- Renamed `AgentEndpoint` to `AgentEndpointConfig`.
+- Removed `CreateAgentVersion` and `CreateAgentVersionAsync` convenience overloads accepting `ProjectsAgentDefinition` parameters directly.
 
 ### Bugs Fixed
 
