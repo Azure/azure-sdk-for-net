@@ -59,11 +59,16 @@ namespace Azure.AI.AgentServer.Core.Tests
             TelemetryTestHandler.CapturedTraceId = null;
 
             // ── Environment setup (same as a real deployed container) ──
-            int port = Random.Shared.Next(9000, 9999);
+            int port = Random.Shared.Next(19000, 19999);
             Environment.SetEnvironmentVariable("PORT", port.ToString());
             Environment.SetEnvironmentVariable(
                 "APPLICATIONINSIGHTS_CONNECTION_STRING",
                 TestEnvironment.ApplicationInsightsConnectionString);
+
+            // FoundryEnvironment is a static class that caches env vars on first access.
+            // We must call Reload() after setting env vars so the server picks up our
+            // PORT and APPLICATIONINSIGHTS_CONNECTION_STRING values.
+            FoundryEnvironment.Reload();
 
             try
             {
@@ -105,7 +110,7 @@ namespace Azure.AI.AgentServer.Core.Tests
                 {
                     if (serverError != null)
                     {
-                        Assert.Fail($"Server failed to start: {serverError.Message}");
+                        Assert.Fail($"Server failed to start: {serverError}");
                     }
 
                     try
@@ -114,13 +119,20 @@ namespace Azure.AI.AgentServer.Core.Tests
                         serverReady = true;
                         break;
                     }
-                    catch (HttpRequestException)
+                    catch (Exception) when (serverError == null)
                     {
                         await Task.Delay(TimeSpan.FromMilliseconds(500));
                     }
                 }
 
-                Assert.That(serverReady, Is.True, "Server did not start within 30 seconds");
+                // Final check — the server thread may have failed after the last iteration
+                if (serverError != null)
+                {
+                    Assert.Fail($"Server failed to start: {serverError}");
+                }
+
+                Assert.That(serverReady, Is.True,
+                    $"Server did not start within 30 seconds on port {port}");
 
                 // ── Send a real HTTP request ──
                 var requestBody = new StringContent(
