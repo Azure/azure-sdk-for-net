@@ -12,21 +12,29 @@ using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientDoc
 {
+    /// <summary> Represents the settings used to configure a <see cref="ClientDocClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
     public partial class ClientDocClientSettings : ClientSettings
     {
-        public Uri Endpoint
-        {
-            get => throw null;
-            set => throw null;
-        }
+        /// <summary> Gets or sets the Endpoint. </summary>
+        public Uri Endpoint { get; set; }
 
-        public ClientDocClientOptions Options
-        {
-            get => throw null;
-            set => throw null;
-        }
+        /// <summary> Gets or sets the Options. </summary>
+        public ClientDocClientOptions Options { get; set; }
 
-        protected override void BindCore(IConfigurationSection section) => throw null;
+        /// <summary> Binds configuration values from the given section. </summary>
+        /// <param name="section"> The configuration section. </param>
+        protected override void BindCore(IConfigurationSection section)
+        {
+            if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri endpoint))
+            {
+                Endpoint = endpoint;
+            }
+            IConfigurationSection optionsSection = section.GetSection("Options");
+            if (optionsSection.Exists())
+            {
+                Options = new ClientDocClientOptions(optionsSection);
+            }
+        }
     }
 }

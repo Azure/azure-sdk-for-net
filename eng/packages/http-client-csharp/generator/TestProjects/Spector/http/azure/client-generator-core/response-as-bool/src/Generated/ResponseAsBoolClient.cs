@@ -7,24 +7,70 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using Azure.Core.Pipeline;
 using Specs.Azure.ClientGenerator.Core.ResponseAsBool._HeadAsBoolean;
 
 namespace Specs.Azure.ClientGenerator.Core.ResponseAsBool
 {
+    /// <summary> Test for @responseAsBool decorator. </summary>
     public partial class ResponseAsBoolClient
     {
-        public ResponseAsBoolClient() : this(new Uri("http://localhost:3000"), new ResponseAsBoolClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private HeadAsBoolean _cachedHeadAsBoolean;
 
-        internal ResponseAsBoolClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ResponseAsBoolClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of ResponseAsBoolClient. </summary>
+        public ResponseAsBoolClient() : this(new Uri("http://localhost:3000"), new ResponseAsBoolClientOptions())
+        {
+        }
 
-        public ResponseAsBoolClient(Uri endpoint, ResponseAsBoolClientOptions options) : this(null, endpoint, options) => throw null;
+        /// <summary> Initializes a new instance of ResponseAsBoolClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal ResponseAsBoolClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ResponseAsBoolClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
+            options ??= new ResponseAsBoolClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of ResponseAsBoolClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public ResponseAsBoolClient(Uri endpoint, ResponseAsBoolClientOptions options) : this(null, endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of ResponseAsBoolClient from a <see cref="ResponseAsBoolClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for ResponseAsBoolClient. </param>
         [Experimental("SCME0002")]
-        public ResponseAsBoolClient(ResponseAsBoolClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public ResponseAsBoolClient(ResponseAsBoolClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual HeadAsBoolean GetHeadAsBooleanClient() => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of HeadAsBoolean. </summary>
+        public virtual HeadAsBoolean GetHeadAsBooleanClient()
+        {
+            return Volatile.Read(ref _cachedHeadAsBoolean) ?? Interlocked.CompareExchange(ref _cachedHeadAsBoolean, new HeadAsBoolean(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedHeadAsBoolean;
+        }
     }
 }

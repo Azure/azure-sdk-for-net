@@ -8,19 +8,54 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using Azure.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientDoc
 {
+    /// <summary> Extension methods to add <see cref="ClientDocClient"/> to an <see cref="IHostApplicationBuilder"/>. </summary>
     [Experimental("SCME0002")]
     public static partial class ClientDocClientHostExtensions
     {
-        public static IClientBuilder AddClientDocClient(this IHostApplicationBuilder host, string sectionName) => throw null;
+        /// <summary> Adds a singleton <see cref="ClientDocClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
+        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddClientDocClient(this IHostApplicationBuilder host, string sectionName)
+        {
+            return host.AddAzureClient<ClientDocClient, ClientDocClientSettings>(sectionName);
+        }
 
-        public static IClientBuilder AddClientDocClient(this IHostApplicationBuilder host, string sectionName, Action<ClientDocClientSettings> configureSettings) => throw null;
+        /// <summary> Adds a singleton <see cref="ClientDocClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
+        /// <param name="configureSettings"> Factory method to modify the <see cref="ClientDocClientSettings"/> after they are created. </param>
+        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddClientDocClient(this IHostApplicationBuilder host, string sectionName, Action<ClientDocClientSettings> configureSettings)
+        {
+            return host.AddAzureClient<ClientDocClient, ClientDocClientSettings>(sectionName, configureSettings);
+        }
 
-        public static IClientBuilder AddKeyedClientDocClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
+        /// <summary> Adds a keyed singleton <see cref="ClientDocClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="key"> The unique key to register as. </param>
+        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
+        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddKeyedClientDocClient(this IHostApplicationBuilder host, string key, string sectionName)
+        {
+            return host.AddKeyedAzureClient<ClientDocClient, ClientDocClientSettings>(key, sectionName);
+        }
 
-        public static IClientBuilder AddKeyedClientDocClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ClientDocClientSettings> configureSettings) => throw null;
+        /// <summary> Adds a keyed singleton <see cref="ClientDocClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
+        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
+        /// <param name="key"> The unique key to register as. </param>
+        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
+        /// <param name="configureSettings"> Factory method to modify the <see cref="ClientDocClientSettings"/> after they are created. </param>
+        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
+        public static IClientBuilder AddKeyedClientDocClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ClientDocClientSettings> configureSettings)
+        {
+            return host.AddKeyedAzureClient<ClientDocClient, ClientDocClientSettings>(key, sectionName, configureSettings);
+        }
     }
 }
