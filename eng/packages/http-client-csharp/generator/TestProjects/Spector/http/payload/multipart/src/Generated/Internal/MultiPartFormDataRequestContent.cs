@@ -9,30 +9,31 @@ using Azure.Core;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Globalization;
 using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Payload.MultiPart
 {
-    internal partial class MultiPartFormDataRequestContent : RequestContent
+    internal partial class MultiPartFormRequestContent : RequestContent
     {
-        private readonly MultiPartFormDataBinaryContent _content;
+        private const string MediaTypeApplicationJson = "application/json";
+        private const string MediaTypeApplicationOctetStream = "application/octet-stream";
 
-        public MultiPartFormDataRequestContent()
+        private readonly MultiPartFormContent _content;
+        private bool _disposed;
+
+        public MultiPartFormRequestContent()
         {
-            _content = new MultiPartFormDataBinaryContent();
-            ContentType = _content.MediaType;
+            _content = new MultiPartFormContent();
         }
 
-        public MultiPartFormDataRequestContent(string boundary)
+        public MultiPartFormRequestContent(string boundary)
         {
-            _content = new MultiPartFormDataBinaryContent(boundary);
-            ContentType = _content.MediaType;
+            _content = new MultiPartFormContent(boundary);
         }
+
+        internal string MediaType => _content.MediaType;
 
         public void Add(string name, FileBinaryContent fileContent)
         {
@@ -42,61 +43,51 @@ namespace Payload.MultiPart
         public void Add<T>(
            string name,
            IPersistableModel<T> model,
+           ModelReaderWriterContext context,
            ModelReaderWriterOptions options = default,
-           ModelReaderWriterContext context = default,
-           string mediaType = default)
+           string mediaType = MediaTypeApplicationJson)
         {
-            _content.Add(name, model, options, context, mediaType);
+            _content.Add(name, model, context, options, mediaType);
         }
 
-        public void Add(string name, string content, string mediaType = default)
+        public void Add(string name, string content, string mediaType = MediaTypeApplicationJson)
         {
             _content.Add(name, content, mediaType);
         }
 
-        public void Add(string name, int content, string mediaType = default)
+        public void Add(string name, int content, string mediaType = MediaTypeApplicationJson)
         {
             _content.Add(name, content, mediaType);
         }
 
-        public void Add(string name, long content, string mediaType = default)
+        public void Add(string name, long content, string mediaType = MediaTypeApplicationJson)
         {
             _content.Add(name, content, mediaType);
         }
 
-        public void Add(string name, float content, string mediaType = default)
+        public void Add(string name, float content, string mediaType = MediaTypeApplicationJson)
         {
             _content.Add(name, content, mediaType);
         }
 
-        public void Add(string name, double content, string mediaType = default)
+        public void Add(string name, double content, string mediaType = MediaTypeApplicationJson)
         {
             _content.Add(name, content, mediaType);
         }
 
-        public void Add(string name, decimal content, string mediaType = default)
+        public void Add(string name, decimal content, string mediaType = MediaTypeApplicationJson)
         {
             _content.Add(name, content, mediaType);
         }
 
-        public void Add(string name, bool content, string mediaType = default)
+        public void Add(string name, byte[] content, string mediaType = MediaTypeApplicationOctetStream)
         {
             _content.Add(name, content, mediaType);
         }
 
-        public void Add(string name, byte[] content, string mediaType = default)
+        public void Add(string name, BinaryData content)
         {
-            _content.Add(name, content, mediaType);
-        }
-
-        public void Add(string name, BinaryData content, string mediaType = default)
-        {
-            _content.Add(name, content, mediaType);
-        }
-
-        public override void Dispose()
-        {
-            _content.Dispose();
+            _content.Add(name, content);
         }
 
         public override bool TryComputeLength(out long length)
@@ -104,14 +95,25 @@ namespace Payload.MultiPart
             return _content.TryComputeLength(out length);
         }
 
-        public override void WriteTo(Stream stream, CancellationToken cancellation)
+        public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
-            _content.WriteTo(stream, cancellation);
+            _content.WriteTo(stream, cancellationToken);
         }
 
-        public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        public override Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
-            return _content.WriteToAsync(stream, cancellation);
+            return _content.WriteToAsync(stream, cancellationToken);
+        }
+
+        public override void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _content.Dispose();
+            _disposed = true;
         }
     }
 }

@@ -17,9 +17,9 @@ namespace Payload.MultiPart.Models
         {
         }
 
-        internal virtual MultiPartFormDataRequestContent ToMultipartContent()
+        internal virtual MultiPartFormRequestContent ToMultipartContent()
         {
-            MultiPartFormDataRequestContent content = new();
+            MultiPartFormRequestContent content = new();
             content.Add("id", Id);
             content.Add("address", Address, ModelSerializationExtensions.WireOptions, new PayloadMultiPartContext());
             content.Add("profileImage", ProfileImage);

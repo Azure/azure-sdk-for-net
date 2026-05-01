@@ -22,7 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" VersionOverride="1.47.1-alpha.20250604.1" />
-    <PackageReference Include="System.ClientModel" VersionOverride="1.6.0-alpha.20250716.1" />
+		<PackageReference Include="Azure.Core" />
+		<PackageReference Include="System.ClientModel" />
+    <!--<PackageReference Include="Azure.Core" VersionOverride="1.47.1-alpha.20250604.1" />
+    <PackageReference Include="System.ClientModel" VersionOverride="1.6.0-alpha.20250716.1" />-->
   </ItemGroup>
 </Project>

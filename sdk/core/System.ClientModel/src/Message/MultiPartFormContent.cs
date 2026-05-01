@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Net;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace System.ClientModel;
@@ -70,16 +71,18 @@ public class MultiPartFormContent : BinaryContent
     public void Add<T>(
         string name,
         IPersistableModel<T> model,
-        ModelReaderWriterContext context,
+        ModelReaderWriterContext? context = default,
         ModelReaderWriterOptions? options = default,
         string? mediaType = MediaTypeApplicationJson)
     {
         Argument.AssertNotNull(model, nameof(model));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(context, nameof(context));
 
         options ??= ModelWriteWireOptions;
-        Add(name, ModelReaderWriter.Write(model, options, context).WithMediaType(mediaType));
+        BinaryData data = context != null
+            ? ModelReaderWriter.Write(model, options, context)
+            : model.Write(options);
+        Add(name, data.WithMediaType(mediaType));
     }
 
     /// <summary>
@@ -88,9 +91,8 @@ public class MultiPartFormContent : BinaryContent
     /// <typeparam name="T"></typeparam>
     /// <param name="name"></param>
     /// <param name="model"></param>
-    /// <param name="context"></param>
-    public void Add<T>(string name, IPersistableModel<T> model, ModelReaderWriterContext context)
-        => Add(name, model, options: default, context: context, mediaType: default);
+    public void Add<T>(string name, IPersistableModel<T> model)
+        => Add(name, model);
 
     // CUSTOM: Add optional content type parameter to the Add method.
     /// <summary>
@@ -255,7 +257,13 @@ public class MultiPartFormContent : BinaryContent
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        Add(new ByteArrayContent(content.ToArray()), name, mediaType: content.MediaType);
+        // Avoid copying the underlying bytes: ReadOnlyMemoryContent / StreamContent over BinaryData
+        // wrap the existing memory without a buffer copy, unlike ByteArrayContent(BinaryData.ToArray()).
+#if NET6_0_OR_GREATER
+        Add(new ReadOnlyMemoryContent(content.ToMemory()), name, mediaType: content.MediaType);
+#else
+        Add(new StreamContent(content.ToStream()), name, mediaType: content.MediaType);
+#endif
     }
 
     /// <param name="content"></param>

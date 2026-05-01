@@ -181,7 +181,7 @@ namespace Payload.MultiPart._FormData
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = body.ToMultipartContent();
-            return FileArrayAndBasic(content, content.ContentType, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return FileArrayAndBasic(content, content.MediaType, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         // CUSTOM: Convenience method
