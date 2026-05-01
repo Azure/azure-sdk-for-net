@@ -176,11 +176,10 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(conditionName), file.Content);
         }
 
-        // Regression test for https://github.com/Azure/azure-sdk-for-net/issues
-        // Ensures that when the conditional header parameter uses the Azure.Core.eTag scalar
-        // (which is mapped to the ETag struct), the generated body accesses ".Value" on the
-        // ETag? parameter directly instead of incorrectly appending ".Value" to a wrapping
-        // expression like TypeFormatters.ConvertToString(ifMatch).Value.
+        // Regression test ensuring that when the conditional header parameter uses the
+        // Azure.Core.eTag scalar (which is mapped to the ETag struct), the generated body
+        // accesses ".Value" on the ETag? parameter directly instead of incorrectly appending
+        // ".Value" to a wrapping expression like TypeFormatters.ConvertToString(ifMatch).Value.
         [TestCase("ifMatch")]
         [TestCase("If-Match")]
         [TestCase("ifNoneMatch")]
