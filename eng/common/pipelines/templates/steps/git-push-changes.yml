@@ -5,11 +5,19 @@ parameters:
   TargetRepoOwner: Azure
   TargetRepoName: $(Build.Repository.Name)
   PushArgs:
-  WorkingDirectory: $(System.DefaultWorkingDirectory)'
+  WorkingDirectory: $(System.DefaultWorkingDirectory)
   ScriptDirectory: eng/common/scripts
   SkipCheckingForChanges: false
+  AuthToken: $(azuresdk-github-pat)
 
 steps:
+- ${{ if eq(parameters.AuthToken, '') }}:
+  - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+    parameters:
+      TokenOwners:
+        - ${{ parameters.TargetRepoOwner }}
+      ScriptDirectory: ${{ parameters.ScriptDirectory }}
+
 - task: PowerShell@2
   displayName: Check for changes
   condition: and(succeeded(), eq(${{ parameters.SkipCheckingForChanges }}, false))
@@ -31,7 +39,7 @@ steps:
 - template: /eng/common/pipelines/templates/steps/emit-rate-limit-metrics.yml
   parameters:
     GitHubUser: azure-sdk
-    GitHubToken: $(azuresdk-github-pat)
+    GitHubToken: ${{ coalesce(parameters.AuthToken, '$(GH_TOKEN)') }}
 
 - task: PowerShell@2
   displayName: Push changes
@@ -43,6 +51,6 @@ steps:
     arguments: >
       -PRBranchName "${{ parameters.BaseRepoBranch }}"
       -CommitMsg "${{ parameters.CommitMsg }}"
-      -GitUrl "https://$(azuresdk-github-pat)@github.com/${{ parameters.BaseRepoOwner }}/$(RepoNameWithoutOwner).git"
+      -GitUrl "https://x-access-token:${{ coalesce(parameters.AuthToken, '$(GH_TOKEN)') }}@github.com/${{ parameters.BaseRepoOwner }}/$(RepoNameWithoutOwner).git"
       -PushArgs "${{ parameters.PushArgs }}"
       -SkipCommit $${{ parameters.SkipCheckingForChanges }}

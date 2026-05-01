@@ -1,5 +1,6 @@
-# Expects azuresdk-github-pat is set to the PAT for azure-sdk
-# Expects the buildtools to be cloned
+# Expects AuthToken to be a valid GitHub token.
+# Defaults to azuresdk-github-pat for backwards compatibility.
+# New callers should pass AuthToken: '' to auto-login via login-to-github.yml.
 
 parameters:
   BaseBranchName: $(Build.SourceBranch)
@@ -21,8 +22,19 @@ parameters:
   SkipCheckingForChanges: false
   CloseAfterOpenForTesting: false
   OpenAsDraft: false
+  AuthToken: $(azuresdk-github-pat)
+  # PushAuthToken: for cross-org pushes (pushing to PROwner's fork in a different org).
+  # Defaults to AuthToken when not specified.
+  PushAuthToken: ''
 
 steps:
+- ${{ if eq(parameters.AuthToken, '') }}:
+  - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+    parameters:
+      TokenOwners:
+        - ${{ parameters.RepoOwner }}
+      ScriptDirectory: ${{ parameters.ScriptDirectory }}
+
 - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
   parameters:
     BaseRepoBranch: ${{ parameters.PRBranchName }}
@@ -34,6 +46,7 @@ steps:
     WorkingDirectory: ${{ parameters.WorkingDirectory }}
     ScriptDirectory: ${{ parameters.ScriptDirectory }}
     SkipCheckingForChanges: ${{ parameters.SkipCheckingForChanges }}
+    AuthToken: ${{ coalesce(parameters.PushAuthToken, parameters.AuthToken, '$(GH_TOKEN)') }}
 
 - task: PowerShell@2
   displayName: Create pull request
@@ -48,7 +61,7 @@ steps:
       -BaseBranch "${{ parameters.BaseBranchName }}"
       -PROwner "${{ parameters.PROwner }}"
       -PRBranch "${{ parameters.PRBranchName }}"
-      -AuthToken "$(azuresdk-github-pat)"
+      -AuthToken "${{ coalesce(parameters.AuthToken, '$(GH_TOKEN)') }}"
       -PRTitle "${{ parameters.PRTitle }}"
       -PRBody "${{ coalesce(parameters.PRBody, parameters.CommitMsg, parameters.PRTitle) }}"
       -PRLabels "${{ parameters.PRLabels }}"
