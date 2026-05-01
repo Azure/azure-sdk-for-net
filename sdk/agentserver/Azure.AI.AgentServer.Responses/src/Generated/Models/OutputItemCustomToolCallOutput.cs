@@ -51,7 +51,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal OutputItemCustomToolCallOutput(OutputItemType @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, BinaryData output, FunctionCallOutputStatusEnum status, string createdBy) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemCustomToolCallOutput(OutputItemType @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, BinaryData output, FunctionCallOutputStatusEnum status, BinaryData createdBy) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -113,11 +113,5 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </summary>
         public FunctionCallOutputStatusEnum Status { get; set; }
 
-        /// <summary> The identifier of the actor that created the item. </summary>
-        public new string CreatedBy
-        {
-            get => _createdBy ?? default;
-            set => _createdBy = value;
-        }
     }
 }

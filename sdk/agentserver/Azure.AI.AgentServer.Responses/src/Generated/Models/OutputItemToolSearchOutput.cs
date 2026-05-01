@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal OutputItemToolSearchOutput(OutputItemType @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType execution, IList<Tool> tools, FunctionCallOutputStatusEnum status, string createdBy) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemToolSearchOutput(OutputItemType @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType execution, IList<Tool> tools, FunctionCallOutputStatusEnum status, BinaryData createdBy) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -68,11 +68,5 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> The status of the tool search output item that was recorded. </summary>
         public FunctionCallOutputStatusEnum Status { get; set; }
 
-        /// <summary> The identifier of the actor that created the item. </summary>
-        public new string CreatedBy
-        {
-            get => _createdBy ?? default;
-            set => _createdBy = value;
-        }
     }
 }
