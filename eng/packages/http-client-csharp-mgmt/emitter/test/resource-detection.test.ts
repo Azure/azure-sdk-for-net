@@ -2480,6 +2480,160 @@ interface NetworkSecurityPerimeterConfigurations {
     // The legacy path (buildArmProviderSchema) correctly handles this override.
   });
 
+  it("GET legacy action returning non-resource model stays Action", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget properties */
+model WidgetProperties {
+  status?: string;
+}
+
+/** Widget resource */
+model Widget is ProxyResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+/** Metadata returned by a GET action that is not the resource itself */
+model WidgetStatusResult {
+  status?: string;
+}
+
+alias WidgetOps = Azure.ResourceManager.Legacy.RoutedOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("widgets")
+    @key
+    @TypeSpec.Http.path
+    widgetName: string;
+  }
+>;
+
+@armResourceOperations
+interface Widgets {
+  get is WidgetOps.Read<Widget>;
+
+  @get
+  queryStatus is WidgetOps.ActionSync<Widget, void, WidgetStatusResult>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const widgetResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/widgets"
+    );
+
+    ok(widgetResource, "Widget resource should be detected");
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Read").length,
+      1,
+      "Widget should have exactly one Read operation"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Action").length,
+      1,
+      "GET action returning metadata should stay classified as Action"
+    );
+  });
+
+  it("PUT/PATCH/DELETE legacy actions with non-resource types stay Action", async () => {
+    const program = await typeSpecCompile(
+      `
+model WidgetProperties {
+  status?: string;
+}
+
+model Widget is ProxyResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+model WidgetMetadataResult {
+  message?: string;
+}
+
+alias WidgetOps = Azure.ResourceManager.Legacy.RoutedOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("widgets")
+    @key
+    @TypeSpec.Http.path
+    widgetName: string;
+  }
+>;
+
+@armResourceOperations
+interface Widgets {
+  get is WidgetOps.Read<Widget>;
+
+  @put
+  createLikeAction is WidgetOps.ActionSync<
+    Widget,
+    WidgetMetadataResult,
+    WidgetMetadataResult
+  >;
+
+  @patch
+  updateLikeAction is WidgetOps.ActionSync<
+    Widget,
+    WidgetMetadataResult,
+    WidgetMetadataResult
+  >;
+
+  @delete
+  deleteLikeAction is WidgetOps.ActionSync<Widget, void, WidgetMetadataResult>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const widgetResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/widgets"
+    );
+
+    ok(widgetResource, "Widget resource should be detected");
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Read").length,
+      1,
+      "Widget should still have its real Read operation"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Create").length,
+      0,
+      "Mismatched PUT action should not be reclassified as Create"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Update").length,
+      0,
+      "Mismatched PATCH action should not be reclassified as Update"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Delete").length,
+      0,
+      "Mismatched DELETE action should not be reclassified as Delete"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Action").length,
+      3,
+      "All verb-overridden actions with mismatched types should stay Action"
+    );
+  });
+
   it("CreateOrReplaceAsync with @patch should be classified as Update not Create", async () => {
     const program = await typeSpecCompile(
       `
@@ -3816,6 +3970,237 @@ interface Containers {
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
+  it("RoutedOperations with dynamic parent type expands into concrete resources", async () => {
+    // This test validates the fix for resources that use Legacy.RoutedOperations with
+    // dynamic parent types (e.g., {parentType}/{parentName}). The emitter should:
+    // 1. Reclassify ActionSync operations based on HTTP verb (GET->Read, PUT->Create, DELETE->Delete)
+    // 2. Expand the dynamic parent type into concrete resource entries per enum value
+    // 3. Each expanded resource shares the same model but has its own path and name
+    const program = await typeSpecCompile(
+      `
+/** Parent topic resource */
+model Topic is TrackedResource<TopicProperties> {
+  ...ResourceNameParameter<Topic>;
+}
+
+/** Topic properties */
+model TopicProperties {
+  /** Topic endpoint */
+  endpoint?: string;
+}
+
+/** Parent domain resource */
+model Domain is TrackedResource<DomainProperties> {
+  ...ResourceNameParameter<Domain>;
+}
+
+/** Domain properties */
+model DomainProperties {
+  /** Domain endpoint */
+  endpoint?: string;
+}
+
+/** Enum for parent type */
+union ParentType {
+  string,
+  /** Topics */
+  topics: "topics",
+  /** Domains */
+  domains: "domains",
+}
+
+/** Private endpoint connection model */
+model PrivateEndpointConnection is ProxyResource<PrivateEndpointConnectionProperties> {
+  ...ResourceNameParameter<PrivateEndpointConnection>;
+}
+
+/** Private endpoint connection properties */
+model PrivateEndpointConnectionProperties {
+  /** Connection status */
+  status?: string;
+}
+
+@armResourceOperations
+interface Topics {
+  get is ArmResourceRead<Topic>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Topic>;
+  delete is ArmResourceDeleteWithoutOkAsync<Topic>;
+  listByResourceGroup is ArmResourceListByParent<Topic>;
+}
+
+@armResourceOperations
+interface Domains {
+  get is ArmResourceRead<Domain>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Domain>;
+  delete is ArmResourceDeleteWithoutOkAsync<Domain>;
+  listByResourceGroup is ArmResourceListByParent<Domain>;
+}
+
+@armResourceOperations
+interface PrivateEndpointConnectionOps
+  extends Azure.ResourceManager.Legacy.RoutedOperations<
+      {
+        ...ApiVersionParameter,
+        ...SubscriptionIdParameter,
+        ...ResourceGroupParameter,
+        @path parentType: ParentType,
+        @path parentName: string,
+      },
+      {
+        @path privateEndpointConnectionName: string,
+      },
+      ResourceRoute = #{
+        route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}",
+      }
+    > {}
+
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-interface-requires-decorator" "Testing RoutedOperations pattern"
+@armResourceOperations(#{ allowStaticRoutes: true })
+interface PrivateEndpointConnections {
+  @get
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  get is PrivateEndpointConnectionOps.ActionSync<PrivateEndpointConnection, void, PrivateEndpointConnection>;
+
+  @put
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  update is PrivateEndpointConnectionOps.ActionSync<PrivateEndpointConnection, PrivateEndpointConnection, PrivateEndpointConnection>;
+
+  @delete
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  delete is PrivateEndpointConnectionOps.ActionAsync<PrivateEndpointConnection, void, void>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    // Build ARM provider schema using legacy detection
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Should have 4 resources: Topic, Domain, TopicPrivateEndpointConnection, DomainPrivateEndpointConnection
+    strictEqual(
+      armProviderSchema.resources.length,
+      4,
+      `Expected 4 resources, got ${armProviderSchema.resources.length}: ${armProviderSchema.resources.map((r) => r.metadata.resourceName).join(", ")}`
+    );
+
+    // Verify parent resources exist
+    const topicResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/topics"
+    );
+    ok(topicResource, "Topic resource should exist");
+
+    const domainResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/domains"
+    );
+    ok(domainResource, "Domain resource should exist");
+
+    // Verify expanded private endpoint connection resources exist
+    const topicPec = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/topics/privateEndpointConnections"
+    );
+    ok(
+      topicPec,
+      "TopicPrivateEndpointConnection resource should exist"
+    );
+    strictEqual(
+      topicPec.metadata.resourceName,
+      "TopicPrivateEndpointConnection"
+    );
+
+    const domainPec = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/domains/privateEndpointConnections"
+    );
+    ok(
+      domainPec,
+      "DomainPrivateEndpointConnection resource should exist"
+    );
+    strictEqual(
+      domainPec.metadata.resourceName,
+      "DomainPrivateEndpointConnection"
+    );
+
+    // Verify expanded resources share the same model
+    strictEqual(
+      topicPec.resourceModelId,
+      domainPec.resourceModelId,
+      "Both expanded resources should share the same model"
+    );
+
+    // Verify the resource ID patterns are concrete (no dynamic segments in type positions)
+    ok(
+      topicPec.metadata.resourceIdPattern.path.includes("/topics/"),
+      "Topic PEC resource ID should contain /topics/"
+    );
+    ok(
+      !topicPec.metadata.resourceIdPattern.path.includes("{parentType}"),
+      "Topic PEC resource ID should NOT contain {parentType}"
+    );
+
+    ok(
+      domainPec.metadata.resourceIdPattern.path.includes("/domains/"),
+      "Domain PEC resource ID should contain /domains/"
+    );
+    ok(
+      !domainPec.metadata.resourceIdPattern.path.includes("{parentType}"),
+      "Domain PEC resource ID should NOT contain {parentType}"
+    );
+
+    // Verify each expanded resource has Read, Create, and Delete operations
+    for (const pec of [topicPec, domainPec]) {
+      const hasRead = pec.metadata.methods.some((m) => m.kind === "Read");
+      const hasCreate = pec.metadata.methods.some((m) => m.kind === "Create");
+      const hasDelete = pec.metadata.methods.some((m) => m.kind === "Delete");
+      ok(hasRead, `${pec.metadata.resourceName} should have Read operation`);
+      ok(hasCreate, `${pec.metadata.resourceName} should have Create operation`);
+      ok(hasDelete, `${pec.metadata.resourceName} should have Delete operation`);
+    }
+
+    // Verify there are NO operations left on non-resource methods for private endpoint connections
+    const pecNonResourceMethods = armProviderSchema.nonResourceMethods.filter(
+      (m) => m.operationPath.path.includes("privateEndpointConnections")
+    );
+    strictEqual(
+      pecNonResourceMethods.length,
+      0,
+      "No private endpoint connection operations should be in non-resource methods"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
+    // does NOT recognize RoutedOperations resources with dynamic parent types as ARM resources.
+    // The PrivateEndpointConnection operations end up as non-resource methods instead of resources.
+    // This is a known limitation of the ARM library. The legacy buildArmProviderSchema path handles
+    // this correctly because it uses @legacyResourceOperation decorators to detect the resource model.
+    // Once the ARM library is updated to support this pattern, the resolveArmResources path will
+    // also benefit from our expansion logic (expandDynamicParentResourcesInSchema).
+    strictEqual(
+      resolvedSchema.resources.length,
+      2,
+      "resolveArmResources only detects Topic and Domain (upstream limitation)"
+    );
+    strictEqual(
+      resolvedSchema.nonResourceMethods.length,
+      3,
+      "PrivateEndpointConnection operations are non-resource methods in resolveArmResources"
     );
   });
 });

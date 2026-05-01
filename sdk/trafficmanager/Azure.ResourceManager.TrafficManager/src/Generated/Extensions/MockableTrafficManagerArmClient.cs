@@ -26,15 +26,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="TrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TrafficManagerEndpointResource"/> object. </returns>
-        public virtual TrafficManagerEndpointResource GetTrafficManagerEndpointResource(ResourceIdentifier id)
-        {
-            TrafficManagerEndpointResource.ValidateResourceId(id);
-            return new TrafficManagerEndpointResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="TrafficManagerProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TrafficManagerProfileResource"/> object. </returns>
@@ -69,6 +60,33 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         {
             TrafficManagerUserMetricsResource.ValidateResourceId(id);
             return new TrafficManagerUserMetricsResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AzureEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AzureEndpointTrafficManagerEndpointResource"/> object. </returns>
+        public virtual AzureEndpointTrafficManagerEndpointResource GetAzureEndpointTrafficManagerEndpointResource(ResourceIdentifier id)
+        {
+            AzureEndpointTrafficManagerEndpointResource.ValidateResourceId(id);
+            return new AzureEndpointTrafficManagerEndpointResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> object. </returns>
+        public virtual ExternalEndpointTrafficManagerEndpointResource GetExternalEndpointTrafficManagerEndpointResource(ResourceIdentifier id)
+        {
+            ExternalEndpointTrafficManagerEndpointResource.ValidateResourceId(id);
+            return new ExternalEndpointTrafficManagerEndpointResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="NestedEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NestedEndpointTrafficManagerEndpointResource"/> object. </returns>
+        public virtual NestedEndpointTrafficManagerEndpointResource GetNestedEndpointTrafficManagerEndpointResource(ResourceIdentifier id)
+        {
+            NestedEndpointTrafficManagerEndpointResource.ValidateResourceId(id);
+            return new NestedEndpointTrafficManagerEndpointResource(Client, id);
         }
     }
 }
