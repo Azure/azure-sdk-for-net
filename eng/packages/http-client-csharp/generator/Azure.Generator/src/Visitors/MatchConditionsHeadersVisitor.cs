@@ -512,11 +512,16 @@ namespace Azure.Generator.Visitors
                     var headerInfo = ExtractHeaderInfo(invokeExpression);
                     if (headerInfo.HasValue)
                     {
-                        var (headerName, headerValue) = headerInfo.Value;
+                        var (headerName, _) = headerInfo.Value;
                         switch (headerFlags)
                         {
                             case var flags when HasSingleRequestConditionHeader(flags):
-                                ifStatement.Update(body: variableExpression.As<Request>().AddHeaderValue(headerName, headerValue.Property("Value")));
+                                // Access ".Value" on the original ETag? parameter directly rather than appending it
+                                // to the generated header value expression. The default code generation may have
+                                // wrapped the parameter (e.g. in TypeFormatters.ConvertToString(...)) for scalar
+                                // types like Azure.Core.eTag, in which case appending ".Value" to the wrapped
+                                // expression would produce invalid code (e.g. ConvertToString(ifMatch).Value).
+                                ifStatement.Update(body: variableExpression.As<Request>().AddHeaderValue(headerName, matchConditionParams[0].Property("Value")));
                                 break;
                             case var flags when HasModificationTimeHeaders(flags):
                                 string? serializationFormat = ParseRequestConditionsSerializationFormat(matchConditionParams);
