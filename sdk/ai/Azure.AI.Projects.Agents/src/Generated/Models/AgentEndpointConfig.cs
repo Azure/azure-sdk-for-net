@@ -7,25 +7,25 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The AgentEndpoint. </summary>
-    public partial class AgentEndpoint
+    /// <summary> The AgentEndpointConfig. </summary>
+    public partial class AgentEndpointConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentEndpoint"/>. </summary>
-        public AgentEndpoint()
+        /// <summary> Initializes a new instance of <see cref="AgentEndpointConfig"/>. </summary>
+        public AgentEndpointConfig()
         {
             Protocols = new ChangeTrackingList<AgentEndpointProtocol>();
             AuthorizationSchemes = new ChangeTrackingList<AgentEndpointAuthorizationScheme>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentEndpointConfig"/>. </summary>
         /// <param name="versionSelector"> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </param>
         /// <param name="protocols"> The protocols that the agent supports. </param>
         /// <param name="authorizationSchemes"> The authorization schemes supported by the agent endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentEndpoint(VersionSelector versionSelector, IList<AgentEndpointProtocol> protocols, IList<AgentEndpointAuthorizationScheme> authorizationSchemes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentEndpointConfig(VersionSelector versionSelector, IList<AgentEndpointProtocol> protocols, IList<AgentEndpointAuthorizationScheme> authorizationSchemes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VersionSelector = versionSelector;
             Protocols = protocols;

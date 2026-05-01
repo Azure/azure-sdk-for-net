@@ -8,6 +8,7 @@
 - Added `Name` and `Description` properties to tool classes (`A2APreviewTool`, `AzureAISearchTool`, `BingCustomSearchPreviewTool`, `BingGroundingTool`, `BrowserAutomationPreviewTool`, `MemorySearchPreviewTool`, `MicrosoftFabricPreviewTool`, `SharepointPreviewTool`).
 
 ### Breaking Changes
+- Renamed `AgentEndpoint` to `AgentEndpointConfig`.
 
 ### Bugs Fixed
 
