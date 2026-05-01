@@ -200,10 +200,8 @@ See the [samples directory][samples_directory] for complete examples.
 
 ### Convert results to LLM-ready text
 
-> [!NOTE]
-> **Preview feature**: `.ToLlmInput()` is currently in preview and may change in
-> future releases. We welcome feedback — please
-> [file an issue][file_issue].
+> **Note:** `.ToLlmInput()` is currently in preview and may change in future releases.
+> We welcome feedback — please [file an issue][file_issue].
 
 Use `.ToLlmInput()` to convert any analysis result into a text format that LLMs can consume directly — YAML front matter with extracted fields followed by the markdown body. This works with all content types (documents, images, audio, video) and handles multi-segment results and classification hierarchies automatically.
 
