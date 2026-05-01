@@ -509,10 +509,9 @@ namespace Azure.Generator.Visitors
                     invokeExpression.InstanceReference is MemberExpression { Inner: VariableExpression variableExpression } &&
                     variableExpression.Type.Equals(variableExpression.ToApi<HttpRequestApi>().Type))
                 {
-                    var headerInfo = ExtractHeaderInfo(invokeExpression);
-                    if (headerInfo.HasValue)
+                    var headerName = ExtractHeaderName(invokeExpression);
+                    if (headerName != null)
                     {
-                        var (headerName, _) = headerInfo.Value;
                         switch (headerFlags)
                         {
                             case var flags when HasSingleRequestConditionHeader(flags):
@@ -562,13 +561,12 @@ namespace Azure.Generator.Visitors
             return matchConditionParams;
         }
 
-        private static (string HeaderName, ValueExpression HeaderValue)? ExtractHeaderInfo(InvokeMethodExpression invokeExpression)
+        private static string? ExtractHeaderName(InvokeMethodExpression invokeExpression)
         {
             if (invokeExpression.Arguments.FirstOrDefault() is ScopedApi<string> { Original: LiteralExpression { Literal: string headerName } } &&
-                _conditionalHeaders.Contains(headerName) &&
-                invokeExpression.Arguments.Count > 1)
+                _conditionalHeaders.Contains(headerName))
             {
-                return (headerName, invokeExpression.Arguments[1]);
+                return headerName;
             }
 
             return null;
