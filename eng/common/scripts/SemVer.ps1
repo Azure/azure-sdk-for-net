@@ -77,10 +77,10 @@ class AzureEngSemanticVersion : IComparable {
     $parseLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
 
     if ($parseLanguage -eq "python") {
-      $parseRegex = [AzureEngSemanticVersion]::PYTHON_SEMVER_REGEX
+      $parseRegex = $this.SetupPythonConventions()
     }
     else {
-      $parseRegex = [AzureEngSemanticVersion]::SEMVER_REGEX
+      $parseRegex = $this.SetupDefaultConventions()
     }
 
     if ($versionString -match "^${parseRegex}$")
@@ -93,7 +93,6 @@ class AzureEngSemanticVersion : IComparable {
 
       $skipPrelabel = $false
       if ($parseLanguage -eq "python") {
-        $this.SetupPythonConventions()
         if ($matches['postword']) {
           $this.IsPostRelease = $true
           $this.PostReleaseNumber = if ($matches['postnum']) { [int]$matches['postnum'] } else { 0 }
@@ -107,9 +106,6 @@ class AzureEngSemanticVersion : IComparable {
           $this.PostReleaseSeparator = ".post"
           $skipPrelabel = $true
         }
-      }
-      else {
-        $this.SetupDefaultConventions()
       }
 
       if ($skipPrelabel -or $null -eq $matches['prelabel'])
@@ -257,15 +253,16 @@ class AzureEngSemanticVersion : IComparable {
     $this.IsPrerelease = $true
   }
 
-  [void] SetupPythonConventions()
+  [string] SetupPythonConventions()
   {
     # Python uses no separators and "b" for beta so this sets up the the object to work with those conventions
     $this.PrereleaseLabelSeparator = $this.PrereleaseNumberSeparator = $this.BuildNumberSeparator = ""
     $this.DefaultPrereleaseLabel = "b"
     $this.DefaultAlphaReleaseLabel = "a"
+    return [AzureEngSemanticVersion]::PYTHON_SEMVER_REGEX
   }
 
-  [void] SetupDefaultConventions()
+  [string] SetupDefaultConventions()
   {
     # Use the default common conventions
     $this.PrereleaseLabelSeparator = "-"
@@ -273,6 +270,7 @@ class AzureEngSemanticVersion : IComparable {
     $this.BuildNumberSeparator = "."
     $this.DefaultPrereleaseLabel = "beta"
     $this.DefaultAlphaReleaseLabel = "alpha"
+    return [AzureEngSemanticVersion]::SEMVER_REGEX
   }
 
   [int] CompareTo($other)
