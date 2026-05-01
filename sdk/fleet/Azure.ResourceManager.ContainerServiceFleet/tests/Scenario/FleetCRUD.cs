@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             Debug.Assert(doesFleetExist == false, "Fleet of was not deleted.");
 
             // Delete ManagedCluster
-            await managedCluster.DeleteAsync(WaitUntil.Completed);
+            await managedCluster.DeleteAsync(WaitUntil.Completed, default);
         }
     }
 }
