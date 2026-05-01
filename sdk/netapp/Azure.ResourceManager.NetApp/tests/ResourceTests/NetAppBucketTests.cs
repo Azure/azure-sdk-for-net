@@ -127,31 +127,40 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
             if (_resourceGroup != null)
             {
-                CapacityPoolCollection poolCollection = _netAppAccount.GetCapacityPools();
-                List<CapacityPoolResource> poolList = await poolCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (CapacityPoolResource pool in poolList)
+                // _netAppAccount can still be null here if SetUp() failed (or was never run)
+                // after the resource group was created but before the account was provisioned -
+                // for example a transient failure in CreateOrUpdateAsync on the account. In
+                // that case there are no pools / volumes / buckets to walk and no account to
+                // delete; the resource group itself is cleaned up by the test framework.
+                if (_netAppAccount != null)
                 {
-                    NetAppVolumeCollection volumeCollection = pool.GetNetAppVolumes();
-                    List<NetAppVolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
-                    foreach (NetAppVolumeResource volume in volumeList)
+                    CapacityPoolCollection poolCollection = _netAppAccount.GetCapacityPools();
+                    List<CapacityPoolResource> poolList = await poolCollection.GetAllAsync().ToEnumerableAsync();
+                    foreach (CapacityPoolResource pool in poolList)
                     {
-                        // Buckets are a child resource of a volume and must be removed first.
-                        NetAppBucketCollection bucketCollection = volume.GetNetAppBuckets();
-                        List<NetAppBucketResource> bucketList = await bucketCollection.GetAllAsync().ToEnumerableAsync();
-                        foreach (NetAppBucketResource bucket in bucketList)
+                        NetAppVolumeCollection volumeCollection = pool.GetNetAppVolumes();
+                        List<NetAppVolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
+                        foreach (NetAppVolumeResource volume in volumeList)
                         {
-                            await bucket.DeleteAsync(WaitUntil.Completed);
+                            // Buckets are a child resource of a volume and must be removed first.
+                            NetAppBucketCollection bucketCollection = volume.GetNetAppBuckets();
+                            List<NetAppBucketResource> bucketList = await bucketCollection.GetAllAsync().ToEnumerableAsync();
+                            foreach (NetAppBucketResource bucket in bucketList)
+                            {
+                                await bucket.DeleteAsync(WaitUntil.Completed);
+                            }
+                            await LiveDelay(10000);
+                            await volume.DeleteAsync(WaitUntil.Completed);
                         }
-                        await LiveDelay(10000);
-                        await volume.DeleteAsync(WaitUntil.Completed);
+                        await LiveDelay(30000);
+                        await pool.DeleteAsync(WaitUntil.Completed);
                     }
-                    await LiveDelay(30000);
-                    await pool.DeleteAsync(WaitUntil.Completed);
+                    await LiveDelay(40000);
+                    await _netAppAccount.DeleteAsync(WaitUntil.Completed);
                 }
-                await LiveDelay(40000);
-                await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;
+            _netAppAccount = null;
         }
 
         // ----------------------------------------------------------------------------------------
