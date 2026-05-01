@@ -32,6 +32,7 @@ steps:
   - template: /eng/common/pipelines/templates/steps/login-to-github.yml
     parameters:
       TokenOwners:
+        - ${{ parameters.PROwner }}
         - ${{ parameters.RepoOwner }}
       ScriptDirectory: ${{ parameters.ScriptDirectory }}
 
@@ -46,7 +47,8 @@ steps:
     WorkingDirectory: ${{ parameters.WorkingDirectory }}
     ScriptDirectory: ${{ parameters.ScriptDirectory }}
     SkipCheckingForChanges: ${{ parameters.SkipCheckingForChanges }}
-    AuthToken: ${{ coalesce(parameters.PushAuthToken, parameters.AuthToken, '$(GH_TOKEN)') }}
+    AuthToken: ${{ coalesce(parameters.PushAuthToken, parameters.AuthToken, format('$(GH_TOKEN_{0})', parameters.PROwner)) }}
+
 
 - task: PowerShell@2
   displayName: Create pull request
@@ -61,7 +63,7 @@ steps:
       -BaseBranch "${{ parameters.BaseBranchName }}"
       -PROwner "${{ parameters.PROwner }}"
       -PRBranch "${{ parameters.PRBranchName }}"
-      -AuthToken "${{ coalesce(parameters.AuthToken, '$(GH_TOKEN)') }}"
+      -AuthToken "${{ coalesce(parameters.AuthToken, format('$(GH_TOKEN_{0})', parameters.RepoOwner)) }}"
       -PRTitle "${{ parameters.PRTitle }}"
       -PRBody "${{ coalesce(parameters.PRBody, parameters.CommitMsg, parameters.PRTitle) }}"
       -PRLabels "${{ parameters.PRLabels }}"
