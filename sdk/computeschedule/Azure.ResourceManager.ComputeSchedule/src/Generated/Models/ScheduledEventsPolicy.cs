@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal AllInstancesDown AllInstancesDown { get; set; }
 
         /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
-        public bool? AutomaticallyApproveRedeploy
+        public bool? IsAutomaticallyApprovedForRedeploy
         {
             get
             {
-                return UserInitiatedRedeploy is null ? default : UserInitiatedRedeploy.AutomaticallyApproveRedeploy;
+                return UserInitiatedRedeploy is null ? default : UserInitiatedRedeploy.IsAutomaticallyApprovedForRedeploy;
             }
             set
             {
@@ -61,16 +61,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 {
                     UserInitiatedRedeploy = new UserInitiatedRedeploy();
                 }
-                UserInitiatedRedeploy.AutomaticallyApproveRedeploy = value;
+                UserInitiatedRedeploy.IsAutomaticallyApprovedForRedeploy = value;
             }
         }
 
         /// <summary> Specifies Reboot Scheduled Event related configurations. </summary>
-        public bool? AutomaticallyApproveReboot
+        public bool? IsAutomaticallyApprovedForReboot
         {
             get
             {
-                return UserInitiatedReboot is null ? default : UserInitiatedReboot.AutomaticallyApproveReboot;
+                return UserInitiatedReboot is null ? default : UserInitiatedReboot.IsAutomaticallyApprovedForReboot;
             }
             set
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 {
                     UserInitiatedReboot = new UserInitiatedReboot();
                 }
-                UserInitiatedReboot.AutomaticallyApproveReboot = value;
+                UserInitiatedReboot.IsAutomaticallyApprovedForReboot = value;
             }
         }
 
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </summary>
-        public bool? AutomaticallyApproveAllInstancesDown
+        public bool? IsAutomaticallyApprovedForAllInstancesDown
         {
             get
             {
-                return AllInstancesDown is null ? default : AllInstancesDown.AutomaticallyApproveAllInstancesDown;
+                return AllInstancesDown is null ? default : AllInstancesDown.IsAutomaticallyApprovedForAllInstancesDown;
             }
             set
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 {
                     AllInstancesDown = new AllInstancesDown();
                 }
-                AllInstancesDown.AutomaticallyApproveAllInstancesDown = value;
+                AllInstancesDown.IsAutomaticallyApprovedForAllInstancesDown = value;
             }
         }
     }

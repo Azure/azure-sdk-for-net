@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(UserInitiatedReboot)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutomaticallyApproveReboot))
+            if (Optional.IsDefined(IsAutomaticallyApprovedForReboot))
             {
                 writer.WritePropertyName("automaticallyApprove"u8);
-                writer.WriteBooleanValue(AutomaticallyApproveReboot.Value);
+                writer.WriteBooleanValue(IsAutomaticallyApprovedForReboot.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            bool? automaticallyApproveReboot = default;
+            bool? isAutomaticallyApprovedForReboot = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    automaticallyApproveReboot = prop.Value.GetBoolean();
+                    isAutomaticallyApprovedForReboot = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserInitiatedReboot(automaticallyApproveReboot, additionalBinaryDataProperties);
+            return new UserInitiatedReboot(isAutomaticallyApprovedForReboot, additionalBinaryDataProperties);
         }
     }
 }

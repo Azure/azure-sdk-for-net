@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(AllInstancesDown)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutomaticallyApproveAllInstancesDown))
+            if (Optional.IsDefined(IsAutomaticallyApprovedForAllInstancesDown))
             {
                 writer.WritePropertyName("automaticallyApprove"u8);
-                writer.WriteBooleanValue(AutomaticallyApproveAllInstancesDown.Value);
+                writer.WriteBooleanValue(IsAutomaticallyApprovedForAllInstancesDown.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            bool? automaticallyApproveAllInstancesDown = default;
+            bool? isAutomaticallyApprovedForAllInstancesDown = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    automaticallyApproveAllInstancesDown = prop.Value.GetBoolean();
+                    isAutomaticallyApprovedForAllInstancesDown = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AllInstancesDown(automaticallyApproveAllInstancesDown, additionalBinaryDataProperties);
+            return new AllInstancesDown(isAutomaticallyApprovedForAllInstancesDown, additionalBinaryDataProperties);
         }
     }
 }

@@ -2378,9 +2378,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public partial class ScheduledEventsPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledEventsPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledEventsPolicy>
     {
         public ScheduledEventsPolicy() { }
-        public bool? AutomaticallyApproveAllInstancesDown { get { throw null; } set { } }
-        public bool? AutomaticallyApproveReboot { get { throw null; } set { } }
-        public bool? AutomaticallyApproveRedeploy { get { throw null; } set { } }
+        public bool? IsAutomaticallyApprovedForAllInstancesDown { get { throw null; } set { } }
+        public bool? IsAutomaticallyApprovedForReboot { get { throw null; } set { } }
+        public bool? IsAutomaticallyApprovedForRedeploy { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeSchedule.Models.EventGridAndResourceGraph ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ScheduledEventsPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

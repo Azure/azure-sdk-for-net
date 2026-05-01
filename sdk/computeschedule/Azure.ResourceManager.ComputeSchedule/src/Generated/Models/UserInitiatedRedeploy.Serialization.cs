@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutomaticallyApproveRedeploy))
+            if (Optional.IsDefined(IsAutomaticallyApprovedForRedeploy))
             {
                 writer.WritePropertyName("automaticallyApprove"u8);
-                writer.WriteBooleanValue(AutomaticallyApproveRedeploy.Value);
+                writer.WriteBooleanValue(IsAutomaticallyApprovedForRedeploy.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            bool? automaticallyApproveRedeploy = default;
+            bool? isAutomaticallyApprovedForRedeploy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    automaticallyApproveRedeploy = prop.Value.GetBoolean();
+                    isAutomaticallyApprovedForRedeploy = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserInitiatedRedeploy(automaticallyApproveRedeploy, additionalBinaryDataProperties);
+            return new UserInitiatedRedeploy(isAutomaticallyApprovedForRedeploy, additionalBinaryDataProperties);
         }
     }
 }

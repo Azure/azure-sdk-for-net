@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserInitiatedReboot"/>. </summary>
-        /// <param name="automaticallyApproveReboot"> Specifies Reboot Scheduled Event related configurations. </param>
+        /// <param name="isAutomaticallyApprovedForReboot"> Specifies Reboot Scheduled Event related configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserInitiatedReboot(bool? automaticallyApproveReboot, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserInitiatedReboot(bool? isAutomaticallyApprovedForReboot, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutomaticallyApproveReboot = automaticallyApproveReboot;
+            IsAutomaticallyApprovedForReboot = isAutomaticallyApprovedForReboot;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies Reboot Scheduled Event related configurations. </summary>
-        public bool? AutomaticallyApproveReboot { get; set; }
+        public bool? IsAutomaticallyApprovedForReboot { get; set; }
     }
 }
