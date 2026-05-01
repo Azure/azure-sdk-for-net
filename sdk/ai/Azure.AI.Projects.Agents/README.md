@@ -392,7 +392,7 @@ AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill
 make it aware of the skill we have created.
 
 ```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
-AgentEndpoint config = new()
+AgentEndpointConfig config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
     Protocols = {AgentEndpointProtocol.Responses}

@@ -9,7 +9,6 @@
 
 ### Breaking Changes
 - Renamed `AgentEndpoint` to `AgentEndpointConfig`.
-- Removed `CreateAgentVersion` and `CreateAgentVersionAsync` convenience overloads accepting `ProjectsAgentDefinition` parameters directly.
 
 ### Bugs Fixed
 
