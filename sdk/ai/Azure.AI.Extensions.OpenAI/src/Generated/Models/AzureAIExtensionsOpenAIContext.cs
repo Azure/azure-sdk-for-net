@@ -279,6 +279,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(ResponsesSkillReferenceParam))]
     [ModelReaderWriterBuildable(typeof(ResponsesStructuredOutputDefinition))]
     [ModelReaderWriterBuildable(typeof(ResponsesTool))]
+    [ModelReaderWriterBuildable(typeof(ResponsesToolboxSearchPreviewTool))]
     [ModelReaderWriterBuildable(typeof(ResponsesToolProjectConnection))]
     [ModelReaderWriterBuildable(typeof(ResponsesToolSearchToolParam))]
     [ModelReaderWriterBuildable(typeof(ResponsesWebSearchApproximateLocation))]
