@@ -18,8 +18,8 @@ namespace Azure.Storage.Files.DataLake
         private readonly Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://storage.azure.com/.default" };
         private readonly string _version;
-        private ServiceRestClient _cachedServiceRestClient;
         private PathRestClient _cachedPathRestClient;
+        private ServiceRestClient _cachedServiceRestClient;
 
         /// <summary> Initializes a new instance of DataLakeClient for mocking. </summary>
         protected DataLakeClient()
@@ -47,12 +47,6 @@ namespace Azure.Storage.Files.DataLake
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of ServiceRestClient. </summary>
-        public virtual ServiceRestClient GetServiceRestClient()
-        {
-            return Volatile.Read(ref _cachedServiceRestClient) ?? Interlocked.CompareExchange(ref _cachedServiceRestClient, new ServiceRestClient(ClientDiagnostics, Pipeline, _endpoint, _version), null) ?? _cachedServiceRestClient;
-        }
-
         /// <summary> Initializes a new instance of FileSystemRestClient. </summary>
         /// <param name="resource"></param>
         public virtual FileSystemRestClient GetFileSystemRestClient(FileSystemResourceType resource)
@@ -64,6 +58,12 @@ namespace Azure.Storage.Files.DataLake
         public virtual PathRestClient GetPathRestClient()
         {
             return Volatile.Read(ref _cachedPathRestClient) ?? Interlocked.CompareExchange(ref _cachedPathRestClient, new PathRestClient(ClientDiagnostics, Pipeline, _endpoint, _version), null) ?? _cachedPathRestClient;
+        }
+
+        /// <summary> Initializes a new instance of ServiceRestClient. </summary>
+        public virtual ServiceRestClient GetServiceRestClient()
+        {
+            return Volatile.Read(ref _cachedServiceRestClient) ?? Interlocked.CompareExchange(ref _cachedServiceRestClient, new ServiceRestClient(ClientDiagnostics, Pipeline, _endpoint, _version), null) ?? _cachedServiceRestClient;
         }
     }
 }
