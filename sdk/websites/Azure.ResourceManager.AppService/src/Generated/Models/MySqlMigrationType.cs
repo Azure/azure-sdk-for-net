@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The type of migration operation to be done. </summary>
+    /// <summary>
+    /// The type of migration operation to be done
+    /// Serialized Name: MySqlMigrationType
+    /// </summary>
     public enum MySqlMigrationType
     {
-        /// <summary> LocalToRemote. </summary>
+        /// <summary>
+        /// LocalToRemote
+        /// Serialized Name: MySqlMigrationType.LocalToRemote
+        /// </summary>
         LocalToRemote,
-        /// <summary> RemoteToLocal. </summary>
+        /// <summary>
+        /// RemoteToLocal
+        /// Serialized Name: MySqlMigrationType.RemoteToLocal
+        /// </summary>
         RemoteToLocal
     }
 }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.TrafficManager;
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> The result of the request or operation. </summary>
-    internal partial class TrafficManagerDeleteOperationResult : IJsonModel<TrafficManagerDeleteOperationResult>
+    public partial class TrafficManagerDeleteOperationResult : IJsonModel<TrafficManagerDeleteOperationResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

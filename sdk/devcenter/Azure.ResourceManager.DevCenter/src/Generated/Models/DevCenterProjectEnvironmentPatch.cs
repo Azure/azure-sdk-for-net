@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     Properties = new ProjectEnvironmentTypeUpdateProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 

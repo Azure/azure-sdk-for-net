@@ -702,6 +702,7 @@ namespace Azure.AI.Projects.Agents
     public partial class CodeConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CodeConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CodeConfiguration>
     {
         public CodeConfiguration(string runtime, System.Collections.Generic.IEnumerable<string> entryPoint) { }
+        public string ContentHash { get { throw null; } }
         public System.Collections.Generic.IList<string> EntryPoint { get { throw null; } }
         public string Runtime { get { throw null; } set { } }
         protected virtual Azure.AI.Projects.Agents.CodeConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -838,6 +839,37 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricDataAgentToolOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricDataAgentToolOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class FabricIQPreviewTool : Azure.AI.Projects.Agents.ProjectsAgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.FabricIQPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricIQPreviewTool>
+    {
+        public FabricIQPreviewTool(Azure.AI.Projects.Agents.FabricIQPreviewToolParameters fabricIqPreview) { }
+        public Azure.AI.Projects.Agents.FabricIQPreviewToolParameters FabricIqPreview { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.ProjectsAgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.ProjectsAgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.FabricIQPreviewTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.FabricIQPreviewTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.FabricIQPreviewTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.FabricIQPreviewTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricIQPreviewTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricIQPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricIQPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FabricIQPreviewToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.FabricIQPreviewToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricIQPreviewToolParameters>
+    {
+        public FabricIQPreviewToolParameters(string projectConnectionId) { }
+        public string ProjectConnectionId { get { throw null; } set { } }
+        public System.BinaryData RequireApproval { get { throw null; } set { } }
+        public string ServerLabel { get { throw null; } set { } }
+        public System.Uri ServerUrl { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.FabricIQPreviewToolParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.FabricIQPreviewToolParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.FabricIQPreviewToolParameters System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.FabricIQPreviewToolParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.FabricIQPreviewToolParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.FabricIQPreviewToolParameters System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricIQPreviewToolParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricIQPreviewToolParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricIQPreviewToolParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class FixedRatioVersionSelectionRule : Azure.AI.Projects.Agents.VersionSelectionRule, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule>
     {
         public FixedRatioVersionSelectionRule(string agentVersion, int trafficPercentage) { }
@@ -864,9 +896,7 @@ namespace Azure.AI.Projects.Agents
     }
     public partial class HeaderIsolationKeySource : Azure.AI.Projects.Agents.IsolationKeySource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.HeaderIsolationKeySource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.HeaderIsolationKeySource>
     {
-        public HeaderIsolationKeySource(string userIsolationKey, string chatIsolationKey) { }
-        public string ChatIsolationKey { get { throw null; } set { } }
-        public string UserIsolationKey { get { throw null; } set { } }
+        public HeaderIsolationKeySource() { }
         protected override Azure.AI.Projects.Agents.IsolationKeySource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.IsolationKeySource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1333,7 +1363,7 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.BrowserAutomationToolOptions BrowserAutomationToolOptions(Azure.AI.Projects.Agents.BrowserAutomationToolConnectionParameters toolConnectionParameters = null) { throw null; }
         public static Azure.AI.Projects.Agents.CaptureStructuredOutputsTool CaptureStructuredOutputsTool(Azure.AI.Projects.Agents.StructuredOutputDefinition outputDefinition) { throw null; }
         public static Azure.AI.Projects.Agents.CaptureStructuredOutputsTool CaptureStructuredOutputsTool(string name = null, string description = null, Azure.AI.Projects.Agents.StructuredOutputDefinition outputDefinition = null) { throw null; }
-        public static Azure.AI.Projects.Agents.CodeConfiguration CodeConfiguration(string runtime = null, System.Collections.Generic.IEnumerable<string> entryPoint = null) { throw null; }
+        public static Azure.AI.Projects.Agents.CodeConfiguration CodeConfiguration(string runtime = null, System.Collections.Generic.IEnumerable<string> entryPoint = null, string contentHash = null) { throw null; }
         public static Azure.AI.Projects.Agents.ContainerConfiguration ContainerConfiguration(string image = null) { throw null; }
         public static Azure.AI.Projects.Agents.ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = null) { throw null; }
         public static Azure.AI.Projects.Agents.CreateAgentVersionFromManifestRequest CreateAgentVersionFromManifestRequest(System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, string manifestId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameterValues = null) { throw null; }
@@ -1342,8 +1372,10 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.EntraAuthorizationScheme EntraAuthorizationScheme(Azure.AI.Projects.Agents.IsolationKeySource isolationKeySource = null) { throw null; }
         public static Azure.AI.Projects.Agents.EntraIsolationKeySource EntraIsolationKeySource() { throw null; }
         public static Azure.AI.Projects.Agents.FabricDataAgentToolOptions FabricDataAgentToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ToolProjectConnection> projectConnections = null) { throw null; }
+        public static Azure.AI.Projects.Agents.FabricIQPreviewTool FabricIQPreviewTool(Azure.AI.Projects.Agents.FabricIQPreviewToolParameters fabricIqPreview = null) { throw null; }
+        public static Azure.AI.Projects.Agents.FabricIQPreviewToolParameters FabricIQPreviewToolParameters(string projectConnectionId = null, string serverLabel = null, System.Uri serverUrl = null, System.BinaryData requireApproval = null) { throw null; }
         public static Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule FixedRatioVersionSelectionRule(string agentVersion = null, int trafficPercentage = 0) { throw null; }
-        public static Azure.AI.Projects.Agents.HeaderIsolationKeySource HeaderIsolationKeySource(string userIsolationKey = null, string chatIsolationKey = null) { throw null; }
+        public static Azure.AI.Projects.Agents.HeaderIsolationKeySource HeaderIsolationKeySource() { throw null; }
         public static Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = null, string secretId = null, string secretKey = null) { throw null; }
         public static Azure.AI.Projects.Agents.HostedAgentDefinition HostedAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProjectsAgentTool> tools, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProtocolVersionRecord> versions, string cpu, string memory, System.Collections.Generic.IDictionary<string, string> environmentVariables, string image) { throw null; }
         public static Azure.AI.Projects.Agents.HostedAgentDefinition HostedAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProjectsAgentTool> tools = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProtocolVersionRecord> versions = null, string cpu = null, string memory = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, string image = null, Azure.AI.Projects.Agents.ContainerConfiguration containerConfiguration = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProtocolVersionRecord> protocolVersions = null, Azure.AI.Projects.Agents.CodeConfiguration codeConfiguration = null, Azure.AI.Projects.Agents.TelemetryConfig telemetryConfig = null) { throw null; }

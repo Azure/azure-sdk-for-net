@@ -36,6 +36,8 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("CustomToolParamFormat")] public abstract partial class ResponsesCustomToolParamFormat { }
 [CodeGenType("EmptyModelParam")] public partial class ResponsesEmptyModelParam { }
 [CodeGenType("FabricDataAgentToolOptions")] public partial class ResponsesFabricDataAgentToolOptions { }
+[CodeGenType("FabricIQPreviewTool")] public partial class ResponsesFabricIQPreviewTool { }
+[CodeGenType("FabricIQPreviewToolParameters")] public partial class ResponsesFabricIQPreviewToolParameters { }
 [CodeGenType("FunctionShellToolParam")] public partial class ResponsesFunctionShellToolParam { }
 [CodeGenType("FunctionShellToolParamEnvironment")] public abstract partial class ResponsesFunctionShellToolParamEnvironment { }
 [CodeGenType("FunctionShellToolParamEnvironmentContainerReferenceParam")] public partial class ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam { }

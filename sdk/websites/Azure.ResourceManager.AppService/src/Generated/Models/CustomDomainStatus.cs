@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The status of the custom domain. </summary>
+    /// <summary>
+    /// The status of the custom domain
+    /// Serialized Name: CustomDomainStatus
+    /// </summary>
     public readonly partial struct CustomDomainStatus : IEquatable<CustomDomainStatus>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.AppService.Models
         private const string DeletingValue = "Deleting";
         private const string UnhealthyValue = "Unhealthy";
 
-        /// <summary> RetrievingValidationToken. </summary>
+        /// <summary>
+        /// RetrievingValidationToken
+        /// Serialized Name: CustomDomainStatus.RetrievingValidationToken
+        /// </summary>
         public static CustomDomainStatus RetrievingValidationToken { get; } = new CustomDomainStatus(RetrievingValidationTokenValue);
-        /// <summary> Validating. </summary>
+        /// <summary>
+        /// Validating
+        /// Serialized Name: CustomDomainStatus.Validating
+        /// </summary>
         public static CustomDomainStatus Validating { get; } = new CustomDomainStatus(ValidatingValue);
-        /// <summary> Adding. </summary>
+        /// <summary>
+        /// Adding
+        /// Serialized Name: CustomDomainStatus.Adding
+        /// </summary>
         public static CustomDomainStatus Adding { get; } = new CustomDomainStatus(AddingValue);
-        /// <summary> Ready. </summary>
+        /// <summary>
+        /// Ready
+        /// Serialized Name: CustomDomainStatus.Ready
+        /// </summary>
         public static CustomDomainStatus Ready { get; } = new CustomDomainStatus(ReadyValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: CustomDomainStatus.Failed
+        /// </summary>
         public static CustomDomainStatus Failed { get; } = new CustomDomainStatus(FailedValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: CustomDomainStatus.Deleting
+        /// </summary>
         public static CustomDomainStatus Deleting { get; } = new CustomDomainStatus(DeletingValue);
-        /// <summary> Unhealthy. </summary>
+        /// <summary>
+        /// Unhealthy
+        /// Serialized Name: CustomDomainStatus.Unhealthy
+        /// </summary>
         public static CustomDomainStatus Unhealthy { get; } = new CustomDomainStatus(UnhealthyValue);
         /// <summary> Determines if two <see cref="CustomDomainStatus"/> values are the same. </summary>
         public static bool operator ==(CustomDomainStatus left, CustomDomainStatus right) => left.Equals(right);

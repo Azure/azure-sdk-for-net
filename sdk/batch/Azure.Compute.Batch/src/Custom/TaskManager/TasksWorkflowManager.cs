@@ -274,7 +274,7 @@ namespace Azure.Compute.Batch
             BatchCreateTaskCollectionResult addTaskResults,
             IReadOnlyDictionary<string, TrackedBatchTask> taskMap)
         {
-            foreach (BatchTaskCreateResult protoAddTaskResult in addTaskResults.Values)
+            foreach (BatchTaskCreateResult protoAddTaskResult in addTaskResults.Results)
             {
                 string taskId = protoAddTaskResult.TaskId;
                 TrackedBatchTask trackedTask = taskMap[taskId];
@@ -285,7 +285,7 @@ namespace Azure.Compute.Batch
                 //at least once.
                 CreateTaskResultStatus status = CreateTaskResultStatus.Success; //The default is success to avoid infinite retry
 
-                status = _bulkTaskCollectionResultHandler.CreateTaskResultHandler(omResult, _cancellationToken);
+                status = _bulkTaskCollectionResultHandler.HandleTaskResult(omResult, _cancellationToken);
 
                 if (status == CreateTaskResultStatus.Retry)
                 {

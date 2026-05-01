@@ -116,8 +116,8 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.NotNull(response.Content);
-            Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
+            Assert.That(response.Content, Is.Not.Null);
+            Assert.That(jsonDocument.RootElement.GetProperty("testId").ToString(), Is.EqualTo(_testId));
         }
 
         [Test]
@@ -134,8 +134,8 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             var loadTestResponse = await _loadTestAdministrationClient.GetTestAsync(_testId);
             var loadTest = loadTestResponse.Value;
-            Assert.NotNull(loadTest);
-            Assert.AreEqual(_testId, loadTest.TestId);
+            Assert.That(loadTest, Is.Not.Null);
+            Assert.That(loadTest.TestId, Is.EqualTo(_testId));
         }
 
         [Test]
@@ -153,7 +153,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
                 foreach (var value in page.Values)
                 {
-                    Assert.NotNull(value.TestId);
+                    Assert.That(value.TestId, Is.Not.Null);
 
                     Console.WriteLine(value.ToString());
                 }
@@ -166,11 +166,11 @@ namespace Azure.Developer.LoadTesting.Tests
 
                 if (i < count)
                 {
-                    Assert.AreEqual(pageSizeHint, page.Values.Count);
+                    Assert.That(page.Values.Count, Is.EqualTo(pageSizeHint));
                 }
                 else
                 {
-                    Assert.LessOrEqual(page.Values.Count, pageSizeHint);
+                    Assert.That(page.Values.Count, Is.LessThanOrEqualTo(pageSizeHint));
                 }
             }
         }
@@ -182,8 +182,8 @@ namespace Azure.Developer.LoadTesting.Tests
             var fileGetResponse = await _loadTestAdministrationClient.GetTestFileAsync(_testId, _fileName);
 
             var file = fileGetResponse.Value;
-            Assert.NotNull(file);
-            Assert.AreEqual(_fileName, file.FileName);
+            Assert.That(file, Is.Not.Null);
+            Assert.That(file.FileName, Is.EqualTo(_fileName));
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 foreach (var value in page.Values)
                 {
-                    Assert.AreEqual(_fileName, value.FileName);
+                    Assert.That(value.FileName, Is.EqualTo(_fileName));
                 }
             }
         }
@@ -248,7 +248,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("components").GetProperty(_resourceId).GetProperty("resourceId").ToString());
+            Assert.That(jsonDocument.RootElement.GetProperty("components").GetProperty(_resourceId).GetProperty("resourceId").ToString(), Is.EqualTo(_resourceId));
         }
 
         [Test]
@@ -279,10 +279,10 @@ namespace Azure.Developer.LoadTesting.Tests
 
             var appComponentsResponse = await _loadTestAdministrationClient.GetAppComponentsAsync(_testId);
             var appComponents = appComponentsResponse.Value;
-            Assert.NotNull(appComponents);
+            Assert.That(appComponents, Is.Not.Null);
             var component = appComponents.Components.Values.FirstOrDefault();
-            Assert.NotNull(component);
-            Assert.AreEqual(_resourceId, component.ResourceId.ToString());
+            Assert.That(component, Is.Not.Null);
+            Assert.That(component.ResourceId.ToString(), Is.EqualTo(_resourceId));
         }
 
         [Test]
@@ -317,7 +317,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("metrics").GetProperty(_resourceId).GetProperty("resourceId").ToString());
+            Assert.That(jsonDocument.RootElement.GetProperty("metrics").GetProperty(_resourceId).GetProperty("resourceId").ToString(), Is.EqualTo(_resourceId));
         }
 
         [Test]
@@ -353,10 +353,10 @@ namespace Azure.Developer.LoadTesting.Tests
 
             var serverMetricsResponse = await _loadTestAdministrationClient.GetServerMetricsConfigAsync(_testId);
             var serverMetrics = serverMetricsResponse.Value;
-            Assert.NotNull(serverMetrics);
+            Assert.That(serverMetrics, Is.Not.Null);
             var metric = serverMetrics.Metrics.Values.FirstOrDefault();
-            Assert.NotNull(metric);
-            Assert.AreEqual(_resourceId, metric.ResourceId.ToString());
+            Assert.That(metric, Is.Not.Null);
+            Assert.That(metric.ResourceId.ToString(), Is.EqualTo(_resourceId));
         }
 
         [Test]
@@ -371,10 +371,10 @@ namespace Azure.Developer.LoadTesting.Tests
                 );
 
             JsonDocument jsonDocument = JsonDocument.Parse(fileUploadOperation.Value.ToString());
-            Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
-            Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
-            Assert.IsTrue(fileUploadOperation.HasValue);
-            Assert.IsTrue(fileUploadOperation.HasCompleted);
+            Assert.That(jsonDocument.RootElement.GetProperty("fileName").ToString(), Is.EqualTo(_fileName));
+            Assert.That(jsonDocument.RootElement.GetProperty("validationStatus").ToString(), Is.EqualTo("VALIDATION_SUCCESS"));
+            Assert.That(fileUploadOperation.HasValue, Is.True);
+            Assert.That(fileUploadOperation.HasCompleted, Is.True);
         }
 
         [Test]
@@ -391,10 +391,10 @@ namespace Azure.Developer.LoadTesting.Tests
             await fileUploadOperation.WaitForCompletionAsync();
 
             JsonDocument jsonDocument = JsonDocument.Parse(fileUploadOperation.Value.ToString());
-            Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
-            Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
-            Assert.IsTrue(fileUploadOperation.HasValue);
-            Assert.IsTrue(fileUploadOperation.HasCompleted);
+            Assert.That(jsonDocument.RootElement.GetProperty("fileName").ToString(), Is.EqualTo(_fileName));
+            Assert.That(jsonDocument.RootElement.GetProperty("validationStatus").ToString(), Is.EqualTo("VALIDATION_SUCCESS"));
+            Assert.That(fileUploadOperation.HasValue, Is.True);
+            Assert.That(fileUploadOperation.HasCompleted, Is.True);
         }
 
         [Test]
@@ -413,13 +413,13 @@ namespace Azure.Developer.LoadTesting.Tests
                     description: "This test was cloned through loadtesting C# SDK"
                 );
 
-                Assert.IsTrue(cloneOperation.HasCompleted);
-                Assert.IsTrue(cloneOperation.HasValue);
+                Assert.That(cloneOperation.HasCompleted, Is.True);
+                Assert.That(cloneOperation.HasValue, Is.True);
 
                 LoadTest loadTest = await _loadTestAdministrationClient.GetTestAsync(clonedTestId);
 
-                Assert.AreEqual(clonedTestId, loadTest.TestId);
-                Assert.AreEqual("Cloned Test from SDK", loadTest.DisplayName);
+                Assert.That(loadTest.TestId, Is.EqualTo(clonedTestId));
+                Assert.That(loadTest.DisplayName, Is.EqualTo("Cloned Test from SDK"));
             }
             finally
             {
@@ -457,8 +457,8 @@ namespace Azure.Developer.LoadTesting.Tests
                 )
             );
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.NotNull(response.Content);
-            Assert.AreEqual(_triggerId, jsonDocument.RootElement.GetProperty("triggerId").ToString());
+            Assert.That(response.Content, Is.Not.Null);
+            Assert.That(jsonDocument.RootElement.GetProperty("triggerId").ToString(), Is.EqualTo(_triggerId));
 
             // Cleanup trigger created by test itself
             await _loadTestAdministrationClient.DeleteTriggerAsync(_triggerId);
@@ -470,9 +470,9 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             var triggerResponse = await _loadTestAdministrationClient.GetTriggerAsync(_triggerId);
             var trigger = triggerResponse.Value;
-            Assert.NotNull(trigger);
-            Assert.AreEqual(_triggerId, trigger.TriggerId);
-            Assert.AreEqual("Test Trigger from SDK", trigger.DisplayName);
+            Assert.That(trigger, Is.Not.Null);
+            Assert.That(trigger.TriggerId, Is.EqualTo(_triggerId));
+            Assert.That(trigger.DisplayName, Is.EqualTo("Test Trigger from SDK"));
         }
 
         [Test]
@@ -481,7 +481,7 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task DeleteTrigger()
         {
             Response response = await _loadTestAdministrationClient.DeleteTriggerAsync(_triggerId);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [Test]
@@ -493,14 +493,14 @@ namespace Azure.Developer.LoadTesting.Tests
 
             await foreach (var trigger in pagedResponse)
             {
-                Assert.NotNull(trigger.TriggerId);
+                Assert.That(trigger.TriggerId, Is.Not.Null);
                 if (trigger.TriggerId == _triggerId)
                 {
                     found = true;
                 }
             }
 
-            Assert.IsTrue(found, "Created trigger should appear in the list");
+            Assert.That(found, Is.True, "Created trigger should appear in the list");
         }
 
         [Test]
@@ -538,10 +538,10 @@ namespace Azure.Developer.LoadTesting.Tests
             );
 
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.NotNull(response.Content);
-            Assert.AreEqual(notificationRuleId, jsonDocument.RootElement.GetProperty("notificationRuleId").ToString());
-            Assert.AreEqual("Test Notification Rule from SDK", jsonDocument.RootElement.GetProperty("displayName").ToString());
-            Assert.AreEqual("Tests", jsonDocument.RootElement.GetProperty("scope").ToString());
+            Assert.That(response.Content, Is.Not.Null);
+            Assert.That(jsonDocument.RootElement.GetProperty("notificationRuleId").ToString(), Is.EqualTo(notificationRuleId));
+            Assert.That(jsonDocument.RootElement.GetProperty("displayName").ToString(), Is.EqualTo("Test Notification Rule from SDK"));
+            Assert.That(jsonDocument.RootElement.GetProperty("scope").ToString(), Is.EqualTo("Tests"));
 
             // Cleanup
             await _loadTestAdministrationClient.DeleteNotificationRuleAsync(notificationRuleId);
@@ -554,10 +554,10 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             Response<NotificationRule> response = await _loadTestAdministrationClient.GetNotificationRuleAsync(_notificationRuleId);
             NotificationRule notificationRule = response.Value;
-            Assert.NotNull(notificationRule);
-            Assert.AreEqual(_notificationRuleId, notificationRule.NotificationRuleId);
-            Assert.AreEqual("Test Notification Rule from SDK", notificationRule.DisplayName);
-            Assert.IsNotEmpty(notificationRule.ActionGroupIds);
+            Assert.That(notificationRule, Is.Not.Null);
+            Assert.That(notificationRule.NotificationRuleId, Is.EqualTo(_notificationRuleId));
+            Assert.That(notificationRule.DisplayName, Is.EqualTo("Test Notification Rule from SDK"));
+            Assert.That(notificationRule.ActionGroupIds, Is.Not.Empty);
         }
 
         [Test]
@@ -567,7 +567,7 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task DeleteNotificationRule()
         {
             Response response = await _loadTestAdministrationClient.DeleteNotificationRuleAsync(_notificationRuleId);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [Test]
@@ -580,15 +580,15 @@ namespace Azure.Developer.LoadTesting.Tests
 
             await foreach (NotificationRule notificationRule in pagedResponse)
             {
-                Assert.NotNull(notificationRule.NotificationRuleId);
+                Assert.That(notificationRule.NotificationRuleId, Is.Not.Null);
                 if (notificationRule.NotificationRuleId == _notificationRuleId)
                 {
                     found = true;
-                    Assert.AreEqual("Test Notification Rule from SDK", notificationRule.DisplayName);
+                    Assert.That(notificationRule.DisplayName, Is.EqualTo("Test Notification Rule from SDK"));
                 }
             }
 
-            Assert.IsTrue(found, "Created notification rule should appear in the list");
+            Assert.That(found, Is.True, "Created notification rule should appear in the list");
         }
     }
 }

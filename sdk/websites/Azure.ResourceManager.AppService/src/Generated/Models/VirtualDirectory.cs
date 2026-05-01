@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Directory for virtual application. </summary>
+    /// <summary>
+    /// Directory for virtual application.
+    /// Serialized Name: VirtualDirectory
+    /// </summary>
     public partial class VirtualDirectory
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualDirectory"/>. </summary>
-        /// <param name="virtualPath"> Path to virtual application. </param>
-        /// <param name="physicalPath"> Physical path. </param>
+        /// <param name="virtualPath">
+        /// Path to virtual application.
+        /// Serialized Name: VirtualDirectory.virtualPath
+        /// </param>
+        /// <param name="physicalPath">
+        /// Physical path.
+        /// Serialized Name: VirtualDirectory.physicalPath
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualDirectory(string virtualPath, string physicalPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Path to virtual application. </summary>
+        /// <summary>
+        /// Path to virtual application.
+        /// Serialized Name: VirtualDirectory.virtualPath
+        /// </summary>
         [WirePath("virtualPath")]
         public string VirtualPath { get; set; }
-        /// <summary> Physical path. </summary>
+        /// <summary>
+        /// Physical path.
+        /// Serialized Name: VirtualDirectory.physicalPath
+        /// </summary>
         [WirePath("physicalPath")]
         public string PhysicalPath { get; set; }
     }

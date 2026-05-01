@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 Properties = new SecurityPolicyWebApplicationFirewall
                 {
-                    WafPolicy = new WritableSubResource
-                    {
-                        Id = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/azure_cli_test/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/azureCliTest")
-                    }
+                    WafPolicyId = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/azure_cli_test/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/azureCliTest")
                 }
             };
             SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();

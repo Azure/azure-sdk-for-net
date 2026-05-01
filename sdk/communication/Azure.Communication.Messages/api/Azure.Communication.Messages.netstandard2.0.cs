@@ -715,10 +715,10 @@ namespace Azure.Communication.Messages
         public MessageTemplateClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public MessageTemplateClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Pageable<System.BinaryData> GetTemplates(System.Guid channelId, int? maxPageSize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplates(System.Guid channelId, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetTemplatesAsync(System.Guid channelId, int? maxPageSize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplatesAsync(System.Guid channelId, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTemplates(System.Guid channelId, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplates(System.Guid channelId, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTemplatesAsync(System.Guid channelId, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplatesAsync(System.Guid channelId, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MessageTemplateClientSettings : System.ClientModel.Primitives.ClientSettings
     {

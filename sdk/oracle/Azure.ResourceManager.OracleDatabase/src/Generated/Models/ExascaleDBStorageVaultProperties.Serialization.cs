@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("highCapacityDatabaseStorageInput"u8);
-            writer.WriteObjectValue(HighCapacityDatabaseStorageInput, options);
+            writer.WriteObjectValue(HighCapacityStorageInput, options);
             if (options.Format != "W" && Optional.IsDefined(HighCapacityDatabaseStorage))
             {
                 writer.WritePropertyName("highCapacityDatabaseStorage"u8);
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? additionalFlashCacheInPercent = default;
             string description = default;
             string displayName = default;
-            ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput = default;
+            ExascaleDBStorageInputDetails highCapacityStorageInput = default;
             ExascaleDBStorageDetails highCapacityDatabaseStorage = default;
             string timeZone = default;
             OracleDatabaseProvisioningState? provisioningState = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (prop.NameEquals("highCapacityDatabaseStorageInput"u8))
                 {
-                    highCapacityDatabaseStorageInput = ExascaleDBStorageInputDetails.DeserializeExascaleDBStorageInputDetails(prop.Value, options);
+                    highCapacityStorageInput = ExascaleDBStorageInputDetails.DeserializeExascaleDBStorageInputDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("highCapacityDatabaseStorage"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 additionalFlashCacheInPercent,
                 description,
                 displayName,
-                highCapacityDatabaseStorageInput,
+                highCapacityStorageInput,
                 highCapacityDatabaseStorage,
                 timeZone,
                 provisioningState,

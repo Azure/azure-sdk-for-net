@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal static partial class ErrorDeploymentTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ErrorDeploymentType value) => value switch
         {
             ErrorDeploymentType.LastSuccessful => "LastSuccessful",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Resources.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ErrorDeploymentType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ErrorDeploymentType ToErrorDeploymentType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LastSuccessful")) return ErrorDeploymentType.LastSuccessful;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SpecificDeployment")) return ErrorDeploymentType.SpecificDeployment;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LastSuccessful"))
+            {
+                return ErrorDeploymentType.LastSuccessful;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SpecificDeployment"))
+            {
+                return ErrorDeploymentType.SpecificDeployment;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ErrorDeploymentType value.");
         }
     }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Cdn
 {
+    /// <summary></summary>
     public partial class FrontDoorOriginResource : IJsonModel<FrontDoorOriginData>
     {
-        private static FrontDoorOriginData s_dataDeserializationInstance;
-        private static FrontDoorOriginData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FrontDoorOriginData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FrontDoorOriginData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FrontDoorOriginData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FrontDoorOriginData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorOriginData>)Data).Write(writer, options);
 
-        FrontDoorOriginData IJsonModel<FrontDoorOriginData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorOriginData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorOriginData IJsonModel<FrontDoorOriginData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FrontDoorOriginData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorOriginData>(Data, options, AzureResourceManagerCdnContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FrontDoorOriginData IPersistableModel<FrontDoorOriginData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorOriginData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<FrontDoorOriginData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorOriginData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontDoorOriginData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

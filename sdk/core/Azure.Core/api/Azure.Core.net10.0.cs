@@ -324,6 +324,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation ChinaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth2 { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth3 { get { throw null; } }
+        public static Azure.Core.AzureLocation DenmarkEast { get { throw null; } }
         public string? DisplayName { get { throw null; } }
         public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS { get { throw null; } }

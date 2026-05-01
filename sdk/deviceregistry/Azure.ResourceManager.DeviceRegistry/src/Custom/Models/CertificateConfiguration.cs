@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// </para>
         /// <para>
         /// For PUT (create) operations, use the full constructor:
-        /// <see cref="CertificateConfiguration(CertificateAuthorityConfiguration, int?)"/>.
+        /// <see cref="CertificateConfiguration(CertificateAuthorityConfiguration, int)"/>.
         /// </para>
         /// </summary>
         /// <param name="leafCertificateValidityPeriodInDays">The validity period in days for leaf certificates.</param>

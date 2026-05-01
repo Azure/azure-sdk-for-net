@@ -8,73 +8,83 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Cdn.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableCdnTenantResource : ArmResource
     {
-        private ClientDiagnostics _defaultClientDiagnostics;
-        private CdnManagementRestOperations _defaultRestClient;
+        private ClientDiagnostics _cdnClientClientDiagnostics;
+        private CdnClient _cdnClientRestClient;
         private ClientDiagnostics _edgeNodesClientDiagnostics;
-        private EdgeNodesRestOperations _edgeNodesRestClient;
+        private EdgeNodes _edgeNodesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCdnTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCdnTenantResource for mocking. </summary>
         protected MockableCdnTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCdnTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCdnTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCdnTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CdnManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CdnManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics EdgeNodesClientDiagnostics => _edgeNodesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private EdgeNodesRestOperations EdgeNodesRestClient => _edgeNodesRestClient ??= new EdgeNodesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CdnClientClientDiagnostics => _cdnClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics EdgeNodesClientDiagnostics => _edgeNodesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EdgeNodes EdgeNodesRestClient => _edgeNodesRestClient ??= new EdgeNodes(EdgeNodesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Cdn/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Cdn/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> Cdn_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableCdnTenantResource.CheckCdnNameAvailability");
+            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnTenantResource.CheckCdnNameAvailability");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CdnClientRestClient.CreateCheckCdnNameAvailabilityRequest(CdnNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -88,31 +98,41 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Cdn/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Cdn/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> Cdn_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableCdnTenantResource.CheckCdnNameAvailability");
+            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnTenantResource.CheckCdnNameAvailability");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckNameAvailability(content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CdnClientRestClient.CreateCheckCdnNameAvailabilityRequest(CdnNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -126,42 +146,44 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Cdn/edgenodes</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Cdn/edgenodes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeNodes_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeNodesOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeNode"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeNode"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EdgeNode.DeserializeEdgeNode(e), EdgeNodesClientDiagnostics, Pipeline, "MockableCdnTenantResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EdgeNodesGetEdgeNodesAsyncCollectionResultOfT(EdgeNodesRestClient, context, "MockableCdnTenantResource.GetEdgeNodes");
         }
 
         /// <summary>
         /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Cdn/edgenodes</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Cdn/edgenodes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeNodes_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeNodesOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,9 +191,11 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> A collection of <see cref="EdgeNode"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EdgeNode.DeserializeEdgeNode(e), EdgeNodesClientDiagnostics, Pipeline, "MockableCdnTenantResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EdgeNodesGetEdgeNodesCollectionResultOfT(EdgeNodesRestClient, context, "MockableCdnTenantResource.GetEdgeNodes");
         }
     }
 }
