@@ -439,5 +439,96 @@ namespace Azure.Core.Tests.Identity
             Assert.That(ex.Message, Does.Contain(AzureDeveloperCliCredential.AzdNotLogIn));
             Assert.That(ex.Message, Does.Not.Contain("{\"type\":\"consoleMessage\""));
         }
+
+        [Test]
+        public void AzdJsonErrorOutput_StructuredError_ExtractsErrorField()
+        {
+            // azd v1.24.0+ writes a single-line structured error to stderr.
+            string aadError = "fetching token: failed to authenticate:\\n(invalid_tenant) AADSTS90002: Tenant 'test' not found";
+            string rawJsonError = "{\"error\":\"" + aadError + "\",\"links\":[{\"title\":\"azd auth login reference\",\"url\":\"https://example.com\"}],\"message\":\"Authentication with Azure failed.\",\"suggestion\":\"Run 'azd auth login' to sign in again.\"}";
+            var testProcess = new TestProcess { Error = rawJsonError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            // Should extract the "error" field, not the wrapping JSON or the friendly "message"/"suggestion"
+            Assert.That(ex.Message, Does.Contain("AADSTS90002"));
+            Assert.That(ex.Message, Does.Not.Contain("\"error\":"));
+            Assert.That(ex.Message, Does.Not.Contain("\"suggestion\":"));
+            Assert.That(ex.Message, Does.Not.Contain("Authentication with Azure failed."));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_StructuredErrorPrecededByEmptyConsoleMessage_PrefersStructuredError()
+        {
+            // azd v1.23.7 - v1.23.15 emits an empty consoleMessage line preceding the structured error.
+            string aadError = "fetching token: failed to authenticate";
+            string rawJsonError =
+                "{\"type\":\"consoleMessage\",\"timestamp\":\"2026-04-13T17:43:24.7558297-07:00\",\"data\":{\"message\":\"\\n\"}}\n" +
+                "{\"error\":\"" + aadError + "\",\"message\":\"Authentication with Azure failed.\",\"suggestion\":\"Run 'azd auth login' to sign in again.\"}";
+            var testProcess = new TestProcess { Error = rawJsonError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain(aadError));
+            Assert.That(ex.Message, Does.Not.Contain("{\"type\":\"consoleMessage\""));
+            Assert.That(ex.Message, Does.Not.Contain("{\"error\":"));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_StructuredErrorWithConsoleMessage_PrefersStructuredError()
+        {
+            // The structured "error" line carries the actionable failure and should win over the consoleMessage
+            string aadError = "AADSTS70008: Refresh token expired";
+            string rawJsonError =
+                "{\"type\":\"consoleMessage\",\"timestamp\":\"...\",\"data\":{\"message\":\"some informational console output\"}}\n" +
+                "{\"error\":\"" + aadError + "\",\"message\":\"Authentication with Azure failed.\"}";
+            var testProcess = new TestProcess { Error = rawJsonError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain(aadError));
+            Assert.That(ex.Message, Does.Not.Contain("some informational console output"));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_MultipleConsoleMessageLines_UsesFirstNonEmpty()
+        {
+            // Multi-line legacy output should fall back to the first non-empty data.message
+            string firstMessage = "ERROR: fetching token: interactive login needed";
+            string rawJsonError =
+                "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"\\n\"}}\n" +
+                "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"" + firstMessage + "\"}}\n" +
+                "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"trailing detail\"}}";
+            var testProcess = new TestProcess { Error = rawJsonError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain(firstMessage));
+            Assert.That(ex.Message, Does.Not.Contain("{\"type\":\"consoleMessage\""));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_StructuredAadStsError_SurfacesAsAuthFailed()
+        {
+            // The "azd auth login" text lives in the ignored "suggestion" field, so the AADSTS error
+            // should surface as AuthenticationFailedException rather than CredentialUnavailableException.
+            string structuredError = "{\"error\":\"AADSTS50076: Multi-factor authentication required\",\"message\":\"Authentication with Azure failed.\",\"suggestion\":\"Run 'azd auth login' to sign in again.\"}";
+            var testProcess = new TestProcess { Error = structuredError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain("AADSTS50076"));
+            Assert.That(ex.Message, Does.Not.Contain("\"suggestion\":"));
+        }
     }
 }
