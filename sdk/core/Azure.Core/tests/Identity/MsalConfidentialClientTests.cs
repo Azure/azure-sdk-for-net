@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -87,6 +88,76 @@ namespace Azure.Core.Tests.Identity
             // If MSAL retry was active, we'd see one or more extra requests.
             Assert.AreEqual(expectedCalls, requestCount, $"Expected exactly {expectedCalls} requests (1 initial + {maxRetries} Azure SDK retries). MSAL retry is not disabled.");
         }
+
+#pragma warning disable AZID5001 // AdditionalQueryParameters is experimental
+        [Test]
+        public void AdditionalQueryParametersAreForwardedToBuilder()
+        {
+            var extraParams = new Dictionary<string, (string Value, bool IncludeInCacheKey)>
+            {
+                ["feature"] = ("agenticSession", false),
+                ["session_id"] = ("abc-123", true)
+            };
+
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = new MockTransport(),
+                DisableInstanceDiscovery = true,
+                AdditionalQueryParameters = extraParams
+            };
+
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var client = new MockMsalConfidentialClient(pipeline, "tenant", "client", "secret", "https://redirect", options);
+
+            // Verify the parameters were snapshotted into the MSAL client
+            var stored = client.GetAdditionalQueryParameters();
+            Assert.IsNotNull(stored);
+            Assert.AreEqual(2, stored.Count);
+            Assert.AreEqual(("agenticSession", false), stored["feature"]);
+            Assert.AreEqual(("abc-123", true), stored["session_id"]);
+
+            // Verify it's a snapshot (mutation of the original doesn't affect the client)
+            extraParams["new_param"] = ("new_value", false);
+            Assert.IsFalse(stored.ContainsKey("new_param"));
+
+            // Verify the builder still works
+            Assert.DoesNotThrowAsync(async () => await client.CallCreateClientAsync(false, true, default));
+        }
+
+        [Test]
+        public void NullAdditionalQueryParametersDoesNotThrow()
+        {
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = new MockTransport(),
+                DisableInstanceDiscovery = true,
+                AdditionalQueryParameters = null
+            };
+
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var client = new MockMsalConfidentialClient(pipeline, "tenant", "client", "secret", "https://redirect", options);
+
+            Assert.IsNull(client.GetAdditionalQueryParameters());
+            Assert.DoesNotThrowAsync(async () => await client.CallCreateClientAsync(false, true, default));
+        }
+
+        [Test]
+        public void EmptyAdditionalQueryParametersDoesNotThrow()
+        {
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = new MockTransport(),
+                DisableInstanceDiscovery = true,
+                AdditionalQueryParameters = new Dictionary<string, (string Value, bool IncludeInCacheKey)>()
+            };
+
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var client = new MockMsalConfidentialClient(pipeline, "tenant", "client", "secret", "https://redirect", options);
+
+            Assert.IsNull(client.GetAdditionalQueryParameters());
+            Assert.DoesNotThrowAsync(async () => await client.CallCreateClientAsync(false, true, default));
+        }
+#pragma warning restore AZID5001
 
         public class TestCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions
         {
