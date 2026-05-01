@@ -20,10 +20,12 @@
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\path\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Path.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\query\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Query.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-default-value\src\_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-doc\src\_Specs_.Azure.ClientGenerator.Core.ClientDoc.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\default\src\Specs.Azure.Tcgc.ClientInit.Default.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\individually\src\Specs.Azure.Tcgc.ClientInit.Individually.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\individuallyParent\src\Specs.Azure.Tcgc.ClientInit.Both.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\next-link-verb\src\_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\response-as-bool\src\_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\usage\src\_Specs_.Azure.ClientGenerator.Core.Usage.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-method-parameter-to-client\src\Specs.Azure.Tcgc.ClientLo.Param.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-existing-sub-client\src\Specs.Azure.Tcgc.ClientLo.Sub.csproj" />
@@ -32,6 +34,7 @@
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\hierarchy-building\src\_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\override\src\_Specs_.Azure.ClientGenerator.Core.Override.csproj" />
     <ProjectReference Include="..\Spector\http\azure\special-headers\client-request-id\src\Azure.SpecialHeaders.XmsClientRequestId.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\special-headers\conditional-request\src\Azure.SpecialHeaders.ConditionalRequest.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\lro\standard\src\_Specs_.Azure.Core.Lro.Standard.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\lro\rpc\src\_Specs_.Azure.Core.Lro.Rpc.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\basic\src\_Specs_.Azure.Core.Basic.csproj" />

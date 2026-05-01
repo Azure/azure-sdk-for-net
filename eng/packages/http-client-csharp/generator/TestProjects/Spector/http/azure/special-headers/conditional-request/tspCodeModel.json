@@ -1,0 +1,471 @@
+{
+  "name": "Azure.SpecialHeaders.ConditionalRequest",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [],
+  "models": [],
+  "clients": [
+    {
+      "$id": "1",
+      "kind": "client",
+      "name": "ConditionalRequestClient",
+      "namespace": "Azure.SpecialHeaders.ConditionalRequest",
+      "doc": "Illustrates conditional request headers with custom header names and eTag types",
+      "methods": [
+        {
+          "$id": "2",
+          "kind": "basic",
+          "name": "postIfMatch",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Check when only If-Match in header is defined with eTag type.",
+          "operation": {
+            "$id": "3",
+            "name": "postIfMatch",
+            "resourceName": "ConditionalRequest",
+            "doc": "Check when only If-Match in header is defined with eTag type.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "4",
+                "kind": "header",
+                "name": "ifMatch",
+                "serializedName": "If-Match",
+                "doc": "The request should only proceed if an entity matches this string.",
+                "type": {
+                  "$id": "5",
+                  "kind": "string",
+                  "name": "eTag",
+                  "crossLanguageDefinitionId": "Azure.Core.eTag",
+                  "baseType": {
+                    "$id": "6",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "optional": true,
+                "isContentType": false,
+                "scope": "Method",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postIfMatch.ifMatch",
+                "methodParameterSegments": [
+                  {
+                    "$id": "7",
+                    "kind": "method",
+                    "name": "ifMatch",
+                    "serializedName": "If-Match",
+                    "doc": "The request should only proceed if an entity matches this string.",
+                    "type": {
+                      "$id": "8",
+                      "kind": "string",
+                      "name": "eTag",
+                      "crossLanguageDefinitionId": "Azure.Core.eTag",
+                      "baseType": {
+                        "$id": "9",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postIfMatch.ifMatch",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/special-headers/conditional-request/if-match",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postIfMatch",
+            "decorators": [],
+            "namespace": "Azure.SpecialHeaders.ConditionalRequest"
+          },
+          "parameters": [
+            {
+              "$ref": "7"
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postIfMatch"
+        },
+        {
+          "$id": "10",
+          "kind": "basic",
+          "name": "postIfNoneMatch",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Check when only If-None-Match in header is defined with eTag type.",
+          "operation": {
+            "$id": "11",
+            "name": "postIfNoneMatch",
+            "resourceName": "ConditionalRequest",
+            "doc": "Check when only If-None-Match in header is defined with eTag type.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "12",
+                "kind": "header",
+                "name": "ifNoneMatch",
+                "serializedName": "If-None-Match",
+                "doc": "The request should only proceed if no entity matches this string.",
+                "type": {
+                  "$id": "13",
+                  "kind": "string",
+                  "name": "eTag",
+                  "crossLanguageDefinitionId": "Azure.Core.eTag",
+                  "baseType": {
+                    "$id": "14",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "optional": true,
+                "isContentType": false,
+                "scope": "Method",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postIfNoneMatch.ifNoneMatch",
+                "methodParameterSegments": [
+                  {
+                    "$id": "15",
+                    "kind": "method",
+                    "name": "ifNoneMatch",
+                    "serializedName": "If-None-Match",
+                    "doc": "The request should only proceed if no entity matches this string.",
+                    "type": {
+                      "$id": "16",
+                      "kind": "string",
+                      "name": "eTag",
+                      "crossLanguageDefinitionId": "Azure.Core.eTag",
+                      "baseType": {
+                        "$id": "17",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postIfNoneMatch.ifNoneMatch",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/special-headers/conditional-request/if-none-match",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postIfNoneMatch",
+            "decorators": [],
+            "namespace": "Azure.SpecialHeaders.ConditionalRequest"
+          },
+          "parameters": [
+            {
+              "$ref": "15"
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postIfNoneMatch"
+        },
+        {
+          "$id": "18",
+          "kind": "basic",
+          "name": "postCustomIfMatch",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Check when custom If-Match header name is used with eTag type for conditional requests.",
+          "operation": {
+            "$id": "19",
+            "name": "postCustomIfMatch",
+            "resourceName": "ConditionalRequest",
+            "doc": "Check when custom If-Match header name is used with eTag type for conditional requests.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "20",
+                "kind": "header",
+                "name": "ifMatch",
+                "serializedName": "x-ms-blob-if-match",
+                "doc": "The request should only proceed if an entity matches this string.",
+                "type": {
+                  "$id": "21",
+                  "kind": "string",
+                  "name": "eTag",
+                  "crossLanguageDefinitionId": "Azure.Core.eTag",
+                  "baseType": {
+                    "$id": "22",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "optional": true,
+                "isContentType": false,
+                "scope": "Method",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postCustomIfMatch.ifMatch",
+                "methodParameterSegments": [
+                  {
+                    "$id": "23",
+                    "kind": "method",
+                    "name": "ifMatch",
+                    "serializedName": "x-ms-blob-if-match",
+                    "doc": "The request should only proceed if an entity matches this string.",
+                    "type": {
+                      "$id": "24",
+                      "kind": "string",
+                      "name": "eTag",
+                      "crossLanguageDefinitionId": "Azure.Core.eTag",
+                      "baseType": {
+                        "$id": "25",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postCustomIfMatch.ifMatch",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/special-headers/conditional-request/custom-if-match",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postCustomIfMatch",
+            "decorators": [],
+            "namespace": "Azure.SpecialHeaders.ConditionalRequest"
+          },
+          "parameters": [
+            {
+              "$ref": "23"
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postCustomIfMatch"
+        },
+        {
+          "$id": "26",
+          "kind": "basic",
+          "name": "postCustomIfNoneMatch",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Check when custom If-None-Match header name is used with eTag type for conditional requests.",
+          "operation": {
+            "$id": "27",
+            "name": "postCustomIfNoneMatch",
+            "resourceName": "ConditionalRequest",
+            "doc": "Check when custom If-None-Match header name is used with eTag type for conditional requests.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "28",
+                "kind": "header",
+                "name": "ifNoneMatch",
+                "serializedName": "x-ms-blob-if-none-match",
+                "doc": "The request should only proceed if no entity matches this string.",
+                "type": {
+                  "$id": "29",
+                  "kind": "string",
+                  "name": "eTag",
+                  "crossLanguageDefinitionId": "Azure.Core.eTag",
+                  "baseType": {
+                    "$id": "30",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "optional": true,
+                "isContentType": false,
+                "scope": "Method",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postCustomIfNoneMatch.ifNoneMatch",
+                "methodParameterSegments": [
+                  {
+                    "$id": "31",
+                    "kind": "method",
+                    "name": "ifNoneMatch",
+                    "serializedName": "x-ms-blob-if-none-match",
+                    "doc": "The request should only proceed if no entity matches this string.",
+                    "type": {
+                      "$id": "32",
+                      "kind": "string",
+                      "name": "eTag",
+                      "crossLanguageDefinitionId": "Azure.Core.eTag",
+                      "baseType": {
+                        "$id": "33",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postCustomIfNoneMatch.ifNoneMatch",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/special-headers/conditional-request/custom-if-none-match",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postCustomIfNoneMatch",
+            "decorators": [],
+            "namespace": "Azure.SpecialHeaders.ConditionalRequest"
+          },
+          "parameters": [
+            {
+              "$ref": "31"
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.postCustomIfNoneMatch"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "34",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "35",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "36",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest.endpoint"
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Azure.SpecialHeaders.ConditionalRequest",
+      "apiVersions": [],
+      "isMultiServiceClient": false
+    }
+  ]
+}
