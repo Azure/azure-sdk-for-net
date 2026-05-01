@@ -3,6 +3,7 @@
 ## 4.10.0 (2026-05-05)
 
 ### Features Added
+
 - Added `KeyProperties.KeySize` to expose the key size in bits.
 
 ## 4.9.0 (2026-03-04)
