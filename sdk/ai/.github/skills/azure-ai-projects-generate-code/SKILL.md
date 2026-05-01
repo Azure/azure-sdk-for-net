@@ -211,7 +211,7 @@ Figure out, which classes are public facing and based on that populate the lates
     ```
 5. Add all new files by running `git add` and modified files by `git add -u`.
 6. Commit changes with the short summary of added features as a comment `git commit -m "new features"`
-7. Create a pull request by calling `gh pr create --title "<title>" --body "<changelog>"`; replace \<title\> and \<changelog\> by short PR title and the changes from the changelog, we have generated in "Updating changelog" section.
+7. Create a pull request by calling `gh pr create --title "<title>" --body "<changelog> --assignee @me"`; replace \<title\> and \<changelog\> by short PR title and the changes from the changelog, we have generated in "Updating changelog" section.
 
 # [Optional] Create an alpha package release
 
