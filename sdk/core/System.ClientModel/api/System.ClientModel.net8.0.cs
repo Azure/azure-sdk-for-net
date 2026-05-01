@@ -98,17 +98,16 @@ namespace System.ClientModel
         public MultiPartFormContent() { }
         public MultiPartFormContent(string boundary) { }
         public void Add(string name, System.BinaryData content) { }
-        public void Add(string name, bool content, string? mediaType = "text/plain") { }
         public void Add(string name, byte[] content, string? mediaType = "application/octet-stream") { }
         public void Add(string name, System.ClientModel.FileBinaryContent fileContent) { }
-        public void Add(string name, decimal content, string? mediaType = "text/plain") { }
-        public void Add(string name, double content, string? mediaType = "text/plain") { }
-        public void Add(string name, int content, string? mediaType = "text/plain") { }
-        public void Add(string name, long content, string? mediaType = "text/plain") { }
-        public void Add(string name, float content, string? mediaType = "text/plain") { }
-        public void Add(string name, string content, string? mediaType = "text/plain") { }
-        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model) { }
-        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null, System.ClientModel.Primitives.ModelReaderWriterContext? context = null, string? mediaType = "application/json") { }
+        public void Add(string name, decimal content, string? mediaType = "application/json") { }
+        public void Add(string name, double content, string? mediaType = "application/json") { }
+        public void Add(string name, int content, string? mediaType = "application/json") { }
+        public void Add(string name, long content, string? mediaType = "application/json") { }
+        public void Add(string name, float content, string? mediaType = "application/json") { }
+        public void Add(string name, string content, string? mediaType = "application/json") { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context) { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null, string? mediaType = "application/json") { }
         public override void Dispose() { }
         public override bool TryComputeLength(out long length) { throw null; }
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }

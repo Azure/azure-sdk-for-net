@@ -8,27 +8,41 @@ namespace System.ClientModel;
 /// <summary>
 /// FileBinaryContent
 /// </summary>
-public partial class FileBinaryContent : BinaryContent
+public class FileBinaryContent : BinaryContent
 {
+    private const string DefaultMediaType = "application/octet-stream";
+
     private readonly BinaryContent _content;
+    private bool _disposed;
 
     /// <summary>
     /// Creates an instance of <see cref="FileBinaryContent"/>.
     /// </summary>
-    /// <param name="data"></param>
-    /// <param name="mediaType"></param>
-    public FileBinaryContent(BinaryData data, string? mediaType = "application/octet-stream")
+    /// <param name="data">The content to send.</param>
+    /// <param name="mediaType">The media type to use when <paramref name="data"/> does not
+    /// already carry one via <see cref="BinaryData.MediaType"/>. To override an existing
+    /// media type on <paramref name="data"/>, use
+    /// <see cref="BinaryData.WithMediaType(string?)"/> before passing it in.</param>
+    public FileBinaryContent(BinaryData data, string? mediaType = DefaultMediaType)
     {
         Argument.AssertNotNull(data, nameof(data));
 
         _content = Create(data);
-        MediaType = mediaType;
+        MediaType = data.MediaType ?? mediaType;
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="FileBinaryContent"/>.
+    /// Creates an instance of <see cref="FileBinaryContent"/> from an existing
+    /// <see cref="Stream"/>.
     /// </summary>
-    public FileBinaryContent(Stream stream, string? mediaType = "application/octet-stream")
+    /// <param name="stream">The seekable stream containing the file's bytes. On
+    /// successful construction, the <see cref="FileBinaryContent"/> takes ownership
+    /// of the stream and disposes it when the content is disposed.</param>
+    /// <param name="mediaType">The media type of the content.</param>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="stream"/> is
+    /// not seekable. The caller retains ownership of <paramref name="stream"/> in
+    /// this case.</exception>
+    public FileBinaryContent(Stream stream, string? mediaType = DefaultMediaType)
     {
         Argument.AssertNotNull(stream, nameof(stream));
 
@@ -39,13 +53,22 @@ public partial class FileBinaryContent : BinaryContent
     /// <summary>
     /// Creates an instance of <see cref="FileBinaryContent"/>.
     /// </summary>
-    public FileBinaryContent(string path, string? mediaType = "application/octet-stream")
+    public FileBinaryContent(string path, string? mediaType = DefaultMediaType)
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
         FileStream fileStream = File.OpenRead(path);
-        _content = Create(fileStream);
+        try
+        {
+            _content = Create(fileStream);
+        }
+        catch
+        {
+            fileStream.Dispose();
+            throw;
+        }
         MediaType = mediaType;
+        Filename = Path.GetFileName(path);
     }
 
     /// <summary>
@@ -56,8 +79,13 @@ public partial class FileBinaryContent : BinaryContent
     /// <inheritdoc/>
     public override void Dispose()
     {
+        if (_disposed)
+        {
+            return;
+        }
+
         _content.Dispose();
-        GC.SuppressFinalize(this);
+        _disposed = true;
     }
 
     /// <inheritdoc/>

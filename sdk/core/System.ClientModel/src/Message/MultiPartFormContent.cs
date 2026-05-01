@@ -24,6 +24,7 @@ public class MultiPartFormContent : BinaryContent
     private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
     private readonly MultipartFormDataContent _multipartContent;
+    private bool _disposed;
 
     /// <summary>
     /// Creates an instance of <see cref="MultiPartFormContent"/> with a randomly generated boundary.
@@ -69,22 +70,16 @@ public class MultiPartFormContent : BinaryContent
     public void Add<T>(
         string name,
         IPersistableModel<T> model,
+        ModelReaderWriterContext context,
         ModelReaderWriterOptions? options = default,
-        ModelReaderWriterContext? context = default,
         string? mediaType = MediaTypeApplicationJson)
     {
         Argument.AssertNotNull(model, nameof(model));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(context, nameof(context));
 
         options ??= ModelWriteWireOptions;
-
-#pragma warning disable AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
-        BinaryData data = context != null
-            ? ModelReaderWriter.Write(model, options, context).WithMediaType(mediaType)
-            : ModelReaderWriter.Write(model, options).WithMediaType(mediaType);
-#pragma warning restore AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
-
-        Add(name, data);
+        Add(name, ModelReaderWriter.Write(model, options, context).WithMediaType(mediaType));
     }
 
     /// <summary>
@@ -93,8 +88,9 @@ public class MultiPartFormContent : BinaryContent
     /// <typeparam name="T"></typeparam>
     /// <param name="name"></param>
     /// <param name="model"></param>
-    public void Add<T>(string name, IPersistableModel<T> model)
-        => Add(name, model, options: default, context: default, mediaType: default);
+    /// <param name="context"></param>
+    public void Add<T>(string name, IPersistableModel<T> model, ModelReaderWriterContext context)
+        => Add(name, model, options: default, context: context, mediaType: default);
 
     // CUSTOM: Add optional content type parameter to the Add method.
     /// <summary>
@@ -110,7 +106,7 @@ public class MultiPartFormContent : BinaryContent
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
@@ -132,7 +128,7 @@ public class MultiPartFormContent : BinaryContent
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
@@ -155,7 +151,7 @@ public class MultiPartFormContent : BinaryContent
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
@@ -178,7 +174,7 @@ public class MultiPartFormContent : BinaryContent
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
@@ -201,7 +197,7 @@ public class MultiPartFormContent : BinaryContent
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
@@ -224,7 +220,7 @@ public class MultiPartFormContent : BinaryContent
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
@@ -299,6 +295,44 @@ public class MultiPartFormContent : BinaryContent
         return chars.ToString();
     }
 
+    private static MemoryStream CreateJsonStream(object value)
+    {
+        var stream = new MemoryStream(64);
+        using (var writer = new Utf8JsonWriter(stream))
+        {
+            switch (value)
+            {
+                case string s:
+                    writer.WriteStringValue(s);
+                    break;
+                case int i:
+                    writer.WriteNumberValue(i);
+                    break;
+                case long l:
+                    writer.WriteNumberValue(l);
+                    break;
+                case float f:
+                    writer.WriteNumberValue(f);
+                    break;
+                case double d:
+                    writer.WriteNumberValue(d);
+                    break;
+                case decimal m:
+                    writer.WriteNumberValue(m);
+                    break;
+                case bool b:
+                    writer.WriteBooleanValue(b);
+                    break;
+                default:
+                    throw new ArgumentException(
+                        $"Unsupported primitive type '{value?.GetType().FullName ?? "null"}' for JSON multipart part.",
+                        nameof(value));
+            }
+        }
+        stream.Position = 0;
+        return stream;
+    }
+
     /// <summary>
     /// Tries to compute the length of the content.
     /// </summary>
@@ -350,8 +384,13 @@ public class MultiPartFormContent : BinaryContent
     /// </summary>
     public override void Dispose()
     {
+        if (_disposed)
+        {
+            return;
+        }
+
         _multipartContent.Dispose();
-        GC.SuppressFinalize(this);
+        _disposed = true;
     }
 
     private sealed class FileHttpContentAdapter : HttpContent
@@ -366,14 +405,14 @@ public class MultiPartFormContent : BinaryContent
         }
 
         protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
-            => await _content.WriteToAsync(stream).ConfigureAwait(false);
+            => await _content.WriteToAsync(stream, CancellationToken.None).ConfigureAwait(false);
 
         protected override bool TryComputeLength(out long length)
             => _content.TryComputeLength(out length);
 
 #if NET6_0_OR_GREATER
         protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-            => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            => await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 
         protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
             => _content.WriteTo(stream, cancellationToken);
@@ -382,7 +421,7 @@ public class MultiPartFormContent : BinaryContent
         {
             if (disposing)
             {
-                _content?.Dispose();
+                _content.Dispose();
             }
             base.Dispose(disposing);
         }

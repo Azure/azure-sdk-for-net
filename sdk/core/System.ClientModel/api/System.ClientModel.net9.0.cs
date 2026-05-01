@@ -82,6 +82,37 @@ namespace System.ClientModel
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
     }
+    public partial class FileBinaryContent : System.ClientModel.BinaryContent
+    {
+        public FileBinaryContent(System.BinaryData data, string? mediaType = "application/octet-stream") { }
+        public FileBinaryContent(System.IO.Stream stream, string? mediaType = "application/octet-stream") { }
+        public FileBinaryContent(string path, string? mediaType = "application/octet-stream") { }
+        public string? Filename { get { throw null; } set { } }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MultiPartFormContent : System.ClientModel.BinaryContent
+    {
+        public MultiPartFormContent() { }
+        public MultiPartFormContent(string boundary) { }
+        public void Add(string name, System.BinaryData content) { }
+        public void Add(string name, byte[] content, string? mediaType = "application/octet-stream") { }
+        public void Add(string name, System.ClientModel.FileBinaryContent fileContent) { }
+        public void Add(string name, decimal content, string? mediaType = "application/json") { }
+        public void Add(string name, double content, string? mediaType = "application/json") { }
+        public void Add(string name, int content, string? mediaType = "application/json") { }
+        public void Add(string name, long content, string? mediaType = "application/json") { }
+        public void Add(string name, float content, string? mediaType = "application/json") { }
+        public void Add(string name, string content, string? mediaType = "application/json") { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context) { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null, string? mediaType = "application/json") { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace System.ClientModel.Primitives
 {
