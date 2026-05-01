@@ -198,10 +198,11 @@ See the [samples directory][samples_directory] for complete examples.
 
 ### Convert results to LLM-ready text
 
+> [!NOTE]
 > **Preview feature**: `.ToLlmInput()` is currently in preview and may change in
 > future releases. We welcome feedback — please file suggestions or issues on
 > [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues) with the
-> **"Cognitive - Content Understanding"** label.
+> `Cognitive - Content Understanding` label.
 
 Use `.ToLlmInput()` to convert any analysis result into a text format that LLMs can consume directly — YAML front matter with extracted fields followed by the markdown body. This works with all content types (documents, images, audio, video) and handles multi-segment results and classification hierarchies automatically.
 
