@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet : IUtf8JsonSerializable, IJsonModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>
+    /// <summary> Customized cipher suite set object that will be used for Https when cipherSuiteSetType is Customized. </summary>
+    public partial class FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet : IJsonModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +69,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(CipherSuiteSetForTls12))
             {
                 writer.WritePropertyName("cipherSuiteSetForTls12"u8);
                 writer.WriteStartArray();
-                foreach (var item in CipherSuiteSetForTls12)
+                foreach (AfdCustomizedCipherSuiteForTls12 item in CipherSuiteSetForTls12)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -50,21 +88,21 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("cipherSuiteSetForTls13"u8);
                 writer.WriteStartArray();
-                foreach (var item in CipherSuiteSetForTls13)
+                foreach (AfdCustomizedCipherSuiteForTls13 item in CipherSuiteSetForTls13)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,54 +111,58 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet IJsonModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet IJsonModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(document.RootElement, options);
         }
 
-        internal static FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet DeserializeFrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet DeserializeFrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<AfdCustomizedCipherSuiteForTls12> cipherSuiteSetForTls12 = default;
             IList<AfdCustomizedCipherSuiteForTls13> cipherSuiteSetForTls13 = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("cipherSuiteSetForTls12"u8))
+                if (prop.NameEquals("cipherSuiteSetForTls12"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AfdCustomizedCipherSuiteForTls12> array = new List<AfdCustomizedCipherSuiteForTls12>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new AfdCustomizedCipherSuiteForTls12(item.GetString()));
                     }
                     cipherSuiteSetForTls12 = array;
                     continue;
                 }
-                if (property.NameEquals("cipherSuiteSetForTls13"u8))
+                if (prop.NameEquals("cipherSuiteSetForTls13"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AfdCustomizedCipherSuiteForTls13> array = new List<AfdCustomizedCipherSuiteForTls13>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new AfdCustomizedCipherSuiteForTls13(item.GetString()));
                     }
@@ -129,105 +171,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(cipherSuiteSetForTls12 ?? new ChangeTrackingList<AfdCustomizedCipherSuiteForTls12>(), cipherSuiteSetForTls13 ?? new ChangeTrackingList<AfdCustomizedCipherSuiteForTls13>(), serializedAdditionalRawData);
+            return new FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(cipherSuiteSetForTls12 ?? new ChangeTrackingList<AfdCustomizedCipherSuiteForTls12>(), cipherSuiteSetForTls13 ?? new ChangeTrackingList<AfdCustomizedCipherSuiteForTls13>(), additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CipherSuiteSetForTls12), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cipherSuiteSetForTls12: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(CipherSuiteSetForTls12))
-                {
-                    if (CipherSuiteSetForTls12.Any())
-                    {
-                        builder.Append("  cipherSuiteSetForTls12: ");
-                        builder.AppendLine("[");
-                        foreach (var item in CipherSuiteSetForTls12)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CipherSuiteSetForTls13), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cipherSuiteSetForTls13: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(CipherSuiteSetForTls13))
-                {
-                    if (CipherSuiteSetForTls13.Any())
-                    {
-                        builder.Append("  cipherSuiteSetForTls13: ");
-                        builder.AppendLine("[");
-                        foreach (var item in CipherSuiteSetForTls13)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

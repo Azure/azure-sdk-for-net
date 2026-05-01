@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </summary>
+    /// <summary>
+    /// &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable.
+    /// Serialized Name: InAvailabilityReasonType
+    /// </summary>
     public readonly partial struct AppServiceNameUnavailableReason : IEquatable<AppServiceNameUnavailableReason>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.AppService.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: InAvailabilityReasonType.Invalid
+        /// </summary>
         public static AppServiceNameUnavailableReason Invalid { get; } = new AppServiceNameUnavailableReason(InvalidValue);
-        /// <summary> AlreadyExists. </summary>
+        /// <summary>
+        /// AlreadyExists
+        /// Serialized Name: InAvailabilityReasonType.AlreadyExists
+        /// </summary>
         public static AppServiceNameUnavailableReason AlreadyExists { get; } = new AppServiceNameUnavailableReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="AppServiceNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(AppServiceNameUnavailableReason left, AppServiceNameUnavailableReason right) => left.Equals(right);

@@ -102,6 +102,8 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(EvaluatorMetric))]
     [ModelReaderWriterBuildable(typeof(EvaluatorVersion))]
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolParameters))]
+    [ModelReaderWriterBuildable(typeof(FabricIQPreviewTool))]
+    [ModelReaderWriterBuildable(typeof(FabricIQPreviewToolParameters))]
     [ModelReaderWriterBuildable(typeof(FileCitationBody))]
     [ModelReaderWriterBuildable(typeof(FileDataset))]
     [ModelReaderWriterBuildable(typeof(FilePath))]

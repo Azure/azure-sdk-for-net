@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     Properties = new AccessPolicyAssignmentProperties();
                 }
-                Properties.UserObjectId = value.Value;
+                Properties.UserObjectId = value;
             }
         }
     }

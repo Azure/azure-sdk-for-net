@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     FrontDoorCertificateSourceParameters = new FrontDoorCertificateSourceParameters();
                 }
-                FrontDoorCertificateSourceParameters.CertificateType = value.Value;
+                FrontDoorCertificateSourceParameters.CertificateType = value;
             }
         }
     }

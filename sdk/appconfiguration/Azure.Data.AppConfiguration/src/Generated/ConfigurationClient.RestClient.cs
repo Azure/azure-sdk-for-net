@@ -247,7 +247,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationSettingRequest(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingRequest(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDateTime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -280,9 +280,9 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
             }
-            if (acceptDatetime != null)
+            if (acceptDateTime != null)
             {
-                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+                request.Headers.SetValue("Accept-Datetime", acceptDateTime);
             }
             if (matchConditions != null)
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct UpdateChannel : IEquatable<UpdateChannel>
     {
         private readonly string _value;
+        /// <summary> Stable channel receives updates, which may include important security and stability updates, later than Preview channel. </summary>
+        private const string StableValue = "Stable";
+        /// <summary> Preview channel normally receives updates before Stable channel, and is the recommended channel for non-production workloads. </summary>
+        private const string PreviewValue = "Preview";
 
         /// <summary> Initializes a new instance of <see cref="UpdateChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpdateChannel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string StableValue = "Stable";
-        private const string PreviewValue = "Preview";
-
-        /// <summary> Stable. </summary>
+        /// <summary> Stable channel receives updates, which may include important security and stability updates, later than Preview channel. </summary>
         public static UpdateChannel Stable { get; } = new UpdateChannel(StableValue);
-        /// <summary> Preview. </summary>
+
+        /// <summary> Preview channel normally receives updates before Stable channel, and is the recommended channel for non-production workloads. </summary>
         public static UpdateChannel Preview { get; } = new UpdateChannel(PreviewValue);
+
         /// <summary> Determines if two <see cref="UpdateChannel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UpdateChannel left, UpdateChannel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UpdateChannel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UpdateChannel left, UpdateChannel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UpdateChannel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UpdateChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UpdateChannel(string value) => new UpdateChannel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UpdateChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UpdateChannel?(string value) => value == null ? null : new UpdateChannel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UpdateChannel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UpdateChannel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

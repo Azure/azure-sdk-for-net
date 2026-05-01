@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the SwiftVirtualNetwork data model.
     /// Swift Virtual Network Contract. This is used to enable the new Swift way of doing virtual network integration.
+    /// Serialized Name: SwiftVirtualNetwork
     /// </summary>
     public partial class SwiftVirtualNetworkData : ResourceData
     {
@@ -60,26 +61,44 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="subnetResourceId"> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
-        /// <param name="isSwiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: SwiftVirtualNetwork.kind
+        /// </param>
+        /// <param name="subnetResourceId">
+        /// The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first.
+        /// Serialized Name: SwiftVirtualNetwork.properties.subnetResourceId
+        /// </param>
+        /// <param name="isSwiftSupported">
+        /// A flag that specifies if the scale unit this Web App is on supports Swift integration.
+        /// Serialized Name: SwiftVirtualNetwork.properties.swiftSupported
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier subnetResourceId, bool? isSwiftSupported, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ResourceIdentifier subnetResourceId, bool? isSwiftSupported, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             SubnetResourceId = subnetResourceId;
             IsSwiftSupported = isSwiftSupported;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </summary>
-        [WirePath("properties.subnetResourceId")]
-        public ResourceIdentifier SubnetResourceId { get; set; }
-        /// <summary> A flag that specifies if the scale unit this Web App is on supports Swift integration. </summary>
-        [WirePath("properties.swiftSupported")]
-        public bool? IsSwiftSupported { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: SwiftVirtualNetwork.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first.
+        /// Serialized Name: SwiftVirtualNetwork.properties.subnetResourceId
+        /// </summary>
+        [WirePath("properties.subnetResourceId")]
+        public ResourceIdentifier SubnetResourceId { get; set; }
+        /// <summary>
+        /// A flag that specifies if the scale unit this Web App is on supports Swift integration.
+        /// Serialized Name: SwiftVirtualNetwork.properties.swiftSupported
+        /// </summary>
+        [WirePath("properties.swiftSupported")]
+        public bool? IsSwiftSupported { get; set; }
     }
 }

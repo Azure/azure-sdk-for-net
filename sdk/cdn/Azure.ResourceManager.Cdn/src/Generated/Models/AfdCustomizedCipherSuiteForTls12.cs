@@ -7,44 +7,61 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The AfdCustomizedCipherSuiteForTls12. </summary>
+    /// <summary></summary>
     public readonly partial struct AfdCustomizedCipherSuiteForTls12 : IEquatable<AfdCustomizedCipherSuiteForTls12>
     {
         private readonly string _value;
+        private const string ECDHERSAAES128GCMSHA256Value = "ECDHE_RSA_AES128_GCM_SHA256";
+        private const string ECDHERSAAES256GCMSHA384Value = "ECDHE_RSA_AES256_GCM_SHA384";
+        private const string DHERSAAES256GCMSHA384Value = "DHE_RSA_AES256_GCM_SHA384";
+        private const string DHERSAAES128GCMSHA256Value = "DHE_RSA_AES128_GCM_SHA256";
+        private const string ECDHERSAAES128SHA256Value = "ECDHE_RSA_AES128_SHA256";
+        private const string ECDHERSAAES256SHA384Value = "ECDHE_RSA_AES256_SHA384";
 
         /// <summary> Initializes a new instance of <see cref="AfdCustomizedCipherSuiteForTls12"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AfdCustomizedCipherSuiteForTls12(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string Ecdhe_Rsa_Aes128_Gcm_Sha256Value = "ECDHE_RSA_AES128_GCM_SHA256";
-        private const string Ecdhe_Rsa_Aes256_Gcm_Sha384Value = "ECDHE_RSA_AES256_GCM_SHA384";
-        private const string Dhe_Rsa_Aes256_Gcm_Sha384Value = "DHE_RSA_AES256_GCM_SHA384";
-        private const string Dhe_Rsa_Aes128_Gcm_Sha256Value = "DHE_RSA_AES128_GCM_SHA256";
-        private const string Ecdhe_Rsa_Aes128_Sha256Value = "ECDHE_RSA_AES128_SHA256";
-        private const string Ecdhe_Rsa_Aes256_Sha384Value = "ECDHE_RSA_AES256_SHA384";
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls12"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AfdCustomizedCipherSuiteForTls12 left, AfdCustomizedCipherSuiteForTls12 right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls12"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AfdCustomizedCipherSuiteForTls12 left, AfdCustomizedCipherSuiteForTls12 right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AfdCustomizedCipherSuiteForTls12"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AfdCustomizedCipherSuiteForTls12"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AfdCustomizedCipherSuiteForTls12(string value) => new AfdCustomizedCipherSuiteForTls12(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AfdCustomizedCipherSuiteForTls12"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AfdCustomizedCipherSuiteForTls12?(string value) => value == null ? null : new AfdCustomizedCipherSuiteForTls12(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AfdCustomizedCipherSuiteForTls12 other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AfdCustomizedCipherSuiteForTls12 other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

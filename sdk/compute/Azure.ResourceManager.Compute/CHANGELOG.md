@@ -1,6 +1,6 @@
 # Release History
 
-## 1.15.0-beta.1 (Unreleased)
+## 1.15.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.15.0-beta.1 (2026-04-24)
+
+### Features Added
+
+- Upgraded api-version tag to `package-2025-11-01-with-cloudservice`.
+- Added new resource type `VmScaleSetLifecycleHookEvent` along with its corresponding `VmScaleSetLifecycleHookEventResource`, `VmScaleSetLifecycleHookEventCollection`, and `VmScaleSetLifecycleHookEventData` classes for managing Virtual Machine Scale Set lifecycle hook events.
+- Added new classes to support lifecycle hooks on Virtual Machine Scale Sets: `LifecycleHook`, `LifecycleHooksProfile`, `VmScaleSetLifecycleHookEventProperties`, `VmScaleSetLifecycleHookEventAdditionalContext`, `VirtualMachineScaleSetLifecycleHookEventTarget`, and `VirtualMachineScaleSetLifecycleHookEventPatch`.
+- Added new enums `LifecycleHookAction`, `LifecycleHookActionState`, `VmScaleSetLifecycleHookEventType`, and `VmScaleSetLifecycleHookEventState`.
+- Added new classes `ResiliencyProfile`, `OperationRecoverySettings`, `ReimageRecoveryPolicy`, `RestartRecoveryPolicy`, `StartRecoveryPolicy`, and `ZoneMovement` for configuring VM Scale Set resiliency and recovery behavior.
+- Added new class `ExternalHealthPolicy`.
+- Added new enums `StorageFaultDomainAlignmentType` and `StorageAlignmentStatus`.
+- Added `LifecycleHooks` and `ExternalHealthPolicy` properties to `VirtualMachineScaleSetProperties` class.
+- Added `LifecycleHooks` property to `VirtualMachineScaleSetPatchProperties` class.
+- Added `Placement` property to `VirtualMachineScaleSetPatch` class.
+- Added `VirtualMachineResourceId` read-only property to `VirtualMachineScaleSetVmProperties` class.
+- Added `IsEnabled` property to `VirtualMachineData` and `VirtualMachinePatch` classes.
+- Added `StorageFaultDomainAlignment` property to `VirtualMachineDataDisk`, `VirtualMachineOSDisk`, `VirtualMachineScaleSetDataDisk`, `VirtualMachineScaleSetOSDisk`, and `VirtualMachineScaleSetUpdateOSDisk` classes.
+- Added `EnableFullCaching` property to `DiffDiskSettings` class.
+- Added new `forceDeallocate` optional parameter to the `VirtualMachineResource.Deallocate` and `VirtualMachineResource.DeallocateAsync` methods.
+- Added `BestEffortAligned` value to `ZonalPlatformFaultDomainAlignMode` enum.
+- Added `Standard` value to `SecurityType` enum.
 
 ## 1.14.0 (2026-01-16)
 

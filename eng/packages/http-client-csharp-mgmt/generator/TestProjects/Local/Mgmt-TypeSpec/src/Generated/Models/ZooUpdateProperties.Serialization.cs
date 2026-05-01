@@ -14,7 +14,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The updatable properties of the Zoo. </summary>
-    internal partial class ZooUpdateProperties : IJsonModel<ZooUpdateProperties>
+    public partial class ZooUpdateProperties : IJsonModel<ZooUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,26 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("something"u8);
                 writer.WriteStringValue(Something);
             }
+            if (Optional.IsDefined(RequiredInt))
+            {
+                writer.WritePropertyName("requiredInt"u8);
+                writer.WriteNumberValue(RequiredInt.Value);
+            }
+            if (Optional.IsDefined(RequiredFixedEnum))
+            {
+                writer.WritePropertyName("requiredFixedEnum"u8);
+                writer.WriteStringValue(RequiredFixedEnum.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(RequiredExtensibleEnum))
+            {
+                writer.WritePropertyName("requiredExtensibleEnum"u8);
+                writer.WriteStringValue(RequiredExtensibleEnum.Value.ToString());
+            }
+            if (Optional.IsDefined(RequiredString))
+            {
+                writer.WritePropertyName("requiredString"u8);
+                writer.WriteStringValue(RequiredString);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +142,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             string something = default;
+            int? requiredInt = default;
+            ZooFixedMode? requiredFixedEnum = default;
+            ZooProvisioningState? requiredExtensibleEnum = default;
+            string requiredString = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,12 +154,50 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     something = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("requiredInt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requiredInt = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("requiredFixedEnum"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requiredFixedEnum = prop.Value.GetString().ToZooFixedMode();
+                    continue;
+                }
+                if (prop.NameEquals("requiredExtensibleEnum"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requiredExtensibleEnum = new ZooProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("requiredString"u8))
+                {
+                    requiredString = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ZooUpdateProperties(something, additionalBinaryDataProperties);
+            return new ZooUpdateProperties(
+                something,
+                requiredInt,
+                requiredFixedEnum,
+                requiredExtensibleEnum,
+                requiredString,
+                additionalBinaryDataProperties);
         }
     }
 }

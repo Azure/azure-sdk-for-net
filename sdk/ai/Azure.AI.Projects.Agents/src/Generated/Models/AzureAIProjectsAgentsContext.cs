@@ -66,6 +66,8 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(EntraAuthorizationScheme))]
     [ModelReaderWriterBuildable(typeof(EntraIsolationKeySource))]
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolOptions))]
+    [ModelReaderWriterBuildable(typeof(FabricIQPreviewTool))]
+    [ModelReaderWriterBuildable(typeof(FabricIQPreviewToolParameters))]
     [ModelReaderWriterBuildable(typeof(FixedRatioVersionSelectionRule))]
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironment))]

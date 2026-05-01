@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotConnectionSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BotConnectionSettingData patch = new BotConnectionSettingData();
+                    BotConnectionSettingData patch = new BotConnectionSettingData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotConnectionSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BotConnectionSettingData patch = new BotConnectionSettingData();
+                    BotConnectionSettingData patch = new BotConnectionSettingData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotConnectionSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BotConnectionSettingData patch = new BotConnectionSettingData();
+                    BotConnectionSettingData patch = new BotConnectionSettingData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<BotConnectionSettingResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotConnectionSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BotConnectionSettingData patch = new BotConnectionSettingData();
+                    BotConnectionSettingData patch = new BotConnectionSettingData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<BotConnectionSettingResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotConnectionSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BotConnectionSettingData patch = new BotConnectionSettingData();
+                    BotConnectionSettingData patch = new BotConnectionSettingData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.BotService
                 else
                 {
                     BotConnectionSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BotConnectionSettingData patch = new BotConnectionSettingData();
+                    BotConnectionSettingData patch = new BotConnectionSettingData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
