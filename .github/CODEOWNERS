@@ -121,10 +121,10 @@
 /sdk/tools/Azure.SdkAnalyzers/    @jsquire @m-nash @m-redding
 
 # PRLabel: %Batch
-/sdk/batch/    @cRui861 @dpwatrous @skapur12 @wanghoppe @wiboris
+/sdk/batch/    @cRui861 @dpwatrous @skapur12 @wanghoppe @wiboris @lilinvictorms @iwang2 @xingwu1
 
 # ServiceLabel: %Batch
-# ServiceOwners: @dpwatrous @wiboris
+# ServiceOwners: @dpwatrous @wiboris @lilinvictorms @iwang2 @xingwu1
 
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/    @conhua @juaduan @mengaims @moreOver0
