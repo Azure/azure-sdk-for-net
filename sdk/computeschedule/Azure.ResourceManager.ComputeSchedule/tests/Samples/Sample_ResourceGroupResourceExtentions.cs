@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Samples
             ScheduledActionOccurrenceResource scheduledActionOccurrenceResource = client.GetScheduledActionOccurrenceResource(scheduledActionOccurrenceResourceId);
 
             // invoke the operation
-            await foreach (OccurrenceResourceData item in scheduledActionOccurrenceResource.GetAttachedResourcesAsync())
+            await foreach (OccurrenceDetails item in scheduledActionOccurrenceResource.GetAttachedResourcesAsync())
             {
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {item.Id}");

@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<CreateFlexResourceOperationResult> TestExecuteCreateFlexAsync(AzureLocation location, ExecuteCreateFlexContent executeCreateFlexRequest, string subid, ArmClient client)
+        protected static async Task<ScheduledActionCreateFlexResult> TestExecuteCreateFlexAsync(AzureLocation location, ExecuteCreateFlexContent executeCreateFlexRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteCreateFlexContent content = executeCreateFlexRequest;
-            CreateFlexResourceOperationResult result;
+            ScheduledActionCreateFlexResult result;
 
             try
             {

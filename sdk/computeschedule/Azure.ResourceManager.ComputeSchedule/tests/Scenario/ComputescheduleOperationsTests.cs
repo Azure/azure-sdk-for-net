@@ -475,11 +475,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 });
 
             // baseProfile: properties common to all VMs in the batch
-            var baseProfile = new BulkVMConfiguration
+            var baseProfile = new BulkVmConfiguration
             {
                 ResourceGroupName = rgName,
                 ComputeApiVersion = "2023-09-01",
-                Properties = new BulkActionVmProperties
+                Properties = new BulkActionVirtualMachineProperties
                 {
                     HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
                     StorageProfile = new VirtualMachineStorageProfile
@@ -537,10 +537,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             baseProfile.Zones.Add("3");
 
             // resourceOverrides: per-VM properties (name, location, osProfile with credentials)
-            var vmOverride = new BulkVMConfiguration
+            var vmOverride = new BulkVmConfiguration
             {
                 Name = "testflexvm0",
-                Properties = new BulkActionVmProperties
+                Properties = new BulkActionVirtualMachineProperties
                 {
                     HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
                     OsProfile = new VirtualMachineOSProfile
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             };
 
             // Act
-            CreateFlexResourceOperationResult executeCreateFlexResult = await TestExecuteCreateFlexAsync(Location, executeCreateFlexRequest, subId, Client);
+            ScheduledActionCreateFlexResult executeCreateFlexResult = await TestExecuteCreateFlexAsync(Location, executeCreateFlexRequest, subId, Client);
 
             // Assert - ExecuteCreateFlex is an immediate operation; results are returned directly
             Assert.NotNull(executeCreateFlexResult);
@@ -596,11 +596,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             };
 
             // baseProfile: properties common to all VMs in the batch
-            var baseProfile = new BulkVMConfiguration
+            var baseProfile = new BulkVmConfiguration
             {
                 ResourceGroupName = rgName,
                 ComputeApiVersion = "2023-09-01",
-                Properties = new BulkActionVmProperties
+                Properties = new BulkActionVirtualMachineProperties
                 {
                     HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
                     StorageProfile = new VirtualMachineStorageProfile
@@ -658,10 +658,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             baseProfile.Zones.Add("3");
 
             // resourceOverrides: per-VM properties (name, location, osProfile with credentials)
-            var vmOverride = new BulkVMConfiguration
+            var vmOverride = new BulkVmConfiguration
             {
                 Name = "testcreatevm0",
-                Properties = new BulkActionVmProperties
+                Properties = new BulkActionVirtualMachineProperties
                 {
                     HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
                     OsProfile = new VirtualMachineOSProfile
