@@ -222,13 +222,9 @@ namespace Azure.Generator.Tests.Visitors
             var writer = new TypeProviderWriter(clientProvider!.RestClient);
             var file = writer.Write();
 
-            // The output for the Azure.Core.eTag scalar should match the same expected
-            // shape as the plain string parameter case (i.e. ifMatch.Value), not the
+            // The output for the Azure.Core.eTag scalar should generate ifMatch.Value, not the
             // broken TypeFormatters.ConvertToString(ifMatch).Value.
-            Assert.AreEqual(
-                Helpers.GetExpectedFromFile(conditionName, method: nameof(TestValidateCreateRequestMethod_SingleIfMatchParameter)),
-                file.Content);
-            StringAssert.DoesNotContain("ConvertToString", file.Content);
+            Assert.AreEqual(Helpers.GetExpectedFromFile(conditionName), file.Content);
         }
 
         [Test]

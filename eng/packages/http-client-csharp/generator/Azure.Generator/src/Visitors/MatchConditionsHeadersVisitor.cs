@@ -516,11 +516,10 @@ namespace Azure.Generator.Visitors
                         switch (headerFlags)
                         {
                             case var flags when HasSingleRequestConditionHeader(flags):
-                                // Access ".Value" on the original ETag? parameter directly rather than appending it
-                                // to the generated header value expression. The default code generation may have
-                                // wrapped the parameter (e.g. in TypeFormatters.ConvertToString(...)) for scalar
-                                // types like Azure.Core.eTag, in which case appending ".Value" to the wrapped
-                                // expression would produce invalid code (e.g. ConvertToString(ifMatch).Value).
+                                if (matchConditionParams.Count == 0)
+                                {
+                                    return false;
+                                }
                                 ifStatement.Update(body: variableExpression.As<Request>().AddHeaderValue(headerName, matchConditionParams[0].Property("Value")));
                                 break;
                             case var flags when HasModificationTimeHeaders(flags):
