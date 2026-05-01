@@ -9,19 +9,8 @@ using Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientDoc
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class _Specs_AzureClientGeneratorCoreClientDocModelFactory
     {
-        /// <summary>
-        /// A plant in the garden.
-        /// This model is used to represent a plant in the client SDK.
-        /// </summary>
-        /// <param name="name"> The name of the plant. </param>
-        /// <param name="species"> The species of the plant. </param>
-        /// <returns> A new <see cref="_Documentation.Plant"/> instance for mocking. </returns>
-        public static Plant Plant(string name = default, string species = default)
-        {
-            return new Plant(name, species, additionalBinaryDataProperties: null);
-        }
+        public static Plant Plant(string name = default, string species = default) => throw null;
     }
 }

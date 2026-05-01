@@ -11,28 +11,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientDoc
 {
-    /// <summary> Client options for <see cref="ClientDocClient"/>. </summary>
     public partial class ClientDocClientOptions : ClientOptions
     {
-        /// <summary> Initializes a new instance of ClientDocClientOptions. </summary>
-        public ClientDocClientOptions()
-        {
-            ConfigureLogging();
-        }
+        public ClientDocClientOptions() => throw null;
 
-        /// <summary> Initializes a new instance of ClientDocClientOptions from configuration. </summary>
-        /// <param name="section"> The configuration section. </param>
         [Experimental("SCME0002")]
-        internal ClientDocClientOptions(IConfigurationSection section) : base(section, null)
-        {
-            if (section is null || !section.Exists())
-            {
-                return;
-            }
-            ConfigureLogging();
-        }
-
-        /// <summary> Configures logging for the client options. </summary>
-        partial void ConfigureLogging();
+        internal ClientDocClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

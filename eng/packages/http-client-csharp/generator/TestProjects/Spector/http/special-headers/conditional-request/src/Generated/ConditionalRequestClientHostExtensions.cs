@@ -8,54 +8,19 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using Azure.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace SpecialHeaders.ConditionalRequest
 {
-    /// <summary> Extension methods to add <see cref="ConditionalRequestClient"/> to an <see cref="IHostApplicationBuilder"/>. </summary>
     [Experimental("SCME0002")]
     public static partial class ConditionalRequestClientHostExtensions
     {
-        /// <summary> Adds a singleton <see cref="ConditionalRequestClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddConditionalRequestClient(this IHostApplicationBuilder host, string sectionName)
-        {
-            return host.AddAzureClient<ConditionalRequestClient, ConditionalRequestClientSettings>(sectionName);
-        }
+        public static IClientBuilder AddConditionalRequestClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        /// <summary> Adds a singleton <see cref="ConditionalRequestClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <param name="configureSettings"> Factory method to modify the <see cref="ConditionalRequestClientSettings"/> after they are created. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddConditionalRequestClient(this IHostApplicationBuilder host, string sectionName, Action<ConditionalRequestClientSettings> configureSettings)
-        {
-            return host.AddAzureClient<ConditionalRequestClient, ConditionalRequestClientSettings>(sectionName, configureSettings);
-        }
+        public static IClientBuilder AddConditionalRequestClient(this IHostApplicationBuilder host, string sectionName, Action<ConditionalRequestClientSettings> configureSettings) => throw null;
 
-        /// <summary> Adds a keyed singleton <see cref="ConditionalRequestClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="key"> The unique key to register as. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddKeyedConditionalRequestClient(this IHostApplicationBuilder host, string key, string sectionName)
-        {
-            return host.AddKeyedAzureClient<ConditionalRequestClient, ConditionalRequestClientSettings>(key, sectionName);
-        }
+        public static IClientBuilder AddKeyedConditionalRequestClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        /// <summary> Adds a keyed singleton <see cref="ConditionalRequestClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
-        /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>
-        /// <param name="key"> The unique key to register as. </param>
-        /// <param name="sectionName"> The section of <see cref="IConfiguration"/> to use. </param>
-        /// <param name="configureSettings"> Factory method to modify the <see cref="ConditionalRequestClientSettings"/> after they are created. </param>
-        /// <returns> An <see cref="IClientBuilder"/> that can be used to further configure the client. </returns>
-        public static IClientBuilder AddKeyedConditionalRequestClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ConditionalRequestClientSettings> configureSettings)
-        {
-            return host.AddKeyedAzureClient<ConditionalRequestClient, ConditionalRequestClientSettings>(key, sectionName, configureSettings);
-        }
+        public static IClientBuilder AddKeyedConditionalRequestClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ConditionalRequestClientSettings> configureSettings) => throw null;
     }
 }

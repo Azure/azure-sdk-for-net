@@ -5,49 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Specs.Azure.ClientGenerator.Core.ClientDoc;
-
 namespace Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation
 {
-    /// <summary>
-    /// A plant in the garden.
-    /// This model is used to represent a plant in the client SDK.
-    /// </summary>
     public partial class Plant
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public Plant(string name, string species) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Plant"/>. </summary>
-        /// <param name="name"> The name of the plant. </param>
-        /// <param name="species"> The species of the plant. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="species"/> is null. </exception>
-        public Plant(string name, string species)
+        public string Name
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(species, nameof(species));
-
-            Name = name;
-            Species = species;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Plant"/>. </summary>
-        /// <param name="name"> The name of the plant. </param>
-        /// <param name="species"> The species of the plant. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Plant(string name, string species, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public string Species
         {
-            Name = name;
-            Species = species;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> The name of the plant. </summary>
-        public string Name { get; set; }
-
-        /// <summary> The species of the plant. </summary>
-        public string Species { get; set; }
     }
 }

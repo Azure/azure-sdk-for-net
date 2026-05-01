@@ -11,28 +11,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace SpecialHeaders.ConditionalRequest
 {
-    /// <summary> Client options for <see cref="ConditionalRequestClient"/>. </summary>
     public partial class ConditionalRequestClientOptions : ClientOptions
     {
-        /// <summary> Initializes a new instance of ConditionalRequestClientOptions. </summary>
-        public ConditionalRequestClientOptions()
-        {
-            ConfigureLogging();
-        }
+        public ConditionalRequestClientOptions() => throw null;
 
-        /// <summary> Initializes a new instance of ConditionalRequestClientOptions from configuration. </summary>
-        /// <param name="section"> The configuration section. </param>
         [Experimental("SCME0002")]
-        internal ConditionalRequestClientOptions(IConfigurationSection section) : base(section, null)
-        {
-            if (section is null || !section.Exists())
-            {
-                return;
-            }
-            ConfigureLogging();
-        }
-
-        /// <summary> Configures logging for the client options. </summary>
-        partial void ConfigureLogging();
+        internal ConditionalRequestClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

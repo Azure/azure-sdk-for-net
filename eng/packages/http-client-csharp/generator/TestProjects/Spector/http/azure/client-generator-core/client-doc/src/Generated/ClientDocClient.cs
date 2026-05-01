@@ -7,70 +7,24 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using Azure.Core.Pipeline;
 using Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientDoc
 {
-    /// <summary> Test for @clientDoc decorator. </summary>
     public partial class ClientDocClient
     {
-        private readonly Uri _endpoint;
-        private Documentation _cachedDocumentation;
+        public ClientDocClient() : this(new Uri("http://localhost:3000"), new ClientDocClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of ClientDocClient. </summary>
-        public ClientDocClient() : this(new Uri("http://localhost:3000"), new ClientDocClientOptions())
-        {
-        }
+        internal ClientDocClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientDocClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of ClientDocClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal ClientDocClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientDocClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public ClientDocClient(Uri endpoint, ClientDocClientOptions options) : this(null, endpoint, options) => throw null;
 
-            options ??= new ClientDocClientOptions();
-
-            _endpoint = endpoint;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            }
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of ClientDocClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ClientDocClient(Uri endpoint, ClientDocClientOptions options) : this(null, endpoint, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of ClientDocClient from a <see cref="ClientDocClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for ClientDocClient. </param>
         [Experimental("SCME0002")]
-        public ClientDocClient(ClientDocClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
-        {
-        }
+        public ClientDocClient(ClientDocClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> Initializes a new instance of Documentation. </summary>
-        public virtual Documentation GetDocumentationClient()
-        {
-            return Volatile.Read(ref _cachedDocumentation) ?? Interlocked.CompareExchange(ref _cachedDocumentation, new Documentation(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDocumentation;
-        }
+        public virtual Documentation GetDocumentationClient() => throw null;
     }
 }
