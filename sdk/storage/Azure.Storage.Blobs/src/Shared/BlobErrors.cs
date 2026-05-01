@@ -23,14 +23,9 @@ namespace Azure.Storage.Blobs
         public static RequestFailedException InvalidRangeWithNonEmptyBlob(RequestFailedException ex) =>
             new RequestFailedException("Invalid range exception during ranged download despite non-empty blob", ex);
 
-        public static ArgumentException AccountNameRequiredForSingleSpecifiedContainer(SessionOptions sessionOptions)
+        public static ArgumentException AccountNameRequiredForEnabledMode(SessionOptions sessionOptions)
              => new ArgumentException(
-                    $"{nameof(SessionOptions.AccountName)} must be set when {nameof(SessionOptions.SessionMode)} is {nameof(SessionMode.SingleSpecifiedContainer)}.",
-                    nameof(sessionOptions));
-
-        public static ArgumentException ContainerNameRequiredForSingleSpecifiedContainer(SessionOptions sessionOptions)
-             => new ArgumentException(
-                    $"{nameof(SessionOptions.ContainerName)} must be set when {nameof(SessionOptions.SessionMode)} is {nameof(SessionMode.SingleSpecifiedContainer)}.",
+                    $"{nameof(SessionOptions.AccountName)} must be set when {nameof(SessionOptions.SessionMode)} is {nameof(SessionMode.Enabled)}.",
                     nameof(sessionOptions));
 
         internal static void VerifyHttpsCustomerProvidedKey(Uri uri, CustomerProvidedKey? customerProvidedKey)

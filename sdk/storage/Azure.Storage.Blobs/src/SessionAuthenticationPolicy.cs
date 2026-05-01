@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Globalization;
 using System.Net;
 using System.Threading;
@@ -16,16 +17,23 @@ namespace Azure.Storage.Blobs
     /// <summary>
     /// A pipeline policy that selects between session token and bearer token authentication.
     /// This policy occupies the authentication policy slot in the pipeline, wrapping the
-    /// <see cref="BearerTokenAuthenticationPolicy"/>. For eligible blob GET requests targeting
-    /// the cached container, the policy authenticates with a session token. For all other
-    /// requests, it delegates to the wrapped bearer token policy.
+    /// <see cref="BearerTokenAuthenticationPolicy"/>. When <see cref="SessionMode.Enabled"/>,
+    /// eligible blob download requests are authenticated with a session token (one cache entry
+    /// per container, created on first access). When <see cref="SessionMode.Disabled"/>,
+    /// all requests are delegated to the wrapped bearer token policy.
     /// </summary>
     internal class SessionAuthenticationPolicy : HttpPipelinePolicy
     {
         private readonly HttpPipelinePolicy _bearerTokenPolicy;
         private readonly Func<BlobServiceClient> _blobServiceClientFactory;
         private readonly SessionOptions _sessionOptions;
-        private readonly AutoRefreshingCache<SessionTokenInfo> _sessionCache;
+
+        /// <summary>
+        /// Per-container session cache. One entry is created per container on first
+        /// access when <see cref="SessionMode.Enabled"/>.
+        /// </summary>
+        private readonly ConcurrentDictionary<string, AutoRefreshingCache<SessionTokenInfo>> _sessionCaches
+            = new ConcurrentDictionary<string, AutoRefreshingCache<SessionTokenInfo>>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Buffer before <see cref="SessionTokenInfo.ExpiresOn"/> at which a proactive
@@ -41,6 +49,7 @@ namespace Azure.Storage.Blobs
 
         private const string SessionsUnavailable = "SessionOperationsTemporarilyUnavailable";
         private const string FeatureNotEnabled = "FeatureNotEnabled";
+        private const string SessionSchemeNotSupported = "Authentication scheme Session is not supported.";
 
         public SessionAuthenticationPolicy(
             HttpPipelinePolicy bearerTokenPolicy,
@@ -51,20 +60,11 @@ namespace Azure.Storage.Blobs
             _blobServiceClientFactory = blobServiceClientFactory ?? throw Errors.ArgumentNull(nameof(blobServiceClientFactory));
             _sessionOptions = sessionOptions ?? new SessionOptions();
 
-            _sessionCache = new AutoRefreshingCache<SessionTokenInfo>(
-                acquire: AcquireSessionAsync,
-                backgroundAcquireTimeout: BackgroundAcquireTimeout);
-
-            if (_sessionOptions.SessionMode == SessionMode.SingleSpecifiedContainer
+            // AccountName is required whenever sessions are used (needed to sign requests).
+            if (_sessionOptions.SessionMode == SessionMode.Enabled
                 && string.IsNullOrEmpty(_sessionOptions.AccountName))
             {
-                throw BlobErrors.AccountNameRequiredForSingleSpecifiedContainer(sessionOptions);
-            }
-
-            if (_sessionOptions.SessionMode == SessionMode.SingleSpecifiedContainer
-                && string.IsNullOrEmpty(_sessionOptions.ContainerName))
-            {
-                throw BlobErrors.ContainerNameRequiredForSingleSpecifiedContainer(sessionOptions);
+                throw BlobErrors.AccountNameRequiredForEnabledMode(sessionOptions);
             }
         }
 
@@ -78,18 +78,18 @@ namespace Azure.Storage.Blobs
 
         private async ValueTask ProcessInternal(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AuthState state = AnalyzeRequest(message);
+            AuthState state = AnalyzeRequest(message, out string containerName);
 
             // If session-eligible, try to acquire a session, sign, and send.
             if (state == AuthState.UseSessionToken)
             {
-                state = await TryAcquireSignAndSendAsync(message, pipeline, async).ConfigureAwait(false);
+                state = await TryAcquireSignAndSendAsync(message, pipeline, async, containerName).ConfigureAwait(false);
             }
 
             // If the session-authenticated request was sent, inspect the response.
             if (state == AuthState.SentWithSession)
             {
-                state = await HandleSessionResponseAsync(message, pipeline, async).ConfigureAwait(false);
+                state = await HandleSessionResponseAsync(message, pipeline, async, containerName).ConfigureAwait(false);
             }
 
             // Fallback to bearer-token.
@@ -108,19 +108,20 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Analyzes the request to determine whether a session token or bearer token should be used.
-        /// Session tokens are only used for blob GET operations in <see cref="SessionMode.SingleSpecifiedContainer"/>
-        /// mode targeting the configured container.
+        /// When <see cref="SessionMode.Enabled"/>, any container is eligible for session-token
+        /// authentication. When <see cref="SessionMode.Disabled"/>, all requests fall back to
+        /// bearer token.
         /// </summary>
         /// <returns>
         /// <see cref="AuthState.UseSessionToken"/> if the request is eligible for session-token
-        /// authentication (a GET against a blob in the configured container, with no comp
-        /// query parameter, while in <see cref="SessionMode.SingleSpecifiedContainer"/> mode);
-        /// <see cref="AuthState.UseBearerToken"/> otherwise.
+        /// authentication; <see cref="AuthState.UseBearerToken"/> otherwise.
         /// </returns>
-        private AuthState AnalyzeRequest(HttpMessage message)
+        private AuthState AnalyzeRequest(HttpMessage message, out string containerName)
         {
+            containerName = null;
+
             // Check if Sessions is disabled.
-            if (_sessionOptions.SessionMode == SessionMode.None)
+            if (_sessionOptions.SessionMode == SessionMode.Disabled)
             {
                 return AuthState.UseBearerToken;
             }
@@ -152,20 +153,14 @@ namespace Azure.Storage.Blobs
                 return AuthState.UseBearerToken;
             }
 
-            // Only the configured container is eligible for session tokens.
-            if (_sessionOptions.SessionMode == SessionMode.SingleSpecifiedContainer
-                && !string.Equals(uriBuilder.BlobContainerName, _sessionOptions.ContainerName, StringComparison.OrdinalIgnoreCase))
-            {
-                return AuthState.UseBearerToken;
-            }
-
+            containerName = uriBuilder.BlobContainerName;
             return AuthState.UseSessionToken;
         }
 
         /// <summary>
         /// Acquires a session token from the cache, signs the request, and sends
         /// it through the pipeline. If session acquisition fails with a service
-        /// error (5xx, 403, or 400/FeatureNotEnabled), returns
+        /// error, returns
         /// <see cref="AuthState.UseBearerToken"/> so the caller can re-issue
         /// the request via the bearer token policy.
         /// </summary>
@@ -178,12 +173,15 @@ namespace Azure.Storage.Blobs
         private async ValueTask<AuthState> TryAcquireSignAndSendAsync(
             HttpMessage message,
             ReadOnlyMemory<HttpPipelinePolicy> pipeline,
-            bool async)
+            bool async,
+            string containerName)
         {
+            AutoRefreshingCache<SessionTokenInfo> cache = GetOrCreateCache(containerName);
+
             SessionTokenInfo sessionInfo;
             try
             {
-                sessionInfo = await _sessionCache.GetAsync(async, message.CancellationToken).ConfigureAwait(false);
+                sessionInfo = await cache.GetAsync(async, message.CancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException ex) when (ShouldFallbackCreateSessionFailure(ex))
             {
@@ -218,7 +216,8 @@ namespace Azure.Storage.Blobs
         private async ValueTask<AuthState> HandleSessionResponseAsync(
             HttpMessage message,
             ReadOnlyMemory<HttpPipelinePolicy> pipeline,
-            bool async)
+            bool async,
+            string containerName)
         {
             int statusCode = message.Response.Status;
 
@@ -228,9 +227,20 @@ namespace Azure.Storage.Blobs
                 // Dispose the content stream to free up a connection before re-sending.
                 message.Response.ContentStream?.Dispose();
 
-                // Invalidate cache and retry.
-                _sessionCache.Invalidate();
-                return await TryAcquireSignAndSendAsync(message, pipeline, async).ConfigureAwait(false);
+                // Invalidate only this container's cache and retry.
+                GetOrCreateCache(containerName).Invalidate();
+                return await TryAcquireSignAndSendAsync(message, pipeline, async, containerName).ConfigureAwait(false);
+            }
+
+            // --- 403 "Authentication scheme Session is not supported." ---
+            if (statusCode == (int)HttpStatusCode.Forbidden
+                && string.Equals(message.Response.ReasonPhrase, SessionSchemeNotSupported, StringComparison.OrdinalIgnoreCase))
+            {
+                // Dispose the content stream to free up a connection.
+                message.Response.ContentStream?.Dispose();
+
+                // Fallback to bearer-token.
+                return AuthState.UseBearerToken;
             }
 
             // --- 503 SessionOperationsTemporarilyUnavailable ---
@@ -255,12 +265,27 @@ namespace Azure.Storage.Blobs
                 && string.Equals(ex.ErrorCode, FeatureNotEnabled, StringComparison.OrdinalIgnoreCase));
 
         /// <summary>
+        /// Returns the per-container cache, creating it on first access. The acquire
+        /// delegate captures <paramref name="containerName"/> so each cache only
+        /// mints sessions for its own container.
+        /// </summary>
+        private AutoRefreshingCache<SessionTokenInfo> GetOrCreateCache(string containerName)
+        {
+            return _sessionCaches.GetOrAdd(
+                containerName,
+                name => new AutoRefreshingCache<SessionTokenInfo>(
+                    acquire: (async, ct) => AcquireSessionAsync(name, async, ct),
+                    backgroundAcquireTimeout: BackgroundAcquireTimeout));
+        }
+
+        /// <summary>
         /// Acquire delegate called by <see cref="AutoRefreshingCache{TValue}"/> to create
         /// a new session via the Container REST API.
         /// </summary>
-        private async ValueTask<SessionTokenInfo> AcquireSessionAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<SessionTokenInfo> AcquireSessionAsync(
+            string containerName, bool async, CancellationToken cancellationToken)
         {
-            BlobContainerClient containerClient = _blobServiceClientFactory().GetBlobContainerClient(_sessionOptions.ContainerName);
+            BlobContainerClient containerClient = _blobServiceClientFactory().GetBlobContainerClient(containerName);
             CreateSessionConfiguration config = new CreateSessionConfiguration(AuthenticationType.Hmac);
 
             Response<CreateSessionResponse> response = async
@@ -289,7 +314,7 @@ namespace Azure.Storage.Blobs
             var credential = new StorageSharedKeyCredential(accountName, sessionInfo.SessionKey);
             var sharedKeyPolicy = new StorageSharedKeyPipelinePolicy(credential);
 
-            // Set x-ms-date header (same as StorageSharedKeyPipelinePolicy.OnSendingRequest does).
+            // Set x-ms-date header (same as StorageSharedKeyPipelinePolicy does).
             // This ensures that the string-to-sign is constructed with the correct date value.
             var date = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
             message.Request.Headers.SetValue(Constants.HeaderNames.Date, date);

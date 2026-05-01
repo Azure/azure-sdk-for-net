@@ -8901,28 +8901,33 @@ namespace Azure.Storage.Blobs.Test
         [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
         public async Task DownloadAsync_Sessions()
         {
-            var containerName = GetNewContainerName();
-            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            var containerNameA = GetNewContainerName();
+            var containerNameB = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(null);
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
+                SessionMode = SessionMode.Enabled,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
-            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+            await using DisposingContainer testA = await GetTestContainerAsync(containerName: containerNameA, service: oauthServiceClient);
+            await using DisposingContainer testB = await GetTestContainerAsync(containerName: containerNameB, service: oauthServiceClient);
 
-            // Arrange
+            // Arrange — 2 blobs per container
             var data = GetRandomBuffer(Constants.KB);
-            List<BlockBlobClient> blobs = new List<BlockBlobClient>(3)
+            List<BlockBlobClient> blobsA = new List<BlockBlobClient>(2)
             {
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()))
+                InstrumentClient(testA.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(testA.Container.GetBlockBlobClient(GetNewBlobName()))
             };
-            foreach (BlockBlobClient blob in blobs)
+            List<BlockBlobClient> blobsB = new List<BlockBlobClient>(2)
+            {
+                InstrumentClient(testB.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(testB.Container.GetBlockBlobClient(GetNewBlobName()))
+            };
+            foreach (BlockBlobClient blob in blobsA.Concat(blobsB))
             {
                 using (var stream = new MemoryStream(data))
                 {
@@ -8930,12 +8935,12 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
 
-            // Act
+            // Act — download 2 from container A, then 2 from container B
             countingPolicy.Start();
             List<Response<BlobDownloadInfo>> responses = new List<Response<BlobDownloadInfo>>();
-            for (int i=0; i < 3; i++)
+            foreach (BlockBlobClient blob in blobsA.Concat(blobsB))
             {
-                responses.Add(await blobs[i].DownloadAsync());
+                responses.Add(await blob.DownloadAsync());
             }
 
             // Assert — verify data was downloaded correctly
@@ -8947,10 +8952,25 @@ namespace Azure.Storage.Blobs.Test
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
 
-            // Assert — verify that Create Sessions was called and Get Blob request used Session authorization
-            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
-            Assert.AreEqual(3, countingPolicy.GetSessionAuthCount, "Expected the download request to use Session authorization");
+            // Assert — 2 CreateSession calls (one per container), all 4 GETs use session auth
+            Assert.AreEqual(2, countingPolicy.CreateSessionCount, "Expected one create session request per container");
+            Assert.AreEqual(4, countingPolicy.GetSessionAuthCount, "Expected all download requests to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
+
+            // Assert — verify per-container token sharing
+            // Ordering: [0]=A0, [1]=A1, [2]=B0, [3]=B1
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetBlobSessionTokens;
+            Assert.AreEqual(4, sessionTokens.Count, "Expected exactly 4 session-authenticated GET blob requests");
+
+            // Container A's two requests share the same session token
+            Assert.AreEqual(sessionTokens[0], sessionTokens[1],
+                "Container A requests should share the same session token");
+            // Container B's two requests share the same session token
+            Assert.AreEqual(sessionTokens[2], sessionTokens[3],
+                "Container B requests should share the same session token");
+            // Container A and B have different session tokens
+            Assert.AreNotEqual(sessionTokens[0], sessionTokens[2],
+                "Container A and container B should have different session tokens");
         }
 
         [RecordedTest]
@@ -8961,9 +8981,8 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
+                SessionMode = SessionMode.Enabled,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
 
@@ -9053,52 +9072,67 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [LiveOnly(Reason = "Test waits 5 minutes for session token expiration; cannot be recorded")]
-        public async Task DownloadAsync_TokenExpiration()
+        public async Task DownloadAsync_SessionTokenExpiration()
         {
-            var containerName = GetNewContainerName();
-            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            var containerNameA = GetNewContainerName();
+            var containerNameB = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(null);
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
+                SessionMode = SessionMode.Enabled,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
-            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+            await using DisposingContainer testA = await GetTestContainerAsync(containerName: containerNameA, service: oauthServiceClient);
+            await using DisposingContainer testB = await GetTestContainerAsync(containerName: containerNameB, service: oauthServiceClient);
 
-            // Arrange
+            // Arrange — upload 4 blobs per container (2 for first batch, 2 for second batch)
             var data = GetRandomBuffer(Constants.KB);
-            List<BlockBlobClient> blobs = new List<BlockBlobClient>(6);
-            for (int i = 0; i < 6; i++)
+            List<BlockBlobClient> blobsA = new List<BlockBlobClient>(4);
+            List<BlockBlobClient> blobsB = new List<BlockBlobClient>(4);
+            for (int i = 0; i < 4; i++)
             {
-                blobs.Add(InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())));
-            }
-            foreach (BlockBlobClient blob in blobs)
-            {
+                BlockBlobClient blobA = InstrumentClient(testA.Container.GetBlockBlobClient(GetNewBlobName()));
                 using (var stream = new MemoryStream(data))
                 {
-                    await blob.UploadAsync(stream);
+                    await blobA.UploadAsync(stream);
                 }
+                blobsA.Add(blobA);
+
+                BlockBlobClient blobB = InstrumentClient(testB.Container.GetBlockBlobClient(GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await blobB.UploadAsync(stream);
+                }
+                blobsB.Add(blobB);
             }
 
-            // Act — first batch of 3 downloads
+            // Act — first batch: 2 downloads from container A, 2 from container B
             countingPolicy.Start();
             List<Response<BlobDownloadInfo>> firstBatch = new List<Response<BlobDownloadInfo>>();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 2; i++)
             {
-                firstBatch.Add(await blobs[i].DownloadAsync());
+                firstBatch.Add(await blobsA[i].DownloadAsync());
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                firstBatch.Add(await blobsB[i].DownloadAsync());
             }
 
-            // Wait 5 minutes so the existing session token expires
+            // Wait 5 minutes so the existing session tokens expire
             await Task.Delay(TimeSpan.FromMinutes(5.1));
 
-            // Act — second batch of 3 downloads (should trigger a new CreateSession)
+            // Act — second batch: 2 more downloads from container A, 2 more from container B
             List<Response<BlobDownloadInfo>> secondBatch = new List<Response<BlobDownloadInfo>>();
-            for (int i = 3; i < 6; i++)
+            for (int i = 2; i < 4; i++)
             {
-                secondBatch.Add(await blobs[i].DownloadAsync());
+                secondBatch.Add(await blobsA[i].DownloadAsync());
+            }
+            for (int i = 2; i < 4; i++)
+            {
+                secondBatch.Add(await blobsB[i].DownloadAsync());
             }
 
             // Assert — verify data was downloaded correctly for both batches
@@ -9110,32 +9144,57 @@ namespace Azure.Storage.Blobs.Test
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
 
-            // Assert — verify session usage and that a second CreateSession occurred after expiration
-            Assert.AreEqual(2, countingPolicy.CreateSessionCount, "Expected two create session requests (one per batch after token expiration)");
-            Assert.AreEqual(6, countingPolicy.GetSessionAuthCount, "Expected all 6 download requests to use Session authorization");
-            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
+            // Assert — verify session usage:
+            // First batch: 2 CreateSession (one per container), second batch: 2 more after expiration
+            Assert.AreEqual(4, countingPolicy.CreateSessionCount,
+                "Expected 4 create session requests (one per container per batch)");
+            Assert.AreEqual(8, countingPolicy.GetSessionAuthCount,
+                "Expected all 8 download requests to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount,
+                "Expected no GET blob requests to fall back to Bearer authorization");
 
-            // Assert — first 3 GET blob requests share one session token, last 3 share a different one
+            // Assert — verify per-container token sharing and expiration via session tokens
+            // Ordering: [0]=A0, [1]=A1, [2]=B0, [3]=B1, [4]=A2, [5]=A3, [6]=B2, [7]=B3
             IReadOnlyList<string> sessionTokens = countingPolicy.GetBlobSessionTokens;
-            Assert.AreEqual(6, sessionTokens.Count, "Expected exactly 6 session-authenticated GET blob requests");
-            Assert.AreEqual(sessionTokens[0], sessionTokens[1], "First batch GET blob requests should share the same session token");
-            Assert.AreEqual(sessionTokens[1], sessionTokens[2], "First batch GET blob requests should share the same session token");
-            Assert.AreEqual(sessionTokens[3], sessionTokens[4], "Second batch GET blob requests should share the same session token");
-            Assert.AreEqual(sessionTokens[4], sessionTokens[5], "Second batch GET blob requests should share the same session token");
-            Assert.AreNotEqual(sessionTokens[0], sessionTokens[3], "Session token after expiration should differ from the original");
+            Assert.AreEqual(8, sessionTokens.Count, "Expected exactly 8 session-authenticated GET blob requests");
+
+            // First batch — container A's two requests share a token
+            Assert.AreEqual(sessionTokens[0], sessionTokens[1],
+                "First batch container A requests should share the same session token");
+            // First batch — container B's two requests share a token
+            Assert.AreEqual(sessionTokens[2], sessionTokens[3],
+                "First batch container B requests should share the same session token");
+            // First batch — container A and B have different tokens
+            Assert.AreNotEqual(sessionTokens[0], sessionTokens[2],
+                "Container A and container B should have different session tokens");
+
+            // Second batch — container A's two requests share a new token
+            Assert.AreEqual(sessionTokens[4], sessionTokens[5],
+                "Second batch container A requests should share the same session token");
+            // Second batch — container B's two requests share a new token
+            Assert.AreEqual(sessionTokens[6], sessionTokens[7],
+                "Second batch container B requests should share the same session token");
+            // Second batch — container A and B still have different tokens
+            Assert.AreNotEqual(sessionTokens[4], sessionTokens[6],
+                "Container A and container B should have different session tokens after expiration");
+
+            // Across batches — tokens changed after expiration
+            Assert.AreNotEqual(sessionTokens[0], sessionTokens[4],
+                "Container A session token after expiration should differ from the original");
+            Assert.AreNotEqual(sessionTokens[2], sessionTokens[6],
+                "Container B session token after expiration should differ from the original");
         }
 
         [RecordedTest]
-        public async Task DownloadAsync_Sessions_None()
+        public async Task DownloadAsync_Sessions_Disabled()
         {
             var containerName = GetNewContainerName();
             var countingPolicy = new SessionAuthCountingPolicy(containerName);
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.None,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
+                SessionMode = SessionMode.Disabled,
+                AccountName = Tenants.TestConfigOAuth.AccountName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -9181,48 +9240,108 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Concurrent downloads cannot be recorded deterministically")]
-        public async Task DownloadContentAsync_Sessions_ConcurrentSharesSession()
+        public async Task DownloadAsync_Sessions_SharedKey()
         {
             var containerName = GetNewContainerName();
             var countingPolicy = new SessionAuthCountingPolicy(containerName);
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
+                SessionMode = SessionMode.Enabled,
+                AccountName = TestConfigDefault.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
-            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
-            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
 
-            // Arrange — upload 10 blobs
+            // Use SharedKey authentication instead of OAuth
+            BlobServiceClient sharedKeyServiceClient = InstrumentClient(
+                new BlobServiceClient(
+                    new Uri(TestConfigDefault.BlobServiceEndpoint),
+                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
+                    options));
+
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: sharedKeyServiceClient);
+
+            // Arrange
             var data = GetRandomBuffer(Constants.KB);
-            List<BlockBlobClient> blobs = new List<BlockBlobClient>(10);
-            for (int i = 0; i < 10; i++)
+            List<BlockBlobClient> blobs = new List<BlockBlobClient>(3)
             {
-                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()))
+            };
+            foreach (BlockBlobClient blob in blobs)
+            {
                 using (var stream = new MemoryStream(data))
                 {
                     await blob.UploadAsync(stream);
                 }
-                blobs.Add(blob);
             }
 
-            // Phase 1 — Sequential download to prime the session cache.
+            // Act
             countingPolicy.Start();
-            Response<BlobDownloadResult> primeResponse = await blobs[0].DownloadContentAsync();
-            Assert.AreEqual(data.Length, primeResponse.Value.Details.ContentLength);
+            List<Response<BlobDownloadInfo>> responses = new List<Response<BlobDownloadInfo>>();
+            for (int i = 0; i < 3; i++)
+            {
+                responses.Add(await blobs[i].DownloadAsync());
+            }
 
-            // Verify exactly 1 CreateSession + 1 Session-auth GET from the priming call.
-            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected exactly 1 CreateSession call during priming");
-            Assert.AreEqual(1, countingPolicy.GetSessionAuthCount, "Expected exactly 1 Session-auth GET during priming");
-            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer during priming");
+            // Assert — verify data was downloaded correctly
+            foreach (Response<BlobDownloadInfo> response in responses)
+            {
+                Assert.AreEqual(data.Length, response.Value.ContentLength);
+                var actual = new MemoryStream();
+                await response.Value.Content.CopyToAsync(actual);
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            }
 
-            // Phase 2
-            // so all 10 should reuse it without calling CreateSession again.
-            countingPolicy.Reset();
+            // Assert — SharedKey auth should not use sessions at all, even with SessionMode enabled
+            Assert.AreEqual(0, countingPolicy.CreateSessionCount, "Expected no create session request when using SharedKey authentication");
+            Assert.AreEqual(0, countingPolicy.GetSessionAuthCount, "Expected no session authorization when using SharedKey authentication");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no Bearer authorization when using SharedKey authentication");
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Concurrent downloads cannot be recorded deterministically")]
+        public async Task DownloadContentAsync_Sessions_ConcurrentAcrossContainers()
+        {
+            const int containerCount = 5;
+            const int blobsPerContainer = 2;
+            var countingPolicy = new SessionAuthCountingPolicy(null);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.Enabled,
+                AccountName = Tenants.TestConfigOAuth.AccountName,
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+
+            // Arrange — create 5 containers, each with 2 blobs
+            var data = GetRandomBuffer(Constants.KB);
+            await using DisposingContainer test1 = await GetTestContainerAsync(service: oauthServiceClient);
+            await using DisposingContainer test2 = await GetTestContainerAsync(service: oauthServiceClient);
+            await using DisposingContainer test3 = await GetTestContainerAsync(service: oauthServiceClient);
+            await using DisposingContainer test4 = await GetTestContainerAsync(service: oauthServiceClient);
+            await using DisposingContainer test5 = await GetTestContainerAsync(service: oauthServiceClient);
+
+            DisposingContainer[] containers = new[] { test1, test2, test3, test4, test5 };
+            // Blobs grouped by container: [c1b1, c1b2, c2b1, c2b2, ..., c5b1, c5b2]
+            List<BlockBlobClient> blobs = new List<BlockBlobClient>(containerCount * blobsPerContainer);
+            foreach (DisposingContainer test in containers)
+            {
+                for (int j = 0; j < blobsPerContainer; j++)
+                {
+                    BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await blob.UploadAsync(stream);
+                    }
+                    blobs.Add(blob);
+                }
+            }
+
+            // Act — concurrent downloads across all 5 containers simultaneously
+            countingPolicy.Start();
 
             Task<Response<BlobDownloadResult>>[] tasks = blobs
                 .Select(blob => blob.DownloadContentAsync())
@@ -9230,17 +9349,37 @@ namespace Azure.Storage.Blobs.Test
 
             Response<BlobDownloadResult>[] responses = await Task.WhenAll(tasks);
 
-            // Assert — all 10 concurrent downloads returned correct data.
+            // Assert — all downloads returned correct data
             foreach (Response<BlobDownloadResult> response in responses)
             {
                 Assert.AreEqual(data.Length, response.Value.Details.ContentLength);
                 TestHelper.AssertSequenceEqual(data, response.Value.Content.ToArray());
             }
 
-            // Assert — no additional CreateSession calls, and all 10 GETs used Session auth.
-            Assert.AreEqual(0, countingPolicy.CreateSessionCount, "Expected no additional CreateSession calls during concurrent downloads");
-            Assert.AreEqual(10, countingPolicy.GetSessionAuthCount, "Expected all 10 concurrent downloads to use Session authorization");
-            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer during concurrent downloads");
+            // Assert — each container should have its own CreateSession, all GETs use session auth
+            Assert.AreEqual(containerCount, countingPolicy.CreateSessionCount,
+                "Expected one create session request per container");
+            Assert.AreEqual(containerCount * blobsPerContainer, countingPolicy.GetSessionAuthCount,
+                "Expected all concurrent downloads to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount,
+                "Expected no GET blob requests to fall back to Bearer authorization");
+
+            // Assert — verify per-container token sharing under concurrency
+            // Note: with concurrent execution, ordering isn't guaranteed per-container,
+            // so group tokens by value and verify we see exactly 5 distinct tokens,
+            // each used exactly twice.
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetBlobSessionTokens;
+            Assert.AreEqual(containerCount * blobsPerContainer, sessionTokens.Count,
+                "Expected exactly 10 session-authenticated GET blob requests");
+
+            var tokenGroups = sessionTokens.GroupBy(t => t).ToList();
+            Assert.AreEqual(containerCount, tokenGroups.Count,
+                "Expected exactly 5 distinct session tokens (one per container)");
+            foreach (var group in tokenGroups)
+            {
+                Assert.AreEqual(blobsPerContainer, group.Count(),
+                    $"Expected each session token to be used exactly {blobsPerContainer} times (once per blob in the container)");
+            }
         }
 
         [RecordedTest]
@@ -9251,9 +9390,8 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
+                SessionMode = SessionMode.Enabled,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -9305,9 +9443,8 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
+                SessionMode = SessionMode.Enabled,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -9340,9 +9477,8 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
+                SessionMode = SessionMode.Enabled,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -9379,63 +9515,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task DownloadAsync_Sessions_DifferentContainer()
-        {
-            var sessionContainerName = GetNewContainerName();
-            var otherContainerName = GetNewContainerName();
-            var countingPolicy = new SessionAuthCountingPolicy(null);
-            BlobClientOptions options = GetOptions();
-            options.SessionOptions = new SessionOptions()
-            {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = sessionContainerName
-            };
-            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
-            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
-            await using DisposingContainer sessionTest = await GetTestContainerAsync(containerName: sessionContainerName, service: oauthServiceClient);
-            await using DisposingContainer otherTest = await GetTestContainerAsync(containerName: otherContainerName, service: oauthServiceClient);
-
-            // Arrange — upload to the non-session container
-            var data = GetRandomBuffer(Constants.KB);
-            List<BlockBlobClient> blobs = new List<BlockBlobClient>(3)
-            {
-                InstrumentClient(otherTest.Container.GetBlockBlobClient(GetNewBlobName())),
-                InstrumentClient(otherTest.Container.GetBlockBlobClient(GetNewBlobName())),
-                InstrumentClient(otherTest.Container.GetBlockBlobClient(GetNewBlobName()))
-            };
-            foreach (BlockBlobClient blob in blobs)
-            {
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadAsync(stream);
-                }
-            }
-
-            // Act — download from the non-session container
-            countingPolicy.Start();
-            List<Response<BlobDownloadInfo>> responses = new List<Response<BlobDownloadInfo>>();
-            for (int i = 0; i < 3; i++)
-            {
-                responses.Add(await blobs[i].DownloadAsync());
-            }
-
-            // Assert — verify data was downloaded correctly
-            foreach (Response<BlobDownloadInfo> response in responses)
-            {
-                Assert.AreEqual(data.Length, response.Value.ContentLength);
-                var actual = new MemoryStream();
-                await response.Value.Content.CopyToAsync(actual);
-                TestHelper.AssertSequenceEqual(data, actual.ToArray());
-            }
-
-            // Assert — GET requests to a different container should use bearer, not session
-            Assert.AreEqual(0, countingPolicy.CreateSessionCount, "Expected no create session request for downloads from a different container");
-            Assert.AreEqual(0, countingPolicy.GetSessionAuthCount, "Expected downloads from a different container to not use Session authorization");
-            Assert.AreEqual(3, countingPolicy.BearerGetBlobCount, "Expected downloads from a different container to use Bearer authorization");
-        }
-
-        [RecordedTest]
         public async Task MixedOperations_Sessions()
         {
             var containerName = GetNewContainerName();
@@ -9443,9 +9522,8 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
+                SessionMode = SessionMode.Enabled,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -9495,9 +9573,8 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
+                SessionMode = SessionMode.Enabled,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -9540,28 +9617,33 @@ namespace Azure.Storage.Blobs.Test
         [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
         public async Task DownloadStreamingAsync_Sessions()
         {
-            var containerName = GetNewContainerName();
-            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            var containerNameA = GetNewContainerName();
+            var containerNameB = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(null);
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
+                SessionMode = SessionMode.Enabled,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
-            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+            await using DisposingContainer testA = await GetTestContainerAsync(containerName: containerNameA, service: oauthServiceClient);
+            await using DisposingContainer testB = await GetTestContainerAsync(containerName: containerNameB, service: oauthServiceClient);
 
-            // Arrange
+            // Arrange — 2 blobs per container
             var data = GetRandomBuffer(Constants.KB);
-            List<BlockBlobClient> blobs = new List<BlockBlobClient>(3)
+            List<BlockBlobClient> blobsA = new List<BlockBlobClient>(2)
             {
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()))
+                InstrumentClient(testA.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(testA.Container.GetBlockBlobClient(GetNewBlobName()))
             };
-            foreach (BlockBlobClient blob in blobs)
+            List<BlockBlobClient> blobsB = new List<BlockBlobClient>(2)
+            {
+                InstrumentClient(testB.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(testB.Container.GetBlockBlobClient(GetNewBlobName()))
+            };
+            foreach (BlockBlobClient blob in blobsA.Concat(blobsB))
             {
                 using (var stream = new MemoryStream(data))
                 {
@@ -9569,12 +9651,12 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
 
-            // Act
+            // Act — download 2 from container A, then 2 from container B
             countingPolicy.Start();
             List<Response<BlobDownloadStreamingResult>> responses = new List<Response<BlobDownloadStreamingResult>>();
-            for (int i = 0; i < 3; i++)
+            foreach (BlockBlobClient blob in blobsA.Concat(blobsB))
             {
-                responses.Add(await blobs[i].DownloadStreamingAsync());
+                responses.Add(await blob.DownloadStreamingAsync());
             }
 
             // Assert — verify data was downloaded correctly
@@ -9586,38 +9668,58 @@ namespace Azure.Storage.Blobs.Test
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
 
-            // Assert — verify that Create Session was called and streaming downloads used Session auth
-            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
-            Assert.AreEqual(3, countingPolicy.GetSessionAuthCount, "Expected streaming download requests to use Session authorization");
+            // Assert — 2 CreateSession calls (one per container), all 4 GETs use session auth
+            Assert.AreEqual(2, countingPolicy.CreateSessionCount, "Expected one create session request per container");
+            Assert.AreEqual(4, countingPolicy.GetSessionAuthCount, "Expected all streaming download requests to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
+
+            // Assert — verify per-container token sharing
+            // Ordering: [0]=A0, [1]=A1, [2]=B0, [3]=B1
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetBlobSessionTokens;
+            Assert.AreEqual(4, sessionTokens.Count, "Expected exactly 4 session-authenticated GET blob requests");
+
+            // Container A's two requests share the same session token
+            Assert.AreEqual(sessionTokens[0], sessionTokens[1],
+                "Container A requests should share the same session token");
+            // Container B's two requests share the same session token
+            Assert.AreEqual(sessionTokens[2], sessionTokens[3],
+                "Container B requests should share the same session token");
+            // Container A and B have different session tokens
+            Assert.AreNotEqual(sessionTokens[0], sessionTokens[2],
+                "Container A and container B should have different session tokens");
         }
 
         [RecordedTest]
         [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
         public async Task DownloadContentAsync_Sessions()
         {
-            var containerName = GetNewContainerName();
-            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            var containerNameA = GetNewContainerName();
+            var containerNameB = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(null);
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleSpecifiedContainer,
+                SessionMode = SessionMode.Enabled,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
-                ContainerName = containerName
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
-            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+            await using DisposingContainer testA = await GetTestContainerAsync(containerName: containerNameA, service: oauthServiceClient);
+            await using DisposingContainer testB = await GetTestContainerAsync(containerName: containerNameB, service: oauthServiceClient);
 
-            // Arrange
+            // Arrange — 2 blobs per container
             var data = GetRandomBuffer(Constants.KB);
-            List<BlockBlobClient> blobs = new List<BlockBlobClient>(3)
+            List<BlockBlobClient> blobsA = new List<BlockBlobClient>(2)
             {
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()))
+                InstrumentClient(testA.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(testA.Container.GetBlockBlobClient(GetNewBlobName()))
             };
-            foreach (BlockBlobClient blob in blobs)
+            List<BlockBlobClient> blobsB = new List<BlockBlobClient>(2)
+            {
+                InstrumentClient(testB.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(testB.Container.GetBlockBlobClient(GetNewBlobName()))
+            };
+            foreach (BlockBlobClient blob in blobsA.Concat(blobsB))
             {
                 using (var stream = new MemoryStream(data))
                 {
@@ -9625,12 +9727,12 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
 
-            // Act
+            // Act — download 2 from container A, then 2 from container B
             countingPolicy.Start();
             List<Response<BlobDownloadResult>> responses = new List<Response<BlobDownloadResult>>();
-            for (int i = 0; i < 3; i++)
+            foreach (BlockBlobClient blob in blobsA.Concat(blobsB))
             {
-                responses.Add(await blobs[i].DownloadContentAsync());
+                responses.Add(await blob.DownloadContentAsync());
             }
 
             // Assert — verify data was downloaded correctly
@@ -9640,10 +9742,25 @@ namespace Azure.Storage.Blobs.Test
                 TestHelper.AssertSequenceEqual(data, response.Value.Content.ToArray());
             }
 
-            // Assert — verify that Create Session was called and content downloads used Session auth
-            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
-            Assert.AreEqual(3, countingPolicy.GetSessionAuthCount, "Expected content download requests to use Session authorization");
+            // Assert — 2 CreateSession calls (one per container), all 4 GETs use session auth
+            Assert.AreEqual(2, countingPolicy.CreateSessionCount, "Expected one create session request per container");
+            Assert.AreEqual(4, countingPolicy.GetSessionAuthCount, "Expected all content download requests to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
+
+            // Assert — verify per-container token sharing
+            // Ordering: [0]=A0, [1]=A1, [2]=B0, [3]=B1
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetBlobSessionTokens;
+            Assert.AreEqual(4, sessionTokens.Count, "Expected exactly 4 session-authenticated GET blob requests");
+
+            // Container A's two requests share the same session token
+            Assert.AreEqual(sessionTokens[0], sessionTokens[1],
+                "Container A requests should share the same session token");
+            // Container B's two requests share the same session token
+            Assert.AreEqual(sessionTokens[2], sessionTokens[3],
+                "Container B requests should share the same session token");
+            // Container A and B have different session tokens
+            Assert.AreNotEqual(sessionTokens[0], sessionTokens[2],
+                "Container A and container B should have different session tokens");
         }
 
         /// <summary>
@@ -9651,7 +9768,7 @@ namespace Azure.Storage.Blobs.Test
         /// requests using <see cref="Interlocked"/>.  Used by session tests to
         /// assert the correct authentication strategy without manual message iteration.
         /// </summary>
-        private class SessionAuthCountingPolicy : HttpPipelineSynchronousPolicy
+        internal class SessionAuthCountingPolicy : HttpPipelineSynchronousPolicy
         {
             private readonly string _containerName;
             private int _getSessionAuthCount;

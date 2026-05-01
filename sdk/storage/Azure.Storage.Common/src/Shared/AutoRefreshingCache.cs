@@ -64,7 +64,8 @@ namespace Azure.Storage
         /// The first caller triggers acquisition; concurrent callers wait on the same result.
         /// When the value approaches expiry, a background refresh is initiated so that no
         /// caller blocks on a stale value.
-        /// Note: this method may throw exceptions from the acquire delegate.
+        /// Note: this method may throw exceptions from the acquire delegate. It also assumes that
+        /// the acquired value will be valid upon retrieval.
         /// </summary>
         public async ValueTask<TValue> GetAsync(bool async, CancellationToken cancellationToken)
         {
@@ -145,8 +146,7 @@ namespace Azure.Storage
                 }
 
                 // Push RefreshOn to now so NeedsBackgroundRefresh returns true on the
-                // next EvaluateState call, which will create the BackgroundValueTcs and
-                // return shouldAcquire = true in one atomic step.
+                // next EvaluateState call.
                 TValue current = _state.CurrentValueTcs.Task.Result;
                 _state = _state.WithCurrentValueRefreshOn(current, now);
             }

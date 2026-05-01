@@ -66,6 +66,20 @@ namespace Azure.Storage.Tests
             => new TestValue(token, expiresOn, refreshOn);
         #endregion
 
+        #region Construction
+
+        [Test]
+        public void Ctor_NullAcquire_Throws()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(() =>
+                new AutoRefreshingCache<TestValue>(acquire: null, TimeSpan.FromSeconds(30)));
+            Assert.AreEqual("acquire", ex.ParamName);
+        }
+
+        #endregion
+
+        #region Basic Acquisition
+
         [Test]
         public async Task FirstCall_AcquiresValue()
         {
@@ -81,32 +95,32 @@ namespace Azure.Storage.Tests
         [Test]
         public async Task CachesValue_WhenNotExpired()
         {
-            int callCount = 0;
+            int acquireCount = 0;
             var cache = new AutoRefreshingCache<TestValue>(
                 acquire: (async, ct) =>
                 {
-                    Interlocked.Increment(ref callCount);
-                    return new ValueTask<TestValue>(MakeValue($"token{callCount}", TimeSpan.FromMinutes(30)));
+                    Interlocked.Increment(ref acquireCount);
+                    return new ValueTask<TestValue>(MakeValue($"token{acquireCount}", TimeSpan.FromMinutes(30)));
                 },
                 backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
 
             TestValue first = await GetValueAsync(cache);
             TestValue second = await GetValueAsync(cache);
 
-            Assert.AreEqual(1, callCount);
+            Assert.AreEqual(1, acquireCount);
             Assert.AreEqual(first.Token, second.Token);
         }
 
         [Test]
         public async Task ReAcquires_WhenExpired()
         {
-            int callCount = 0;
+            int acquireCount = 0;
             var cache = new AutoRefreshingCache<TestValue>(
                 acquire: (async, ct) =>
                 {
-                    Interlocked.Increment(ref callCount);
+                    Interlocked.Increment(ref acquireCount);
                     return new ValueTask<TestValue>(MakeValue(
-                        $"token{callCount}",
+                        $"token{acquireCount}",
                         expiresOn: DateTimeOffset.UtcNow,
                         refreshOn: DateTimeOffset.UtcNow));
                 },
@@ -115,150 +129,51 @@ namespace Azure.Storage.Tests
             TestValue first = await GetValueAsync(cache);
             TestValue second = await GetValueAsync(cache);
 
-            Assert.AreEqual(2, callCount);
+            Assert.AreEqual(2, acquireCount);
             Assert.AreNotEqual(first.Token, second.Token);
         }
 
         [Test]
-        public async Task BackgroundRefresh_WhenApproachingExpiry()
+        public async Task MultipleExpiryCycles_WorkCorrectly()
         {
-            // requestMre: signals that the acquire delegate has been entered.
-            // responseMre: controls when the acquire delegate is allowed to complete.
-            // Both start OPEN so the first (foreground) acquisition runs unimpeded.
-            var requestMre = new ManualResetEventSlim(true);
-            var responseMre = new ManualResetEventSlim(true);
-            var callCount = 0;
-
+            int acquireCount = 0;
             var cache = new AutoRefreshingCache<TestValue>(
                 acquire: (async, ct) =>
                 {
-                    requestMre.Set();       // signal: "acquire has been called"
-                    responseMre.Wait(ct);   // block until the test allows completion
-                    requestMre.Reset();
-                    Interlocked.Increment(ref callCount);
-
-                    // First call: value is valid for 10 min but refreshOn = now,
-                    //             so the cache will trigger a background refresh immediately.
-                    // Subsequent calls: return a fully fresh value.
-                    return new ValueTask<TestValue>(callCount == 1
-                        ? MakeValue("original", expiresOn: DateTimeOffset.UtcNow.AddMinutes(10), refreshOn: DateTimeOffset.UtcNow)
-                        : MakeValue("refreshed", TimeSpan.FromMinutes(30)));
+                    int count = Interlocked.Increment(ref acquireCount);
+                    // Each value expires in ~1 second.
+                    return new ValueTask<TestValue>(MakeValue(
+                        $"token{count}",
+                        expiresOn: DateTimeOffset.UtcNow.AddSeconds(1),
+                        refreshOn: DateTimeOffset.UtcNow.AddSeconds(1)));
                 },
                 backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
 
-            // --- Phase 1: Initial foreground acquisition (both gates open) ---
-            TestValue first = await GetValueAsync(cache);
-            Assert.AreEqual("original", first.Token);
-
-            // Close the response gate so the next acquire call will block inside the delegate.
-            responseMre.Reset();
-
-            // --- Phase 2: Background refresh is kicked off but blocked ---
-            // The cache sees refreshOn has passed (needs refresh) but expiresOn hasn't
-            // (still valid), so it returns the current "original" value immediately
-            // and starts a background Task.Run to refresh. That background task is now
-            // stuck waiting on responseMre.
-            TestValue second = await GetValueAsync(cache);
-            Assert.AreEqual("original", second.Token);
-
-            // --- Phase 3: Unblock the background refresh and verify the new value ---
-            responseMre.Set();          // let the background acquire complete
-            await Task.Delay(1_000);    // give the background task time to finish
-
-            // The background result ("refreshed") is now promoted to current.
-            TestValue third = await GetValueAsync(cache);
-            Assert.AreEqual("refreshed", third.Token);
-            Assert.GreaterOrEqual(callCount, 2);
-        }
-
-        [Test]
-        public async Task BackgroundRefresh_DoesNotBlockConcurrentCallers()
-        {
-            // requestMre: signals that acquire has been entered and passed responseMre.
-            // responseMre: controls when the acquire delegate is allowed to complete.
-            // Both start OPEN so the first foreground acquisition runs unimpeded.
-            var requestMre = new ManualResetEventSlim(true);
-            var responseMre = new ManualResetEventSlim(true);
-            var callCount = 0;
-
-            var cache = new AutoRefreshingCache<TestValue>(
-                acquire: (async, ct) =>
-                {
-                    Interlocked.Increment(ref callCount);
-                    responseMre.Wait(ct);
-                    requestMre.Set();
-                    // Every value returned has refreshOn = now, so the cache always
-                    // wants a background refresh on the next call.
-                    return new ValueTask<TestValue>(
-                        MakeValue($"token{callCount}", expiresOn: DateTimeOffset.UtcNow.AddMinutes(10), refreshOn: DateTimeOffset.UtcNow));
-                },
-                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
-
-            // --- Phase 1: Initial foreground acquisition ---
-            await GetValueAsync(cache);
-            requestMre.Wait();
-            // Close the gate so the background refresh will block inside the delegate.
-            responseMre.Reset();
-
-            // --- Phase 2: Three calls while background is blocked ---
-            // The first call triggers a background refresh (stuck on responseMre).
-            // The second and third calls see a background refresh is already in-flight,
-            // so they just return the current value — no additional acquire calls.
-            TestValue v1 = await GetValueAsync(cache);
-            TestValue v2 = await GetValueAsync(cache);
-            TestValue v3 = await GetValueAsync(cache);
-
-            // --- Phase 3: Let the background finish ---
-            requestMre.Reset();
-            responseMre.Set();
-            requestMre.Wait();
-
-            // Only 2 acquire calls total: the initial foreground + one background.
-            Assert.AreEqual(2, callCount);
-            Assert.AreEqual(v1.Token, v2.Token);
-            Assert.AreEqual(v2.Token, v3.Token);
-        }
-
-        [Test]
-        public async Task HundredConcurrentCalls_SingleAcquisition()
-        {
-            int callCount = 0;
-            var cache = new AutoRefreshingCache<TestValue>(
-                acquire: (async, ct) =>
-                {
-                    Thread.Sleep(100);
-                    Interlocked.Increment(ref callCount);
-                    return new ValueTask<TestValue>(MakeValue(Guid.NewGuid().ToString(), TimeSpan.FromMinutes(30)));
-                },
-                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
-
-            var tasks = new Task<TestValue>[100];
-            for (int i = 0; i < tasks.Length; i++)
+            for (int cycle = 1; cycle <= 3; cycle++)
             {
-                tasks[i] = GetValueAsync(cache).AsTask();
+                TestValue result = await GetValueAsync(cache);
+                Assert.AreEqual($"token{cycle}", result.Token);
+                await Task.Delay(2_000);
             }
 
-            await Task.WhenAll(tasks);
-
-            Assert.AreEqual(1, callCount);
-            string firstToken = tasks[0].Result.Token;
-            for (int i = 1; i < tasks.Length; i++)
-            {
-                Assert.AreEqual(firstToken, tasks[i].Result.Token);
-            }
+            Assert.AreEqual(3, acquireCount);
         }
+
+        #endregion
+
+        #region Foreground Concurrency
 
         [Test]
         public async Task GatedConcurrentCalls_WaitOnSameTcs()
         {
-            int callCount = 0;
+            int acquireCount = 0;
             // Both gates start CLOSED so we can control the exact ordering.
             var requestMre = new ManualResetEventSlim(false);
             var responseMre = new ManualResetEventSlim(false);
             var cache = new AutoRefreshingCache<TestValue>(
                 acquire: (async, ct) =>
                 {
-                    Interlocked.Increment(ref callCount);
+                    Interlocked.Increment(ref acquireCount);
                     requestMre.Set();       // signal: "I'm inside acquire"
                     responseMre.Wait(ct);   // block until test says go
                     return new ValueTask<TestValue>(MakeValue(Guid.NewGuid().ToString(), TimeSpan.FromMinutes(30)));
@@ -277,24 +192,492 @@ namespace Azure.Storage.Tests
             await Task.WhenAll(firstTask, secondTask);
 
             // Only one acquire call, and both callers got the same value.
-            Assert.AreEqual(1, callCount);
+            Assert.AreEqual(1, acquireCount);
             Assert.AreEqual(firstTask.Result.Token, secondTask.Result.Token);
         }
 
         [Test]
-        public async Task SuccessThenFailureThenSuccess()
+        public async Task HundredConcurrentCalls_SingleAcquisition()
         {
-            var callCount = 0;
+            int acquireCount = 0;
             var cache = new AutoRefreshingCache<TestValue>(
                 acquire: (async, ct) =>
                 {
-                    Interlocked.Increment(ref callCount);
-                    if (callCount == 2)
+                    Thread.Sleep(100);
+                    Interlocked.Increment(ref acquireCount);
+                    return new ValueTask<TestValue>(MakeValue(Guid.NewGuid().ToString(), TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            var tasks = new Task<TestValue>[100];
+            for (int i = 0; i < tasks.Length; i++)
+            {
+                tasks[i] = GetValueAsync(cache).AsTask();
+            }
+
+            await Task.WhenAll(tasks);
+
+            Assert.AreEqual(1, acquireCount);
+            string firstToken = tasks[0].Result.Token;
+            for (int i = 1; i < tasks.Length; i++)
+            {
+                Assert.AreEqual(firstToken, tasks[i].Result.Token);
+            }
+        }
+
+        [Test]
+        public async Task ConcurrentCalls_AfterExpiry_SingleReAcquisition()
+        {
+            int acquireCount = 0;
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    int count = Interlocked.Increment(ref acquireCount);
+                    responseMre.Wait(ct);
+                    requestMre.Set();
+                    if (count == 1)
+                    {
+                        // Short-lived value that expires almost immediately.
+                        return new ValueTask<TestValue>(MakeValue("original",
+                            expiresOn: DateTimeOffset.UtcNow.AddSeconds(1),
+                            refreshOn: DateTimeOffset.UtcNow.AddSeconds(1)));
+                    }
+                    return new ValueTask<TestValue>(MakeValue("new", TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // Phase 1: Foreground acquire returns a short-lived value.
+            TestValue first = await GetValueAsync(cache);
+            Assert.AreEqual("original", first.Token);
+            Assert.AreEqual(1, acquireCount);
+
+            // Phase 2: Let it expire.
+            await Task.Delay(2_000);
+
+            // Close gates so the re-acquisition blocks.
+            requestMre.Reset();
+            responseMre.Reset();
+
+            // Phase 3: Multiple callers arrive after expiry — one wins foreground
+            // acquire, the rest join the same TCS.
+            var tasks = new Task<TestValue>[10];
+            for (int i = 0; i < tasks.Length; i++)
+            {
+                tasks[i] = Task.Run(async () => await GetValueAsync(cache));
+            }
+
+            // Wait for the winning caller to enter the acquire delegate.
+            await Task.Delay(500);
+
+            // Release the acquire delegate.
+            responseMre.Set();
+            requestMre.Wait();
+
+            await Task.WhenAll(tasks);
+
+            // Only one re-acquisition after expiry (2 total: initial + expiration re-acquire).
+            Assert.AreEqual(2, acquireCount);
+            foreach (var task in tasks)
+            {
+                Assert.AreEqual("new", task.Result.Token);
+            }
+        }
+
+        [Test]
+        public async Task SteadyState_HighConcurrency_NoExtraAcquires()
+        {
+            int acquireCount = 0;
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    Interlocked.Increment(ref acquireCount);
+                    return new ValueTask<TestValue>(MakeValue("steady", TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // Prime the cache with a long-lived value
+            TestValue primed = await GetValueAsync(cache);
+            Assert.AreEqual("steady", primed.Token);
+            Assert.AreEqual(1, acquireCount);
+
+            // Hammer the cache with 200 concurrent calls. All should hit the
+            // lock-free fast path; none should trigger another acquire.
+            var tasks = new Task<TestValue>[200];
+            for (int i = 0; i < tasks.Length; i++)
+            {
+                tasks[i] = Task.Run(async () => await GetValueAsync(cache));
+            }
+            await Task.WhenAll(tasks);
+
+            Assert.AreEqual(1, acquireCount, "Steady-state reads must not trigger acquire.");
+            foreach (var t in tasks)
+            {
+                Assert.AreEqual("steady", t.Result.Token);
+            }
+        }
+
+        [Test]
+        public async Task FullLifecycle_AcquireCacheExpireReAcquire()
+        {
+            int acquireCount = 0;
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    int count = Interlocked.Increment(ref acquireCount);
+                    // 5-second expiry: plenty of headroom for steps 1–2,
+                    // short enough that the test finishes quickly.
+                    return new ValueTask<TestValue>(MakeValue(
+                        $"token{count}",
+                        expiresOn: DateTimeOffset.UtcNow.AddSeconds(5),
+                        refreshOn: DateTimeOffset.UtcNow.AddSeconds(5)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // Step 1: First call triggers a foreground acquire.
+            TestValue first = await GetValueAsync(cache);
+            Assert.AreEqual("token1", first.Token);
+            Assert.AreEqual(1, acquireCount);
+
+            // Step 2: Immediate second call. Value is still fresh, so no acquire triggered.
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("token1", second.Token);
+            Assert.AreEqual(1, acquireCount);
+
+            // Let the value expire.
+            await Task.Delay(6_000);
+
+            // Step 3: Value expired — triggers a new foreground acquire.
+            TestValue third = await GetValueAsync(cache);
+            Assert.AreEqual("token2", third.Token);
+            Assert.AreEqual(2, acquireCount);
+
+            // Step 4: Immediate call — new value still fresh.
+            TestValue fourth = await GetValueAsync(cache);
+            Assert.AreEqual("token2", fourth.Token);
+            Assert.AreEqual(2, acquireCount);
+        }
+
+        #endregion
+
+        #region Background Refresh
+
+        [Test]
+        public async Task BackgroundRefresh_WhenApproachingExpiry()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var acquireCount = 0;
+
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    requestMre.Set();
+                    responseMre.Wait(ct);
+                    requestMre.Reset();
+                    Interlocked.Increment(ref acquireCount);
+
+                    return new ValueTask<TestValue>(acquireCount == 1
+                        ? MakeValue("original", expiresOn: DateTimeOffset.UtcNow.AddMinutes(10), refreshOn: DateTimeOffset.UtcNow)
+                        : MakeValue("refreshed", TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // --- Phase 1: Initial foreground acquisition (both gates open) ---
+            TestValue first = await GetValueAsync(cache);
+            Assert.AreEqual("original", first.Token);
+            Assert.AreEqual(1, acquireCount);
+
+            // Close the response gate so the next acquire call will block inside the delegate.
+            responseMre.Reset();
+
+            // --- Phase 2: Background refresh is kicked off but blocked ---
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("original", second.Token);
+            Assert.AreEqual(1, acquireCount);
+
+            // --- Phase 3: Unblock the background refresh and verify the new value ---
+            responseMre.Set();
+            await Task.Delay(1_000);
+
+            // The background result ("refreshed") is now promoted to current.
+            TestValue third = await GetValueAsync(cache);
+            Assert.AreEqual("refreshed", third.Token);
+            Assert.AreEqual(2, acquireCount);
+        }
+
+        [Test]
+        public async Task BackgroundRefresh_DoesNotBlockConcurrentCallers()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var acquireCount = 0;
+
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    Interlocked.Increment(ref acquireCount);
+                    responseMre.Wait(ct);
+                    requestMre.Set();
+                    return new ValueTask<TestValue>(
+                        MakeValue($"token{acquireCount}", expiresOn: DateTimeOffset.UtcNow.AddMinutes(10), refreshOn: DateTimeOffset.UtcNow));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // --- Phase 1: Initial foreground acquisition ---
+            await GetValueAsync(cache);
+            requestMre.Wait();
+            responseMre.Reset();
+
+            // --- Phase 2: Three calls while background is blocked ---
+            // The first call triggers a background refresh (stuck on responseMre).
+            // The second and third calls see a background refresh is already in-flight,
+            // so they just return the current value — no additional acquire calls.
+            TestValue v1 = await GetValueAsync(cache);
+            TestValue v2 = await GetValueAsync(cache);
+            TestValue v3 = await GetValueAsync(cache);
+
+            // --- Phase 3: Let the background finish ---
+            requestMre.Reset();
+            responseMre.Set();
+            requestMre.Wait();
+
+            // Only 2 acquire calls total: the initial foreground + one background.
+            Assert.AreEqual(2, acquireCount);
+            Assert.AreEqual("token1", v1.Token);
+            Assert.AreEqual(v1.Token, v2.Token);
+            Assert.AreEqual(v2.Token, v3.Token);
+
+            // --- Phase 4: Verify the background result was promoted to current in the next call ---
+            await Task.Delay(500);
+            TestValue v4 = await GetValueAsync(cache);
+            Assert.AreEqual("token2", v4.Token);
+        }
+
+        [Test]
+        public async Task ConcurrentCalls_DuringBackgroundRefresh_OneAcquireAllSeeCurrent()
+        {
+            int acquireCount = 0;
+            int delegateEntries = 0;
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    Interlocked.Increment(ref delegateEntries);
+                    requestMre.Set();
+                    responseMre.Wait(ct);
+                    int count = Interlocked.Increment(ref acquireCount);
+                    return count == 1
+                        ? new ValueTask<TestValue>(MakeValue("current",
+                            expiresOn: DateTimeOffset.UtcNow.AddMinutes(10),
+                            refreshOn: DateTimeOffset.UtcNow))
+                        : new ValueTask<TestValue>(MakeValue("refreshed", TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // Phase 1: foreground acquire.
+            await GetValueAsync(cache);
+            Assert.AreEqual(1, delegateEntries);
+
+            // Phase 2: close the gate so the next acquire stalls inside the delegate.
+            requestMre.Reset();
+            responseMre.Reset();
+
+            // Phase 3: 50 concurrent callers arrive during the refresh window.
+            // Exactly one wins the background-refresh slot; all 50 get "current"
+            // immediately without waiting on the background.
+            var tasks = new Task<TestValue>[50];
+            for (int i = 0; i < tasks.Length; i++)
+            {
+                tasks[i] = Task.Run(async () => await GetValueAsync(cache));
+            }
+            await Task.WhenAll(tasks);
+
+            // Wait for the background task to actually enter the delegate
+            requestMre.Wait();
+
+            foreach (var t in tasks)
+            {
+                Assert.AreEqual("current", t.Result.Token);
+            }
+
+            // Initial foreground entry (1) + exactly one background entry (1) = 2.
+            // No duplicate background acquires should have been issued.
+            Assert.AreEqual(2, delegateEntries,
+                "Only one background refresh should be in flight at a time.");
+
+            // Cleanup: let the background acquire complete.
+            responseMre.Set();
+        }
+
+        [Test]
+        public async Task BackgroundAcquireTimeout_KeepsCurrentValueAndRetriesImmediately()
+        {
+            var backgroundTimeout = TimeSpan.FromSeconds(2);
+            int acquireCount = 0;
+            var responseMre = new ManualResetEventSlim(true);
+
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: async (isAsync, ct) =>
+                {
+                    int count = Interlocked.Increment(ref acquireCount);
+                    if (count == 1)
+                    {
+                        return MakeValue("original",
+                            expiresOn: DateTimeOffset.UtcNow.AddMinutes(10),
+                            refreshOn: DateTimeOffset.UtcNow);
+                    }
+                    if (count == 2)
+                    {
+                        await Task.Delay(Timeout.InfiniteTimeSpan, ct);
+                    }
+                    responseMre.Wait(ct);
+                    return MakeValue("refreshed", TimeSpan.FromMinutes(30));
+                },
+                backgroundAcquireTimeout: backgroundTimeout);
+
+            // Phase 1: Foreground acquire returns "original" with refreshOn = now.
+            TestValue first = await GetValueAsync(cache);
+            Assert.AreEqual("original", first.Token);
+
+            // Phase 2: Triggers background refresh (which will block and timeout).
+            // Returns "original" immediately since the value is still valid.
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("original", second.Token);
+
+            // Phase 3: Wait for the background timeout to fire and the background
+            // TCS to be completed with the current value (refreshOn = now).
+            await Task.Delay(backgroundTimeout + TimeSpan.FromSeconds(1));
+
+            // Phase 4: The timed-out background result was promoted with refreshOn = now,
+            // so this call triggers another background refresh — which succeeds this time.
+            TestValue third = await GetValueAsync(cache);
+            Assert.AreEqual("original", third.Token);
+
+            // Wait for the successful background refresh to complete.
+            await Task.Delay(1_000);
+
+            // Phase 5: The refreshed value is now promoted.
+            TestValue fourth = await GetValueAsync(cache);
+            Assert.AreEqual("refreshed", fourth.Token);
+            Assert.AreEqual(3, acquireCount);
+        }
+
+        [Test]
+        public async Task BackgroundPromotedValue_EventuallyExpires_TriggersReAcquire()
+        {
+            int acquireCount = 0;
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    responseMre.Wait(ct);
+                    requestMre.Set();
+                    int count = Interlocked.Increment(ref acquireCount);
+                    if (count == 1)
+                    {
+                        return new ValueTask<TestValue>(MakeValue("original",
+                            expiresOn: DateTimeOffset.UtcNow.AddMinutes(10),
+                            refreshOn: DateTimeOffset.UtcNow));
+                    }
+                    if (count == 2)
+                    {
+                        return new ValueTask<TestValue>(MakeValue("background",
+                            expiresOn: DateTimeOffset.UtcNow.AddSeconds(1),
+                            refreshOn: DateTimeOffset.UtcNow.AddSeconds(1)));
+                    }
+                    return new ValueTask<TestValue>(MakeValue("final", TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // Phase 1: Foreground acquire.
+            TestValue first = await GetValueAsync(cache);
+            Assert.AreEqual("original", first.Token);
+
+            // Phase 2: Trigger background refresh and let it complete.
+            responseMre.Reset();
+            requestMre.Reset();
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("original", second.Token);
+
+            // Unblock background acquire and wait for it to finish.
+            responseMre.Set();
+            requestMre.Wait();
+            await Task.Delay(500);
+
+            // Phase 3: Background value promoted.
+            TestValue third = await GetValueAsync(cache);
+            Assert.AreEqual("background", third.Token);
+
+            // Phase 4: Let the promoted value expire.
+            await Task.Delay(2_000);
+
+            TestValue fourth = await GetValueAsync(cache);
+            Assert.AreEqual("final", fourth.Token);
+            Assert.AreEqual(3, acquireCount);
+        }
+
+        [Test]
+        public async Task BackgroundResult_AlreadyExpired_IsNotPromoted()
+        {
+            int acquireCount = 0;
+
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    int count = Interlocked.Increment(ref acquireCount);
+                    if (count == 1)
+                    {
+                        return new ValueTask<TestValue>(MakeValue("original",
+                            expiresOn: DateTimeOffset.UtcNow.AddMinutes(10),
+                            refreshOn: DateTimeOffset.UtcNow));
+                    }
+                    return new ValueTask<TestValue>(MakeValue("stale",
+                        expiresOn: DateTimeOffset.UtcNow.AddSeconds(-1),
+                        refreshOn: DateTimeOffset.UtcNow.AddSeconds(-1)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // Phase 1: Foreground acquire.
+            TestValue first = await GetValueAsync(cache);
+            Assert.AreEqual("original", first.Token);
+
+            // Phase 2: Kick off the background refresh (will return original).
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("original", second.Token);
+
+            // Let the background acquire complete with the stale value.
+            await Task.Delay(500);
+
+            // Phase 3: The stale background value must NOT be promoted
+            TestValue third = await GetValueAsync(cache);
+            Assert.AreEqual("original", third.Token);
+        }
+
+        #endregion
+
+        #region Failure Handling
+
+        [Test]
+        public async Task SuccessThenFailureThenSuccess()
+        {
+            var acquireCount = 0;
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    Interlocked.Increment(ref acquireCount);
+                    if (acquireCount == 2)
                     {
                         throw new InvalidOperationException("Acquire failed");
                     }
                     return new ValueTask<TestValue>(MakeValue(
-                        $"token{callCount}",
+                        $"token{acquireCount}",
                         expiresOn: DateTimeOffset.UtcNow.AddSeconds(1),
                         refreshOn: DateTimeOffset.UtcNow.AddSeconds(1)));
                 },
@@ -302,16 +685,59 @@ namespace Azure.Storage.Tests
 
             TestValue first = await GetValueAsync(cache);
             Assert.AreEqual("token1", first.Token);
-            Assert.AreEqual(1, callCount);
+            Assert.AreEqual(1, acquireCount);
 
             await Task.Delay(2_000);
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await GetValueAsync(cache));
-            Assert.AreEqual(2, callCount);
+            Assert.AreEqual(2, acquireCount);
 
             TestValue third = await GetValueAsync(cache);
             Assert.AreEqual("token3", third.Token);
-            Assert.AreEqual(3, callCount);
+            Assert.AreEqual(3, acquireCount);
+        }
+
+        [Test]
+        public void GatedConcurrentCalls_BothFail()
+        {
+            // Both gates start CLOSED for precise ordering control.
+            var requestMre = new ManualResetEventSlim(false);
+            var responseMre = new ManualResetEventSlim(false);
+            int acquireCount = 0;
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    // Only the first caller blocks — ensures the second arrives
+                    // while acquisition is still in-flight.
+                    if (Interlocked.Increment(ref acquireCount) == 1)
+                    {
+                        requestMre.Set();
+                        responseMre.Wait(ct);
+                    }
+                    throw new InvalidOperationException("Error");
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // First caller enters acquire, blocks on responseMre.
+            var firstTask = Task.Run(async () => await GetValueAsync(cache));
+            requestMre.Wait();
+
+            // Second caller joins the same TCS (acquire still in-flight).
+            var secondTask = Task.Run(async () => await GetValueAsync(cache));
+            responseMre.Set();
+
+            Assert.CatchAsync(async () => await Task.WhenAll(firstTask, secondTask));
+
+            Assert.IsTrue(firstTask.IsFaulted);
+            Assert.IsTrue(secondTask.IsFaulted);
+
+            // If both callers shared the same TCS, they get the same exception.
+            // Guard handles the race where the second caller arrived after the
+            // first already failed, triggering a separate acquire (acquireCount == 2).
+            if (acquireCount == 1)
+            {
+                Assert.AreEqual(firstTask.Exception.InnerException, secondTask.Exception.InnerException);
+            }
         }
 
         [Test]
@@ -321,7 +747,7 @@ namespace Azure.Storage.Tests
             ThreadPool.SetMinThreads(Math.Max(prevWorker, 120), prevIO);
             try
             {
-                int callCount = 0;
+                int acquireCount = 0;
                 // Gate the acquire so it blocks until we're sure all tasks are queued.
                 var requestMre = new ManualResetEventSlim(false);
                 var responseMre = new ManualResetEventSlim(false);
@@ -333,7 +759,7 @@ namespace Azure.Storage.Tests
                 var cache = new AutoRefreshingCache<TestValue>(
                     acquire: (async, ct) =>
                     {
-                        Interlocked.Increment(ref callCount);
+                        Interlocked.Increment(ref acquireCount);
                         requestMre.Set();       // signal: acquire entered
                         responseMre.Wait(ct);   // block until test releases
                         throw new InvalidOperationException("Error");
@@ -362,9 +788,7 @@ namespace Azure.Storage.Tests
 
                 // All 100 threads are already executing. Give them time to pass
                 // through EvaluateState (just a lock acquisition each) and start
-                // awaiting the shared TCS. This is much more reliable than the
-                // original Thread.Sleep(500) because all threads are already
-                // scheduled — we're only waiting for ~99 lock acquisitions.
+                // awaiting the shared TCS.
                 Thread.Sleep(500);
 
                 // Let the acquire throw — all 100 tasks observe the same faulted TCS.
@@ -372,7 +796,7 @@ namespace Azure.Storage.Tests
 
                 Assert.CatchAsync(async () => await Task.WhenAll(tasks));
 
-                Assert.AreEqual(1, callCount);
+                Assert.AreEqual(1, acquireCount);
                 foreach (var task in tasks)
                 {
                     Assert.IsTrue(task.IsFaulted);
@@ -389,49 +813,6 @@ namespace Azure.Storage.Tests
             finally
             {
                 ThreadPool.SetMinThreads(prevWorker, prevIO);
-            }
-        }
-
-        [Test]
-        public void GatedConcurrentCalls_BothFail()
-        {
-            // Both gates start CLOSED for precise ordering control.
-            var requestMre = new ManualResetEventSlim(false);
-            var responseMre = new ManualResetEventSlim(false);
-            int callCount = 0;
-            var cache = new AutoRefreshingCache<TestValue>(
-                acquire: (async, ct) =>
-                {
-                    // Only the first caller blocks — ensures the second arrives
-                    // while acquisition is still in-flight.
-                    if (Interlocked.Increment(ref callCount) == 1)
-                    {
-                        requestMre.Set();
-                        responseMre.Wait(ct);
-                    }
-                    throw new InvalidOperationException("Error");
-                },
-                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
-
-            // First caller enters acquire, blocks on responseMre.
-            var firstTask = Task.Run(async () => await GetValueAsync(cache));
-            requestMre.Wait();
-
-            // Second caller joins the same TCS (acquire still in-flight).
-            var secondTask = Task.Run(async () => await GetValueAsync(cache));
-            responseMre.Set();
-
-            Assert.CatchAsync(async () => await Task.WhenAll(firstTask, secondTask));
-
-            Assert.IsTrue(firstTask.IsFaulted);
-            Assert.IsTrue(secondTask.IsFaulted);
-
-            // If both callers shared the same TCS, they get the same exception.
-            // Guard handles the race where the second caller arrived after the
-            // first already failed, triggering a separate acquire (callCount == 2).
-            if (callCount == 1)
-            {
-                Assert.AreEqual(firstTask.Exception.InnerException, secondTask.Exception.InnerException);
             }
         }
 
@@ -487,44 +868,6 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        public async Task CancelledFirstRequest_DoesNotCancelSecond()
-        {
-            // Both gates start CLOSED for precise ordering.
-            var requestMre = new ManualResetEventSlim(false);
-            var responseMre = new ManualResetEventSlim(false);
-            var cts = new CancellationTokenSource();
-            var cache = new AutoRefreshingCache<TestValue>(
-                acquire: (async, ct) =>
-                {
-                    requestMre.Set();
-                    responseMre.Wait(ct);   // throws when cts is canceled
-                    return new ValueTask<TestValue>(MakeValue("token1", TimeSpan.FromMinutes(30)));
-                },
-                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
-
-            // First caller enters acquire with a cancellable token.
-            var firstTask = Task.Run(async () => await GetValueAsync(cache, cts.Token));
-            requestMre.Wait();
-
-            // Second caller joins the same TCS (no cancellation token).
-            var secondTask = Task.Run(async () => await GetValueAsync(cache));
-
-            // Cancel the first caller's token — TCS becomes canceled.
-            cts.Cancel();
-
-            // First caller gets OperationCanceledException.
-            Assert.CatchAsync<OperationCanceledException>(async () => await firstTask);
-
-            // Open the gate so the second caller's retry loop can re-acquire.
-            // The second caller's token isn't canceled, so it retries via the
-            // while(true) loop in GetAsync and successfully acquires.
-            responseMre.Set();
-
-            TestValue result = await secondTask;
-            Assert.AreEqual("token1", result.Token);
-        }
-
-        [Test]
         [Repeat(10)]
         public void NoUnobservedTaskException()
         {
@@ -565,74 +908,106 @@ namespace Azure.Storage.Tests
             }
         }
 
+        #endregion
+
+        #region Throttling
+
         [Test]
-        public async Task BackgroundFailure_ThrottlesRetry()
+        public async Task BackgroundFailure_DoesNotRetryUntilThrottleElapses()
         {
-            var backgroundAcquireTimes = new ConcurrentQueue<DateTimeOffset>();
-            int callCount = 0;
-            var retryDelay = TimeSpan.FromSeconds(2);
+            int acquireCount = 0;
+            var throttleWindow = TimeSpan.FromSeconds(2);
+            // Signaled each time a background acquire enters the delegate.
+            var backgroundEntered = new AutoResetEvent(false);
 
             var cache = new AutoRefreshingCache<TestValue>(
                 acquire: (async, ct) =>
                 {
-                    int count = Interlocked.Increment(ref callCount);
-                    if (count > 1)
+                    int count = Interlocked.Increment(ref acquireCount);
+                    if (count == 1)
                     {
-                        backgroundAcquireTimes.Enqueue(DateTimeOffset.UtcNow);
-                        throw new InvalidOperationException("Background refresh failed");
+                        // Foreground: long-lived value with refreshOn = now,
+                        // so the next GetAsync triggers a background refresh.
+                        return new ValueTask<TestValue>(MakeValue("original",
+                            expiresOn: DateTimeOffset.UtcNow.AddMinutes(10),
+                            refreshOn: DateTimeOffset.UtcNow));
                     }
-                    return new ValueTask<TestValue>(MakeValue("original",
-                        expiresOn: DateTimeOffset.UtcNow.AddMinutes(10),
-                        refreshOn: DateTimeOffset.UtcNow));
+                    // Every background acquire fails — signal entry first so the
+                    // test can synchronize without timing-based waits.
+                    backgroundEntered.Set();
+                    throw new InvalidOperationException("Background refresh failed");
                 },
-                backgroundAcquireTimeout: retryDelay);
+                backgroundAcquireTimeout: throttleWindow);
 
-            TestValue first = await GetValueAsync(cache);
-            Assert.AreEqual("original", first.Token);
+            // Phase 1: foreground acquire.
+            Assert.AreEqual("original", (await GetValueAsync(cache)).Token);
+            Assert.AreEqual(1, acquireCount);
 
-            TestValue second = await GetValueAsync(cache);
-            Assert.AreEqual("original", second.Token);
+            // Phase 2: trigger the failing background refresh.
+            Assert.AreEqual("original", (await GetValueAsync(cache)).Token);
 
-            await Task.Delay(retryDelay + TimeSpan.FromSeconds(1));
+            // Wait deterministically for the background to enter and fail.
+            Assert.IsTrue(backgroundEntered.WaitOne(TimeSpan.FromSeconds(10)),
+                "Background acquire never ran.");
+            // Give the cache a beat to apply the WithRefreshOn(now + throttleWindow) update.
+            // (This is the one unavoidable wait — it's between the throw and the
+            // catch handler updating state. Generous bound since it's microseconds in practice.)
+            await Task.Delay(100);
+            int countAfterFailure = Volatile.Read(ref acquireCount);
+            Assert.AreEqual(2, countAfterFailure);
 
-            TestValue third = await GetValueAsync(cache);
-            Assert.AreEqual("original", third.Token);
+            // Phase 3: within the throttle window, repeated calls must NOT trigger
+            // another background acquire. We don't loop with delays — we just verify
+            // that the gate hasn't been signaled.
+            for (int i = 0; i < 5; i++)
+            {
+                Assert.AreEqual("original", (await GetValueAsync(cache)).Token);
+            }
+            Assert.IsFalse(backgroundEntered.WaitOne(TimeSpan.Zero),
+                "Background acquire should be throttled within the failure window.");
+            Assert.AreEqual(countAfterFailure, Volatile.Read(ref acquireCount));
 
-            await Task.Delay(1_000);
+            // Phase 4: after the throttle window elapses, the next call triggers
+            // another background acquire. Wait deterministically.
+            await Task.Delay(throttleWindow + TimeSpan.FromMilliseconds(100));
+            Assert.AreEqual("original", (await GetValueAsync(cache)).Token);
 
-            Assert.GreaterOrEqual(backgroundAcquireTimes.Count, 2);
-            var times = backgroundAcquireTimes.ToArray();
-            Assert.That(times[1] - times[0], Is.GreaterThanOrEqualTo(retryDelay));
+            Assert.IsTrue(backgroundEntered.WaitOne(TimeSpan.FromSeconds(10)),
+                "Background acquire should resume after the throttle window elapses.");
+            Assert.Greater(Volatile.Read(ref acquireCount), countAfterFailure);
         }
+
+        #endregion
+
+        #region Invalidate
 
         [Test]
         public async Task Invalidate_ClearsCacheAndReAcquires()
         {
-            int callCount = 0;
+            int acquireCount = 0;
             var cache = new AutoRefreshingCache<TestValue>(
                 acquire: (async, ct) =>
                 {
-                    Interlocked.Increment(ref callCount);
-                    return new ValueTask<TestValue>(MakeValue($"token{callCount}", TimeSpan.FromMinutes(30)));
+                    Interlocked.Increment(ref acquireCount);
+                    return new ValueTask<TestValue>(MakeValue($"token{acquireCount}", TimeSpan.FromMinutes(30)));
                 },
                 backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
 
             TestValue first = await GetValueAsync(cache);
             Assert.AreEqual("token1", first.Token);
-            Assert.AreEqual(1, callCount);
+            Assert.AreEqual(1, acquireCount);
 
             cache.Invalidate();
 
             TestValue second = await GetValueAsync(cache);
             Assert.AreEqual("token2", second.Token);
-            Assert.AreEqual(2, callCount);
+            Assert.AreEqual(2, acquireCount);
         }
 
         [Test]
         public async Task Invalidate_DuringInflightAcquire_NextCallerReAcquires()
         {
             int acquireCount = 0;
-            // Both gates start CLOSED for precise ordering.
             var requestMre = new ManualResetEventSlim(false);
             var responseMre = new ManualResetEventSlim(false);
             var cache = new AutoRefreshingCache<TestValue>(
@@ -649,20 +1024,31 @@ namespace Azure.Storage.Tests
             var callerA = Task.Run(async () => await GetValueAsync(cache));
             requestMre.Wait();
 
-            // Invalidate while caller A is still acquiring.
+            // Caller B arrives while A is still acquiring — joins A's in-flight TCS
+            // rather than starting a new acquisition.
+            var callerB = Task.Run(async () => await GetValueAsync(cache));
+            // Give B time to enter EvaluateState and park on A's TCS before we Invalidate.
+            await Task.Delay(200);
+
+            // Invalidate while caller A is acquiring and caller B is waiting on A's TCS.
             cache.Invalidate();
 
-            // Reset the gate so we can detect a second acquire entry.
             requestMre.Reset();
 
-            // Let caller A finish — it completes with "token1", but the
-            // state was already nulled by Invalidate.
+            // Let caller A finish — A's acquire completes and SetResult("token1") on the
+            // TCS. Both A and B unblock with "token1", even though _state is now null.
             responseMre.Set();
             TestValue resultA = await callerA;
-            Assert.AreEqual("token1", resultA.Token);
+            TestValue resultB = await callerB;
+            Assert.AreEqual("token1", resultA.Token, "Caller A should receive its acquired value.");
+            Assert.AreEqual("token1", resultB.Token,
+                "Caller B captured the in-flight TCS before Invalidate and should still receive A's value.");
+
+            // Only one acquire so far — B never re-entered the delegate.
+            Assert.AreEqual(1, acquireCount,
+                "B must not have triggered a second acquire while parked on A's TCS.");
 
             // Caller C arrives after Invalidate — should do a fresh foreground acquire
-            // since _state was set to null by Invalidate.
             responseMre.Reset();
             var callerC = Task.Run(async () => await GetValueAsync(cache));
             requestMre.Wait();
@@ -671,6 +1057,31 @@ namespace Azure.Storage.Tests
             TestValue resultC = await callerC;
             Assert.AreEqual("token2", resultC.Token);
             Assert.AreEqual(2, acquireCount);
+        }
+
+        #endregion
+
+        #region ScheduleRefresh
+
+        [Test]
+        public async Task ScheduleRefresh_BeforeFirstCall_IsNoOp()
+        {
+            int acquireCount = 0;
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    int count = Interlocked.Increment(ref acquireCount);
+                    return new ValueTask<TestValue>(MakeValue($"token{count}", TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // ScheduleRefresh on an empty cache (_state == null) — should be a no-op.
+            cache.ScheduleRefresh();
+
+            // First call still does a normal foreground acquire.
+            TestValue result = await GetValueAsync(cache);
+            Assert.AreEqual("token1", result.Token);
+            Assert.AreEqual(1, acquireCount);
         }
 
         [Test]
@@ -701,27 +1112,6 @@ namespace Azure.Storage.Tests
             TestValue third = await GetValueAsync(cache);
             Assert.AreEqual("token2", third.Token);
             Assert.AreEqual(2, acquireCount);
-        }
-
-        [Test]
-        public async Task ScheduleRefresh_BeforeFirstCall_IsNoOp()
-        {
-            int acquireCount = 0;
-            var cache = new AutoRefreshingCache<TestValue>(
-                acquire: (async, ct) =>
-                {
-                    int count = Interlocked.Increment(ref acquireCount);
-                    return new ValueTask<TestValue>(MakeValue($"token{count}", TimeSpan.FromMinutes(30)));
-                },
-                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
-
-            // ScheduleRefresh on an empty cache (_state == null) — should be a no-op.
-            cache.ScheduleRefresh();
-
-            // First call still does a normal foreground acquire.
-            TestValue result = await GetValueAsync(cache);
-            Assert.AreEqual("token1", result.Token);
-            Assert.AreEqual(1, acquireCount);
         }
 
         [Test]
@@ -761,62 +1151,120 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        public async Task BackgroundAcquireTimeout_KeepsCurrentValueAndRetriesImmediately()
+        public async Task ScheduleRefresh_DuringInflightBackground_IsNoOp()
         {
-            var backgroundTimeout = TimeSpan.FromSeconds(1);
             int acquireCount = 0;
             var responseMre = new ManualResetEventSlim(true);
 
             var cache = new AutoRefreshingCache<TestValue>(
-                acquire: async (isAsync, ct) =>
+                acquire: (async, ct) =>
+                {
+                    responseMre.Wait(ct);
+                    int count = Interlocked.Increment(ref acquireCount);
+                    return new ValueTask<TestValue>(MakeValue($"token{count}", TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // Foreground acquire.
+            TestValue first = await GetValueAsync(cache);
+            Assert.AreEqual("token1", first.Token);
+
+            // Trigger a background refresh via ScheduleRefresh, then block it.
+            cache.ScheduleRefresh();
+            responseMre.Reset();
+
+            // This call kicks off the background refresh (now blocked).
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("token1", second.Token);
+
+            // Another ScheduleRefresh while background is in-flight — should be ignored.
+            cache.ScheduleRefresh();
+
+            // Release the background refresh.
+            responseMre.Set();
+            await Task.Delay(1_000);
+
+            TestValue third = await GetValueAsync(cache);
+            Assert.AreEqual("token2", third.Token);
+
+            // Only 2 acquires total: initial + one background. The second ScheduleRefresh was a no-op.
+            Assert.AreEqual(2, acquireCount);
+        }
+
+        [Test]
+        public async Task ScheduleRefresh_AfterFailedAcquire_IsNoOp()
+        {
+            int acquireCount = 0;
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
                 {
                     int count = Interlocked.Increment(ref acquireCount);
                     if (count == 1)
                     {
-                        // First call: return a value whose refreshOn = now so the
-                        // next GetAsync triggers a background refresh.
-                        return MakeValue("original",
-                            expiresOn: DateTimeOffset.UtcNow.AddMinutes(10),
-                            refreshOn: DateTimeOffset.UtcNow);
+                        throw new InvalidOperationException("First acquire failed");
                     }
-                    if (count == 2)
-                    {
-                        // Second call (background): block until the timeout fires.
-                        // The CTS created by AcquireInBackgroundAsync will cancel
-                        // after backgroundAcquireTimeout, triggering the timeout path.
-                        await Task.Delay(Timeout.InfiniteTimeSpan, ct);
-                    }
-                    // Third call (retry after timeout): succeed with a new value.
-                    responseMre.Wait(ct);
-                    return MakeValue("refreshed", TimeSpan.FromMinutes(30));
+                    return new ValueTask<TestValue>(MakeValue($"token{count}", TimeSpan.FromMinutes(30)));
                 },
-                backgroundAcquireTimeout: backgroundTimeout);
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
 
-            // Phase 1: Foreground acquire returns "original" with refreshOn = now.
-            TestValue first = await GetValueAsync(cache);
-            Assert.AreEqual("original", first.Token);
+            // First call faults — CurrentValueTcs is now in the Faulted state.
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await GetValueAsync(cache));
+            Assert.AreEqual(1, acquireCount);
 
-            // Phase 2: Triggers background refresh (which will block and timeout).
-            // Returns "original" immediately since the value is still valid.
-            TestValue second = await GetValueAsync(cache);
-            Assert.AreEqual("original", second.Token);
+            // ScheduleRefresh on a faulted cache must be a no-op — it must not
+            // throw, and it must not touch _state in a way that breaks recovery.
+            Assert.DoesNotThrow(() => cache.ScheduleRefresh());
+            Assert.AreEqual(1, acquireCount, "ScheduleRefresh must not trigger acquire on its own.");
 
-            // Phase 3: Wait for the background timeout to fire and the background
-            // TCS to be completed with the current value (refreshOn = now).
-            await Task.Delay(backgroundTimeout + TimeSpan.FromSeconds(1));
-
-            // Phase 4: The timed-out background result was promoted with refreshOn = now,
-            // so this call triggers another background refresh — which succeeds this time.
-            TestValue third = await GetValueAsync(cache);
-            Assert.AreEqual("original", third.Token);
-
-            // Wait for the successful background refresh to complete.
-            await Task.Delay(1_000);
-
-            // Phase 5: The refreshed value is now promoted.
-            TestValue fourth = await GetValueAsync(cache);
-            Assert.AreEqual("refreshed", fourth.Token);
-            Assert.AreEqual(3, acquireCount);
+            // The next GetAsync recovers normally via the EvaluateState
+            // failed-or-expired path (foreground re-acquire).
+            TestValue recovered = await GetValueAsync(cache);
+            Assert.AreEqual("token2", recovered.Token);
+            Assert.AreEqual(2, acquireCount);
         }
+
+        #endregion
+
+        #region Cancellation
+
+        [Test]
+        public async Task CancelledFirstRequest_DoesNotCancelSecond()
+        {
+            // Both gates start CLOSED for precise ordering.
+            var requestMre = new ManualResetEventSlim(false);
+            var responseMre = new ManualResetEventSlim(false);
+            var cts = new CancellationTokenSource();
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    requestMre.Set();
+                    responseMre.Wait(ct);   // throws when cts is canceled
+                    return new ValueTask<TestValue>(MakeValue("token1", TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // First caller enters acquire with a cancellable token.
+            var firstTask = Task.Run(async () => await GetValueAsync(cache, cts.Token));
+            requestMre.Wait();
+
+            // Second caller joins the same TCS (no cancellation token).
+            var secondTask = Task.Run(async () => await GetValueAsync(cache));
+
+            // Cancel the first caller's token — TCS becomes canceled.
+            cts.Cancel();
+
+            // First caller gets OperationCanceledException.
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstTask);
+
+            // Open the gate so the second caller's retry loop can re-acquire.
+            // The second caller's token isn't canceled, so it retries via the
+            // while(true) loop in GetAsync and successfully acquires.
+            responseMre.Set();
+
+            TestValue result = await secondTask;
+            Assert.AreEqual("token1", result.Token);
+        }
+
+        #endregion
     }
 }

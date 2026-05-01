@@ -415,6 +415,12 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// Options for configuring session token authentication for blob operations.
+        /// Note: Session token authentication currently only applies when using TokenCredentials for Blob Download operations.
+        /// </summary>
+        public Blobs.Models.SessionOptions SessionOptions { get; set; }
+
+        /// <summary>
         /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
         /// </summary>
         /// <value>If <c>null</c>, <see cref="DataLakeAudience.DefaultAudience" /> will be assumed.</value>

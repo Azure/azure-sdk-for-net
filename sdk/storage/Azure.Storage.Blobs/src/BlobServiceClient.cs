@@ -565,6 +565,20 @@ namespace Azure.Storage.Blobs
                 clientSideEncryption: null);
         }
 
+        /// <summary>
+        /// Creates a <see cref="SessionAuthenticationPolicy"/> wrapping the given bearer token policy.
+        /// </summary>
+        protected static HttpPipelinePolicy CreateSessionAuthenticationPolicy(
+            HttpPipelinePolicy bearerTokenPolicy,
+            Func<BlobServiceClient> blobServiceClientFactory,
+            SessionOptions sessionOptions)
+        {
+            return new SessionAuthenticationPolicy(
+                bearerTokenPolicy,
+                blobServiceClientFactory,
+                sessionOptions);
+        }
+
         private ServiceRestClient BuildServiceRestClient(Uri uri)
             => new ServiceRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,

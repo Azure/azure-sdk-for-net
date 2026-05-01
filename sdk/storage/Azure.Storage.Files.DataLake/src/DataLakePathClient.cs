@@ -573,6 +573,15 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
 
+            // Token-credential path: wrap bearer policy with SessionAuthenticationPolicy
+            if (tokenCredential != null)
+            {
+                authentication = DataLakeServiceClient.BlobServiceClientInternals.CreateSessionPolicy(
+                    authentication,
+                    () => _blockBlobClient.GetParentBlobContainerClient().GetParentBlobServiceClient(),
+                    options.SessionOptions);
+            }
+
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,

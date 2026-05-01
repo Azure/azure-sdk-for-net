@@ -392,6 +392,14 @@ namespace Azure.Storage.Files.DataLake
             _uri = serviceUri;
             _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
 
+            // Token-credential path: wrap bearer policy with SessionAuthenticationPolicy
+            if (tokenCredential != null)
+            {
+                authentication = BlobServiceClientInternals.CreateSessionPolicy(
+                    authentication,
+                    () => _blobServiceClient,
+                    options.SessionOptions);
+            }
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
@@ -413,7 +421,7 @@ namespace Azure.Storage.Files.DataLake
         /// Helper to access protected static members of BlobServiceClient
         /// that should not be exposed directly to customers.
         /// </summary>
-        private class BlobServiceClientInternals : BlobServiceClient
+        internal class BlobServiceClientInternals : BlobServiceClient
         {
             public static BlobServiceClient Create(
                 Uri uri,
@@ -431,6 +439,17 @@ namespace Azure.Storage.Files.DataLake
                     clientConfiguration.SharedKeyCredential,
                     clientConfiguration.SasCredential,
                     clientConfiguration.TokenCredential);
+            }
+
+            public static HttpPipelinePolicy CreateSessionPolicy(
+                HttpPipelinePolicy bearerTokenPolicy,
+                Func<BlobServiceClient> blobServiceClientFactory,
+                Blobs.Models.SessionOptions sessionOptions)
+            {
+                return BlobServiceClient.CreateSessionAuthenticationPolicy(
+                    bearerTokenPolicy,
+                    blobServiceClientFactory,
+                    sessionOptions);
             }
         }
         #endregion ctors

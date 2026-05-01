@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
@@ -433,6 +434,15 @@ namespace Azure.Storage.Files.DataLake
             _uri = fileSystemUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
+
+            // Token-credential path: wrap bearer policy with SessionAuthenticationPolicy
+            if (tokenCredential != null)
+            {
+                authentication = DataLakeServiceClient.BlobServiceClientInternals.CreateSessionPolicy(
+                    authentication,
+                    () => _containerClient.GetParentBlobServiceClient(),
+                    options.SessionOptions);
+            }
 
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),

@@ -13,19 +13,13 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The session authentication mode to use for blob operations.
         /// </summary>
-        public SessionMode SessionMode { get; set; } = SessionMode.Auto;
+        public SessionMode SessionMode { get; set; } = SessionMode.Disabled;
 
         /// <summary>
         /// The Account name to use for signing the session key.
-        /// Must be set if <see cref="Models.SessionMode"/> is not <see cref="SessionMode.None"/>.
+        /// Must be set if <see cref="Models.SessionMode"/> is <see cref="SessionMode.Enabled"/>.
         /// </summary>
         public string AccountName { get; set; }
-
-        /// <summary>
-        /// The container name to cache for Session Authentication.
-        /// Must be set if <see cref="Models.SessionMode"/> is <see cref="SessionMode.SingleSpecifiedContainer"/>.
-        /// </summary>
-        public string ContainerName { get; set; }
     }
 
     /// <summary>
@@ -36,17 +30,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Always use bearer token authentication. No session tokens are used.
         /// </summary>
-        None = 0,
+        Disabled = 0,
 
         /// <summary>
-        /// Default behavior. This is currently equivalent to <see cref="None"/>.
+        /// Opt in to session token authentication for all containers.
+        /// Each container gets its own cached session token.
         /// </summary>
-        Auto = None,
-
-        /// <summary>
-        /// Opt in to session token authentication scoped to a single container
-        /// that is specified in <see cref="SessionOptions.ContainerName"/>.
-        /// </summary>
-        SingleSpecifiedContainer = 1
+        Enabled = 1
     }
 }
