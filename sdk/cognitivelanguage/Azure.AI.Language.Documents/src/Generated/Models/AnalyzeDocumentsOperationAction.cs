@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Documents
 {
     /// <summary>
     /// The long running task to be performed by the service on the input documents.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PiiLROTask"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PiiLROTask"/>, <see cref="ExtractiveSummarizationOperationAction"/>, and <see cref="AbstractiveSummarizationOperationAction"/>.
     /// </summary>
     public abstract partial class AnalyzeDocumentsOperationAction
     {

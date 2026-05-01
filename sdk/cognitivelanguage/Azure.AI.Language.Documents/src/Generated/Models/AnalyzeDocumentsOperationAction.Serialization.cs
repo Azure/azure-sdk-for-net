@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Documents
 {
     /// <summary>
     /// The long running task to be performed by the service on the input documents.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PiiLROTask"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PiiLROTask"/>, <see cref="ExtractiveSummarizationOperationAction"/>, and <see cref="AbstractiveSummarizationOperationAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalyzeDocumentsOperationAction))]
     public abstract partial class AnalyzeDocumentsOperationAction : IJsonModel<AnalyzeDocumentsOperationAction>
@@ -136,6 +136,10 @@ namespace Azure.AI.Language.Documents
                 {
                     case "PiiEntityRecognition":
                         return PiiLROTask.DeserializePiiLROTask(element, options);
+                    case "ExtractiveSummarization":
+                        return ExtractiveSummarizationOperationAction.DeserializeExtractiveSummarizationOperationAction(element, options);
+                    case "AbstractiveSummarization":
+                        return AbstractiveSummarizationOperationAction.DeserializeAbstractiveSummarizationOperationAction(element, options);
                 }
             }
             return UnknownAnalyzeDocumentsOperationAction.DeserializeUnknownAnalyzeDocumentsOperationAction(element, options);

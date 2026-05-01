@@ -13,6 +13,8 @@ namespace Azure.AI.Language.Documents
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AbstractiveSummarizationActionContent))]
+    [ModelReaderWriterBuildable(typeof(AbstractiveSummarizationOperationAction))]
     [ModelReaderWriterBuildable(typeof(AbstractiveSummarizationOperationResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeDocumentsDocumentError))]
     [ModelReaderWriterBuildable(typeof(AnalyzeDocumentsError))]
@@ -36,6 +38,9 @@ namespace Azure.AI.Language.Documents
     [ModelReaderWriterBuildable(typeof(EntityMaskPolicy))]
     [ModelReaderWriterBuildable(typeof(EntitySynonym))]
     [ModelReaderWriterBuildable(typeof(EntitySynonyms))]
+    [ModelReaderWriterBuildable(typeof(ExtractiveSummarizationActionContent))]
+    [ModelReaderWriterBuildable(typeof(ExtractiveSummarizationOperationAction))]
+    [ModelReaderWriterBuildable(typeof(ExtractiveSummarizationOperationResult))]
     [ModelReaderWriterBuildable(typeof(InnerErrorModel))]
     [ModelReaderWriterBuildable(typeof(MarkerMaskPolicy))]
     [ModelReaderWriterBuildable(typeof(MultiLanguageDocumentInput))]

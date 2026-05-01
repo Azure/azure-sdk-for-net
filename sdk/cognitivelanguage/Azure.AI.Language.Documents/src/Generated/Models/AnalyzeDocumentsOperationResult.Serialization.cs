@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Documents
 {
     /// <summary>
     /// Contains the AnalyzeDocuments long running operation result object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PiiEntityRecognitionOperationResult"/> and <see cref="AbstractiveSummarizationOperationResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PiiEntityRecognitionOperationResult"/>, <see cref="ExtractiveSummarizationOperationResult"/>, and <see cref="AbstractiveSummarizationOperationResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalyzeDocumentsOperationResult))]
     public abstract partial class AnalyzeDocumentsOperationResult : IJsonModel<AnalyzeDocumentsOperationResult>
@@ -140,6 +140,8 @@ namespace Azure.AI.Language.Documents
                 {
                     case "PiiEntityRecognitionLROResults":
                         return PiiEntityRecognitionOperationResult.DeserializePiiEntityRecognitionOperationResult(element, options);
+                    case "ExtractiveSummarizationLROResults":
+                        return ExtractiveSummarizationOperationResult.DeserializeExtractiveSummarizationOperationResult(element, options);
                     case "AbstractiveSummarizationLROResults":
                         return AbstractiveSummarizationOperationResult.DeserializeAbstractiveSummarizationOperationResult(element, options);
                 }

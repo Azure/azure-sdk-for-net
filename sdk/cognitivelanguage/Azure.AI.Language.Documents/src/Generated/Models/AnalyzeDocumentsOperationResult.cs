@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Documents
 {
     /// <summary>
     /// Contains the AnalyzeDocuments long running operation result object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PiiEntityRecognitionOperationResult"/> and <see cref="AbstractiveSummarizationOperationResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PiiEntityRecognitionOperationResult"/>, <see cref="ExtractiveSummarizationOperationResult"/>, and <see cref="AbstractiveSummarizationOperationResult"/>.
     /// </summary>
     public abstract partial class AnalyzeDocumentsOperationResult
     {

@@ -106,7 +106,7 @@ namespace Azure.AI.Language.Documents
 
         /// <summary>
         /// Contains the AnalyzeDocuments long running operation result object.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.PiiEntityRecognitionOperationResult"/> and <see cref="Documents.AbstractiveSummarizationOperationResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.PiiEntityRecognitionOperationResult"/>, <see cref="Documents.ExtractiveSummarizationOperationResult"/>, and <see cref="Documents.AbstractiveSummarizationOperationResult"/>.
         /// </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
@@ -248,6 +248,23 @@ namespace Azure.AI.Language.Documents
             return new AzureContainerFolderDocumentLocation(DocumentLocationKind.AzureContainerFolder, additionalBinaryDataProperties: null, location, managedIdentityClientId);
         }
 
+        /// <summary> An object representing the results for an Extractive Summarization task. </summary>
+        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <param name="taskName"> task name. </param>
+        /// <param name="results"> Results of the document task. </param>
+        /// <returns> A new <see cref="Documents.ExtractiveSummarizationOperationResult"/> instance for mocking. </returns>
+        public static ExtractiveSummarizationOperationResult ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, DocumentActionState status = default, string taskName = default, AnalyzeDocumentsResult results = default)
+        {
+            return new ExtractiveSummarizationOperationResult(
+                lastUpdateDateTime,
+                status,
+                taskName,
+                AnalyzeDocumentsOperationResultsKind.ExtractiveSummarizationOperationResults,
+                additionalBinaryDataProperties: null,
+                results);
+        }
+
         /// <summary> An object representing the results for an Abstractive Summarization task. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
@@ -301,7 +318,7 @@ namespace Azure.AI.Language.Documents
 
         /// <summary>
         /// The long running task to be performed by the service on the input documents.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.PiiLROTask"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.PiiLROTask"/>, <see cref="Documents.ExtractiveSummarizationOperationAction"/>, and <see cref="Documents.AbstractiveSummarizationOperationAction"/>.
         /// </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
@@ -495,6 +512,64 @@ namespace Azure.AI.Language.Documents
         public static ConfidenceScoreThresholdOverride ConfidenceScoreThresholdOverride(PiiCategories entity = default, float value = default, string language = default)
         {
             return new ConfidenceScoreThresholdOverride(entity, value, language, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An object representing the task definition for an Extractive Summarization task. </summary>
+        /// <param name="name"> task name. </param>
+        /// <param name="actionContent"> Parameters for the Extractive Summarization task. </param>
+        /// <returns> A new <see cref="Documents.ExtractiveSummarizationOperationAction"/> instance for mocking. </returns>
+        public static ExtractiveSummarizationOperationAction ExtractiveSummarizationOperationAction(string name = default, ExtractiveSummarizationActionContent actionContent = default)
+        {
+            return new ExtractiveSummarizationOperationAction(name, AnalyzeDocumentsOperationActionKind.ExtractiveSummarization, additionalBinaryDataProperties: null, actionContent);
+        }
+
+        /// <summary> Supported parameters for an Extractive Summarization task. </summary>
+        /// <param name="loggingOptOut"> logging opt out. </param>
+        /// <param name="modelVersion"> model version. </param>
+        /// <param name="sentenceCount"> Specifies the number of sentences in the extracted summary. </param>
+        /// <param name="sortBy"> Specifies how to sort the extracted summaries. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
+        /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
+        /// <returns> A new <see cref="Documents.ExtractiveSummarizationActionContent"/> instance for mocking. </returns>
+        public static ExtractiveSummarizationActionContent ExtractiveSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, long? sentenceCount = default, ExtractiveSummarizationSortingCriteria? sortBy = default, StringIndexType? stringIndexType = default, string query = default)
+        {
+            return new ExtractiveSummarizationActionContent(
+                loggingOptOut,
+                modelVersion,
+                sentenceCount,
+                sortBy,
+                stringIndexType,
+                query,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An object representing the task definition for an Abstractive Summarization task. </summary>
+        /// <param name="name"> task name. </param>
+        /// <param name="actionContent"> Parameters for the Abstractive Summarization task. </param>
+        /// <returns> A new <see cref="Documents.AbstractiveSummarizationOperationAction"/> instance for mocking. </returns>
+        public static AbstractiveSummarizationOperationAction AbstractiveSummarizationOperationAction(string name = default, AbstractiveSummarizationActionContent actionContent = default)
+        {
+            return new AbstractiveSummarizationOperationAction(name, AnalyzeDocumentsOperationActionKind.AbstractiveSummarization, additionalBinaryDataProperties: null, actionContent);
+        }
+
+        /// <summary> Supported parameters for the pre-built Abstractive Summarization task. </summary>
+        /// <param name="loggingOptOut"> logging opt out. </param>
+        /// <param name="modelVersion"> model version. </param>
+        /// <param name="sentenceCount"> Controls the approximate number of sentences in the output summaries. </param>
+        /// <param name="stringIndexType"> String index type. </param>
+        /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
+        /// <param name="instruction"> (Optional) If provided, the instruction will be used to generate the summary. </param>
+        /// <returns> A new <see cref="Documents.AbstractiveSummarizationActionContent"/> instance for mocking. </returns>
+        public static AbstractiveSummarizationActionContent AbstractiveSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, string instruction = default)
+        {
+            return new AbstractiveSummarizationActionContent(
+                loggingOptOut,
+                modelVersion,
+                sentenceCount,
+                stringIndexType,
+                summaryLength,
+                instruction,
+                additionalBinaryDataProperties: null);
         }
     }
 }
