@@ -158,12 +158,9 @@ namespace Azure.AI.AgentServer.Core.Tests
             await Task.Delay(TimeSpan.FromSeconds(5));
 
             // ── Query Application Insights ──
-            var credential = new Azure.Identity.DefaultAzureCredential(
-                new Azure.Identity.DefaultAzureCredentialOptions
-                {
-                    ExcludeInteractiveBrowserCredential = true
-                });
-            var logsClient = new LogsQueryClient(credential);
+            // Use TestEnvironment.Credential which is configured for the correct
+            // tenant/subscription in CI (service principal from test-resources deployment).
+            var logsClient = new LogsQueryClient(TestEnvironment.Credential);
             var traceId = TelemetryTestHandler.CapturedTraceId!;
             var resourceId = new ResourceIdentifier(TestEnvironment.ApplicationInsightsResourceId);
 
