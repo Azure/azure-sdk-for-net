@@ -1,10 +1,14 @@
 # Analyze a document from binary data
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer and convert the result to LLM-friendly text.
 
 ## About analyzing documents from binary data
 
 One of the key values of Content Understanding is taking a content file and extracting the content for you in one call. The service returns an `AnalysisResult` that contains an array of `AnalysisContent` items in `AnalysisResult.Contents`. This sample starts with a document file, so each item is a `DocumentContent` (a subtype of `AnalysisContent`) that exposes markdown plus detailed structure such as pages, tables, figures, and paragraphs.
+
+## Using results with LLMs
+
+The markdown returned by Content Understanding can be directly consumed by large language models (LLMs) for summarization, question answering, and other generative AI tasks. To make this even easier, the SDK provides a convenient `.ToLlmInput()` helper that converts an `AnalysisResult` into a single text block with YAML front matter (content type, page numbers, extracted fields) followed by the markdown body — ready for injection into LLM prompts, vector databases, or agentic tool outputs. For advanced usage (output options, content ranges, video/audio, metadata), see [Advanced ToLlmInput sample][sample-advanced-to-llm-input].
 
 This sample focuses on **document analysis**. For prebuilt RAG analyzers covering images, audio, and video, see [Sample 02: Analyze content from URLs][sample02-analyze-url].
 
@@ -184,6 +188,21 @@ if (content is DocumentContent documentContent)
 }
 ```
 
+## Convert results to LLM-ready text
+
+The markdown returned by Content Understanding can be directly consumed by large language models (LLMs) for summarization, question answering, and other generative AI tasks. The SDK provides `.ToLlmInput()` which packages the result into a single text block with YAML front matter (content type, page numbers, extracted fields) followed by the markdown body — ready for LLM prompts, vector databases, or agentic tool outputs.
+
+```C# Snippet:ContentUnderstandingConvertToLlmInput
+// The markdown above can be consumed directly by LLMs. For convenience, the SDK
+// provides .ToLlmInput() which packages the result into a single
+// text block with YAML front matter (content type, pages, fields, optional metadata)
+// followed by the markdown body — ready for LLM prompts, vector stores, or agentic tools.
+string llmText = result.ToLlmInput();
+Console.WriteLine(llmText);
+```
+
+For advanced usage (output options, content ranges, video/audio, metadata), see the [Advanced ToLlmInput sample][sample-advanced-to-llm-input].
+
 ## Next steps
 
 - **[Sample02_AnalyzeUrl][sample02-analyze-url]** - Learn how to analyze documents from publicly accessible URLs
@@ -209,3 +228,4 @@ if (content is DocumentContent documentContent)
 [cu-document-markdown]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/markdown
 [cu-document-elements]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements
 [cu-service-limits]: https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#document-and-text
+[sample-advanced-to-llm-input]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md

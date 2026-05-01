@@ -16,18 +16,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             {
                 cache.AddOrUpdate(i.ToString(), i, i.ToString().Length);
             }
-            Assert.AreEqual(10, cache.Count);
-            Assert.AreEqual(20, cache.TotalLength);
+            Assert.That(cache.Count, Is.EqualTo(10));
+            Assert.That(cache.TotalLength, Is.EqualTo(20));
 
             for (int i = 0; i < 10; i++)
             {
-                Assert.IsFalse(cache.TryGet(i.ToString(), out _));
+                Assert.That(cache.TryGet(i.ToString(), out _), Is.False);
             }
 
             for (int i = 11; i < 20; i++)
             {
-                Assert.IsTrue(cache.TryGet(i.ToString(), out var value));
-                Assert.AreEqual(i, value);
+                Assert.That(cache.TryGet(i.ToString(), out var value), Is.True);
+                Assert.That(value, Is.EqualTo(i));
             }
         }
 
@@ -40,15 +40,15 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             cache.AddOrUpdate("2", 2, 1);
             cache.AddOrUpdate("3", 3, 1);
             // 1 is moved to head of list
-            Assert.IsTrue(cache.TryGet("1", out _));
+            Assert.That(cache.TryGet("1", out _), Is.True);
             // 4 is added to head of list, which evicts 2, the least recently used item
             cache.AddOrUpdate("4", 4, 1);
             // 2 should be evicted
-            Assert.IsFalse(cache.TryGet("2", out _));
+            Assert.That(cache.TryGet("2", out _), Is.False);
             // 5 is moved to head of list
             cache.AddOrUpdate("5", 4, 1);
             // 3 should be evicted
-            Assert.IsFalse(cache.TryGet("3", out _));
+            Assert.That(cache.TryGet("3", out _), Is.False);
         }
 
         [Test]
@@ -58,12 +58,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             cache.AddOrUpdate("1", 1, 1);
             cache.TryGet("1", out int val);
-            Assert.AreEqual(1, val);
-            Assert.AreEqual(1, cache.TotalLength);
+            Assert.That(val, Is.EqualTo(1));
+            Assert.That(cache.TotalLength, Is.EqualTo(1));
             cache.AddOrUpdate("1", 10, 2);
-            Assert.AreEqual(2, cache.TotalLength);
+            Assert.That(cache.TotalLength, Is.EqualTo(2));
             cache.TryGet("1", out val);
-            Assert.AreEqual(10, val);
+            Assert.That(val, Is.EqualTo(10));
         }
     }
 }

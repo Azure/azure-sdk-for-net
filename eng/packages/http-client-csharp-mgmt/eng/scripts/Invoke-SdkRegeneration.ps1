@@ -50,10 +50,8 @@ $result = @{
 
 try {
     # Load tsp-location.yaml
-    if (-not (Get-Module -ListAvailable -Name powershell-yaml -ErrorAction SilentlyContinue)) {
-        Install-Module -Name powershell-yaml -Force -Scope CurrentUser 2>&1 | Out-Null
-    }
-    Import-Module powershell-yaml -ErrorAction SilentlyContinue
+    . (Join-Path $PSScriptRoot ".." ".." ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
     $tspConfig = Get-Content (Join-Path $ProjectPath "tsp-location.yaml") -Raw | ConvertFrom-Yaml
     
     $repo = $tspConfig["repo"]

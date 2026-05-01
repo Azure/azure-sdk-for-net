@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0 (2026-04-14)
+## 12.0.0 (2026-05-01)
 
 ### Features Added
 
@@ -9,7 +9,8 @@
 - Added knowledge base management types: `KnowledgeBase`, `KnowledgeBaseModel`, `KnowledgeBaseAzureOpenAIModel`, and `KnowledgeSourceReference`.
 - Added knowledge source types: `AzureBlobKnowledgeSource`, `SearchIndexKnowledgeSource`, `IndexedOneLakeKnowledgeSource`, and `WebKnowledgeSource` with associated parameters.
 - Added knowledge base retrieval models: `KnowledgeBaseRetrievalRequest`, `KnowledgeBaseRetrievalResponse`, `KnowledgeBaseMessage`, `KnowledgeBaseMessageContent`, and `KnowledgeBaseReference` with typed variants (`KnowledgeBaseAzureBlobReference`, `KnowledgeBaseSearchIndexReference`, `KnowledgeBaseIndexedOneLakeReference`, `KnowledgeBaseWebReference`).
-- Added knowledge base activity tracking: `KnowledgeBaseActivityRecord` and `KnowledgeBaseAgenticReasoningActivityRecord`.
+- Added knowledge base activity tracking: `KnowledgeBaseActivityRecord`, `KnowledgeBaseAgenticReasoningActivityRecord`, and `KnowledgeBaseModelWebSummarizationActivityRecord`.
+- Added `KnowledgeBaseActivityRecordType.ModelWebSummarization` value for LLM web summarization activity records.
 - Added knowledge source ingestion and status models: `KnowledgeSourceIngestionParameters`, `KnowledgeSourceStatus`, `KnowledgeSourceStatistics`, and `SynchronizationState`.
 - Added AI skill types: `ChatCompletionSkill`, `ContentUnderstandingSkill`, and `DocumentIntelligenceLayoutSkill` with associated configuration models.
 - Added `AzureMachineLearningVectorizer` and `AzureMachineLearningParameters` for AML-based vectorization.

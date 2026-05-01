@@ -100,8 +100,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             );
 
             // Assert
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
 
             TilerMosaicSearchRegistrationResult result = response.Value;
             ValidateNotNullOrEmpty(result.SearchId, "Search ID");
@@ -152,7 +152,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             ValidateResponse(response, "GetMosaicsSearchInfo");
 
             TilerStacSearchRegistration searchInfo = response.Value;
-            Assert.IsNotNull(searchInfo, "Search info should not be null");
+            Assert.That(searchInfo, Is.Not.Null, "Search info should not be null");
 
             TestContext.WriteLine($"Search registration retrieved successfully");
             TestContext.WriteLine($"Search info retrieved for search ID: {searchId}");
@@ -198,10 +198,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             ValidateResponse(response, "GetMosaicsTileJson");
 
             TileJsonMetadata tileJson = response.Value;
-            Assert.IsNotNull(tileJson, "TileJSON should not be null");
-            Assert.IsNotNull(tileJson.TileJson, "TileJSON version should not be null");
-            Assert.IsNotNull(tileJson.Tiles, "Tiles array should not be null");
-            Assert.Greater(tileJson.Tiles.Count, 0, "Should have at least one tile URL pattern");
+            Assert.That(tileJson, Is.Not.Null, "TileJSON should not be null");
+            Assert.That(tileJson.TileJson, Is.Not.Null, "TileJSON version should not be null");
+            Assert.That(tileJson.Tiles, Is.Not.Null, "Tiles array should not be null");
+            Assert.That(tileJson.Tiles.Count, Is.GreaterThan(0), "Should have at least one tile URL pattern");
 
             TestContext.WriteLine($"TileJSON version: {tileJson.TileJson}");
             TestContext.WriteLine($"Number of tile URL patterns: {tileJson.Tiles.Count}");
@@ -262,12 +262,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Verify PNG magic bytes
             byte[] pngMagic = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
-            Assert.Greater(imageBytes.Length, 0, "Image bytes should not be empty");
-            Assert.Greater(imageBytes.Length, 100, $"Image should be substantial, got only {imageBytes.Length} bytes");
+            Assert.That(imageBytes.Length, Is.GreaterThan(0), "Image bytes should not be empty");
+            Assert.That(imageBytes.Length, Is.GreaterThan(100), $"Image should be substantial, got only {imageBytes.Length} bytes");
 
             for (int i = 0; i < pngMagic.Length; i++)
             {
-                Assert.AreEqual(pngMagic[i], imageBytes[i], $"PNG magic byte {i} mismatch");
+                Assert.That(imageBytes[i], Is.EqualTo(pngMagic[i]), $"PNG magic byte {i} mismatch");
             }
 
             TestContext.WriteLine("PNG magic bytes verified successfully");
@@ -320,7 +320,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"XML first 200 chars: {xmlString.Substring(0, Math.Min(200, xmlString.Length))}");
 
             // Validate XML structure
-            Assert.Greater(xmlBytes.Length, 0, "XML bytes should not be empty");
+            Assert.That(xmlBytes.Length, Is.GreaterThan(0), "XML bytes should not be empty");
             Assert.That(xmlString, Does.Contain("Capabilities"), "Response should contain Capabilities element");
             Assert.That(xmlString.ToLower(), Does.Contain("wmts"), "Response should reference WMTS");
             Assert.That(xmlString, Does.Contain("TileMatrix"), "Response should contain TileMatrix information");
@@ -374,7 +374,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             ValidateResponse(response, "GetMosaicsAssetsForPoint");
 
             IReadOnlyList<StacItemPointAsset> assets = response.Value;
-            Assert.IsNotNull(assets, "Assets list should not be null");
+            Assert.That(assets, Is.Not.Null, "Assets list should not be null");
 
             TestContext.WriteLine($"Number of assets: {assets.Count}");
 
@@ -382,9 +382,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             if (assets.Count > 0)
             {
                 StacItemPointAsset firstAsset = assets[0];
-                Assert.IsNotNull(firstAsset, "First asset should not be null");
-                Assert.IsNotNull(firstAsset.Id, "Asset ID should not be null");
-                Assert.IsNotEmpty(firstAsset.Id, "Asset ID should not be empty");
+                Assert.That(firstAsset, Is.Not.Null, "First asset should not be null");
+                Assert.That(firstAsset.Id, Is.Not.Null, "Asset ID should not be null");
+                Assert.That(firstAsset.Id, Is.Not.Empty, "Asset ID should not be empty");
 
                 TestContext.WriteLine($"First asset ID: {firstAsset.Id}");
             }
@@ -434,7 +434,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             ValidateResponse(response, "GetMosaicsAssetsForTile");
 
             IReadOnlyList<TilerAssetGeoJson> assets = response.Value;
-            Assert.IsNotNull(assets, "Assets list should not be null");
+            Assert.That(assets, Is.Not.Null, "Assets list should not be null");
 
             TestContext.WriteLine($"Number of assets: {assets.Count}");
             TestContext.WriteLine("Assets for tile retrieved successfully");
@@ -528,8 +528,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             ValidateResponse(response, "CreateStaticImage");
 
             ImageResponse imageResponse = response.Value;
-            Assert.IsNotNull(imageResponse, "Image response should not be null");
-            Assert.IsNotNull(imageResponse.Url, "Image URL should not be null");
+            Assert.That(imageResponse, Is.Not.Null, "Image response should not be null");
+            Assert.That(imageResponse.Url, Is.Not.Null, "Image URL should not be null");
 
             TestContext.WriteLine($"Static image created successfully");
             TestContext.WriteLine($"Image URL: {imageResponse.Url}");
@@ -620,8 +620,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Created image with ID: {imageId}");
             TestContext.WriteLine($"Image URL: {url}");
 
-            Assert.IsNotNull(imageId, "Image ID should not be null");
-            Assert.IsNotEmpty(imageId, "Image ID should not be empty");
+            Assert.That(imageId, Is.Not.Null, "Image ID should not be null");
+            Assert.That(imageId, Is.Not.Empty, "Image ID should not be empty");
 
             // Act - Get the static image
             Response<BinaryData> response = await dataClient.GetStaticImageAsync(
@@ -640,11 +640,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Verify PNG magic bytes
             byte[] pngMagic = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
-            Assert.Greater(imageBytes.Length, 0, "Image bytes should not be empty");
+            Assert.That(imageBytes.Length, Is.GreaterThan(0), "Image bytes should not be empty");
 
             for (int i = 0; i < Math.Min(pngMagic.Length, imageBytes.Length); i++)
             {
-                Assert.AreEqual(pngMagic[i], imageBytes[i], $"PNG magic byte {i} mismatch");
+                Assert.That(imageBytes[i], Is.EqualTo(pngMagic[i]), $"PNG magic byte {i} mismatch");
             }
 
             TestContext.WriteLine("PNG magic bytes verified successfully");
