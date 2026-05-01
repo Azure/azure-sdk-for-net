@@ -45,8 +45,7 @@ namespace Azure.Storage.Queues
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] The Dequeue operation retrieves one or more messages from the front of the
-        /// queue.
+        /// [Protocol Method] Retrieves one or more messages from the front of the queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -54,13 +53,20 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="numberOfMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to
+        /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
         /// visible messages are returned. By default, a single message is retrieved from
         /// the queue with this operation.
         /// </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -81,8 +87,7 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] The Dequeue operation retrieves one or more messages from the front of the
-        /// queue.
+        /// [Protocol Method] Retrieves one or more messages from the front of the queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -90,13 +95,20 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="numberOfMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to
+        /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
         /// visible messages are returned. By default, a single message is retrieved from
         /// the queue with this operation.
         /// </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -116,18 +128,22 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary>
-        /// The Dequeue operation retrieves one or more messages from the front of the
-        /// queue.
-        /// </summary>
+        /// <summary> Retrieves one or more messages from the front of the queue. </summary>
         /// <param name="numberOfMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to
+        /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
         /// visible messages are returned. By default, a single message is retrieved from
         /// the queue with this operation.
         /// </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<ReceivedMessages> Dequeue(int? numberOfMessages = default, int? visibilityTimeout = default, int? timeout = default, CancellationToken cancellationToken = default)
@@ -136,18 +152,22 @@ namespace Azure.Storage.Queues
             return Response.FromValue((ReceivedMessages)result, result);
         }
 
-        /// <summary>
-        /// The Dequeue operation retrieves one or more messages from the front of the
-        /// queue.
-        /// </summary>
+        /// <summary> Retrieves one or more messages from the front of the queue. </summary>
         /// <param name="numberOfMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to
+        /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
         /// visible messages are returned. By default, a single message is retrieved from
         /// the queue with this operation.
         /// </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<ReceivedMessages>> DequeueAsync(int? numberOfMessages = default, int? visibilityTimeout = default, int? timeout = default, CancellationToken cancellationToken = default)
@@ -157,14 +177,17 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] The Clear operation deletes all messages from the specified queue.
+        /// [Protocol Method] Deletes all messages from the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -185,14 +208,17 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] The Clear operation deletes all messages from the specified queue.
+        /// [Protocol Method] Deletes all messages from the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -212,8 +238,11 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary> The Clear operation deletes all messages from the specified queue. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Deletes all messages from the specified queue. </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Clear(int? timeout = default, CancellationToken cancellationToken = default)
@@ -221,8 +250,11 @@ namespace Azure.Storage.Queues
             return Clear(timeout, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Clear operation deletes all messages from the specified queue. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Deletes all messages from the specified queue. </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> ClearAsync(int? timeout = default, CancellationToken cancellationToken = default)
@@ -231,12 +263,9 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] The Enqueue operation adds a new message to the back of the message queue. A
-        /// visibility timeout can also be specified to make the message invisible until
-        /// the visibility timeout expires. A message must be in a format that can be
-        /// included in an XML request with UTF-8 encoding. The encoded message can be up
-        /// to 64 KB in size for versions 2011-08-18 and newer, or 8 KB in size for
-        /// previous versions.
+        /// [Protocol Method] Adds a new message to the back of the message queue. A visibility timeout
+        /// can also be specified to make the message invisible until the visibility timeout
+        /// expires.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -244,15 +273,22 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
         /// <param name="messageTimeToLive">
-        /// Optional. Specifies the time-to-live interval for the message, in seconds.
+        /// Specifies the time-to-live interval for the message, in seconds.
         /// Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For
         /// version 2017-07-29 or later, the maximum time-to-live can be any positive
         /// number, as well as -1 indicating that the message does not expire. If this
         /// parameter is omitted, the default time-to-live is 7 days.
         /// </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -273,12 +309,9 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] The Enqueue operation adds a new message to the back of the message queue. A
-        /// visibility timeout can also be specified to make the message invisible until
-        /// the visibility timeout expires. A message must be in a format that can be
-        /// included in an XML request with UTF-8 encoding. The encoded message can be up
-        /// to 64 KB in size for versions 2011-08-18 and newer, or 8 KB in size for
-        /// previous versions.
+        /// [Protocol Method] Adds a new message to the back of the message queue. A visibility timeout
+        /// can also be specified to make the message invisible until the visibility timeout
+        /// expires.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -286,15 +319,22 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
         /// <param name="messageTimeToLive">
-        /// Optional. Specifies the time-to-live interval for the message, in seconds.
+        /// Specifies the time-to-live interval for the message, in seconds.
         /// Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For
         /// version 2017-07-29 or later, the maximum time-to-live can be any positive
         /// number, as well as -1 indicating that the message does not expire. If this
         /// parameter is omitted, the default time-to-live is 7 days.
         /// </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -315,23 +355,30 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// The Enqueue operation adds a new message to the back of the message queue. A
-        /// visibility timeout can also be specified to make the message invisible until
-        /// the visibility timeout expires. A message must be in a format that can be
-        /// included in an XML request with UTF-8 encoding. The encoded message can be up
-        /// to 64 KB in size for versions 2011-08-18 and newer, or 8 KB in size for
-        /// previous versions.
+        /// Adds a new message to the back of the message queue. A visibility timeout
+        /// can also be specified to make the message invisible until the visibility timeout
+        /// expires.
         /// </summary>
-        /// <param name="queueMessage"> A Message object which can be stored in a Queue. </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
+        /// <param name="queueMessage">
+        /// The queue message. The message must be in a format that can be included in an XML request with UTF-8
+        /// encoding. The encoded message can be up to 64 KB in size.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
         /// <param name="messageTimeToLive">
-        /// Optional. Specifies the time-to-live interval for the message, in seconds.
+        /// Specifies the time-to-live interval for the message, in seconds.
         /// Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For
         /// version 2017-07-29 or later, the maximum time-to-live can be any positive
         /// number, as well as -1 indicating that the message does not expire. If this
         /// parameter is omitted, the default time-to-live is 7 days.
         /// </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<ListOfSentMessage> Enqueue(QueueMessage queueMessage, int? visibilityTimeout = default, int? messageTimeToLive = default, int? timeout = default, CancellationToken cancellationToken = default)
@@ -341,23 +388,30 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// The Enqueue operation adds a new message to the back of the message queue. A
-        /// visibility timeout can also be specified to make the message invisible until
-        /// the visibility timeout expires. A message must be in a format that can be
-        /// included in an XML request with UTF-8 encoding. The encoded message can be up
-        /// to 64 KB in size for versions 2011-08-18 and newer, or 8 KB in size for
-        /// previous versions.
+        /// Adds a new message to the back of the message queue. A visibility timeout
+        /// can also be specified to make the message invisible until the visibility timeout
+        /// expires.
         /// </summary>
-        /// <param name="queueMessage"> A Message object which can be stored in a Queue. </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
+        /// <param name="queueMessage">
+        /// The queue message. The message must be in a format that can be included in an XML request with UTF-8
+        /// encoding. The encoded message can be up to 64 KB in size.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
         /// <param name="messageTimeToLive">
-        /// Optional. Specifies the time-to-live interval for the message, in seconds.
+        /// Specifies the time-to-live interval for the message, in seconds.
         /// Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For
         /// version 2017-07-29 or later, the maximum time-to-live can be any positive
         /// number, as well as -1 indicating that the message does not expire. If this
         /// parameter is omitted, the default time-to-live is 7 days.
         /// </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<ListOfSentMessage>> EnqueueAsync(QueueMessage queueMessage, int? visibilityTimeout = default, int? messageTimeToLive = default, int? timeout = default, CancellationToken cancellationToken = default)
@@ -367,8 +421,7 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] The Peek operation retrieves one or more messages from the front of the queue,
-        /// but does not alter the visibility of the message.
+        /// [Protocol Method] Retrieves one or more messages from the front of the queue, but does not alter the visibility of the message.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -376,12 +429,15 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="numberOfMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to
+        /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
         /// visible messages are returned. By default, a single message is retrieved from
         /// the queue with this operation.
         /// </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -402,8 +458,7 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] The Peek operation retrieves one or more messages from the front of the queue,
-        /// but does not alter the visibility of the message.
+        /// [Protocol Method] Retrieves one or more messages from the front of the queue, but does not alter the visibility of the message.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -411,12 +466,15 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="numberOfMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to
+        /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
         /// visible messages are returned. By default, a single message is retrieved from
         /// the queue with this operation.
         /// </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -436,17 +494,17 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary>
-        /// The Peek operation retrieves one or more messages from the front of the queue,
-        /// but does not alter the visibility of the message.
-        /// </summary>
+        /// <summary> Retrieves one or more messages from the front of the queue, but does not alter the visibility of the message. </summary>
         /// <param name="numberOfMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to
+        /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
         /// visible messages are returned. By default, a single message is retrieved from
         /// the queue with this operation.
         /// </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PeekedMessages> Peek(int? numberOfMessages = default, int? timeout = default, CancellationToken cancellationToken = default)
@@ -455,17 +513,17 @@ namespace Azure.Storage.Queues
             return Response.FromValue((PeekedMessages)result, result);
         }
 
-        /// <summary>
-        /// The Peek operation retrieves one or more messages from the front of the queue,
-        /// but does not alter the visibility of the message.
-        /// </summary>
+        /// <summary> Retrieves one or more messages from the front of the queue, but does not alter the visibility of the message. </summary>
         /// <param name="numberOfMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to
+        /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
         /// visible messages are returned. By default, a single message is retrieved from
         /// the queue with this operation.
         /// </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<PeekedMessages>> PeekAsync(int? numberOfMessages = default, int? timeout = default, CancellationToken cancellationToken = default)

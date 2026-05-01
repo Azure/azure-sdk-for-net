@@ -60,7 +60,7 @@ namespace Azure.Storage.Queues.Models
             return new QueueMetrics(version, enabled, includeApis, retentionPolicy);
         }
 
-        /// <summary> CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain. </summary>
+        /// <summary> The CORS rules. </summary>
         /// <param name="allowedOrigins"></param>
         /// <param name="allowedMethods"></param>
         /// <param name="allowedHeaders"></param>
@@ -72,10 +72,10 @@ namespace Azure.Storage.Queues.Models
             return new QueueCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
         }
 
-        /// <summary> Represents an access policy. </summary>
+        /// <summary> The access policy. </summary>
         /// <param name="startsOn"> The date-time the policy is active. </param>
         /// <param name="expiresOn"> The date-time the policy expires. </param>
-        /// <param name="permissions"> The permissions for acl the policy. </param>
+        /// <param name="permissions"> The permissions for the policy. </param>
         /// <returns> A new <see cref="Models.QueueAccessPolicy"/> instance for mocking. </returns>
         public static QueueAccessPolicy QueueAccessPolicy(DateTimeOffset? startsOn = default, DateTimeOffset? expiresOn = default, string permissions = default)
         {

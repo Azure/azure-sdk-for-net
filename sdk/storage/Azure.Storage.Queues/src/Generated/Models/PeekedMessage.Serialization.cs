@@ -15,10 +15,7 @@ using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary>
-    /// The object returned in the QueueMessageList array when calling Peek Messages on
-    /// a Queue
-    /// </summary>
+    /// <summary> The peeked queue message. </summary>
     public partial class PeekedMessage : IPersistableModel<PeekedMessage>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>

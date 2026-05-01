@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> List wrapper for PeekedMessageItem array. </summary>
+    /// <summary> The response of peek messages. </summary>
     internal partial class PeekedMessages
     {
         /// <summary> Initializes a new instance of <see cref="PeekedMessages"/>. </summary>

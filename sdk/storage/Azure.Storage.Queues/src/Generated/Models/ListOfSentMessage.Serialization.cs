@@ -17,7 +17,7 @@ using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> List wrapper for EnqueuedMessage array. </summary>
+    /// <summary> The response of send message. </summary>
     internal partial class ListOfSentMessage : IPersistableModel<ListOfSentMessage>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="ListOfSentMessage"/> for deserialization. </summary>

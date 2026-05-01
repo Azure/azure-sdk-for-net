@@ -17,7 +17,7 @@ using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> List wrapper for DequeuedMessageItem array. </summary>
+    /// <summary> The response of receive messages. </summary>
     internal partial class ReceivedMessages : IPersistableModel<ReceivedMessages>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="ReceivedMessages"/> for deserialization. </summary>

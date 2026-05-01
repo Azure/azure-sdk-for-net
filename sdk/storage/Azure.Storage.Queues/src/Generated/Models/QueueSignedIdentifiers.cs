@@ -12,7 +12,7 @@ using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> Represents an array of signed identifiers. </summary>
+    /// <summary> An array of signed identifiers. </summary>
     internal partial class QueueSignedIdentifiers
     {
         /// <summary> Initializes a new instance of <see cref="QueueSignedIdentifiers"/>. </summary>

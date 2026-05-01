@@ -17,7 +17,7 @@ using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> The list queue segment response. </summary>
+    /// <summary> The list queues response. </summary>
     internal partial class ListQueuesResponse : IPersistableModel<ListQueuesResponse>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="ListQueuesResponse"/> for deserialization. </summary>

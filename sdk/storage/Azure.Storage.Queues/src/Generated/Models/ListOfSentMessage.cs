@@ -10,24 +10,24 @@ using System.Linq;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> List wrapper for EnqueuedMessage array. </summary>
+    /// <summary> The response of send message. </summary>
     internal partial class ListOfSentMessage
     {
         /// <summary> Initializes a new instance of <see cref="ListOfSentMessage"/>. </summary>
-        /// <param name="items"> The list of enqueued messages. </param>
+        /// <param name="items"> The list of sent messages. </param>
         internal ListOfSentMessage(IEnumerable<SendReceipt> items)
         {
             Items = items.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListOfSentMessage"/>. </summary>
-        /// <param name="items"> The list of enqueued messages. </param>
+        /// <param name="items"> The list of sent messages. </param>
         internal ListOfSentMessage(IList<SendReceipt> items)
         {
             Items = items;
         }
 
-        /// <summary> The list of enqueued messages. </summary>
+        /// <summary> The list of sent messages. </summary>
         public IList<SendReceipt> Items { get; }
     }
 }

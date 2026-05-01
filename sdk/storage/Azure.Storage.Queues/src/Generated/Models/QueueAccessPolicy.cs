@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> Represents an access policy. </summary>
+    /// <summary> The access policy. </summary>
     public partial class QueueAccessPolicy
     {
         /// <summary> Initializes a new instance of <see cref="QueueAccessPolicy"/>. </summary>
@@ -20,7 +20,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary> Initializes a new instance of <see cref="QueueAccessPolicy"/>. </summary>
         /// <param name="startsOn"> The date-time the policy is active. </param>
         /// <param name="expiresOn"> The date-time the policy expires. </param>
-        /// <param name="permissions"> The permissions for acl the policy. </param>
+        /// <param name="permissions"> The permissions for the policy. </param>
         internal QueueAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string permissions)
         {
             StartsOn = startsOn;
@@ -34,7 +34,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary> The date-time the policy expires. </summary>
         public DateTimeOffset? ExpiresOn { get; set; }
 
-        /// <summary> The permissions for acl the policy. </summary>
+        /// <summary> The permissions for the policy. </summary>
         public string Permissions { get; set; }
     }
 }

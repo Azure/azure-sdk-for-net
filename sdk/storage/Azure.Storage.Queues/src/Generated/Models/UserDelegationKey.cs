@@ -13,12 +13,12 @@ namespace Azure.Storage.Queues.Models
     public partial class UserDelegationKey
     {
         /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
-        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
-        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
+        /// <param name="signedObjectId"> The Entra ID object ID in GUID format. </param>
+        /// <param name="signedTenantId"> The Entra ID tenant ID in GUID format. </param>
         /// <param name="signedStartsOn"> The date-time the key is active. </param>
         /// <param name="signedExpiresOn"> The date-time the key expires. </param>
         /// <param name="signedService"> The service that created the key. </param>
-        /// <param name="signedVersion"> The version of the service that created the key. </param>
+        /// <param name="signedVersion"> The service version used when creating the key. </param>
         /// <param name="value"> The key as a base64 string. </param>
         internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value)
         {
@@ -32,13 +32,13 @@ namespace Azure.Storage.Queues.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
-        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
-        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
+        /// <param name="signedObjectId"> The Entra ID object ID in GUID format. </param>
+        /// <param name="signedTenantId"> The Entra ID tenant ID in GUID format. </param>
         /// <param name="signedStartsOn"> The date-time the key is active. </param>
         /// <param name="signedExpiresOn"> The date-time the key expires. </param>
         /// <param name="signedService"> The service that created the key. </param>
-        /// <param name="signedVersion"> The version of the service that created the key. </param>
-        /// <param name="signedDelegatedUserTenantId"> The delegated user tenant id in Azure AD. Return if DelegatedUserTid is specified. </param>
+        /// <param name="signedVersion"> The service version used when creating the key. </param>
+        /// <param name="signedDelegatedUserTenantId"> The delegated user tenant ID in Entra ID. Return if DelegatedUserTid is specified. </param>
         /// <param name="value"> The key as a base64 string. </param>
         internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string signedDelegatedUserTenantId, string value)
         {

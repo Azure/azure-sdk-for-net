@@ -46,14 +46,18 @@ namespace Azure.Storage.Queues
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Creates a new queue under the specified account. If a queue with the same name already exists, the operation succeeds when the metadata is identical and returns 204; if the metadata differs, the operation returns 409.
+        /// [Protocol Method] Creates a new queue. If a queue with the same name already exists, the operation succeeds when the metadata
+        /// is identical. If the metadata differs, the operation fails.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -75,14 +79,18 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a new queue under the specified account. If a queue with the same name already exists, the operation succeeds when the metadata is identical and returns 204; if the metadata differs, the operation returns 409.
+        /// [Protocol Method] Creates a new queue. If a queue with the same name already exists, the operation succeeds when the metadata
+        /// is identical. If the metadata differs, the operation fails.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -103,8 +111,14 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary> Creates a new queue under the specified account. If a queue with the same name already exists, the operation succeeds when the metadata is identical and returns 204; if the metadata differs, the operation returns 409. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary>
+        /// Creates a new queue. If a queue with the same name already exists, the operation succeeds when the metadata
+        /// is identical. If the metadata differs, the operation fails.
+        /// </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -113,8 +127,14 @@ namespace Azure.Storage.Queues
             return Create(timeout, metadata, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> Creates a new queue under the specified account. If a queue with the same name already exists, the operation succeeds when the metadata is identical and returns 204; if the metadata differs, the operation returns 409. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary>
+        /// Creates a new queue. If a queue with the same name already exists, the operation succeeds when the metadata
+        /// is identical. If the metadata differs, the operation fails.
+        /// </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -124,14 +144,17 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] returns all user-defined metadata and system properties for the specified queue.
+        /// [Protocol Method] Returns all user-defined metadata and system properties for the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -152,14 +175,17 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] returns all user-defined metadata and system properties for the specified queue.
+        /// [Protocol Method] Returns all user-defined metadata and system properties for the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -179,8 +205,11 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary> returns all user-defined metadata and system properties for the specified queue. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Returns all user-defined metadata and system properties for the specified queue. </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response GetProperties(int? timeout = default, CancellationToken cancellationToken = default)
@@ -188,8 +217,11 @@ namespace Azure.Storage.Queues
             return GetProperties(timeout, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> returns all user-defined metadata and system properties for the specified queue. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Returns all user-defined metadata and system properties for the specified queue. </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> GetPropertiesAsync(int? timeout = default, CancellationToken cancellationToken = default)
@@ -198,14 +230,17 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] operation permanently deletes the specified queue
+        /// [Protocol Method] Permanently deletes the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -226,14 +261,17 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] operation permanently deletes the specified queue
+        /// [Protocol Method] Permanently deletes the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -253,8 +291,11 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary> operation permanently deletes the specified queue. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Permanently deletes the specified queue. </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Delete(int? timeout = default, CancellationToken cancellationToken = default)
@@ -262,8 +303,11 @@ namespace Azure.Storage.Queues
             return Delete(timeout, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> operation permanently deletes the specified queue. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Permanently deletes the specified queue. </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteAsync(int? timeout = default, CancellationToken cancellationToken = default)
@@ -272,14 +316,17 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] operation sets one or more user-defined name-value pairs for the specified queue.
+        /// [Protocol Method] Sets user-defined metadata for the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -301,14 +348,17 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] operation sets one or more user-defined name-value pairs for the specified queue.
+        /// [Protocol Method] Sets user-defined metadata for the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -329,8 +379,11 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary> operation sets one or more user-defined name-value pairs for the specified queue. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Sets user-defined metadata for the specified queue. </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -339,8 +392,11 @@ namespace Azure.Storage.Queues
             return SetMetadata(timeout, metadata, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> operation sets one or more user-defined name-value pairs for the specified queue. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Sets user-defined metadata for the specified queue. </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -350,14 +406,17 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] gets the permissions for the specified queue. The permissions indicate whether queue data may be accessed publicly.
+        /// [Protocol Method] Gets the access policy for the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -378,14 +437,17 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] gets the permissions for the specified queue. The permissions indicate whether queue data may be accessed publicly.
+        /// [Protocol Method] Gets the access policy for the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -405,8 +467,11 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary> gets the permissions for the specified queue. The permissions indicate whether queue data may be accessed publicly. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Gets the access policy for the specified queue. </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<QueueSignedIdentifiers> GetAccessPolicy(int? timeout = default, CancellationToken cancellationToken = default)
@@ -415,8 +480,11 @@ namespace Azure.Storage.Queues
             return Response.FromValue((QueueSignedIdentifiers)result, result);
         }
 
-        /// <summary> gets the permissions for the specified queue. The permissions indicate whether queue data may be accessed publicly. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Gets the access policy for the specified queue. </summary>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<QueueSignedIdentifiers>> GetAccessPolicyAsync(int? timeout = default, CancellationToken cancellationToken = default)
@@ -426,7 +494,7 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] sets the permissions for the specified queue.
+        /// [Protocol Method] Sets the permissions for the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -434,7 +502,10 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -455,7 +526,7 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] sets the permissions for the specified queue.
+        /// [Protocol Method] Sets the permissions for the specified queue.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -463,7 +534,10 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -483,9 +557,12 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary> sets the permissions for the specified queue. </summary>
-        /// <param name="queueAcl"> The access control list for the queue. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Sets the permissions for the specified queue. </summary>
+        /// <param name="queueAcl"> The access control list. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response SetAccessPolicy(QueueSignedIdentifiers queueAcl = default, int? timeout = default, CancellationToken cancellationToken = default)
@@ -493,9 +570,12 @@ namespace Azure.Storage.Queues
             return SetAccessPolicy(queueAcl, timeout, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> sets the permissions for the specified queue. </summary>
-        /// <param name="queueAcl"> The access control list for the queue. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Sets the permissions for the specified queue. </summary>
+        /// <param name="queueAcl"> The access control list. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> SetAccessPolicyAsync(QueueSignedIdentifiers queueAcl = default, int? timeout = default, CancellationToken cancellationToken = default)

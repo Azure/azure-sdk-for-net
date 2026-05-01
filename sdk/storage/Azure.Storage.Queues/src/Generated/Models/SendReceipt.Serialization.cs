@@ -15,10 +15,7 @@ using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary>
-    /// The object returned in the QueueMessageList array when calling Put Message on a
-    /// Queue
-    /// </summary>
+    /// <summary> The sent queue message. </summary>
     public partial class SendReceipt : IPersistableModel<SendReceipt>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>

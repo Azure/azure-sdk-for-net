@@ -10,14 +10,14 @@ using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> The list queue segment response. </summary>
+    /// <summary> The list queues response. </summary>
     internal partial class ListQueuesResponse
     {
         /// <summary> Initializes a new instance of <see cref="ListQueuesResponse"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="prefix"> The prefix of the queues. </param>
-        /// <param name="maxResults"> The max results of the queues. </param>
-        /// <param name="nextMarker"> The next marker of the queues. </param>
+        /// <param name="maxResults"> The max results. </param>
+        /// <param name="nextMarker"> Identifies the portion of the list of queues to be returned with the next listing operation. </param>
         internal ListQueuesResponse(string serviceEndpoint, string prefix, int maxResults, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
@@ -30,10 +30,10 @@ namespace Azure.Storage.Queues.Models
         /// <summary> Initializes a new instance of <see cref="ListQueuesResponse"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="prefix"> The prefix of the queues. </param>
-        /// <param name="marker"> The marker of the queues. </param>
-        /// <param name="maxResults"> The max results of the queues. </param>
-        /// <param name="queueItems"> The queue segment. </param>
-        /// <param name="nextMarker"> The next marker of the queues. </param>
+        /// <param name="marker"> Identifies the current position in the list queues operation. </param>
+        /// <param name="maxResults"> The max results. </param>
+        /// <param name="queueItems"> The list of queues. </param>
+        /// <param name="nextMarker"> Identifies the portion of the list of queues to be returned with the next listing operation. </param>
         internal ListQueuesResponse(string serviceEndpoint, string prefix, string marker, int maxResults, IList<QueueItem> queueItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
@@ -50,16 +50,16 @@ namespace Azure.Storage.Queues.Models
         /// <summary> The prefix of the queues. </summary>
         public string Prefix { get; }
 
-        /// <summary> The marker of the queues. </summary>
+        /// <summary> Identifies the current position in the list queues operation. </summary>
         public string Marker { get; }
 
-        /// <summary> The max results of the queues. </summary>
+        /// <summary> The max results. </summary>
         public int MaxResults { get; }
 
-        /// <summary> The queue segment. </summary>
+        /// <summary> The list of queues. </summary>
         public IList<QueueItem> QueueItems { get; }
 
-        /// <summary> The next marker of the queues. </summary>
+        /// <summary> Identifies the portion of the list of queues to be returned with the next listing operation. </summary>
         public string NextMarker { get; }
     }
 }

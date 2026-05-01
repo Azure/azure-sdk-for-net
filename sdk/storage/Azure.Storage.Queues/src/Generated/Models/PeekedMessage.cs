@@ -9,18 +9,15 @@ using System;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary>
-    /// The object returned in the QueueMessageList array when calling Peek Messages on
-    /// a Queue
-    /// </summary>
+    /// <summary> The peeked queue message. </summary>
     public partial class PeekedMessage
     {
         /// <summary> Initializes a new instance of <see cref="PeekedMessage"/>. </summary>
-        /// <param name="messageId"> The Id of the Message. </param>
-        /// <param name="insertedOn"> The time the Message was inserted into the Queue. </param>
-        /// <param name="expiresOn"> The time that the Message will expire and be automatically deleted. </param>
+        /// <param name="messageId"> The ID of the message. </param>
+        /// <param name="insertedOn"> The time the message was inserted into the queue. </param>
+        /// <param name="expiresOn"> The time that the message will expire and be automatically deleted. </param>
         /// <param name="dequeueCount"> The number of times the message has been dequeued. </param>
-        /// <param name="messageText"> The content of the Message. </param>
+        /// <param name="messageText"> The content of the message. </param>
         internal PeekedMessage(string messageId, DateTimeOffset? insertedOn, DateTimeOffset? expiresOn, long dequeueCount, string messageText)
         {
             MessageId = messageId;

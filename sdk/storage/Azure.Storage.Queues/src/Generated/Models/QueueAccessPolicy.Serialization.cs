@@ -15,7 +15,7 @@ using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> Represents an access policy. </summary>
+    /// <summary> The access policy. </summary>
     public partial class QueueAccessPolicy : IPersistableModel<QueueAccessPolicy>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>

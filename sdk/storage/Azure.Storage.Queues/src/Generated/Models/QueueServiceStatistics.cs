@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> Stats for the storage service. </summary>
+    /// <summary> Statistics for the storage queue service. </summary>
     public partial class QueueServiceStatistics
     {
         /// <summary> Initializes a new instance of <see cref="QueueServiceStatistics"/>. </summary>

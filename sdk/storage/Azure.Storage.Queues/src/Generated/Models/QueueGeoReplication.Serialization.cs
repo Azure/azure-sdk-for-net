@@ -15,7 +15,7 @@ using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
+    /// <summary> Geo replication information for the secondary storage location. </summary>
     public partial class QueueGeoReplication : IPersistableModel<QueueGeoReplication>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>

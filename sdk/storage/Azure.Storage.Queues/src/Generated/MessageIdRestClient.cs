@@ -45,22 +45,28 @@ namespace Azure.Storage.Queues
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] The Update operation was introduced with version 2011-08-18 of the Queue
-        /// service API. The Update Message operation updates the visibility timeout of a
-        /// message. You can also use this operation to update the contents of a message. A
-        /// message must be in a format that can be included in an XML request with UTF-8
-        /// encoding, and the encoded message can be up to 64KB in size.
+        /// [Protocol Method] Updates the visibility timeout of a message. This operation can also be used to update the contents of a message.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="messageId"> The id of the queue message. </param>
-        /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
+        /// <param name="messageId"> The ID of the queue message. </param>
+        /// <param name="popReceipt">
+        /// An opaque value required to delete the message. If deletion fails using this
+        /// PopReceipt then the message has been dequeued by another client.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -81,22 +87,28 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] The Update operation was introduced with version 2011-08-18 of the Queue
-        /// service API. The Update Message operation updates the visibility timeout of a
-        /// message. You can also use this operation to update the contents of a message. A
-        /// message must be in a format that can be included in an XML request with UTF-8
-        /// encoding, and the encoded message can be up to 64KB in size.
+        /// [Protocol Method] Updates the visibility timeout of a message. This operation can also be used to update the contents of a message.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="messageId"> The id of the queue message. </param>
-        /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
+        /// <param name="messageId"> The ID of the queue message. </param>
+        /// <param name="popReceipt">
+        /// An opaque value required to delete the message. If deletion fails using this
+        /// PopReceipt then the message has been dequeued by another client.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -116,18 +128,25 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary>
-        /// The Update operation was introduced with version 2011-08-18 of the Queue
-        /// service API. The Update Message operation updates the visibility timeout of a
-        /// message. You can also use this operation to update the contents of a message. A
-        /// message must be in a format that can be included in an XML request with UTF-8
-        /// encoding, and the encoded message can be up to 64KB in size.
-        /// </summary>
-        /// <param name="messageId"> The id of the queue message. </param>
-        /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
-        /// <param name="queueMessage"> A Message object which can be stored in a Queue. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Updates the visibility timeout of a message. This operation can also be used to update the contents of a message. </summary>
+        /// <param name="messageId"> The ID of the queue message. </param>
+        /// <param name="popReceipt">
+        /// An opaque value required to delete the message. If deletion fails using this
+        /// PopReceipt then the message has been dequeued by another client.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
+        /// <param name="queueMessage">
+        /// The queue message. The message must be in a format that can be included in
+        /// an XML request with UTF-8 encoding. The encoded message can be up to 64 KB in size.
+        /// </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Update(string messageId, string popReceipt, int visibilityTimeout, QueueMessage queueMessage = default, int? timeout = default, CancellationToken cancellationToken = default)
@@ -135,18 +154,25 @@ namespace Azure.Storage.Queues
             return Update(messageId, popReceipt, visibilityTimeout, queueMessage, timeout, cancellationToken.ToRequestContext());
         }
 
-        /// <summary>
-        /// The Update operation was introduced with version 2011-08-18 of the Queue
-        /// service API. The Update Message operation updates the visibility timeout of a
-        /// message. You can also use this operation to update the contents of a message. A
-        /// message must be in a format that can be included in an XML request with UTF-8
-        /// encoding, and the encoded message can be up to 64KB in size.
-        /// </summary>
-        /// <param name="messageId"> The id of the queue message. </param>
-        /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
-        /// <param name="visibilityTimeout"> Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
-        /// <param name="queueMessage"> A Message object which can be stored in a Queue. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Updates the visibility timeout of a message. This operation can also be used to update the contents of a message. </summary>
+        /// <param name="messageId"> The ID of the queue message. </param>
+        /// <param name="popReceipt">
+        /// An opaque value required to delete the message. If deletion fails using this
+        /// PopReceipt then the message has been dequeued by another client.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
+        /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
+        /// can be set to a value later than the expiry time.
+        /// </param>
+        /// <param name="queueMessage">
+        /// The queue message. The message must be in a format that can be included in
+        /// an XML request with UTF-8 encoding. The encoded message can be up to 64 KB in size.
+        /// </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> UpdateAsync(string messageId, string popReceipt, int visibilityTimeout, QueueMessage queueMessage = default, int? timeout = default, CancellationToken cancellationToken = default)
@@ -155,16 +181,22 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] The Delete operation deletes the specified message.
+        /// [Protocol Method] Deletes the specified message.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="messageId"> The id of the queue message. </param>
-        /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="messageId"> The ID of the queue message. </param>
+        /// <param name="popReceipt">
+        /// An opaque value required to delete the message. If deletion fails using this
+        /// PopReceipt then the message has been dequeued by another client.
+        /// </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -185,16 +217,22 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// [Protocol Method] The Delete operation deletes the specified message.
+        /// [Protocol Method] Deletes the specified message.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="messageId"> The id of the queue message. </param>
-        /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="messageId"> The ID of the queue message. </param>
+        /// <param name="popReceipt">
+        /// An opaque value required to delete the message. If deletion fails using this
+        /// PopReceipt then the message has been dequeued by another client.
+        /// </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -214,10 +252,16 @@ namespace Azure.Storage.Queues
             }
         }
 
-        /// <summary> The Delete operation deletes the specified message. </summary>
-        /// <param name="messageId"> The id of the queue message. </param>
-        /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Deletes the specified message. </summary>
+        /// <param name="messageId"> The ID of the queue message. </param>
+        /// <param name="popReceipt">
+        /// An opaque value required to delete the message. If deletion fails using this
+        /// PopReceipt then the message has been dequeued by another client.
+        /// </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Delete(string messageId, string popReceipt, int? timeout = default, CancellationToken cancellationToken = default)
@@ -225,10 +269,16 @@ namespace Azure.Storage.Queues
             return Delete(messageId, popReceipt, timeout, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Delete operation deletes the specified message. </summary>
-        /// <param name="messageId"> The id of the queue message. </param>
-        /// <param name="popReceipt"> Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Deletes the specified message. </summary>
+        /// <param name="messageId"> The ID of the queue message. </param>
+        /// <param name="popReceipt">
+        /// An opaque value required to delete the message. If deletion fails using this
+        /// PopReceipt then the message has been dequeued by another client.
+        /// </param>
+        /// <param name="timeout">
+        /// The timeout parameter is expressed in seconds. For more information, see
+        /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteAsync(string messageId, string popReceipt, int? timeout = default, CancellationToken cancellationToken = default)

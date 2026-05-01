@@ -16,7 +16,7 @@ using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> Stats for the storage service. </summary>
+    /// <summary> Statistics for the storage queue service. </summary>
     public partial class QueueServiceStatistics : IPersistableModel<QueueServiceStatistics>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>

@@ -23,7 +23,7 @@ namespace Azure.Storage.Queues.Models
 
         /// <summary> Initializes a new instance of <see cref="QueueItem"/>. </summary>
         /// <param name="name"> The name of the queue. </param>
-        /// <param name="metadata"> The metadata of the container. </param>
+        /// <param name="metadata"> The metadata of the queue. </param>
         internal QueueItem(string name, IDictionary<string, string> metadata)
         {
             Name = name;
