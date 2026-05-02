@@ -21,9 +21,10 @@ namespace Azure.Storage
     /// </summary>
     /// <typeparam name="TValue">
     /// The type of value to cache.  Must implement <see cref="IExpiringValue"/> so the cache
-    /// can determine when to expire and proactively refresh.
+    /// can determine when to expire and proactively refresh, and <see cref="IEquatable{T}"/>
+    /// so <see cref="InvalidateIfCurrent(TValue)"/> can identify the value being invalidated.
     /// </typeparam>
-    internal sealed class AutoRefreshingCache<TValue> where TValue : struct, IExpiringValue
+    internal sealed class AutoRefreshingCache<TValue> where TValue : struct, IExpiringValue, IEquatable<TValue>
     {
         /// <summary>
         /// Delegate the cache calls to acquire or refresh the value.
@@ -126,41 +127,51 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// Signals that the cached value should be proactively refreshed in the background.
-        /// If the current value is still valid, the next call to <see cref="GetAsync"/> will
-        /// return it immediately while a background refresh is initiated.
+        /// Initiates a background refresh of the cached value immediately, without waiting for
+        /// the next call to <see cref="GetAsync"/>. No-op if the cache is empty, the current
+        /// value cannot be served (failed or expired), or a background refresh is already in
+        /// flight. Concurrent <see cref="GetAsync"/> callers continue to receive the current
+        /// value; the new value is promoted on the next <see cref="GetAsync"/> after the
+        /// background acquire completes.
         /// </summary>
         public void ScheduleRefresh()
         {
+            TaskCompletionSource<TValue> backgroundTcs;
+            TValue current;
+
             lock (_syncObj)
             {
-                DateTimeOffset now = DateTimeOffset.UtcNow;
                 if (_state == null
-                    || !_state.CurrentValueTcs.Task.IsCompleted
-                    || _state.CurrentValueTcs.Task.Status != TaskStatus.RanToCompletion
-                    || _state.BackgroundValueTcs != null
-                    || _state.IsCurrentValueFailedOrExpired(now)
-                    || _state.NeedsBackgroundRefresh(now))
+                    || _state.IsCurrentValueFailedOrExpired(DateTimeOffset.UtcNow)
+                    || _state.BackgroundValueTcs != null)
                 {
                     return;
                 }
 
-                // Push RefreshOn to now so NeedsBackgroundRefresh returns true on the
-                // next EvaluateState call.
-                TValue current = _state.CurrentValueTcs.Task.Result;
-                _state = _state.WithCurrentValueRefreshOn(current, now);
+                current = _state.CurrentValueTcs.Task.Result;
+                _state = _state.WithNewBackgroundValueTcs();
+                backgroundTcs = _state.BackgroundValueTcs;
             }
+
+            _ = Task.Run(() => AcquireInBackgroundAsync(backgroundTcs, current, async: true));
         }
 
         /// <summary>
-        /// Clears the cached value entirely.  The next call to <see cref="GetAsync"/> will
-        /// trigger a fresh acquisition.
+        /// Clears the cached value only if the currently cached value equals
+        /// <paramref name="expectedValue"/>.
+        /// The next call to <see cref="GetAsync"/> after a successful invalidation
+        /// will trigger a fresh acquisition.
         /// </summary>
-        public void Invalidate()
+        public void InvalidateIfCurrent(TValue expectedValue)
         {
             lock (_syncObj)
             {
-                _state = null;
+                if (_state != null
+                    && _state.CurrentValueTcs.Task.Status == TaskStatus.RanToCompletion
+                    && expectedValue.Equals(_state.CurrentValueTcs.Task.Result))
+                {
+                    _state = null;
+                }
             }
         }
 
@@ -363,14 +374,6 @@ namespace Azure.Storage
 
             public CacheState WithNewBackgroundValueTcs() =>
                 new CacheState(CurrentValueTcs, NewTcs());
-
-            public CacheState WithCurrentValueRefreshOn(TValue currentValue, DateTimeOffset refreshOn)
-            {
-                var updatedValue = (TValue)currentValue.WithRefreshOn(refreshOn);
-                var tcs = NewTcs();
-                tcs.SetResult(updatedValue);
-                return new CacheState(tcs, default);
-            }
         }
     }
 }

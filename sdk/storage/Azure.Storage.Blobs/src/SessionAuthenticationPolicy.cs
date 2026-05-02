@@ -79,17 +79,18 @@ namespace Azure.Storage.Blobs
         private async ValueTask ProcessInternal(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             AuthState state = AnalyzeRequest(message, out string containerName);
+            SessionTokenInfo sentWith = default;
 
             // If session-eligible, try to acquire a session, sign, and send.
             if (state == AuthState.UseSessionToken)
             {
-                state = await TryAcquireSignAndSendAsync(message, pipeline, async, containerName).ConfigureAwait(false);
+                (state, sentWith) = await TryAcquireSignAndSendAsync(message, pipeline, async, containerName).ConfigureAwait(false);
             }
 
             // If the session-authenticated request was sent, inspect the response.
             if (state == AuthState.SentWithSession)
             {
-                state = await HandleSessionResponseAsync(message, pipeline, async, containerName).ConfigureAwait(false);
+                state = await HandleSessionResponseAsync(message, pipeline, async, containerName, sentWith).ConfigureAwait(false);
             }
 
             // Fallback to bearer-token.
@@ -160,17 +161,17 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Acquires a session token from the cache, signs the request, and sends
         /// it through the pipeline. If session acquisition fails with a service
-        /// error, returns
-        /// <see cref="AuthState.UseBearerToken"/> so the caller can re-issue
-        /// the request via the bearer token policy.
+        /// error, returns <see cref="AuthState.UseBearerToken"/> so the caller can
+        /// re-issue the request via the bearer token policy.
         /// </summary>
         /// <returns>
-        /// <see cref="AuthState.SentWithSession"/> if the request was sent with a
-        /// session token (response is on <paramref name="message"/>);
-        /// <see cref="AuthState.UseBearerToken"/> if the caller should invoke
-        /// the bearer token policy.
+        /// A tuple containing the resulting <see cref="AuthState"/> and, when the
+        /// state is <see cref="AuthState.SentWithSession"/>, the
+        /// <see cref="SessionTokenInfo"/> that was used to sign the request.
+        /// The token is <c>default</c> when the state is
+        /// <see cref="AuthState.UseBearerToken"/>.
         /// </returns>
-        private async ValueTask<AuthState> TryAcquireSignAndSendAsync(
+        private async ValueTask<(AuthState State, SessionTokenInfo SentWith)> TryAcquireSignAndSendAsync(
             HttpMessage message,
             ReadOnlyMemory<HttpPipelinePolicy> pipeline,
             bool async,
@@ -186,7 +187,7 @@ namespace Azure.Storage.Blobs
             catch (RequestFailedException ex) when (ShouldFallbackCreateSessionFailure(ex))
             {
                 // Session creation failed with a service error — signal bearer fallback.
-                return AuthState.UseBearerToken;
+                return (AuthState.UseBearerToken, default);
             }
 
             SignRequestAndSetAuthHeader(message, sessionInfo);
@@ -201,7 +202,7 @@ namespace Azure.Storage.Blobs
                 ProcessNext(message, pipeline);
             }
 
-            return AuthState.SentWithSession;
+            return (AuthState.SentWithSession, sessionInfo);
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.Storage.Blobs
             HttpMessage message,
             ReadOnlyMemory<HttpPipelinePolicy> pipeline,
             bool async,
-            string containerName)
+            string containerName,
+            SessionTokenInfo sentWith)
         {
             int statusCode = message.Response.Status;
 
@@ -227,9 +229,11 @@ namespace Azure.Storage.Blobs
                 // Dispose the content stream to free up a connection before re-sending.
                 message.Response.ContentStream?.Dispose();
 
-                // Invalidate only this container's cache and retry.
-                GetOrCreateCache(containerName).Invalidate();
-                return await TryAcquireSignAndSendAsync(message, pipeline, async, containerName).ConfigureAwait(false);
+                // Conditional invalidate: only clear the cache if it still holds the token we just used.
+                GetOrCreateCache(containerName).InvalidateIfCurrent(sentWith);
+                // Retry one more time but don't handle session response.
+                (AuthState retryState, _) = await TryAcquireSignAndSendAsync(message, pipeline, async, containerName).ConfigureAwait(false);
+                return retryState;
             }
 
             // --- 403 "Authentication scheme Session is not supported." ---
@@ -331,7 +335,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Cached session token information returned by the Create Session API.
         /// </summary>
-        internal readonly struct SessionTokenInfo : IExpiringValue
+        internal readonly struct SessionTokenInfo : IExpiringValue, IEquatable<SessionTokenInfo>
         {
             public string SessionToken { get; }
             public string SessionKey { get; }
@@ -348,6 +352,9 @@ namespace Azure.Storage.Blobs
 
             public IExpiringValue WithRefreshOn(DateTimeOffset refreshOn) =>
                 new SessionTokenInfo(SessionToken, SessionKey, ExpiresOn, refreshOn);
+
+            public bool Equals(SessionTokenInfo other) =>
+                string.Equals(SessionToken, other.SessionToken);
         }
 
         /// <summary>

@@ -568,6 +568,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Creates a <see cref="SessionAuthenticationPolicy"/> wrapping the given bearer token policy.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected static HttpPipelinePolicy CreateSessionAuthenticationPolicy(
             HttpPipelinePolicy bearerTokenPolicy,
             Func<BlobServiceClient> blobServiceClientFactory,

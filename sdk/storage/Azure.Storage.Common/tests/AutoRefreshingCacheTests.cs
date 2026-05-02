@@ -27,7 +27,7 @@ namespace Azure.Storage.Tests
         /// Lightweight test struct implementing <see cref="IExpiringValue"/>
         /// so we can test <see cref="AutoRefreshingCache{TValue}"/> in isolation.
         /// </summary>
-        private readonly struct TestValue : IExpiringValue
+        private readonly struct TestValue : IExpiringValue, IEquatable<TestValue>
         {
             public string Token { get; }
             public DateTimeOffset ExpiresOn { get; }
@@ -46,6 +46,9 @@ namespace Azure.Storage.Tests
 
             public IExpiringValue WithRefreshOn(DateTimeOffset refreshOn) =>
                 new TestValue(Token, ExpiresOn, refreshOn);
+
+            public bool Equals(TestValue other) =>
+                string.Equals(Token, other.Token, StringComparison.Ordinal);
         }
 
         #endregion
@@ -982,7 +985,7 @@ namespace Azure.Storage.Tests
         #region Invalidate
 
         [Test]
-        public async Task Invalidate_ClearsCacheAndReAcquires()
+        public async Task InvalidateIfCurrent_ClearsCacheAndReAcquires()
         {
             int acquireCount = 0;
             var cache = new AutoRefreshingCache<TestValue>(
@@ -997,7 +1000,7 @@ namespace Azure.Storage.Tests
             Assert.AreEqual("token1", first.Token);
             Assert.AreEqual(1, acquireCount);
 
-            cache.Invalidate();
+            cache.InvalidateIfCurrent(first);
 
             TestValue second = await GetValueAsync(cache);
             Assert.AreEqual("token2", second.Token);
@@ -1005,7 +1008,7 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        public async Task Invalidate_DuringInflightAcquire_NextCallerReAcquires()
+        public async Task InvalidateIfCurrent_DuringInflightAcquire_IsNoOp()
         {
             int acquireCount = 0;
             var requestMre = new ManualResetEventSlim(false);
@@ -1024,39 +1027,66 @@ namespace Azure.Storage.Tests
             var callerA = Task.Run(async () => await GetValueAsync(cache));
             requestMre.Wait();
 
-            // Caller B arrives while A is still acquiring — joins A's in-flight TCS
-            // rather than starting a new acquisition.
+            // Caller B arrives while A is still acquiring — joins A's in-flight TCS.
             var callerB = Task.Run(async () => await GetValueAsync(cache));
-            // Give B time to enter EvaluateState and park on A's TCS before we Invalidate.
             await Task.Delay(200);
 
-            // Invalidate while caller A is acquiring and caller B is waiting on A's TCS.
-            cache.Invalidate();
+            // InvalidateIfCurrent during in-flight acquire is a no-op (CurrentValueTcs
+            // is not RanToCompletion, so the equality check is skipped).
+            cache.InvalidateIfCurrent(MakeValue("anything", TimeSpan.FromMinutes(30)));
 
-            requestMre.Reset();
-
-            // Let caller A finish — A's acquire completes and SetResult("token1") on the
-            // TCS. Both A and B unblock with "token1", even though _state is now null.
+            // Let caller A finish.
             responseMre.Set();
             TestValue resultA = await callerA;
             TestValue resultB = await callerB;
-            Assert.AreEqual("token1", resultA.Token, "Caller A should receive its acquired value.");
-            Assert.AreEqual("token1", resultB.Token,
-                "Caller B captured the in-flight TCS before Invalidate and should still receive A's value.");
+            Assert.AreEqual("token1", resultA.Token);
+            Assert.AreEqual("token1", resultB.Token);
+            Assert.AreEqual(1, acquireCount);
 
-            // Only one acquire so far — B never re-entered the delegate.
+            // Caller C arrives after — sees A's cached result, no re-acquire.
+            TestValue resultC = await GetValueAsync(cache);
+            Assert.AreEqual("token1", resultC.Token);
             Assert.AreEqual(1, acquireCount,
-                "B must not have triggered a second acquire while parked on A's TCS.");
+                "InvalidateIfCurrent during in-flight acquire must not trigger a re-acquire.");
+        }
 
-            // Caller C arrives after Invalidate — should do a fresh foreground acquire
-            responseMre.Reset();
-            var callerC = Task.Run(async () => await GetValueAsync(cache));
-            requestMre.Wait();
-            responseMre.Set();
+        [Test]
+        public async Task InvalidateIfCurrent_AfterValueReplaced_IsNoOp()
+        {
+            int acquireCount = 0;
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    int count = Interlocked.Increment(ref acquireCount);
+                    return new ValueTask<TestValue>(MakeValue($"token{count}", TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
 
-            TestValue resultC = await callerC;
-            Assert.AreEqual("token2", resultC.Token);
+            // Acquire token1, then replace it with token2 via InvalidateIfCurrent + GetAsync.
+            TestValue first = await GetValueAsync(cache);
+            Assert.AreEqual("token1", first.Token);
+            cache.InvalidateIfCurrent(first);
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("token2", second.Token);
             Assert.AreEqual(2, acquireCount);
+
+            // Simulate a "late" 401 handler still holding token1: must NOT clear the cache.
+            cache.InvalidateIfCurrent(first);
+
+            TestValue third = await GetValueAsync(cache);
+            Assert.AreEqual("token2", third.Token, "Stale invalidate must not displace the current token.");
+            Assert.AreEqual(2, acquireCount, "Stale invalidate must not trigger a re-acquire.");
+        }
+
+        [Test]
+        public void InvalidateIfCurrent_WhenEmpty_IsNoOp()
+        {
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) => new ValueTask<TestValue>(MakeValue("token", TimeSpan.FromMinutes(30))),
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // No cached value yet — must not throw.
+            Assert.DoesNotThrow(() => cache.InvalidateIfCurrent(MakeValue("anything", TimeSpan.FromMinutes(30))));
         }
 
         #endregion
@@ -1088,12 +1118,10 @@ namespace Azure.Storage.Tests
         public async Task ScheduleRefresh_TriggersBackgroundRefresh()
         {
             int acquireCount = 0;
-            var responseMre = new ManualResetEventSlim(true);
 
             var cache = new AutoRefreshingCache<TestValue>(
                 acquire: (async, ct) =>
                 {
-                    responseMre.Wait(ct);
                     int count = Interlocked.Increment(ref acquireCount);
                     return new ValueTask<TestValue>(MakeValue($"token{count}", TimeSpan.FromMinutes(30)));
                 },
@@ -1102,15 +1130,15 @@ namespace Azure.Storage.Tests
             TestValue first = await GetValueAsync(cache);
             Assert.AreEqual("token1", first.Token);
 
+            // Kicks off the background refresh immediately.
             cache.ScheduleRefresh();
 
-            TestValue second = await GetValueAsync(cache);
-            Assert.AreEqual("token1", second.Token);
-
+            // Give the background acquire time to complete.
             await Task.Delay(1_000);
 
-            TestValue third = await GetValueAsync(cache);
-            Assert.AreEqual("token2", third.Token);
+            // Next call promotes the background result.
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("token2", second.Token);
             Assert.AreEqual(2, acquireCount);
         }
 
@@ -1135,18 +1163,15 @@ namespace Azure.Storage.Tests
             TestValue first = await GetValueAsync(cache);
             Assert.AreEqual("original", first.Token);
 
-            // Trigger a background refresh that will fail.
+            // Kicks off a background refresh that will fail.
             cache.ScheduleRefresh();
 
-            // This call kicks off the background refresh (which throws).
-            TestValue second = await GetValueAsync(cache);
-            Assert.AreEqual("original", second.Token);
-
+            // Give the background acquire time to fail.
             await Task.Delay(1_000);
 
             // The caller still gets the valid cached value — failure was absorbed.
-            TestValue third = await GetValueAsync(cache);
-            Assert.AreEqual("original", third.Token);
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("original", second.Token);
             Assert.GreaterOrEqual(acquireCount, 2);
         }
 
@@ -1169,11 +1194,11 @@ namespace Azure.Storage.Tests
             TestValue first = await GetValueAsync(cache);
             Assert.AreEqual("token1", first.Token);
 
-            // Trigger a background refresh via ScheduleRefresh, then block it.
-            cache.ScheduleRefresh();
+            // Block the next acquire, then trigger a background refresh.
             responseMre.Reset();
+            cache.ScheduleRefresh();
 
-            // This call kicks off the background refresh (now blocked).
+            // GetAsync returns the current value while the background refresh is in flight.
             TestValue second = await GetValueAsync(cache);
             Assert.AreEqual("token1", second.Token);
 
@@ -1220,6 +1245,46 @@ namespace Azure.Storage.Tests
             // failed-or-expired path (foreground re-acquire).
             TestValue recovered = await GetValueAsync(cache);
             Assert.AreEqual("token2", recovered.Token);
+            Assert.AreEqual(2, acquireCount);
+        }
+
+        [Test]
+        public async Task ScheduleRefresh_ConcurrentCalls_TriggersSingleAcquire()
+        {
+            int acquireCount = 0;
+            var responseMre = new ManualResetEventSlim(true);
+
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: (async, ct) =>
+                {
+                    responseMre.Wait(ct);
+                    int count = Interlocked.Increment(ref acquireCount);
+                    return new ValueTask<TestValue>(MakeValue($"token{count}", TimeSpan.FromMinutes(30)));
+                },
+                backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+
+            // Foreground acquire to seed the cache.
+            TestValue first = await GetValueAsync(cache);
+            Assert.AreEqual("token1", first.Token);
+
+            // Block the next acquire so all concurrent ScheduleRefresh callers
+            // race against the same in-flight background slot.
+            responseMre.Reset();
+
+            // Fire many concurrent ScheduleRefresh calls.
+            const int parallelism = 32;
+            Parallel.For(0, parallelism, _ => cache.ScheduleRefresh());
+
+            // Release the background acquire and let it complete.
+            responseMre.Set();
+            await Task.Delay(1_000);
+
+            // The next GetAsync promotes the single background result.
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("token2", second.Token);
+
+            // Only 2 acquires total: initial + exactly one background, regardless
+            // of how many ScheduleRefresh calls raced.
             Assert.AreEqual(2, acquireCount);
         }
 
