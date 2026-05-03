@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetSharedGalleryRequest(string subscriptionId, AzureLocation location, string galleryUniqueName, RequestContext context)
+        internal HttpMessage CreateGetSharedGalleryDataRequest(string subscriptionId, AzureLocation location, string galleryUniqueName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

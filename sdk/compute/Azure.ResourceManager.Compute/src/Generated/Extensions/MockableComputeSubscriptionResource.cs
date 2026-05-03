@@ -2925,11 +2925,11 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SharedGalleryData>> GetSharedGalleryAsync(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedGalleryData>> GetSharedGalleryDataAsync(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
-            using DiagnosticScope scope = SharedGalleriesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetSharedGallery");
+            using DiagnosticScope scope = SharedGalleriesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetSharedGalleryData");
             scope.Start();
             try
             {
@@ -2937,7 +2937,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleriesRestClient.CreateGetSharedGalleryRequest(Id.SubscriptionId, location, galleryUniqueName, context);
+                HttpMessage message = SharedGalleriesRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, location, galleryUniqueName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -2975,11 +2975,11 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SharedGalleryData> GetSharedGallery(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public virtual Response<SharedGalleryData> GetSharedGalleryData(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
-            using DiagnosticScope scope = SharedGalleriesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetSharedGallery");
+            using DiagnosticScope scope = SharedGalleriesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetSharedGalleryData");
             scope.Start();
             try
             {
@@ -2987,7 +2987,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleriesRestClient.CreateGetSharedGalleryRequest(Id.SubscriptionId, location, galleryUniqueName, context);
+                HttpMessage message = SharedGalleriesRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, location, galleryUniqueName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3483,11 +3483,11 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CommunityGalleryData>> GetCommunityGalleryAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunityGalleryData>> GetCommunityGalleryDataAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
-            using DiagnosticScope scope = CommunityGalleriesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetCommunityGallery");
+            using DiagnosticScope scope = CommunityGalleriesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetCommunityGalleryData");
             scope.Start();
             try
             {
@@ -3495,7 +3495,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CommunityGalleriesRestClient.CreateGetCommunityGalleryRequest(Id.SubscriptionId, location, publicGalleryName, context);
+                HttpMessage message = CommunityGalleriesRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3533,11 +3533,11 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CommunityGalleryData> GetCommunityGallery(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        public virtual Response<CommunityGalleryData> GetCommunityGalleryData(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
-            using DiagnosticScope scope = CommunityGalleriesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetCommunityGallery");
+            using DiagnosticScope scope = CommunityGalleriesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetCommunityGalleryData");
             scope.Start();
             try
             {
@@ -3545,7 +3545,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CommunityGalleriesRestClient.CreateGetCommunityGalleryRequest(Id.SubscriptionId, location, publicGalleryName, context);
+                HttpMessage message = CommunityGalleriesRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(result), result);
                 if (response.Value == null)

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
                 await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 if (message.Response.IsError)
                     throw new RequestFailedException(message.Response);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
                 Pipeline.Send(message, cancellationToken);
                 if (message.Response.IsError)
                     throw new RequestFailedException(message.Response);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
                 await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 if (message.Response.Status == 404)
                     return Response.FromValue(false, message.Response);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
                 Pipeline.Send(message, cancellationToken);
                 if (message.Response.Status == 404)
                     return Response.FromValue(false, message.Response);
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
                 await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 if (message.Response.Status == 404)
                     return new NoValueResponse<CommunityGalleryResource>(message.Response);
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _communityGalleryRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, new RequestContext { CancellationToken = cancellationToken });
                 Pipeline.Send(message, cancellationToken);
                 if (message.Response.Status == 404)
                     return new NoValueResponse<CommunityGalleryResource>(message.Response);

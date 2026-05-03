@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
                 await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 if (message.Response.IsError)
                     throw new RequestFailedException(message.Response);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
                 Pipeline.Send(message, cancellationToken);
                 if (message.Response.IsError)
                     throw new RequestFailedException(message.Response);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
                 await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 if (message.Response.Status == 404)
                     return Response.FromValue(false, message.Response);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
                 Pipeline.Send(message, cancellationToken);
                 if (message.Response.Status == 404)
                     return Response.FromValue(false, message.Response);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
                 await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 if (message.Response.Status == 404)
                     return new NoValueResponse<SharedGalleryResource>(message.Response);
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
+                using var message = _sharedGalleryRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, new RequestContext { CancellationToken = cancellationToken });
                 Pipeline.Send(message, cancellationToken);
                 if (message.Response.Status == 404)
                     return new NoValueResponse<SharedGalleryResource>(message.Response);

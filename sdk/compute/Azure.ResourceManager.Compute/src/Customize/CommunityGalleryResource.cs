@@ -124,9 +124,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public virtual async Task<Response<CommunityGalleryResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var response = await GetSubscriptionResource().GetCommunityGalleryAsync(new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-            response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
-            return Response.FromValue(new CommunityGalleryResource(Client, response.Value), response.GetRawResponse());
+            return await GetSubscriptionResource().GetCommunityGalleryAsync(new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -136,9 +134,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public virtual Response<CommunityGalleryResource> Get(CancellationToken cancellationToken = default)
         {
-            var response = GetSubscriptionResource().GetCommunityGallery(new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-            response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
-            return Response.FromValue(new CommunityGalleryResource(Client, response.Value), response.GetRawResponse());
+            return GetSubscriptionResource().GetCommunityGallery(new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
         }
     }
 }
