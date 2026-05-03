@@ -15,7 +15,20 @@
 
 .PARAMETER Services
     One or more service name patterns to regenerate (e.g., "KeyVault", "Compute").
-    Supports wildcards. Case-insensitive. Uses substring matching.
+    Case-insensitive. Matching rules:
+      * If the pattern contains a wildcard ('*' or '?'), it is matched verbatim
+        with -like (no implicit padding).
+      * Otherwise the pattern is treated as a literal substring and matched
+        against both Library and Service names (the legacy behavior).
+      * As a special case, a pattern that starts with "Azure.ResourceManager."
+        and contains no wildcards is matched as an exact Library name. This
+        avoids the common pitfall where "Azure.ResourceManager.Compute" also
+        selects ComputeFleet, ComputeLimit, ComputeSchedule, etc.
+      * Use -Exact to force exact Library-name matching for any pattern.
+
+.PARAMETER Exact
+    When specified, every pattern in -Services must match a Library name
+    exactly (case-insensitive). Disables substring/wildcard matching.
 
 .PARAMETER Parallel
     Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
@@ -46,10 +59,20 @@
 
 .EXAMPLE
     .\RegenSdkLocal.ps1 -Services "KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs"
+
+.EXAMPLE
+    .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.Compute"
+    # Auto-treated as exact Library match because it starts with "Azure.ResourceManager."
+    # Will NOT also pick up ComputeFleet, ComputeLimit, ComputeSchedule.
+
+.EXAMPLE
+    .\RegenSdkLocal.ps1 -Services "Compute" -Exact
+    # Forces exact match against Library name only (no service-arm, no substring).
 #>
 
 param(
     [string[]]$Services,
+    [switch]$Exact,
     [ValidateRange(1, [int]::MaxValue)]
     [int]$Parallel = 4,
     [string]$LocalSpecRepoPath,
@@ -146,9 +169,31 @@ Write-Host "Found $($mgmtSdkFolders.Count) mgmt SDK folders"
 
 # Apply services filter
 if ($Services -and $Services.Count -gt 0) {
-    $mgmtSdkFolders = @($mgmtSdkFolders | Where-Object { 
+    $mgmtSdkFolders = @($mgmtSdkFolders | Where-Object {
         $folder = $_
-        $Services | Where-Object { $folder.Library -like "*$_*" -or $folder.Service -like "*$_*" }
+        $matched = $false
+        foreach ($pattern in $Services) {
+            $hasWildcard = $pattern -match '[\*\?]'
+            $isFullLibName = -not $hasWildcard -and $pattern -like 'Azure.ResourceManager.*'
+
+            if ($Exact -or $isFullLibName) {
+                # Exact Library-name match (case-insensitive)
+                if ($folder.Library -ieq $pattern) { $matched = $true; break }
+            }
+            elseif ($hasWildcard) {
+                # User-supplied wildcard pattern, used verbatim
+                if ($folder.Library -like $pattern -or $folder.Service -like $pattern) {
+                    $matched = $true; break
+                }
+            }
+            else {
+                # Legacy substring match against Library or Service
+                if ($folder.Library -like "*$pattern*" -or $folder.Service -like "*$pattern*") {
+                    $matched = $true; break
+                }
+            }
+        }
+        $matched
     })
     Write-Host "Filtered to $($mgmtSdkFolders.Count) matching: $($Services -join ', ')"
 }
