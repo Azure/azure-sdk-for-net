@@ -1,8 +1,5 @@
 # Server Code Generation Design
 
-> Condensed from the prototype design docs in
-> [ArcturusZhang/arm-server-codegen/docs](https://github.com/ArcturusZhang/arm-server-codegen/tree/main/docs).
-
 ## The API-first vision
 
 Today, ARM resource provider teams maintain hand-written ASP.NET controllers

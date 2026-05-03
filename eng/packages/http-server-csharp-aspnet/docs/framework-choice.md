@@ -1,9 +1,5 @@
 # Why Microsoft.TypeSpec.Generator?
 
-> Condensed from
-> [server-codegen-framework-comparison.md](https://github.com/ArcturusZhang/arm-server-codegen/blob/main/docs/server-codegen-framework-comparison.md)
-> in the prototype repo.
-
 ## The two candidate frameworks
 
 |                | Framework                                                                                                            | Language        |
