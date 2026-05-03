@@ -79,18 +79,59 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(ResourceProvisionPayload)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(VirtualMachineBaseProfile))
+            if (Optional.IsCollectionDefined(BaseProfile))
             {
-                writer.WritePropertyName("virtualMachineBaseProfile"u8);
-                writer.WriteObjectValue(VirtualMachineBaseProfile, options);
-            }
-            if (Optional.IsCollectionDefined(VirtualMachineOverrides))
-            {
-                writer.WritePropertyName("virtualMachineOverrides"u8);
-                writer.WriteStartArray();
-                foreach (BulkVMConfiguration item in VirtualMachineOverrides)
+                writer.WritePropertyName("baseProfile"u8);
+                writer.WriteStartObject();
+                foreach (var item in BaseProfile)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(ResourceOverrides))
+            {
+                writer.WritePropertyName("resourceOverrides"u8);
+                writer.WriteStartArray();
+                foreach (IDictionary<string, BinaryData> item in ResourceOverrides)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartObject();
+                    foreach (var item0 in item)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+#if NET6_0_OR_GREATER
+                        writer.WriteRawValue(item0.Value);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
+                    }
+                    writer.WriteEndObject();
                 }
                 writer.WriteEndArray();
             }
@@ -143,34 +184,65 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            BulkVMConfiguration virtualMachineBaseProfile = default;
-            IList<BulkVMConfiguration> virtualMachineOverrides = default;
+            IDictionary<string, BinaryData> baseProfile = default;
+            IList<IDictionary<string, BinaryData>> resourceOverrides = default;
             int resourceCount = default;
             string resourcePrefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("virtualMachineBaseProfile"u8))
+                if (prop.NameEquals("baseProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    virtualMachineBaseProfile = BulkVMConfiguration.DeserializeBulkVMConfiguration(prop.Value, options);
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    baseProfile = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("virtualMachineOverrides"u8))
+                if (prop.NameEquals("resourceOverrides"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<BulkVMConfiguration> array = new List<BulkVMConfiguration>();
+                    List<IDictionary<string, BinaryData>> array = new List<IDictionary<string, BinaryData>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BulkVMConfiguration.DeserializeBulkVMConfiguration(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var prop0 in item.EnumerateObject())
+                            {
+                                if (prop0.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(prop0.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                                }
+                            }
+                            array.Add(dictionary);
+                        }
                     }
-                    virtualMachineOverrides = array;
+                    resourceOverrides = array;
                     continue;
                 }
                 if (prop.NameEquals("resourceCount"u8))
@@ -188,7 +260,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceProvisionPayload(virtualMachineBaseProfile, virtualMachineOverrides ?? new ChangeTrackingList<BulkVMConfiguration>(), resourceCount, resourcePrefix, additionalBinaryDataProperties);
+            return new ResourceProvisionPayload(baseProfile ?? new ChangeTrackingDictionary<string, BinaryData>(), resourceOverrides ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(), resourceCount, resourcePrefix, additionalBinaryDataProperties);
         }
     }
 }
