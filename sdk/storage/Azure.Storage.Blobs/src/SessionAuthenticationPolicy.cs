@@ -83,19 +83,19 @@ namespace Azure.Storage.Blobs
 
             SessionTokenInfo sentWith = default; // Tracks the token used in the most recent session request.
 
-            // 2. First attempt with session authentication (if eligible).
+            // 2. Attempt first request with session authentication (if eligible).
             if (state == AuthState.UseSessionToken)
             {
                 (state, sentWith) = await TryAcquireSignAndSendAsync(message, pipeline, async, containerName).ConfigureAwait(false);
             }
 
-            // 3. Classify the first attempt session response (may signal retry or fallback to bearer-token).
+            // 3. Handle the first attempt's session response (may signal retry or fallback to bearer-token).
             if (state == AuthState.SentWithSession)
             {
                 state = HandleFirstSessionResponse(message, containerName, sentWith);
             }
 
-            // 4. Single terminal retry (if eligible). Intentionally do not handle response on the retry.
+            // 4. Retry exactly one time (if eligible). Intentionally do not handle response on the retry.
             if (state == AuthState.UseSessionToken)
             {
                 (state, sentWith) = await TryAcquireSignAndSendAsync(message, pipeline, async, containerName).ConfigureAwait(false);
