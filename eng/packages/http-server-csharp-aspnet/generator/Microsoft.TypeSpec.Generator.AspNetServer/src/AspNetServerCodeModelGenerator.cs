@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel.Composition;
-using System.Threading.Tasks;
 using Microsoft.TypeSpec.Generator;
 
 namespace Microsoft.TypeSpec.Generator.AspNetServer
@@ -34,16 +33,8 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
 
         /// <inheritdoc/>
         public override AspNetServerOutputLibrary OutputLibrary { get; } = new();
-
-        /// <summary>
-        /// Emits the ASP.NET controller base files. These are written as raw
-        /// C# source rather than going through the TypeProvider pipeline because
-        /// they reference <c>Microsoft.AspNetCore.Mvc</c> types that are not
-        /// loaded in the generator's runtime.
-        /// </summary>
-        public override Task WriteAdditionalFiles(string outputPath) =>
-            ControllerEmitter.EmitAsync(outputPath);
     }
 }
+
 
 

@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
     <PackageReference Include="Microsoft.TypeSpec.Generator.Input" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <Target Name="CheckEmitterBuild" BeforeTargets="Build">
@@ -22,6 +23,9 @@
       <SourceDir Include="$(OutputPath)**\*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
-    <Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
+    <!-- Use our own runtimeconfig.json (instead of upstream's) so the generator
+         host loads both Microsoft.NETCore.App and Microsoft.AspNetCore.App,
+         allowing our TypeProviders to reference AspNetCore types via typeof(). -->
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
   </Target>
 </Project>
