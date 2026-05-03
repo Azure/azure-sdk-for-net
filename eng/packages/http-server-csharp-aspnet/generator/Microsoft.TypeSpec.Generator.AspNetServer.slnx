@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="Microsoft.TypeSpec.Generator.AspNetServer/src/Microsoft.TypeSpec.Generator.AspNetServer.csproj" />
+  <Project Path="Microsoft.TypeSpec.Generator.AspNetServer/test/Microsoft.TypeSpec.Generator.AspNetServer.Tests.csproj" />
 </Solution>

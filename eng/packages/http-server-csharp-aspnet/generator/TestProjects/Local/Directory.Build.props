@@ -1,0 +1,12 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <IsClientLibrary>true</IsClientLibrary>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+  <!--
+    Generated test projects are not first-party SDK libraries — they exist purely
+    to validate end-to-end emitter+generator output. The flags above prevent the
+    repo's SDK build infrastructure from treating them as shipping libraries.
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+</Project>

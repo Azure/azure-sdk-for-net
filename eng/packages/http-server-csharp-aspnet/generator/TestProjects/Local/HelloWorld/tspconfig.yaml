@@ -1,0 +1,6 @@
+emit:
+  - "@azure-typespec/http-server-csharp-aspnet"
+options:
+  "@azure-typespec/http-server-csharp-aspnet":
+    package-name: "Microsoft.TypeSpec.Generator.AspNetServer.HelloWorld"
+

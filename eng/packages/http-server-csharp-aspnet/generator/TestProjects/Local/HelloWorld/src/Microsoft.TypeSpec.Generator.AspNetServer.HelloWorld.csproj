@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>End-to-end test project for the AspNetServer code generator.</Description>
+    <AssemblyTitle>SDK Code Generation Microsoft.TypeSpec.Generator.AspNetServer.HelloWorld</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Microsoft.TypeSpec.Generator.AspNetServer.HelloWorld</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>
