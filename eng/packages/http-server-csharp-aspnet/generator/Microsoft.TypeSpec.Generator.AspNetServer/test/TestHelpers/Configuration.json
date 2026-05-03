@@ -1,6 +1,0 @@
-{
-  "output-folder": "./outputFolder",
-  "project-folder": "./projectFolder",
-  "package-name": "AspNetServer.TestHost",
-  "disable-xml-docs": true
-}

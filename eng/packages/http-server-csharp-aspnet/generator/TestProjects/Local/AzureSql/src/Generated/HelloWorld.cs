@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.HelloWorld
+namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql
 {
     internal static partial class HelloWorld
     {

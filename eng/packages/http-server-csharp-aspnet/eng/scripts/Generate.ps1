@@ -23,10 +23,10 @@ $testProjectsLocalDir = Join-Path $packageRoot 'generator' 'TestProjects' 'Local
 
 $testProjects = @(
     @{
-        FilterName = "HelloWorld"
-        Folder     = "HelloWorld"
+        FilterName = "AzureSql"
+        Folder     = "AzureSql"
         EntryTsp   = "main.tsp"
-        Csproj     = "Microsoft.TypeSpec.Generator.AspNetServer.HelloWorld.csproj"
+        Csproj     = "Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.csproj"
     }
 )
 
