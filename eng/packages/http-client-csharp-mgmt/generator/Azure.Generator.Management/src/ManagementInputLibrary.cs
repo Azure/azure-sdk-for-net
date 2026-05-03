@@ -115,21 +115,23 @@ namespace Azure.Generator.Management
                 }
 
                 // @@clientOption(target, name, value, scope?) — TCGC propagates the named arguments as BinaryData JSON values.
-                if (!decorator.Arguments.TryGetValue("name", out var keyData) || keyData == null)
+                // Note: the second positional parameter is called "name" in the TCGC decorator definition,
+                // even though our docs and conceptual model refer to these as "keys".
+                if (!decorator.Arguments.TryGetValue("name", out var nameData) || nameData == null)
                 {
                     continue;
                 }
 
-                string? key;
+                string? optionName;
                 try
                 {
-                    key = keyData.ToObjectFromJson<string>();
+                    optionName = nameData.ToObjectFromJson<string>();
                 }
                 catch
                 {
                     continue;
                 }
-                if (key != DisableSafeFlattenKey)
+                if (optionName != DisableSafeFlattenKey)
                 {
                     continue;
                 }
