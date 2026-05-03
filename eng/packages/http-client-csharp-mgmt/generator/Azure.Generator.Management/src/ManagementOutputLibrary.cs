@@ -67,6 +67,27 @@ namespace Azure.Generator.Management
                 kv => ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!,
                 kv => kv.Value.Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!)!).ToHashSet());
 
+        private HashSet<ModelProvider>? _safeFlattenDisabledModels;
+        /// <summary>
+        /// Set of model providers for which safe-flatten should be disabled, derived from the
+        /// <c>@@clientOption(Model, "disable-safe-flatten", true, "csharp")</c> decorator on the input model.
+        /// </summary>
+        internal HashSet<ModelProvider> SafeFlattenDisabledModels => _safeFlattenDisabledModels ??= BuildSafeFlattenDisabledModels();
+
+        private HashSet<ModelProvider> BuildSafeFlattenDisabledModels()
+        {
+            var result = new HashSet<ModelProvider>();
+            foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.SafeFlattenDisabledModels)
+            {
+                var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+                if (model != null)
+                {
+                    result.Add(model);
+                }
+            }
+            return result;
+        }
+
         private T GetValue<T>(ref T? field) where T : class
         {
             InitializeResourceClients(
