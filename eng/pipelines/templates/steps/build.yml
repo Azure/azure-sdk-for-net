@@ -56,6 +56,7 @@ steps:
     - template: /eng/common/pipelines/templates/steps/verify-codeowners.yml
       parameters:
         ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+        Artifacts: ${{ parameters.Artifacts }}
 
   - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
 

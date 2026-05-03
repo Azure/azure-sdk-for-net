@@ -24,11 +24,21 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
-        internal MicrosoftFabricPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FabricDataAgentToolOptions toolOptions) : base(@type, additionalBinaryDataProperties)
+        internal MicrosoftFabricPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, FabricDataAgentToolOptions toolOptions) : base(@type, additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
             ToolOptions = toolOptions;
         }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary> The fabric data agent tool parameters. </summary>
         public FabricDataAgentToolOptions ToolOptions { get; set; }

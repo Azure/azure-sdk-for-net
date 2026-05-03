@@ -4,8 +4,6 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,76 +18,8 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
-public class Sample_EvaluationRules : SamplesBase
+public class Sample_EvaluationRules : EvaluationSampleBase
 {
-    #region Snippet:Sample_GetError_EvaluationRules
-    private static string GetErrorMessageOrEmpty(ClientResult result)
-    {
-        string error = "";
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
-        string code = default;
-        string message = default;
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            if (prop.NameEquals("error"u8) && prop.Value.ValueKind != JsonValueKind.Null && prop.Value is JsonElement countsElement)
-            {
-                foreach (JsonProperty errorNode in countsElement.EnumerateObject())
-                {
-                    if (errorNode.Value.ValueKind == JsonValueKind.String)
-                    {
-                        if (errorNode.NameEquals("code"u8))
-                        {
-                            code = errorNode.Value.GetString();
-                        }
-                        else if (errorNode.NameEquals("message"u8))
-                        {
-                            message = errorNode.Value.GetString();
-                        }
-                    }
-                }
-            }
-        }
-        if (!string.IsNullOrEmpty(message))
-        {
-            error = $"Message: {message}, Code: {code ?? "<None>"}";
-        }
-        return error;
-    }
-    #endregion
-    #region Snippet:Sample_GetStringValues_EvaluationRules
-    private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
-    {
-        Dictionary<string, string> results = [];
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            foreach (string key in expectedProperties)
-            {
-                if (prop.NameEquals(Encoding.UTF8.GetBytes(key)) && prop.Value.ValueKind == JsonValueKind.String)
-                {
-                    results[key] = prop.Value.GetString();
-                }
-            }
-        }
-        List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
-        if (notFoundItems.Count > 0)
-        {
-            StringBuilder sbNotFound = new();
-            foreach (string value in notFoundItems)
-            {
-                sbNotFound.Append($"{value}, ");
-            }
-            if (sbNotFound.Length > 2)
-            {
-                sbNotFound.Remove(sbNotFound.Length - 2, 2);
-            }
-            throw new InvalidOperationException($"The next keys were not found in returned result: {sbNotFound}.");
-        }
-        return results;
-    }
-    #endregion
     #region Snippet:Sample_GetRunIDs_EvaluationRules_Async
     private static async Task<Dictionary<string, (string RunUri, string RunStatus)>> GetRunIDsAsync(EvaluationClient client, string evaluationId, string evaluationRunStatus = default)
     {
@@ -100,7 +30,7 @@ public class Sample_EvaluationRules : SamplesBase
         {
             ClientResult resultList = await client.GetEvaluationRunsAsync(evaluationId: evaluationId, limit: 10, order: "desc", after: lastId, evaluationRunStatus: evaluationRunStatus, options: new System.ClientModel.Primitives.RequestOptions());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
             {
@@ -163,7 +93,7 @@ public class Sample_EvaluationRules : SamplesBase
         {
             ClientResult resultList = client.GetEvaluationRuns(evaluationId: evaluationId, limit: 10, order: "desc", after: lastId, evaluationRunStatus: evaluationRunStatus, options: new System.ClientModel.Primitives.RequestOptions());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
             {

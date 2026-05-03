@@ -1,0 +1,20 @@
+id: sdk-local-update-version-001
+name: Update SDK Package Version
+description: |
+  Test that the skill triggers version update for a generated SDK package.
+tags:
+  - metadata
+  - version
+inputs:
+  prompt: "Update the package version for the Java SDK at sdk/contoso/azure-resourcemanager-contoso."
+expected:
+  output_contains:
+    - "version"
+  output_excludes:
+    - "cannot help"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_package_update_version
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

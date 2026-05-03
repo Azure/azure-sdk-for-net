@@ -67,10 +67,10 @@
 ####################
 
 # PRLabel: %AI Agents
-/sdk/agentserver/    @ankitbko @RaviPidaparthi
+/sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp
 
 # ServiceLabel: %AI Agents
-# ServiceOwners: @ankitbko @RaviPidaparthi
+# ServiceOwners: @ankitbko @RaviPidaparthi @vangarp
 
 # PRLabel: %AI Model Inference %AI Projects
 /sdk/ai/    @dargilco @glharper @nick863 @trangevi @trrwilson
@@ -509,7 +509,7 @@
 /sdk/webpubsub/    @JialinXin @KrzysztofCwalina @vicancy
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @vicancy
+/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @JialinXin @vicancy @Y-Sindo
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners: @JialinXin @vicancy
