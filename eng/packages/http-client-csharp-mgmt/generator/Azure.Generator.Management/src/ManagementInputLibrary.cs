@@ -15,10 +15,13 @@ namespace Azure.Generator.Management
     {
         private const string ArmProviderSchemaDecoratorName = "Azure.ClientGenerator.Core.@armProviderSchema";
         private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
+        private const string ClientOptionDecoratorName = "Azure.ClientGenerator.Core.@clientOption";
+        private const string DisableSafeFlattenKey = "disable-safe-flatten";
 
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
+        private HashSet<InputModelType>? _safeFlattenDisabledModels;
         private ArmProviderSchema? _providerSchema;
         private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
 
@@ -81,6 +84,87 @@ namespace Azure.Generator.Management
                 }
             }
             return result;
+        }
+
+        /// <summary>
+        /// Set of input models for which safe-flatten should be disabled. Populated from
+        /// <c>@@clientOption(Model, "disable-safe-flatten", true, "csharp")</c> decorators.
+        /// </summary>
+        internal HashSet<InputModelType> SafeFlattenDisabledModels => _safeFlattenDisabledModels ??= BuildSafeFlattenDisabledModels();
+
+        private HashSet<InputModelType> BuildSafeFlattenDisabledModels()
+        {
+            var result = new HashSet<InputModelType>();
+            foreach (var model in InputNamespace.Models)
+            {
+                if (HasDisableSafeFlattenDecorator(model.Decorators))
+                {
+                    result.Add(model);
+                }
+            }
+            return result;
+        }
+
+        private static bool HasDisableSafeFlattenDecorator(IReadOnlyList<InputDecoratorInfo> decorators)
+        {
+            foreach (var decorator in decorators)
+            {
+                if (decorator.Name != ClientOptionDecoratorName || decorator.Arguments == null)
+                {
+                    continue;
+                }
+
+                // @@clientOption(target, name, value, scope?) — TCGC propagates the named arguments as BinaryData JSON values.
+                if (!decorator.Arguments.TryGetValue("name", out var keyData) || keyData == null)
+                {
+                    continue;
+                }
+
+                string? key;
+                try
+                {
+                    key = keyData.ToObjectFromJson<string>();
+                }
+                catch
+                {
+                    continue;
+                }
+                if (key != DisableSafeFlattenKey)
+                {
+                    continue;
+                }
+
+                if (!decorator.Arguments.TryGetValue("value", out var valueData) || valueData == null)
+                {
+                    continue;
+                }
+
+                // Accept JSON boolean true, or JSON string "true" (some pipelines stringify scalars).
+                try
+                {
+                    if (valueData.ToObjectFromJson<bool>())
+                    {
+                        return true;
+                    }
+                }
+                catch
+                {
+                    // not a boolean — try string
+                }
+                try
+                {
+                    var s = valueData.ToObjectFromJson<string>();
+                    if (string.Equals(s, "true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+                catch
+                {
+                    // not a string either — skip
+                }
+            }
+            return false;
         }
 
         /// <inheritdoc/>

@@ -696,6 +696,13 @@ namespace Azure.Generator.Management.Visitors
                         continue;
                     }
 
+                    // skip if the inner model opts out of safe-flatten via
+                    // @@clientOption(InnerModel, "disable-safe-flatten", true, "csharp")
+                    if (ManagementClientGenerator.Instance.OutputLibrary.SafeFlattenDisabledModels.Contains(modelProvider))
+                    {
+                        continue;
+                    }
+
                     isSafeFlatten = SafeFlatten(model, innerProperties, propertyMap, internalProperty, modelProvider);
                 }
             }

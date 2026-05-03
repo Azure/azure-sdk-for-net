@@ -79,7 +79,30 @@ public override ResourceNameRequirements GetResourceNameRequirements()
 
 The `pattern` string is parsed to determine which `ResourceNameCharacters` flags to include. Character classes (`[a-z]`, `[A-Z]`, `[0-9]`, `-`, `_`, `.`, `()`) are extracted from the regex and tested against representative characters.
 
+## `disable-safe-flatten`
+
+Opts a model out of the C# generator's *safe-flatten* transform. By default, when a parent model has a property whose type is another model that contains exactly one public, non-discriminator, non-obsolete property, the generator lifts that single inner property up onto the parent and removes the inner type. Setting `disable-safe-flatten` to `true` on the inner model preserves it as a public type and keeps the parent's property pointing at it.
+
+Use this when the inner model is part of the public API surface that consumers already depend on (for example, when migrating from AutoRest where `safe-flatten: false` was used in `readme.md` directives), or when future spec changes are likely to add more properties to the inner model and you do not want the public surface to change.
+
+**Target:** Any input model that would otherwise be safe-flattened (e.g. `AllInstancesDown`, `UserInitiatedRedeploy`).
+
+**Value:** Boolean `true`.
+
+**Example:**
+
+```typespec
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Preserve type for public API surface"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Preserve type for public API surface"
+@@clientOption(AllInstancesDown, "disable-safe-flatten", true, "csharp");
+```
+
+**Effect:** The C# generator skips the safe-flatten step for the targeted model wherever it appears as a single-property inner type. The model is emitted as a regular public type, and the parent property continues to expose it directly (i.e. `parent.AllInstancesDown.AutomaticallyApprove` rather than `parent.AutomaticallyApprove`).
+
+**Scope:** Inner-model. One decorator covers every parent that uses the model. There is no per-call-site granularity.
+
 ## Notes
 
 - All `@@clientOption` decorators require `#suppress` directives for the `client-option` and `client-option-requires-scope` diagnostics until the TCGC issue [Azure/typespec-azure#4104](https://github.com/Azure/typespec-azure/issues/4104) is resolved.
-- These options are read during resource detection in the emitter and serialized into the `armProviderSchema` decorator on the code model. The C# generator then deserializes them to drive code generation.
+- The `resource-rbac-roles` and `resource-name-constraint` keys are read during resource detection in the emitter and serialized into the `armProviderSchema` decorator on the code model. The C# generator then deserializes them to drive code generation.
+- The `disable-safe-flatten` key is propagated by TCGC onto the input model's `Decorators` collection. The C# generator reads it directly when deciding whether to apply safe-flatten.
