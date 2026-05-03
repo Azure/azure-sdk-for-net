@@ -136,34 +136,20 @@ namespace Azure.Generator.Management
                     continue;
                 }
 
-                if (!decorator.Arguments.TryGetValue("value", out var valueData) || valueData == null)
+                // Only accept a JSON boolean true. Any other value (string "true", 1, false, etc.) is ignored.
+                if (decorator.Arguments.TryGetValue("value", out var valueData) && valueData != null)
                 {
-                    continue;
-                }
-
-                // Accept JSON boolean true, or JSON string "true" (some pipelines stringify scalars).
-                try
-                {
-                    if (valueData.ToObjectFromJson<bool>())
+                    try
                     {
-                        return true;
+                        if (valueData.ToObjectFromJson<bool>())
+                        {
+                            return true;
+                        }
                     }
-                }
-                catch
-                {
-                    // not a boolean — try string
-                }
-                try
-                {
-                    var s = valueData.ToObjectFromJson<string>();
-                    if (string.Equals(s, "true", StringComparison.OrdinalIgnoreCase))
+                    catch
                     {
-                        return true;
+                        // not a boolean — ignore
                     }
-                }
-                catch
-                {
-                    // not a string either — skip
                 }
             }
             return false;
