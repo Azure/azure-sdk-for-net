@@ -91,6 +91,3 @@ This emitter currently implements the **non-versioned** subset of the design:
 - ⏳ Version registry, incremental per-version directories, and impact
   analysis driven by `@added`/`@removed`/`@typeChangedFrom`
 - ⏳ Polymorphic discriminators, paging helpers, validation attributes
-
-See [framework-choice.md](./framework-choice.md) for why this emitter is built
-on Microsoft.TypeSpec.Generator rather than Alloy.

@@ -51,9 +51,8 @@ touched.
   that loads both `Microsoft.NETCore.App` and `Microsoft.AspNetCore.App` so the
   generator can reference `[ApiController]`, `ControllerBase`, `[Http*]`, and
   `[From*]` types directly.
-- `docs/` — Design rationale: the API-first vision, incremental versioning
-  pattern, and why this emitter is built on Microsoft.TypeSpec.Generator rather
-  than Alloy.
+- `docs/` — Design rationale: how the generated code is structured and why
+  the generated/hand-written split looks the way it does.
 
 ## Building
 
