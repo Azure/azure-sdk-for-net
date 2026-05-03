@@ -1091,10 +1091,10 @@ namespace Azure.Storage.Tests
 
         #endregion
 
-        #region ScheduleRefresh
+        #region ScheduleBackgroundRefresh
 
         [Test]
-        public async Task ScheduleRefresh_BeforeFirstCall_IsNoOp()
+        public async Task ScheduleBackgroundRefresh_BeforeFirstCall_IsNoOp()
         {
             int acquireCount = 0;
             var cache = new AutoRefreshingCache<TestValue>(
@@ -1106,7 +1106,7 @@ namespace Azure.Storage.Tests
                 backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
 
             // ScheduleRefresh on an empty cache (_state == null) — should be a no-op.
-            cache.ScheduleRefresh();
+            cache.ScheduleBackgroundRefresh();
 
             // First call still does a normal foreground acquire.
             TestValue result = await GetValueAsync(cache);
@@ -1115,7 +1115,7 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        public async Task ScheduleRefresh_TriggersBackgroundRefresh()
+        public async Task ScheduleBackgroundRefresh_TriggersBackgroundRefresh()
         {
             int acquireCount = 0;
 
@@ -1131,7 +1131,7 @@ namespace Azure.Storage.Tests
             Assert.AreEqual("token1", first.Token);
 
             // Kicks off the background refresh immediately.
-            cache.ScheduleRefresh();
+            cache.ScheduleBackgroundRefresh();
 
             // Give the background acquire time to complete.
             await Task.Delay(1_000);
@@ -1143,7 +1143,7 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        public async Task ScheduleRefresh_BackgroundFailure_IsAbsorbed()
+        public async Task ScheduleBackgroundRefresh_BackgroundFailure_IsAbsorbed()
         {
             int acquireCount = 0;
             var cache = new AutoRefreshingCache<TestValue>(
@@ -1164,7 +1164,7 @@ namespace Azure.Storage.Tests
             Assert.AreEqual("original", first.Token);
 
             // Kicks off a background refresh that will fail.
-            cache.ScheduleRefresh();
+            cache.ScheduleBackgroundRefresh();
 
             // Give the background acquire time to fail.
             await Task.Delay(1_000);
@@ -1176,7 +1176,7 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        public async Task ScheduleRefresh_DuringInflightBackground_IsNoOp()
+        public async Task ScheduleBackgroundRefresh_DuringInflightBackground_IsNoOp()
         {
             int acquireCount = 0;
             var responseMre = new ManualResetEventSlim(true);
@@ -1196,14 +1196,14 @@ namespace Azure.Storage.Tests
 
             // Block the next acquire, then trigger a background refresh.
             responseMre.Reset();
-            cache.ScheduleRefresh();
+            cache.ScheduleBackgroundRefresh();
 
             // GetAsync returns the current value while the background refresh is in flight.
             TestValue second = await GetValueAsync(cache);
             Assert.AreEqual("token1", second.Token);
 
             // Another ScheduleRefresh while background is in-flight — should be ignored.
-            cache.ScheduleRefresh();
+            cache.ScheduleBackgroundRefresh();
 
             // Release the background refresh.
             responseMre.Set();
@@ -1217,7 +1217,7 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        public async Task ScheduleRefresh_AfterFailedAcquire_IsNoOp()
+        public async Task ScheduleBackgroundRefresh_AfterFailedAcquire_IsNoOp()
         {
             int acquireCount = 0;
             var cache = new AutoRefreshingCache<TestValue>(
@@ -1238,7 +1238,7 @@ namespace Azure.Storage.Tests
 
             // ScheduleRefresh on a faulted cache must be a no-op — it must not
             // throw, and it must not touch _state in a way that breaks recovery.
-            Assert.DoesNotThrow(() => cache.ScheduleRefresh());
+            Assert.DoesNotThrow(() => cache.ScheduleBackgroundRefresh());
             Assert.AreEqual(1, acquireCount, "ScheduleRefresh must not trigger acquire on its own.");
 
             // The next GetAsync recovers normally via the EvaluateState
@@ -1249,7 +1249,7 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        public async Task ScheduleRefresh_ConcurrentCalls_TriggersSingleAcquire()
+        public async Task ScheduleBackgroundRefresh_ConcurrentCalls_TriggersSingleAcquire()
         {
             int acquireCount = 0;
             var responseMre = new ManualResetEventSlim(true);
@@ -1273,7 +1273,7 @@ namespace Azure.Storage.Tests
 
             // Fire many concurrent ScheduleRefresh calls.
             const int parallelism = 32;
-            Parallel.For(0, parallelism, _ => cache.ScheduleRefresh());
+            Parallel.For(0, parallelism, _ => cache.ScheduleBackgroundRefresh());
 
             // Release the background acquire and let it complete.
             responseMre.Set();

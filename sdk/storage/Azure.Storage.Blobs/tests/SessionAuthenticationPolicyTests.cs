@@ -1405,6 +1405,107 @@ namespace Azure.Storage.Blobs.Tests
             }
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());
         }
+
+        [Test]
+        public async Task Concurrent_401_OnSameContainer_CoalescesIntoSingleReacquire()
+        {
+            const int parallelism = 20;
+            var mockBearer = CreateMockBearerPolicy();
+
+            // Exactly two CreateSession responses queued: one for the initial prime,
+            // one for the post-401 re-acquisition. If the policy's InvalidateIfCurrent
+            // coalescing fails (e.g. each of the N concurrent 401 handlers wipes the
+            // cache and triggers its own re-acquire), the inner MockTransport will
+            // run out of responses and throw, failing the test.
+            var serviceClient = CreateMockServiceClient(
+                CreateSessionMockResponse(sessionToken: "token-original"),
+                CreateSessionMockResponse(sessionToken: "token-refreshed"));
+
+            var policy = new SessionAuthenticationPolicy(
+                bearerTokenPolicy: mockBearer.Object,
+                blobServiceClientFactory: () => serviceClient,
+                sessionOptions: EnabledOptions);
+
+            // Prime the cache with token-original so all `parallelism` tasks start
+            // signing with the same (about-to-be-invalidated) token.
+            await SendBlobGetAsync(policy, BlobUri, RequestMethod.Get, CreateBlobGetResponse(200));
+
+            var attemptByMessage = new ConcurrentDictionary<HttpMessage, int>();
+            var capturedAuthHeaders = new ConcurrentQueue<string>();
+            using var arrivalGate = new CountdownEvent(parallelism);
+            using var releaseGate = new ManualResetEventSlim(false);
+            var outerTransport = MockTransport.FromMessageCallback(msg =>
+            {
+                msg.Request.Headers.TryGetValue("Authorization", out string auth);
+                capturedAuthHeaders.Enqueue(auth);
+                int attempt = attemptByMessage.AddOrUpdate(msg, 1, (_, v) => v + 1);
+                if (attempt == 1)
+                {
+                    // First attempt: signal arrival, then wait for the test to
+                    // release all N 401s together.
+                    arrivalGate.Signal();
+                    releaseGate.Wait();
+                    return CreateBlobGetResponse(401);
+                }
+                // Retry: succeed immediately.
+                return CreateBlobGetResponse(200);
+            });
+            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
+
+            using var startGate = new ManualResetEventSlim(false);
+            var tasks = new Task[parallelism];
+            for (int i = 0; i < parallelism; i++)
+            {
+                tasks[i] = Task.Run(async () =>
+                {
+                    startGate.Wait();
+                    var message = pipeline.CreateMessage();
+                    message.Request.Method = RequestMethod.Get;
+                    message.Request.Uri.Reset(BlobUri);
+                    await SendAsync(pipeline, message);
+                    Assert.AreEqual(200, message.Response.Status);
+                });
+            }
+            startGate.Set();
+
+            // Wait for every first attempt to be parked at the transport, then
+            // release them all at once.
+            arrivalGate.Wait();
+            releaseGate.Set();
+            await Task.WhenAll(tasks);
+
+            // Every task: 1 initial 401 + 1 retry = 2 outer requests.
+            Assert.AreEqual(parallelism * 2, capturedAuthHeaders.Count);
+
+            // Partition captured headers by token. The original-token requests are
+            // the initial 401 attempts; the refreshed-token requests are the retries.
+            // We expect exactly `parallelism` of each — i.e., one and only one
+            // re-acquisition serviced all N concurrent 401 retries.
+            int originalCount = 0;
+            int refreshedCount = 0;
+            foreach (string auth in capturedAuthHeaders)
+            {
+                Assert.IsNotNull(auth);
+                if (auth.StartsWith("Session token-original:"))
+                {
+                    originalCount++;
+                }
+                else if (auth.StartsWith("Session token-refreshed:"))
+                {
+                    refreshedCount++;
+                }
+                else
+                {
+                    Assert.Fail($"Unexpected Authorization header: {auth}");
+                }
+            }
+            Assert.AreEqual(parallelism, originalCount,
+                "Every task's first attempt should have signed with the original token.");
+            Assert.AreEqual(parallelism, refreshedCount,
+                "Every task's retry should have signed with the single refreshed token. " +
+                "Seeing a different count means the cache was re-acquired more than once.");
+            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
+        }
         #endregion
 
         /// <summary>

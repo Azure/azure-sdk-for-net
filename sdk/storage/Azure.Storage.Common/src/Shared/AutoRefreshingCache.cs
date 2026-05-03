@@ -134,7 +134,7 @@ namespace Azure.Storage
         /// value; the new value is promoted on the next <see cref="GetAsync"/> after the
         /// background acquire completes.
         /// </summary>
-        public void ScheduleRefresh()
+        public void ScheduleBackgroundRefresh()
         {
             TaskCompletionSource<TValue> backgroundTcs;
             TValue current;
