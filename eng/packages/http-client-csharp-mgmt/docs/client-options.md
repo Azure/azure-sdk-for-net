@@ -87,7 +87,7 @@ Use this when the inner model is part of the public API surface that consumers a
 
 **Target:** Any input model that would otherwise be safe-flattened (e.g. `AllInstancesDown`, `UserInitiatedRedeploy`).
 
-**Value:** Boolean `true`.
+**Value:** Boolean `true`. Any other value — including the string `"true"`, `1`, `false`, or omission — is ignored and the model will still be safe-flattened.
 
 **Example:**
 
