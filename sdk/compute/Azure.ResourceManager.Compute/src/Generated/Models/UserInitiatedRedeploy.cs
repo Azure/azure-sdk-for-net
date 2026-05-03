@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies Redeploy related Scheduled Event related configurations. </summary>
-    internal partial class UserInitiatedRedeploy
+    /// <summary> The UserInitiatedRedeploy. </summary>
+    public partial class UserInitiatedRedeploy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,15 +22,20 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserInitiatedRedeploy"/>. </summary>
-        /// <param name="automaticallyApproveRedeploy"> Specifies Redeploy Scheduled Event related configurations. </param>
+        /// <param name="automaticallyApprove"> Specifies Redeploy Scheduled Event related configurations. </param>
+        /// <param name="dummy"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserInitiatedRedeploy(bool? automaticallyApproveRedeploy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserInitiatedRedeploy(bool? automaticallyApprove, string dummy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutomaticallyApproveRedeploy = automaticallyApproveRedeploy;
+            AutomaticallyApprove = automaticallyApprove;
+            Dummy = dummy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
-        public bool? AutomaticallyApproveRedeploy { get; set; }
+        public bool? AutomaticallyApprove { get; set; }
+
+        /// <summary> Gets or sets the Dummy. </summary>
+        public string Dummy { get; set; }
     }
 }
