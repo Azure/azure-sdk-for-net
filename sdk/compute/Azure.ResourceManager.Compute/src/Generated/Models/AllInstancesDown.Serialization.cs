@@ -13,8 +13,8 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The AllInstancesDown. </summary>
-    public partial class AllInstancesDown : IJsonModel<AllInstancesDown>
+    /// <summary> Specifies if Scheduled Events should be auto-approved when all instances are down. </summary>
+    internal partial class AllInstancesDown : IJsonModel<AllInstancesDown>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,15 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(AllInstancesDown)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutomaticallyApprove))
+            if (Optional.IsDefined(AutomaticallyApproveAllDown))
             {
                 writer.WritePropertyName("automaticallyApprove"u8);
-                writer.WriteBooleanValue(AutomaticallyApprove.Value);
-            }
-            if (Optional.IsDefined(Dummy))
-            {
-                writer.WritePropertyName("dummy"u8);
-                writer.WriteStringValue(Dummy);
+                writer.WriteBooleanValue(AutomaticallyApproveAllDown.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,8 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            bool? automaticallyApprove = default;
-            string dummy = default;
+            bool? automaticallyApproveAllDown = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,12 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    automaticallyApprove = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("dummy"u8))
-                {
-                    dummy = prop.Value.GetString();
+                    automaticallyApproveAllDown = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AllInstancesDown(automaticallyApprove, dummy, additionalBinaryDataProperties);
+            return new AllInstancesDown(automaticallyApproveAllDown, additionalBinaryDataProperties);
         }
     }
 }

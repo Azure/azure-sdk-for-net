@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The AllInstancesDown. </summary>
-    public partial class AllInstancesDown
+    /// <summary> Specifies if Scheduled Events should be auto-approved when all instances are down. </summary>
+    internal partial class AllInstancesDown
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,16 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AllInstancesDown"/>. </summary>
-        /// <param name="automaticallyApprove">
+        /// <param name="automaticallyApproveAllDown">
         /// Specifies if Scheduled Events should be auto-approved when all instances are down.
         /// its default value is true
         /// </param>
-        /// <param name="dummy"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AllInstancesDown(bool? automaticallyApprove, string dummy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AllInstancesDown(bool? automaticallyApproveAllDown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutomaticallyApprove = automaticallyApprove;
-            Dummy = dummy;
+            AutomaticallyApproveAllDown = automaticallyApproveAllDown;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,9 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// Specifies if Scheduled Events should be auto-approved when all instances are down.
         /// its default value is true
         /// </summary>
-        public bool? AutomaticallyApprove { get; set; }
-
-        /// <summary> Gets or sets the Dummy. </summary>
-        public string Dummy { get; set; }
+        public bool? AutomaticallyApproveAllDown { get; set; }
     }
 }
