@@ -12,9 +12,11 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
     /// service definition.
     /// </summary>
     /// <remarks>
-    /// This is the initial scaffold and currently produces a single hello-world
-    /// C# file. Real outputs (controllers, models, version registry) will be
-    /// added incrementally.
+    /// Initial scope: emits one POCO per TypeSpec model under
+    /// <c>src/Generated/Models/</c> and one abstract <c>ControllerBase</c>
+    /// subclass per TypeSpec interface under <c>src/Generated/Controllers/</c>.
+    /// Versioning, polymorphic discriminators, paging helpers, and validation
+    /// attributes are intentionally out of scope for this initial cut.
     /// </remarks>
     [Export(typeof(CodeModelGenerator))]
     [ExportMetadata(GeneratorMetadataName, nameof(AspNetServerCodeModelGenerator))]
@@ -24,15 +26,24 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
         [ImportingConstructor]
         public AspNetServerCodeModelGenerator(GeneratorContext context) : base(context)
         {
+            TypeFactory = new AspNetServerTypeFactory();
         }
+
+        /// <inheritdoc/>
+        public override AspNetServerTypeFactory TypeFactory { get; }
 
         /// <inheritdoc/>
         public override AspNetServerOutputLibrary OutputLibrary { get; } = new();
 
         /// <summary>
-        /// The server SDK does not currently emit a configuration schema file.
+        /// Emits the ASP.NET controller base files. These are written as raw
+        /// C# source rather than going through the TypeProvider pipeline because
+        /// they reference <c>Microsoft.AspNetCore.Mvc</c> types that are not
+        /// loaded in the generator's runtime.
         /// </summary>
-        public override Task WriteAdditionalFiles(string outputPath) => Task.CompletedTask;
+        public override Task WriteAdditionalFiles(string outputPath) =>
+            ControllerEmitter.EmitAsync(outputPath);
     }
 }
+
 
