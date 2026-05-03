@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies if Scheduled Events should be auto-approved when all instances are down. </summary>
-    internal partial class AllInstancesDown
+    public partial class AllInstancesDown
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AllInstancesDown"/>. </summary>
-        /// <param name="automaticallyApproveAllDown">
+        /// <param name="automaticallyApprove">
         /// Specifies if Scheduled Events should be auto-approved when all instances are down.
         /// its default value is true
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AllInstancesDown(bool? automaticallyApproveAllDown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AllInstancesDown(bool? automaticallyApprove, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutomaticallyApproveAllDown = automaticallyApproveAllDown;
+            AutomaticallyApprove = automaticallyApprove;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// Specifies if Scheduled Events should be auto-approved when all instances are down.
         /// its default value is true
         /// </summary>
-        public bool? AutomaticallyApproveAllDown { get; set; }
+        public bool? AutomaticallyApprove { get; set; }
     }
 }

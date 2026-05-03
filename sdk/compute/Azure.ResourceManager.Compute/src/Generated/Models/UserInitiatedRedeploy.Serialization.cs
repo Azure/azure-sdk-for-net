@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies Redeploy related Scheduled Event related configurations. </summary>
-    internal partial class UserInitiatedRedeploy : IJsonModel<UserInitiatedRedeploy>
+    public partial class UserInitiatedRedeploy : IJsonModel<UserInitiatedRedeploy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutomaticallyApproveRedeploy))
+            if (Optional.IsDefined(AutomaticallyApprove))
             {
                 writer.WritePropertyName("automaticallyApprove"u8);
-                writer.WriteBooleanValue(AutomaticallyApproveRedeploy.Value);
+                writer.WriteBooleanValue(AutomaticallyApprove.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            bool? automaticallyApproveRedeploy = default;
+            bool? automaticallyApprove = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    automaticallyApproveRedeploy = prop.Value.GetBoolean();
+                    automaticallyApprove = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserInitiatedRedeploy(automaticallyApproveRedeploy, additionalBinaryDataProperties);
+            return new UserInitiatedRedeploy(automaticallyApprove, additionalBinaryDataProperties);
         }
     }
 }

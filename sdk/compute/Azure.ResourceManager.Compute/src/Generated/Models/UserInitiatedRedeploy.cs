@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies Redeploy related Scheduled Event related configurations. </summary>
-    internal partial class UserInitiatedRedeploy
+    public partial class UserInitiatedRedeploy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserInitiatedRedeploy"/>. </summary>
-        /// <param name="automaticallyApproveRedeploy"> Specifies Redeploy Scheduled Event related configurations. </param>
+        /// <param name="automaticallyApprove"> Specifies Redeploy Scheduled Event related configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserInitiatedRedeploy(bool? automaticallyApproveRedeploy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserInitiatedRedeploy(bool? automaticallyApprove, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutomaticallyApproveRedeploy = automaticallyApproveRedeploy;
+            AutomaticallyApprove = automaticallyApprove;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
-        public bool? AutomaticallyApproveRedeploy { get; set; }
+        public bool? AutomaticallyApprove { get; set; }
     }
 }

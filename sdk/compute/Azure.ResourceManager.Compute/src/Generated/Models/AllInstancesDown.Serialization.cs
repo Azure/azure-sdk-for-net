@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies if Scheduled Events should be auto-approved when all instances are down. </summary>
-    internal partial class AllInstancesDown : IJsonModel<AllInstancesDown>
+    public partial class AllInstancesDown : IJsonModel<AllInstancesDown>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(AllInstancesDown)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutomaticallyApproveAllDown))
+            if (Optional.IsDefined(AutomaticallyApprove))
             {
                 writer.WritePropertyName("automaticallyApprove"u8);
-                writer.WriteBooleanValue(AutomaticallyApproveAllDown.Value);
+                writer.WriteBooleanValue(AutomaticallyApprove.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            bool? automaticallyApproveAllDown = default;
+            bool? automaticallyApprove = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    automaticallyApproveAllDown = prop.Value.GetBoolean();
+                    automaticallyApprove = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AllInstancesDown(automaticallyApproveAllDown, additionalBinaryDataProperties);
+            return new AllInstancesDown(automaticallyApprove, additionalBinaryDataProperties);
         }
     }
 }
