@@ -3,6 +3,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +21,13 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
         /// Gets a database.
         /// </summary>
         [HttpGet("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<global::Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models.Database>> GetAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, CancellationToken cancellationToken = default);
+        public abstract Task<ActionResult<Database>> GetAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates or updates a database (long-running operation).
         /// </summary>
         [HttpPut("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<global::Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models.Database>> CreateOrUpdateAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, [FromBody] global::Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models.Database resource, CancellationToken cancellationToken = default);
+        public abstract Task<ActionResult<Database>> CreateOrUpdateAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, [FromBody] Database resource, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a database (long-running operation).
@@ -38,12 +39,12 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
         /// Updates a database. Added in 2025-12-01.
         /// </summary>
         [HttpPatch("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<global::Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models.Database>> UpdateAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, [FromBody] global::Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models.DatabaseUpdate properties, CancellationToken cancellationToken = default);
+        public abstract Task<ActionResult<Database>> UpdateAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, [FromBody] DatabaseUpdate properties, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists databases under a server. Added in 2025-12-01.
         /// </summary>
         [HttpGet("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases")]
-        public abstract Task<ActionResult<global::System.Collections.Generic.IList<global::Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models.Database>>> ListByResourceGroupAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, CancellationToken cancellationToken = default);
+        public abstract Task<ActionResult<IList<Database>>> ListByResourceGroupAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, CancellationToken cancellationToken = default);
     }
 }

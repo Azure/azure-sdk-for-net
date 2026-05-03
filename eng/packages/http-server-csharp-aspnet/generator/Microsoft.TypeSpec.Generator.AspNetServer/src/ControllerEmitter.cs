@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 
 namespace Microsoft.TypeSpec.Generator.AspNetServer
 {
@@ -61,6 +62,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
             sb.AppendLine("#nullable enable");
             sb.AppendLine();
             sb.AppendLine("using System;");
+            sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using System.Threading;");
             sb.AppendLine("using System.Threading.Tasks;");
             sb.AppendLine("using Microsoft.AspNetCore.Mvc;");
@@ -158,8 +160,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
                 return "Task<IActionResult>";
             }
 
-            var name = csharp.ToString();
-            return $"Task<ActionResult<{name}>>";
+            return $"Task<ActionResult<{FormatType(csharp)}>>";
         }
 
         private static string BuildParameterList(InputClient client, InputServiceMethod method)
@@ -215,12 +216,65 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
                     _ => string.Empty,
                 };
 
-                var typeStr = csharp.ToString();
+                var typeStr = FormatType(csharp);
                 parts.Add($"{binding} {typeStr} {name}".Trim());
             }
 
             parts.Add("CancellationToken cancellationToken = default");
             return string.Join(", ", parts);
+        }
+
+        /// <summary>
+        /// Formats a <see cref="CSharpType"/> as a short C# source string suitable for
+        /// embedding in generated code. Unlike <see cref="CSharpType.ToString"/>, this
+        /// emits unqualified names (relying on the <c>using</c> directives we add at
+        /// the top of every controller file) and uses idiomatic suffixes such as
+        /// <c>?</c> for nullables and <c>[]</c> for arrays.
+        /// </summary>
+        private static string FormatType(CSharpType type)
+        {
+            if (type.IsArray)
+            {
+                return FormatType(type.ElementType) + "[]";
+            }
+
+            var sb = new StringBuilder();
+            sb.Append(FormatTypeName(type));
+            if (type.IsGenericType && type.Arguments.Count > 0)
+            {
+                sb.Append('<');
+                for (int i = 0; i < type.Arguments.Count; i++)
+                {
+                    if (i > 0) sb.Append(", ");
+                    sb.Append(FormatType(type.Arguments[i]));
+                }
+                sb.Append('>');
+            }
+            if (type.IsNullable)
+            {
+                sb.Append('?');
+            }
+            return sb.ToString();
+        }
+
+        private static string FormatTypeName(CSharpType type)
+        {
+            if (type.IsFrameworkType && type.FrameworkType is { } ft)
+            {
+                // Use C# language keywords for primitives where possible.
+                if (ft == typeof(string)) return "string";
+                if (ft == typeof(bool)) return "bool";
+                if (ft == typeof(int)) return "int";
+                if (ft == typeof(long)) return "long";
+                if (ft == typeof(short)) return "short";
+                if (ft == typeof(byte)) return "byte";
+                if (ft == typeof(float)) return "float";
+                if (ft == typeof(double)) return "double";
+                if (ft == typeof(decimal)) return "decimal";
+                if (ft == typeof(object)) return "object";
+                if (ft == typeof(void)) return "void";
+            }
+            return type.Name;
         }
 
         private static (InputRequestLocation? Location, bool IsRoute) ClassifyParameter(InputParameter p) => p switch
