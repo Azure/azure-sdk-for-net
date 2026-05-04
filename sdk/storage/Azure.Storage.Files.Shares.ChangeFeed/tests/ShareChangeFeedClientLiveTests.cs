@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
@@ -42,6 +44,35 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 new StorageSharedKeyCredential(
                     TestConfigDefault.AccountName,
                     TestConfigDefault.AccountKey));
+        }
+
+        /// <summary>
+        /// Creates a new Azure File Share with change feed enabled and returns a clean
+        /// <see cref="ShareClient"/> for it. The <c>x-ms-file-enable-change-feed</c> header
+        /// (not exposed by the base Files SDK) is injected via a one-shot pipeline policy
+        /// scoped to the share-create PUT only; the returned client carries no custom header
+        /// on subsequent operations.
+        /// </summary>
+        private async Task<ShareClient> CreateChangeFeedEnabledShareAsync()
+        {
+            string shareName = "changefeed-" + Recording.Random.NewGuid().ToString();
+
+            ShareClientOptions creatorOptions = GetOptions();
+            CustomRequestHeadersAndQueryParametersPolicy headerPolicy = new CustomRequestHeadersAndQueryParametersPolicy();
+            headerPolicy.AddRequestHeader("x-ms-file-enable-change-feed", "true");
+            creatorOptions.AddPolicy(headerPolicy, HttpPipelinePosition.PerCall);
+
+            ShareServiceClient creatorService = InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey),
+                    creatorOptions));
+
+            await creatorService.GetShareClient(shareName).CreateAsync();
+
+            return GetShareServiceClient_SharedKey().GetShareClient(shareName);
         }
 
         /// <summary>
@@ -277,6 +308,69 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     !string.IsNullOrEmpty(firstEvent.EventData.FileName) ||
                     !string.IsNullOrEmpty(firstEvent.EventData.FullFilePath),
                     "FileName or FullFilePath should be populated for non-control events");
+            }
+        }
+
+        /// <summary>
+        /// Verifies that <see cref="ShareChangeFeedClientOptions.IncludeUnfinalizedEvents"/>
+        /// allows reading events past the change feed's last consumable watermark.
+        /// </summary>
+        [Test]
+        [Ignore(Reason = "Requires unfinalized segments in the change feed, which cannot be reproduced deterministically in playback.")]
+        public async Task GetChanges_IncludeUnfinalizedEvents_ReturnsEventsPastLastConsumable()
+        {
+            // Arrange - provision a fresh change-feed-enabled share and seed it with events.
+            ShareClient shareClient = await CreateChangeFeedEnabledShareAsync();
+            try
+            {
+                // Seed the change feed with directory-create events.
+                for (int i = 0; i < 10; i++)
+                {
+                    await shareClient.GetDirectoryClient($"dir-{i}").CreateAsync();
+                }
+                // Give the service a moment to surface the new events into the unfinalized segment index.
+                await Task.Delay(TimeSpan.FromSeconds(30));
+
+                ShareChangeFeedClient tailing = new ShareChangeFeedClient(
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
+                    shareClient.Name,
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey),
+                    new ShareChangeFeedClientOptions { IncludeUnfinalizedEvents = true });
+
+                // Snapshot the current watermark. On a freshly-created share with no finalized
+                // segments yet this will be null, in which case every event the tailing reader
+                // returns is by definition past last consumable.
+                DateTimeOffset? lastConsumable = IsAsync
+                    ? await tailing.GetLastConsumableAsync()
+                    : tailing.GetLastConsumable();
+
+                // Act - tailing reader
+                List<ShareChangeFeedEvent> tailingEvents = new List<ShareChangeFeedEvent>();
+                if (IsAsync)
+                {
+                    await foreach (ShareChangeFeedEvent e in tailing.GetChangesAsync())
+                        tailingEvents.Add(e);
+                }
+                else
+                {
+                    foreach (ShareChangeFeedEvent e in tailing.GetChanges())
+                        tailingEvents.Add(e);
+                }
+
+                // Assert - tailing reader surfaces unfinalized events past the watermark.
+                CollectionAssert.IsNotEmpty(tailingEvents, "Tailing reader should surface events from the unfinalized segment.");
+                if (lastConsumable.HasValue)
+                {
+                    Assert.IsTrue(
+                        tailingEvents.Any(e => e.EventTime > lastConsumable.Value),
+                        "Tailing reader should return at least one event with EventTime > LastConsumable.");
+                }
+            }
+            finally
+            {
+                await shareClient.DeleteAsync();
             }
         }
 

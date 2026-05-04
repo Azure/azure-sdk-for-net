@@ -27,7 +27,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
             ShareChangeFeedPageable pageable = new ShareChangeFeedPageable(
                 client: null,
-                maxTransferSize: null);
+                maxTransferSize: null,
+                includeUnfinalizedEvents: false);
 
             Assert.Throws<ArgumentException>(() =>
             {
@@ -46,7 +47,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
             ShareChangeFeedAsyncPageable pageable = new ShareChangeFeedAsyncPageable(
                 client: null,
-                maxTransferSize: null);
+                maxTransferSize: null,
+                includeUnfinalizedEvents: false);
 
             Assert.ThrowsAsync<ArgumentException>(async () =>
             {

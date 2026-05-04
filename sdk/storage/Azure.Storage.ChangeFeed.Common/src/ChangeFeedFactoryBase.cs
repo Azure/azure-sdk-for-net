@@ -20,6 +20,7 @@ namespace Azure.Storage.ChangeFeed.Common
         private readonly SegmentFactoryBase<TEvent> _segmentFactory;
         private readonly BlobContainerClient _containerClient;
         private readonly ChangeFeedConfiguration<TEvent> _config;
+        private readonly bool _includeUnfinalizedEvents;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChangeFeedFactoryBase{TEvent}"/> class,
@@ -28,13 +29,20 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="containerClient">Container client for the change feed container.</param>
         /// <param name="maxTransferSize">Optional override for the chunk download block size.</param>
         /// <param name="config">Change feed configuration.</param>
+        /// <param name="includeUnfinalizedEvents">
+        /// When <c>true</c>, segment enumeration is not capped at the change feed's last consumable
+        /// timestamp. Used by callers that opt in to reading from non-finalized segments. Defaults
+        /// to <c>false</c> to preserve the historical behavior of capping at the watermark.
+        /// </param>
         public ChangeFeedFactoryBase(
             BlobContainerClient containerClient,
             long? maxTransferSize,
-            ChangeFeedConfiguration<TEvent> config)
+            ChangeFeedConfiguration<TEvent> config,
+            bool includeUnfinalizedEvents = false)
         {
             _containerClient = containerClient;
             _config = config;
+            _includeUnfinalizedEvents = includeUnfinalizedEvents;
             _segmentFactory = new SegmentFactoryBase<TEvent>(
                 _containerClient,
                 new ShardFactoryBase<TEvent>(
@@ -54,14 +62,20 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="containerClient">Container client for the change feed container.</param>
         /// <param name="segmentFactory">Pre-built segment factory.</param>
         /// <param name="config">Change feed configuration.</param>
+        /// <param name="includeUnfinalizedEvents">
+        /// When <c>true</c>, segment enumeration is not capped at the change feed's last consumable
+        /// timestamp.
+        /// </param>
         public ChangeFeedFactoryBase(
             BlobContainerClient containerClient,
             SegmentFactoryBase<TEvent> segmentFactory,
-            ChangeFeedConfiguration<TEvent> config)
+            ChangeFeedConfiguration<TEvent> config,
+            bool includeUnfinalizedEvents = false)
         {
             _containerClient = containerClient;
             _segmentFactory = segmentFactory;
             _config = config;
+            _includeUnfinalizedEvents = includeUnfinalizedEvents;
         }
 
         /// <summary>
@@ -113,9 +127,19 @@ namespace Azure.Storage.ChangeFeed.Common
                 .ConfigureAwait(false);
 
             if (lastConsumableNullable.HasValue)
+            {
                 lastConsumable = lastConsumableNullable.Value;
+            }
+            else if (_includeUnfinalizedEvents)
+            {
+                // No watermark exists yet (e.g. brand-new change feed). Caller opted in to
+                // unfinalized events, so attempt to scan segments anyway.
+                lastConsumable = DateTimeOffset.MinValue;
+            }
             else
+            {
                 return ChangeFeedBase<TEvent>.Empty();
+            }
 
             years = await GetYearPathsInternal(async, cancellationToken).ConfigureAwait(false);
 
@@ -128,13 +152,19 @@ namespace Azure.Storage.ChangeFeed.Common
 
             if (years.Count == 0) return ChangeFeedBase<TEvent>.Empty();
 
+            // When _includeUnfinalizedEvents is true, do not cap segment enumeration at the
+            // last consumable watermark — pass the user's endTime through directly.
+            DateTimeOffset? effectiveEndTime = _includeUnfinalizedEvents
+                ? endTime
+                : ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endTime);
+
             // Scan through years until we find one that contains matching segments within the time window.
             while (segments.Count == 0 && years.Count > 0)
             {
                 segments = await ChangeFeedExtensionsBase.GetSegmentsInYearInternal(
                     containerClient: _containerClient, yearPath: years.Dequeue(),
                     startTime: startTime,
-                    endTime: ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endTime),
+                    endTime: effectiveEndTime,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

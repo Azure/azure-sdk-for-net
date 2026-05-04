@@ -116,5 +116,31 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     FileServiceUri,
                     string.Empty));
         }
+
+        [Test]
+        public void Constructor_IncludeUnfinalizedEvents_DefaultsToFalse()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            Assert.IsFalse(client._includeUnfinalizedEvents);
+        }
+
+        [Test]
+        public void Constructor_IncludeUnfinalizedEvents_FlowsFromOptions()
+        {
+            ShareChangeFeedClientOptions options = new ShareChangeFeedClientOptions
+            {
+                IncludeUnfinalizedEvents = true,
+            };
+
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName,
+                options);
+
+            Assert.IsTrue(client._includeUnfinalizedEvents);
+        }
     }
 }
