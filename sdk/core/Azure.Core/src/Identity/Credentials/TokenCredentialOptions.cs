@@ -72,7 +72,7 @@ namespace Azure.Identity
         /// This property is only honored by MSAL-backed credentials.
         /// </summary>
         [Experimental("AZID5001")]
-        public IDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get; } = new();
+        public IDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get; } = new Dictionary<string, (string Value, bool IncludeInCacheKey)>();
 
         /// <summary>
         /// Gets or sets whether this credential is part of a chained credential.
@@ -93,10 +93,7 @@ namespace Azure.Identity
 
             // copy AdditionalQueryParameters (deep copy to avoid shared mutable state)
 #pragma warning disable AZID5001 // AdditionalQueryParameters is experimental
-            if (AdditionalQueryParameters.Count > 0)
-            {
-                clone.AdditionalQueryParameters = new Dictionary<string, (string Value, bool IncludeInCacheKey)>(AdditionalQueryParameters);
-            }
+            CloneListItems(AdditionalQueryParameters, clone.AdditionalQueryParameters);
 #pragma warning restore AZID5001
 
             // copy TokenCredentialDiagnosticsOptions specific options
@@ -148,7 +145,7 @@ namespace Azure.Identity
             return clone;
         }
 
-        private static void CloneListItems<T>(IList<T> original, IList<T> clone)
+        private static void CloneListItems<T>(ICollection<T> original, ICollection<T> clone)
         {
             clone.Clear();
 
