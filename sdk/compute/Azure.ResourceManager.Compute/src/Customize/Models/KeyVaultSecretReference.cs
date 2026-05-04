@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal partial class KeyVaultSecretReferenceConverter : JsonConverter<KeyVaultSecretReference>
         {
+            /// <inheritdoc />
             public override void Write(Utf8JsonWriter writer, KeyVaultSecretReference model, JsonSerializerOptions options)
             {
                 ((IJsonModel<KeyVaultSecretReference>)model).Write(writer, ModelSerializationExtensions.WireOptions);
             }
 
+            /// <inheritdoc />
             public override KeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
