@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The virtual machine extension instance view. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineExtensionProperties(string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures, KeyVaultSecretReference protectedSettingsFromKeyVault, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineExtensionProperties(string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
             SuppressFailures = suppressFailures;
-            ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
+            KeyVaultProtectedSettings = keyVaultProtectedSettings;
             ProvisionAfterExtensions = provisionAfterExtensions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? SuppressFailures { get; set; }
 
         /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
-        public KeyVaultSecretReference ProtectedSettingsFromKeyVault { get; set; }
+        public KeyVaultSecretReference KeyVaultProtectedSettings { get; set; }
 
         /// <summary> Collection of extension names after which this extension needs to be provisioned. </summary>
         public IList<string> ProvisionAfterExtensions { get; } = new ChangeTrackingList<string>();

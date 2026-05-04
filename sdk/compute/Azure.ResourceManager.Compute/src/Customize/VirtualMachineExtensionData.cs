@@ -6,10 +6,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineScaleSetVmExtensionPatch
+    public partial class VirtualMachineExtensionData
     {
         // Backward compatibility: the previously-shipped SDK exposed `ProtectedSettingsFromKeyVault` as a loosely-typed
         // BinaryData property. The TypeSpec spec types it as `KeyVaultSecretReference`, which is now surfaced as the

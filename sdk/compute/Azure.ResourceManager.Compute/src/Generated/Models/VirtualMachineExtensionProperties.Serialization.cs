@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("suppressFailures"u8);
                 writer.WriteBooleanValue(SuppressFailures.Value);
             }
-            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(ProtectedSettingsFromKeyVault, options);
+                writer.WriteObjectValue(KeyVaultProtectedSettings, options);
             }
             if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute.Models
             string provisioningState = default;
             VirtualMachineExtensionInstanceView instanceView = default;
             bool? suppressFailures = default;
-            KeyVaultSecretReference protectedSettingsFromKeyVault = default;
+            KeyVaultSecretReference keyVaultProtectedSettings = default;
             IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(prop.Value, options);
+                    keyVaultProtectedSettings = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisionAfterExtensions"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute.Models
                 provisioningState,
                 instanceView,
                 suppressFailures,
-                protectedSettingsFromKeyVault,
+                keyVaultProtectedSettings,
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }

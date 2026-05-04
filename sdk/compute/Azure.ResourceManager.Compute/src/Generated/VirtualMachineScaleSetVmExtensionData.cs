@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
-        public KeyVaultSecretReference ProtectedSettingsFromKeyVault
+        public KeyVaultSecretReference KeyVaultProtectedSettings
         {
             get
             {
-                return Properties is null ? default : Properties.ProtectedSettingsFromKeyVault;
+                return Properties is null ? default : Properties.KeyVaultProtectedSettings;
             }
             set
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineExtensionProperties();
                 }
-                Properties.ProtectedSettingsFromKeyVault = value;
+                Properties.KeyVaultProtectedSettings = value;
             }
         }
 

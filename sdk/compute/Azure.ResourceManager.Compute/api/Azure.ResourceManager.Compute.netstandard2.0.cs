@@ -2601,8 +2601,9 @@ namespace Azure.ResourceManager.Compute
         public string ExtensionType { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineExtensionInstanceView InstanceView { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.KeyVaultSecretReference KeyVaultProtectedSettings { get { throw null; } set { } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.KeyVaultSecretReference ProtectedSettingsFromKeyVault { get { throw null; } set { } }
+        public System.BinaryData ProtectedSettingsFromKeyVault { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
@@ -2946,7 +2947,7 @@ namespace Azure.ResourceManager.Compute
         public string Name { get { throw null; } set { } }
         public string ParentName { get { throw null; } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.KeyVaultSecretReference ProtectedSettingsFromKeyVault { get { throw null; } set { } }
+        public System.BinaryData ProtectedSettingsFromKeyVault { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
@@ -3204,7 +3205,7 @@ namespace Azure.ResourceManager.Compute
         public string Name { get { throw null; } }
         public string ParentName { get { throw null; } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.KeyVaultSecretReference ProtectedSettingsFromKeyVault { get { throw null; } set { } }
+        public System.BinaryData ProtectedSettingsFromKeyVault { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
@@ -10138,8 +10139,9 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ExtensionType { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.KeyVaultSecretReference KeyVaultProtectedSettings { get { throw null; } set { } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.KeyVaultSecretReference ProtectedSettingsFromKeyVault { get { throw null; } set { } }
+        public System.BinaryData ProtectedSettingsFromKeyVault { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public System.BinaryData Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
@@ -10749,7 +10751,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.KeyVaultSecretReference KeyVaultProtectedSettings { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.KeyVaultSecretReference ProtectedSettingsFromKeyVault { get { throw null; } set { } }
+        public System.BinaryData ProtectedSettingsFromKeyVault { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
@@ -11425,7 +11427,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.KeyVaultSecretReference KeyVaultProtectedSettings { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.KeyVaultSecretReference ProtectedSettingsFromKeyVault { get { throw null; } set { } }
+        public System.BinaryData ProtectedSettingsFromKeyVault { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public System.BinaryData Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }

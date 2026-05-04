@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("suppressFailures"u8);
                 writer.WriteBooleanValue(SuppressFailures.Value);
             }
-            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(ProtectedSettingsFromKeyVault, options);
+                writer.WriteObjectValue(KeyVaultProtectedSettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute.Models
             BinaryData settings = default;
             BinaryData protectedSettings = default;
             bool? suppressFailures = default;
-            KeyVaultSecretReference protectedSettingsFromKeyVault = default;
+            KeyVaultSecretReference keyVaultProtectedSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(prop.Value, options);
+                    keyVaultProtectedSettings = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute.Models
                 settings,
                 protectedSettings,
                 suppressFailures,
-                protectedSettingsFromKeyVault,
+                keyVaultProtectedSettings,
                 additionalBinaryDataProperties);
         }
     }

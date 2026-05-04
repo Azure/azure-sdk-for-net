@@ -6,15 +6,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
-using System.Text;
-using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    // Backward compatibility: restore name constructor and KeyVaultProtectedSettings property alias.
-    // The old SDK exposed ProtectedSettingsFromKeyVault as "KeyVaultProtectedSettings" (typed).
-    // The generator now generates ProtectedSettingsFromKeyVault directly as KeyVaultSecretReference.
     public partial class VirtualMachineScaleSetExtensionData
     {
         /// <summary> Initializes a new instance of VmssExtensionData. </summary>
@@ -24,12 +19,16 @@ namespace Azure.ResourceManager.Compute
             Name = name;
         }
 
+        // Backward compatibility: the previously-shipped SDK exposed `ProtectedSettingsFromKeyVault` as a loosely-typed
+        // BinaryData property. The TypeSpec spec types it as `KeyVaultSecretReference`, which is now surfaced as the
+        // strongly-typed `KeyVaultProtectedSettings` (see G5 client.tsp clientName rename). This shim re-adds the
+        // BinaryData accessor by serializing/deserializing through the typed property to preserve binary compatibility.
         /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public KeyVaultSecretReference KeyVaultProtectedSettings
+        public BinaryData ProtectedSettingsFromKeyVault
         {
-            get => ProtectedSettingsFromKeyVault;
-            set => ProtectedSettingsFromKeyVault = value;
+            get => KeyVaultProtectedSettings is null ? null : ((IJsonModel<KeyVaultSecretReference>)KeyVaultProtectedSettings).Write(ModelSerializationExtensions.WireOptions);
+            set => KeyVaultProtectedSettings = value is null ? null : ModelReaderWriter.Read<KeyVaultSecretReference>(value, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
         }
     }
 }
