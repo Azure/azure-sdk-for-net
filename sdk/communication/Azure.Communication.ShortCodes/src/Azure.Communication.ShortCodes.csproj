@@ -8,7 +8,8 @@
     <Version>1.0.0-alpha.1</Version>
     <PackageTags>Microsoft Azure Communication Short Codes Service;Microsoft;Azure;Azure Communication Service;Azure Communication Short Codes Service;Short Codes;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

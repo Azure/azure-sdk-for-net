@@ -6,7 +6,8 @@
     <PackageTags>Microsoft Azure Anomaly Detector</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <GenerateAPIListing>true</GenerateAPIListing>    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <GenerateAPIListing>true</GenerateAPIListing>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>

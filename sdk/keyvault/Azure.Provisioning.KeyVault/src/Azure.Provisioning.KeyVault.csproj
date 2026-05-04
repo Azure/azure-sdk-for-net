@@ -7,8 +7,7 @@
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>12</LangVersion>
-
-    <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->  </PropertyGroup>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Provisioning" />

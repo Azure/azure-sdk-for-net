@@ -4,7 +4,8 @@
     <AssemblyTitle>Azure Maps Azure.Maps.Geolocation</AssemblyTitle>
     <Version>1.0.0-beta.4</Version>
     <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Geolocation</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 

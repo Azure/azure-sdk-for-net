@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
-    <!-- We don't care about XML doc comments on test types and members -->  </PropertyGroup>
+  </PropertyGroup>
 
   <!-- Reference the Client Library -->
   <ItemGroup>
