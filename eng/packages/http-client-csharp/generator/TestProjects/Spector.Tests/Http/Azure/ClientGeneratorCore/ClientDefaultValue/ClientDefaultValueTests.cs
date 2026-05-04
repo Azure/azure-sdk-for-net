@@ -10,6 +10,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientDefaul
     public class ClientDefaultValueTests : SpectorTestBase
     {
         [SpectorTest]
+        [Ignore("https://github.com/microsoft/typespec/issues/10578")]
         public Task Azure_ClientGenerator_Core_ClientDefaultValue_PutModelProperty() => Test(async (host) =>
         {
             var response = await new ClientDefaultValueClient(host, null).PutModelPropertyAsync(new ModelWithDefaultValues("test"));
