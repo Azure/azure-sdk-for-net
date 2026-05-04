@@ -16,6 +16,24 @@ namespace Azure.Storage.Files.DataLake
 
         public virtual TransferValidationOptions TransferValidation { get; } = new();
 
+        private HttpPipeline _blobPipeline;
+
+        /// <summary>
+        /// Pipeline used by inner blob clients (e.g. <see cref="Blobs.BlobServiceClient"/>,
+        /// <see cref="Blobs.BlobContainerClient"/>, <see cref="Blobs.Specialized.BlockBlobClient"/>)
+        /// constructed inside DataLake clients. For token-credential scenarios this pipeline is
+        /// wrapped with <c>SessionAuthenticationPolicy</c>, while the DFS-side
+        /// <see cref="StorageClientConfiguration.Pipeline"/> uses the supplied authentication
+        /// policy as-is so DFS endpoint requests can never route through session auth.
+        /// Falls back to <see cref="StorageClientConfiguration.Pipeline"/> when no separate
+        /// blob pipeline has been configured (e.g. SharedKey / SAS scenarios).
+        /// </summary>
+        public virtual HttpPipeline BlobPipeline
+        {
+            get => _blobPipeline ?? Pipeline;
+            internal set => _blobPipeline = value;
+        }
+
         /// <summary>
         /// Create a <see cref="DataLakeClientConfiguration"/> without authentication,
         /// or with SAS that was provided as part of the URL.
@@ -99,7 +117,8 @@ namespace Azure.Storage.Files.DataLake
         }
 
         internal static DataLakeClientConfiguration DeepCopy(DataLakeClientConfiguration originalClientConfiguration)
-            => new DataLakeClientConfiguration(
+        {
+            var copy = new DataLakeClientConfiguration(
                 pipeline: originalClientConfiguration.Pipeline,
                 sharedKeyCredential: originalClientConfiguration.SharedKeyCredential,
                 sasCredential: originalClientConfiguration.SasCredential,
@@ -107,5 +126,8 @@ namespace Azure.Storage.Files.DataLake
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
                 clientOptions: originalClientConfiguration.ClientOptions,
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey);
+            copy._blobPipeline = originalClientConfiguration._blobPipeline;
+            return copy;
+        }
     }
 }

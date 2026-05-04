@@ -366,7 +366,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private enum AuthState
         {
-            /// <summary>Request is eligible for session-token auth; not yet attempted.</summary>
+            /// <summary>Caller should attempt session-token authentication for this request.</summary>
             UseSessionToken,
 
             /// <summary>Request was sent with a session token; response is on the message.</summary>
