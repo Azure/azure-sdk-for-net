@@ -6,9 +6,7 @@
     <PackageTags>Azure Health Insights</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012</NoWarn>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <GenerateAPIListing>true</GenerateAPIListing>    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 

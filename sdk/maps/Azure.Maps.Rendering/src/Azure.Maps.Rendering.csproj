@@ -4,9 +4,7 @@
     <AssemblyTitle>Azure Maps Azure.Maps.Rendering</AssemblyTitle>
     <Version>2.0.0-beta.2</Version>
     <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Rendering</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0012;AZC0035</NoWarn>
-    <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>    <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>

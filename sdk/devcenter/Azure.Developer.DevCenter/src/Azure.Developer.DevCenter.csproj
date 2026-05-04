@@ -7,9 +7,7 @@
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure DevCenter</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <NoWarn>$(NoWarn);AZC003;AZC0034</NoWarn>
-  </PropertyGroup>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>  </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
