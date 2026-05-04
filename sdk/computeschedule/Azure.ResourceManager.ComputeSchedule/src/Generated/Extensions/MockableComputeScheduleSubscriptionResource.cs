@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
 
         private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Endpoint, "2026-04-15-preview");
 
         /// <summary>
         /// List ScheduledAction resources by subscription ID
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CreateFlexResourceOperationResult>> ExecuteVirtualMachineCreateFlexOperationAsync(AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScheduledActionCreateFlexResult>> ExecuteVirtualMachineCreateFlexOperationAsync(AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 };
                 HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateFlexOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateFlexContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CreateFlexResourceOperationResult> response = Response.FromValue(CreateFlexResourceOperationResult.FromResponse(result), result);
+                Response<ScheduledActionCreateFlexResult> response = Response.FromValue(ScheduledActionCreateFlexResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CreateFlexResourceOperationResult> ExecuteVirtualMachineCreateFlexOperation(AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ScheduledActionCreateFlexResult> ExecuteVirtualMachineCreateFlexOperation(AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 };
                 HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateFlexOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateFlexContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CreateFlexResourceOperationResult> response = Response.FromValue(CreateFlexResourceOperationResult.FromResponse(result), result);
+                Response<ScheduledActionCreateFlexResult> response = Response.FromValue(ScheduledActionCreateFlexResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
