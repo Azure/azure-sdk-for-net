@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>The result from connect request.</summary>
+#pragma warning disable AZC0035 // Model factory will be added in a future update
     public class ConnectCallResult
+#pragma warning restore AZC0035
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;

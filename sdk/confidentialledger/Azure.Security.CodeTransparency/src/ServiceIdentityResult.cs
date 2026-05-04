@@ -8,7 +8,9 @@ using Azure.Core;
 namespace Azure.Security.CodeTransparency
 {
     /// <summary> Response from the identity service containing the TLS cert. </summary>
+#pragma warning disable AZC0035 // Model factory will be added in a future update
     public partial class ServiceIdentityResult
+#pragma warning restore AZC0035
     {
         /// <summary> Initializes a new instance of <see cref="ServiceIdentityResult"/>. </summary>
         /// <param name="ledgerTlsCertificate"> String representing the service certificate. </param>
