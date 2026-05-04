@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static string ToSerialString(this ComputeGalleryEndpointType value) => value switch
         {
             ComputeGalleryEndpointType.WireServer => "WireServer",
-            ComputeGalleryEndpointType.IMDS => "IMDS",
+            ComputeGalleryEndpointType.Imds => "IMDS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeGalleryEndpointType value.")
         };
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "IMDS"))
             {
-                return ComputeGalleryEndpointType.IMDS;
+                return ComputeGalleryEndpointType.Imds;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeGalleryEndpointType value.");
         }

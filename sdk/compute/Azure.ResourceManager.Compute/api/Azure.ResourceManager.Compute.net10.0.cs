@@ -4471,7 +4471,7 @@ namespace Azure.ResourceManager.Compute.Models
     public enum ComputeGalleryEndpointType
     {
         WireServer = 0,
-        IMDS = 1,
+        Imds = 1,
     }
     public partial class ComputeGalleryPlatformAttribute : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeGalleryPlatformAttribute>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeGalleryPlatformAttribute>
     {

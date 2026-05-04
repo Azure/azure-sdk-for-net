@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> WireServer. </summary>
         WireServer,
-        /// <summary> IMDS. </summary>
-        IMDS
+        /// <summary> Imds. </summary>
+        Imds
     }
 }
