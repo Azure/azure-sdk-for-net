@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The geo-location where the resource lives. </param>
         public ManagedDiskData(AzureLocation location) : base(location)
         {
+            ManagedByExtended = new ChangeTrackingList<ResourceIdentifier>();
             Zones = new ChangeTrackingList<string>();
         }
 
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
         /// <param name="zones"> The Logical zone list for Disk. </param>
         /// <param name="extendedLocation"> The extended location where the disk will be created. Extended location cannot be changed. </param>
-        internal ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DiskProperties properties, ResourceIdentifier managedBy, ResourceIdentifier managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DiskProperties properties, ResourceIdentifier managedBy, IReadOnlyList<ResourceIdentifier> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Compute
         public ResourceIdentifier ManagedBy { get; }
 
         /// <summary> List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </summary>
-        public ResourceIdentifier ManagedByExtended { get; }
+        public IReadOnlyList<ResourceIdentifier> ManagedByExtended { get; }
 
         /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </summary>
         public DiskSku Sku { get; set; }

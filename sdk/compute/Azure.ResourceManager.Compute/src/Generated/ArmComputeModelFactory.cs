@@ -2799,106 +2799,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new RunCommandParameterDefinition(name, runCommandParameterDefinitionType, defaultValue, @required, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="timeCreated"> The time when the disk was created. </param>
-        /// <param name="osType"> The Operating System type. </param>
-        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
-        /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer}. </param>
-        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
-        /// <param name="creationData"> Disk source information. CreationData information cannot be changed after the disk has been created. </param>
-        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
-        /// <param name="diskSizeBytes"> The size of the disk in bytes. This field is read only. </param>
-        /// <param name="uniqueId"> Unique Guid identifying the resource. </param>
-        /// <param name="encryptionSettingsGroup"> Encryption settings collection used for Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
-        /// <param name="provisioningState"> The disk provisioning state. </param>
-        /// <param name="diskIopsReadWrite"> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </param>
-        /// <param name="diskMBpsReadWrite"> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
-        /// <param name="diskIopsReadOnly"> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </param>
-        /// <param name="diskMBpsReadOnly"> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
-        /// <param name="diskState"> The state of the disk. </param>
-        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
-        /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
-        /// <param name="shareInfo"> Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </param>
-        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
-        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
-        /// <param name="burstingEnabledOn"> Latest time when bursting was last enabled on a disk. </param>
-        /// <param name="tier"> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </param>
-        /// <param name="burstingEnabled"> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </param>
-        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
-        /// <param name="securityProfile"> Contains the security related information for the resource. </param>
-        /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
-        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
-        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
-        /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
-        /// <param name="lastOwnershipUpdateOn"> The UTC time when the ownership state of the disk was last changed i.e., the time the disk was last attached or detached from a VM or the time when the VM to which the disk was attached was deallocated or started. </param>
-        /// <param name="propertyUpdatesInProgressTargetTier"> The target performance tier of the disk if a tier change operation is in progress. </param>
-        /// <param name="availabilityActionOnDiskDelay"> Determines on how to handle disks with slow I/O. </param>
-        /// <param name="managedBy"> A relative URI containing the ID of the VM that has the disk attached. </param>
-        /// <param name="managedByExtended"> List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </param>
-        /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
-        /// <param name="zones"> The Logical zone list for Disk. </param>
-        /// <param name="extendedLocation"> The extended location where the disk will be created. Extended location cannot be changed. </param>
-        /// <returns> A new <see cref="Compute.ManagedDiskData"/> instance for mocking. </returns>
-        public static ManagedDiskData ManagedDiskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? timeCreated = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsGroup = default, string provisioningState = default, long? diskIopsReadWrite = default, long? diskMBpsReadWrite = default, long? diskIopsReadOnly = default, long? diskMBpsReadOnly = default, DiskState? diskState = default, DiskEncryption encryption = default, int? maxShares = default, IEnumerable<ShareInfoElement> shareInfo = default, NetworkAccessPolicy? networkAccessPolicy = default, ResourceIdentifier diskAccessId = default, DateTimeOffset? burstingEnabledOn = default, string tier = default, bool? burstingEnabled = default, bool? supportsHibernation = default, DiskSecurityProfile securityProfile = default, float? completionPercent = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, bool? isOptimizedForFrequentAttach = default, DateTimeOffset? lastOwnershipUpdateOn = default, string propertyUpdatesInProgressTargetTier = default, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default, ResourceIdentifier managedBy = default, ResourceIdentifier managedByExtended = default, DiskSku sku = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new ManagedDiskData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                timeCreated is null && osType is null && hyperVGeneration is null && purchasePlan is null && supportedCapabilities is null && creationData is null && diskSizeGB is null && diskSizeBytes is null && uniqueId is null && encryptionSettingsGroup is null && provisioningState is null && diskIopsReadWrite is null && diskMBpsReadWrite is null && diskIopsReadOnly is null && diskMBpsReadOnly is null && diskState is null && encryption is null && maxShares is null && shareInfo is null && networkAccessPolicy is null && diskAccessId is null && burstingEnabledOn is null && tier is null && burstingEnabled is null && supportsHibernation is null && securityProfile is null && completionPercent is null && publicNetworkAccess is null && dataAccessAuthMode is null && isOptimizedForFrequentAttach is null && lastOwnershipUpdateOn is null && propertyUpdatesInProgressTargetTier is null && availabilityActionOnDiskDelay is null ? default : new DiskProperties(
-                    timeCreated,
-                    osType,
-                    hyperVGeneration,
-                    purchasePlan,
-                    supportedCapabilities,
-                    creationData,
-                    diskSizeGB,
-                    diskSizeBytes,
-                    uniqueId,
-                    encryptionSettingsGroup,
-                    provisioningState,
-                    diskIopsReadWrite,
-                    diskMBpsReadWrite,
-                    diskIopsReadOnly,
-                    diskMBpsReadOnly,
-                    diskState,
-                    encryption,
-                    maxShares,
-                    (shareInfo ?? new ChangeTrackingList<ShareInfoElement>()).ToList(),
-                    networkAccessPolicy,
-                    diskAccessId,
-                    burstingEnabledOn,
-                    tier,
-                    burstingEnabled,
-                    new PropertyUpdatesInProgress(propertyUpdatesInProgressTargetTier, null),
-                    supportsHibernation,
-                    securityProfile,
-                    completionPercent,
-                    publicNetworkAccess,
-                    dataAccessAuthMode,
-                    isOptimizedForFrequentAttach,
-                    lastOwnershipUpdateOn,
-                    new AvailabilityPolicy(availabilityActionOnDiskDelay, null),
-                    null),
-                managedBy,
-                managedByExtended,
-                sku,
-                zones.ToList(),
-                extendedLocation);
-        }
-
         /// <summary> Data used when creating a disk. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
@@ -5881,8 +5781,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="lastOwnershipUpdateOn"> The UTC time when the ownership state of the disk was last changed i.e., the time the disk was last attached or detached from a VM or the time when the VM to which the disk was attached was deallocated or started. </param>
         /// <param name="availabilityActionOnDiskDelay"> Determines how platform treats disk failures. </param>
         /// <returns> A new <see cref="Compute.ManagedDiskData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedDiskData ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier managedBy, IEnumerable<ResourceIdentifier> managedByExtended, DiskSku sku, IEnumerable<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IEnumerable<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, string propertyUpdatesInProgressTargetTier, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay)
+        public static ManagedDiskData ManagedDiskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier managedBy = default, IEnumerable<ResourceIdentifier> managedByExtended = default, DiskSku sku = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, DateTimeOffset? timeCreated = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsGroup = default, string provisioningState = default, long? diskIopsReadWrite = default, long? diskMBpsReadWrite = default, long? diskIopsReadOnly = default, long? diskMBpsReadOnly = default, DiskState? diskState = default, DiskEncryption encryption = default, int? maxShares = default, IEnumerable<ShareInfoElement> shareInfo = default, NetworkAccessPolicy? networkAccessPolicy = default, ResourceIdentifier diskAccessId = default, DateTimeOffset? burstingEnabledOn = default, string tier = default, bool? burstingEnabled = default, string propertyUpdatesInProgressTargetTier = default, bool? supportsHibernation = default, DiskSecurityProfile securityProfile = default, float? completionPercent = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, bool? isOptimizedForFrequentAttach = default, DateTimeOffset? lastOwnershipUpdateOn = default, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             managedByExtended ??= new ChangeTrackingList<ResourceIdentifier>();
@@ -6982,25 +6881,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedDiskData ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier managedBy, IEnumerable<ResourceIdentifier> managedByExtended, DiskSku sku, IEnumerable<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IEnumerable<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, string propertyUpdatesInProgressTargetTier, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            managedByExtended ??= new ChangeTrackingList<ResourceIdentifier>();
-            zones ??= new ChangeTrackingList<string>();
-            shareInfo ??= new ChangeTrackingList<ShareInfoElement>();
-
-            return new ManagedDiskData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                managedBy,
-                managedByExtended.ToList(),
-                sku,
-                zones.ToList(),
-                extendedLocation);
+            return ManagedDiskData(id, name, resourceType, systemData, tags, location, timeCreated, osType, hyperVGeneration, purchasePlan, supportedCapabilities, creationData, diskSizeGB, diskSizeBytes, uniqueId, encryptionSettingsGroup, provisioningState, diskIopsReadWrite, diskMBpsReadWrite, diskIopsReadOnly, diskMBpsReadOnly, diskState, encryption, maxShares, shareInfo, networkAccessPolicy, diskAccessId, burstingEnabledOn, tier, burstingEnabled, supportsHibernation, securityProfile, completionPercent, publicNetworkAccess, dataAccessAuthMode, isOptimizedForFrequentAttach, lastOwnershipUpdateOn, propertyUpdatesInProgressTargetTier, availabilityActionOnDiskDelay: default, managedBy, managedByExtended, sku, zones, extendedLocation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskCreationData"/>. </summary>

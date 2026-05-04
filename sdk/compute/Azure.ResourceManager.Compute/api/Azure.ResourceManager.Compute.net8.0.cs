@@ -1965,7 +1965,7 @@ namespace Azure.ResourceManager.Compute
         public bool? IsOptimizedForFrequentAttach { get { throw null; } set { } }
         public System.DateTimeOffset? LastOwnershipUpdateOn { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManagedBy { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ManagedByExtended { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> ManagedByExtended { get { throw null; } }
         public int? MaxShares { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? OSType { get { throw null; } set { } }
