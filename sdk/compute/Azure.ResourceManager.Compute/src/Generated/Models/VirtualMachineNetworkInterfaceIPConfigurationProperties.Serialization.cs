@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute.Models
             ComputeWriteableSubResourceData subnet = default;
             bool? primary = default;
             VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default;
-            IPVersions? privateIPAddressVersion = default;
+            IPVersion? privateIPAddressVersion = default;
             IList<WritableSubResource> applicationSecurityGroups = default;
             IList<WritableSubResource> applicationGatewayBackendAddressPools = default;
             IList<WritableSubResource> loadBalancerBackendAddressPools = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    privateIPAddressVersion = new IPVersions(prop.Value.GetString());
+                    privateIPAddressVersion = new IPVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("applicationSecurityGroups"u8))

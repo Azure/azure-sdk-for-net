@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineIPTag> ipTags = default;
             ComputeWriteableSubResourceData publicIPPrefix = default;
-            IPVersions? publicIPAddressVersion = default;
+            IPVersion? publicIPAddressVersion = default;
             PublicIPAllocationMethod? publicIPAllocationMethod = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    publicIPAddressVersion = new IPVersions(prop.Value.GetString());
+                    publicIPAddressVersion = new IPVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicIPAllocationMethod"u8))

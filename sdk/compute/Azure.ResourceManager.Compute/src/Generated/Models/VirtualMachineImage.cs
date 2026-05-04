@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the HyperVGeneration Type. </summary>
-        public HyperVGenerationTypes? HyperVGeneration
+        public HyperVGeneration? HyperVGeneration
         {
             get
             {

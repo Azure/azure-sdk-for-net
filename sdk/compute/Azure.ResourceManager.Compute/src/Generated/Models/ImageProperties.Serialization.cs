@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
             ComputeWriteableSubResourceData sourceVirtualMachine = default;
             ImageStorageProfile storageProfile = default;
             string provisioningState = default;
-            HyperVGenerationTypes? hyperVGeneration = default;
+            HyperVGeneration? hyperVGeneration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hyperVGeneration = new HyperVGenerationTypes(prop.Value.GetString());
+                    hyperVGeneration = new HyperVGeneration(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

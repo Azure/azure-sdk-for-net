@@ -1264,7 +1264,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
         /// <param name="tags"> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachinePublicIPAddressConfiguration VirtualMachinePublicIPAddressConfiguration(string name = default, int? idleTimeoutInMinutes = default, ComputeDeleteOption? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIPTag> ipTags = default, IPVersions? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default, ResourceIdentifier publicIPPrefixId = default, ComputePublicIPAddressSku sku = default, IDictionary<string, string> tags = default)
+        public static VirtualMachinePublicIPAddressConfiguration VirtualMachinePublicIPAddressConfiguration(string name = default, int? idleTimeoutInMinutes = default, ComputeDeleteOption? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIPTag> ipTags = default, IPVersion? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default, ResourceIdentifier publicIPPrefixId = default, ComputePublicIPAddressSku sku = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1592,7 +1592,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="patchStatus"> [Preview Feature] The status of virtual machine patch operations. </param>
         /// <param name="isVmInStandbyPool"> [Preview Feature] Specifies whether the VM is currently in or out of the Standby Pool. </param>
         /// <returns> A new <see cref="Models.VirtualMachineInstanceView"/> instance for mocking. </returns>
-        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string computerName = default, string osName = default, string osVersion = default, HyperVGenerationType? hyperVGeneration = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, string assignedHost = default, IEnumerable<InstanceViewStatus> statuses = default, VirtualMachinePatchStatus patchStatus = default, bool? isVmInStandbyPool = default)
+        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, string assignedHost = default, IEnumerable<InstanceViewStatus> statuses = default, VirtualMachinePatchStatus patchStatus = default, bool? isVmInStandbyPool = default)
         {
             disks ??= new ChangeTrackingList<DiskInstanceView>();
             extensions ??= new ChangeTrackingList<VirtualMachineExtensionInstanceView>();
@@ -2179,34 +2179,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new SshPublicKeyGenerateKeyPairResult(privateKey, publicKey, id, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
-        /// <param name="sourceVirtualMachineId"> Resource Id. </param>
-        /// <param name="extendedLocation"> The extended location of the Image. </param>
-        /// <returns> A new <see cref="Compute.DiskImageData"/> instance for mocking. </returns>
-        public static DiskImageData DiskImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGenerationTypes? hyperVGeneration = default, ResourceIdentifier sourceVirtualMachineId = default, ExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiskImageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                storageProfile is null && provisioningState is null && hyperVGeneration is null && sourceVirtualMachineId is null ? default : new ImageProperties(new ComputeWriteableSubResourceData(sourceVirtualMachineId, null), storageProfile, provisioningState, hyperVGeneration, null),
-                extendedLocation);
-        }
-
         /// <summary> Describes a storage profile. </summary>
         /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
@@ -2217,19 +2189,6 @@ namespace Azure.ResourceManager.Compute.Models
             dataDisks ??= new ChangeTrackingList<ImageDataDisk>();
 
             return new ImageStorageProfile(osDisk, dataDisks.ToList(), zoneResilient, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
-        /// <param name="sourceVirtualMachineId"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.DiskImagePatch"/> instance for mocking. </returns>
-        public static DiskImagePatch DiskImagePatch(IDictionary<string, string> tags = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGenerationTypes? hyperVGeneration = default, ResourceIdentifier sourceVirtualMachineId = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiskImagePatch(tags, additionalBinaryDataProperties: null, storageProfile is null && provisioningState is null && hyperVGeneration is null && sourceVirtualMachineId is null ? default : new ImageProperties(new ComputeWriteableSubResourceData(sourceVirtualMachineId, null), storageProfile, provisioningState, hyperVGeneration, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2285,7 +2244,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </param>
         /// <param name="hyperVGeneration"> HyperVGeneration of the source VM for which restore point is captured. </param>
         /// <returns> A new <see cref="Models.RestorePointSourceMetadata"/> instance for mocking. </returns>
-        public static RestorePointSourceMetadata RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile = default, RestorePointSourceVmStorageProfile storageProfile = default, VirtualMachineOSProfile osProfile = default, BootDiagnostics bootDiagnostics = default, string licenseType = default, string vmId = default, SecurityProfile securityProfile = default, string location = default, string userData = default, HyperVGenerationTypes? hyperVGeneration = default)
+        public static RestorePointSourceMetadata RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile = default, RestorePointSourceVmStorageProfile storageProfile = default, VirtualMachineOSProfile osProfile = default, BootDiagnostics bootDiagnostics = default, string licenseType = default, string vmId = default, SecurityProfile securityProfile = default, string location = default, string userData = default, HyperVGeneration? hyperVGeneration = default)
         {
             return new RestorePointSourceMetadata(
                 hardwareProfile,
@@ -2635,7 +2594,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="automaticOSUpgradeSupported"> Specifies whether automatic OS upgrade is supported on the image. </param>
         /// <param name="disallowedVmDiskType"> VM disk types which are disallowed. </param>
         /// <returns> A new <see cref="Models.VirtualMachineImage"/> instance for mocking. </returns>
-        public static VirtualMachineImage VirtualMachineImage(ResourceIdentifier id = default, string name = default, AzureLocation location = default, IDictionary<string, string> tags = default, ExtendedLocation extendedLocation = default, PurchasePlan plan = default, IEnumerable<DataDiskImage> dataDiskImages = default, HyperVGenerationTypes? hyperVGeneration = default, IEnumerable<VirtualMachineImageFeature> features = default, ArchitectureType? architecture = default, ImageDeprecationStatus imageDeprecationStatus = default, SupportedOperatingSystemType? osDiskImageOperatingSystem = default, bool? automaticOSUpgradeSupported = default, VirtualMachineDiskType? disallowedVmDiskType = default)
+        public static VirtualMachineImage VirtualMachineImage(ResourceIdentifier id = default, string name = default, AzureLocation location = default, IDictionary<string, string> tags = default, ExtendedLocation extendedLocation = default, PurchasePlan plan = default, IEnumerable<DataDiskImage> dataDiskImages = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<VirtualMachineImageFeature> features = default, ArchitectureType? architecture = default, ImageDeprecationStatus imageDeprecationStatus = default, SupportedOperatingSystemType? osDiskImageOperatingSystem = default, bool? automaticOSUpgradeSupported = default, VirtualMachineDiskType? disallowedVmDiskType = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3311,61 +3270,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new SharingUpdate(operationType, groups.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="description"> The description of this gallery image definition resource. This property is updatable. </param>
-        /// <param name="eula"> The Eula agreement for the gallery image definition. </param>
-        /// <param name="privacyStatementUri"> The privacy statement uri. </param>
-        /// <param name="releaseNoteUri"> The release note uri. </param>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
-        /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
-        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="identifier"> This is the gallery image definition identifier. </param>
-        /// <param name="recommended"> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </param>
-        /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="features"> A list of gallery image features. </param>
-        /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
-        /// <param name="allowUpdateImage"> Optional. Must be set to true if the gallery image features are being updated. </param>
-        /// <param name="disallowedDiskTypes"> A list of disk types. </param>
-        /// <returns> A new <see cref="Compute.GalleryImageData"/> instance for mocking. </returns>
-        public static GalleryImageData GalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, HyperVGeneration? hyperVGeneration = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier identifier = default, RecommendedMachineConfiguration recommended = default, ImagePurchasePlan purchasePlan = default, GalleryProvisioningState? provisioningState = default, IEnumerable<GalleryImageFeature> features = default, Architecture? architecture = default, bool? allowUpdateImage = default, IEnumerable<string> disallowedDiskTypes = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new GalleryImageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                description is null && eula is null && privacyStatementUri is null && releaseNoteUri is null && osType is null && osState is null && hyperVGeneration is null && endOfLifeOn is null && identifier is null && recommended is null && purchasePlan is null && provisioningState is null && features is null && architecture is null && allowUpdateImage is null && disallowedDiskTypes is null ? default : new GalleryImageProperties(
-                    description,
-                    eula,
-                    privacyStatementUri,
-                    releaseNoteUri,
-                    osType.GetValueOrDefault(),
-                    osState.GetValueOrDefault(),
-                    hyperVGeneration,
-                    endOfLifeOn,
-                    identifier,
-                    recommended,
-                    new Disallowed((disallowedDiskTypes ?? new ChangeTrackingList<string>()).ToList(), null),
-                    purchasePlan,
-                    provisioningState,
-                    (features ?? new ChangeTrackingList<GalleryImageFeature>()).ToList(),
-                    architecture,
-                    allowUpdateImage,
-                    null));
-        }
-
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -3387,7 +3291,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="allowUpdateImage"> Optional. Must be set to true if the gallery image features are being updated. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
         /// <returns> A new <see cref="Models.GalleryImagePatch"/> instance for mocking. </returns>
-        public static GalleryImagePatch GalleryImagePatch(string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, HyperVGeneration? hyperVGeneration = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier identifier = default, RecommendedMachineConfiguration recommended = default, ImagePurchasePlan purchasePlan = default, GalleryProvisioningState? provisioningState = default, IEnumerable<GalleryImageFeature> features = default, Architecture? architecture = default, bool? allowUpdateImage = default, IEnumerable<string> disallowedDiskTypes = default)
+        public static GalleryImagePatch GalleryImagePatch(string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, HyperVGeneration? hyperVGeneration = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier identifier = default, RecommendedMachineConfiguration recommended = default, ImagePurchasePlan purchasePlan = default, GalleryProvisioningState? provisioningState = default, IEnumerable<GalleryImageFeature> features = default, ArchitectureType? architecture = default, bool? allowUpdateImage = default, IEnumerable<string> disallowedDiskTypes = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4246,7 +4150,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageData"/> instance for mocking. </returns>
-        public static SharedGalleryImageData SharedGalleryImageData(string name = default, string location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, Architecture? architecture = default, Uri privacyStatementUri = default, string eula = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
+        public static SharedGalleryImageData SharedGalleryImageData(string name = default, string location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
         {
             return new SharedGalleryImageData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null), osType is null && osState is null && endOfLifeOn is null && imageIdentifier is null && recommended is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && artifactTags is null && disallowedDiskTypes is null ? default : new SharedGalleryImageProperties(
                 osType.GetValueOrDefault(),
@@ -4392,7 +4296,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageData CommunityGalleryImageData(string name = default, string location = default, string @type = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, CommunityGalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, Architecture? architecture = default, Uri privacyStatementUri = default, string eula = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
+        public static CommunityGalleryImageData CommunityGalleryImageData(string name = default, string location = default, string @type = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, CommunityGalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
         {
             return new CommunityGalleryImageData(
                 name,
@@ -5254,8 +5158,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
         /// <returns> A new <see cref="Compute.DiskImageData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DiskImageData DiskImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ResourceIdentifier sourceVirtualMachineId, ImageStorageProfile storageProfile, string provisioningState, HyperVGeneration? hyperVGeneration)
+        public static DiskImageData DiskImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, ResourceIdentifier sourceVirtualMachineId = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGeneration? hyperVGeneration = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5667,8 +5570,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
         /// <returns> A new <see cref="Models.DiskImagePatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DiskImagePatch DiskImagePatch(IDictionary<string, string> tags, ResourceIdentifier sourceVirtualMachineId, ImageStorageProfile storageProfile, string provisioningState, HyperVGeneration? hyperVGeneration)
+        public static DiskImagePatch DiskImagePatch(IDictionary<string, string> tags = default, ResourceIdentifier sourceVirtualMachineId = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGeneration? hyperVGeneration = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -6459,8 +6361,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
         /// <param name="allowUpdateImage"> Optional. Must be set to true if the gallery image features are being updated. </param>
         /// <returns> A new <see cref="Compute.GalleryImageData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GalleryImageData GalleryImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IEnumerable<GalleryImageFeature> features, ArchitectureType? architecture, bool? allowUpdateImage)
+        public static GalleryImageData GalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, HyperVGeneration? hyperVGeneration = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier identifier = default, RecommendedMachineConfiguration recommended = default, IEnumerable<string> disallowedDiskTypes = default, ImagePurchasePlan purchasePlan = default, GalleryProvisioningState? provisioningState = default, IEnumerable<GalleryImageFeature> features = default, ArchitectureType? architecture = default, bool? allowUpdateImage = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             disallowedDiskTypes ??= new ChangeTrackingList<string>();
@@ -7350,29 +7251,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IEnumerable<DiskInstanceView> disks, IEnumerable<VirtualMachineExtensionInstanceView> extensions, InstanceViewStatus vmHealthStatus, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IEnumerable<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus)
         {
-            disks ??= new ChangeTrackingList<DiskInstanceView>();
-            extensions ??= new ChangeTrackingList<VirtualMachineExtensionInstanceView>();
-            statuses ??= new ChangeTrackingList<InstanceViewStatus>();
-
-            return new VirtualMachineInstanceView(
-                platformUpdateDomain,
-                platformFaultDomain,
-                computerName,
-                osName,
-                osVersion,
-                hyperVGeneration,
-                rdpThumbPrint,
-                vmAgent,
-                maintenanceRedeployStatus,
-                disks.ToList(),
-                extensions.ToList(),
-                default,
-                bootDiagnostics,
-                assignedHost,
-                statuses.ToList(),
-                patchStatus,
-                default,
-                additionalBinaryDataProperties: null);
+            return VirtualMachineInstanceView(platformUpdateDomain, platformFaultDomain, computerName, osName, osVersion, hyperVGeneration, rdpThumbPrint, vmAgent, maintenanceRedeployStatus, disks, extensions, vmHealthStatus, bootDiagnostics, assignedHost, statuses, patchStatus, isVmInStandbyPool: default);
         }
 
         /// <param name="id"></param>
@@ -7579,19 +7458,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GalleryImageData GalleryImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IEnumerable<GalleryImageFeature> features, ArchitectureType? architecture)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            disallowedDiskTypes ??= new ChangeTrackingList<string>();
-            features ??= new ChangeTrackingList<GalleryImageFeature>();
-
-            return new GalleryImageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default);
+            return GalleryImageData(id, name, resourceType, systemData, tags, location, description, eula, privacyStatementUri, releaseNoteUri, osType, osState, hyperVGeneration, endOfLifeOn, identifier, recommended, purchasePlan, provisioningState, features, architecture, allowUpdateImage: default, disallowedDiskTypes);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryImagePatch"/>. </summary>

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="architecture"> Specifies the Architecture Type. </param>
         /// <param name="imageDeprecationStatus"> Describes image deprecation status properties on the image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineImageProperties(PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture, ImageDeprecationStatus imageDeprecationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineImageProperties(PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGeneration? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture, ImageDeprecationStatus imageDeprecationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Plan = plan;
             OSDiskImage = osDiskImage;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; }
 
         /// <summary> Specifies the HyperVGeneration Type. </summary>
-        public HyperVGenerationTypes? HyperVGeneration { get; }
+        public HyperVGeneration? HyperVGeneration { get; }
 
         /// <summary> Specifies disallowed configuration for the VirtualMachine created from the image. </summary>
         internal DisallowedConfiguration Disallowed { get; }

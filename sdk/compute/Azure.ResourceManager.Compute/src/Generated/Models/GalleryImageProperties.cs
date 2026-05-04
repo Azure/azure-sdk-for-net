@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
         /// <param name="allowUpdateImage"> Optional. Must be set to true if the gallery image features are being updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageProperties(string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, SupportedOperatingSystemType osType, OperatingSystemStateType osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, Architecture? architecture, bool? allowUpdateImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryImageProperties(string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, SupportedOperatingSystemType osType, OperatingSystemStateType osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, ArchitectureType? architecture, bool? allowUpdateImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Eula = eula;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<GalleryImageFeature> Features { get; } = new ChangeTrackingList<GalleryImageFeature>();
 
         /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
-        public Architecture? Architecture { get; set; }
+        public ArchitectureType? Architecture { get; set; }
 
         /// <summary> Optional. Must be set to true if the gallery image features are being updated. </summary>
         public bool? AllowUpdateImage { get; set; }

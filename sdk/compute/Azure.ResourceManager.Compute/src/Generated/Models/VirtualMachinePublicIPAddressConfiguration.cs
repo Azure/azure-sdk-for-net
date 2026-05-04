@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </summary>
-        public IPVersions? PublicIPAddressVersion
+        public IPVersion? PublicIPAddressVersion
         {
             get
             {

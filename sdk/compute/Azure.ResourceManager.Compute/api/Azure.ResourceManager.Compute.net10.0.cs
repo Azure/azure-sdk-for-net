@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Compute
     public partial class CommunityGalleryImageData : Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CommunityGalleryImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CommunityGalleryImageData>
     {
         internal CommunityGalleryImageData() { }
-        public Azure.ResourceManager.Compute.Models.Architecture? Architecture { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ArtifactTags { get { throw null; } }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
         public string Disclaimer { get { throw null; } }
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.Compute
     {
         public DiskImageData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceVirtualMachineId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageStorageProfile StorageProfile { get { throw null; } set { } }
@@ -1530,7 +1530,7 @@ namespace Azure.ResourceManager.Compute
     {
         public GalleryImageData(Azure.Core.AzureLocation location) { }
         public bool? AllowUpdateImage { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Architecture? Architecture { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
@@ -2249,7 +2249,7 @@ namespace Azure.ResourceManager.Compute
     public partial class SharedGalleryImageData : Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.SharedGalleryImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.SharedGalleryImageData>
     {
         internal SharedGalleryImageData() { }
-        public Azure.ResourceManager.Compute.Models.Architecture? Architecture { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ArtifactTags { get { throw null; } }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
@@ -3754,23 +3754,6 @@ namespace Azure.ResourceManager.Compute.Models
         Azure.ResourceManager.Compute.Models.AllInstancesDown System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AllInstancesDown>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AllInstancesDown>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AllInstancesDown>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Architecture : System.IEquatable<Azure.ResourceManager.Compute.Models.Architecture>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Architecture(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.Architecture Arm64 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.Architecture X64 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.Architecture other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.Architecture left, Azure.ResourceManager.Compute.Models.Architecture right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.Architecture (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.Architecture? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.Architecture left, Azure.ResourceManager.Compute.Models.Architecture right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArchitectureType : System.IEquatable<Azure.ResourceManager.Compute.Models.ArchitectureType>
@@ -5580,7 +5563,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DiskImagePatch : Azure.ResourceManager.Compute.Models.ComputeResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.DiskImagePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DiskImagePatch>
     {
         public DiskImagePatch() { }
-        public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceVirtualMachineId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageStorageProfile StorageProfile { get { throw null; } set { } }
@@ -6277,7 +6260,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public GalleryImagePatch() { }
         public bool? AllowUpdateImage { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Architecture? Architecture { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
@@ -7012,40 +6995,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.HyperVGeneration left, Azure.ResourceManager.Compute.Models.HyperVGeneration right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HyperVGenerationType : System.IEquatable<Azure.ResourceManager.Compute.Models.HyperVGenerationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HyperVGenerationType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.HyperVGenerationType V1 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.HyperVGenerationType V2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.HyperVGenerationType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.HyperVGenerationType left, Azure.ResourceManager.Compute.Models.HyperVGenerationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.HyperVGenerationType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.HyperVGenerationType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.HyperVGenerationType left, Azure.ResourceManager.Compute.Models.HyperVGenerationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HyperVGenerationTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.HyperVGenerationTypes>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HyperVGenerationTypes(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.HyperVGenerationTypes V1 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.HyperVGenerationTypes V2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.HyperVGenerationTypes other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.HyperVGenerationTypes left, Azure.ResourceManager.Compute.Models.HyperVGenerationTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.HyperVGenerationTypes (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.HyperVGenerationTypes left, Azure.ResourceManager.Compute.Models.HyperVGenerationTypes right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ImageAlternativeOption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ImageAlternativeOption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ImageAlternativeOption>
     {
         internal ImageAlternativeOption() { }
@@ -7324,23 +7273,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.IPVersion (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.IPVersion? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.IPVersion left, Azure.ResourceManager.Compute.Models.IPVersion right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IPVersions : System.IEquatable<Azure.ResourceManager.Compute.Models.IPVersions>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IPVersions(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.IPVersions IPv4 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.IPVersions IPv6 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.IPVersions other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.IPVersions left, Azure.ResourceManager.Compute.Models.IPVersions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.IPVersions (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.IPVersions? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.IPVersions left, Azure.ResourceManager.Compute.Models.IPVersions right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class KeyForDiskEncryptionSet : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet>
@@ -8674,7 +8606,7 @@ namespace Azure.ResourceManager.Compute.Models
         public RestorePointSourceMetadata() { }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile HardwareProfile { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
         public string LicenseType { get { throw null; } }
         public string Location { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineOSProfile OSProfile { get { throw null; } }
@@ -9668,7 +9600,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public SupportedCapabilities() { }
         public bool? AcceleratedNetwork { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Architecture? Architecture { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } set { } }
         public string DiskControllerTypes { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SupportedSecurityOption? SupportedSecurityOption { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.SupportedCapabilities JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10264,7 +10196,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DataDiskImage> DataDiskImages { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineDiskType? DisallowedVmDiskType { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineImageFeature> Features { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImageDeprecationStatus ImageDeprecationStatus { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? OSDiskImageOperatingSystem { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.PurchasePlan Plan { get { throw null; } }
@@ -10360,7 +10292,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ComputerName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DiskInstanceView> Disks { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineExtensionInstanceView> Extensions { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.HyperVGenerationType? HyperVGeneration { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
         public bool? IsVmInStandbyPool { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.MaintenanceRedeployStatus MaintenanceRedeployStatus { get { throw null; } }
         public string OSName { get { throw null; } }
@@ -10448,7 +10380,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerBackendAddressPools { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.IPVersions? PrivateIPAddressVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachinePublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceIPConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10642,7 +10574,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineIPTag> IPTags { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.IPVersions? PublicIPAddressVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.IPVersion? PublicIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.PublicIPAllocationMethod? PublicIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePublicIPAddressSku Sku { get { throw null; } set { } }

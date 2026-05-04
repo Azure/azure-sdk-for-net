@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="architecture"> CPU architecture supported by an OS disk. </param>
         /// <param name="supportedSecurityOption"> Refers to the security capability of the disk supported to create a Trusted launch or Confidential VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedCapabilities(string diskControllerTypes, bool? acceleratedNetwork, Architecture? architecture, SupportedSecurityOption? supportedSecurityOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupportedCapabilities(string diskControllerTypes, bool? acceleratedNetwork, ArchitectureType? architecture, SupportedSecurityOption? supportedSecurityOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskControllerTypes = diskControllerTypes;
             AcceleratedNetwork = acceleratedNetwork;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? AcceleratedNetwork { get; set; }
 
         /// <summary> CPU architecture supported by an OS disk. </summary>
-        public Architecture? Architecture { get; set; }
+        public ArchitectureType? Architecture { get; set; }
 
         /// <summary> Refers to the security capability of the disk supported to create a Trusted launch or Confidential VM. </summary>
         public SupportedSecurityOption? SupportedSecurityOption { get; set; }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedGalleryImageProperties(SupportedOperatingSystemType osType, OperatingSystemStateType osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, Architecture? architecture, Uri privacyStatementUri, string eula, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedGalleryImageProperties(SupportedOperatingSystemType osType, OperatingSystemStateType osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             OSState = osState;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ImagePurchasePlan PurchasePlan { get; }
 
         /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
-        public Architecture? Architecture { get; }
+        public ArchitectureType? Architecture { get; }
 
         /// <summary> Privacy statement uri for the current community gallery image. </summary>
         public Uri PrivacyStatementUri { get; }

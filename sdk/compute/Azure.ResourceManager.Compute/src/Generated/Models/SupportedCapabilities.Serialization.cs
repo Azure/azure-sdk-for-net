@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string diskControllerTypes = default;
             bool? acceleratedNetwork = default;
-            Architecture? architecture = default;
+            ArchitectureType? architecture = default;
             SupportedSecurityOption? supportedSecurityOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    architecture = new Architecture(prop.Value.GetString());
+                    architecture = new ArchitectureType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("supportedSecurityOption"u8))

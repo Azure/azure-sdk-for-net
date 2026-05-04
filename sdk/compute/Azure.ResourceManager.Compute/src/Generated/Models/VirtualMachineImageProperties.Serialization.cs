@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
             OSDiskImage osDiskImage = default;
             IList<DataDiskImage> dataDiskImages = default;
             AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default;
-            HyperVGenerationTypes? hyperVGeneration = default;
+            HyperVGeneration? hyperVGeneration = default;
             DisallowedConfiguration disallowed = default;
             IList<VirtualMachineImageFeature> features = default;
             ArchitectureType? architecture = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hyperVGeneration = new HyperVGenerationTypes(prop.Value.GetString());
+                    hyperVGeneration = new HyperVGeneration(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("disallowed"u8))

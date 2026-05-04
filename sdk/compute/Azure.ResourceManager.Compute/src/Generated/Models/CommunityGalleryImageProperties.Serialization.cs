@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Compute.Models
             HyperVGeneration? hyperVGeneration = default;
             IList<GalleryImageFeature> features = default;
             ImagePurchasePlan purchasePlan = default;
-            Architecture? architecture = default;
+            ArchitectureType? architecture = default;
             Uri privacyStatementUri = default;
             string eula = default;
             string disclaimer = default;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    architecture = new Architecture(prop.Value.GetString());
+                    architecture = new ArchitectureType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privacyStatementUri"u8))

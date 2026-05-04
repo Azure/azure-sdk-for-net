@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
             SecurityProfile securityProfile = default;
             string location = default;
             string userData = default;
-            HyperVGenerationTypes? hyperVGeneration = default;
+            HyperVGeneration? hyperVGeneration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hyperVGeneration = new HyperVGenerationTypes(prop.Value.GetString());
+                    hyperVGeneration = new HyperVGeneration(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

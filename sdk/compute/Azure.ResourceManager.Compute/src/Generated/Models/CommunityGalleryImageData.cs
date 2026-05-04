@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
-        public Architecture? Architecture
+        public ArchitectureType? Architecture
         {
             get
             {

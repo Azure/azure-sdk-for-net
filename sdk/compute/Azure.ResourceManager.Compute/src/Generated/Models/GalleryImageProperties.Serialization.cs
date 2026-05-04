@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Models
             ImagePurchasePlan purchasePlan = default;
             GalleryProvisioningState? provisioningState = default;
             IList<GalleryImageFeature> features = default;
-            Architecture? architecture = default;
+            ArchitectureType? architecture = default;
             bool? allowUpdateImage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    architecture = new Architecture(prop.Value.GetString());
+                    architecture = new ArchitectureType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("allowUpdateImage"u8))

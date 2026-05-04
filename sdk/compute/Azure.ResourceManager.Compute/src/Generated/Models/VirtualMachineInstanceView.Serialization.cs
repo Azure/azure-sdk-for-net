@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
             string computerName = default;
             string osName = default;
             string osVersion = default;
-            HyperVGenerationType? hyperVGeneration = default;
+            HyperVGeneration? hyperVGeneration = default;
             string rdpThumbPrint = default;
             VirtualMachineAgentInstanceView vmAgent = default;
             MaintenanceRedeployStatus maintenanceRedeployStatus = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hyperVGeneration = new HyperVGenerationType(prop.Value.GetString());
+                    hyperVGeneration = new HyperVGeneration(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rdpThumbPrint"u8))
