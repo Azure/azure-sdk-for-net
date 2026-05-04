@@ -44,15 +44,6 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The artifact tags of a community gallery resource. </summary>
-        public IDictionary<string, string> ArtifactTags
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ArtifactTags;
-            }
-        }
-
         /// <summary> The metadata of community gallery. </summary>
         public CommunityGalleryMetadata CommunityMetadata
         {

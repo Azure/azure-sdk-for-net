@@ -88,15 +88,6 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> A list of gallery image features. </summary>
-        public IList<GalleryImageFeature> Features
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Features;
-            }
-        }
-
         /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
         public ImagePurchasePlan PurchasePlan
         {
@@ -130,15 +121,6 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties is null ? default : Properties.Eula;
-            }
-        }
-
-        /// <summary> The artifact tags of a shared gallery resource. </summary>
-        public IDictionary<string, string> ArtifactTags
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ArtifactTags;
             }
         }
 

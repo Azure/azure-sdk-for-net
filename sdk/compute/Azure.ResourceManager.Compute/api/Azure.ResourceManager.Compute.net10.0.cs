@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Compute
     public partial class CommunityGalleryData : Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CommunityGalleryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CommunityGalleryData>
     {
         internal CommunityGalleryData() { }
-        public System.Collections.Generic.IDictionary<string, string> ArtifactTags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> ArtifactTags { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CommunityGalleryMetadata CommunityMetadata { get { throw null; } }
         public string Disclaimer { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -563,12 +563,12 @@ namespace Azure.ResourceManager.Compute
     {
         internal CommunityGalleryImageData() { }
         public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> ArtifactTags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> ArtifactTags { get { throw null; } }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
         public string Disclaimer { get { throw null; } }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public string Eula { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier Identifier { get { throw null; } }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Compute
     public partial class CommunityGalleryImageVersionData : Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CommunityGalleryImageVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CommunityGalleryImageVersionData>
     {
         internal CommunityGalleryImageVersionData() { }
-        public System.Collections.Generic.IDictionary<string, string> ArtifactTags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> ArtifactTags { get { throw null; } }
         public string Disclaimer { get { throw null; } }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public bool? ExcludeFromLatest { get { throw null; } }
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.Compute
     {
         public DedicatedHostGroupData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> DedicatedHosts { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DedicatedHostInstanceViewWithName> InstanceViewHosts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHostInstanceViewWithName> InstanceViewHosts { get { throw null; } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public bool? SupportAutomaticPlacement { get { throw null; } set { } }
         public bool? UltraSsdEnabled { get { throw null; } set { } }
@@ -2250,11 +2250,11 @@ namespace Azure.ResourceManager.Compute
     {
         internal SharedGalleryImageData() { }
         public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> ArtifactTags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> ArtifactTags { get { throw null; } }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public string Eula { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier ImageIdentifier { get { throw null; } }
@@ -2309,7 +2309,7 @@ namespace Azure.ResourceManager.Compute
     public partial class SharedGalleryImageVersionData : Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.SharedGalleryImageVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.SharedGalleryImageVersionData>
     {
         internal SharedGalleryImageVersionData() { }
-        public System.Collections.Generic.IDictionary<string, string> ArtifactTags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> ArtifactTags { get { throw null; } }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public bool? ExcludeFromLatest { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -4588,7 +4588,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
-        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
         public string Type { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.ComputePrivateLinkResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5171,7 +5171,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public DedicatedHostGroupPatch() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> DedicatedHosts { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DedicatedHostInstanceViewWithName> InstanceViewHosts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHostInstanceViewWithName> InstanceViewHosts { get { throw null; } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public bool? SupportAutomaticPlacement { get { throw null; } set { } }
         public bool? UltraSsdEnabled { get { throw null; } set { } }

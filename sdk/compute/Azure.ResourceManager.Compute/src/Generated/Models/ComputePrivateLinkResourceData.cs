@@ -66,14 +66,5 @@ namespace Azure.ResourceManager.Compute.Models
                 return Properties is null ? default : Properties.RequiredMembers;
             }
         }
-
-        /// <summary> The private link resource DNS zone name. </summary>
-        public IList<string> RequiredZoneNames
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RequiredZoneNames;
-            }
-        }
     }
 }
