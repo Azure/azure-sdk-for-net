@@ -6,13 +6,16 @@ using System.ClientModel.Internal;
 namespace System.ClientModel;
 
 /// <summary>
-/// FileBinaryContent
+/// Represents file content for use in HTTP requests, in particular as a part of a
+/// multipart form-data payload. Instances created from a file path open the underlying
+/// file lazily on first write so that constructing the type does not allocate an
+/// operating system file handle.
 /// </summary>
 public class FileBinaryContent : BinaryContent
 {
     private const string DefaultMediaType = "application/octet-stream";
 
-    private readonly BinaryContent _content;
+    private readonly Lazy<BinaryContent> _lazyContent;
     private bool _disposed;
 
     /// <summary>
@@ -27,7 +30,8 @@ public class FileBinaryContent : BinaryContent
     {
         Argument.AssertNotNull(data, nameof(data));
 
-        _content = Create(data);
+        BinaryContent content = Create(data);
+        _lazyContent = new Lazy<BinaryContent>(() => content);
         MediaType = data.MediaType ?? mediaType;
     }
 
@@ -46,27 +50,39 @@ public class FileBinaryContent : BinaryContent
     {
         Argument.AssertNotNull(stream, nameof(stream));
 
-        _content = Create(stream);
+        BinaryContent content = Create(stream);
+        _lazyContent = new Lazy<BinaryContent>(() => content);
         MediaType = mediaType;
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="FileBinaryContent"/>.
+    /// Creates an instance of <see cref="FileBinaryContent"/> that reads from the file
+    /// at <paramref name="path"/>. The file is opened lazily on the first write or
+    /// length computation so that simply constructing the instance does not hold an
+    /// operating system file handle. The file is opened at most once even under
+    /// concurrent first calls; if the file cannot be opened at that time, the
+    /// underlying I/O exception (for example <see cref="FileNotFoundException"/> or
+    /// <see cref="UnauthorizedAccessException"/>) is propagated to the caller.
     /// </summary>
+    /// <param name="path">The path to the file to send.</param>
+    /// <param name="mediaType">The media type of the content.</param>
     public FileBinaryContent(string path, string? mediaType = DefaultMediaType)
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
-        FileStream fileStream = File.OpenRead(path);
-        try
+        _lazyContent = new Lazy<BinaryContent>(() =>
         {
-            _content = Create(fileStream);
-        }
-        catch
-        {
-            fileStream.Dispose();
-            throw;
-        }
+            FileStream fileStream = File.OpenRead(path);
+            try
+            {
+                return Create(fileStream);
+            }
+            catch
+            {
+                fileStream.Dispose();
+                throw;
+            }
+        });
         MediaType = mediaType;
         Filename = Path.GetFileName(path);
     }
@@ -84,19 +100,32 @@ public class FileBinaryContent : BinaryContent
             return;
         }
 
-        _content.Dispose();
+        if (_lazyContent.IsValueCreated)
+        {
+            _lazyContent.Value.Dispose();
+        }
         _disposed = true;
     }
 
     /// <inheritdoc/>
     public override bool TryComputeLength(out long length)
-        => _content.TryComputeLength(out length);
+    {
+        try
+        {
+            return _lazyContent.Value.TryComputeLength(out length);
+        }
+        catch
+        {
+            length = 0;
+            return false;
+        }
+    }
 
     /// <inheritdoc/>
     public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
-        => _content.WriteTo(stream, cancellationToken);
+        => _lazyContent.Value.WriteTo(stream, cancellationToken);
 
     /// <inheritdoc/>
     public override Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
-        => _content.WriteToAsync(stream, cancellationToken);
+        => _lazyContent.Value.WriteToAsync(stream, cancellationToken);
 }
