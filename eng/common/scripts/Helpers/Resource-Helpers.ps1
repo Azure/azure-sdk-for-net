@@ -176,6 +176,9 @@ filter Remove-PurgeableResources {
           if ($r.PSObject.Properties['ScheduledPurgeDate'] -and $r.ScheduledPurgeDate) {
             $purgeMsg += " and may not be purged until $($r.ScheduledPurgeDate)"
           }
+          else{
+            $purgeMsg += " and cannot be deleted"
+          }
           Write-Verbose $purgeMsg -Verbose:$verboseFlag
           continue
         }
@@ -192,6 +195,9 @@ filter Remove-PurgeableResources {
           $purgeMsg = "Managed HSM '$($r.Name)' has purge protection enabled"
           if ($r.PSObject.Properties['ScheduledPurgeDate'] -and $r.ScheduledPurgeDate) {
             $purgeMsg += " and may not be purged until $($r.ScheduledPurgeDate)"
+          }
+          else{
+            $purgeMsg += " and cannot be deleted"
           }
           Write-Verbose $purgeMsg -Verbose:$verboseFlag
           continue
