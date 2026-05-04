@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string resourceType = default;
+            ResourceType? resourceType = default;
             ComputeSku sku = default;
             VirtualMachineScaleSetSkuCapacity capacity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +140,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

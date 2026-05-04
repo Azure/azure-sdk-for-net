@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -113,13 +114,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
-                foreach (string item in Locations)
+                foreach (AzureLocation item in Locations)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -228,7 +224,7 @@ namespace Azure.ResourceManager.Compute.Models
             string family = default;
             string kind = default;
             ComputeResourceSkuCapacity capacity = default;
-            IReadOnlyList<string> locations = default;
+            IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo = default;
             IReadOnlyList<string> apiVersions = default;
             IReadOnlyList<ResourceSkuCosts> costs = default;
@@ -282,17 +278,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -387,7 +376,7 @@ namespace Azure.ResourceManager.Compute.Models
                 family,
                 kind,
                 capacity,
-                locations ?? new ChangeTrackingList<string>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
                 locationInfo ?? new ChangeTrackingList<ComputeResourceSkuLocationInfo>(),
                 apiVersions ?? new ChangeTrackingList<string>(),
                 costs ?? new ChangeTrackingList<ResourceSkuCosts>(),

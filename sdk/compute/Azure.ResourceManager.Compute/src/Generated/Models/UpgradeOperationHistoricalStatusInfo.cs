@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="upgradeOperationHistoricalStatusInfoType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeOperationHistoricalStatusInfo(UpgradeOperationHistoricalStatusInfoProperties properties, string upgradeOperationHistoricalStatusInfoType, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradeOperationHistoricalStatusInfo(UpgradeOperationHistoricalStatusInfoProperties properties, string upgradeOperationHistoricalStatusInfoType, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             UpgradeOperationHistoricalStatusInfoType = upgradeOperationHistoricalStatusInfoType;
@@ -41,6 +42,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string UpgradeOperationHistoricalStatusInfoType { get; }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

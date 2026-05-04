@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PirResourceData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PirResourceData(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;
@@ -36,6 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get; }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

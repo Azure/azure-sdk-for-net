@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="identifier"> The identifier information of community gallery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of a gallery image definition. </param>
-        internal CommunityGalleryImageData(string name, string location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryImageProperties properties) : base(name, location, @type, identifier, additionalBinaryDataProperties)
+        internal CommunityGalleryImageData(string name, AzureLocation? location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryImageProperties properties) : base(name, location, @type, identifier, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

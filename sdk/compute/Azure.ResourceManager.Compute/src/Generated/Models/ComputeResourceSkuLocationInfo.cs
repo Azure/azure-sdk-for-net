@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Zones = zones;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Location of the SKU. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> List of availability zones where the SKU is supported. </summary>
         public IReadOnlyList<string> Zones { get; }

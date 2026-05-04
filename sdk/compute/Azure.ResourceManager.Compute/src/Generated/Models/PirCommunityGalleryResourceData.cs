@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="identifier"> The identifier information of community gallery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PirCommunityGalleryResourceData(string name, string location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PirCommunityGalleryResourceData(string name, AzureLocation? location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get; }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> Resource type. </summary>
         public string Type { get; }

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Type))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             VirtualMachineExtensionProperties properties = default;
             string parentName = default;
-            string location = default;
+            AzureLocation? location = default;
             string @type = default;
             string name = default;
             string vmssExtensionName = default;
@@ -171,7 +171,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

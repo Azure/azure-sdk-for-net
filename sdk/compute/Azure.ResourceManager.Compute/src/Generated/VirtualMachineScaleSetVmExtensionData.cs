@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="type"> Resource type. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="vmssExtensionName"> The name of the virtual machine extension. </param>
-        internal VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualMachineExtensionProperties properties, string parentName, string location, string @type, string name, string vmssExtensionName) : base(id, additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualMachineExtensionProperties properties, string parentName, AzureLocation? location, string @type, string name, string vmssExtensionName) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
             ParentName = parentName;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute
         public string ParentName { get; }
 
         /// <summary> The location of the extension. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Resource type. </summary>
         public string Type { get; }

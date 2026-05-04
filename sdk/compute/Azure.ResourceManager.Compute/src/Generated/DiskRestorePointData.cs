@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Location of source disk or source disk restore point when source resource is from a different region. </summary>
-        public string SourceResourceLocation
+        public AzureLocation? SourceResourceLocation
         {
             get
             {

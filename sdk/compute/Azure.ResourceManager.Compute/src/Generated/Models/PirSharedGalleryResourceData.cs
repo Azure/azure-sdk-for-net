@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identifier"> The identifier information of shared gallery. </param>
-        internal PirSharedGalleryResourceData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier) : base(name, location, additionalBinaryDataProperties)
+        internal PirSharedGalleryResourceData(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier) : base(name, location, additionalBinaryDataProperties)
         {
             Identifier = identifier;
         }

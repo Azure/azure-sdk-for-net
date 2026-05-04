@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </param>
         /// <param name="hyperVGeneration"> HyperVGeneration of the source VM for which restore point is captured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, VirtualMachineOSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location, string userData, HyperVGeneration? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, VirtualMachineOSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, AzureLocation? location, string userData, HyperVGeneration? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         public SecurityProfile SecurityProfile { get; }
 
         /// <summary> Location of the VM from which the restore point was created. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </summary>
         public string UserData { get; }

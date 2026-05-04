@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Location of the source resource used to create this restore point collection. </param>
         /// <param name="id"> Resource Id of the source resource used to create this restore point collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointGroupSource(string location, ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointGroupSource(AzureLocation? location, ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Id = id;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Location of the source resource used to create this restore point collection. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> Resource Id of the source resource used to create this restore point collection. </summary>
         public ResourceIdentifier Id { get; set; }

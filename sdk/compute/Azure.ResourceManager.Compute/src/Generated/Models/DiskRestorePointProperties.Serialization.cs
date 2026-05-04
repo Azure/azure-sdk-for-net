@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(SourceResourceLocation))
             {
                 writer.WritePropertyName("sourceResourceLocation"u8);
-                writer.WriteStringValue(SourceResourceLocation);
+                writer.WriteStringValue(SourceResourceLocation.Value);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier diskAccessId = default;
             float? completionPercent = default;
             string replicationState = default;
-            string sourceResourceLocation = default;
+            AzureLocation? sourceResourceLocation = default;
             DiskSecurityProfile securityProfile = default;
             int? logicalSectorSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -353,7 +353,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("sourceResourceLocation"u8))
                 {
-                    sourceResourceLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("securityProfile"u8))

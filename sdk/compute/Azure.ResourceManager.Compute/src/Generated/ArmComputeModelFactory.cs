@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="upgradeOperationHistoricalStatusInfoType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <returns> A new <see cref="Models.UpgradeOperationHistoricalStatusInfo"/> instance for mocking. </returns>
-        public static UpgradeOperationHistoricalStatusInfo UpgradeOperationHistoricalStatusInfo(UpgradeOperationHistoricalStatusInfoProperties properties = default, string upgradeOperationHistoricalStatusInfoType = default, string location = default)
+        public static UpgradeOperationHistoricalStatusInfo UpgradeOperationHistoricalStatusInfo(UpgradeOperationHistoricalStatusInfoProperties properties = default, string upgradeOperationHistoricalStatusInfoType = default, AzureLocation? location = default)
         {
             return new UpgradeOperationHistoricalStatusInfo(properties, upgradeOperationHistoricalStatusInfoType, location, additionalBinaryDataProperties: null);
         }
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sku"> The Sku. </param>
         /// <param name="capacity"> Specifies the number of virtual machines in the scale set. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetSku"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetSku VirtualMachineScaleSetSku(string resourceType = default, ComputeSku sku = default, VirtualMachineScaleSetSkuCapacity capacity = default)
+        public static VirtualMachineScaleSetSku VirtualMachineScaleSetSku(ResourceType? resourceType = default, ComputeSku sku = default, VirtualMachineScaleSetSkuCapacity capacity = default)
         {
             return new VirtualMachineScaleSetSku(resourceType, sku, capacity, additionalBinaryDataProperties: null);
         }
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="vmssExtensionName"> The name of the virtual machine extension. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetVmExtensionData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmExtensionData VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, VirtualMachineExtensionInstanceView instanceView = default, bool? suppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default, string parentName = default, string location = default, string @type = default, string name = default, string vmssExtensionName = default)
+        public static VirtualMachineScaleSetVmExtensionData VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, VirtualMachineExtensionInstanceView instanceView = default, bool? suppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default, string parentName = default, AzureLocation? location = default, string @type = default, string name = default, string vmssExtensionName = default)
         {
             return new VirtualMachineScaleSetVmExtensionData(
                 id,
@@ -2228,7 +2228,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Location of the source resource used to create this restore point collection. </param>
         /// <param name="id"> Resource Id of the source resource used to create this restore point collection. </param>
         /// <returns> A new <see cref="Models.RestorePointGroupSource"/> instance for mocking. </returns>
-        public static RestorePointGroupSource RestorePointGroupSource(string location = default, ResourceIdentifier id = default)
+        public static RestorePointGroupSource RestorePointGroupSource(AzureLocation? location = default, ResourceIdentifier id = default)
         {
             return new RestorePointGroupSource(location, id, additionalBinaryDataProperties: null);
         }
@@ -2244,7 +2244,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </param>
         /// <param name="hyperVGeneration"> HyperVGeneration of the source VM for which restore point is captured. </param>
         /// <returns> A new <see cref="Models.RestorePointSourceMetadata"/> instance for mocking. </returns>
-        public static RestorePointSourceMetadata RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile = default, RestorePointSourceVmStorageProfile storageProfile = default, VirtualMachineOSProfile osProfile = default, BootDiagnostics bootDiagnostics = default, string licenseType = default, string vmId = default, SecurityProfile securityProfile = default, string location = default, string userData = default, HyperVGeneration? hyperVGeneration = default)
+        public static RestorePointSourceMetadata RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile = default, RestorePointSourceVmStorageProfile storageProfile = default, VirtualMachineOSProfile osProfile = default, BootDiagnostics bootDiagnostics = default, string licenseType = default, string vmId = default, SecurityProfile securityProfile = default, AzureLocation? location = default, string userData = default, HyperVGeneration? hyperVGeneration = default)
         {
             return new RestorePointSourceMetadata(
                 hardwareProfile,
@@ -3046,7 +3046,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
         /// <returns> A new <see cref="Compute.DiskRestorePointData"/> instance for mocking. </returns>
-        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier sourceResourceId = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, string familyId = default, string sourceUniqueId = default, DiskEncryption encryption = default, bool? supportsHibernation = default, NetworkAccessPolicy? networkAccessPolicy = default, DiskPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier diskAccessId = default, float? completionPercent = default, string replicationState = default, string sourceResourceLocation = default, DiskSecurityProfile securityProfile = default, int? logicalSectorSize = default)
+        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier sourceResourceId = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, string familyId = default, string sourceUniqueId = default, DiskEncryption encryption = default, bool? supportsHibernation = default, NetworkAccessPolicy? networkAccessPolicy = default, DiskPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier diskAccessId = default, float? completionPercent = default, string replicationState = default, AzureLocation? sourceResourceLocation = default, DiskSecurityProfile securityProfile = default, int? logicalSectorSize = default)
         {
             return new DiskRestorePointData(
                 id,
@@ -4110,7 +4110,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryData"/> instance for mocking. </returns>
-        public static SharedGalleryData SharedGalleryData(string name = default, string location = default, string uniqueId = default, IReadOnlyDictionary<string, string> artifactTags = default)
+        public static SharedGalleryData SharedGalleryData(string name = default, AzureLocation? location = default, string uniqueId = default, IReadOnlyDictionary<string, string> artifactTags = default)
         {
             return new SharedGalleryData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null), artifactTags is null ? default : new SharedGalleryProperties(artifactTags, null));
         }
@@ -4119,7 +4119,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <returns> A new <see cref="Models.PirSharedGalleryResourceData"/> instance for mocking. </returns>
-        public static PirSharedGalleryResourceData PirSharedGalleryResourceData(string name = default, string location = default, string uniqueId = default)
+        public static PirSharedGalleryResourceData PirSharedGalleryResourceData(string name = default, AzureLocation? location = default, string uniqueId = default)
         {
             return new PirSharedGalleryResourceData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null));
         }
@@ -4128,7 +4128,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <returns> A new <see cref="Models.PirResourceData"/> instance for mocking. </returns>
-        public static PirResourceData PirResourceData(string name = default, string location = default)
+        public static PirResourceData PirResourceData(string name = default, AzureLocation? location = default)
         {
             return new PirResourceData(name, location, additionalBinaryDataProperties: null);
         }
@@ -4150,7 +4150,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageData"/> instance for mocking. </returns>
-        public static SharedGalleryImageData SharedGalleryImageData(string name = default, string location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
+        public static SharedGalleryImageData SharedGalleryImageData(string name = default, AzureLocation? location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
         {
             return new SharedGalleryImageData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null), osType is null && osState is null && endOfLifeOn is null && imageIdentifier is null && recommended is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && artifactTags is null && disallowedDiskTypes is null ? default : new SharedGalleryImageProperties(
                 osType.GetValueOrDefault(),
@@ -4178,7 +4178,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageVersionData"/> instance for mocking. </returns>
-        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, string location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? excludeFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IDictionary<string, string> artifactTags = default)
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, AzureLocation? location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? excludeFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IDictionary<string, string> artifactTags = default)
         {
             return new SharedGalleryImageVersionData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null), publishedOn is null && endOfLifeOn is null && excludeFromLatest is null && storageProfile is null && artifactTags is null ? default : new SharedGalleryImageVersionProperties(
                 publishedOn,
@@ -4236,7 +4236,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="communityMetadata"> The metadata of community gallery. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryData"/> instance for mocking. </returns>
-        public static CommunityGalleryData CommunityGalleryData(string name = default, string location = default, string @type = default, string uniqueId = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, CommunityGalleryMetadata communityMetadata = default)
+        public static CommunityGalleryData CommunityGalleryData(string name = default, AzureLocation? location = default, string @type = default, string uniqueId = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, CommunityGalleryMetadata communityMetadata = default)
         {
             return new CommunityGalleryData(
                 name,
@@ -4272,7 +4272,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
         /// <returns> A new <see cref="Models.PirCommunityGalleryResourceData"/> instance for mocking. </returns>
-        public static PirCommunityGalleryResourceData PirCommunityGalleryResourceData(string name = default, string location = default, string @type = default, string uniqueId = default)
+        public static PirCommunityGalleryResourceData PirCommunityGalleryResourceData(string name = default, AzureLocation? location = default, string @type = default, string uniqueId = default)
         {
             return new PirCommunityGalleryResourceData(name, location, @type, uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null), additionalBinaryDataProperties: null);
         }
@@ -4296,7 +4296,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageData CommunityGalleryImageData(string name = default, string location = default, string @type = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, CommunityGalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
+        public static CommunityGalleryImageData CommunityGalleryImageData(string name = default, AzureLocation? location = default, string @type = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, CommunityGalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
         {
             return new CommunityGalleryImageData(
                 name,
@@ -4343,7 +4343,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, string location = default, string @type = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? excludeFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default)
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, AzureLocation? location = default, string @type = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? excludeFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default)
         {
             return new CommunityGalleryImageVersionData(
                 name,
@@ -4376,9 +4376,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
         /// <returns> A new <see cref="Models.ComputeResourceSku"/> instance for mocking. </returns>
-        public static ComputeResourceSku ComputeResourceSku(string resourceType = default, string name = default, string tier = default, string size = default, string family = default, string kind = default, ComputeResourceSkuCapacity capacity = default, IEnumerable<string> locations = default, IEnumerable<ComputeResourceSkuLocationInfo> locationInfo = default, IEnumerable<string> apiVersions = default, IEnumerable<ResourceSkuCosts> costs = default, IEnumerable<ComputeResourceSkuCapabilities> capabilities = default, IEnumerable<ComputeResourceSkuRestrictions> restrictions = default)
+        public static ComputeResourceSku ComputeResourceSku(string resourceType = default, string name = default, string tier = default, string size = default, string family = default, string kind = default, ComputeResourceSkuCapacity capacity = default, IEnumerable<AzureLocation> locations = default, IEnumerable<ComputeResourceSkuLocationInfo> locationInfo = default, IEnumerable<string> apiVersions = default, IEnumerable<ResourceSkuCosts> costs = default, IEnumerable<ComputeResourceSkuCapabilities> capabilities = default, IEnumerable<ComputeResourceSkuRestrictions> restrictions = default)
         {
-            locations ??= new ChangeTrackingList<string>();
+            locations ??= new ChangeTrackingList<AzureLocation>();
             locationInfo ??= new ChangeTrackingList<ComputeResourceSkuLocationInfo>();
             apiVersions ??= new ChangeTrackingList<string>();
             costs ??= new ChangeTrackingList<ResourceSkuCosts>();
@@ -4420,7 +4420,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
         /// <returns> A new <see cref="Models.ComputeResourceSkuLocationInfo"/> instance for mocking. </returns>
-        public static ComputeResourceSkuLocationInfo ComputeResourceSkuLocationInfo(string location = default, IEnumerable<string> zones = default, IEnumerable<ComputeResourceSkuZoneDetails> zoneDetails = default, IEnumerable<string> extendedLocations = default, ExtendedLocationType? extendedLocationType = default)
+        public static ComputeResourceSkuLocationInfo ComputeResourceSkuLocationInfo(AzureLocation? location = default, IEnumerable<string> zones = default, IEnumerable<ComputeResourceSkuZoneDetails> zoneDetails = default, IEnumerable<string> extendedLocations = default, ExtendedLocationType? extendedLocationType = default)
         {
             zones ??= new ChangeTrackingList<string>();
             zoneDetails ??= new ChangeTrackingList<ComputeResourceSkuZoneDetails>();
@@ -4483,9 +4483,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         /// <returns> A new <see cref="Models.ComputeResourceSkuRestrictionInfo"/> instance for mocking. </returns>
-        public static ComputeResourceSkuRestrictionInfo ComputeResourceSkuRestrictionInfo(IEnumerable<string> locations = default, IEnumerable<string> zones = default)
+        public static ComputeResourceSkuRestrictionInfo ComputeResourceSkuRestrictionInfo(IEnumerable<AzureLocation> locations = default, IEnumerable<string> zones = default)
         {
-            locations ??= new ChangeTrackingList<string>();
+            locations ??= new ChangeTrackingList<AzureLocation>();
             zones ??= new ChangeTrackingList<string>();
 
             return new ComputeResourceSkuRestrictionInfo(locations.ToList(), zones.ToList(), additionalBinaryDataProperties: null);
@@ -7277,7 +7277,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SharedGalleryData SharedGalleryData(string name, AzureLocation? location, string uniqueId)
         {
-            return new SharedGalleryData(name, location, additionalBinaryDataProperties: null, default, default);
+            return SharedGalleryData(name, location, uniqueId, artifactTags: default);
         }
 
         /// <param name="name"></param>
@@ -7618,13 +7618,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, AzureLocation? sourceResourceLocation, DiskSecurityProfile securityProfile)
         {
-            return new DiskRestorePointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
+            return DiskRestorePointData(id, name, resourceType, systemData, timeCreated, sourceResourceId, osType, hyperVGeneration, purchasePlan, supportedCapabilities, familyId, sourceUniqueId, encryption, supportsHibernation, networkAccessPolicy, publicNetworkAccess, diskAccessId, completionPercent, replicationState, sourceResourceLocation, securityProfile, logicalSectorSize: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataDisksToAttach"/>. </summary>
