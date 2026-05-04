@@ -143,7 +143,7 @@ namespace Azure.Identity
                 confClientBuilder.WithRedirectUri(RedirectUrl);
             }
 
-            if (AdditionalQueryParameters != null)
+            if (AdditionalQueryParameters.Count > 0)
             {
                 confClientBuilder.WithExtraQueryParameters(AdditionalQueryParameters.ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.Value, kvp.Value.IncludeInCacheKey)));
             }
