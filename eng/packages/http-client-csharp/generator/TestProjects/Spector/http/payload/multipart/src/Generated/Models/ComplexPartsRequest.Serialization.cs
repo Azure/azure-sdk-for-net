@@ -17,11 +17,11 @@ namespace Payload.MultiPart.Models
         {
         }
 
-        internal virtual MultiPartFormRequestContent ToMultipartContent()
+        internal MultiPartFormContent ToMultipartContent()
         {
-            MultiPartFormRequestContent content = new();
+            MultiPartFormContent content = new();
             content.Add("id", Id);
-            content.Add("address", Address, ModelSerializationExtensions.WireOptions, new PayloadMultiPartContext());
+            content.Add("address", Address, new PayloadMultiPartContext(), ModelSerializationExtensions.WireOptions);
             content.Add("profileImage", ProfileImage);
 
             foreach (var picture in Pictures)

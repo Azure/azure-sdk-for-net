@@ -180,8 +180,8 @@ namespace Payload.MultiPart._FormData
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToMultipartContent();
-            return FileArrayAndBasic(content, content.MediaType, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            using MultiPartFormContent content = body.ToMultipartContent();
+            return FileArrayAndBasic(RequestContent.Create(content), content.MediaType, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         // CUSTOM: Convenience method
@@ -189,8 +189,8 @@ namespace Payload.MultiPart._FormData
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToMultipartContent();
-            return await FileArrayAndBasicAsync(content, content.ContentType, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            using MultiPartFormContent content = body.ToMultipartContent();
+            return await FileArrayAndBasicAsync(RequestContent.Create(content), content.MediaType, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>

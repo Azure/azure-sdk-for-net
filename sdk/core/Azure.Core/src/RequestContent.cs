@@ -77,6 +77,13 @@ namespace Azure.Core
         public static RequestContent Create(BinaryData content) => new MemoryContent(content.ToMemory());
 
         /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryContent"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="BinaryContent"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryContent"/>.</returns>
+        public static RequestContent Create(BinaryContent content) => new BinaryContentAdapter(content);
+
+        /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.
         /// </summary>
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
@@ -509,6 +516,35 @@ namespace Azure.Core
             {
                 return _binaryContent.TryComputeLength(out length);
             }
+        }
+
+        private sealed class BinaryContentAdapter : RequestContent
+        {
+            private readonly BinaryContent _content;
+            private bool _disposed;
+
+            public BinaryContentAdapter(BinaryContent content)
+            {
+                _content = content;
+            }
+
+            public override void Dispose()
+            {
+                if (!_disposed)
+                {
+                    _content.Dispose();
+                    _disposed = true;
+                }
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
+                => _content.WriteTo(stream, cancellationToken);
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
+                => await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+
+            public override bool TryComputeLength(out long length)
+                => _content.TryComputeLength(out length);
         }
     }
 }

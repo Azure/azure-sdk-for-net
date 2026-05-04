@@ -92,7 +92,7 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="model"></param>
     public void Add<T>(string name, IPersistableModel<T> model)
-        => Add(name, model);
+        => Add(name, model, context: default, mediaType: default);
 
     // CUSTOM: Add optional content type parameter to the Add method.
     /// <summary>

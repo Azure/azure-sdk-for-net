@@ -104,8 +104,8 @@ namespace System.ClientModel
         public void Add(string name, long content, string? mediaType = "application/json") { }
         public void Add(string name, float content, string? mediaType = "application/json") { }
         public void Add(string name, string content, string? mediaType = "application/json") { }
-        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context) { }
-        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null, string? mediaType = "application/json") { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model) { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext? context = null, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null, string? mediaType = "application/json") { }
         public override void Dispose() { }
         public override bool TryComputeLength(out long length) { throw null; }
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
