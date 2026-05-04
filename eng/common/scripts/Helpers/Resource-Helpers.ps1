@@ -172,7 +172,11 @@ filter Remove-PurgeableResources {
     switch ($r.AzsdkResourceType) {
       'Key Vault' {
         if ($r.EnablePurgeProtection) {
-          Write-Verbose "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)" -Verbose:$verboseFlag
+          $purgeMsg = "Key Vault '$($r.VaultName)' has purge protection enabled"
+          if ($r.PSObject.Properties['ScheduledPurgeDate'] -and $r.ScheduledPurgeDate) {
+            $purgeMsg += " and may not be purged until $($r.ScheduledPurgeDate)"
+          }
+          Write-Verbose $purgeMsg -Verbose:$verboseFlag
           continue
         }
 
@@ -185,7 +189,11 @@ filter Remove-PurgeableResources {
 
       'Managed HSM' {
         if ($r.EnablePurgeProtection) {
-          Write-Verbose "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)" -Verbose:$verboseFlag
+          $purgeMsg = "Managed HSM '$($r.Name)' has purge protection enabled"
+          if ($r.PSObject.Properties['ScheduledPurgeDate'] -and $r.ScheduledPurgeDate) {
+            $purgeMsg += " and may not be purged until $($r.ScheduledPurgeDate)"
+          }
+          Write-Verbose $purgeMsg -Verbose:$verboseFlag
           continue
         }
 
