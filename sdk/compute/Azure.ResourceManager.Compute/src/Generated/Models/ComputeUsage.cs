@@ -17,11 +17,13 @@ namespace Azure.ResourceManager.Compute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeUsage"/>. </summary>
+        /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal ComputeUsage(int currentValue, long limit, ComputeUsageName name)
+        internal ComputeUsage(ComputeUsageUnit unit, int currentValue, long limit, ComputeUsageName name)
         {
+            Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeUsage(string unit, int currentValue, long limit, ComputeUsageName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeUsage(ComputeUsageUnit unit, int currentValue, long limit, ComputeUsageName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> An enum describing the unit of usage measurement. </summary>
-        public string Unit { get; } = "Count";
+        public ComputeUsageUnit Unit { get; }
 
         /// <summary> The current usage of the resource. </summary>
         public int CurrentValue { get; }

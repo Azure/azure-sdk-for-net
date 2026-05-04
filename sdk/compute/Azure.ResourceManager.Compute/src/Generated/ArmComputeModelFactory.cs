@@ -2581,13 +2581,14 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Describes Compute Resource Usage. </summary>
+        /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <returns> A new <see cref="Models.ComputeUsage"/> instance for mocking. </returns>
-        public static ComputeUsage ComputeUsage(int currentValue = default, long limit = default, ComputeUsageName name = default)
+        public static ComputeUsage ComputeUsage(ComputeUsageUnit unit = default, int currentValue = default, long limit = default, ComputeUsageName name = default)
         {
-            return new ComputeUsage("Count", currentValue, limit, name, additionalBinaryDataProperties: null);
+            return new ComputeUsage(unit, currentValue, limit, name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The Usage Names. </summary>
@@ -5268,18 +5269,6 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 default,
                 extendedLocation);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeUsage"/>. </summary>
-        /// <param name="unit"> An enum describing the unit of usage measurement. </param>
-        /// <param name="currentValue"> The current usage of the resource. </param>
-        /// <param name="limit"> The maximum permitted usage of the resource. </param>
-        /// <param name="name"> The name of the type of usage. </param>
-        /// <returns> A new <see cref="Models.ComputeUsage"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ComputeUsage ComputeUsage(ComputeUsageUnit unit, int currentValue, long limit, ComputeUsageName name)
-        {
-            return new ComputeUsage(unit, currentValue, limit, name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetProperties"/>. </summary>

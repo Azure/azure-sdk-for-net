@@ -4952,7 +4952,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int CurrentValue { get { throw null; } }
         public long Limit { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ComputeUsageName Name { get { throw null; } }
-        public string Unit { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeUsageUnit Unit { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.ComputeUsage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.ComputeUsage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4988,8 +4988,10 @@ namespace Azure.ResourceManager.Compute.Models
         public bool Equals(Azure.ResourceManager.Compute.Models.ComputeUsageUnit other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static implicit operator string (Azure.ResourceManager.Compute.Models.ComputeUsageUnit value) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComputeUsageUnit left, Azure.ResourceManager.Compute.Models.ComputeUsageUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.ComputeUsageUnit (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ComputeUsageUnit? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComputeUsageUnit left, Azure.ResourceManager.Compute.Models.ComputeUsageUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ComputeWriteableSubResourceData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData>

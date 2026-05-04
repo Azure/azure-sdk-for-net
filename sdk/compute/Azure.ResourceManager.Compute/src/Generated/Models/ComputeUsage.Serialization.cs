@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(ComputeUsage)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("unit"u8);
-            writer.WriteStringValue(Unit);
+            writer.WriteStringValue(Unit.ToString());
             writer.WritePropertyName("currentValue"u8);
             writer.WriteNumberValue(CurrentValue);
             writer.WritePropertyName("limit"u8);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string unit = default;
+            ComputeUsageUnit unit = default;
             int currentValue = default;
             long limit = default;
             ComputeUsageName name = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("unit"u8))
                 {
-                    unit = prop.Value.GetString();
+                    unit = new ComputeUsageUnit(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("currentValue"u8))
