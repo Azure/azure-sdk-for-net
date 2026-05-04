@@ -4,9 +4,7 @@
     <AssemblyTitle>Azure Maps Azure.Maps.Weather</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Weather</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0012</NoWarn>
-    <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>    <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
