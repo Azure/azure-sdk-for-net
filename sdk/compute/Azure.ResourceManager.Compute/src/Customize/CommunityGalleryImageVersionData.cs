@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties is null ? default : (IReadOnlyDictionary<string, string>)Properties.ArtifactTags;
+                return Properties is null ? new ChangeTrackingDictionary<string, string>() : (IReadOnlyDictionary<string, string>)Properties.ArtifactTags;
             }
         }
     }

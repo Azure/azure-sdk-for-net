@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties is null ? default : (IReadOnlyList<DedicatedHostInstanceViewWithName>)Properties.InstanceViewHosts;
+                return Properties is null ? new ChangeTrackingList<DedicatedHostInstanceViewWithName>() : (IReadOnlyList<DedicatedHostInstanceViewWithName>)Properties.InstanceViewHosts;
             }
         }
     }

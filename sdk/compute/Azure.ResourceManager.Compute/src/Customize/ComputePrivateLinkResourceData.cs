@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties is null ? default : (IReadOnlyList<string>)Properties.RequiredZoneNames;
+                return Properties is null ? new ChangeTrackingList<string>() : (IReadOnlyList<string>)Properties.RequiredZoneNames;
             }
         }
     }
