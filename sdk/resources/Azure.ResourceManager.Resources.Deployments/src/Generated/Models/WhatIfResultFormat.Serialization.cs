@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal static partial class WhatIfResultFormatExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WhatIfResultFormat value) => value switch
         {
             WhatIfResultFormat.ResourceIdOnly => "ResourceIdOnly",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Resources.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WhatIfResultFormat value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WhatIfResultFormat ToWhatIfResultFormat(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ResourceIdOnly")) return WhatIfResultFormat.ResourceIdOnly;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FullResourcePayloads")) return WhatIfResultFormat.FullResourcePayloads;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ResourceIdOnly"))
+            {
+                return WhatIfResultFormat.ResourceIdOnly;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FullResourcePayloads"))
+            {
+                return WhatIfResultFormat.FullResourcePayloads;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WhatIfResultFormat value.");
         }
     }

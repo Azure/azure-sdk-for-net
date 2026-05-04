@@ -181,12 +181,12 @@ private static BinaryData GetEvaluationConfig(string modelDeploymentName)
 
 7. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use it to get evaluation name and ID.
 
-```C# Snippet:Sample_GetStringValues_EvaluationsFunction
-private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+```C# Snippet:Sample_ParseClientResult_EvaluationSampleBase
+protected static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
     {
         foreach (string key in expectedProperties)
@@ -197,7 +197,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
             }
         }
     }
-    List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
+    List<string> notFoundItems = [.. expectedProperties.Where((key) => !results.ContainsKey(key))];
     if (notFoundItems.Count > 0)
     {
         StringBuilder sbNotFound = new();
@@ -298,12 +298,12 @@ Console.WriteLine($"Evaluation run created (id: {runId})");
 
 11. Define the method to get the error message and code from the response if any.
 
-```C# Snippet:Sample_GetError_EvaluationsFunction
-private static string GetErrorMessageOrEmpty(ClientResult result)
+```C# Snippet:Sample_GetErrorMessageOrEmpty_EvaluationSampleBase
+protected static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     string code = default;
     string message = default;
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
@@ -368,11 +368,11 @@ if (runStatus == "failed")
 
 13. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
 
-```C# Snippet:Sample_GetResultCounts_EvaluationsFunction
-private static string GetResultsCounts(ClientResult result)
+```C# Snippet:Sample_GetResultCounts_EvaluationSampleBase
+protected static string GetResultsCounts(ClientResult result)
 {
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     StringBuilder sbFormattedCounts = new("{\n");
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
     {
@@ -399,8 +399,8 @@ private static string GetResultsCounts(ClientResult result)
 14. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
 
 Synchronous sample:
-```C# Snippet:Sample_GetResultsList_EvaluationsFunction_Sync
-private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsList_EvaluationSampleBase
+protected static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
@@ -409,7 +409,7 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
     {
         ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -438,8 +438,8 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_GetResultsList_EvaluationsFunction_Async
-private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsListAsync_EvaluationSampleBase
+protected static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
@@ -448,7 +448,7 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
     {
         ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {

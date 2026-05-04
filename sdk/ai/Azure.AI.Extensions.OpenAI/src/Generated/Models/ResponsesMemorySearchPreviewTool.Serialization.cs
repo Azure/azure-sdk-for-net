@@ -76,6 +76,16 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ResponsesMemorySearchPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             writer.WritePropertyName("memory_store_name"u8);
             writer.WriteStringValue(MemoryStoreName);
             writer.WritePropertyName("scope"u8);
@@ -119,6 +129,8 @@ namespace Azure.AI.Extensions.OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            string description = default;
             string memoryStoreName = default;
             string scope = default;
             ResponsesMemorySearchOptions searchOptions = default;
@@ -128,6 +140,16 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("memory_store_name"u8))
@@ -166,6 +188,8 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesMemorySearchPreviewTool(
                 @type,
                 additionalBinaryDataProperties,
+                name,
+                description,
                 memoryStoreName,
                 scope,
                 searchOptions,

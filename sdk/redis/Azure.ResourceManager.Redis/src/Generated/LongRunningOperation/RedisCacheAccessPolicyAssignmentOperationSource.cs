@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Redis
 {
-    internal class RedisCacheAccessPolicyAssignmentOperationSource : IOperationSource<RedisCacheAccessPolicyAssignmentResource>
+    /// <summary></summary>
+    internal partial class RedisCacheAccessPolicyAssignmentOperationSource : IOperationSource<RedisCacheAccessPolicyAssignmentResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal RedisCacheAccessPolicyAssignmentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         RedisCacheAccessPolicyAssignmentResource IOperationSource<RedisCacheAccessPolicyAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisCacheAccessPolicyAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            RedisCacheAccessPolicyAssignmentData data = RedisCacheAccessPolicyAssignmentData.DeserializeRedisCacheAccessPolicyAssignmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new RedisCacheAccessPolicyAssignmentResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<RedisCacheAccessPolicyAssignmentResource> IOperationSource<RedisCacheAccessPolicyAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisCacheAccessPolicyAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
-            return await Task.FromResult(new RedisCacheAccessPolicyAssignmentResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            RedisCacheAccessPolicyAssignmentData data = RedisCacheAccessPolicyAssignmentData.DeserializeRedisCacheAccessPolicyAssignmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RedisCacheAccessPolicyAssignmentResource(_client, data);
         }
     }
 }

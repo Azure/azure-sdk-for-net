@@ -111,7 +111,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("total"u8);
             writer.WriteNumberValue(Total);
             writer.WritePropertyName("upgradingOS"u8);
-            writer.WriteNumberValue(UpgradingOs);
+            writer.WriteNumberValue(UpgradingOS);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -170,7 +170,7 @@ namespace Azure.Compute.Batch
             int deallocated = default;
             int deallocating = default;
             int total = default;
-            int upgradingOs = default;
+            int upgradingOS = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -256,7 +256,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("upgradingOS"u8))
                 {
-                    upgradingOs = prop.Value.GetInt32();
+                    upgradingOS = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -281,7 +281,7 @@ namespace Azure.Compute.Batch
                 deallocated,
                 deallocating,
                 total,
-                upgradingOs,
+                upgradingOS,
                 additionalBinaryDataProperties);
         }
     }

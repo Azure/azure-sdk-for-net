@@ -26,7 +26,8 @@ namespace Azure.Generator
                 new RequestContextExtensionsDefinition(),
                 AzureClientGenerator.Instance.RawRequestUriBuilderExtensionsDefinition,
                 AzureClientGenerator.Instance.RequestHeaderExtensionsDefinition,
-                .. publicClients.Count > 0 ? [new ClientBuilderExtensionsDefinition(publicClients)] : Array.Empty<TypeProvider>()
+                .. publicClients.Count > 0 ? [new ClientBuilderExtensionsDefinition(publicClients)] : Array.Empty<TypeProvider>(),
+                .. publicClients.Where(c => c.ClientSettings != null).Select(c => new ClientHostExtensionsDefinition(c))
             ];
         }
     }

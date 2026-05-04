@@ -36,6 +36,8 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("CustomToolParamFormat")] public abstract partial class ResponsesCustomToolParamFormat { }
 [CodeGenType("EmptyModelParam")] public partial class ResponsesEmptyModelParam { }
 [CodeGenType("FabricDataAgentToolOptions")] public partial class ResponsesFabricDataAgentToolOptions { }
+[CodeGenType("FabricIQPreviewTool")] public partial class ResponsesFabricIQPreviewTool { }
+[CodeGenType("FabricIQPreviewToolParameters")] public partial class ResponsesFabricIQPreviewToolParameters { }
 [CodeGenType("FunctionShellToolParam")] public partial class ResponsesFunctionShellToolParam { }
 [CodeGenType("FunctionShellToolParamEnvironment")] public abstract partial class ResponsesFunctionShellToolParamEnvironment { }
 [CodeGenType("FunctionShellToolParamEnvironmentContainerReferenceParam")] public partial class ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam { }
@@ -60,6 +62,7 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("OpenApiProjectConnectionSecurityScheme")] public partial class ResponsesOpenApiProjectConnectionSecurityScheme { }
 [CodeGenType("OpenApiTool")] public partial class ResponsesOpenApiTool { }
 [CodeGenType("Tool")] public abstract partial class ResponsesTool { }
+[CodeGenType("ToolboxSearchPreviewTool")] public partial class ResponsesToolboxSearchPreviewTool { }
 [CodeGenType("SharepointGroundingToolParameters")] public partial class ResponsesSharepointGroundingToolParameters { }
 [CodeGenType("SharepointPreviewTool")] public partial class ResponsesSharepointPreviewTool { }
 [CodeGenType("SkillReferenceParam")] public partial class ResponsesSkillReferenceParam { }

@@ -65,7 +65,7 @@ public class Sample_AgentsEndpoint : SamplesBase
         #endregion
 
         #region Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
-        AgentEndpoint config = new()
+        AgentEndpointConfig config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = {AgentEndpointProtocol.Responses}
@@ -118,7 +118,7 @@ public class Sample_AgentsEndpoint : SamplesBase
             Replace <first> and <second> by the actual summation arguments.
             """);
 
-        AgentEndpoint config = new()
+        AgentEndpointConfig config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = { AgentEndpointProtocol.Responses }

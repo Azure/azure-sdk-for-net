@@ -82,66 +82,6 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
-        /// <summary> Create a new agent version. </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersion(string agentName, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            CreateAgentVersionRequest1 spreadModel = new CreateAgentVersionRequest1(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, blueprintReference, default);
-            ClientResult result = CreateAgentVersion(agentName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
-        }
-
-        /// <summary> Create a new agent version. </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionAsync(string agentName, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            CreateAgentVersionRequest1 spreadModel = new CreateAgentVersionRequest1(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, blueprintReference, default);
-            ClientResult result = await CreateAgentVersionAsync(agentName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
-        }
-
         /// <summary>
         /// [Protocol Method] Updates an agent endpoint.
         /// <list type="bullet">

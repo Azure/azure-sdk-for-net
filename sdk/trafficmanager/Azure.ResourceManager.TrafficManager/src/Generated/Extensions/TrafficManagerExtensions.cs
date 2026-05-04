@@ -45,24 +45,6 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TrafficManagerEndpointResource"/> object. </returns>
-        public static TrafficManagerEndpointResource GetTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerEndpointResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="TrafficManagerProfileResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -132,6 +114,60 @@ namespace Azure.ResourceManager.TrafficManager
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableTrafficManagerArmClient(client).GetTrafficManagerUserMetricsResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AzureEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetAzureEndpointTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AzureEndpointTrafficManagerEndpointResource"/> object. </returns>
+        public static AzureEndpointTrafficManagerEndpointResource GetAzureEndpointTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableTrafficManagerArmClient(client).GetAzureEndpointTrafficManagerEndpointResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetExternalEndpointTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> object. </returns>
+        public static ExternalEndpointTrafficManagerEndpointResource GetExternalEndpointTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableTrafficManagerArmClient(client).GetExternalEndpointTrafficManagerEndpointResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NestedEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetNestedEndpointTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NestedEndpointTrafficManagerEndpointResource"/> object. </returns>
+        public static NestedEndpointTrafficManagerEndpointResource GetNestedEndpointTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableTrafficManagerArmClient(client).GetNestedEndpointTrafficManagerEndpointResource(id);
         }
 
         /// <summary>

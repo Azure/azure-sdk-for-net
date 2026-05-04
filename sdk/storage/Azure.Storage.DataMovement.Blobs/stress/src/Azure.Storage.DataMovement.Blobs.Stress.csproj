@@ -15,6 +15,7 @@
     <PackageReference Include="NUnit" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" >
       <Aliases>BaseBlobs</Aliases>
