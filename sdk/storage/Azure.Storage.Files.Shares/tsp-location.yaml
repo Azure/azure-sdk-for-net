@@ -1,4 +1,4 @@
 repo: Azure/azure-rest-api-specs
 directory: "specification/storage/data-plane/FileStorage"
-commit: 7a31ddd8a9f0177d0f788d04258f70df597f8c58
+commit: a64ec4ce9e0f6375c84b6281016ac2ba68e7f8bd
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"
