@@ -288,7 +288,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(
                     TransferState.Paused,
                     transfer.Status.State,
-                    $"Expected Paused after pause #{pause + 1}, but got {transfer.Status.State}");
+                    $"[TestConsole] Expected Paused after pause #{pause + 1}, but got {transfer.Status.State}");
 
                 // Resume
                 TransferOptions resumeOptions = new TransferOptions()
