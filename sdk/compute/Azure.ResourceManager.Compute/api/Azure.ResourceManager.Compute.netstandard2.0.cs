@@ -3958,7 +3958,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CapacityReservationGroupGetExpand(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupGetExpand VirtualMachineScaleSetVMsRef { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupGetExpand VirtualMachineScaleSetVmsRef { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupGetExpand VirtualMachinesRef { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.CapacityReservationGroupGetExpand other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -5014,7 +5014,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ConfidentialVmEncryptionType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ConfidentialVmEncryptionType EncryptedVMGuestStateOnlyWithPmk { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ConfidentialVmEncryptionType EncryptedVmGuestStateOnlyWithPmk { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.ConfidentialVmEncryptionType EncryptedWithCmk { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.ConfidentialVmEncryptionType EncryptedWithPmk { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.ConfidentialVmEncryptionType NonPersistedTPM { get { throw null; } }
@@ -5348,7 +5348,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly int _dummyPrimitive;
         public DiskControllerType(string value) { throw null; }
         public static Azure.ResourceManager.Compute.Models.DiskControllerType NVMe { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskControllerType SCSI { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskControllerType Scsi { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.DiskControllerType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -5566,8 +5566,8 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DiskImageFileFormat(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.DiskImageFileFormat VHD { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskImageFileFormat VHDX { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskImageFileFormat Vhd { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskImageFileFormat Vhdx { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.DiskImageFileFormat other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -5712,10 +5712,10 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DiskSecurityType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.DiskSecurityType ConfidentialVMDiskEncryptedWithCustomerKey { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskSecurityType ConfidentialVMDiskEncryptedWithPlatformKey { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskSecurityType ConfidentialVMNonPersistedTPM { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskSecurityType ConfidentialVMVMGuestStateOnlyEncryptedWithPlatformKey { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskSecurityType ConfidentialVmDiskEncryptedWithCustomerKey { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskSecurityType ConfidentialVmDiskEncryptedWithPlatformKey { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskSecurityType ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskSecurityType ConfidentialVmNonPersistedTPM { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.DiskSecurityType TrustedLaunch { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.DiskSecurityType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -5747,8 +5747,8 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DiskState(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.DiskState ActiveSAS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskState ActiveSASFrozen { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskState ActiveSas { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskState ActiveSasFrozen { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.DiskState ActiveUpload { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.DiskState Attached { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.DiskState Frozen { get { throw null; } }
@@ -5770,13 +5770,13 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DiskStorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumV2LRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSSDLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSSDZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType UltraSSDLRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSsdZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType UltraSsdLrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.DiskStorageAccountType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -5811,10 +5811,10 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EdgeZoneStorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType StandardSSDLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType StandardZRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType StandardZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -6362,7 +6362,7 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryImageVersionPolicyViolationCategory(string value) { throw null; }
         public static Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory CopyrightValidation { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory ImageFlaggedUnsafe { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory IpTheft { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory IPTheft { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.GalleryImageVersionPolicyViolationCategory other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -7221,10 +7221,10 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ImageStorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType PremiumV2LRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardZRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.ImageStorageAccountType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -7811,6 +7811,9 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public NetworkApiVersion(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.NetworkApiVersion TwoThousandTwenty1101 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.NetworkApiVersion v2020_11_01 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.NetworkApiVersion v2022_11_01 { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.NetworkApiVersion _20201101 { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.NetworkApiVersion _20221101 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.NetworkApiVersion other) { throw null; }
@@ -9055,9 +9058,9 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SecurityEncryptionType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.SecurityEncryptionType DiskWithVMGuestState { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SecurityEncryptionType DiskWithVmGuestState { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.SecurityEncryptionType NonPersistedTPM { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.SecurityEncryptionType VMGuestStateOnly { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SecurityEncryptionType VmGuestStateOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.SecurityEncryptionType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -9107,7 +9110,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SecurityType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.SecurityType ConfidentialVM { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SecurityType ConfidentialVm { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.SecurityType Standard { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.SecurityType TrustedLaunch { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.SecurityType other) { throw null; }
@@ -9428,9 +9431,9 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SnapshotStorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardZRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -9550,8 +9553,8 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public StorageAccountStrategy(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountStrategy DefaultStandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountStrategy PreferStandardZRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountStrategy DefaultStandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountStrategy PreferStandardZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.StorageAccountStrategy other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -9567,13 +9570,13 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public StorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumV2LRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSSDLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSSDZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType UltraSSDLRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSsdZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType UltraSsdLrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.StorageAccountType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -9691,7 +9694,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SupportedSecurityOption(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.SupportedSecurityOption TrustedLaunchAndConfidentialVMSupported { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SupportedSecurityOption TrustedLaunchAndConfidentialVmSupported { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.SupportedSecurityOption TrustedLaunchSupported { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.SupportedSecurityOption other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -11213,8 +11216,8 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly int _dummyPrimitive;
         public VirtualMachineScaleSetScaleInRule(string value) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRule Default { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRule NewestVM { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRule OldestVM { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRule NewestVm { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRule OldestVm { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRule other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }

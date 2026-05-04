@@ -1,0 +1,24 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.ComponentModel;
+using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.ResourceManager.Compute.Models
+{
+    public readonly partial struct NetworkApiVersion
+    {
+        /// <summary> 2020-11-01. </summary>
+        [CodeGenMember("_20201101")]
+        public static NetworkApiVersion v2020_11_01 { get; } = new NetworkApiVersion(_20201101Value);
+
+        /// <summary> 2022-11-01. </summary>
+        [CodeGenMember("_20221101")]
+        public static NetworkApiVersion v2022_11_01 { get; } = new NetworkApiVersion(_20221101Value);
+
+        /// <summary> 2020-11-01. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkApiVersion TwoThousandTwenty1101 { get; } = v2020_11_01;
+    }
+}

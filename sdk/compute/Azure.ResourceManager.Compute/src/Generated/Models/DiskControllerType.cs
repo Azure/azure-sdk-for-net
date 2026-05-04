@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct DiskControllerType : IEquatable<DiskControllerType>
     {
         private readonly string _value;
-        private const string SCSIValue = "SCSI";
+        private const string ScsiValue = "SCSI";
         private const string NVMeValue = "NVMe";
 
         /// <summary> Initializes a new instance of <see cref="DiskControllerType"/>. </summary>
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value;
         }
 
-        /// <summary> Gets the SCSI. </summary>
-        public static DiskControllerType SCSI { get; } = new DiskControllerType(SCSIValue);
+        /// <summary> Gets the Scsi. </summary>
+        public static DiskControllerType Scsi { get; } = new DiskControllerType(ScsiValue);
 
         /// <summary> Gets the NVMe. </summary>
         public static DiskControllerType NVMe { get; } = new DiskControllerType(NVMeValue);

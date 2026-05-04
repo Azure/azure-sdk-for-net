@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The disk supports creating Trusted Launch VMs. </summary>
         private const string TrustedLaunchSupportedValue = "TrustedLaunchSupported";
         /// <summary> The disk supports creating both Trusted Launch and Confidential VMs. </summary>
-        private const string TrustedLaunchAndConfidentialVMSupportedValue = "TrustedLaunchAndConfidentialVMSupported";
+        private const string TrustedLaunchAndConfidentialVmSupportedValue = "TrustedLaunchAndConfidentialVMSupported";
 
         /// <summary> Initializes a new instance of <see cref="SupportedSecurityOption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static SupportedSecurityOption TrustedLaunchSupported { get; } = new SupportedSecurityOption(TrustedLaunchSupportedValue);
 
         /// <summary> The disk supports creating both Trusted Launch and Confidential VMs. </summary>
-        public static SupportedSecurityOption TrustedLaunchAndConfidentialVMSupported { get; } = new SupportedSecurityOption(TrustedLaunchAndConfidentialVMSupportedValue);
+        public static SupportedSecurityOption TrustedLaunchAndConfidentialVmSupported { get; } = new SupportedSecurityOption(TrustedLaunchAndConfidentialVmSupportedValue);
 
         /// <summary> Determines if two <see cref="SupportedSecurityOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

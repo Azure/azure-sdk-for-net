@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
         /// <summary> A VHD file is a disk image file in the Virtual Hard Disk file format. </summary>
-        private const string VHDValue = "VHD";
+        private const string VhdValue = "VHD";
         /// <summary> A VHDX file is a disk image file in the Virtual Hard Disk v2 file format. </summary>
-        private const string VHDXValue = "VHDX";
+        private const string VhdxValue = "VHDX";
 
         /// <summary> Initializes a new instance of <see cref="DiskImageFileFormat"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A VHD file is a disk image file in the Virtual Hard Disk file format. </summary>
-        public static DiskImageFileFormat VHD { get; } = new DiskImageFileFormat(VHDValue);
+        public static DiskImageFileFormat Vhd { get; } = new DiskImageFileFormat(VhdValue);
 
         /// <summary> A VHDX file is a disk image file in the Virtual Hard Disk v2 file format. </summary>
-        public static DiskImageFileFormat VHDX { get; } = new DiskImageFileFormat(VHDXValue);
+        public static DiskImageFileFormat Vhdx { get; } = new DiskImageFileFormat(VhdxValue);
 
         /// <summary> Determines if two <see cref="DiskImageFileFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

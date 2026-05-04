@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
         private const string DefaultValue = "Default";
-        private const string OldestVMValue = "OldestVM";
-        private const string NewestVMValue = "NewestVM";
+        private const string OldestVmValue = "OldestVM";
+        private const string NewestVmValue = "NewestVM";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetScaleInRule"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the Default. </summary>
         public static VirtualMachineScaleSetScaleInRule Default { get; } = new VirtualMachineScaleSetScaleInRule(DefaultValue);
 
-        /// <summary> Gets the OldestVM. </summary>
-        public static VirtualMachineScaleSetScaleInRule OldestVM { get; } = new VirtualMachineScaleSetScaleInRule(OldestVMValue);
+        /// <summary> Gets the OldestVm. </summary>
+        public static VirtualMachineScaleSetScaleInRule OldestVm { get; } = new VirtualMachineScaleSetScaleInRule(OldestVmValue);
 
-        /// <summary> Gets the NewestVM. </summary>
-        public static VirtualMachineScaleSetScaleInRule NewestVM { get; } = new VirtualMachineScaleSetScaleInRule(NewestVMValue);
+        /// <summary> Gets the NewestVm. </summary>
+        public static VirtualMachineScaleSetScaleInRule NewestVm { get; } = new VirtualMachineScaleSetScaleInRule(NewestVmValue);
 
         /// <summary> Determines if two <see cref="VirtualMachineScaleSetScaleInRule"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

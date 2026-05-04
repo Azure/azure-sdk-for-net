@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct CapacityReservationGroupGetExpand : IEquatable<CapacityReservationGroupGetExpand>
     {
         private readonly string _value;
-        private const string VirtualMachineScaleSetVMsRefValue = "virtualMachineScaleSetVMs/$ref";
+        private const string VirtualMachineScaleSetVmsRefValue = "virtualMachineScaleSetVMs/$ref";
         private const string VirtualMachinesRefValue = "virtualMachines/$ref";
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupGetExpand"/>. </summary>
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value;
         }
 
-        /// <summary> Gets the VirtualMachineScaleSetVMsRef. </summary>
-        public static CapacityReservationGroupGetExpand VirtualMachineScaleSetVMsRef { get; } = new CapacityReservationGroupGetExpand(VirtualMachineScaleSetVMsRefValue);
+        /// <summary> Gets the VirtualMachineScaleSetVmsRef. </summary>
+        public static CapacityReservationGroupGetExpand VirtualMachineScaleSetVmsRef { get; } = new CapacityReservationGroupGetExpand(VirtualMachineScaleSetVmsRefValue);
 
         /// <summary> Gets the VirtualMachinesRef. </summary>
         public static CapacityReservationGroupGetExpand VirtualMachinesRef { get; } = new CapacityReservationGroupGetExpand(VirtualMachinesRefValue);

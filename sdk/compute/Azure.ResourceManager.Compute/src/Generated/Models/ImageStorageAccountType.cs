@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct ImageStorageAccountType : IEquatable<ImageStorageAccountType>
     {
         private readonly string _value;
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string StandardZRSValue = "Standard_ZRS";
-        private const string PremiumLRSValue = "Premium_LRS";
-        private const string PremiumV2LRSValue = "PremiumV2_LRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string StandardZrsValue = "Standard_ZRS";
+        private const string PremiumLrsValue = "Premium_LRS";
+        private const string PremiumV2LrsValue = "PremiumV2_LRS";
 
         /// <summary> Initializes a new instance of <see cref="ImageStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value;
         }
 
-        /// <summary> Gets the StandardLRS. </summary>
-        public static ImageStorageAccountType StandardLRS { get; } = new ImageStorageAccountType(StandardLRSValue);
+        /// <summary> Gets the StandardLrs. </summary>
+        public static ImageStorageAccountType StandardLrs { get; } = new ImageStorageAccountType(StandardLrsValue);
 
-        /// <summary> Gets the StandardZRS. </summary>
-        public static ImageStorageAccountType StandardZRS { get; } = new ImageStorageAccountType(StandardZRSValue);
+        /// <summary> Gets the StandardZrs. </summary>
+        public static ImageStorageAccountType StandardZrs { get; } = new ImageStorageAccountType(StandardZrsValue);
 
-        /// <summary> Gets the PremiumLRS. </summary>
-        public static ImageStorageAccountType PremiumLRS { get; } = new ImageStorageAccountType(PremiumLRSValue);
+        /// <summary> Gets the PremiumLrs. </summary>
+        public static ImageStorageAccountType PremiumLrs { get; } = new ImageStorageAccountType(PremiumLrsValue);
 
-        /// <summary> Gets the PremiumV2LRS. </summary>
-        public static ImageStorageAccountType PremiumV2LRS { get; } = new ImageStorageAccountType(PremiumV2LRSValue);
+        /// <summary> Gets the PremiumV2Lrs. </summary>
+        public static ImageStorageAccountType PremiumV2Lrs { get; } = new ImageStorageAccountType(PremiumV2LrsValue);
 
         /// <summary> Determines if two <see cref="ImageStorageAccountType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct EdgeZoneStorageAccountType : IEquatable<EdgeZoneStorageAccountType>
     {
         private readonly string _value;
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string StandardZRSValue = "Standard_ZRS";
-        private const string StandardSSDLRSValue = "StandardSSD_LRS";
-        private const string PremiumLRSValue = "Premium_LRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string StandardZrsValue = "Standard_ZRS";
+        private const string StandardSsdLrsValue = "StandardSSD_LRS";
+        private const string PremiumLrsValue = "Premium_LRS";
 
         /// <summary> Initializes a new instance of <see cref="EdgeZoneStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value;
         }
 
-        /// <summary> Gets the StandardLRS. </summary>
-        public static EdgeZoneStorageAccountType StandardLRS { get; } = new EdgeZoneStorageAccountType(StandardLRSValue);
+        /// <summary> Gets the StandardLrs. </summary>
+        public static EdgeZoneStorageAccountType StandardLrs { get; } = new EdgeZoneStorageAccountType(StandardLrsValue);
 
-        /// <summary> Gets the StandardZRS. </summary>
-        public static EdgeZoneStorageAccountType StandardZRS { get; } = new EdgeZoneStorageAccountType(StandardZRSValue);
+        /// <summary> Gets the StandardZrs. </summary>
+        public static EdgeZoneStorageAccountType StandardZrs { get; } = new EdgeZoneStorageAccountType(StandardZrsValue);
 
-        /// <summary> Gets the StandardSSDLRS. </summary>
-        public static EdgeZoneStorageAccountType StandardSSDLRS { get; } = new EdgeZoneStorageAccountType(StandardSSDLRSValue);
+        /// <summary> Gets the StandardSsdLrs. </summary>
+        public static EdgeZoneStorageAccountType StandardSsdLrs { get; } = new EdgeZoneStorageAccountType(StandardSsdLrsValue);
 
-        /// <summary> Gets the PremiumLRS. </summary>
-        public static EdgeZoneStorageAccountType PremiumLRS { get; } = new EdgeZoneStorageAccountType(PremiumLRSValue);
+        /// <summary> Gets the PremiumLrs. </summary>
+        public static EdgeZoneStorageAccountType PremiumLrs { get; } = new EdgeZoneStorageAccountType(PremiumLrsValue);
 
         /// <summary> Determines if two <see cref="EdgeZoneStorageAccountType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

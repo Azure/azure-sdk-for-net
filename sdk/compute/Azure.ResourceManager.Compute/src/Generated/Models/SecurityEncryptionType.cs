@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct SecurityEncryptionType : IEquatable<SecurityEncryptionType>
     {
         private readonly string _value;
-        private const string VMGuestStateOnlyValue = "VMGuestStateOnly";
-        private const string DiskWithVMGuestStateValue = "DiskWithVMGuestState";
+        private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
+        private const string DiskWithVmGuestStateValue = "DiskWithVMGuestState";
         private const string NonPersistedTPMValue = "NonPersistedTPM";
 
         /// <summary> Initializes a new instance of <see cref="SecurityEncryptionType"/>. </summary>
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value;
         }
 
-        /// <summary> Gets the VMGuestStateOnly. </summary>
-        public static SecurityEncryptionType VMGuestStateOnly { get; } = new SecurityEncryptionType(VMGuestStateOnlyValue);
+        /// <summary> Gets the VmGuestStateOnly. </summary>
+        public static SecurityEncryptionType VmGuestStateOnly { get; } = new SecurityEncryptionType(VmGuestStateOnlyValue);
 
-        /// <summary> Gets the DiskWithVMGuestState. </summary>
-        public static SecurityEncryptionType DiskWithVMGuestState { get; } = new SecurityEncryptionType(DiskWithVMGuestStateValue);
+        /// <summary> Gets the DiskWithVmGuestState. </summary>
+        public static SecurityEncryptionType DiskWithVmGuestState { get; } = new SecurityEncryptionType(DiskWithVmGuestStateValue);
 
         /// <summary> Gets the NonPersistedTPM. </summary>
         public static SecurityEncryptionType NonPersistedTPM { get; } = new SecurityEncryptionType(NonPersistedTPMValue);

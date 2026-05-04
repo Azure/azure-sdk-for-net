@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Trusted Launch provides security features such as secure boot and virtual Trusted Platform Module (vTPM). </summary>
         private const string TrustedLaunchValue = "TrustedLaunch";
         /// <summary> Indicates Confidential VM disk with only VM guest state encrypted. </summary>
-        private const string ConfidentialVMVMGuestStateOnlyEncryptedWithPlatformKeyValue = "ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey";
+        private const string ConfidentialVmGuestStateOnlyEncryptedWithPlatformKeyValue = "ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey";
         /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a platform managed key. </summary>
-        private const string ConfidentialVMDiskEncryptedWithPlatformKeyValue = "ConfidentialVM_DiskEncryptedWithPlatformKey";
+        private const string ConfidentialVmDiskEncryptedWithPlatformKeyValue = "ConfidentialVM_DiskEncryptedWithPlatformKey";
         /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a customer managed key. </summary>
-        private const string ConfidentialVMDiskEncryptedWithCustomerKeyValue = "ConfidentialVM_DiskEncryptedWithCustomerKey";
+        private const string ConfidentialVmDiskEncryptedWithCustomerKeyValue = "ConfidentialVM_DiskEncryptedWithCustomerKey";
         /// <summary> Indicates Confidential VM disk with a ephemeral vTPM. vTPM state is not persisted across VM reboots. </summary>
-        private const string ConfidentialVMNonPersistedTPMValue = "ConfidentialVM_NonPersistedTPM";
+        private const string ConfidentialVmNonPersistedTPMValue = "ConfidentialVM_NonPersistedTPM";
 
         /// <summary> Initializes a new instance of <see cref="DiskSecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskSecurityType TrustedLaunch { get; } = new DiskSecurityType(TrustedLaunchValue);
 
         /// <summary> Indicates Confidential VM disk with only VM guest state encrypted. </summary>
-        public static DiskSecurityType ConfidentialVMVMGuestStateOnlyEncryptedWithPlatformKey { get; } = new DiskSecurityType(ConfidentialVMVMGuestStateOnlyEncryptedWithPlatformKeyValue);
+        public static DiskSecurityType ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey { get; } = new DiskSecurityType(ConfidentialVmGuestStateOnlyEncryptedWithPlatformKeyValue);
 
         /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a platform managed key. </summary>
-        public static DiskSecurityType ConfidentialVMDiskEncryptedWithPlatformKey { get; } = new DiskSecurityType(ConfidentialVMDiskEncryptedWithPlatformKeyValue);
+        public static DiskSecurityType ConfidentialVmDiskEncryptedWithPlatformKey { get; } = new DiskSecurityType(ConfidentialVmDiskEncryptedWithPlatformKeyValue);
 
         /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a customer managed key. </summary>
-        public static DiskSecurityType ConfidentialVMDiskEncryptedWithCustomerKey { get; } = new DiskSecurityType(ConfidentialVMDiskEncryptedWithCustomerKeyValue);
+        public static DiskSecurityType ConfidentialVmDiskEncryptedWithCustomerKey { get; } = new DiskSecurityType(ConfidentialVmDiskEncryptedWithCustomerKeyValue);
 
         /// <summary> Indicates Confidential VM disk with a ephemeral vTPM. vTPM state is not persisted across VM reboots. </summary>
-        public static DiskSecurityType ConfidentialVMNonPersistedTPM { get; } = new DiskSecurityType(ConfidentialVMNonPersistedTPMValue);
+        public static DiskSecurityType ConfidentialVmNonPersistedTPM { get; } = new DiskSecurityType(ConfidentialVmNonPersistedTPMValue);
 
         /// <summary> Determines if two <see cref="DiskSecurityType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

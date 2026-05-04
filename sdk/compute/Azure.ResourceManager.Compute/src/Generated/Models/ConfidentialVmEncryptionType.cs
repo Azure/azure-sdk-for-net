@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct ConfidentialVmEncryptionType : IEquatable<ConfidentialVmEncryptionType>
     {
         private readonly string _value;
-        private const string EncryptedVMGuestStateOnlyWithPmkValue = "EncryptedVMGuestStateOnlyWithPmk";
+        private const string EncryptedVmGuestStateOnlyWithPmkValue = "EncryptedVMGuestStateOnlyWithPmk";
         private const string EncryptedWithPmkValue = "EncryptedWithPmk";
         private const string EncryptedWithCmkValue = "EncryptedWithCmk";
         private const string NonPersistedTPMValue = "NonPersistedTPM";
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value;
         }
 
-        /// <summary> Gets the EncryptedVMGuestStateOnlyWithPmk. </summary>
-        public static ConfidentialVmEncryptionType EncryptedVMGuestStateOnlyWithPmk { get; } = new ConfidentialVmEncryptionType(EncryptedVMGuestStateOnlyWithPmkValue);
+        /// <summary> Gets the EncryptedVmGuestStateOnlyWithPmk. </summary>
+        public static ConfidentialVmEncryptionType EncryptedVmGuestStateOnlyWithPmk { get; } = new ConfidentialVmEncryptionType(EncryptedVmGuestStateOnlyWithPmkValue);
 
         /// <summary> Gets the EncryptedWithPmk. </summary>
         public static ConfidentialVmEncryptionType EncryptedWithPmk { get; } = new ConfidentialVmEncryptionType(EncryptedWithPmkValue);

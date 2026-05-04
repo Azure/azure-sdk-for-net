@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The disk is attached to a VM which is in hibernated state. </summary>
         private const string FrozenValue = "Frozen";
         /// <summary> The disk currently has an Active SAS Uri associated with it. </summary>
-        private const string ActiveSASValue = "ActiveSAS";
+        private const string ActiveSasValue = "ActiveSAS";
         /// <summary> The disk is attached to a VM in hibernated state and has an active SAS URI associated with it. </summary>
-        private const string ActiveSASFrozenValue = "ActiveSASFrozen";
+        private const string ActiveSasFrozenValue = "ActiveSASFrozen";
         /// <summary> A disk is ready to be created by upload by requesting a write token. </summary>
         private const string ReadyToUploadValue = "ReadyToUpload";
         /// <summary> A disk is created for upload and a write token has been issued for uploading to it. </summary>
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskState Frozen { get; } = new DiskState(FrozenValue);
 
         /// <summary> The disk currently has an Active SAS Uri associated with it. </summary>
-        public static DiskState ActiveSAS { get; } = new DiskState(ActiveSASValue);
+        public static DiskState ActiveSas { get; } = new DiskState(ActiveSasValue);
 
         /// <summary> The disk is attached to a VM in hibernated state and has an active SAS URI associated with it. </summary>
-        public static DiskState ActiveSASFrozen { get; } = new DiskState(ActiveSASFrozenValue);
+        public static DiskState ActiveSasFrozen { get; } = new DiskState(ActiveSasFrozenValue);
 
         /// <summary> A disk is ready to be created by upload by requesting a write token. </summary>
         public static DiskState ReadyToUpload { get; } = new DiskState(ReadyToUploadValue);

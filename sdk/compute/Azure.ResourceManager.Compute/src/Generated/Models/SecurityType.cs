@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Indicates a VM without UEFI features such as SecureBoot or vTPM; returned as the default value when securityType is not specified. </summary>
         private const string StandardValue = "Standard";
         private const string TrustedLaunchValue = "TrustedLaunch";
-        private const string ConfidentialVMValue = "ConfidentialVM";
+        private const string ConfidentialVmValue = "ConfidentialVM";
 
         /// <summary> Initializes a new instance of <see cref="SecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the TrustedLaunch. </summary>
         public static SecurityType TrustedLaunch { get; } = new SecurityType(TrustedLaunchValue);
 
-        /// <summary> Gets the ConfidentialVM. </summary>
-        public static SecurityType ConfidentialVM { get; } = new SecurityType(ConfidentialVMValue);
+        /// <summary> Gets the ConfidentialVm. </summary>
+        public static SecurityType ConfidentialVm { get; } = new SecurityType(ConfidentialVmValue);
 
         /// <summary> Determines if two <see cref="SecurityType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

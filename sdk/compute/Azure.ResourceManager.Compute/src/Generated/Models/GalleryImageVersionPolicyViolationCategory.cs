@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         private const string OtherValue = "Other";
         private const string ImageFlaggedUnsafeValue = "ImageFlaggedUnsafe";
         private const string CopyrightValidationValue = "CopyrightValidation";
-        private const string IpTheftValue = "IpTheft";
+        private const string IPTheftValue = "IpTheft";
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionPolicyViolationCategory"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the CopyrightValidation. </summary>
         public static GalleryImageVersionPolicyViolationCategory CopyrightValidation { get; } = new GalleryImageVersionPolicyViolationCategory(CopyrightValidationValue);
 
-        /// <summary> Gets the IpTheft. </summary>
-        public static GalleryImageVersionPolicyViolationCategory IpTheft { get; } = new GalleryImageVersionPolicyViolationCategory(IpTheftValue);
+        /// <summary> Gets the IPTheft. </summary>
+        public static GalleryImageVersionPolicyViolationCategory IPTheft { get; } = new GalleryImageVersionPolicyViolationCategory(IPTheftValue);
 
         /// <summary> Determines if two <see cref="GalleryImageVersionPolicyViolationCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

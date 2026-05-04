@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
         /// <summary> Choose Standard_ZRS storage if the region supports it, else choose Standard_LRS storage, unless overridden by specifying regional storageAccountType. If no storageAccountStrategy is specified, this is the default strategy (from API version 2025-03-03 onwards). </summary>
-        private const string PreferStandardZRSValue = "PreferStandard_ZRS";
+        private const string PreferStandardZrsValue = "PreferStandard_ZRS";
         /// <summary> Choose Standard_LRS storage unless overridden by specifying regional storageAccountType. </summary>
-        private const string DefaultStandardLRSValue = "DefaultStandard_LRS";
+        private const string DefaultStandardLrsValue = "DefaultStandard_LRS";
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Choose Standard_ZRS storage if the region supports it, else choose Standard_LRS storage, unless overridden by specifying regional storageAccountType. If no storageAccountStrategy is specified, this is the default strategy (from API version 2025-03-03 onwards). </summary>
-        public static StorageAccountStrategy PreferStandardZRS { get; } = new StorageAccountStrategy(PreferStandardZRSValue);
+        public static StorageAccountStrategy PreferStandardZrs { get; } = new StorageAccountStrategy(PreferStandardZrsValue);
 
         /// <summary> Choose Standard_LRS storage unless overridden by specifying regional storageAccountType. </summary>
-        public static StorageAccountStrategy DefaultStandardLRS { get; } = new StorageAccountStrategy(DefaultStandardLRSValue);
+        public static StorageAccountStrategy DefaultStandardLrs { get; } = new StorageAccountStrategy(DefaultStandardLrsValue);
 
         /// <summary> Determines if two <see cref="StorageAccountStrategy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
