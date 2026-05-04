@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> The publisherName. </param>
         /// <param name="type"> The type. </param>
         /// <param name="version"> The version. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string publisherName, string @type, string version)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publisherName, string @type, string version)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{@type}/versions/{version}";
             return new ResourceIdentifier(resourceId);

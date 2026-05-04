@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly VirtualMachineImagesEdgeZoneOperationGroup _client;
         private readonly string _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly string _edgeZone;
         private readonly string _publisherName;
         private readonly RequestContext _context;
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of ComputeVirtualMachineImagesEdgeZoneOperationGroupListOffersAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineImagesEdgeZoneOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComputeVirtualMachineImagesEdgeZoneOperationGroupListOffersAsyncCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, string location, string edgeZone, string publisherName, RequestContext context, string diagnosticScope)
+        public ComputeVirtualMachineImagesEdgeZoneOperationGroupListOffersAsyncCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, AzureLocation location, string edgeZone, string publisherName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly VirtualMachineImagesOperationGroup _client;
         private readonly string _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly string _edgeZone;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of VirtualMachineImagesOperationGroupGetVirtualMachineImagesByEdgeZoneCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineImagesOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public VirtualMachineImagesOperationGroupGetVirtualMachineImagesByEdgeZoneCollectionResultOfT(VirtualMachineImagesOperationGroup client, string subscriptionId, string location, string edgeZone, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public VirtualMachineImagesOperationGroupGetVirtualMachineImagesByEdgeZoneCollectionResultOfT(VirtualMachineImagesOperationGroup client, string subscriptionId, AzureLocation location, string edgeZone, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

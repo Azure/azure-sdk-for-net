@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetVirtualMachineImagesByEdgeZoneRequest(string subscriptionId, string location, string edgeZone, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagesByEdgeZoneRequest(string subscriptionId, AzureLocation location, string edgeZone, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/edgeZones/", false);
             uri.AppendPath(edgeZone, true);
             uri.AppendPath("/vmimages", false);
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetVirtualMachineImagePublishersRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagePublishersRequest(string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/publishers", false);
             if (_apiVersion != null)
             {
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetVirtualMachineImageOffersRequest(string subscriptionId, string location, string publisherName, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImageOffersRequest(string subscriptionId, AzureLocation location, string publisherName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/publishers/", false);
             uri.AppendPath(publisherName, true);
             uri.AppendPath("/artifacttypes/vmimage/offers", false);
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetVirtualMachineImageSkusRequest(string subscriptionId, string location, string publisherName, string offer, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImageSkusRequest(string subscriptionId, AzureLocation location, string publisherName, string offer, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/publishers/", false);
             uri.AppendPath(publisherName, true);
             uri.AppendPath("/artifacttypes/vmimage/offers/", false);
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetVirtualMachineImagesRequest(string subscriptionId, string location, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagesRequest(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/publishers/", false);
             uri.AppendPath(publisherName, true);
             uri.AppendPath("/artifacttypes/vmimage/offers/", false);
@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetVirtualMachineImagesWithPropertiesRequest(string subscriptionId, string location, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagesWithPropertiesRequest(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/publishers/", false);
             uri.AppendPath(publisherName, true);
             uri.AppendPath("/artifacttypes/vmimage/offers/", false);

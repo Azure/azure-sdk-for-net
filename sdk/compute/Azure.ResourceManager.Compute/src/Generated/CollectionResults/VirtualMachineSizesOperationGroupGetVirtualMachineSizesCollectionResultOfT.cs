@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly VirtualMachineSizesOperationGroup _client;
         private readonly string _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of VirtualMachineSizesOperationGroupGetVirtualMachineSizesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineSizesOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public VirtualMachineSizesOperationGroupGetVirtualMachineSizesCollectionResultOfT(VirtualMachineSizesOperationGroup client, string subscriptionId, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public VirtualMachineSizesOperationGroupGetVirtualMachineSizesCollectionResultOfT(VirtualMachineSizesOperationGroup client, string subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

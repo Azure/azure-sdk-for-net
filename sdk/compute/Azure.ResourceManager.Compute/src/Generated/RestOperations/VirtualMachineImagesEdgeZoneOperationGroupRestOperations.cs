@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetPublishersVirtualMachineImagesEdgeZonesRequest(string subscriptionId, string location, string edgeZone, RequestContext context)
+        internal HttpMessage CreateGetPublishersVirtualMachineImagesEdgeZonesRequest(string subscriptionId, AzureLocation location, string edgeZone, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/edgeZones/", false);
             uri.AppendPath(edgeZone, true);
             uri.AppendPath("/publishers", false);
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetOffersVirtualMachineImagesEdgeZonesRequest(string subscriptionId, string location, string edgeZone, string publisherName, RequestContext context)
+        internal HttpMessage CreateGetOffersVirtualMachineImagesEdgeZonesRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/edgeZones/", false);
             uri.AppendPath(edgeZone, true);
             uri.AppendPath("/publishers/", false);
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetVirtualMachineImageEdgeZoneSkusRequest(string subscriptionId, string location, string edgeZone, string publisherName, string offer, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImageEdgeZoneSkusRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/edgeZones/", false);
             uri.AppendPath(edgeZone, true);
             uri.AppendPath("/publishers/", false);
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetVirtualMachineImagesEdgeZonesRequest(string subscriptionId, string location, string edgeZone, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagesEdgeZonesRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/edgeZones/", false);
             uri.AppendPath(edgeZone, true);
             uri.AppendPath("/publishers/", false);

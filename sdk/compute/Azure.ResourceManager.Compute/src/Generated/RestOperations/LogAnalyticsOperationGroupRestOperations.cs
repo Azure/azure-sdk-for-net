@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateExportLogAnalyticsRequestRateByIntervalRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateExportLogAnalyticsRequestRateByIntervalRequest(string subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/logAnalytics/apiAccess/getRequestRateByInterval", false);
             if (_apiVersion != null)
             {
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateExportLogAnalyticsThrottledRequestsRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateExportLogAnalyticsThrottledRequestsRequest(string subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/logAnalytics/apiAccess/getThrottledRequests", false);
             if (_apiVersion != null)
             {

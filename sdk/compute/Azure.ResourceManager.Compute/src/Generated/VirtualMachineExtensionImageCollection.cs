@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
         private readonly ClientDiagnostics _virtualMachineExtensionImagesClientDiagnostics;
         private readonly VirtualMachineExtensionImages _virtualMachineExtensionImagesRestClient;
         /// <summary> The location. </summary>
-        private readonly string _location;
+        private readonly AzureLocation _location;
         /// <summary> The publisherName. </summary>
         private readonly string _publisherName;
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="publisherName"> The publisherName for the resource. </param>
-        internal VirtualMachineExtensionImageCollection(ArmClient client, ResourceIdentifier id, string location, string publisherName) : base(client, id)
+        internal VirtualMachineExtensionImageCollection(ArmClient client, ResourceIdentifier id, AzureLocation location, string publisherName) : base(client, id)
         {
             TryGetApiVersion(VirtualMachineExtensionImageResource.ResourceType, out string virtualMachineExtensionImageApiVersion);
             _location = location;
