@@ -40,6 +40,8 @@
 
 # PRLabel: %Azure.Core
 /sdk/core/                                                         @m-nash @Azure/azure-sdk-write-net-core
+/sdk/core/Azure.Core/src/Identity/                                 @christothes @JonathanCrd @Azure/azure-sdk-write-identity
+/sdk/core/Azure.Core/tests/Identity/                               @christothes @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Core
 # ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
