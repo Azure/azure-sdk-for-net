@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct NetworkApiVersion : IEquatable<NetworkApiVersion>
     {
         private readonly string _value;
-        private const string _20201101Value = "2020-11-01";
-        private const string _20221101Value = "2022-11-01";
+        private const string V20201101Value = "2020-11-01";
+        private const string V20221101Value = "2022-11-01";
 
         /// <summary> Initializes a new instance of <see cref="NetworkApiVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -27,12 +27,6 @@ namespace Azure.ResourceManager.Compute.Models
 
             _value = value;
         }
-
-        /// <summary> Gets the _20201101. </summary>
-        public static NetworkApiVersion _20201101 { get; } = new NetworkApiVersion(_20201101Value);
-
-        /// <summary> Gets the _20221101. </summary>
-        public static NetworkApiVersion _20221101 { get; } = new NetworkApiVersion(_20221101Value);
 
         /// <summary> Determines if two <see cref="NetworkApiVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

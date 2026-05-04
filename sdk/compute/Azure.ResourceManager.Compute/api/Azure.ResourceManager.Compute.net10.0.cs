@@ -7814,8 +7814,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static Azure.ResourceManager.Compute.Models.NetworkApiVersion TwoThousandTwenty1101 { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.NetworkApiVersion v2020_11_01 { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.NetworkApiVersion v2022_11_01 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.NetworkApiVersion _20201101 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.NetworkApiVersion _20221101 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.NetworkApiVersion other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
