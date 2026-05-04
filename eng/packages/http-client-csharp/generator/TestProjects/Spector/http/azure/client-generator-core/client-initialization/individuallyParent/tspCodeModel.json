@@ -211,7 +211,7 @@
         {
           "$id": "19",
           "kind": "client",
-          "name": "IndividuallyParentNestedWithPathClient",
+          "name": "NestedWithPathClient",
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
           "doc": "Operations for nested default -> individually and parent",
           "methods": [
@@ -579,7 +579,7 @@
         {
           "$id": "43",
           "kind": "client",
-          "name": "IndividuallyParentNestedWithQueryClient",
+          "name": "NestedWithQueryClient",
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
           "doc": "Operations for nested default -> individually and parent with query parameters",
           "methods": [
@@ -938,7 +938,7 @@
         {
           "$id": "67",
           "kind": "client",
-          "name": "IndividuallyParentNestedWithHeaderClient",
+          "name": "NestedWithHeaderClient",
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
           "doc": "Operations for nested default -> individually and parent header parameters",
           "methods": [
@@ -1248,7 +1248,7 @@
         {
           "$id": "89",
           "kind": "client",
-          "name": "IndividuallyParentNestedWithMultipleClient",
+          "name": "NestedWithMultipleClient",
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
           "doc": "Operations for nested default -> individually and parent multiple parameters",
           "methods": [
@@ -1655,7 +1655,7 @@
         {
           "$id": "119",
           "kind": "client",
-          "name": "IndividuallyParentNestedWithMixedClient",
+          "name": "NestedWithMixedClient",
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
           "doc": "Operations for nested default -> individually and parent mixed parameters",
           "methods": [
@@ -2105,7 +2105,7 @@
         {
           "$id": "153",
           "kind": "client",
-          "name": "IndividuallyParentNestedWithParamAliasClient",
+          "name": "NestedWithParamAliasClient",
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
           "doc": "Operations for nested default -> individually and parent param alias",
           "methods": [

@@ -1447,6 +1447,14 @@ namespace Azure.Analytics.Defender.Easm
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDiscoveryGroupAsync(Azure.Analytics.Defender.Easm.DiscoveryGroupPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ValidateDiscoveryGroupAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class EasmClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddEasmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddEasmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Analytics.Defender.Easm.EasmClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEasmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEasmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Analytics.Defender.Easm.EasmClientSettings> configureSettings) { throw null; }
+    }
     public partial class EasmClientOptions : Azure.Core.ClientOptions
     {
         public EasmClientOptions(Azure.Analytics.Defender.Easm.EasmClientOptions.ServiceVersion version = Azure.Analytics.Defender.Easm.EasmClientOptions.ServiceVersion.V2024_10_01_Preview) { }
