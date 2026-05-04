@@ -50,6 +50,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             Debug.Assert(serviceProvider != null, "serviceProvider was null");
 
+            LiveMetricsClientManager? liveMetricsManager = null;
+
             var tracerProvider = serviceProvider!.GetService<TracerProvider>();
             if (tracerProvider != null)
             {
@@ -61,8 +63,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (exporterOptions.EnableLiveMetrics)
                 {
-                    var manager = serviceProvider!.GetRequiredService<LiveMetricsClientManager>();
-                    tracerProvider.AddProcessor(new LiveMetricsActivityProcessor(manager));
+                    liveMetricsManager = serviceProvider!.GetRequiredService<LiveMetricsClientManager>();
+                    tracerProvider.AddProcessor(new LiveMetricsActivityProcessor(liveMetricsManager));
                 }
 
                 // TODO: Add Ai Sampler.
@@ -89,17 +91,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (exporterOptions.EnableLiveMetrics)
                 {
-                    var manager = serviceProvider!.GetRequiredService<LiveMetricsClientManager>();
+                    liveMetricsManager ??= serviceProvider!.GetRequiredService<LiveMetricsClientManager>();
 
                     loggerProvider.AddProcessor(new CompositeProcessor<LogRecord>(
                     [
-                        new LiveMetricsLogProcessor(manager),
+                        new LiveMetricsLogProcessor(liveMetricsManager),
                         baseProcessor
                     ]));
                 }
                 else
                 {
                     loggerProvider.AddProcessor(baseProcessor);
+                }
+            }
+
+            // Defer LiveMetrics background thread start until the host is fully started.
+            // This prevents blocking during host initialization (e.g., WebApplicationFactory in tests)
+            // where the synchronous HTTP ping to the LiveMetrics endpoint can hang.
+            if (liveMetricsManager != null)
+            {
+                var lifetime = serviceProvider!.GetService<IHostApplicationLifetime>();
+                if (lifetime != null)
+                {
+                    lifetime.ApplicationStarted.Register(() => liveMetricsManager.Start());
+                }
+                else
+                {
+                    // No host lifetime available (e.g., manual ServiceCollection usage).
+                    // Start immediately as there is no host startup to block.
+                    liveMetricsManager.Start();
                 }
             }
         }

@@ -259,6 +259,41 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             EvaluationHelper.EvaluateLoggerProvider(serviceProvider, enableLiveMetrics);
         }
 
+        /// <summary>
+        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58948
+        /// Verifies that a real host with IHostApplicationLifetime starts and stops
+        /// without hanging when LiveMetrics is enabled. This exercises the deferred
+        /// Start() path via ApplicationStarted callback.
+        /// </summary>
+#if NET
+        [Fact]
+        public async Task VerifyHostWithLiveMetricsDoesNotHang()
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+
+            var hostBuilder = new HostBuilder()
+                .ConfigureServices(services =>
+                {
+                    services.AddOpenTelemetry()
+                        .UseAzureMonitorExporter(options =>
+                        {
+                            options.ConnectionString = TestConnectionString;
+                            options.EnableLiveMetrics = true;
+                        });
+                });
+
+            using var host = hostBuilder.Build();
+
+            // StartAsync triggers IHostedService.StartAsync and then fires ApplicationStarted.
+            // Before the fix, this could hang if LiveMetrics made a blocking HTTP call during startup.
+            await host.StartAsync(cts.Token);
+
+            // StopAsync triggers ApplicationStopping/Stopped and disposes services.
+            // This verifies the Dispose/Start lifecycle doesn't deadlock.
+            await host.StopAsync(cts.Token);
+        }
+#endif
+
         private static async Task StartHostedServicesAsync(ServiceProvider serviceProvider)
         {
             var hostedServices = serviceProvider.GetServices<IHostedService>();

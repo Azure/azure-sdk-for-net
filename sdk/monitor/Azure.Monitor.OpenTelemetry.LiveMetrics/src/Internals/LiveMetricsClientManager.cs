@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -15,22 +16,45 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         private readonly LiveMetricsRestAPIsForClientSDKsRestClient _quickPulseSDKClientAPIsRestClient;
         private readonly ConnectionVars _connectionVars;
         private readonly bool _isAadEnabled;
+        private readonly bool _enableLiveMetrics;
         private readonly string _streamId = Guid.NewGuid().ToString(); // StreamId should be unique per application instance.
+        private readonly object _lifecycleLock = new();
         private LiveMetricsResource? _liveMetricsResource;
         private bool _disposedValue;
+        private int _started; // 0 = not started, 1 = started, 2 = disposed
 
         public LiveMetricsClientManager(AzureMonitorLiveMetricsOptions options, IPlatform platform)
         {
             options.Retry.MaxRetries = 0; // prevent Azure.Core from automatically retrying.
 
+            _enableLiveMetrics = options.EnableLiveMetrics;
             _connectionVars = InitializeConnectionVars(options, platform);
             _quickPulseSDKClientAPIsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
             _collectionConfigurationInfo = new CollectionConfigurationInfo();
             _collectionConfiguration = new CollectionConfiguration(_collectionConfigurationInfo, out _);
+        }
 
-            if (options.EnableLiveMetrics)
+        /// <summary>
+        /// Starts the LiveMetrics background ping thread.
+        /// This is safe to call multiple times; only the first call has effect.
+        /// No-op after Dispose.
+        /// </summary>
+        internal void Start()
+        {
+            if (!_enableLiveMetrics)
             {
+                return;
+            }
+
+            lock (_lifecycleLock)
+            {
+                if (_started != 0)
+                {
+                    return;
+                }
+
+                _started = 1;
                 InitializeState();
             }
         }
@@ -87,10 +111,21 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         public void Dispose()
         {
-            if (!_disposedValue)
+            lock (_lifecycleLock)
             {
-                ShutdownState();
+                if (_disposedValue)
+                {
+                    return;
+                }
+
                 _disposedValue = true;
+                var wasStarted = _started == 1;
+                _started = 2;
+
+                if (wasStarted)
+                {
+                    ShutdownState();
+                }
             }
         }
     }
