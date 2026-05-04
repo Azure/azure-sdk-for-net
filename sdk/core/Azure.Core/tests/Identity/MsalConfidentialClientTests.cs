@@ -122,10 +122,8 @@ namespace Azure.Core.Tests.Identity
         [Test]
         public async Task AdditionalQueryParametersAreIncludedInRequests()
         {
-            var capturedRequests = new List<MockRequest>();
             var mockTransport = new MockTransport(req =>
             {
-                capturedRequests.Add(req);
                 var response = new MockResponse(400);
                 response.SetContent("{\"error\":\"invalid_grant\",\"error_description\":\"bad request\"}");
                 return response;
@@ -147,9 +145,8 @@ namespace Azure.Core.Tests.Identity
             Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" })));
 
-            Assert.IsNotEmpty(capturedRequests);
-            // Find the token request (POST to /oauth2/v2.0/token)
-            var tokenRequest = capturedRequests.Find(r => r.Uri.Path.Contains("/oauth2/v2.0/token"));
+            Assert.IsNotEmpty(mockTransport.Requests);
+            var tokenRequest = mockTransport.Requests.Find(r => r.Uri.Path.Contains("/oauth2/v2.0/token"));
             Assert.IsNotNull(tokenRequest, "Expected a token request to /oauth2/v2.0/token");
 
             var query = tokenRequest.Uri.Query;
