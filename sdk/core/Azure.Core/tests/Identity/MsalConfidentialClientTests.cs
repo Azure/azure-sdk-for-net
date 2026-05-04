@@ -89,7 +89,7 @@ namespace Azure.Core.Tests.Identity
             Assert.AreEqual(expectedCalls, requestCount, $"Expected exactly {expectedCalls} requests (1 initial + {maxRetries} Azure SDK retries). MSAL retry is not disabled.");
         }
 
-#pragma warning disable AZID5001 // AdditionalQueryParameters is experimental
+#pragma warning disable AZID0001 // AdditionalQueryParameters is experimental
         [Test]
         public void AdditionalQueryParametersAreForwardedToBuilder()
         {
@@ -137,10 +137,10 @@ namespace Azure.Core.Tests.Identity
                 Retry = { MaxRetries = 0 },
                 DisableInstanceDiscovery = true,
             };
-#pragma warning disable AZID5001
+#pragma warning disable AZID0001
             options.AdditionalQueryParameters["feature"] = ("agenticSession", false);
             options.AdditionalQueryParameters["session_id"] = ("abc-123", true);
-#pragma warning restore AZID5001
+#pragma warning restore AZID0001
 
             var credential = new ClientSecretCredential("tenant", "client", "secret", options);
 
@@ -172,7 +172,7 @@ namespace Azure.Core.Tests.Identity
             Assert.IsNull(client.GetAdditionalQueryParameters());
             Assert.DoesNotThrowAsync(async () => await client.CallCreateClientAsync(false, true, default));
         }
-#pragma warning restore AZID5001
+#pragma warning restore AZID0001
 
         public class TestCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions
         {

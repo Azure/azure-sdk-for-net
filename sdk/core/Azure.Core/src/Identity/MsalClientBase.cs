@@ -52,11 +52,11 @@ namespace Azure.Identity
             ISupportsTokenCachePersistenceOptions cacheOptions = options as ISupportsTokenCachePersistenceOptions;
             _tokenCachePersistenceOptions = cacheOptions?.TokenCachePersistenceOptions;
             IsSupportLoggingEnabled = options?.IsUnsafeSupportLoggingEnabled ?? false;
-#pragma warning disable AZID5001 // AdditionalQueryParameters is experimental
+#pragma warning disable AZID0001 // AdditionalQueryParameters is experimental
             AdditionalQueryParameters = options?.AdditionalQueryParameters is { Count: > 0 }
                 ? new ReadOnlyDictionary<string, (string Value, bool IncludeInCacheKey)>(new Dictionary<string, (string Value, bool IncludeInCacheKey)>(options.AdditionalQueryParameters))
                 : null;
-#pragma warning restore AZID5001
+#pragma warning restore AZID0001
             Pipeline = pipeline;
             TenantId = tenantId;
             ClientId = clientId;
