@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="FabricIQPreviewTool"/>, and <see cref="MemorySearchPreviewTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="FabricIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, and <see cref="ToolboxSearchPreviewTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
     public abstract partial class ProjectsAgentTool : IJsonModel<ProjectsAgentTool>
@@ -153,6 +153,8 @@ namespace Azure.AI.Projects.Agents
                         return FabricIQPreviewTool.DeserializeFabricIQPreviewTool(element, options);
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
+                    case "toolbox_search_preview":
+                        return ToolboxSearchPreviewTool.DeserializeToolboxSearchPreviewTool(element, options);
                     case "code_interpreter":
                         return OpenAI.InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "function":

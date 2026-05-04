@@ -3,7 +3,7 @@
     <AssemblyTitle>Microsoft Azure.Search.Documents client library</AssemblyTitle>
     <Version>12.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>11.7.0</ApiCompatVersion>
+    <ApiCompatVersion>12.0.0</ApiCompatVersion>
     <Description>
       This is the Azure AI Search client library for developing .NET
       applications with rich search experiences.  It enables you to query your

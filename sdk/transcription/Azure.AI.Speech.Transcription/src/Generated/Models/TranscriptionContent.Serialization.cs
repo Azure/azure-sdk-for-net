@@ -90,7 +90,14 @@ namespace Azure.AI.Speech.Transcription
             if (Optional.IsDefined(Audio))
             {
                 writer.WritePropertyName("audio"u8);
-                writer.WriteBase64StringValue(Audio.ToArray(), "D");
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Audio);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Audio))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,7 +157,7 @@ namespace Azure.AI.Speech.Transcription
                     {
                         continue;
                     }
-                    audio = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    audio = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

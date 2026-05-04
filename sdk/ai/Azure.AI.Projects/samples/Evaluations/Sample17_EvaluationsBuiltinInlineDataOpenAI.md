@@ -30,8 +30,8 @@ internal class HeaderPolicy : PipelinePolicy
 
 2. Define helper methods for parsing protocol-level responses. The `ParseClientResult` method extracts string values from the JSON response.
 
-```C# Snippet:Sample_GetStringValues_EvaluationsBuiltinInlineDataOpenAI
-private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+```C# Snippet:Sample_ParseClientResult_EvaluationSampleBase
+protected static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -46,7 +46,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
             }
         }
     }
-    List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
+    List<string> notFoundItems = [.. expectedProperties.Where((key) => !results.ContainsKey(key))];
     if (notFoundItems.Count > 0)
     {
         StringBuilder sbNotFound = new();
@@ -66,8 +66,8 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
 
 3. Define a helper to extract error messages from the response.
 
-```C# Snippet:Sample_GetError_EvaluationsBuiltinInlineDataOpenAI
-private static string GetErrorMessageOrEmpty(ClientResult result)
+```C# Snippet:Sample_GetErrorMessageOrEmpty_EvaluationSampleBase
+protected static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -354,8 +354,8 @@ if (runStatus == "failed")
 
 12. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
 
-```C# Snippet:Sample_GetResultCounts_EvaluationsBuiltinInlineDataOpenAI
-private static string GetResultsCounts(ClientResult result)
+```C# Snippet:Sample_GetResultCounts_EvaluationSampleBase
+protected static string GetResultsCounts(ClientResult result)
 {
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
     using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -385,8 +385,8 @@ private static string GetResultsCounts(ClientResult result)
 13. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
 
 Synchronous sample:
-```C# Snippet:Sample_GetResultsList_EvaluationsBuiltinInlineDataOpenAI_Sync
-private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsList_EvaluationSampleBase
+protected static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
@@ -424,8 +424,8 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_GetResultsList_EvaluationsBuiltinInlineDataOpenAI_Async
-private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsListAsync_EvaluationSampleBase
+protected static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
