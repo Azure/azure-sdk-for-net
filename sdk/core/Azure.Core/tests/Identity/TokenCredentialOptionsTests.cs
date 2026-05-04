@@ -253,7 +253,7 @@ namespace Azure.Core.Tests.Identity
                     AuthorityHost = AzureAuthorityHosts.AzureChina,
                     IsUnsafeSupportLoggingEnabled = true,
 #pragma warning disable AZID5001 // AdditionalQueryParameters is experimental
-                    AdditionalQueryParameters = new Dictionary<string, (string Value, bool IncludeInCacheKey)>
+                    AdditionalQueryParameters =
                     {
                         ["feature"] = ("agenticSession", false),
                         ["session_id"] = (Guid.NewGuid().ToString(), true)
@@ -374,16 +374,15 @@ namespace Azure.Core.Tests.Identity
 #pragma warning disable AZID5001 // AdditionalQueryParameters is experimental
             // AdditionalQueryParameters is on TokenCredentialOptions (base class), so it should always be cloned
             var sourceOptions = (TokenCredentialOptions)source;
-            var destOptions = (TokenCredentialOptions)destination;
-            sourceOptions.AdditionalQueryParameters = new Dictionary<string, (string Value, bool IncludeInCacheKey)> { ["test"] = ("value", true) };
+            sourceOptions.AdditionalQueryParameters["test"] = ("value", true);
 
-            // Re-clone after setting AdditionalQueryParameters to verify it's copied
+            // Re-clone after populating AdditionalQueryParameters to verify it's copied
             var reclonedDest = (TokenCredentialOptions)sourceType
                 .GetMethod("Clone", BindingFlags.Instance | BindingFlags.NonPublic)
                 .MakeGenericMethod(destinationType)
                 .Invoke(source, null);
 
-            Assert.IsNotNull(reclonedDest.AdditionalQueryParameters);
+            Assert.AreEqual(1, reclonedDest.AdditionalQueryParameters.Count);
             Assert.AreEqual(("value", true), reclonedDest.AdditionalQueryParameters["test"]);
             Assert.AreNotSame(sourceOptions.AdditionalQueryParameters, reclonedDest.AdditionalQueryParameters);
 #pragma warning restore AZID5001
@@ -391,23 +390,19 @@ namespace Azure.Core.Tests.Identity
 
 #pragma warning disable AZID5001 // AdditionalQueryParameters is experimental
         [Test]
-        public void AdditionalQueryParametersDefaultsToNull()
+        public void AdditionalQueryParametersDefaultsToEmpty()
         {
             var options = new TokenCredentialOptions();
-            Assert.IsNull(options.AdditionalQueryParameters);
+            Assert.IsNotNull(options.AdditionalQueryParameters);
+            Assert.AreEqual(0, options.AdditionalQueryParameters.Count);
         }
 
         [Test]
-        public void AdditionalQueryParametersCanBeSet()
+        public void AdditionalQueryParametersCanBePopulated()
         {
-            var options = new TokenCredentialOptions
-            {
-                AdditionalQueryParameters = new Dictionary<string, (string Value, bool IncludeInCacheKey)>
-                {
-                    ["feature"] = ("agenticSession", false),
-                    ["session_id"] = ("abc-123", true)
-                }
-            };
+            var options = new TokenCredentialOptions();
+            options.AdditionalQueryParameters["feature"] = ("agenticSession", false);
+            options.AdditionalQueryParameters["session_id"] = ("abc-123", true);
 
             Assert.AreEqual(2, options.AdditionalQueryParameters.Count);
             Assert.AreEqual(("agenticSession", false), options.AdditionalQueryParameters["feature"]);
@@ -415,49 +410,31 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
-        public void AdditionalQueryParametersCanBeSetToEmpty()
+        public void AdditionalQueryParametersCanBeCleared()
         {
-            var options = new TokenCredentialOptions
-            {
-                AdditionalQueryParameters = new Dictionary<string, (string Value, bool IncludeInCacheKey)>()
-            };
+            var options = new TokenCredentialOptions();
+            options.AdditionalQueryParameters["key"] = ("value", false);
 
-            Assert.IsNotNull(options.AdditionalQueryParameters);
+            options.AdditionalQueryParameters.Clear();
             Assert.AreEqual(0, options.AdditionalQueryParameters.Count);
         }
 
         [Test]
-        public void AdditionalQueryParametersCanBeCleared()
-        {
-            var options = new TokenCredentialOptions
-            {
-                AdditionalQueryParameters = new Dictionary<string, (string Value, bool IncludeInCacheKey)> { ["key"] = ("value", false) }
-            };
-
-            options.AdditionalQueryParameters = null;
-            Assert.IsNull(options.AdditionalQueryParameters);
-        }
-
-        [Test]
-        public void CloneWithNullAdditionalQueryParametersReturnsNull()
+        public void CloneWithEmptyAdditionalQueryParametersReturnsEmpty()
         {
             var options = new TokenCredentialOptions();
             var clone = options.Clone<TokenCredentialOptions>();
 
-            Assert.IsNull(clone.AdditionalQueryParameters);
+            Assert.IsNotNull(clone.AdditionalQueryParameters);
+            Assert.AreEqual(0, clone.AdditionalQueryParameters.Count);
         }
 
         [Test]
         public void CloneDeepCopiesAdditionalQueryParameters()
         {
-            var options = new TokenCredentialOptions
-            {
-                AdditionalQueryParameters = new Dictionary<string, (string Value, bool IncludeInCacheKey)>
-                {
-                    ["feature"] = ("agenticSession", false),
-                    ["session_id"] = ("abc-123", true)
-                }
-            };
+            var options = new TokenCredentialOptions();
+            options.AdditionalQueryParameters["feature"] = ("agenticSession", false);
+            options.AdditionalQueryParameters["session_id"] = ("abc-123", true);
 
             var clone = options.Clone<TokenCredentialOptions>();
 

@@ -93,18 +93,13 @@ namespace Azure.Core.Tests.Identity
         [Test]
         public void AdditionalQueryParametersAreForwardedToBuilder()
         {
-            var extraParams = new Dictionary<string, (string Value, bool IncludeInCacheKey)>
-            {
-                ["feature"] = ("agenticSession", false),
-                ["session_id"] = ("abc-123", true)
-            };
-
             var options = new InteractiveBrowserCredentialOptions
             {
                 Transport = new MockTransport(),
                 DisableInstanceDiscovery = true,
-                AdditionalQueryParameters = extraParams
             };
+            options.AdditionalQueryParameters["feature"] = ("agenticSession", false);
+            options.AdditionalQueryParameters["session_id"] = ("abc-123", true);
 
             var pipeline = CredentialPipeline.GetInstance(options);
             var client = new MockMsalPublicClient(pipeline, "tenant", Guid.NewGuid().ToString(), "https://redirect", options);
@@ -117,7 +112,7 @@ namespace Azure.Core.Tests.Identity
             Assert.AreEqual(("abc-123", true), stored["session_id"]);
 
             // Verify it's a snapshot (mutation of the original doesn't affect the client)
-            extraParams["new_param"] = ("new_value", false);
+            options.AdditionalQueryParameters["new_param"] = ("new_value", false);
             Assert.IsFalse(stored.ContainsKey("new_param"));
 
             // Verify the builder still works
@@ -125,30 +120,50 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
-        public void NullAdditionalQueryParametersDoesNotThrow()
+        public async Task AdditionalQueryParametersAreIncludedInRequests()
         {
-            var options = new InteractiveBrowserCredentialOptions
+            var capturedRequests = new List<MockRequest>();
+            var mockTransport = new MockTransport(req =>
             {
-                Transport = new MockTransport(),
+                capturedRequests.Add(req);
+                var response = new MockResponse(400);
+                response.SetContent("{\"error\":\"invalid_grant\",\"error_description\":\"bad request\"}");
+                return response;
+            });
+
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = mockTransport,
+                Retry = { MaxRetries = 0 },
                 DisableInstanceDiscovery = true,
-                AdditionalQueryParameters = null
             };
+#pragma warning disable AZID5001
+            options.AdditionalQueryParameters["feature"] = ("agenticSession", false);
+            options.AdditionalQueryParameters["session_id"] = ("abc-123", true);
+#pragma warning restore AZID5001
 
-            var pipeline = CredentialPipeline.GetInstance(options);
-            var client = new MockMsalPublicClient(pipeline, "tenant", Guid.NewGuid().ToString(), "https://redirect", options);
+            var credential = new ClientSecretCredential("tenant", "client", "secret", options);
 
-            Assert.IsNull(client.GetAdditionalQueryParameters());
-            Assert.DoesNotThrowAsync(async () => await client.CallCreateClientAsync(false, true, default));
+            Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" })));
+
+            Assert.IsNotEmpty(capturedRequests);
+            // Find the token request (POST to /oauth2/v2.0/token)
+            var tokenRequest = capturedRequests.Find(r => r.Uri.Path.Contains("/oauth2/v2.0/token"));
+            Assert.IsNotNull(tokenRequest, "Expected a token request to /oauth2/v2.0/token");
+
+            var query = tokenRequest.Uri.Query;
+            Assert.IsTrue(query.Contains("feature=agenticSession"), $"Expected 'feature=agenticSession' in query: {query}");
+            Assert.IsTrue(query.Contains("session_id=abc-123"), $"Expected 'session_id=abc-123' in query: {query}");
         }
 
         [Test]
-        public void EmptyAdditionalQueryParametersDoesNotThrow()
+        public void DefaultEmptyAdditionalQueryParametersDoesNotThrow()
         {
             var options = new InteractiveBrowserCredentialOptions
             {
                 Transport = new MockTransport(),
                 DisableInstanceDiscovery = true,
-                AdditionalQueryParameters = new Dictionary<string, (string Value, bool IncludeInCacheKey)>()
             };
 
             var pipeline = CredentialPipeline.GetInstance(options);
