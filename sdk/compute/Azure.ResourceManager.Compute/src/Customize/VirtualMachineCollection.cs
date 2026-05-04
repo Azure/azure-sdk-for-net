@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Compute
         public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, vmName, data, BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
 
+        // Backward-compat: preserve the (CT-only) overload that shipped before MatchConditions was added as an optional middle parameter.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, VirtualMachineData data, CancellationToken cancellationToken)
+            => CreateOrUpdateAsync(waitUntil, vmName, data, matchConditions: null, cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData data, CancellationToken cancellationToken)
+            => CreateOrUpdate(waitUntil, vmName, data, matchConditions: null, cancellationToken);
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<VirtualMachineResource> GetAllAsync(string statusOnly, CancellationToken cancellationToken = default)
             => GetAllAsync(filter: null, expand: null, cancellationToken: cancellationToken);
