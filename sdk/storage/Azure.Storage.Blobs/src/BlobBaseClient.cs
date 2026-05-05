@@ -1582,10 +1582,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="cancellationToken">
         /// Cancellation token.
         /// </param>
-        /// <param name="layoutSegments">
-        /// Optional. Layout segments from GetBlobLayout for locality-aware routing.
-        /// When provided, the download chunk is intersected with layout segments
-        /// to determine the optimal endpoint.
+        /// <param name="layoutCache">
+        /// Optional. Auto-refreshing cache of layout segments from GetBlobLayout for
+        /// locality-aware routing. When provided, the cache is awaited to obtain the
+        /// current segments and the download chunk is intersected with them to
+        /// determine the optimal endpoint.
         /// </param>
         /// <returns></returns>
         internal virtual async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
@@ -1596,7 +1597,7 @@ namespace Azure.Storage.Blobs.Specialized
             string operationName,
             bool async,
             CancellationToken cancellationToken,
-            IReadOnlyList<BlobLayoutSegment> layoutSegments = null)
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
@@ -1623,7 +1624,14 @@ namespace Azure.Storage.Blobs.Specialized
                         parameterName: nameof(conditions));
 
                     // The ideal endpoint from the layout segment that overlaps with the download chunk
-                    string idealEndpoint = GetIdealEndpoint(range, layoutSegments);
+                    string idealEndpoint = null;
+                    if (layoutCache != null)
+                    {
+                        BlobLayoutSegmentCacheValue cached = await layoutCache
+                            .GetAsync(async, cancellationToken)
+                            .ConfigureAwait(false);
+                        idealEndpoint = GetIdealEndpoint(range, cached.Segments);
+                    }
 
                     // Add the ideal endpoint to the Http message properties so DataLocalityPolicy can route the request
                     if (idealEndpoint != null)

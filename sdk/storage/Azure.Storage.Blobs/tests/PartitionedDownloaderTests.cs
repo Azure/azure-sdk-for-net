@@ -213,7 +213,7 @@ namespace Azure.Storage.Blobs.Test
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
-            var capturedCalls = new List<(HttpRange Range, IReadOnlyList<BlobLayoutSegment> LayoutSegments)>();
+            var capturedCalls = new List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)>();
             SetupDownloadWithCapture(blockClient, dataSource, capturedCalls);
 
             BlobLayoutSegment[] expectedSegments = new[]
@@ -242,42 +242,32 @@ namespace Azure.Storage.Blobs.Test
             AssertContent(100, stream);
             Assert.NotNull(result);
 
-            // Assert - GetLayout was called
-            if (_async)
-            {
-                blockClient.Verify(c => c.GetLayoutAsync(
-                    It.IsAny<HttpRange>(),
-                    It.IsAny<BlobRequestConditions>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
-            }
-            else
-            {
-                blockClient.Verify(c => c.GetLayout(
-                    It.IsAny<HttpRange>(),
-                    It.IsAny<BlobRequestConditions>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
-            }
-
             // With initial=20, chunk=10, total=100 we expect exactly:
-            //   1 initial call (no layout segments) + 8 subsequent chunk calls
+            //   1 initial call (no layout cache) + 8 subsequent chunk calls
             //   Chunks [20-29],[30-39],[40-49] → host-a  (3 chunks)
             //   Chunks [50-59],[60-69],[70-79],[80-89] → host-b  (4 chunks)
             //   Chunks [90-99] → host-c  (1 chunk)
             Assert.AreEqual(9, capturedCalls.Count, "Expected 1 initial + 8 subsequent chunk calls");
 
-            // First call (initial download) has no layout segments
-            Assert.IsNull(capturedCalls[0].LayoutSegments);
+            // First call (initial download) has no layout cache
+            Assert.IsNull(capturedCalls[0].LayoutCache);
             Assert.AreEqual(new HttpRange(0, 20), capturedCalls[0].Range);
 
-            // Verify every subsequent chunk resolves to the correct ideal endpoint
+            // Verify every subsequent chunk resolves to the correct ideal endpoint.
+            // Resolving the cache here triggers the underlying GetLayout/GetLayoutAsync
+            // mock since DownloadStreamingInternal itself is mocked.
             BlobBaseClient endpointResolver = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/c/b"));
             int hostACount = 0;
             int hostBCount = 0;
             int hostCCount = 0;
             for (int i = 1; i < capturedCalls.Count; i++)
             {
-                var (range, segments) = capturedCalls[i];
+                var (range, layoutCache) = capturedCalls[i];
                 Assert.NotNull(range);
+                Assert.IsNotNull(layoutCache, $"Chunk {i} at range [{range.Offset}] should have layout cache");
+
+                BlobLayoutSegmentCacheValue cached = await layoutCache.GetAsync(async: _async, CancellationToken.None);
+                BlobLayoutSegment[] segments = cached.Segments;
                 Assert.IsNotNull(segments, $"Chunk {i} at range [{range.Offset}] should have layout segments");
 
                 string idealEndpoint = endpointResolver.GetIdealEndpoint(range, segments);
@@ -303,9 +293,100 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
 
+            // Assert - GetLayout was called exactly once (cache de-duplicates concurrent acquires)
+            if (_async)
+            {
+                blockClient.Verify(c => c.GetLayoutAsync(
+                    It.IsAny<HttpRange>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
+            else
+            {
+                blockClient.Verify(c => c.GetLayout(
+                    It.IsAny<HttpRange>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
+
             Assert.AreEqual(3, hostACount, "Exactly 3 chunks ([20-29]..[40-49]) should route to host-a");
             Assert.AreEqual(4, hostBCount, "Exactly 4 chunks ([50-59]..[80-89]) should route to host-b");
             Assert.AreEqual(1, hostCCount, "Exactly 1 chunk ([90-99]) should route to host-c");
+        }
+
+        [Test]
+        public async Task DataLocality_LayoutCacheDeduplicatesAcrossChunks()
+        {
+            // Arrange - 100 byte blob with data locality enabled and download hint present
+            MemoryStream stream = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            var capturedCalls = new List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)>();
+            SetupDownloadWithCapture(blockClient, dataSource, capturedCalls);
+
+            BlobLayoutSegment[] expectedSegments = new[]
+            {
+                new BlobLayoutSegment { Start = 20, End = 99, Endpoint = "https://host-a:443" },
+            };
+
+            SetupGetLayout(blockClient, expectedSegments);
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 20
+                },
+                transferValidation: s_validationOptions,
+                enableDataLocality: true);
+
+            // Act
+            Response result = await InvokeDownloadToAsync(downloader, stream);
+
+            // Assert - all chunked calls share the SAME cache instance
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> sharedCache = capturedCalls[1].LayoutCache;
+            Assert.IsNotNull(sharedCache, "Cache should be constructed for chunked calls");
+            for (int i = 1; i < capturedCalls.Count; i++)
+            {
+                Assert.AreSame(sharedCache, capturedCalls[i].LayoutCache,
+                    $"Chunk {i} should receive the same AutoRefreshingCache instance as chunk 1");
+            }
+
+            // Resolve the cache many times — far more than the chunk count — to prove
+            // de-duplication. Every resolve should return the exact same Segments array
+            // reference, and GetLayout should still have been invoked exactly once.
+            BlobLayoutSegmentCacheValue first = await sharedCache.GetAsync(async: _async, CancellationToken.None);
+            Assert.IsNotNull(first.Segments);
+            Assert.AreEqual(1, first.Segments.Length);
+
+            for (int i = 0; i < 50; i++)
+            {
+                BlobLayoutSegmentCacheValue resolved = await sharedCache.GetAsync(async: _async, CancellationToken.None);
+                Assert.AreSame(first.Segments, resolved.Segments,
+                    "Repeated GetAsync calls within the TTL should return the same cached Segments array");
+            }
+
+            // Assert - GetLayout was called exactly once across all chunks + 51 explicit resolves
+            if (_async)
+            {
+                blockClient.Verify(c => c.GetLayoutAsync(
+                    It.IsAny<HttpRange>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
+            else
+            {
+                blockClient.Verify(c => c.GetLayout(
+                    It.IsAny<HttpRange>(),
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
+
+            AssertContent(100, stream);
+            Assert.NotNull(result);
         }
 
         [Test]
@@ -317,7 +398,7 @@ namespace Azure.Storage.Blobs.Test
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
-            var capturedCalls = new List<(HttpRange Range, IReadOnlyList<BlobLayoutSegment> LayoutSegments)>();
+            var capturedCalls = new List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)>();
             SetupDownloadWithCapture(blockClient, dataSource, capturedCalls);
 
             PartitionedDownloader downloader = new PartitionedDownloader(
@@ -349,11 +430,11 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(9, capturedCalls.Count, "Expected 1 initial + 8 subsequent chunk calls");
 
-            // Assert - all calls received null layout segments (no routing would occur)
-            foreach (var (range, segments) in capturedCalls)
+            // Assert - all calls received null layout cache (no routing would occur)
+            foreach (var (range, layoutCache) in capturedCalls)
             {
                 Assert.NotNull(range);
-                Assert.IsNull(segments, $"Layout segments should be null for chunk at offset {range.Offset} when download hint is absent");
+                Assert.IsNull(layoutCache, $"Layout cache should be null for chunk at offset {range.Offset} when download hint is absent");
             }
         }
 
@@ -366,7 +447,7 @@ namespace Azure.Storage.Blobs.Test
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
-            var capturedCalls = new List<(HttpRange Range, IReadOnlyList<BlobLayoutSegment> LayoutSegments)>();
+            var capturedCalls = new List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)>();
             SetupDownloadWithCapture(blockClient, dataSource, capturedCalls);
 
             // enableDataLocality: false (default)
@@ -399,11 +480,11 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(9, capturedCalls.Count, "Expected 1 initial + 8 subsequent chunk calls");
 
-            // Assert - all calls received null layout segments (no routing would occur)
-            foreach (var (range, segments) in capturedCalls)
+            // Assert - all calls received null layout cache (no routing would occur)
+            foreach (var (range, layoutCache) in capturedCalls)
             {
                 Assert.NotNull(range);
-                Assert.IsNull(segments, $"Layout segments should be null for chunk at offset {range.Offset} when data locality is disabled");
+                Assert.IsNull(layoutCache, $"Layout cache should be null for chunk at offset {range.Offset} when data locality is disabled");
             }
         }
 
@@ -421,7 +502,7 @@ namespace Azure.Storage.Blobs.Test
         private void SetupDownloadWithCapture(
             Mock<BlobBaseClient> blockClient,
             MockDataSource dataSource,
-            List<(HttpRange Range, IReadOnlyList<BlobLayoutSegment> LayoutSegments)> capturedCalls)
+            List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)> capturedCalls)
         {
             blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
             blockClient.Setup(c => c.DownloadStreamingInternal(
@@ -433,13 +514,13 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
                 s_cancellationToken,
-                It.IsAny<IReadOnlyList<BlobLayoutSegment>>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, IReadOnlyList<BlobLayoutSegment>>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutSegments) =>
+                It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>())
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(
+                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache) =>
                 {
                     lock (capturedCalls)
                     {
-                        capturedCalls.Add((range, layoutSegments));
+                        capturedCalls.Add((range, layoutCache));
                     }
                     return async
                         ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
@@ -498,8 +579,8 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
                 s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, IReadOnlyList<BlobLayoutSegment>>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutSegments) => async
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(
+                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache) => async
                     ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }
@@ -533,8 +614,8 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
                 s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, IReadOnlyList<BlobLayoutSegment>>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutSegments) => async
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(
+                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache) => async
                     ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }
