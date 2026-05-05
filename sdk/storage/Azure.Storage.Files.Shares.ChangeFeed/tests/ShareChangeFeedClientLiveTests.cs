@@ -79,7 +79,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         /// Enumerates all change feed events and verifies at least one event is returned.
         /// </summary>
         [RecordedTest]
-        //[Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
+        [Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
         public async Task GetChanges_ReturnsEvents()
         {
             ShareServiceClient shareServiceClient = GetShareServiceClient_SharedKey();
@@ -89,15 +89,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             ShareChangeFeedClient client = GetChangeFeedClient("changefeedtest");
             ShareClient shareClient = shareServiceClient.GetShareClient("changefeedtest");
 
-            await shareClient.CreateSnapshotAsync();
+            //await shareClient.CreateSnapshotAsync();
 
-            for (int i = 0; i < 2000; i++)
-            {
-                ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient(Guid.NewGuid().ToString());
-                await directoryClient.CreateAsync();
-            }
+            //for (int i = 0; i < 2000; i++)
+            //{
+            //    ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient(Guid.NewGuid().ToString());
+            //    await directoryClient.CreateAsync();
+            //}
 
-            await shareClient.CreateSnapshotAsync();
+            //await shareClient.CreateSnapshotAsync();
 
             // Act
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
@@ -177,7 +177,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public async Task GetChanges_WithContinuationToken_ResumesCorrectly()
         {
             // Arrange
-            ShareChangeFeedClient client = GetChangeFeedClient("fileschangefeedshare");
+            ShareChangeFeedClient client = GetChangeFeedClient("changefeedtest");
 
             // Act - read the first page
             HashSet<DateTimeOffset> firstPageEventTimes = new HashSet<DateTimeOffset>();
@@ -272,7 +272,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public async Task GetChanges_EventDataIsPopulated()
         {
             // Arrange
-            ShareChangeFeedClient client = GetChangeFeedClient();
+            ShareChangeFeedClient client = GetChangeFeedClient("changefeedtest");
 
             // Act - get just a few events
             ShareChangeFeedEvent firstEvent = null;
