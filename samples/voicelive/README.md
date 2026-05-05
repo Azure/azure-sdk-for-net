@@ -1,15 +1,3 @@
----
-page_type: sample
-languages:
-- csharp
-products:
-- azure
-- azure-ai-voicelive
-- azure-ai-foundry
-name: Azure VoiceLive samples for .NET
-description: Samples demonstrating how to use the Azure VoiceLive SDK for .NET.
----
-
 # Azure VoiceLive Samples for .NET
 
 This folder contains samples demonstrating how to use the [Azure VoiceLive SDK for .NET](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/voicelive/Azure.AI.VoiceLive).
