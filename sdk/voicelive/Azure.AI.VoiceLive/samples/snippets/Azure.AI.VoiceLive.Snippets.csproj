@@ -13,10 +13,4 @@
     <ProjectReference Include="..\..\src\Azure.AI.VoiceLive.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter"/>
-    <PackageReference Include="OpenTelemetry"/>
-    <PackageReference Include="OpenTelemetry.Exporter.Console"/>
-  </ItemGroup>
-
 </Project>
