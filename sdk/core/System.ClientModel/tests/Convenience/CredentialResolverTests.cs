@@ -90,7 +90,7 @@ public class CredentialResolverTests
         // A throwing resolver indicates a real bug in the resolver
         // implementation (e.g., a NullReferenceException), not "I can't
         // handle this credential source" — that case is signaled by
-        // returning false from TryCreate. The engine surfaces the
+        // returning false from TryResolve. The engine surfaces the
         // exception so the bug isn't silently swallowed.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
@@ -832,7 +832,7 @@ public class CredentialResolverTests
 
     private sealed class MatchAllNamedAResolver : CredentialResolver
     {
-        public override bool TryCreate(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
         {
             provider = new StubTokenProvider("A");
             return true;
@@ -841,7 +841,7 @@ public class CredentialResolverTests
 
     private sealed class MatchAllNamedBResolver : CredentialResolver
     {
-        public override bool TryCreate(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
         {
             provider = new StubTokenProvider("B");
             return true;
@@ -850,7 +850,7 @@ public class CredentialResolverTests
 
     private sealed class MatchEverythingResolver : CredentialResolver
     {
-        public override bool TryCreate(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
         {
             provider = new StubTokenProvider("auto");
             return true;
@@ -862,7 +862,7 @@ public class CredentialResolverTests
         public string? LastTenantId { get; private set; }
         public string? LastClientId { get; private set; }
 
-        public override bool TryCreate(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
         {
             LastTenantId = credentialSection["TenantId"];
             LastClientId = credentialSection["ClientId"];
@@ -892,7 +892,7 @@ public class CredentialResolverTests
         public IConfigurationSection? LastSection { get; private set; }
         public AuthenticationTokenProvider? LastProvider { get; private set; }
 
-        public override bool TryCreate(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
         {
             CallCount++;
             LastSection = credentialSection;
@@ -910,7 +910,7 @@ public class CredentialResolverTests
 
     private sealed class ScopedDefaultResolver : CredentialResolver
     {
-        public override bool TryCreate(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
         {
             provider = null;
             return false;
@@ -919,7 +919,7 @@ public class CredentialResolverTests
 
     private sealed class OtherResolver : CredentialResolver
     {
-        public override bool TryCreate(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
         {
             provider = null;
             return false;
@@ -928,7 +928,7 @@ public class CredentialResolverTests
 
     private sealed class ThrowingResolver : CredentialResolver
     {
-        public override bool TryCreate(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
             => throw new InvalidOperationException("boom");
     }
 
@@ -961,7 +961,7 @@ public class CredentialResolverTests
     private sealed class DisposableProviderResolver : CredentialResolver
     {
         public int CallCount { get; private set; }
-        public override bool TryCreate(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
         {
             CallCount++;
             provider = new DisposableStubTokenProvider();
@@ -972,7 +972,7 @@ public class CredentialResolverTests
     private sealed class AsyncDisposableProviderResolver : CredentialResolver
     {
         public int CallCount { get; private set; }
-        public override bool TryCreate(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
         {
             CallCount++;
             provider = new AsyncDisposableStubTokenProvider();

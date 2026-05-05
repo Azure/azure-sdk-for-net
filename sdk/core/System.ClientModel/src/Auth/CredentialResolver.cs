@@ -26,7 +26,7 @@ public abstract class CredentialResolver
     /// <returns><see langword="true"/> if this resolver recognized and handled
     /// the section; <see langword="false"/> to defer to the next resolver in the
     /// chain.</returns>
-    public abstract bool TryCreate(
+    public abstract bool TryResolve(
         IConfigurationSection credentialSection,
         [NotNullWhen(true)] out AuthenticationTokenProvider? provider);
 }

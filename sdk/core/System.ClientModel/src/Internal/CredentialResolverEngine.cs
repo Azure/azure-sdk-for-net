@@ -49,7 +49,7 @@ internal static class CredentialResolverEngine
         //   1. Look up cache by (sectionHash, RuntimeHelpers.GetHashCode(resolver)).
         //      If hit, return — that resolver previously produced a provider
         //      for this exact section.
-        //   2. Otherwise call TryCreate. If it succeeds, store the produced
+        //   2. Otherwise call TryResolve. If it succeeds, store the produced
         //      provider under that key and return.
         //   3. If it doesn't match, continue to the next resolver.
         //
@@ -68,7 +68,7 @@ internal static class CredentialResolverEngine
                 resolver,
                 static (section, r) =>
                 {
-                    if (r.TryCreate(section, out AuthenticationTokenProvider? p) && p is not null)
+                    if (r.TryResolve(section, out AuthenticationTokenProvider? p) && p is not null)
                     {
                         return p;
                     }

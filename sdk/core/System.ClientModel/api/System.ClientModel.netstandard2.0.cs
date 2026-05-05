@@ -252,7 +252,7 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class CredentialResolver
     {
-        public abstract bool TryCreate(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider);
+        public abstract bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider);
     }
     public sealed partial class CredentialSettings
     {

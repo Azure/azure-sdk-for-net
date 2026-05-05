@@ -258,7 +258,7 @@ namespace System.ClientModel.Primitives
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public abstract partial class CredentialResolver
     {
-        public abstract bool TryCreate(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider);
+        public abstract bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider);
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public sealed partial class CredentialSettings

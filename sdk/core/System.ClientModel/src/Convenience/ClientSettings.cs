@@ -49,7 +49,7 @@ public abstract class ClientSettings
     protected abstract void BindCore(IConfigurationSection section);
 
     // TODO (Phase 5a removal): Remove. Its only consumers (the Azure default-scope
-    // quirk + credential override) move into AzureCredentialResolver.TryCreate
+    // quirk + credential override) move into AzureCredentialResolver.TryResolve
     // and IClientBuilder.ConfigureCredential.
     /// <summary>
     /// Allows for additional configuration using the <see cref="IConfigurationSection"/> after the initial binding.
