@@ -461,6 +461,7 @@ namespace Azure.Identity
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
+        public System.Collections.Generic.IDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get { throw null; } }
         public System.Uri AuthorityHost { get { throw null; } set { } }
         public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
         public bool IsUnsafeSupportLoggingEnabled { get { throw null; } set { } }
