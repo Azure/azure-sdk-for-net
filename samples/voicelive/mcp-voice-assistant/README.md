@@ -16,7 +16,7 @@ This sample demonstrates how to use the **Azure VoiceLive SDK** with **MCP (Mode
 
 ## Prerequisites
 
-- .NET 8.0 or later
+- .NET 10.0 or later
 - An Azure subscription with VoiceLive access
 - A VoiceLive endpoint and API key (or Azure credential)
 - Microphone and speakers/headphones

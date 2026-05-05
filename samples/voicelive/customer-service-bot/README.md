@@ -77,7 +77,7 @@ This sample demonstrates how to build a sophisticated customer service voice bot
 
 ### Prerequisites
 
-- .NET 8.0 or later
+- .NET 10.0 or later
 - Azure VoiceLive API key
 - Audio input/output devices (microphone and speakers)
 

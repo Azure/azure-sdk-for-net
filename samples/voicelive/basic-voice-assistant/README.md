@@ -42,7 +42,7 @@ These methods eliminate the need to manually construct and populate `ClientEvent
 
 ## Prerequisites
 
-- .NET 8.0 or later
+- .NET 10.0 or later
 - Azure VoiceLive API key or Azure credential
 - Microphone and speakers/headphones
 - Audio drivers properly installed

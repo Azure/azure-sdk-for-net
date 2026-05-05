@@ -16,7 +16,7 @@ This sample demonstrates how to use the **Azure VoiceLive SDK** to connect to an
 
 ## Prerequisites
 
-- .NET 8.0 or later
+- .NET 10.0 or later
 - An Azure subscription with VoiceLive access
 - An Azure AI Foundry project with a deployed agent
 - Azure CLI logged in (`az login`) or a managed identity
