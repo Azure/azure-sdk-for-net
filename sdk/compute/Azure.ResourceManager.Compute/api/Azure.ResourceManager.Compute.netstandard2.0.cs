@@ -2559,6 +2559,7 @@ namespace Azure.ResourceManager.Compute
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> Resources { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy ScheduledEventsPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeScheduledEventsProfile ScheduledEventsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile StorageProfile { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
@@ -10501,6 +10502,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy ScheduledEventsPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeScheduledEventsProfile ScheduledEventsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile StorageProfile { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
