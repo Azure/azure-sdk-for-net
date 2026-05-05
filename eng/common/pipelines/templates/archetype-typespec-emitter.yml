@@ -462,7 +462,6 @@ extends:
             parameters:
               TokenOwners:
                 - Azure
-                - azure-sdk
 
           - pwsh: |
               $generateJobResult = '$(generateJobResult)'
@@ -551,7 +550,7 @@ extends:
                 -BaseBranch '$(pullRequestTargetBranch)'
                 -PROwner 'azure-sdk'
                 -PRBranch '$(branchName)'
-                -AuthToken '$(GH_TOKEN_Azure)'
+                -AuthToken '$(GH_TOKEN)'
                 -PRTitle '$(PullRequestTitle)'
                 -PRBody '$(PullRequestBody)'
                 -OpenAsDraft $$(OpenAsDraft)
