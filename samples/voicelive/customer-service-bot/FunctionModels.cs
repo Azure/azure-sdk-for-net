@@ -166,7 +166,7 @@ public static class SampleData
         /// </summary>
         public string? TrackingNumber { get; set; }
         /// <summary>
-        /// Theustomer ID associated with the order.
+        /// The customer ID associated with the order.
         /// </summary>
         public string CustomerId { get; set; } = string.Empty;
         /// <summary>
