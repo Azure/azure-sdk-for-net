@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,19 +20,20 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpgradePolicy"/>. </summary>
         public VirtualMachineScaleSetUpgradePolicy()
         {
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpgradePolicy"/>. </summary>
         /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; <b>Automatic</b> - All virtual machines in the scale set are  automatically updated at the same time. </param>
         /// <param name="rollingUpgradePolicy"> The configuration parameters used while performing a rolling upgrade. </param>
         /// <param name="automaticOSUpgradePolicy"> Configuration parameters used for performing automatic OS Upgrade. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpgradePolicy(VirtualMachineScaleSetUpgradeMode? mode, RollingUpgradePolicy rollingUpgradePolicy, AutomaticOSUpgradePolicy automaticOSUpgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="additionalProperties"></param>
+        internal VirtualMachineScaleSetUpgradePolicy(VirtualMachineScaleSetUpgradeMode? mode, RollingUpgradePolicy rollingUpgradePolicy, AutomaticOSUpgradePolicy automaticOSUpgradePolicy, IDictionary<string, BinaryData> additionalProperties)
         {
             Mode = mode;
             RollingUpgradePolicy = rollingUpgradePolicy;
             AutomaticOSUpgradePolicy = automaticOSUpgradePolicy;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; <b>Automatic</b> - All virtual machines in the scale set are  automatically updated at the same time. </summary>
@@ -42,5 +44,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Configuration parameters used for performing automatic OS Upgrade. </summary>
         public AutomaticOSUpgradePolicy AutomaticOSUpgradePolicy { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

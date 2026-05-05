@@ -11075,6 +11075,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineScaleSetProperties() { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy AutomaticRepairsPolicy { get { throw null; } set { } }
         public bool? DoNotRunExtensionsOnOverprovisionedVms { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ExternalHealthPolicy ExternalHealthPolicy { get { throw null; } set { } }
@@ -11427,6 +11428,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetUpgradePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpgradePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpgradePolicy>
     {
         public VirtualMachineScaleSetUpgradePolicy() { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.AutomaticOSUpgradePolicy AutomaticOSUpgradePolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpgradeMode? Mode { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradePolicy RollingUpgradePolicy { get { throw null; } set { } }
@@ -11574,6 +11576,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineScaleSetVmProperties() { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.Core.ResourceIdentifier AvailabilitySetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile HardwareProfile { get { throw null; } set { } }
@@ -11654,6 +11657,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineSizeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineSizeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineSizeProperties>
     {
         public VirtualMachineSizeProperties() { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public int? VCpusAvailable { get { throw null; } set { } }
         public int? VCpusPerCore { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineSizeProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

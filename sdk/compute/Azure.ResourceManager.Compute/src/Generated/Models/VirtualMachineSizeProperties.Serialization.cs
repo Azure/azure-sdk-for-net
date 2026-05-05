@@ -84,20 +84,17 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("vCPUsPerCore"u8);
                 writer.WriteNumberValue(VCpusPerCore.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            foreach (var item in AdditionalProperties)
             {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -128,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? vCpusAvailable = default;
             int? vCpusPerCore = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("vCPUsAvailable"u8))
@@ -149,12 +146,9 @@ namespace Azure.ResourceManager.Compute.Models
                     vCpusPerCore = prop.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new VirtualMachineSizeProperties(vCpusAvailable, vCpusPerCore, additionalBinaryDataProperties);
+            return new VirtualMachineSizeProperties(vCpusAvailable, vCpusPerCore, additionalProperties);
         }
     }
 }

@@ -175,20 +175,17 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("virtualMachineResourceId"u8);
                 writer.WriteStringValue(VirtualMachineResourceId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            foreach (var item in AdditionalProperties)
             {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -237,7 +234,7 @@ namespace Azure.ResourceManager.Compute.Models
             string userData = default;
             DateTimeOffset? timeCreated = default;
             ResourceIdentifier virtualMachineResourceId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("latestModelApplied"u8))
@@ -400,10 +397,7 @@ namespace Azure.ResourceManager.Compute.Models
                     virtualMachineResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new VirtualMachineScaleSetVmProperties(
                 latestModelApplied,
@@ -426,7 +420,7 @@ namespace Azure.ResourceManager.Compute.Models
                 userData,
                 timeCreated,
                 virtualMachineResourceId,
-                additionalBinaryDataProperties);
+                additionalProperties);
         }
     }
 }

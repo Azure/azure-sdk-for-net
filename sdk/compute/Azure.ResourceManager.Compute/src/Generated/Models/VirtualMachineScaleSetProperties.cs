@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetProperties"/>. </summary>
         public VirtualMachineScaleSetProperties()
         {
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetProperties"/>. </summary>
@@ -49,8 +51,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="highSpeedInterconnectPlacement"> Specifies the high speed interconnect placement for the virtual machine scale set. </param>
         /// <param name="lifecycleHooksProfile"> Specifies the lifecycle hooks profile for the virtual machine scale set. </param>
         /// <param name="externalHealthPolicy"> Specifies the external health policy for the virtual machine scale set. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ComputeWriteableSubResourceData proximityPlacementGroup, ComputeWriteableSubResourceData hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="additionalProperties"></param>
+        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ComputeWriteableSubResourceData proximityPlacementGroup, ComputeWriteableSubResourceData hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalProperties)
         {
             UpgradePolicy = upgradePolicy;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -78,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
             HighSpeedInterconnectPlacement = highSpeedInterconnectPlacement;
             LifecycleHooksProfile = lifecycleHooksProfile;
             ExternalHealthPolicy = externalHealthPolicy;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The upgrade policy. </summary>
@@ -158,6 +160,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the external health policy for the virtual machine scale set. </summary>
         public ExternalHealthPolicy ExternalHealthPolicy { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier ProximityPlacementGroupId

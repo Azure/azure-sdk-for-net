@@ -89,20 +89,17 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("automaticOSUpgradePolicy"u8);
                 writer.WriteObjectValue(AutomaticOSUpgradePolicy, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            foreach (var item in AdditionalProperties)
             {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -134,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetUpgradeMode? mode = default;
             RollingUpgradePolicy rollingUpgradePolicy = default;
             AutomaticOSUpgradePolicy automaticOSUpgradePolicy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("mode"u8))
@@ -164,12 +161,9 @@ namespace Azure.ResourceManager.Compute.Models
                     automaticOSUpgradePolicy = AutomaticOSUpgradePolicy.DeserializeAutomaticOSUpgradePolicy(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new VirtualMachineScaleSetUpgradePolicy(mode, rollingUpgradePolicy, automaticOSUpgradePolicy, additionalBinaryDataProperties);
+            return new VirtualMachineScaleSetUpgradePolicy(mode, rollingUpgradePolicy, automaticOSUpgradePolicy, additionalProperties);
         }
     }
 }

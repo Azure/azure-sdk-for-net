@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,17 +20,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeProperties"/>. </summary>
         public VirtualMachineSizeProperties()
         {
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeProperties"/>. </summary>
         /// <param name="vCpusAvailable"> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). </param>
         /// <param name="vCpusPerCore"> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). <b>Setting this property to 1 also means that hyper-threading is disabled.</b>. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineSizeProperties(int? vCpusAvailable, int? vCpusPerCore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="additionalProperties"></param>
+        internal VirtualMachineSizeProperties(int? vCpusAvailable, int? vCpusPerCore, IDictionary<string, BinaryData> additionalProperties)
         {
             VCpusAvailable = vCpusAvailable;
             VCpusPerCore = vCpusPerCore;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). </summary>
@@ -37,5 +39,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). <b>Setting this property to 1 also means that hyper-threading is disabled.</b>. </summary>
         public int? VCpusPerCore { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

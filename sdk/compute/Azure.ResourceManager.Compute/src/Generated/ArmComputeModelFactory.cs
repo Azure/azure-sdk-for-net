@@ -124,9 +124,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="highSpeedInterconnectPlacement"> Specifies the high speed interconnect placement for the virtual machine scale set. </param>
         /// <param name="lifecycleHooks"> Specifies the lifecycle hooks configured for the virtual machine scale set. </param>
         /// <param name="externalHealthPolicy"> Specifies the external health policy for the virtual machine scale set. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetProperties"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = default, ScheduledEventsPolicy scheduledEventsPolicy = default, AutomaticRepairsPolicy automaticRepairsPolicy = default, VirtualMachineScaleSetVmProfile virtualMachineProfile = default, string provisioningState = default, bool? overprovision = default, bool? doNotRunExtensionsOnOverprovisionedVms = default, string uniqueId = default, bool? singlePlacementGroup = default, bool? zoneBalance = default, int? platformFaultDomainCount = default, ResourceIdentifier proximityPlacementGroupId = default, ResourceIdentifier hostGroupId = default, AdditionalCapabilities additionalCapabilities = default, ScaleInPolicy scaleInPolicy = default, OrchestrationMode? orchestrationMode = default, SpotRestorePolicy spotRestorePolicy = default, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default, DateTimeOffset? timeCreated = default, bool? isMaximumCapacityConstrained = default, ResiliencyPolicy resiliencyPolicy = default, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default, ComputeSkuProfile skuProfile = default, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default, IEnumerable<LifecycleHook> lifecycleHooks = default, ExternalHealthPolicy externalHealthPolicy = default)
+        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = default, ScheduledEventsPolicy scheduledEventsPolicy = default, AutomaticRepairsPolicy automaticRepairsPolicy = default, VirtualMachineScaleSetVmProfile virtualMachineProfile = default, string provisioningState = default, bool? overprovision = default, bool? doNotRunExtensionsOnOverprovisionedVms = default, string uniqueId = default, bool? singlePlacementGroup = default, bool? zoneBalance = default, int? platformFaultDomainCount = default, ResourceIdentifier proximityPlacementGroupId = default, ResourceIdentifier hostGroupId = default, AdditionalCapabilities additionalCapabilities = default, ScaleInPolicy scaleInPolicy = default, OrchestrationMode? orchestrationMode = default, SpotRestorePolicy spotRestorePolicy = default, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default, DateTimeOffset? timeCreated = default, bool? isMaximumCapacityConstrained = default, ResiliencyPolicy resiliencyPolicy = default, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default, ComputeSkuProfile skuProfile = default, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default, IEnumerable<LifecycleHook> lifecycleHooks = default, ExternalHealthPolicy externalHealthPolicy = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
             return new VirtualMachineScaleSetProperties(
                 upgradePolicy,
                 scheduledEventsPolicy,
@@ -154,7 +157,20 @@ namespace Azure.ResourceManager.Compute.Models
                 highSpeedInterconnectPlacement,
                 lifecycleHooks is null ? default : new LifecycleHooksProfile((lifecycleHooks ?? new ChangeTrackingList<LifecycleHook>()).ToList(), null),
                 externalHealthPolicy,
-                additionalBinaryDataProperties: null);
+                additionalProperties);
+        }
+
+        /// <summary> Describes an upgrade policy - automatic, manual, or rolling. </summary>
+        /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; <b>Automatic</b> - All virtual machines in the scale set are  automatically updated at the same time. </param>
+        /// <param name="rollingUpgradePolicy"> The configuration parameters used while performing a rolling upgrade. </param>
+        /// <param name="automaticOSUpgradePolicy"> Configuration parameters used for performing automatic OS Upgrade. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpgradePolicy"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetUpgradePolicy VirtualMachineScaleSetUpgradePolicy(VirtualMachineScaleSetUpgradeMode? mode = default, RollingUpgradePolicy rollingUpgradePolicy = default, AutomaticOSUpgradePolicy automaticOSUpgradePolicy = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new VirtualMachineScaleSetUpgradePolicy(mode, rollingUpgradePolicy, automaticOSUpgradePolicy, additionalProperties);
         }
 
         /// <param name="osProfile"> Specifies the operating system settings for the virtual machines in the scale set. </param>
@@ -459,6 +475,18 @@ namespace Azure.ResourceManager.Compute.Models
         public static ComputeSubResourceData ComputeSubResourceData(ResourceIdentifier id = default)
         {
             return new ComputeSubResourceData(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specifies VM Size Property settings on the virtual machine. </summary>
+        /// <param name="vCpusAvailable"> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). </param>
+        /// <param name="vCpusPerCore"> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). <b>Setting this property to 1 also means that hyper-threading is disabled.</b>. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.VirtualMachineSizeProperties"/> instance for mocking. </returns>
+        public static VirtualMachineSizeProperties VirtualMachineSizeProperties(int? vCpusAvailable = default, int? vCpusPerCore = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new VirtualMachineSizeProperties(vCpusAvailable, vCpusPerCore, additionalProperties);
         }
 
         /// <summary> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </summary>
@@ -997,9 +1025,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="virtualMachineResourceId"> Specifies the ARM resource ID of the standalone virtual machine associated with this VMSS VM. This property is only applicable to Virtual Machine Scale Sets with Flexible orchestration mode. Minimum api-version: 2025-11-01. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProperties"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied = default, string vmId = default, VirtualMachineScaleSetVmInstanceView instanceView = default, VirtualMachineHardwareProfile hardwareProfile = default, ResilientVmDeletionStatus? resilientVmDeletionStatus = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, SecurityProfile securityProfile = default, VirtualMachineNetworkProfile networkProfile = default, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, string provisioningState = default, string licenseType = default, string modelDefinitionApplied = default, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default, string userData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier virtualMachineResourceId = default)
+        public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied = default, string vmId = default, VirtualMachineScaleSetVmInstanceView instanceView = default, VirtualMachineHardwareProfile hardwareProfile = default, ResilientVmDeletionStatus? resilientVmDeletionStatus = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, SecurityProfile securityProfile = default, VirtualMachineNetworkProfile networkProfile = default, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, string provisioningState = default, string licenseType = default, string modelDefinitionApplied = default, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default, string userData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier virtualMachineResourceId = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
             return new VirtualMachineScaleSetVmProperties(
                 latestModelApplied,
                 vmId,
@@ -1021,7 +1052,7 @@ namespace Azure.ResourceManager.Compute.Models
                 userData,
                 timeCreated,
                 virtualMachineResourceId,
-                additionalBinaryDataProperties: null);
+                additionalProperties);
         }
 
         /// <param name="platformUpdateDomain"> The Update Domain count. </param>
@@ -5143,36 +5174,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ResourceIdentifier proximityPlacementGroupId, ResourceIdentifier hostGroupId, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, IDictionary<string, BinaryData> additionalProperties)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new VirtualMachineScaleSetProperties(
-                upgradePolicy,
-                scheduledEventsPolicy,
-                automaticRepairsPolicy,
-                virtualMachineProfile,
-                provisioningState,
-                overprovision,
-                doNotRunExtensionsOnOverprovisionedVms,
-                uniqueId,
-                singlePlacementGroup,
-                zoneBalance,
-                platformFaultDomainCount,
-                default,
-                default,
-                additionalCapabilities,
-                scaleInPolicy,
-                orchestrationMode,
-                spotRestorePolicy,
-                priorityMixPolicy,
-                timeCreated,
-                isMaximumCapacityConstrained,
-                resiliencyPolicy,
-                zonalPlatformFaultDomainAlignMode,
-                skuProfile,
-                highSpeedInterconnectPlacement,
-                default,
-                default,
-                additionalBinaryDataProperties: null);
+            return VirtualMachineScaleSetProperties(upgradePolicy, scheduledEventsPolicy, automaticRepairsPolicy, virtualMachineProfile, provisioningState, overprovision, doNotRunExtensionsOnOverprovisionedVms, uniqueId, singlePlacementGroup, zoneBalance, platformFaultDomainCount, proximityPlacementGroupId, hostGroupId, additionalCapabilities, scaleInPolicy, orchestrationMode, spotRestorePolicy, priorityMixPolicy, timeCreated, isMaximumCapacityConstrained, resiliencyPolicy, zonalPlatformFaultDomainAlignMode, skuProfile, highSpeedInterconnectPlacement, lifecycleHooks: default, externalHealthPolicy: default, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetExtensionData"/>. </summary>
@@ -5567,31 +5569,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, ResilientVmDeletionStatus? resilientVmDeletionStatus, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalProperties)
         {
-            networkInterfaceConfigurations ??= new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>();
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new VirtualMachineScaleSetVmProperties(
-                latestModelApplied,
-                vmId,
-                instanceView,
-                hardwareProfile,
-                resilientVmDeletionStatus,
-                storageProfile,
-                additionalCapabilities,
-                osProfile,
-                securityProfile,
-                networkProfile,
-                default,
-                default,
-                default,
-                provisioningState,
-                licenseType,
-                modelDefinitionApplied,
-                protectionPolicy,
-                userData,
-                timeCreated,
-                default,
-                additionalBinaryDataProperties: null);
+            return VirtualMachineScaleSetVmProperties(latestModelApplied, vmId, instanceView, hardwareProfile, resilientVmDeletionStatus, storageProfile, additionalCapabilities, osProfile, securityProfile, networkProfile, networkInterfaceConfigurations, bootDiagnostics, availabilitySetId, provisioningState, licenseType, modelDefinitionApplied, protectionPolicy, userData, timeCreated, virtualMachineResourceId: default, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetVmExtensionData"/>. </summary>
@@ -6713,36 +6691,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ResourceIdentifier proximityPlacementGroupId, ResourceIdentifier hostGroupId, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, IDictionary<string, BinaryData> additionalProperties)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new VirtualMachineScaleSetProperties(
-                upgradePolicy,
-                scheduledEventsPolicy,
-                automaticRepairsPolicy,
-                virtualMachineProfile,
-                provisioningState,
-                overprovision,
-                doNotRunExtensionsOnOverprovisionedVms,
-                uniqueId,
-                singlePlacementGroup,
-                zoneBalance,
-                platformFaultDomainCount,
-                default,
-                default,
-                additionalCapabilities,
-                scaleInPolicy,
-                orchestrationMode,
-                spotRestorePolicy,
-                priorityMixPolicy,
-                timeCreated,
-                isMaximumCapacityConstrained,
-                resiliencyPolicy,
-                zonalPlatformFaultDomainAlignMode,
-                skuProfile,
-                default,
-                default,
-                default,
-                additionalBinaryDataProperties: null);
+            return VirtualMachineScaleSetProperties(upgradePolicy, scheduledEventsPolicy, automaticRepairsPolicy, virtualMachineProfile, provisioningState, overprovision, doNotRunExtensionsOnOverprovisionedVms, uniqueId, singlePlacementGroup, zoneBalance, platformFaultDomainCount, proximityPlacementGroupId, hostGroupId, additionalCapabilities, scaleInPolicy, orchestrationMode, spotRestorePolicy, priorityMixPolicy, timeCreated, isMaximumCapacityConstrained, resiliencyPolicy, zonalPlatformFaultDomainAlignMode, skuProfile, highSpeedInterconnectPlacement: default, lifecycleHooks: default, externalHealthPolicy: default, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CapacityReservationGroupPatch"/>. </summary>

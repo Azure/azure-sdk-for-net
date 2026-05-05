@@ -204,20 +204,17 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("externalHealthPolicy"u8);
                 writer.WriteObjectValue(ExternalHealthPolicy, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            foreach (var item in AdditionalProperties)
             {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -272,7 +269,7 @@ namespace Azure.ResourceManager.Compute.Models
             HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default;
             LifecycleHooksProfile lifecycleHooksProfile = default;
             ExternalHealthPolicy externalHealthPolicy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("upgradePolicy"u8))
@@ -501,10 +498,7 @@ namespace Azure.ResourceManager.Compute.Models
                     externalHealthPolicy = ExternalHealthPolicy.DeserializeExternalHealthPolicy(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new VirtualMachineScaleSetProperties(
                 upgradePolicy,
@@ -533,7 +527,7 @@ namespace Azure.ResourceManager.Compute.Models
                 highSpeedInterconnectPlacement,
                 lifecycleHooksProfile,
                 externalHealthPolicy,
-                additionalBinaryDataProperties);
+                additionalProperties);
         }
     }
 }
