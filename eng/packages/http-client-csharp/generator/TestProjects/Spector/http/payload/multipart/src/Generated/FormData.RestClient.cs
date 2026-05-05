@@ -31,6 +31,34 @@ namespace Payload.MultiPart._FormData
             return message;
         }
 
+        internal HttpMessage CreateWithWireNameRequest(RequestContent content, string contentType, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Method = RequestMethod.Post;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/multipart/form-data/mixed-parts-with-wire-name", false);
+            request.Uri = uri;
+            request.Headers.SetValue("Content-Type", contentType);
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateOptionalPartsRequest(RequestContent content, string contentType, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Method = RequestMethod.Post;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/multipart/form-data/optional-parts", false);
+            request.Uri = uri;
+            request.Headers.SetValue("Content-Type", contentType);
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateFileArrayAndBasicRequest(RequestContent content, string contentType, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);

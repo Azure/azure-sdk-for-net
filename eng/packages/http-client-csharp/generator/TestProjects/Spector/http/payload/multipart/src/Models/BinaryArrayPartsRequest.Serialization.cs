@@ -7,23 +7,21 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
+
+using Payload.MultiPart;
 
 namespace Payload.MultiPart.Models
 {
-    public partial class ComplexPartsRequest
+    public partial class BinaryArrayPartsRequest
     {
-        internal ComplexPartsRequest()
+        internal BinaryArrayPartsRequest()
         {
         }
 
-        internal MultiPartFormContent ToMultipartContent()
+        internal virtual MultiPartFormContent ToMultipartContent()
         {
             MultiPartFormContent content = new();
-            content.Add("id", Id);
-            content.Add("address", Address, new PayloadMultiPartContext(), ModelSerializationExtensions.WireOptions);
-            content.Add("profileImage", ProfileImage);
-
+            content.Add("id", Id, "text/plain");
             foreach (var picture in Pictures)
             {
                 content.Add("pictures", picture);

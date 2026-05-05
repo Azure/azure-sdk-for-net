@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Payload.MultiPart;
 using Payload.MultiPart._FormData.HttpParts;
 using Payload.MultiPart.Models;
+using Payload.MultiPart._FormData.File;
 
 namespace Payload.MultiPart._FormData
 {
@@ -24,6 +25,7 @@ namespace Payload.MultiPart._FormData
     {
         private readonly Uri _endpoint;
         private FormDataHttpParts _cachedFormDataHttpParts;
+        private global::Payload.MultiPart._FormData.File.FormDataFile _cachedFormDataFile;
 
         /// <summary> Initializes a new instance of FormData for mocking. </summary>
         protected FormData()
@@ -111,6 +113,58 @@ namespace Payload.MultiPart._FormData
             }
         }
 
+        public virtual Response WithWireName(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FormData.WithWireName");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateWithWireNameRequest(content, contentType, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
+
+        public virtual async Task<Response> WithWireNameAsync(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FormData.WithWireName");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateWithWireNameRequest(content, contentType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
+
+        public virtual Response OptionalParts(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FormData.OptionalParts");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateOptionalPartsRequest(content, contentType, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
+
+        public virtual async Task<Response> OptionalPartsAsync(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FormData.OptionalParts");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateOptionalPartsRequest(content, contentType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
+
         /// <summary>
         /// [Protocol Method] Test content-type: multipart/form-data for mixed scenarios
         /// <list type="bullet">
@@ -175,26 +229,8 @@ namespace Payload.MultiPart._FormData
             }
         }
 
-        // CUSTOM: Convenience method
-        public virtual Response FileArrayAndBasic(ComplexPartsRequest body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultiPartFormContent content = body.ToMultipartContent();
-            return FileArrayAndBasic(RequestContent.Create(content), content.MediaType, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        // CUSTOM: Convenience method
-        public virtual async Task<Response> FileArrayAndBasicAsync(ComplexPartsRequest body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultiPartFormContent content = body.ToMultipartContent();
-            return await FileArrayAndBasicAsync(RequestContent.Create(content), content.MediaType, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
         /// <summary>
-        /// [Protocol Method] Test content-type: multipart/form-data for scenario contains json part and binary part 
+        /// [Protocol Method] Test content-type: multipart/form-data for scenario contains json part and binary part
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -226,7 +262,7 @@ namespace Payload.MultiPart._FormData
         }
 
         /// <summary>
-        /// [Protocol Method] Test content-type: multipart/form-data for scenario contains json part and binary part 
+        /// [Protocol Method] Test content-type: multipart/form-data for scenario contains json part and binary part
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -517,6 +553,12 @@ namespace Payload.MultiPart._FormData
         public virtual FormDataHttpParts GetFormDataHttpPartsClient()
         {
             return Volatile.Read(ref _cachedFormDataHttpParts) ?? Interlocked.CompareExchange(ref _cachedFormDataHttpParts, new FormDataHttpParts(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedFormDataHttpParts;
+        }
+
+        /// <summary> Initializes a new instance of FormDataFile. </summary>
+        public virtual FormDataFile GetFormDataFileClient()
+        {
+            return Volatile.Read(ref _cachedFormDataFile) ?? Interlocked.CompareExchange(ref _cachedFormDataFile, new FormDataFile(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedFormDataFile;
         }
     }
 }
