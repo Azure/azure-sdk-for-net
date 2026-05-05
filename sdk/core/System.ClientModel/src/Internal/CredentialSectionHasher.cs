@@ -31,8 +31,15 @@ internal static class CredentialSectionHasher
             // be confused with the structural separators '=' or ';'. This
             // prevents cache-key collisions for values containing those bytes
             // (e.g., connection-string-like secrets such as "b;c=d").
+            //
+            // IConfiguration treats keys case-insensitively, so we normalize
+            // keys to lower-invariant before hashing — two configurations
+            // that differ only in the casing of their keys must produce the
+            // same cache key. Values are NOT normalized; they are
+            // case-sensitive (tokens, secrets, IDs).
+            string key = entry.Key.ToLowerInvariant();
             string value = entry.Value ?? string.Empty;
-            sb.Append(entry.Key.Length).Append(':').Append(entry.Key)
+            sb.Append(key.Length).Append(':').Append(key)
               .Append('=')
               .Append(value.Length).Append(':').Append(value)
               .Append(';');

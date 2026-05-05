@@ -97,4 +97,43 @@ public class CredentialSectionHasherTests
 
         Assert.That(CredentialSectionHasher.ComputeKey(a), Is.Not.EqualTo(CredentialSectionHasher.ComputeKey(b)));
     }
+
+    [Test]
+    public void ComputeKey_KeysDifferOnlyInCasing_ProduceSameKey()
+    {
+        // IConfiguration treats keys case-insensitively. Two sections that
+        // only differ in the casing of their keys must produce the same hash
+        // (and therefore share a cache slot), while values must remain
+        // case-sensitive.
+        IConfigurationSection a = BuildSection("Cred", new Dictionary<string, string?>
+        {
+            ["Cred:TenantId"] = "abc",
+            ["Cred:ClientId"] = "xyz",
+        });
+        IConfigurationSection b = BuildSection("Cred", new Dictionary<string, string?>
+        {
+            ["Cred:tenantid"] = "abc",
+            ["Cred:CLIENTID"] = "xyz",
+        });
+
+        Assert.That(CredentialSectionHasher.ComputeKey(a), Is.EqualTo(CredentialSectionHasher.ComputeKey(b)),
+            "Configuration keys are case-insensitive; hash must be invariant to key casing.");
+    }
+
+    [Test]
+    public void ComputeKey_ValuesDifferOnlyInCasing_ProduceDifferentKeys()
+    {
+        // Values are case-sensitive — credentials, tokens, secrets etc.
+        IConfigurationSection a = BuildSection("Cred", new Dictionary<string, string?>
+        {
+            ["Cred:Token"] = "Secret",
+        });
+        IConfigurationSection b = BuildSection("Cred", new Dictionary<string, string?>
+        {
+            ["Cred:Token"] = "secret",
+        });
+
+        Assert.That(CredentialSectionHasher.ComputeKey(a), Is.Not.EqualTo(CredentialSectionHasher.ComputeKey(b)),
+            "Configuration values are case-sensitive; hash must distinguish them.");
+    }
 }
