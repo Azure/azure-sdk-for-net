@@ -127,86 +127,49 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.IsEmpty(filtered);
         }
 
+        // Standard "good" snapshot metadata pair shared by validation tests.
+        private static SnapshotMetadata MakeMeta(
+            DateTimeOffset timestamp,
+            long cvId,
+            string status = "Finalized")
+            => new SnapshotMetadata
+            {
+                Version = 0,
+                SnapshotTimestamp = timestamp,
+                CvId = cvId,
+                MinLogWindowForNextSnapshot = timestamp,
+                MaxLogWindowForCurrentSnapshot = timestamp.AddHours(1),
+                Status = status,
+            };
+
         /// <summary>
-        /// Verifies that the snapshot pageable throws <see cref="ArgumentException"/>
-        /// when the end snapshot is not finalized.
+        /// Verifies that <see cref="SnapshotInputValidator.ValidateMetadata"/> throws when the
+        /// end snapshot is not finalized.
         /// </summary>
         [Test]
         public void EndSnapshotNotFinalized_Throws()
         {
-            // Arrange - create snapshot metadata where the end snapshot is still Publishing
-            SnapshotMetadata beginMeta = new SnapshotMetadata
-            {
-                Version = 0,
-                SnapshotTimestamp = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),
-                CvId = 50,
-                MinLogWindowForNextSnapshot = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),
-                MaxLogWindowForCurrentSnapshot = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero),
-                Status = "Finalized",
-            };
+            SnapshotMetadata beginMeta = MakeMeta(new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero), 50);
+            SnapshotMetadata endMeta = MakeMeta(new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero), 200, status: "Publishing");
 
-            SnapshotMetadata endMeta = new SnapshotMetadata
-            {
-                Version = 0,
-                SnapshotTimestamp = new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero),
-                CvId = 200,
-                MinLogWindowForNextSnapshot = new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero),
-                MaxLogWindowForCurrentSnapshot = new DateTimeOffset(2024, 1, 15, 13, 0, 0, TimeSpan.Zero),
-                Status = "Publishing",
-            };
-
-            // Act & Assert - the finalization check should throw
-            Assert.Throws<ArgumentException>(() =>
-            {
-                if (endMeta.Status != null && !endMeta.Status.Equals("Finalized", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentException(
-                        $"End snapshot is not finalized (status: {endMeta.Status}). " +
-                        "Wait for the snapshot to be finalized before querying.");
-                }
-            });
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => SnapshotInputValidator.ValidateMetadata(beginMeta, "begin", endMeta, "end"));
+            StringAssert.Contains("End snapshot", ex.Message);
+            StringAssert.Contains("Publishing", ex.Message);
         }
 
         /// <summary>
-        /// Verifies that the finalization check passes when the end snapshot status is "Finalized".
+        /// Verifies that <see cref="SnapshotInputValidator.ValidateMetadata"/> does not throw
+        /// when both snapshots are finalized and form a valid range.
         /// </summary>
         [Test]
-        public void EndSnapshotFinalized_DoesNotThrow()
+        public void BothSnapshotsFinalized_DoesNotThrow()
         {
-            SnapshotMetadata endMeta = new SnapshotMetadata
-            {
-                Status = "Finalized",
-            };
+            SnapshotMetadata beginMeta = MakeMeta(new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero), 50);
+            SnapshotMetadata endMeta = MakeMeta(new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero), 200);
 
-            // Should not throw
-            Assert.DoesNotThrow(() =>
-            {
-                if (endMeta.Status != null && !endMeta.Status.Equals("Finalized", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentException("End snapshot is not finalized.");
-                }
-            });
-        }
-
-        /// <summary>
-        /// Verifies that the finalization check passes when status is null (treated as finalized).
-        /// </summary>
-        [Test]
-        public void EndSnapshotNullStatus_DoesNotThrow()
-        {
-            SnapshotMetadata endMeta = new SnapshotMetadata
-            {
-                Status = null,
-            };
-
-            // null status should not trigger the check
-            Assert.DoesNotThrow(() =>
-            {
-                if (endMeta.Status != null && !endMeta.Status.Equals("Finalized", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentException("End snapshot is not finalized.");
-                }
-            });
+            Assert.DoesNotThrow(
+                () => SnapshotInputValidator.ValidateMetadata(beginMeta, "begin", endMeta, "end"));
         }
 
         /// <summary>
@@ -285,6 +248,115 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     // Should not reach here
                 }
             });
+        }
+
+        // Input-string validation runs synchronously in the pageable constructor, so these tests
+        // exercise the public surface (constructor) for both sync and async pageables.
+
+        [Test]
+        public void Validation_NullBeginSnapshot_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotPageable(null, null, beginSnapshot: null, endSnapshot: "2024-01-15T12:00:00.000Z"));
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotAsyncPageable(null, null, beginSnapshot: null, endSnapshot: "2024-01-15T12:00:00.000Z"));
+        }
+
+        [Test]
+        public void Validation_EmptyBeginSnapshot_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotPageable(null, null, beginSnapshot: "", endSnapshot: "2024-01-15T12:00:00.000Z"));
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotAsyncPageable(null, null, beginSnapshot: "", endSnapshot: "2024-01-15T12:00:00.000Z"));
+        }
+
+        [Test]
+        public void Validation_NullEndSnapshot_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotPageable(null, null, beginSnapshot: "2024-01-15T08:00:00.000Z", endSnapshot: null));
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotAsyncPageable(null, null, beginSnapshot: "2024-01-15T08:00:00.000Z", endSnapshot: null));
+        }
+
+        [Test]
+        public void Validation_EmptyEndSnapshot_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotPageable(null, null, beginSnapshot: "2024-01-15T08:00:00.000Z", endSnapshot: ""));
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotAsyncPageable(null, null, beginSnapshot: "2024-01-15T08:00:00.000Z", endSnapshot: ""));
+        }
+
+        [Test]
+        public void Validation_InvalidBeginTimestamp_Throws()
+        {
+            Assert.Throws<ArgumentException>(
+                () => new ShareChangeFeedSnapshotPageable(null, null, beginSnapshot: "not-a-timestamp", endSnapshot: "2024-01-15T12:00:00.000Z"));
+            Assert.Throws<ArgumentException>(
+                () => new ShareChangeFeedSnapshotAsyncPageable(null, null, beginSnapshot: "not-a-timestamp", endSnapshot: "2024-01-15T12:00:00.000Z"));
+        }
+
+        [Test]
+        public void Validation_InvalidEndTimestamp_Throws()
+        {
+            Assert.Throws<ArgumentException>(
+                () => new ShareChangeFeedSnapshotPageable(null, null, beginSnapshot: "2024-01-15T08:00:00.000Z", endSnapshot: "garbage"));
+            Assert.Throws<ArgumentException>(
+                () => new ShareChangeFeedSnapshotAsyncPageable(null, null, beginSnapshot: "2024-01-15T08:00:00.000Z", endSnapshot: "garbage"));
+        }
+
+        // Post-meta-read validation tests. These call SnapshotInputValidator.ValidateMetadata
+        // directly because the snapshot pageables defer reading meta blobs until enumeration —
+        // testing them through the pageable would require setting up the full mocked container
+        // chain, which is covered separately in the end-to-end tests.
+
+        [Test]
+        public void Validation_BeginSnapshotNotFinalized_Throws()
+        {
+            SnapshotMetadata beginMeta = MakeMeta(new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero), 50, status: "Publishing");
+            SnapshotMetadata endMeta = MakeMeta(new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero), 200);
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => SnapshotInputValidator.ValidateMetadata(beginMeta, "begin", endMeta, "end"));
+            StringAssert.Contains("Begin snapshot", ex.Message);
+        }
+
+        [Test]
+        public void Validation_BeginTimestampLaterThanEnd_Throws()
+        {
+            SnapshotMetadata beginMeta = MakeMeta(new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero), 100);
+            SnapshotMetadata endMeta = MakeMeta(new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero), 200);
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => SnapshotInputValidator.ValidateMetadata(beginMeta, "begin", endMeta, "end"));
+            StringAssert.Contains("later than", ex.Message);
+        }
+
+        [Test]
+        public void Validation_BeginCvIdGreaterThanEnd_Throws()
+        {
+            // Same timestamp window but inverted CvIds; isolates the CvId check from the timestamp check.
+            DateTimeOffset ts = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero);
+            SnapshotMetadata beginMeta = MakeMeta(ts, 200);
+            SnapshotMetadata endMeta = MakeMeta(ts.AddHours(4), 100);
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => SnapshotInputValidator.ValidateMetadata(beginMeta, "begin", endMeta, "end"));
+            StringAssert.Contains("CvId", ex.Message);
+        }
+
+        [Test]
+        public void Validation_EqualSnapshots_Throws()
+        {
+            DateTimeOffset ts = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero);
+            SnapshotMetadata beginMeta = MakeMeta(ts, 100);
+            SnapshotMetadata endMeta = MakeMeta(ts, 100);
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => SnapshotInputValidator.ValidateMetadata(beginMeta, "begin", endMeta, "end"));
+            StringAssert.Contains("same CvId", ex.Message);
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Azure.Storage.ChangeFeed.Common
 
         private DateTimeOffset? _startTime;
         private DateTimeOffset? _endTime;
+        private readonly bool _includeUnfinalizedEvents;
         private bool _empty;
 
         /// <summary>
@@ -45,6 +46,11 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="startTime">Optional inclusive start time for the change feed window.</param>
         /// <param name="endTime">Optional exclusive end time for the change feed window.</param>
         /// <param name="config">Change feed configuration.</param>
+        /// <param name="includeUnfinalizedEvents">
+        /// Whether the producing run was reading past the finalized watermark. Recorded into the
+        /// emitted continuation token so that <see cref="ChangeFeedFactoryBase{TEvent}"/> can
+        /// reject incompatible replays.
+        /// </param>
         public ChangeFeedBase(
             BlobContainerClient containerClient,
             SegmentFactoryBase<TEvent> segmentFactory,
@@ -54,7 +60,8 @@ namespace Azure.Storage.ChangeFeed.Common
             DateTimeOffset lastConsumable,
             DateTimeOffset? startTime,
             DateTimeOffset? endTime,
-            ChangeFeedConfiguration<TEvent> config)
+            ChangeFeedConfiguration<TEvent> config,
+            bool includeUnfinalizedEvents = false)
         {
             _containerClient = containerClient;
             _segmentFactory = segmentFactory;
@@ -65,6 +72,7 @@ namespace Azure.Storage.ChangeFeed.Common
             _startTime = startTime;
             _endTime = endTime;
             _config = config;
+            _includeUnfinalizedEvents = includeUnfinalizedEvents;
             _empty = false;
         }
 
@@ -140,7 +148,8 @@ namespace Azure.Storage.ChangeFeed.Common
             => new ChangeFeedCursor(
                 urlHost: _containerClient.Uri.Host,
                 endDateTime: _endTime,
-                currentSegmentCursor: _currentSegment.GetCursor());
+                currentSegmentCursor: _currentSegment.GetCursor(),
+                includeUnfinalizedEvents: _includeUnfinalizedEvents);
 
         /// <summary>
         /// Advances to the next segment if the current one is exhausted, loading segments from the next year if needed.

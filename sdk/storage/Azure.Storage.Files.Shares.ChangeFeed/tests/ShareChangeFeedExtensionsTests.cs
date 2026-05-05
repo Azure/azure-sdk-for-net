@@ -158,6 +158,29 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.That(blobUri.Query, Does.Contain("sig=fakesig"));
         }
 
+        // Gap 38: sovereign cloud and edge-case endpoint conversion.
+
+        [TestCase("https://account.file.core.chinacloudapi.cn", "account.blob.core.chinacloudapi.cn")]
+        [TestCase("https://account.file.core.usgovcloudapi.net", "account.blob.core.usgovcloudapi.net")]
+        [TestCase("https://account.file.core.cloudapi.de", "account.blob.core.cloudapi.de")]
+        public void FileToBlobEndpoint_SovereignClouds(string fileEndpoint, string expectedHost)
+        {
+            Uri blobUri = ContainerDiscovery.FileToBlobEndpoint(new Uri(fileEndpoint));
+            Assert.AreEqual(expectedHost, blobUri.Host);
+        }
+
+        [Test]
+        public void FileToBlobEndpoint_StripsSharePathToRoot()
+        {
+            // A file URI that includes a share segment in the path should be reduced to root,
+            // since the BlobServiceClient is account-scoped (not share-scoped).
+            Uri fileUri = new Uri("https://account.file.core.windows.net/myshare");
+            Uri blobUri = ContainerDiscovery.FileToBlobEndpoint(fileUri);
+
+            Assert.AreEqual("account.blob.core.windows.net", blobUri.Host);
+            Assert.AreEqual("/", blobUri.AbsolutePath);
+        }
+
         #endregion
     }
 }

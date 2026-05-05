@@ -95,19 +95,59 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                     Version = root.TryGetProperty("version", out JsonElement version)
                         ? version.GetInt32()
                         : 0,
-                    SnapshotTimestamp = root.GetProperty("snapshotTimestamp").GetDateTimeOffset(),
-                    CvId = root.GetProperty("cvId").GetInt64(),
-                    MinLogWindowForNextSnapshot = root.GetProperty("minLogWindowForNextSnapshot").GetDateTimeOffset(),
-                    MaxLogWindowForCurrentSnapshot = root.GetProperty("maxLogWindowForCurrentSnapshot").GetDateTimeOffset(),
-                    Status = root.TryGetProperty("status", out JsonElement status)
-                        ? status.GetString()
-                        : null,
+                    SnapshotTimestamp = RequireDateTimeOffset(root, "snapshotTimestamp", path),
+                    CvId = RequireInt64(root, "cvId", path),
+                    MinLogWindowForNextSnapshot = RequireDateTimeOffset(root, "minLogWindowForNextSnapshot", path),
+                    MaxLogWindowForCurrentSnapshot = RequireDateTimeOffset(root, "maxLogWindowForCurrentSnapshot", path),
+                    Status = RequireString(root, "status", path),
                 };
             }
             finally
             {
                 json?.Dispose();
             }
+        }
+
+        private static DateTimeOffset RequireDateTimeOffset(JsonElement root, string field, string path)
+        {
+            if (!root.TryGetProperty(field, out JsonElement value))
+                throw new FormatException($"Snapshot metadata at '{path}' is missing required field '{field}'.");
+            try
+            {
+                return value.GetDateTimeOffset();
+            }
+            catch (Exception ex) when (ex is FormatException || ex is InvalidOperationException)
+            {
+                throw new FormatException(
+                    $"Snapshot metadata at '{path}' field '{field}' is not a valid DateTimeOffset.",
+                    ex);
+            }
+        }
+
+        private static long RequireInt64(JsonElement root, string field, string path)
+        {
+            if (!root.TryGetProperty(field, out JsonElement value))
+                throw new FormatException($"Snapshot metadata at '{path}' is missing required field '{field}'.");
+            try
+            {
+                return value.GetInt64();
+            }
+            catch (Exception ex) when (ex is FormatException || ex is InvalidOperationException)
+            {
+                throw new FormatException(
+                    $"Snapshot metadata at '{path}' field '{field}' is not a valid Int64.",
+                    ex);
+            }
+        }
+
+        private static string RequireString(JsonElement root, string field, string path)
+        {
+            if (!root.TryGetProperty(field, out JsonElement value))
+                throw new FormatException($"Snapshot metadata at '{path}' is missing required field '{field}'.");
+            string s = value.GetString();
+            if (s == null)
+                throw new FormatException($"Snapshot metadata at '{path}' field '{field}' is null.");
+            return s;
         }
     }
 }

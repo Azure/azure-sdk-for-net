@@ -103,7 +103,7 @@ namespace Azure.Storage.ChangeFeed.Common
             if (continuation != null)
             {
                 cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
-                ValidateCursor(_containerClient, cursor);
+                ValidateCursor(_containerClient, cursor, _includeUnfinalizedEvents);
                 startTime = ChangeFeedExtensionsBase.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
                 endTime = cursor.EndTime;
             }
@@ -188,19 +188,33 @@ namespace Azure.Storage.ChangeFeed.Common
                 lastConsumable,
                 startTime,
                 endTime,
-                _config);
+                _config,
+                _includeUnfinalizedEvents);
         }
 
         /// <summary>
-        /// Validates that a deserialized cursor matches the current storage account and uses a supported version.
+        /// Validates that a deserialized cursor matches the current storage account, uses a
+        /// supported version, and is compatible with the current run's <c>IncludeUnfinalizedEvents</c>
+        /// flag. The flag rule is asymmetric: a cursor produced with the flag on cannot be replayed
+        /// with the flag off (would silently skip events past the watermark that the producing
+        /// run already consumed).
         /// </summary>
-        private static void ValidateCursor(BlobContainerClient containerClient, ChangeFeedCursor cursor)
+        private static void ValidateCursor(
+            BlobContainerClient containerClient,
+            ChangeFeedCursor cursor,
+            bool currentIncludeUnfinalizedEvents)
         {
             if (containerClient.Uri.Host != cursor.UrlHost)
                 throw new ArgumentException("Cursor URL Host does not match container URL host.");
 
-            if (cursor.CursorVersion != 1)
+            if (cursor.CursorVersion != 1 && cursor.CursorVersion != 2)
                 throw new ArgumentException("Unsupported cursor version.");
+
+            if (cursor.IncludeUnfinalizedEvents && !currentIncludeUnfinalizedEvents)
+                throw new ArgumentException(
+                    "This continuation token was produced with IncludeUnfinalizedEvents=true and cannot be replayed " +
+                    "with IncludeUnfinalizedEvents=false. Re-enable the option on ShareChangeFeedClientOptions, or " +
+                    "start a fresh read without the cursor.");
         }
 
         /// <summary>

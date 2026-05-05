@@ -55,18 +55,63 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// Initializes a new <see cref="ShareChangeFeedEvent"/> from an Avro record dictionary.
         /// </summary>
         /// <param name="record">The deserialized Avro record containing event fields.</param>
+        /// <exception cref="FormatException">
+        /// Thrown if any required field is missing, null, or has the wrong type.
+        /// </exception>
         internal ShareChangeFeedEvent(Dictionary<string, object> record)
         {
-            record.TryGetValue(Constants.FilesChangeFeed.Event.SchemaVersion, out object schemaVersion);
-            SchemaVersion = schemaVersion is long sv ? sv : 0;
-            Reason = new ShareChangeFeedReasonType((string)record[Constants.FilesChangeFeed.Event.Reason]);
-            Protocol = new ShareChangeFeedProtocol((string)record[Constants.FilesChangeFeed.Event.Protocol]);
-            EventTime = DateTimeOffset.Parse((string)record[Constants.FilesChangeFeed.Event.EventTime], CultureInfo.InvariantCulture);
-            Id = (string)record[Constants.FilesChangeFeed.Event.Id];
-            record.TryGetValue(Constants.FilesChangeFeed.Event.Cvnt, out object cvnt);
-            ContainerVersionNumber = cvnt is long c ? c : 0;
-            if (record.TryGetValue(Constants.FilesChangeFeed.Event.Data, out object data) && data is Dictionary<string, object> dataDict)
-                EventData = new ShareChangeFeedEventData(dataDict);
+            SchemaVersion = RequireLong(record, Constants.FilesChangeFeed.Event.SchemaVersion);
+            Reason = new ShareChangeFeedReasonType(RequireString(record, Constants.FilesChangeFeed.Event.Reason));
+            Protocol = new ShareChangeFeedProtocol(RequireString(record, Constants.FilesChangeFeed.Event.Protocol));
+
+            string eventTime = RequireString(record, Constants.FilesChangeFeed.Event.EventTime);
+            try
+            {
+                EventTime = DateTimeOffset.Parse(eventTime, CultureInfo.InvariantCulture);
+            }
+            catch (FormatException ex)
+            {
+                throw new FormatException(
+                    $"Change feed event field '{Constants.FilesChangeFeed.Event.EventTime}' is not a valid DateTimeOffset: '{eventTime}'.",
+                    ex);
+            }
+
+            Id = RequireString(record, Constants.FilesChangeFeed.Event.Id);
+            ContainerVersionNumber = RequireLong(record, Constants.FilesChangeFeed.Event.Cvnt);
+            EventData = new ShareChangeFeedEventData(RequireDict(record, Constants.FilesChangeFeed.Event.Data));
+        }
+
+        private static string RequireString(Dictionary<string, object> record, string key)
+        {
+            if (!record.TryGetValue(key, out object value))
+                throw new FormatException($"Change feed event is missing required field '{key}'.");
+            if (value is null)
+                throw new FormatException($"Change feed event field '{key}' is null.");
+            if (value is not string s)
+                throw new FormatException($"Change feed event field '{key}' must be a string but was {value.GetType().Name}.");
+            return s;
+        }
+
+        private static long RequireLong(Dictionary<string, object> record, string key)
+        {
+            if (!record.TryGetValue(key, out object value))
+                throw new FormatException($"Change feed event is missing required field '{key}'.");
+            if (value is null)
+                throw new FormatException($"Change feed event field '{key}' is null.");
+            if (value is not long l)
+                throw new FormatException($"Change feed event field '{key}' must be a long but was {value.GetType().Name}.");
+            return l;
+        }
+
+        private static Dictionary<string, object> RequireDict(Dictionary<string, object> record, string key)
+        {
+            if (!record.TryGetValue(key, out object value))
+                throw new FormatException($"Change feed event is missing required field '{key}'.");
+            if (value is null)
+                throw new FormatException($"Change feed event field '{key}' is null.");
+            if (value is not Dictionary<string, object> d)
+                throw new FormatException($"Change feed event field '{key}' must be a record but was {value.GetType().Name}.");
+            return d;
         }
 
         /// <summary>

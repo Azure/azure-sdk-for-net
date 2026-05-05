@@ -21,6 +21,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string beginSnapshot,
             string endSnapshot)
         {
+            SnapshotInputValidator.ValidateInputStrings(beginSnapshot, endSnapshot);
             _client = client;
             _maxTransferSize = maxTransferSize;
             _beginSnapshot = beginSnapshot;
@@ -53,12 +54,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 cancellationToken: default)
                 .ConfigureAwait(false);
 
-            if (endMeta.Status != null && !endMeta.Status.Equals("Finalized", StringComparison.OrdinalIgnoreCase))
-            {
-                throw new ArgumentException(
-                    $"End snapshot '{_endSnapshot}' is not finalized (status: {endMeta.Status}). " +
-                    "Wait for the snapshot to be finalized before querying.");
-            }
+            SnapshotInputValidator.ValidateMetadata(beginMeta, _beginSnapshot, endMeta, _endSnapshot);
 
             long beginCvId = beginMeta.CvId;
             long endCvId = endMeta.CvId;

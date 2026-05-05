@@ -106,5 +106,58 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             StringAssert.Contains("myshare", ex.Message);
             StringAssert.Contains("Change Feed is not enabled", ex.Message);
         }
+
+        // Helper to set up a mocked ShareClient that returns the given header value.
+        private void SetupMockShareWithHeader(Mock<ShareClient> shareClient, string headerValue)
+        {
+            shareClient.Setup(c => c.Name).Returns("myshare");
+            MockResponse rawResponse = new MockResponse(200);
+            if (headerValue != null)
+                rawResponse.AddHeader("x-ms-file-blob-container-for-xfiles-change-feed", headerValue);
+
+            ShareProperties properties = ShareModelFactory.ShareProperties(enableSnapshotVirtualDirectoryAccess: default);
+            Response<ShareProperties> response = Response.FromValue(properties, rawResponse);
+
+            shareClient.Setup(c => c.GetPropertiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(response);
+            shareClient.Setup(c => c.GetProperties(It.IsAny<CancellationToken>())).Returns(response);
+        }
+
+        [Test]
+        public void DiscoverContainerNameAsync_HeaderEmpty_Throws()
+        {
+            Mock<ShareClient> shareClient = new Mock<ShareClient>();
+            SetupMockShareWithHeader(shareClient, "");
+
+            System.InvalidOperationException ex = Assert.ThrowsAsync<System.InvalidOperationException>(
+                async () => await ContainerDiscovery.DiscoverContainerNameAsync(shareClient.Object, IsAsync, CancellationToken.None));
+            StringAssert.Contains("empty", ex.Message);
+        }
+
+        [Test]
+        public void DiscoverContainerNameAsync_HeaderMissingDollarPrefix_Throws()
+        {
+            Mock<ShareClient> shareClient = new Mock<ShareClient>();
+            SetupMockShareWithHeader(shareClient, "fileschangefeed-no-prefix");
+
+            System.InvalidOperationException ex = Assert.ThrowsAsync<System.InvalidOperationException>(
+                async () => await ContainerDiscovery.DiscoverContainerNameAsync(shareClient.Object, IsAsync, CancellationToken.None));
+            StringAssert.Contains("'$' prefix", ex.Message);
+        }
+
+        [Test]
+        public void DiscoverContainerNameAsync_GetPropertiesThrows_PropagatesException()
+        {
+            // RequestFailedException from the share's GetProperties (e.g. 403, 404) should
+            // surface to the caller rather than being silently swallowed or remapped.
+            Mock<ShareClient> shareClient = new Mock<ShareClient>();
+            shareClient.Setup(c => c.Name).Returns("myshare");
+
+            RequestFailedException requestEx = new RequestFailedException(403, "forbidden");
+            shareClient.Setup(c => c.GetPropertiesAsync(It.IsAny<CancellationToken>())).ThrowsAsync(requestEx);
+            shareClient.Setup(c => c.GetProperties(It.IsAny<CancellationToken>())).Throws(requestEx);
+
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await ContainerDiscovery.DiscoverContainerNameAsync(shareClient.Object, IsAsync, CancellationToken.None));
+        }
     }
 }

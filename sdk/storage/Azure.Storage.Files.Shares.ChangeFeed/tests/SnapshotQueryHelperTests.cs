@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
@@ -172,6 +175,112 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             StringAssert.Contains(snapshotTimestamp, ex.Message);
             StringAssert.Contains(expectedPath, ex.Message);
             Assert.IsInstanceOf<RequestFailedException>(ex.InnerException);
+        }
+
+        /// <summary>
+        /// Sets up a mock container that returns the given JSON body when the snapshot meta
+        /// blob for <paramref name="snapshotTimestamp"/> is downloaded.
+        /// </summary>
+        private void SetupSnapshotMetaResponse(
+            Mock<BlobContainerClient> containerClient,
+            string snapshotTimestamp,
+            string json)
+        {
+            string path = SnapshotQueryHelper.SnapshotTimestampToPath(snapshotTimestamp);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            containerClient.Setup(c => c.GetBlobClient(path)).Returns(blobClient.Object);
+
+            BlobDownloadStreamingResult streamingResult = BlobsModelFactory.BlobDownloadStreamingResult(
+                content: new MemoryStream(Encoding.UTF8.GetBytes(json)));
+
+            if (IsAsync)
+            {
+                blobClient.Setup(b => b.DownloadStreamingAsync(
+                    It.IsAny<BlobDownloadOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(streamingResult, null));
+            }
+            else
+            {
+                blobClient.Setup(b => b.DownloadStreaming(
+                    It.IsAny<BlobDownloadOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .Returns(Response.FromValue(streamingResult, null));
+            }
+        }
+
+        [Test]
+        public void ReadSnapshotMetadata_MissingCvId_Throws()
+        {
+            string snapshotTimestamp = "2024-01-15T08:00:00.000Z";
+            string json = @"{
+                ""snapshotTimestamp"": ""2024-01-15T08:00:00.000Z"",
+                ""minLogWindowForNextSnapshot"": ""2024-01-15T08:00:00.000Z"",
+                ""maxLogWindowForCurrentSnapshot"": ""2024-01-15T09:00:00.000Z"",
+                ""status"": ""Finalized""
+            }";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupSnapshotMetaResponse(containerClient, snapshotTimestamp, json);
+
+            FormatException ex = Assert.ThrowsAsync<FormatException>(
+                async () => await SnapshotQueryHelper.ReadSnapshotMetadataAsync(
+                    containerClient.Object,
+                    snapshotTimestamp,
+                    IsAsync,
+                    CancellationToken.None));
+
+            StringAssert.Contains("cvId", ex.Message);
+        }
+
+        [TestCase("snapshotTimestamp")]
+        [TestCase("minLogWindowForNextSnapshot")]
+        [TestCase("maxLogWindowForCurrentSnapshot")]
+        [TestCase("status")]
+        public void ReadSnapshotMetadata_MissingRequiredField_Throws(string fieldToOmit)
+        {
+            string snapshotTimestamp = "2024-01-15T08:00:00.000Z";
+            Dictionary<string, string> fields = new Dictionary<string, string>
+            {
+                { "snapshotTimestamp", "\"2024-01-15T08:00:00.000Z\"" },
+                { "cvId", "100" },
+                { "minLogWindowForNextSnapshot", "\"2024-01-15T08:00:00.000Z\"" },
+                { "maxLogWindowForCurrentSnapshot", "\"2024-01-15T09:00:00.000Z\"" },
+                { "status", "\"Finalized\"" },
+            };
+            fields.Remove(fieldToOmit);
+
+            string json = "{" + string.Join(",", fields.Select(kv => $"\"{kv.Key}\":{kv.Value}")) + "}";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupSnapshotMetaResponse(containerClient, snapshotTimestamp, json);
+
+            FormatException ex = Assert.ThrowsAsync<FormatException>(
+                async () => await SnapshotQueryHelper.ReadSnapshotMetadataAsync(
+                    containerClient.Object,
+                    snapshotTimestamp,
+                    IsAsync,
+                    CancellationToken.None));
+
+            StringAssert.Contains(fieldToOmit, ex.Message);
+        }
+
+        [Test]
+        public void ReadSnapshotMetadata_MalformedJson_Throws()
+        {
+            string snapshotTimestamp = "2024-01-15T08:00:00.000Z";
+            string corrupt = "{\"cvId\": \"this is not a number, it's a string and the JSON ends abruptly";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupSnapshotMetaResponse(containerClient, snapshotTimestamp, corrupt);
+
+            // CatchAsync accepts JsonException or any subclass (e.g. JsonReaderException).
+            Assert.CatchAsync<JsonException>(
+                async () => await SnapshotQueryHelper.ReadSnapshotMetadataAsync(
+                    containerClient.Object,
+                    snapshotTimestamp,
+                    IsAsync,
+                    CancellationToken.None));
         }
     }
 }

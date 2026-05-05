@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Storage.Files.Shares;
 using NUnit.Framework;
@@ -130,6 +131,174 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
             Assert.AreEqual(ShareChangeFeedProtocol.Smb, new ShareChangeFeedProtocol("SMB"));
             Assert.AreNotEqual(ShareChangeFeedProtocol.Smb, ShareChangeFeedProtocol.Rest);
+        }
+
+        /// <summary>
+        /// Returns a fully populated event-record dictionary so individual tests can mutate one
+        /// field at a time while keeping the rest valid.
+        /// </summary>
+        private static Dictionary<string, object> ValidRecord() => new Dictionary<string, object>
+        {
+            { "SchemaVersion", 1L },
+            { "Reason", "SmbCreate" },
+            { "Protocol", "SMB" },
+            { "EventTime", "2024-01-15T08:12:11.5746587Z" },
+            { "Id", "evt-1" },
+            { "Cvnt", 100L },
+            { "Data", new Dictionary<string, object> { { "FileId", "1" } } },
+        };
+
+        [Test]
+        public void Deserialization_MissingCvnt_Throws()
+        {
+            Dictionary<string, object> record = ValidRecord();
+            record.Remove("Cvnt");
+
+            FormatException ex = Assert.Throws<FormatException>(() => new ShareChangeFeedEvent(record));
+            StringAssert.Contains("Cvnt", ex.Message);
+        }
+
+        [Test]
+        public void Deserialization_MissingSchemaVersion_Throws()
+        {
+            Dictionary<string, object> record = ValidRecord();
+            record.Remove("SchemaVersion");
+
+            FormatException ex = Assert.Throws<FormatException>(() => new ShareChangeFeedEvent(record));
+            StringAssert.Contains("SchemaVersion", ex.Message);
+        }
+
+        [Test]
+        public void Deserialization_MissingReason_Throws()
+        {
+            Dictionary<string, object> record = ValidRecord();
+            record.Remove("Reason");
+
+            FormatException ex = Assert.Throws<FormatException>(() => new ShareChangeFeedEvent(record));
+            StringAssert.Contains("Reason", ex.Message);
+        }
+
+        [Test]
+        public void Deserialization_MissingProtocol_Throws()
+        {
+            Dictionary<string, object> record = ValidRecord();
+            record.Remove("Protocol");
+
+            FormatException ex = Assert.Throws<FormatException>(() => new ShareChangeFeedEvent(record));
+            StringAssert.Contains("Protocol", ex.Message);
+        }
+
+        [Test]
+        public void Deserialization_MissingEventTime_Throws()
+        {
+            Dictionary<string, object> record = ValidRecord();
+            record.Remove("EventTime");
+
+            FormatException ex = Assert.Throws<FormatException>(() => new ShareChangeFeedEvent(record));
+            StringAssert.Contains("EventTime", ex.Message);
+        }
+
+        [Test]
+        public void Deserialization_MissingId_Throws()
+        {
+            Dictionary<string, object> record = ValidRecord();
+            record.Remove("Id");
+
+            FormatException ex = Assert.Throws<FormatException>(() => new ShareChangeFeedEvent(record));
+            StringAssert.Contains("Id", ex.Message);
+        }
+
+        [Test]
+        public void Deserialization_MissingData_Throws()
+        {
+            Dictionary<string, object> record = ValidRecord();
+            record.Remove("Data");
+
+            FormatException ex = Assert.Throws<FormatException>(() => new ShareChangeFeedEvent(record));
+            StringAssert.Contains("Data", ex.Message);
+        }
+
+        [TestCase("not-a-date")]
+        [TestCase("")]
+        public void Deserialization_InvalidEventTimeFormat_Throws(string invalidTime)
+        {
+            Dictionary<string, object> record = ValidRecord();
+            record["EventTime"] = invalidTime;
+
+            FormatException ex = Assert.Throws<FormatException>(() => new ShareChangeFeedEvent(record));
+            StringAssert.Contains("EventTime", ex.Message);
+        }
+
+        [Test]
+        public void Deserialization_WrongTypeCvnt_Throws()
+        {
+            Dictionary<string, object> record = ValidRecord();
+            record["Cvnt"] = "100";
+
+            FormatException ex = Assert.Throws<FormatException>(() => new ShareChangeFeedEvent(record));
+            StringAssert.Contains("Cvnt", ex.Message);
+        }
+
+        [Test]
+        public void Deserialization_DataWrongType_Throws()
+        {
+            Dictionary<string, object> record = ValidRecord();
+            record["Data"] = "not-a-dict";
+
+            FormatException ex = Assert.Throws<FormatException>(() => new ShareChangeFeedEvent(record));
+            StringAssert.Contains("Data", ex.Message);
+        }
+
+        // Gap 36: extensible-enum coverage.
+
+        [Test]
+        public void ReasonType_IsCaseSensitive()
+        {
+            // Reason equality is Ordinal — case matters for matching well-known values.
+            Assert.AreNotEqual(ShareChangeFeedReasonType.SmbCreate, new ShareChangeFeedReasonType("smbcreate"));
+            Assert.AreNotEqual(ShareChangeFeedReasonType.SmbCreate, new ShareChangeFeedReasonType("SMBCREATE"));
+        }
+
+        [Test]
+        public void Protocol_IsCaseInsensitive()
+        {
+            // Protocol equality is OrdinalIgnoreCase — service may emit any case.
+            Assert.AreEqual(ShareChangeFeedProtocol.Smb, new ShareChangeFeedProtocol("smb"));
+            Assert.AreEqual(ShareChangeFeedProtocol.Smb, new ShareChangeFeedProtocol("Smb"));
+            Assert.AreEqual(ShareChangeFeedProtocol.Rest, new ShareChangeFeedProtocol("rest"));
+        }
+
+        [Test]
+        public void ReasonType_NotEqualOperator()
+        {
+            Assert.IsTrue(ShareChangeFeedReasonType.SmbCreate != ShareChangeFeedReasonType.SmbDelete);
+            Assert.IsFalse(ShareChangeFeedReasonType.SmbCreate != new ShareChangeFeedReasonType("SmbCreate"));
+        }
+
+        [Test]
+        public void ReasonType_GetHashCode_ConsistentForEqualInstances()
+        {
+            ShareChangeFeedReasonType a = ShareChangeFeedReasonType.SmbCreate;
+            ShareChangeFeedReasonType b = new ShareChangeFeedReasonType("SmbCreate");
+            Assert.AreEqual(a, b);
+            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+        }
+
+        [Test]
+        public void ReasonType_UnknownForwardCompatValue_Allowed()
+        {
+            // A future service version may emit an unknown reason. The struct must accept and
+            // round-trip the value without throwing, so callers can switch on ToString().
+            ShareChangeFeedReasonType future = new ShareChangeFeedReasonType("FutureUnknownOp");
+            Assert.AreEqual("FutureUnknownOp", future.ToString());
+            Assert.AreEqual(future, new ShareChangeFeedReasonType("FutureUnknownOp"));
+            Assert.AreNotEqual(future, ShareChangeFeedReasonType.SmbCreate);
+        }
+
+        [Test]
+        public void ReasonType_NullValue_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() => new ShareChangeFeedReasonType(null));
         }
     }
 }

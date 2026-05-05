@@ -142,5 +142,43 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
             Assert.IsTrue(client._includeUnfinalizedEvents);
         }
+
+        // Gap 34: connection-string ctor must reject null/empty connection strings.
+        [TestCase(null)]
+        [TestCase("")]
+        public void Constructor_NullOrEmptyConnectionString_Throws(string connectionString)
+        {
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedClient(connectionString, TestShareName));
+            Assert.AreEqual("connectionString", ex.ParamName);
+        }
+
+        // Gap 35: MaximumTransferSize option flows from options into the client and on into
+        // ChangeFeedConfiguration / chunk download path.
+        [Test]
+        public void Constructor_MaximumTransferSize_FlowsFromOptions()
+        {
+            ShareChangeFeedClientOptions options = new ShareChangeFeedClientOptions
+            {
+                MaximumTransferSize = 4 * 1024 * 1024,
+            };
+
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName,
+                options);
+
+            Assert.AreEqual(4 * 1024 * 1024L, client._maxTransferSize);
+        }
+
+        [Test]
+        public void Constructor_MaximumTransferSize_DefaultsToNull()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            Assert.IsNull(client._maxTransferSize);
+        }
     }
 }

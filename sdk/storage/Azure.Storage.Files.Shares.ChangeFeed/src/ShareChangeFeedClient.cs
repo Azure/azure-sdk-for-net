@@ -23,7 +23,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     {
         private readonly ShareClient _shareClient;
         internal readonly BlobServiceClient _blobServiceClient;
-        private readonly long? _maxTransferSize;
+        internal readonly long? _maxTransferSize;
         internal readonly bool _includeUnfinalizedEvents;
 
         // Lazily resolved after the first call to DiscoverContainerNameAsync.
@@ -40,6 +40,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string shareName,
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
+            if (string.IsNullOrEmpty(connectionString)) throw new ArgumentNullException(nameof(connectionString));
             if (string.IsNullOrEmpty(shareName)) throw new ArgumentNullException(nameof(shareName));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeUnfinalizedEvents = changeFeedOptions?.IncludeUnfinalizedEvents ?? false;

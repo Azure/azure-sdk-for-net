@@ -51,6 +51,20 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                     $"Enable it by setting x-ms-file-enable-change-feed: true when creating or updating the share.");
             }
 
+            if (string.IsNullOrEmpty(containerName))
+            {
+                throw new InvalidOperationException(
+                    $"Change Feed container header for share '{shareClient.Name}' was present but empty. " +
+                    "The service returned an unexpected response.");
+            }
+
+            if (containerName[0] != '$')
+            {
+                throw new InvalidOperationException(
+                    $"Change Feed container name '{containerName}' for share '{shareClient.Name}' does not begin with the expected '$' prefix. " +
+                    "The service returned an unexpected response.");
+            }
+
             return containerName;
         }
 

@@ -183,7 +183,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 "log/00/2020/01/16/2300/");
             ChangeFeedCursor cursor = new ChangeFeedCursor
             {
-                CursorVersion = 2,
+                CursorVersion = 99,
                 UrlHost = containerUri.Host,
                 EndTime = null,
                 CurrentSegmentCursor = segmentCursor
