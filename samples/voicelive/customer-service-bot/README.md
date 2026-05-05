@@ -1,3 +1,14 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- azure-ai-voicelive
+name: Azure VoiceLive Customer Service Bot sample for .NET
+description: Sample demonstrating a sophisticated customer service voice bot with function calling capabilities using the Azure VoiceLive SDK.
+---
+
 # Customer Service Bot Sample
 
 This sample demonstrates how to build a sophisticated customer service voice bot using the Azure VoiceLive SDK with function calling capabilities. The bot provides real-time voice interaction for common customer service scenarios including order tracking, account management, returns processing, and technical support scheduling.
