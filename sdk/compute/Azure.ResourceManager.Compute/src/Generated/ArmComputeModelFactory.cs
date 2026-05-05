@@ -4749,7 +4749,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zones"></param>
         /// <param name="identity"></param>
         /// <param name="etag"></param>
-        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, VirtualMachineScaleSetVmProperties properties, ComputePlan plan = default, IEnumerable<VirtualMachineExtensionData> resources = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, string etag = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, VirtualMachineScaleSetVmProperties properties, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, IEnumerable<string> zones, ManagedServiceIdentity identity, string etag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             resources ??= new ChangeTrackingList<VirtualMachineExtensionData>();
@@ -6675,29 +6676,6 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="name"></param>
         /// <param name="location"></param>
-        /// <param name="uniqueId"></param>
-        /// <param name="publishedOn"></param>
-        /// <param name="endOfLifeOn"></param>
-        /// <param name="isExcludedFromLatest"></param>
-        /// <param name="storageProfile"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
-        {
-            return SharedGalleryImageVersionData(name, location, uniqueId, publishedOn, endOfLifeOn, isExcludedFromLatest, storageProfile, artifactTags: default);
-        }
-
-        /// <param name="name"></param>
-        /// <param name="location"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="uniqueId"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CommunityGalleryData CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId)
-        {
-            return CommunityGalleryData(name, location, resourceType, uniqueId, disclaimer: default, artifactTags: default, communityMetadata: default);
-        }
-
-        /// <param name="name"></param>
-        /// <param name="location"></param>
         /// <param name="resourceType"></param>
         /// <param name="uniqueId"></param>
         /// <param name="osType"></param>
@@ -6716,20 +6694,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static CommunityGalleryImageData CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, HyperVGeneration? hyperVGeneration, IEnumerable<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula)
         {
             return CommunityGalleryImageData(name, location, resourceType, uniqueId, osType, osState, endOfLifeOn, imageIdentifier, recommended, hyperVGeneration, features, purchasePlan, architecture, privacyStatementUri, eula, disclaimer: default, artifactTags: default, disallowedDiskTypes);
-        }
-
-        /// <param name="name"></param>
-        /// <param name="location"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="uniqueId"></param>
-        /// <param name="publishedOn"></param>
-        /// <param name="endOfLifeOn"></param>
-        /// <param name="isExcludedFromLatest"></param>
-        /// <param name="storageProfile"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
-        {
-            return CommunityGalleryImageVersionData(name, location, resourceType, uniqueId, publishedOn, endOfLifeOn, isExcludedFromLatest, storageProfile, disclaimer: default, artifactTags: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryPatch"/>. </summary>
