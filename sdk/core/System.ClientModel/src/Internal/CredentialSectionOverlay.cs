@@ -117,7 +117,7 @@ internal static class CredentialSectionOverlay
         public IEnumerable<IConfigurationSection> GetChildren()
         {
             string prefix = _path.Length == 0 ? string.Empty : _path + ":";
-            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            HashSet<string>? seen = null;
             foreach (string key in _data.Keys)
             {
                 if (prefix.Length > 0)
@@ -138,6 +138,7 @@ internal static class CredentialSectionOverlay
                 {
                     continue;
                 }
+                seen ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
                 if (seen.Add(segment))
                 {
                     yield return new MutableSection(_data, Combine(_path, segment), segment, _externalRoot);
