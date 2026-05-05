@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Source))
+            if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                writer.WriteObjectValue(GallerySource, options);
             }
             if (Optional.IsDefined(OSDiskImage))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            GalleryArtifactVersionFullSource source = default;
+            GalleryArtifactVersionFullSource gallerySource = default;
             GalleryOSDiskImage osDiskImage = default;
             IList<GalleryDataDiskImage> dataDiskImages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(prop.Value, options);
+                    gallerySource = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osDiskImage"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryImageVersionStorageProfile(source, osDiskImage, dataDiskImages ?? new ChangeTrackingList<GalleryDataDiskImage>(), additionalBinaryDataProperties);
+            return new GalleryImageVersionStorageProfile(gallerySource, osDiskImage, dataDiskImages ?? new ChangeTrackingList<GalleryDataDiskImage>(), additionalBinaryDataProperties);
         }
     }
 }

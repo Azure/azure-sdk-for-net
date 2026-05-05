@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="GalleryDataDiskImage"/>. </summary>
         /// <param name="sizeInGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
-        /// <param name="source"> The source for the disk image. </param>
+        /// <param name="gallerySource"> The source for the disk image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
-        internal GalleryDataDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryDiskImageSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties, int lun) : base(sizeInGB, hostCaching, source, additionalBinaryDataProperties)
+        internal GalleryDataDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryDiskImageSource gallerySource, IDictionary<string, BinaryData> additionalBinaryDataProperties, int lun) : base(sizeInGB, hostCaching, gallerySource, additionalBinaryDataProperties)
         {
             Lun = lun;
         }

@@ -6091,6 +6091,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public GalleryArtifactVersionFullSource() { }
         public string CommunityGalleryImageId { get { throw null; } set { } }
+        public override System.Uri Uri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6106,6 +6107,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public GalleryArtifactVersionSource() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public virtual System.Uri Uri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6133,9 +6135,10 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GalleryDiskImage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GalleryDiskImage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GalleryDiskImage>
     {
         public GalleryDiskImage() { }
+        public Azure.ResourceManager.Compute.Models.GalleryDiskImageSource GallerySource { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HostCaching? HostCaching { get { throw null; } set { } }
         public int? SizeInGB { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.GalleryDiskImageSource Source { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource Source { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryDiskImage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryDiskImage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6149,8 +6152,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GalleryDiskImageSource : Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GalleryDiskImageSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GalleryDiskImageSource>
     {
         public GalleryDiskImageSource() { }
+        public string SourceUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6391,8 +6394,9 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public GalleryImageVersionStorageProfile() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryDataDiskImage> DataDiskImages { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.GalleryArtifactVersionFullSource GallerySource { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryOSDiskImage OSDiskImage { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.GalleryArtifactVersionFullSource Source { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource Source { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

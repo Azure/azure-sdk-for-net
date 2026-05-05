@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Source))
+            if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                writer.WriteObjectValue(GallerySource, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? sizeInGB = default;
             HostCaching? hostCaching = default;
-            GalleryDiskImageSource source = default;
+            GalleryDiskImageSource gallerySource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(prop.Value, options);
+                    gallerySource = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryDiskImage(sizeInGB, hostCaching, source, additionalBinaryDataProperties);
+            return new GalleryDiskImage(sizeInGB, hostCaching, gallerySource, additionalBinaryDataProperties);
         }
     }
 }

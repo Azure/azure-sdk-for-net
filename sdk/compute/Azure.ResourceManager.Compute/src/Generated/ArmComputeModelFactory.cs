@@ -3313,46 +3313,46 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-        /// <param name="source"> The source of the gallery artifact version. </param>
+        /// <param name="gallerySource"> The source of the gallery artifact version. </param>
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         /// <param name="dataDiskImages"> A list of data disk images. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionStorageProfile"/> instance for mocking. </returns>
-        public static GalleryImageVersionStorageProfile GalleryImageVersionStorageProfile(GalleryArtifactVersionFullSource source = default, GalleryOSDiskImage osDiskImage = default, IEnumerable<GalleryDataDiskImage> dataDiskImages = default)
+        public static GalleryImageVersionStorageProfile GalleryImageVersionStorageProfile(GalleryArtifactVersionFullSource gallerySource = default, GalleryOSDiskImage osDiskImage = default, IEnumerable<GalleryDataDiskImage> dataDiskImages = default)
         {
             dataDiskImages ??= new ChangeTrackingList<GalleryDataDiskImage>();
 
-            return new GalleryImageVersionStorageProfile(source, osDiskImage, dataDiskImages.ToList(), additionalBinaryDataProperties: null);
+            return new GalleryImageVersionStorageProfile(gallerySource, osDiskImage, dataDiskImages.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is the OS disk image. </summary>
         /// <param name="sizeInGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
-        /// <param name="source"> The source for the disk image. </param>
+        /// <param name="gallerySource"> The source for the disk image. </param>
         /// <returns> A new <see cref="Models.GalleryOSDiskImage"/> instance for mocking. </returns>
-        public static GalleryOSDiskImage GalleryOSDiskImage(int? sizeInGB = default, HostCaching? hostCaching = default, GalleryDiskImageSource source = default)
+        public static GalleryOSDiskImage GalleryOSDiskImage(int? sizeInGB = default, HostCaching? hostCaching = default, GalleryDiskImageSource gallerySource = default)
         {
-            return new GalleryOSDiskImage(sizeInGB, hostCaching, source, additionalBinaryDataProperties: null);
+            return new GalleryOSDiskImage(sizeInGB, hostCaching, gallerySource, additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is the disk image base class. </summary>
         /// <param name="sizeInGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
-        /// <param name="source"> The source for the disk image. </param>
+        /// <param name="gallerySource"> The source for the disk image. </param>
         /// <returns> A new <see cref="Models.GalleryDiskImage"/> instance for mocking. </returns>
-        public static GalleryDiskImage GalleryDiskImage(int? sizeInGB = default, HostCaching? hostCaching = default, GalleryDiskImageSource source = default)
+        public static GalleryDiskImage GalleryDiskImage(int? sizeInGB = default, HostCaching? hostCaching = default, GalleryDiskImageSource gallerySource = default)
         {
-            return new GalleryDiskImage(sizeInGB, hostCaching, source, additionalBinaryDataProperties: null);
+            return new GalleryDiskImage(sizeInGB, hostCaching, gallerySource, additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is the data disk image. </summary>
         /// <param name="sizeInGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
-        /// <param name="source"> The source for the disk image. </param>
+        /// <param name="gallerySource"> The source for the disk image. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
         /// <returns> A new <see cref="Models.GalleryDataDiskImage"/> instance for mocking. </returns>
-        public static GalleryDataDiskImage GalleryDataDiskImage(int? sizeInGB = default, HostCaching? hostCaching = default, GalleryDiskImageSource source = default, int lun = default)
+        public static GalleryDataDiskImage GalleryDataDiskImage(int? sizeInGB = default, HostCaching? hostCaching = default, GalleryDiskImageSource gallerySource = default, int lun = default)
         {
-            return new GalleryDataDiskImage(sizeInGB, hostCaching, source, additionalBinaryDataProperties: null, lun);
+            return new GalleryDataDiskImage(sizeInGB, hostCaching, gallerySource, additionalBinaryDataProperties: null, lun);
         }
 
         /// <summary> This is the safety profile of the Gallery Image Version. </summary>

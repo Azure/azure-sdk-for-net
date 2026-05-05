@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="GalleryDiskImageSource"/>. </summary>
         /// <param name="id"> The id of the gallery artifact version source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
+        /// <param name="sourceUri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
         /// <param name="storageAccountId"> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </param>
-        internal GalleryDiskImageSource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, ResourceIdentifier storageAccountId) : base(id, additionalBinaryDataProperties)
+        internal GalleryDiskImageSource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sourceUri, ResourceIdentifier storageAccountId) : base(id, additionalBinaryDataProperties)
         {
-            Uri = uri;
+            SourceUri = sourceUri;
             StorageAccountId = storageAccountId;
         }
 
         /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
-        public string Uri { get; set; }
+        public string SourceUri { get; set; }
 
         /// <summary> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </summary>
         public ResourceIdentifier StorageAccountId { get; set; }

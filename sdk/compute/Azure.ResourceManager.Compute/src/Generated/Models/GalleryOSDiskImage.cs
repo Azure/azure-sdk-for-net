@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="GalleryOSDiskImage"/>. </summary>
         /// <param name="sizeInGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
-        /// <param name="source"> The source for the disk image. </param>
+        /// <param name="gallerySource"> The source for the disk image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryOSDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryDiskImageSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sizeInGB, hostCaching, source, additionalBinaryDataProperties)
+        internal GalleryOSDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryDiskImageSource gallerySource, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sizeInGB, hostCaching, gallerySource, additionalBinaryDataProperties)
         {
         }
     }
