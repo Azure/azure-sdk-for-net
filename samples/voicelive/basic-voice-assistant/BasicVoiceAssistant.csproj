@@ -2,8 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>BasicVoiceAssistant</AssemblyName>
@@ -25,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Azure.AI.VoiceLive.csproj" />
+    <ProjectReference Include="..\..\..\sdk\voicelive\Azure.AI.VoiceLive\src\Azure.AI.VoiceLive.csproj" />
   </ItemGroup>
 
   <ItemGroup>
