@@ -5,9 +5,6 @@ parameters:
   - name: DiffDirectory
     type: string
     default: $(Build.ArtifactStagingDirectory)/CodeownersPrDiff
-  - name: Artifacts
-    type: object
-    default: []
   - name: Repo
     type: string
     default: $(Build.Repository.Name)
@@ -47,7 +44,6 @@ steps:
           -AzsdkPath '$(AZSDK)'
           -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
           -SdkTypes ${{ join(',', parameters.SdkTypes) }}
-          -ArtifactsJson '${{ convertToJson(parameters.Artifacts) }}'
           -Repo '${{ parameters.Repo }}'
           -PrDiffFile '${{ parameters.DiffDirectory }}/diff.json'
         workingDirectory: $(Build.SourcesDirectory)
@@ -63,6 +59,5 @@ steps:
           -AzsdkPath '$(AZSDK)'
           -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
           -SdkTypes ${{ join(',', parameters.SdkTypes) }}
-          -ArtifactsJson '${{ convertToJson(parameters.Artifacts) }}'
           -Repo '${{ parameters.Repo }}'
         workingDirectory: $(Build.SourcesDirectory)

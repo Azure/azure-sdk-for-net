@@ -4,7 +4,7 @@ Validates CODEOWNERS coverage for package directories described by package-info 
 
 .DESCRIPTION
 Reads package-info JSON files from a directory and runs `azsdk config codeowners check-package`
-for each eligible package directory. Packages can be excluded by artifact metadata or SDK type.
+for each eligible package directory. Packages can be excluded by package-info artifact details or SDK type.
 
 When a PR diff file is supplied, the script applies PR-aware behavior:
 - packages with no direct file changes under their package directory are skipped,
@@ -24,10 +24,6 @@ or downloaded from a pipeline artifact such as `PackageInfo`.
 Array of SDK types that should be validated. Package-info entries whose `SdkType` is not in this
 list are skipped.
 
-.PARAMETER ArtifactsJson
-JSON string describing the pipeline artifacts for the current build. Artifacts marked with
-`skipCodeownersVerification` are excluded from validation.
-
 .PARAMETER Repo
 Repository name passed through to the AZSDK CLI for CODEOWNERS cache lookup.
 
@@ -45,7 +41,6 @@ pwsh -File eng/common/scripts/Test-CodeownersForArtifacts.ps1 `
   -AzsdkPath "$(AZSDK)" `
   -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
   -SdkTypes @('client', 'compat', 'data', 'functions', 'datamovement') `
-  -ArtifactsJson '[]' `
   -Repo 'Azure/azure-sdk-for-net'
 
 .EXAMPLE
@@ -53,7 +48,6 @@ pwsh -File eng/common/scripts/Test-CodeownersForArtifacts.ps1 `
   -AzsdkPath "$(AZSDK)" `
   -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
   -SdkTypes @('client', 'compat', 'data', 'functions', 'datamovement') `
-  -ArtifactsJson '[]' `
   -Repo 'Azure/azure-sdk-for-net' `
   -PrDiffFile "$(Build.ArtifactStagingDirectory)/CodeownersPrDiff/diff.json" `
   -TargetCommittish 'origin/main'
@@ -63,7 +57,6 @@ param(
     [string] $AzsdkPath,
     [string] $PackageInfoDirectory,
     [array] $SdkTypes,
-    [string] $ArtifactsJson,
     [string] $Repo,
     [string] $PrDiffFile,
     [string] $TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
@@ -149,8 +142,6 @@ function shouldSkipCodeownersInPrContext([PSCustomObject] $PackageProperties, [P
 }
 
 $failedPackages = @()
-$excludedArtifacts = @()
-$artifacts = $ArtifactsJson | ConvertFrom-Json
 $prDiff = $null
 $isPrCheck = $false
 
@@ -165,20 +156,14 @@ if ($PrDiffFile) {
     $isPrCheck = $true
 }
 
-foreach ($artifact in $artifacts) {
-    if ($artifact.PSObject.Properties.Name -contains "skipCodeownersVerification" -and $artifact.skipCodeownersVerification) {
-        $excludedArtifacts += $artifact.Name
-    }
-}
-
-Write-Host "Excluded artifacts: $($excludedArtifacts -join ', ')"
 Write-Host "SDK types to validate: $($SdkTypes -join ', ')"
 
 foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter '*.json' -File) {
     $pkgProperties = Get-Content -Raw -Path $pkgPropertiesFile | ConvertFrom-Json
+    $artifactDetails = $pkgProperties.ArtifactDetails
 
-    if ($excludedArtifacts -contains $pkgProperties.Name) {
-        Write-Host "Skipping package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath) because it is in the list of artifacts to exclude from validation."
+    if ($artifactDetails -and $artifactDetails.PSObject.Properties['skipCodeownersVerification'] -and $artifactDetails.skipCodeownersVerification) {
+        Write-Host "Skipping package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath) because package info marks it to skip CODEOWNERS verification."
         continue
     }
     if ($SdkTypes -notcontains $pkgProperties.SdkType) {
