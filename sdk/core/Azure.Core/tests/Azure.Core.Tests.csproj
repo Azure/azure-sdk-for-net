@@ -2,8 +2,9 @@
   <PropertyGroup>
     <ProjectGuid>{84491222-6C36-4FA7-BBAE-1FA804129151}</ProjectGuid>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>$(DefineConstants);HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
+    <DefineConstants>$(DefineConstants);HAS_INTERNALS_VISIBLE_CORE;IDENTITY_TESTS</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>$(NoWarn);0618;SCME0002</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,12 +20,17 @@
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="System.Linq.AsyncEnumerable" />
     <PackageReference Include="Polly" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="common\Azure.Core.Tests.Common.csproj" />
     <ProjectReference Include="..\src\Azure.Core.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Identity\Data\*" Link="Data\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <ContentWithTargetPath Include="Identity\Data\*" Link="Data\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" TargetPath="certs\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\Multipart\*.cs" LinkBase="Shared\Multipart" />

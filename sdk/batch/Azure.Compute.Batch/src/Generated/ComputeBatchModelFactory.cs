@@ -306,12 +306,12 @@ namespace Azure.Compute.Batch
 
         /// <summary> The Customer Managed Key reference to encrypt the Disk. </summary>
         /// <param name="identityReference"> The reference of one of the pool identities to encrypt Disk. This identity will be used to access the KeyVault. </param>
-        /// <param name="keyUrl"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
+        /// <param name="keyUri"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of the Disk Encryption to the latest key version. Default is false. </param>
         /// <returns> A new <see cref="Batch.DiskCustomerManagedKey"/> instance for mocking. </returns>
-        public static DiskCustomerManagedKey DiskCustomerManagedKey(BatchPoolIdentityReference identityReference = default, Uri keyUrl = default, bool? rotationToLatestKeyVersionEnabled = default)
+        public static DiskCustomerManagedKey DiskCustomerManagedKey(BatchPoolIdentityReference identityReference = default, Uri keyUri = default, bool? rotationToLatestKeyVersionEnabled = default)
         {
-            return new DiskCustomerManagedKey(identityReference, keyUrl, rotationToLatestKeyVersionEnabled, additionalBinaryDataProperties: null);
+            return new DiskCustomerManagedKey(identityReference, keyUri, rotationToLatestKeyVersionEnabled, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The reference of one of the pool identities to encrypt Disk. This identity will be used to access the key vault. </summary>

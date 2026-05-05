@@ -74,6 +74,11 @@ namespace Azure.Identity
                 pubAppBuilder.WithInstanceDiscovery(false);
             }
 
+            if (AdditionalQueryParameters != null)
+            {
+                pubAppBuilder.WithExtraQueryParameters(AdditionalQueryParameters.ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.Value, kvp.Value.IncludeInCacheKey)));
+            }
+
             return new ValueTask<IPublicClientApplication>(pubAppBuilder.Build());
         }
 

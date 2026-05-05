@@ -78,10 +78,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(IdentityReference, options);
             }
-            if (Optional.IsDefined(KeyUrl))
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUrl"u8);
-                writer.WriteStringValue(KeyUrl.AbsoluteUri);
+                writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
@@ -131,7 +131,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             BatchPoolIdentityReference identityReference = default;
-            Uri keyUrl = default;
+            Uri keyUri = default;
             bool? rotationToLatestKeyVersionEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    keyUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    keyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("rotationToLatestKeyVersionEnabled"u8))
@@ -168,7 +168,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiskCustomerManagedKey(identityReference, keyUrl, rotationToLatestKeyVersionEnabled, additionalBinaryDataProperties);
+            return new DiskCustomerManagedKey(identityReference, keyUri, rotationToLatestKeyVersionEnabled, additionalBinaryDataProperties);
         }
     }
 }

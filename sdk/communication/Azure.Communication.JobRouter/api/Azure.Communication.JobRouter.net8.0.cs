@@ -580,6 +580,14 @@ namespace Azure.Communication.JobRouter
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateQueueAsync(string queueId, Azure.Core.RequestContent content, Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class JobRouterAdministrationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddJobRouterAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddJobRouterAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Communication.JobRouter.JobRouterAdministrationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedJobRouterAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedJobRouterAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Communication.JobRouter.JobRouterAdministrationClientSettings> configureSettings) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class JobRouterAdministrationClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public JobRouterAdministrationClientSettings() { }
@@ -685,6 +693,14 @@ namespace Azure.Communication.JobRouter
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.JobRouter.JobRouterClient, Azure.Communication.JobRouter.JobRouterClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.Core.TokenCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.JobRouter.JobRouterClient, Azure.Communication.JobRouter.JobRouterClientOptions> AddJobRouterClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class JobRouterClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddJobRouterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddJobRouterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Communication.JobRouter.JobRouterClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedJobRouterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedJobRouterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Communication.JobRouter.JobRouterClientSettings> configureSettings) { throw null; }
     }
     public partial class JobRouterClientOptions : Azure.Core.ClientOptions
     {

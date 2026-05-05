@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (OccurrenceExtensionResourceData item in Value)
+            foreach (OccurrenceExtensionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IList<OccurrenceExtensionResourceData> value = default;
+            IList<OccurrenceExtensionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<OccurrenceExtensionResourceData> array = new List<OccurrenceExtensionResourceData>();
+                    List<OccurrenceExtensionData> array = new List<OccurrenceExtensionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OccurrenceExtensionResourceData.DeserializeOccurrenceExtensionResourceData(item, options));
+                        array.Add(OccurrenceExtensionData.DeserializeOccurrenceExtensionData(item, options));
                     }
                     value = array;
                     continue;

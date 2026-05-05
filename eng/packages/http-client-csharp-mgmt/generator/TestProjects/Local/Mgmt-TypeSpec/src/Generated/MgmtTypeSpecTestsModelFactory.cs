@@ -1724,6 +1724,70 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 provisioningState is null && description is null ? default : new CycleTestConnectionProperties(provisioningState, description, null));
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="eventGridTopicEndpoint"> Topic endpoint. </param>
+        /// <returns> A new <see cref="Tests.EventGridTopicData"/> instance for mocking. </returns>
+        public static EventGridTopicData EventGridTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eventGridTopicEndpoint = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EventGridTopicData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                eventGridTopicEndpoint is null ? default : new EventGridTopicProperties(eventGridTopicEndpoint, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="eventGridDomainEndpoint"> Domain endpoint. </param>
+        /// <returns> A new <see cref="Tests.EventGridDomainData"/> instance for mocking. </returns>
+        public static EventGridDomainData EventGridDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eventGridDomainEndpoint = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EventGridDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                eventGridDomainEndpoint is null ? default : new EventGridDomainProperties(eventGridDomainEndpoint, null));
+        }
+
+        /// <summary> EventGrid private endpoint connection model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.EventGridPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static EventGridPrivateEndpointConnectionData EventGridPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventGridPrivateEndpointConnectionProperties properties = default)
+        {
+            return new EventGridPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>

@@ -315,6 +315,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation ChinaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth2 { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth3 { get { throw null; } }
+        public static Azure.Core.AzureLocation DenmarkEast { get { throw null; } }
         public string? DisplayName { get { throw null; } }
         public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS { get { throw null; } }
@@ -1632,6 +1633,7 @@ namespace Azure.Identity
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
+        public System.Collections.Generic.IDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get { throw null; } }
         public System.Uri AuthorityHost { get { throw null; } set { } }
         public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
         public bool IsUnsafeSupportLoggingEnabled { get { throw null; } set { } }

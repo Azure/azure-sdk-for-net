@@ -4,9 +4,14 @@
 
 ### Features Added
 
+- Added `AzureLocation.DenmarkEast` for the Denmark East Azure region.
+- Added experimental `AdditionalQueryParameters` property to `TokenCredentialOptions` to enable forwarding extra query string parameters to MSAL during authentication.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed `AzureDeveloperCliCredential` to correctly parse error messages from Azure Developer CLI v1.23.7 and later, which previously caused raw JSON to surface in `AuthenticationFailedException` instead of the underlying error text.
 
 ### Other Changes
 
