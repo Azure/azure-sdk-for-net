@@ -208,10 +208,10 @@
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/    @AikoBB @Azure/acs-identity-sdk @maximrytych-ms @mjafferi-msft
+/sdk/communication/Azure.Communication.Common/    @anjulgarg @Joeleniqs @tsohoni-msft
 
 # PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/    @AikoBB @Azure/acs-identity-sdk @maximrytych-ms @mjafferi-msft
+/sdk/communication/Azure.Communication.Identity/    @anjulgarg @Joeleniqs @tsohoni-msft
 
 # PRLabel: %Communication - Phone Numbers
 /sdk/communication/Azure.Communication.PhoneNumbers/    @besh2014 @gfeitosa-msft @ihuseynov-msft @ilyapaliakou-msft @kirill-linnik @phermanov-msft
