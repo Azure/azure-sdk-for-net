@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
@@ -13,6 +13,8 @@
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
     <AotAnalyzersOptOut>true</AotAnalyzersOptOut>
+    <!-- NU1603: a referenced dev-feed package version was replaced by a newer alpha. Suppressed to keep restore green when alpha builds rotate. -->
+    <NoWarn>$(NoWarn);NU1603</NoWarn>
   </PropertyGroup>
 
   <!--Conditionally define the PREVIEW_FEATURE_FLAG constant if the version is pre-release-->

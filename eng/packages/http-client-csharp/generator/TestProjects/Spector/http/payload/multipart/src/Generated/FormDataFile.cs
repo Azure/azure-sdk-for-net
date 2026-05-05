@@ -13,24 +13,102 @@ using Azure.Core.Pipeline;
 
 namespace Payload.MultiPart._FormData.File
 {
+    /// <summary></summary>
     public partial class FormDataFile
     {
-        protected FormDataFile() => throw null;
+        private readonly Uri _endpoint;
 
-        internal FormDataFile(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        protected FormDataFile()
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        internal FormDataFile(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+        }
 
-        public virtual Response UploadFileSpecificContentType(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Task<Response> UploadFileSpecificContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Response UploadFileRequiredFilename(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual Response UploadFileSpecificContentType(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FormDataFile.UploadFileSpecificContentType");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateUploadFileSpecificContentTypeRequest(content, contentType, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
 
-        public virtual Task<Response> UploadFileRequiredFilenameAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual async Task<Response> UploadFileSpecificContentTypeAsync(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FormDataFile.UploadFileSpecificContentType");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateUploadFileSpecificContentTypeRequest(content, contentType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
 
-        public virtual Response UploadFileArray(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual Response UploadFileRequiredFilename(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FormDataFile.UploadFileRequiredFilename");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateUploadFileRequiredFilenameRequest(content, contentType, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
 
-        public virtual Task<Response> UploadFileArrayAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+        public virtual async Task<Response> UploadFileRequiredFilenameAsync(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FormDataFile.UploadFileRequiredFilename");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateUploadFileRequiredFilenameRequest(content, contentType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
+
+        public virtual Response UploadFileArray(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FormDataFile.UploadFileArray");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateUploadFileArrayRequest(content, contentType, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
+
+        public virtual async Task<Response> UploadFileArrayAsync(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FormDataFile.UploadFileArray");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateUploadFileArrayRequest(content, contentType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
     }
 }

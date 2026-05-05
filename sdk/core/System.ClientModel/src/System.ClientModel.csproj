@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Contains building blocks for clients that call cloud services.</Description>
@@ -11,6 +11,8 @@
     <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net10.0'">net8.0</ApiCompatBaselineTargetFramework>
+    <!-- NU1603: a referenced dev-feed package version was replaced by a newer alpha. Suppressed to keep restore green when alpha builds rotate. -->
+    <NoWarn>$(NoWarn);NU1603</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

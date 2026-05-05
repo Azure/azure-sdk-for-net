@@ -11,11 +11,16 @@ using Microsoft.Extensions.Configuration;
 
 namespace Payload.MultiPart
 {
+    /// <summary> Client options for <see cref="MultiPartClient"/>. </summary>
     public partial class MultiPartClientOptions : ClientOptions
     {
-        public MultiPartClientOptions() => throw null;
+        public MultiPartClientOptions()
+        {
+        }
 
         [Experimental("SCME0002")]
-        internal MultiPartClientOptions(IConfigurationSection section) : base(section, null) => throw null;
+        internal MultiPartClientOptions(IConfigurationSection section) : base(section, null)
+        {
+        }
     }
 }
