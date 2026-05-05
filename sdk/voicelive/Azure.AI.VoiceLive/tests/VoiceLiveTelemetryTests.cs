@@ -116,10 +116,9 @@ namespace Azure.AI.VoiceLive.Tests
         // ─── Construction helpers ─────────────────────────────────────────────────
 
         private static VoiceLiveTracer CreateTracer(
-            string endpoint = "wss://example.voicelive.azure.com/realtime",
-            bool? enableContentRecording = null)
+            string endpoint = "wss://example.voicelive.azure.com/realtime")
         {
-            return new VoiceLiveTracer(new Uri(endpoint), enableContentRecording);
+            return new VoiceLiveTracer(new Uri(endpoint), null);
         }
 
         private static TestableVoiceLiveSession CreateSession(out FakeWebSocket socket)
@@ -278,45 +277,6 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.That(connectSpan, Is.Not.Null);
             Assert.That(connectSpan!.GetTag(Keys.GenAiRequestTemperature), Is.EqualTo("0.8"));
             Assert.That(connectSpan.GetTag(Keys.GenAiRequestMaxOutputTokens), Is.EqualTo("4096"));
-        }
-
-        [Test]
-        public void AddSendContentEvent_WhenEnabled_AddsActivityEvent()
-        {
-            using var capturer = new ActivityCapturer();
-            var tracer = new VoiceLiveTracer(new Uri("wss://example.azure.com"), enableContentRecordingOverride: true);
-            tracer.StartConnectActivity();
-
-            var sendActivity = tracer.StartSendActivity("session.update");
-            tracer.AddSendContentEvent(sendActivity, "session.update", @"{""type"":""session.update""}");
-            sendActivity?.Stop();
-            tracer.EndConnectActivity();
-
-            var span = capturer.Find("send session.update");
-            Assert.That(span, Is.Not.Null);
-            Assert.That(span!.Events.Count, Is.EqualTo(1));
-            Assert.That(span.Events[0].Name, Is.EqualTo("gen_ai.input.messages"));
-        }
-
-        [Test]
-        public void AddSendContentEvent_WhenDisabled_NoActivityEvent()
-        {
-            using var capturer = new ActivityCapturer();
-            var tracer = new VoiceLiveTracer(new Uri("wss://example.azure.com"), enableContentRecordingOverride: false);
-            tracer.StartConnectActivity();
-
-            var sendActivity = tracer.StartSendActivity("session.update");
-            tracer.AddSendContentEvent(sendActivity, "session.update", @"{""type"":""session.update""}");
-            sendActivity?.Stop();
-            tracer.EndConnectActivity();
-
-            var span = capturer.Find("send session.update");
-            Assert.That(span, Is.Not.Null);
-            Assert.That(span!.Events.Count, Is.EqualTo(1),
-                "event is always emitted but without content when recording is disabled");
-            var contentTag = span.Events[0].Tags.FirstOrDefault(t => t.Key == Keys.GenAiEventContent);
-            Assert.That(contentTag.Value, Is.Null,
-                "content events should be suppressed when recording is disabled");
         }
 
         // ─── Recv spans ───────────────────────────────────────────────────────────
@@ -734,50 +694,6 @@ namespace Azure.AI.VoiceLive.Tests
         }
 
         [Test]
-        public void EmitSystemInstructionsEvent_WhenContentEnabled_AddsEventToConnectSpan()
-        {
-            using var capturer = new ActivityCapturer();
-            var tracer = new VoiceLiveTracer(new Uri("wss://example.azure.com"), enableContentRecordingOverride: true);
-            tracer.StartConnectActivity();
-
-            var sendActivity = tracer.StartSendActivity("session.update");
-            using var doc = JsonDocument.Parse(
-                @"{""type"":""session.update"",""session"":{""instructions"":""Be concise.""}}");
-            tracer.EnrichSendSessionUpdate(sendActivity, doc.RootElement);
-            sendActivity?.Stop();
-            tracer.EndConnectActivity();
-
-            var connectSpan = capturer.Find("connect");
-            Assert.That(connectSpan, Is.Not.Null);
-            var instrEvent = connectSpan!.Events.FirstOrDefault(e => e.Name == Keys.SystemInstructionEventName);
-            Assert.That(instrEvent.Name, Is.EqualTo(Keys.SystemInstructionEventName), "gen_ai.system.instructions event must be added");
-            var content = instrEvent.Tags.FirstOrDefault(t => t.Key == Keys.GenAiEventContent).Value as string;
-            Assert.That(content, Does.Contain("Be concise."));
-            Assert.That(content, Does.StartWith("[{\"role\":\"system\""));
-        }
-
-        [Test]
-        public void EmitSystemInstructionsEvent_WhenContentDisabled_NoEventOnConnectSpan()
-        {
-            using var capturer = new ActivityCapturer();
-            var tracer = new VoiceLiveTracer(new Uri("wss://example.azure.com"), enableContentRecordingOverride: false);
-            tracer.StartConnectActivity();
-
-            var sendActivity = tracer.StartSendActivity("session.update");
-            using var doc = JsonDocument.Parse(
-                @"{""type"":""session.update"",""session"":{""instructions"":""Be concise.""}}");
-            tracer.EnrichSendSessionUpdate(sendActivity, doc.RootElement);
-            sendActivity?.Stop();
-            tracer.EndConnectActivity();
-
-            var connectSpan = capturer.Find("connect");
-            Assert.That(connectSpan, Is.Not.Null);
-            bool hasInstrEvent = connectSpan!.Events.Any(e => e.Name == Keys.SystemInstructionEventName);
-            Assert.That(hasInstrEvent, Is.False,
-                "gen_ai.system.instructions event must not be emitted when content recording is off");
-        }
-
-        [Test]
         public void EnrichRecvSessionEvent_SetsAgentIdAndThreadIdOnConnectSpan()
         {
             using var capturer = new ActivityCapturer();
@@ -923,50 +839,6 @@ namespace Azure.AI.VoiceLive.Tests
         }
 
         [Test]
-        public void AddRateLimitsEvent_WhenContentEnabled_AddsEventWithPayload()
-        {
-            using var capturer = new ActivityCapturer();
-            var tracer = new VoiceLiveTracer(new Uri("wss://example.azure.com"), enableContentRecordingOverride: true);
-            tracer.StartConnectActivity();
-
-            var recvActivity = tracer.StartRecvActivity("rate_limits.updated");
-            using var doc = JsonDocument.Parse(
-                @"{""type"":""rate_limits.updated"",""rate_limits"":[{""name"":""requests"",""limit"":100,""remaining"":99}]}");
-            tracer.AddRateLimitsEvent(recvActivity, doc.RootElement);
-            recvActivity?.Stop();
-            tracer.EndConnectActivity();
-
-            var span = capturer.Find("recv rate_limits.updated");
-            Assert.That(span, Is.Not.Null);
-            Assert.That(span!.Events.Count, Is.EqualTo(1));
-            Assert.That(span.Events[0].Name, Is.EqualTo(Keys.VoiceRateLimitsEventName));
-            var content = span.Events[0].Tags.FirstOrDefault(t => t.Key == Keys.GenAiEventContent).Value as string;
-            Assert.That(content, Does.Contain("requests"));
-        }
-
-        [Test]
-        public void AddRateLimitsEvent_WhenContentDisabled_AddsEventWithoutPayload()
-        {
-            using var capturer = new ActivityCapturer();
-            var tracer = new VoiceLiveTracer(new Uri("wss://example.azure.com"), enableContentRecordingOverride: false);
-            tracer.StartConnectActivity();
-
-            var recvActivity = tracer.StartRecvActivity("rate_limits.updated");
-            using var doc = JsonDocument.Parse(
-                @"{""type"":""rate_limits.updated"",""rate_limits"":[{""name"":""requests"",""limit"":100,""remaining"":99}]}");
-            tracer.AddRateLimitsEvent(recvActivity, doc.RootElement);
-            recvActivity?.Stop();
-            tracer.EndConnectActivity();
-
-            var span = capturer.Find("recv rate_limits.updated");
-            Assert.That(span, Is.Not.Null);
-            Assert.That(span!.Events.Count, Is.EqualTo(1), "event must be emitted even without content");
-            Assert.That(span.Events[0].Name, Is.EqualTo(Keys.VoiceRateLimitsEventName));
-            var content = span.Events[0].Tags.FirstOrDefault(t => t.Key == Keys.GenAiEventContent).Value;
-            Assert.That(content, Is.Null, "payload must be omitted when content recording is off");
-        }
-
-        [Test]
         public async Task GetUpdatesAsync_ErrorEvent_SetsErrorStatusOnRecvSpan()
         {
             using var capturer = new ActivityCapturer();
@@ -1107,26 +979,6 @@ namespace Azure.AI.VoiceLive.Tests
             using var doc = JsonDocument.Parse(@"{""type"":""session.created"",""session"":{""id"":""s1""}}");
             string result = VoiceLiveTracer.ExtractDoneEventContent("session.created", doc.RootElement);
             Assert.That(result, Is.Null);
-        }
-
-        [Test]
-        public void AddRecvContentEvent_WithForceContent_EmitsContentWhenRecordingDisabled()
-        {
-            using var capturer = new ActivityCapturer();
-            var tracer = new VoiceLiveTracer(new Uri("wss://example.azure.com"), enableContentRecordingOverride: false);
-            tracer.StartConnectActivity();
-
-            var recvActivity = tracer.StartRecvActivity("response.text.done");
-            tracer.AddRecvContentEvent(recvActivity, "response.text.done", jsonContent: null, forceContent: "{\"text\":\"hello\"}");
-            recvActivity?.Stop();
-            tracer.EndConnectActivity();
-
-            var span = capturer.Find("recv response.text.done");
-            Assert.That(span, Is.Not.Null);
-            Assert.That(span!.Events.Count, Is.EqualTo(1));
-            var content = span.Events[0].Tags.FirstOrDefault(t => t.Key == Keys.GenAiEventContent).Value as string;
-            Assert.That(content, Is.EqualTo("{\"text\":\"hello\"}"),
-                "forceContent is emitted unconditionally even when content recording is disabled");
         }
 
         [Test]

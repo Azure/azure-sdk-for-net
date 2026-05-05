@@ -2,23 +2,6 @@
 
 This sample demonstrates how to enable recording of message content (prompts, completions, event payloads) inside span attributes. Content is redacted by default to avoid leaking sensitive data into telemetry backends.
 
-## Enable content recording per client
-
-Pass `EnableContentRecording = true` through `VoiceLiveClientOptions` to capture message payloads for a specific client instance:
-
-```C# Snippet:VoiceLiveContentRecording
-// Option B: enable content recording per-client via VoiceLiveClientOptions.
-// To use option A instead, set OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
-// in the environment before starting the process (the env var is read once, lazily).
-var clientOptions = new VoiceLiveClientOptions { EnableContentRecording = true };
-```
-
-Then pass `clientOptions` when creating the `VoiceLiveClient`:
-
-```csharp
-var client = new VoiceLiveClient(endpoint, credential, clientOptions);
-```
-
 ## Enable content recording process-wide
 
 To enable content recording for all clients without modifying code, set the environment variable before starting the process:

@@ -102,7 +102,7 @@ namespace Azure.AI.VoiceLive
 
             // Initialize OpenTelemetry tracer; the tracer is cheap to construct and guards itself
             // with ActivitySource.HasListeners() so there is zero overhead when OTel is not configured.
-            _tracer = new VoiceLiveTracer(endpoint, parentClient.Options.EnableContentRecording);
+            _tracer = new VoiceLiveTracer(endpoint, null);
         }
 
         /// <summary>

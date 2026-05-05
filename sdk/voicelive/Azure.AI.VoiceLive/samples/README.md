@@ -47,21 +47,6 @@ var client = new VoiceLiveClient(new Uri(endpoint), credential);
 var session = await client.StartSessionAsync(model);
 ```
 
-### Enable content recording
-
-Message payloads are **not** captured by default. Two ways to enable:
-
-```csharp
-// Option A: environment variable (process-wide)
-// $env:OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT = "true"
-
-// Option B: per-client option (preferred for fine-grained control)
-var options = new VoiceLiveClientOptions { EnableContentRecording = true };
-var client = new VoiceLiveClient(new Uri(endpoint), credential, options);
-```
-
-> **Warning:** Content recording may capture personal data (user speech transcripts, AI responses). Only enable in development or controlled environments.
-
 ### Disable tracing
 
 Dispose the `TracerProvider` to stop exporting spans:
@@ -155,7 +140,6 @@ connect (parent — open for the entire session lifetime)
 | [Sample2_ConsoleTracing.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample2_ConsoleTracing.md) | Console exporter — spans print to stdout |
 | [Sample3_AzureMonitorTracing.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample3_AzureMonitorTracing.md) | Azure Monitor / Application Insights exporter |
 | [Sample4_CustomAttributes.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample4_CustomAttributes.md) | Custom `BaseProcessor<Activity>` to inject app-specific tags |
-| [Sample5_ContentRecording.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Sample5_ContentRecording.md) | Enable message content recording via `VoiceLiveClientOptions` |
 
 ### Console exporter (development)
 
@@ -214,7 +198,7 @@ using var tracerProvider = Sdk.CreateTracerProviderBuilder()
 |---|---|---|
 | No spans appear | `AddSource("Azure.AI.VoiceLive")` not called | Add `.AddSource("Azure.AI.VoiceLive")` to your `TracerProviderBuilder` |
 | Spans created but not exported | No exporter configured | Add `.AddConsoleExporter()` or another exporter |
-| Content not in span events | Content recording off by default | Set `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true` or `VoiceLiveClientOptions { EnableContentRecording = true }` |
+| Content not in span events | Content recording off by default | Set `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true` |
 | Azure Monitor spans missing | Wrong or missing connection string | Set `APPLICATIONINSIGHTS_CONNECTION_STRING` |
 | `InvalidOperationException` on startup | Missing endpoint env var | Set `AZURE_VOICELIVE_ENDPOINT` |
 

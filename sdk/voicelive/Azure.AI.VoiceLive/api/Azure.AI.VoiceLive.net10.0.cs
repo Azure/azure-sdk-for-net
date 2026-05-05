@@ -2320,7 +2320,6 @@ namespace Azure.AI.VoiceLive
     {
         public VoiceLiveClientOptions(Azure.AI.VoiceLive.VoiceLiveClientOptions.ServiceVersion version = Azure.AI.VoiceLive.VoiceLiveClientOptions.ServiceVersion.V2025_10_01) { }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
-        public bool? EnableContentRecording { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
         public enum ServiceVersion
         {
