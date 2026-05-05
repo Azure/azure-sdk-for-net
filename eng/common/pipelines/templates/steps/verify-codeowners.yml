@@ -2,6 +2,9 @@ parameters:
   - name: ArtifactPath
     type: string
     default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: DiffDirectory
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/CodeownersPrDiff
   - name: Artifacts
     type: object
     default: []
@@ -22,15 +25,44 @@ steps:
     parameters:
       Condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
 
-  - task: PowerShell@2
-    displayName: Verify Codeowners
-    condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
-    inputs:
-      pwsh: true
-      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Test-CodeownersForArtifacts.ps1
-      arguments: >-
-        -AzsdkPath '$(AZSDK)'
-        -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
-        -SdkTypes ${{ join(',', parameters.SdkTypes) }}
-        -ArtifactsJson '${{ convertToJson(parameters.Artifacts) }}'
-        -Repo '${{ parameters.Repo }}'
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    - task: PowerShell@2
+      displayName: Generate PR Diff for Codeowners
+      condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Generate-PR-Diff.ps1
+        arguments: >-
+          -ArtifactPath '${{ parameters.DiffDirectory }}'
+          -TargetPath '$(Build.SourcesDirectory)'
+        workingDirectory: $(Build.SourcesDirectory)
+
+    - task: PowerShell@2
+      displayName: Verify Codeowners
+      condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Test-CodeownersForArtifacts.ps1
+        arguments: >-
+          -AzsdkPath '$(AZSDK)'
+          -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
+          -SdkTypes ${{ join(',', parameters.SdkTypes) }}
+          -ArtifactsJson '${{ convertToJson(parameters.Artifacts) }}'
+          -Repo '${{ parameters.Repo }}'
+          -PrDiffFile '${{ parameters.DiffDirectory }}/diff.json'
+        workingDirectory: $(Build.SourcesDirectory)
+
+  - ${{ else }}:
+    - task: PowerShell@2
+      displayName: Verify Codeowners
+      condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Test-CodeownersForArtifacts.ps1
+        arguments: >-
+          -AzsdkPath '$(AZSDK)'
+          -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
+          -SdkTypes ${{ join(',', parameters.SdkTypes) }}
+          -ArtifactsJson '${{ convertToJson(parameters.Artifacts) }}'
+          -Repo '${{ parameters.Repo }}'
+        workingDirectory: $(Build.SourcesDirectory)
