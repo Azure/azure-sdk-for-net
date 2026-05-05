@@ -2094,15 +2094,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new MigrateToVirtualMachineScaleSetInput(new ComputeWriteableSubResourceData(virtualMachineScaleSetFlexibleId, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The ComputeSubResourceDataWithColocationStatus. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="colocationStatus"> Describes colocation status of a resource in the Proximity Placement Group. </param>
-        /// <returns> A new <see cref="Models.ComputeSubResourceDataWithColocationStatus"/> instance for mocking. </returns>
-        public static ComputeSubResourceDataWithColocationStatus ComputeSubResourceDataWithColocationStatus(ResourceIdentifier id = default, InstanceViewStatus colocationStatus = default)
-        {
-            return new ComputeSubResourceDataWithColocationStatus(id, additionalBinaryDataProperties: null, colocationStatus);
-        }
-
         /// <summary> Specifies information about the proximity placement group. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ProximityPlacementGroupPatch"/> instance for mocking. </returns>
@@ -2649,50 +2640,12 @@ namespace Azure.ResourceManager.Compute.Models
                     null));
         }
 
-        /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
-        /// <param name="publisher"> The publisher ID. </param>
-        /// <param name="name"> The plan ID. </param>
-        /// <param name="product"> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </param>
-        /// <returns> A new <see cref="Models.PurchasePlan"/> instance for mocking. </returns>
-        public static PurchasePlan PurchasePlan(string publisher = default, string name = default, string product = default)
-        {
-            return new PurchasePlan(publisher, name, product, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Contains the data disk images information. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <returns> A new <see cref="Models.DataDiskImage"/> instance for mocking. </returns>
         public static DataDiskImage DataDiskImage(int? lun = default)
         {
             return new DataDiskImage(lun, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Specifies additional capabilities supported by the image. </summary>
-        /// <param name="name"> The name of the feature. </param>
-        /// <param name="value"> The corresponding value for the feature. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineImageFeature"/> instance for mocking. </returns>
-        public static VirtualMachineImageFeature VirtualMachineImageFeature(string name = default, string value = default)
-        {
-            return new VirtualMachineImageFeature(name, value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Describes image deprecation status properties on the image. </summary>
-        /// <param name="imageState"> Describes the state of the image. </param>
-        /// <param name="scheduledDeprecationOn"> The time, in future, at which this image will be marked as deprecated. This scheduled time is chosen by the Publisher. </param>
-        /// <param name="alternativeOption"> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </param>
-        /// <returns> A new <see cref="Models.ImageDeprecationStatus"/> instance for mocking. </returns>
-        public static ImageDeprecationStatus ImageDeprecationStatus(ImageState? imageState = default, DateTimeOffset? scheduledDeprecationOn = default, ImageAlternativeOption alternativeOption = default)
-        {
-            return new ImageDeprecationStatus(imageState, scheduledDeprecationOn, alternativeOption, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </summary>
-        /// <param name="alternativeType"> Describes the type of the alternative option. </param>
-        /// <param name="value"> Indicates the alternative option value specified by the Publisher. This is the Offer name when the type is Offer or the Plan name when the type is Plan. </param>
-        /// <returns> A new <see cref="Models.ImageAlternativeOption"/> instance for mocking. </returns>
-        public static ImageAlternativeOption ImageAlternativeOption(ImageAlternativeType? alternativeType = default, string value = default)
-        {
-            return new ImageAlternativeOption(alternativeType, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Api request input for LogAnalytics getRequestRateByInterval Api. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiskRestorePointData"/>. </summary>
-        internal DiskRestorePointData()
+        public DiskRestorePointData()
         {
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Properties of an incremental disk restore point. </summary>
-        internal DiskRestorePointProperties Properties { get; }
+        internal DiskRestorePointProperties Properties { get; set; }
 
         /// <summary> The timestamp of restorePoint creation. </summary>
         public DateTimeOffset? TimeCreated
@@ -74,6 +74,14 @@ namespace Azure.ResourceManager.Compute
             {
                 return Properties is null ? default : Properties.HyperVGeneration;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskRestorePointProperties();
+                }
+                Properties.HyperVGeneration = value;
+            }
         }
 
         /// <summary> Purchase plan information for the the image from which the OS disk was created. </summary>
@@ -83,6 +91,14 @@ namespace Azure.ResourceManager.Compute
             {
                 return Properties is null ? default : Properties.PurchasePlan;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskRestorePointProperties();
+                }
+                Properties.PurchasePlan = value;
+            }
         }
 
         /// <summary> List of supported capabilities for the image from which the OS disk was created. </summary>
@@ -91,6 +107,14 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties is null ? default : Properties.SupportedCapabilities;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskRestorePointProperties();
+                }
+                Properties.SupportedCapabilities = value;
             }
         }
 
@@ -128,6 +152,14 @@ namespace Azure.ResourceManager.Compute
             {
                 return Properties is null ? default : Properties.SupportsHibernation;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskRestorePointProperties();
+                }
+                Properties.SupportsHibernation = value;
+            }
         }
 
         /// <summary> Policy for accessing the disk via network. </summary>
@@ -136,6 +168,14 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties is null ? default : Properties.NetworkAccessPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskRestorePointProperties();
+                }
+                Properties.NetworkAccessPolicy = value;
             }
         }
 
@@ -146,6 +186,14 @@ namespace Azure.ResourceManager.Compute
             {
                 return Properties is null ? default : Properties.PublicNetworkAccess;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskRestorePointProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
         }
 
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
@@ -155,6 +203,14 @@ namespace Azure.ResourceManager.Compute
             {
                 return Properties is null ? default : Properties.DiskAccessId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskRestorePointProperties();
+                }
+                Properties.DiskAccessId = value;
+            }
         }
 
         /// <summary> Percentage complete for the background copy of disk restore point when source resource is from a different region. </summary>
@@ -163,6 +219,14 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties is null ? default : Properties.CompletionPercent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskRestorePointProperties();
+                }
+                Properties.CompletionPercent = value;
             }
         }
 
@@ -190,6 +254,14 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties is null ? default : Properties.SecurityProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskRestorePointProperties();
+                }
+                Properties.SecurityProfile = value;
             }
         }
 

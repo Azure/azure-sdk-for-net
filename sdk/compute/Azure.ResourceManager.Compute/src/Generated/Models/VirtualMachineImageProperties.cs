@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImageProperties"/>. </summary>
-        internal VirtualMachineImageProperties()
+        public VirtualMachineImageProperties()
         {
             DataDiskImages = new ChangeTrackingList<DataDiskImage>();
             Features = new ChangeTrackingList<VirtualMachineImageFeature>();
@@ -50,31 +50,31 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
-        public PurchasePlan Plan { get; }
+        public PurchasePlan Plan { get; set; }
 
         /// <summary> Contains the os disk image information. </summary>
-        internal OSDiskImage OSDiskImage { get; }
+        internal OSDiskImage OSDiskImage { get; set; }
 
         /// <summary> The list of data disk images information. </summary>
         public IList<DataDiskImage> DataDiskImages { get; } = new ChangeTrackingList<DataDiskImage>();
 
         /// <summary> Describes automatic OS upgrade properties on the image. </summary>
-        internal AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; }
+        internal AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; set; }
 
         /// <summary> Specifies the HyperVGeneration Type. </summary>
-        public HyperVGeneration? HyperVGeneration { get; }
+        public HyperVGeneration? HyperVGeneration { get; set; }
 
         /// <summary> Specifies disallowed configuration for the VirtualMachine created from the image. </summary>
-        internal DisallowedConfiguration Disallowed { get; }
+        internal DisallowedConfiguration Disallowed { get; set; }
 
         /// <summary> Gets the Features. </summary>
         public IList<VirtualMachineImageFeature> Features { get; } = new ChangeTrackingList<VirtualMachineImageFeature>();
 
         /// <summary> Specifies the Architecture Type. </summary>
-        public ArchitectureType? Architecture { get; }
+        public ArchitectureType? Architecture { get; set; }
 
         /// <summary> Describes image deprecation status properties on the image. </summary>
-        public ImageDeprecationStatus ImageDeprecationStatus { get; }
+        public ImageDeprecationStatus ImageDeprecationStatus { get; set; }
 
         /// <summary> The operating system of the osDiskImage. </summary>
         public SupportedOperatingSystemType? OSDiskImageOperatingSystem
@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Compute.Models
             get
             {
                 return OSDiskImage is null ? default : OSDiskImage.OperatingSystem;
+            }
+            set
+            {
+                OSDiskImage = value.HasValue ? new OSDiskImage(value.Value) : default;
             }
         }
 
@@ -92,6 +96,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return AutomaticOSUpgradeProperties is null ? default : AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported;
             }
+            set
+            {
+                AutomaticOSUpgradeProperties = value.HasValue ? new AutomaticOSUpgradeProperties(value.Value) : default;
+            }
         }
 
         /// <summary> VM disk types which are disallowed. </summary>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Compute.Models
             get
             {
                 return Disallowed is null ? default : Disallowed.VmDiskType;
+            }
+            set
+            {
+                if (Disallowed is null)
+                {
+                    Disallowed = new DisallowedConfiguration();
+                }
+                Disallowed.VmDiskType = value;
             }
         }
     }

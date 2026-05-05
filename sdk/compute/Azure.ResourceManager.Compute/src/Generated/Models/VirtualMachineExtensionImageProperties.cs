@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,8 +21,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="operatingSystem"> The operating system this extension supports. </param>
         /// <param name="computeRole"> The type of role (IaaS or PaaS) this extension supports. </param>
         /// <param name="handlerSchema"> The schema defined by publisher, where extension consumers should provide settings in a matching schema. </param>
-        internal VirtualMachineExtensionImageProperties(string operatingSystem, string computeRole, string handlerSchema)
+        /// <exception cref="ArgumentNullException"> <paramref name="operatingSystem"/>, <paramref name="computeRole"/> or <paramref name="handlerSchema"/> is null. </exception>
+        public VirtualMachineExtensionImageProperties(string operatingSystem, string computeRole, string handlerSchema)
         {
+            Argument.AssertNotNull(operatingSystem, nameof(operatingSystem));
+            Argument.AssertNotNull(computeRole, nameof(computeRole));
+            Argument.AssertNotNull(handlerSchema, nameof(handlerSchema));
+
             OperatingSystem = operatingSystem;
             ComputeRole = computeRole;
             HandlerSchema = handlerSchema;
@@ -45,18 +51,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The operating system this extension supports. </summary>
-        public string OperatingSystem { get; }
+        public string OperatingSystem { get; set; }
 
         /// <summary> The type of role (IaaS or PaaS) this extension supports. </summary>
-        public string ComputeRole { get; }
+        public string ComputeRole { get; set; }
 
         /// <summary> The schema defined by publisher, where extension consumers should provide settings in a matching schema. </summary>
-        public string HandlerSchema { get; }
+        public string HandlerSchema { get; set; }
 
         /// <summary> Whether the extension can be used on xRP VMScaleSets. By default existing extensions are usable on scalesets, but there might be cases where a publisher wants to explicitly indicate the extension is only enabled for CRP VMs but not VMSS. </summary>
-        public bool? VirtualMachineScaleSetEnabled { get; }
+        public bool? VirtualMachineScaleSetEnabled { get; set; }
 
         /// <summary> Whether the handler can support multiple extensions. </summary>
-        public bool? SupportsMultipleExtensions { get; }
+        public bool? SupportsMultipleExtensions { get; set; }
     }
 }

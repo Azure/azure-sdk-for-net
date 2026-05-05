@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GallerySoftDeletedResourceProperties"/>. </summary>
-        internal GallerySoftDeletedResourceProperties()
+        public GallerySoftDeletedResourceProperties()
         {
         }
 
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> arm id of the soft-deleted resource. </summary>
-        public ResourceIdentifier ResourceArmId { get; }
+        public ResourceIdentifier ResourceArmId { get; set; }
 
         /// <summary> artifact type of the soft-deleted resource. </summary>
-        public GallerySoftDeletedArtifactType? SoftDeletedArtifactType { get; }
+        public GallerySoftDeletedArtifactType? SoftDeletedArtifactType { get; set; }
 
         /// <summary> The timestamp for when the resource is soft-deleted. In dateTime offset format. </summary>
-        public DateTimeOffset? SoftDeletedOn { get; }
+        public DateTimeOffset? SoftDeletedOn { get; set; }
     }
 }

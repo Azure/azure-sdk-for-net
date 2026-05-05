@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DisallowedConfiguration"/>. </summary>
-        internal DisallowedConfiguration()
+        public DisallowedConfiguration()
         {
         }
 
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> VM disk types which are disallowed. </summary>
-        public VirtualMachineDiskType? VmDiskType { get; }
+        public VirtualMachineDiskType? VmDiskType { get; set; }
     }
 }

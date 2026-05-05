@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiskRestorePointProperties"/>. </summary>
-        internal DiskRestorePointProperties()
+        public DiskRestorePointProperties()
         {
         }
 
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.Compute.Models
         public SupportedOperatingSystemType? OSType { get; }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
-        public HyperVGeneration? HyperVGeneration { get; }
+        public HyperVGeneration? HyperVGeneration { get; set; }
 
         /// <summary> Purchase plan information for the the image from which the OS disk was created. </summary>
-        public DiskPurchasePlan PurchasePlan { get; }
+        public DiskPurchasePlan PurchasePlan { get; set; }
 
         /// <summary> List of supported capabilities for the image from which the OS disk was created. </summary>
-        public SupportedCapabilities SupportedCapabilities { get; }
+        public SupportedCapabilities SupportedCapabilities { get; set; }
 
         /// <summary> id of the backing snapshot's MIS family. </summary>
         public string FamilyId { get; }
@@ -93,19 +93,19 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskEncryption Encryption { get; }
 
         /// <summary> Indicates the OS on a disk supports hibernation. </summary>
-        public bool? SupportsHibernation { get; }
+        public bool? SupportsHibernation { get; set; }
 
         /// <summary> Policy for accessing the disk via network. </summary>
-        public NetworkAccessPolicy? NetworkAccessPolicy { get; }
+        public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
 
         /// <summary> Policy for controlling export on the disk. </summary>
-        public DiskPublicNetworkAccess? PublicNetworkAccess { get; }
+        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public ResourceIdentifier DiskAccessId { get; }
+        public ResourceIdentifier DiskAccessId { get; set; }
 
         /// <summary> Percentage complete for the background copy of disk restore point when source resource is from a different region. </summary>
-        public float? CompletionPercent { get; }
+        public float? CompletionPercent { get; set; }
 
         /// <summary> Replication state of disk restore point when source resource is from a different region. </summary>
         public string ReplicationState { get; }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
         public AzureLocation? SourceResourceLocation { get; }
 
         /// <summary> Contains the security related information for the resource. </summary>
-        public DiskSecurityProfile SecurityProfile { get; }
+        public DiskSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </summary>
         public int? LogicalSectorSize { get; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,8 +21,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="name"> The plan ID. </param>
         /// <param name="product"> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </param>
-        internal PurchasePlan(string publisher, string name, string product)
+        /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="name"/> or <paramref name="product"/> is null. </exception>
+        public PurchasePlan(string publisher, string name, string product)
         {
+            Argument.AssertNotNull(publisher, nameof(publisher));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(product, nameof(product));
+
             Publisher = publisher;
             Name = name;
             Product = product;
@@ -41,12 +47,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The publisher ID. </summary>
-        public string Publisher { get; }
+        public string Publisher { get; set; }
 
         /// <summary> The plan ID. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </summary>
-        public string Product { get; }
+        public string Product { get; set; }
     }
 }

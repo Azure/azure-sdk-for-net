@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="GallerySoftDeletedResourceDetails"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal GallerySoftDeletedResourceDetails(AzureLocation location) : base(location)
+        public GallerySoftDeletedResourceDetails(AzureLocation location) : base(location)
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Describes the properties of a soft-deleted resource. </summary>
-        internal GallerySoftDeletedResourceProperties Properties { get; }
+        internal GallerySoftDeletedResourceProperties Properties { get; set; }
 
         /// <summary> arm id of the soft-deleted resource. </summary>
         public ResourceIdentifier ResourceArmId
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.Compute.Models
             get
             {
                 return Properties is null ? default : Properties.ResourceArmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GallerySoftDeletedResourceProperties();
+                }
+                Properties.ResourceArmId = value;
             }
         }
 
@@ -58,6 +66,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return Properties is null ? default : Properties.SoftDeletedArtifactType;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GallerySoftDeletedResourceProperties();
+                }
+                Properties.SoftDeletedArtifactType = value;
+            }
         }
 
         /// <summary> The timestamp for when the resource is soft-deleted. In dateTime offset format. </summary>
@@ -66,6 +82,14 @@ namespace Azure.ResourceManager.Compute.Models
             get
             {
                 return Properties is null ? default : Properties.SoftDeletedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GallerySoftDeletedResourceProperties();
+                }
+                Properties.SoftDeletedOn = value;
             }
         }
     }

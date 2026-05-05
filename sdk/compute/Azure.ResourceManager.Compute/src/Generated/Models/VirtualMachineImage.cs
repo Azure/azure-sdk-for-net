@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -18,8 +19,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/>. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
-        internal VirtualMachineImage(string name, AzureLocation location) : base(name, location)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public VirtualMachineImage(string name, AzureLocation location) : base(name, location)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/>. </summary>
@@ -36,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Describes the properties of a Virtual Machine Image. </summary>
-        internal VirtualMachineImageProperties Properties { get; }
+        internal VirtualMachineImageProperties Properties { get; set; }
 
         /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
         public PurchasePlan Plan
@@ -45,6 +49,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return Properties is null ? default : Properties.Plan;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineImageProperties();
+                }
+                Properties.Plan = value;
+            }
         }
 
         /// <summary> The list of data disk images information. </summary>
@@ -52,7 +64,11 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties is null ? default : Properties.DataDiskImages;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineImageProperties();
+                }
+                return Properties.DataDiskImages;
             }
         }
 
@@ -63,6 +79,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return Properties is null ? default : Properties.HyperVGeneration;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineImageProperties();
+                }
+                Properties.HyperVGeneration = value;
+            }
         }
 
         /// <summary> Gets the Features. </summary>
@@ -70,7 +94,11 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Features;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineImageProperties();
+                }
+                return Properties.Features;
             }
         }
 
@@ -81,6 +109,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return Properties is null ? default : Properties.Architecture;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineImageProperties();
+                }
+                Properties.Architecture = value;
+            }
         }
 
         /// <summary> Describes image deprecation status properties on the image. </summary>
@@ -89,6 +125,14 @@ namespace Azure.ResourceManager.Compute.Models
             get
             {
                 return Properties is null ? default : Properties.ImageDeprecationStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineImageProperties();
+                }
+                Properties.ImageDeprecationStatus = value;
             }
         }
 
@@ -99,6 +143,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return Properties is null ? default : Properties.OSDiskImageOperatingSystem;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineImageProperties();
+                }
+                Properties.OSDiskImageOperatingSystem = value;
+            }
         }
 
         /// <summary> Specifies whether automatic OS upgrade is supported on the image. </summary>
@@ -108,6 +160,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return Properties is null ? default : Properties.AutomaticOSUpgradeSupported;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineImageProperties();
+                }
+                Properties.AutomaticOSUpgradeSupported = value;
+            }
         }
 
         /// <summary> VM disk types which are disallowed. </summary>
@@ -116,6 +176,14 @@ namespace Azure.ResourceManager.Compute.Models
             get
             {
                 return Properties is null ? default : Properties.DisallowedVmDiskType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineImageProperties();
+                }
+                Properties.DisallowedVmDiskType = value;
             }
         }
     }

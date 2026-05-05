@@ -1302,24 +1302,24 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskRestorePointData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.DiskRestorePointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.DiskRestorePointData>
     {
-        internal DiskRestorePointData() { }
-        public float? CompletionPercent { get { throw null; } }
-        public Azure.Core.ResourceIdentifier DiskAccessId { get { throw null; } }
+        public DiskRestorePointData() { }
+        public float? CompletionPercent { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskAccessId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskEncryption Encryption { get { throw null; } }
         public string FamilyId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public int? LogicalSectorSize { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? OSType { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } set { } }
         public string ReplicationState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.DiskSecurityProfile SecurityProfile { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.DiskSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } }
         public Azure.Core.AzureLocation? SourceResourceLocation { get { throw null; } }
         public string SourceUniqueId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.SupportedCapabilities SupportedCapabilities { get { throw null; } }
-        public bool? SupportsHibernation { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.SupportedCapabilities SupportedCapabilities { get { throw null; } set { } }
+        public bool? SupportsHibernation { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2645,12 +2645,12 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineExtensionImageData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.VirtualMachineExtensionImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.VirtualMachineExtensionImageData>
     {
-        internal VirtualMachineExtensionImageData() { }
-        public string ComputeRole { get { throw null; } }
-        public string HandlerSchema { get { throw null; } }
-        public string OperatingSystem { get { throw null; } }
-        public bool? SupportsMultipleExtensions { get { throw null; } }
-        public bool? VirtualMachineScaleSetEnabled { get { throw null; } }
+        public VirtualMachineExtensionImageData(Azure.Core.AzureLocation location) { }
+        public string ComputeRole { get { throw null; } set { } }
+        public string HandlerSchema { get { throw null; } set { } }
+        public string OperatingSystem { get { throw null; } set { } }
+        public bool? SupportsMultipleExtensions { get { throw null; } set { } }
+        public bool? VirtualMachineScaleSetEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4928,8 +4928,8 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ComputeSubResourceDataWithColocationStatus : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeSubResourceDataWithColocationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeSubResourceDataWithColocationStatus>
     {
-        internal ComputeSubResourceDataWithColocationStatus() { }
-        public Azure.ResourceManager.Compute.Models.InstanceViewStatus ColocationStatus { get { throw null; } }
+        public ComputeSubResourceDataWithColocationStatus() { }
+        public Azure.ResourceManager.Compute.Models.InstanceViewStatus ColocationStatus { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5103,7 +5103,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class DataDiskImage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.DataDiskImage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DataDiskImage>
     {
-        internal DataDiskImage() { }
+        public DataDiskImage() { }
         public int? Lun { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.DataDiskImage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6843,10 +6843,10 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class GallerySoftDeletedResourceDetails : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GallerySoftDeletedResourceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GallerySoftDeletedResourceDetails>
     {
-        internal GallerySoftDeletedResourceDetails() { }
-        public Azure.Core.ResourceIdentifier ResourceArmId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.GallerySoftDeletedArtifactType? SoftDeletedArtifactType { get { throw null; } }
-        public System.DateTimeOffset? SoftDeletedOn { get { throw null; } }
+        public GallerySoftDeletedResourceDetails(Azure.Core.AzureLocation location) { }
+        public Azure.Core.ResourceIdentifier ResourceArmId { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.GallerySoftDeletedArtifactType? SoftDeletedArtifactType { get { throw null; } set { } }
+        public System.DateTimeOffset? SoftDeletedOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7016,9 +7016,9 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ImageAlternativeOption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ImageAlternativeOption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ImageAlternativeOption>
     {
-        internal ImageAlternativeOption() { }
-        public Azure.ResourceManager.Compute.Models.ImageAlternativeType? AlternativeType { get { throw null; } }
-        public string Value { get { throw null; } }
+        public ImageAlternativeOption() { }
+        public Azure.ResourceManager.Compute.Models.ImageAlternativeType? AlternativeType { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.ImageAlternativeOption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.ImageAlternativeOption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7063,10 +7063,10 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ImageDeprecationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ImageDeprecationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ImageDeprecationStatus>
     {
-        internal ImageDeprecationStatus() { }
-        public Azure.ResourceManager.Compute.Models.ImageAlternativeOption AlternativeOption { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ImageState? ImageState { get { throw null; } }
-        public System.DateTimeOffset? ScheduledDeprecationOn { get { throw null; } }
+        public ImageDeprecationStatus() { }
+        public Azure.ResourceManager.Compute.Models.ImageAlternativeOption AlternativeOption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ImageState? ImageState { get { throw null; } set { } }
+        public System.DateTimeOffset? ScheduledDeprecationOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.ImageDeprecationStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.ImageDeprecationStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8250,10 +8250,10 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class PurchasePlan : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PurchasePlan>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PurchasePlan>
     {
-        internal PurchasePlan() { }
-        public string Name { get { throw null; } }
-        public string Product { get { throw null; } }
-        public string Publisher { get { throw null; } }
+        public PurchasePlan(string publisher, string name, string product) { }
+        public string Name { get { throw null; } set { } }
+        public string Product { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.PurchasePlan JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.PurchasePlan PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10217,16 +10217,16 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class VirtualMachineImage : Azure.ResourceManager.Compute.Models.VirtualMachineImageBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineImage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineImage>
     {
-        internal VirtualMachineImage() { }
-        public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } }
-        public bool? AutomaticOSUpgradeSupported { get { throw null; } }
+        public VirtualMachineImage(string name, Azure.Core.AzureLocation location) : base (default(string), default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } set { } }
+        public bool? AutomaticOSUpgradeSupported { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DataDiskImage> DataDiskImages { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineDiskType? DisallowedVmDiskType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineDiskType? DisallowedVmDiskType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineImageFeature> Features { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ImageDeprecationStatus ImageDeprecationStatus { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? OSDiskImageOperatingSystem { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.PurchasePlan Plan { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ImageDeprecationStatus ImageDeprecationStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? OSDiskImageOperatingSystem { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.PurchasePlan Plan { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10239,10 +10239,10 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class VirtualMachineImageBase : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineImageBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineImageBase>
     {
-        internal VirtualMachineImageBase() { }
-        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } }
-        public Azure.Core.AzureLocation Location { get { throw null; } }
-        public string Name { get { throw null; } }
+        public VirtualMachineImageBase(string name, Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected override Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10256,9 +10256,9 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class VirtualMachineImageFeature : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineImageFeature>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineImageFeature>
     {
-        internal VirtualMachineImageFeature() { }
-        public string Name { get { throw null; } }
-        public string Value { get { throw null; } }
+        public VirtualMachineImageFeature() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineImageFeature JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineImageFeature PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

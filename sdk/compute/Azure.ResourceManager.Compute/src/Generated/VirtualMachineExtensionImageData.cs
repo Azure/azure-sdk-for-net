@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionImageData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal VirtualMachineExtensionImageData(AzureLocation location) : base(location)
+        public VirtualMachineExtensionImageData(AzureLocation location) : base(location)
         {
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Describes the properties of a Virtual Machine Extension Image. </summary>
-        internal VirtualMachineExtensionImageProperties Properties { get; }
+        internal VirtualMachineExtensionImageProperties Properties { get; set; }
 
         /// <summary> The operating system this extension supports. </summary>
         public string OperatingSystem
@@ -49,6 +49,14 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties is null ? default : Properties.OperatingSystem;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionImageProperties();
+                }
+                Properties.OperatingSystem = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.Compute
             {
                 return Properties is null ? default : Properties.ComputeRole;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionImageProperties();
+                }
+                Properties.ComputeRole = value;
+            }
         }
 
         /// <summary> The schema defined by publisher, where extension consumers should provide settings in a matching schema. </summary>
@@ -67,6 +83,14 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties is null ? default : Properties.HandlerSchema;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionImageProperties();
+                }
+                Properties.HandlerSchema = value;
             }
         }
 
@@ -77,6 +101,14 @@ namespace Azure.ResourceManager.Compute
             {
                 return Properties is null ? default : Properties.VirtualMachineScaleSetEnabled;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionImageProperties();
+                }
+                Properties.VirtualMachineScaleSetEnabled = value;
+            }
         }
 
         /// <summary> Whether the handler can support multiple extensions. </summary>
@@ -85,6 +117,14 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties is null ? default : Properties.SupportsMultipleExtensions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionImageProperties();
+                }
+                Properties.SupportsMultipleExtensions = value;
             }
         }
     }

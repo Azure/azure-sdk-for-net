@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="OSDiskImage"/>. </summary>
         /// <param name="operatingSystem"> The operating system of the osDiskImage. </param>
-        internal OSDiskImage(SupportedOperatingSystemType operatingSystem)
+        public OSDiskImage(SupportedOperatingSystemType operatingSystem)
         {
             OperatingSystem = operatingSystem;
         }
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The operating system of the osDiskImage. </summary>
-        public SupportedOperatingSystemType OperatingSystem { get; }
+        public SupportedOperatingSystemType OperatingSystem { get; set; }
     }
 }

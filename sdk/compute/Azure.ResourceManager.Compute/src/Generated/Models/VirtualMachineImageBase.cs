@@ -19,8 +19,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImageBase"/>. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
-        internal VirtualMachineImageBase(string name, AzureLocation location)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public VirtualMachineImageBase(string name, AzureLocation location)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             Name = name;
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -42,15 +45,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The name of the resource. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> The supported Azure location of the resource. </summary>
-        public AzureLocation Location { get; }
+        public AzureLocation Location { get; set; }
 
         /// <summary> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </summary>
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The extended location of the Virtual Machine. </summary>
-        public ExtendedLocation ExtendedLocation { get; }
+        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

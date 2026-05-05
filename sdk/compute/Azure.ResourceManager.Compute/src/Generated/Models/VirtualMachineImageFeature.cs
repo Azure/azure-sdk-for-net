@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImageFeature"/>. </summary>
-        internal VirtualMachineImageFeature()
+        public VirtualMachineImageFeature()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The name of the feature. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> The corresponding value for the feature. </summary>
-        public string Value { get; }
+        public string Value { get; set; }
     }
 }

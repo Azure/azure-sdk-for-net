@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="AutomaticOSUpgradeProperties"/>. </summary>
         /// <param name="automaticOSUpgradeSupported"> Specifies whether automatic OS upgrade is supported on the image. </param>
-        internal AutomaticOSUpgradeProperties(bool automaticOSUpgradeSupported)
+        public AutomaticOSUpgradeProperties(bool automaticOSUpgradeSupported)
         {
             AutomaticOSUpgradeSupported = automaticOSUpgradeSupported;
         }
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies whether automatic OS upgrade is supported on the image. </summary>
-        public bool AutomaticOSUpgradeSupported { get; }
+        public bool AutomaticOSUpgradeSupported { get; set; }
     }
 }

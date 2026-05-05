@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImageDeprecationStatus"/>. </summary>
-        internal ImageDeprecationStatus()
+        public ImageDeprecationStatus()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Describes the state of the image. </summary>
-        public ImageState? ImageState { get; }
+        public ImageState? ImageState { get; set; }
 
         /// <summary> The time, in future, at which this image will be marked as deprecated. This scheduled time is chosen by the Publisher. </summary>
-        public DateTimeOffset? ScheduledDeprecationOn { get; }
+        public DateTimeOffset? ScheduledDeprecationOn { get; set; }
 
         /// <summary> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </summary>
-        public ImageAlternativeOption AlternativeOption { get; }
+        public ImageAlternativeOption AlternativeOption { get; set; }
     }
 }
