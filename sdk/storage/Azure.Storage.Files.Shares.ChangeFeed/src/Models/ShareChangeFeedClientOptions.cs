@@ -27,6 +27,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// window may be incomplete; (2) two consecutive reads of the same window may return
         /// different events; and (3) segments may appear, grow, or be partially written
         /// between calls.
+        ///
+        /// While this option is enabled, change feed pages do not carry a continuation token
+        /// (<see cref="Azure.Page{T}.ContinuationToken"/> is <c>null</c>), and the
+        /// <see cref="ShareChangeFeedClient.GetChanges(string)"/> /
+        /// <see cref="ShareChangeFeedClient.GetChangesAsync(string)"/> overloads will throw
+        /// <see cref="System.ArgumentException"/>. Resumption is unsupported in this mode because
+        /// the underlying segments may change between calls.
         /// </remarks>
         public bool IncludeNonFinalizedEvents { get; set; }
     }

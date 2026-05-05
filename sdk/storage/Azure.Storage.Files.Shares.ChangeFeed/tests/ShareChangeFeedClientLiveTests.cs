@@ -79,25 +79,25 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         /// Enumerates all change feed events and verifies at least one event is returned.
         /// </summary>
         [RecordedTest]
-        [Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
+        //[Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
         public async Task GetChanges_ReturnsEvents()
         {
             ShareServiceClient shareServiceClient = GetShareServiceClient_SharedKey();
             await shareServiceClient.GetSharesAsync().ToListAsync();
 
             // Arrange
-            ShareChangeFeedClient client = GetChangeFeedClient("fileschangefeedshare");
-            ShareClient shareClient = shareServiceClient.GetShareClient("fileschangefeedshare");
+            ShareChangeFeedClient client = GetChangeFeedClient("changefeedtest");
+            ShareClient shareClient = shareServiceClient.GetShareClient("changefeedtest");
 
-            //await shareClient.CreateSnapshotAsync();
+            await shareClient.CreateSnapshotAsync();
 
-            //for (int i = 0; i < 2000; i++)
-            //{
-            //    ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient(Guid.NewGuid().ToString());
-            //    await directoryClient.CreateAsync();
-            //}
+            for (int i = 0; i < 2000; i++)
+            {
+                ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient(Guid.NewGuid().ToString());
+                await directoryClient.CreateAsync();
+            }
 
-            //await shareClient.CreateSnapshotAsync();
+            await shareClient.CreateSnapshotAsync();
 
             // Act
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
@@ -346,17 +346,26 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     ? await tailing.GetLastConsumableAsync()
                     : tailing.GetLastConsumable();
 
-                // Act - tailing reader
+                // Act - tailing reader. Iterate via AsPages so we can also assert that no page
+                // carries a continuation token (resumption is unsupported in non-finalized mode).
                 List<ShareChangeFeedEvent> tailingEvents = new List<ShareChangeFeedEvent>();
                 if (IsAsync)
                 {
-                    await foreach (ShareChangeFeedEvent e in tailing.GetChangesAsync())
-                        tailingEvents.Add(e);
+                    await foreach (Page<ShareChangeFeedEvent> page in tailing.GetChangesAsync().AsPages())
+                    {
+                        Assert.IsNull(page.ContinuationToken,
+                            "Pages produced with IncludeNonFinalizedEvents=true must not carry a continuation token.");
+                        tailingEvents.AddRange(page.Values);
+                    }
                 }
                 else
                 {
-                    foreach (ShareChangeFeedEvent e in tailing.GetChanges())
-                        tailingEvents.Add(e);
+                    foreach (Page<ShareChangeFeedEvent> page in tailing.GetChanges().AsPages())
+                    {
+                        Assert.IsNull(page.ContinuationToken,
+                            "Pages produced with IncludeNonFinalizedEvents=true must not carry a continuation token.");
+                        tailingEvents.AddRange(page.Values);
+                    }
                 }
 
                 // Assert - tailing reader surfaces non-finalized events past the watermark.

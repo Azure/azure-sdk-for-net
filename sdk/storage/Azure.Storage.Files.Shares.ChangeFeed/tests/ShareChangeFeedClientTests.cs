@@ -180,5 +180,53 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
             Assert.IsNull(client._maxTransferSize);
         }
+
+        // GetChanges(continuationToken) must reject any non-null continuation when
+        // IncludeNonFinalizedEvents is enabled, since pages produced in that mode
+        // never carry a continuation token.
+
+        [Test]
+        public void GetChanges_WithContinuation_IncludeNonFinalizedEventsTrue_Throws()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName,
+                new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = true });
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => client.GetChanges("any-continuation-token"));
+
+            StringAssert.Contains(nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents), ex.Message);
+            Assert.AreEqual("continuationToken", ex.ParamName);
+        }
+
+        [Test]
+        public void GetChangesAsync_WithContinuation_IncludeNonFinalizedEventsTrue_Throws()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName,
+                new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = true });
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => client.GetChangesAsync("any-continuation-token"));
+
+            StringAssert.Contains(nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents), ex.Message);
+            Assert.AreEqual("continuationToken", ex.ParamName);
+        }
+
+        [Test]
+        public void GetChanges_WithContinuation_IncludeNonFinalizedEventsFalse_DoesNotThrow()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName,
+                new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = false });
+
+            // Constructing the pageable should not throw; we deliberately do not enumerate
+            // (which would issue a service call against the synthetic SAS URI).
+            Assert.DoesNotThrow(() => client.GetChanges("any-continuation-token"));
+            Assert.DoesNotThrow(() => client.GetChangesAsync("any-continuation-token"));
+        }
     }
 }

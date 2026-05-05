@@ -212,26 +212,76 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 endTime: end);
 
         /// <summary>
-        /// Resumes reading change feed events from a continuation token.
+        /// Resumes reading change feed events from a continuation token previously produced
+        /// by a <see cref="Page{T}.ContinuationToken"/> on a page returned by this client.
         /// </summary>
+        /// <param name="continuationToken">
+        /// A continuation token previously captured from a <see cref="Page{T}.ContinuationToken"/>.
+        /// </param>
+        /// <returns>A pageable of change feed events resuming from the saved position.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
+        /// is enabled. Resumption is not supported in non-finalized mode because pages
+        /// produced in that mode never carry a continuation token.
+        /// </exception>
+        /// <remarks>
+        /// To resume from a saved position, the client must be configured with
+        /// <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/> set to <c>false</c>.
+        /// </remarks>
         public virtual Pageable<ShareChangeFeedEvent> GetChanges(
             string continuationToken)
-            => new ShareChangeFeedPageable(
+        {
+            ThrowIfContinuationDisallowed(continuationToken);
+            return new ShareChangeFeedPageable(
                 this,
                 _maxTransferSize,
                 _includeNonFinalizedEvents,
                 continuation: continuationToken);
+        }
 
         /// <summary>
-        /// Resumes reading change feed events from a continuation token.
+        /// Resumes reading change feed events from a continuation token previously produced
+        /// by a <see cref="Page{T}.ContinuationToken"/> on a page returned by this client.
         /// </summary>
+        /// <param name="continuationToken">
+        /// A continuation token previously captured from a <see cref="Page{T}.ContinuationToken"/>.
+        /// </param>
+        /// <returns>An async pageable of change feed events resuming from the saved position.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
+        /// is enabled. Resumption is not supported in non-finalized mode because pages
+        /// produced in that mode never carry a continuation token.
+        /// </exception>
+        /// <remarks>
+        /// To resume from a saved position, the client must be configured with
+        /// <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/> set to <c>false</c>.
+        /// </remarks>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync(
             string continuationToken)
-            => new ShareChangeFeedAsyncPageable(
+        {
+            ThrowIfContinuationDisallowed(continuationToken);
+            return new ShareChangeFeedAsyncPageable(
                 this,
                 _maxTransferSize,
                 _includeNonFinalizedEvents,
                 continuation: continuationToken);
+        }
+
+        private void ThrowIfContinuationDisallowed(string continuationToken)
+        {
+            if (continuationToken != null && _includeNonFinalizedEvents)
+            {
+                throw new ArgumentException(
+                    "Resuming from a continuation token is not supported when " +
+                    nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents) +
+                    " is enabled on " + nameof(ShareChangeFeedClientOptions) + ". " +
+                    "Non-finalized reads do not produce continuation tokens because segments past " +
+                    "the finalized watermark may change between calls. Disable " +
+                    nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents) +
+                    " to resume from a saved position.",
+                    nameof(continuationToken));
+            }
+        }
         #endregion GetChanges
 
         #region GetChangesBetweenSnapshots

@@ -18,7 +18,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 {
     /// <summary>
     /// Mocked unit tests verifying that <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
-    /// causes <see cref="ChangeFeedFactoryBase{TEvent}"/> to bypass the lastConsumable cap when enumerating segments.
+    /// causes <see cref="ChangeFeedFactoryBase{TEvent}"/> to bypass the lastConsumable cap when enumerating
+    /// segments, and that pages produced in that mode do not carry a continuation token.
     /// </summary>
     public class ShareChangeFeedNonFinalizedTests : ShareChangeFeedTestBase
     {
@@ -32,7 +33,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         private static readonly DateTimeOffset LastConsumable = new DateTimeOffset(2024, 1, 15, 8, 30, 0, TimeSpan.Zero);
 
         [Test]
-        public async Task BuildChangeFeed_FlagOff_StopsAtLastConsumable()
+        public async Task BuildChangeFeed_IncludeNonFinalizedEventsFalse_StopsAtLastConsumable()
         {
             Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
             Mock<BlobContainerClient> containerClient = SetupContainer();
@@ -55,7 +56,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         [Test]
-        public async Task BuildChangeFeed_FlagOn_ReturnsSegmentsPastLastConsumable()
+        public async Task BuildChangeFeed_IncludeNonFinalizedEventsTrue_ReturnsSegmentsPastLastConsumable()
         {
             Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
             Mock<BlobContainerClient> containerClient = SetupContainer();
@@ -77,10 +78,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         [Test]
-        public async Task BuildChangeFeed_FlagOn_NoMetadata_StillScansSegments()
+        public async Task BuildChangeFeed_IncludeNonFinalizedEventsTrue_NoMetadata_StillScansSegments()
         {
             // When meta/segments.json is missing (brand-new change feed), the default reader returns
-            // an empty change feed. With the flag on, we should still attempt to enumerate segments.
+            // an empty change feed. With IncludeNonFinalizedEvents=true, we should still attempt to
+            // enumerate segments.
             Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
             Mock<BlobContainerClient> containerClient = SetupContainer(metaBlobExists: false);
 
@@ -189,7 +191,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         // these cover the case where endTime is explicitly past lastConsumable (08:30).
 
         [Test]
-        public async Task BuildChangeFeed_FlagOn_UserEndTimePastLastConsumable_UsesUserEndTime()
+        public async Task BuildChangeFeed_IncludeNonFinalizedEventsTrue_UserEndTimePastLastConsumable_UsesUserEndTime()
         {
             Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
             Mock<BlobContainerClient> containerClient = SetupContainer();
@@ -205,8 +207,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 startTime: null, endTime: endTime, continuation: null, async: IsAsync, cancellationToken: CancellationToken.None);
             while (changeFeed.HasNext()) await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
 
-            // With flag on and user endTime=08:45, segments at 08:00, 08:15, 08:30, 08:45 should be visited;
-            // segment at 09:00 should NOT be visited (past user's endTime).
+            // With IncludeNonFinalizedEvents=true and user endTime=08:45, segments at 08:00, 08:15, 08:30,
+            // 08:45 should be visited; segment at 09:00 should NOT be visited (past user's endTime).
             VerifyBuildSegment(segmentFactory, "idx/segments/2024/01/15/0800/meta.json", Times.Once());
             VerifyBuildSegment(segmentFactory, "idx/segments/2024/01/15/0815/meta.json", Times.Once());
             VerifyBuildSegment(segmentFactory, "idx/segments/2024/01/15/0830/meta.json", Times.Once());
@@ -215,7 +217,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         [Test]
-        public async Task BuildChangeFeed_FlagOff_UserEndTimePastLastConsumable_StillCapsAtLastConsumable()
+        public async Task BuildChangeFeed_IncludeNonFinalizedEventsFalse_UserEndTimePastLastConsumable_StillCapsAtLastConsumable()
         {
             Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
             Mock<BlobContainerClient> containerClient = SetupContainer();
@@ -231,7 +233,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 startTime: null, endTime: endTime, continuation: null, async: IsAsync, cancellationToken: CancellationToken.None);
             while (changeFeed.HasNext()) await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
 
-            // With flag off, MinDateTime(lastConsumable=08:30, endTime=08:45) = 08:30 caps the effective endTime.
+            // With IncludeNonFinalizedEvents=false, MinDateTime(lastConsumable=08:30, endTime=08:45) = 08:30
+            // caps the effective endTime.
             VerifyBuildSegment(segmentFactory, "idx/segments/2024/01/15/0800/meta.json", Times.Once());
             VerifyBuildSegment(segmentFactory, "idx/segments/2024/01/15/0815/meta.json", Times.Once());
             VerifyBuildSegment(segmentFactory, "idx/segments/2024/01/15/0830/meta.json", Times.Once());
@@ -239,17 +242,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             VerifyBuildSegment(segmentFactory, "idx/segments/2024/01/15/0900/meta.json", Times.Never());
         }
 
-        // Cursor flag transition tests (gaps 25-29). The asymmetric rule:
-        //   cursor false + current any  → allowed
-        //   cursor true  + current true → allowed
-        //   cursor true  + current false → throws ArgumentException
-        // A cursor produced with the flag on records that the run already consumed events past
-        // the watermark; replaying it with the flag off would silently skip those events.
+        // GetPage continuation token suppression: when IncludeNonFinalizedEvents is true the
+        // resulting pages must NOT carry a continuation token, since the underlying segments
+        // may change between calls and a captured position cannot be safely resumed.
 
-        [TestCase(false, false)]
-        [TestCase(false, true)]
-        [TestCase(true, true)]
-        public async Task CursorFlagTransition_Compatible_Allowed(bool cursorFlag, bool currentFlag)
+        [Test]
+        public async Task GetPage_IncludeNonFinalizedEventsTrue_ContinuationTokenIsNull()
         {
             Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
             Mock<BlobContainerClient> containerClient = SetupContainer();
@@ -258,23 +256,29 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object,
                 ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                includeNonFinalizedEvents: currentFlag);
+                includeNonFinalizedEvents: true);
 
-            string continuation = SerializeCursor(cursorFlag);
-
-            // Should not throw — drain to confirm the entire pipeline is happy.
             ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
                 startTime: null,
                 endTime: null,
-                continuation: continuation,
+                continuation: null,
                 async: IsAsync,
                 cancellationToken: CancellationToken.None);
 
-            Assert.IsNotNull(changeFeed);
+            int pageCount = 0;
+            while (changeFeed.HasNext())
+            {
+                Page<ShareChangeFeedEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+                Assert.IsNull(page.ContinuationToken,
+                    "Pages produced with IncludeNonFinalizedEvents=true must not carry a continuation token.");
+                pageCount++;
+            }
+
+            Assert.Greater(pageCount, 0, "Expected at least one page to be produced.");
         }
 
         [Test]
-        public void CursorFlagTrue_ReplayWithFlagFalse_Throws()
+        public async Task GetPage_IncludeNonFinalizedEventsFalse_ContinuationTokenIsNotNull()
         {
             Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
             Mock<BlobContainerClient> containerClient = SetupContainer();
@@ -285,62 +289,23 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
                 includeNonFinalizedEvents: false);
 
-            string continuation = SerializeCursor(includeNonFinalizedEvents: true);
+            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
+                startTime: null,
+                endTime: null,
+                continuation: null,
+                async: IsAsync,
+                cancellationToken: CancellationToken.None);
 
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
-                async () => await factory.BuildChangeFeed(
-                    startTime: null,
-                    endTime: null,
-                    continuation: continuation,
-                    async: IsAsync,
-                    cancellationToken: CancellationToken.None));
-
-            StringAssert.Contains("IncludeNonFinalizedEvents", ex.Message);
-        }
-
-        [Test]
-        public void V1Cursor_TreatedAsFlagFalse_AllowedWithEitherCurrentFlag()
-        {
-            // A cursor JSON without IncludeNonFinalizedEvents (v1 schema) deserializes to flag=false.
-            // Forward-compat: such cursors must replay successfully under either current-flag value.
-            string v1Json = System.Text.Json.JsonSerializer.Serialize(new
+            int pageCount = 0;
+            while (changeFeed.HasNext())
             {
-                CursorVersion = 1,
-                UrlHost = "account.blob.core.windows.net",
-                EndTime = (DateTimeOffset?)null,
-                CurrentSegmentCursor = new SegmentCursor("idx/segments/2024/01/15/0800/meta.json", new List<ShardCursor>(), null),
-            });
-
-            foreach (bool currentFlag in new[] { false, true })
-            {
-                Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
-                Mock<BlobContainerClient> containerClient = SetupContainer();
-
-                ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(
-                    containerClient.Object,
-                    segmentFactory.Object,
-                    ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                    includeNonFinalizedEvents: currentFlag);
-
-                Assert.DoesNotThrowAsync(
-                    async () => await factory.BuildChangeFeed(
-                        startTime: null,
-                        endTime: null,
-                        continuation: v1Json,
-                        async: IsAsync,
-                        cancellationToken: CancellationToken.None),
-                    $"V1 cursor should replay with currentFlag={currentFlag}");
+                Page<ShareChangeFeedEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+                Assert.IsNotNull(page.ContinuationToken,
+                    "Pages produced with IncludeNonFinalizedEvents=false must carry a continuation token.");
+                pageCount++;
             }
-        }
 
-        private static string SerializeCursor(bool includeNonFinalizedEvents)
-        {
-            ChangeFeedCursor cursor = new ChangeFeedCursor(
-                urlHost: "account.blob.core.windows.net",
-                endDateTime: null,
-                currentSegmentCursor: new SegmentCursor("idx/segments/2024/01/15/0800/meta.json", new List<ShardCursor>(), null),
-                includeNonFinalizedEvents: includeNonFinalizedEvents);
-            return System.Text.Json.JsonSerializer.Serialize(cursor);
+            Assert.Greater(pageCount, 0, "Expected at least one page to be produced.");
         }
 
         private async Task DrainAsync(ChangeFeedFactoryBase<ShareChangeFeedEvent> factory)

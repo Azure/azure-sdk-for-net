@@ -47,9 +47,9 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="endTime">Optional exclusive end time for the change feed window.</param>
         /// <param name="config">Change feed configuration.</param>
         /// <param name="includeNonFinalizedEvents">
-        /// Whether the producing run was reading past the finalized watermark. Recorded into the
-        /// emitted continuation token so that <see cref="ChangeFeedFactoryBase{TEvent}"/> can
-        /// reject incompatible replays.
+        /// Whether the producing run was reading past the finalized watermark. When <c>true</c>,
+        /// emitted pages will not include a continuation token (resumption is not supported in
+        /// this mode because non-finalized segments may change between reads).
         /// </param>
         public ChangeFeedBase(
             BlobContainerClient containerClient,
@@ -124,7 +124,16 @@ namespace Azure.Storage.ChangeFeed.Common
                 await AdvanceSegmentIfNecessary(async, cancellationToken).ConfigureAwait(false);
             }
 
-            return new ChangeFeedEventPageBase<TEvent>(events, JsonSerializer.Serialize<ChangeFeedCursor>(GetCursor()));
+            // When IncludeNonFinalizedEvents is enabled the read is intrinsically unstable —
+            // segments past the finalized watermark may grow, shrink, or appear/disappear
+            // between calls — so resuming from a captured position would silently miss or
+            // duplicate events. Suppress the continuation token in that mode so callers
+            // cannot persist a position that we cannot honor.
+            string continuationToken = _includeNonFinalizedEvents
+                ? null
+                : JsonSerializer.Serialize<ChangeFeedCursor>(GetCursor());
+
+            return new ChangeFeedEventPageBase<TEvent>(events, continuationToken);
         }
 
         /// <summary>
@@ -148,8 +157,7 @@ namespace Azure.Storage.ChangeFeed.Common
             => new ChangeFeedCursor(
                 urlHost: _containerClient.Uri.Host,
                 endDateTime: _endTime,
-                currentSegmentCursor: _currentSegment.GetCursor(),
-                includeNonFinalizedEvents: _includeNonFinalizedEvents);
+                currentSegmentCursor: _currentSegment.GetCursor());
 
         /// <summary>
         /// Advances to the next segment if the current one is exhausted, loading segments from the next year if needed.
