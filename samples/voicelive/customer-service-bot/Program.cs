@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using NAudio.Wave;
 
 /// <summary>
-/// FILE: SampleProgram.cs
+/// FILE: Program.cs
 /// </summary>
 /// <remarks>
 /// DESCRIPTION:
@@ -44,7 +44,7 @@ using NAudio.Wave;
 ///     - System.CommandLine
 ///     - System.Text.Json
 /// </remarks>
-public class SampleProgram
+public class Program
 {
     /// <summary>
     /// Main entry point for the customer service bot sample.
@@ -156,7 +156,7 @@ public class SampleProgram
             }
         });
 
-        var logger = loggerFactory.CreateLogger<SampleProgram>();
+        var logger = loggerFactory.CreateLogger<Program>();
 
         // Validate credentials
         if (string.IsNullOrEmpty(apiKey) && !useTokenCredential)
