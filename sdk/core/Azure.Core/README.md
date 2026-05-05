@@ -1,7 +1,6 @@
 # Azure Core shared client library for .NET
 
 Azure.Core provides shared primitives, abstractions, and helpers for modern .NET Azure SDK client libraries.
-This temporary sentence exists only to exercise PR CODEOWNERS scenario testing for ignored packages.
 These libraries follow the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html)
 and can be easily identified by package and namespaces names starting with 'Azure', e.g. `Azure.Storage.Blobs`.
 A more complete list of client libraries using Azure.Core can be found [here](https://github.com/Azure/azure-sdk-for-net#core-services).
