@@ -32,7 +32,7 @@ namespace Azure.Storage.ChangeFeed.Common
         public SegmentCursor CurrentSegmentCursor { get; set; }
 
         /// <summary>
-        /// Whether the producing run had <c>IncludeUnfinalizedEvents</c> enabled. Used by Files
+        /// Whether the producing run had <c>IncludeNonFinalizedEvents</c> enabled. Used by Files
         /// Change Feed to validate cursor replays: a cursor produced with this flag set may
         /// not be replayed against a run that has the flag cleared, since events past the
         /// finalized watermark may have been emitted that a flag-off replay would silently skip.
@@ -40,7 +40,7 @@ namespace Azure.Storage.ChangeFeed.Common
         /// V1 cursors (produced before this property was added) deserialize to <c>false</c>,
         /// which is the correct safe default.
         /// </summary>
-        public bool IncludeUnfinalizedEvents { get; set; }
+        public bool IncludeNonFinalizedEvents { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChangeFeedCursor"/> class.
@@ -48,21 +48,21 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="urlHost">Storage account host name.</param>
         /// <param name="endDateTime">Optional end time for the change feed window.</param>
         /// <param name="currentSegmentCursor">Cursor for the current segment position.</param>
-        /// <param name="includeUnfinalizedEvents">
-        /// Whether the producing run had <c>IncludeUnfinalizedEvents</c> enabled. Defaults to
+        /// <param name="includeNonFinalizedEvents">
+        /// Whether the producing run had <c>IncludeNonFinalizedEvents</c> enabled. Defaults to
         /// <c>false</c> so existing callers (including Blob Change Feed) get the safe value.
         /// </param>
         internal ChangeFeedCursor(
             string urlHost,
             DateTimeOffset? endDateTime,
             SegmentCursor currentSegmentCursor,
-            bool includeUnfinalizedEvents = false)
+            bool includeNonFinalizedEvents = false)
         {
             CursorVersion = 2;
             UrlHost = urlHost;
             EndTime = endDateTime;
             CurrentSegmentCursor = currentSegmentCursor;
-            IncludeUnfinalizedEvents = includeUnfinalizedEvents;
+            IncludeNonFinalizedEvents = includeNonFinalizedEvents;
         }
 
         /// <summary>

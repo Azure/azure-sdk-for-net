@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     {
         private readonly ShareChangeFeedClient _client;
         private readonly long? _maxTransferSize;
-        private readonly bool _includeUnfinalizedEvents;
+        private readonly bool _includeNonFinalizedEvents;
         private readonly DateTimeOffset? _startTime;
         private readonly DateTimeOffset? _endTime;
         private readonly string _continuation;
@@ -21,14 +21,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         internal ShareChangeFeedPageable(
             ShareChangeFeedClient client,
             long? maxTransferSize,
-            bool includeUnfinalizedEvents,
+            bool includeNonFinalizedEvents,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default,
             string continuation = default)
         {
             _client = client;
             _maxTransferSize = maxTransferSize;
-            _includeUnfinalizedEvents = includeUnfinalizedEvents;
+            _includeNonFinalizedEvents = includeNonFinalizedEvents;
             _startTime = startTime;
             _endTime = endTime;
             _continuation = continuation;
@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 containerClient,
                 _maxTransferSize,
                 config,
-                _includeUnfinalizedEvents);
+                _includeNonFinalizedEvents);
 
             ChangeFeedBase<ShareChangeFeedEvent> changeFeed = factory.BuildChangeFeed(
                 _startTime,

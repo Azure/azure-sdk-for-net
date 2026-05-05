@@ -28,6 +28,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// different events; and (3) segments may appear, grow, or be partially written
         /// between calls.
         /// </remarks>
-        public bool IncludeUnfinalizedEvents { get; set; }
+        public bool IncludeNonFinalizedEvents { get; set; }
     }
 }

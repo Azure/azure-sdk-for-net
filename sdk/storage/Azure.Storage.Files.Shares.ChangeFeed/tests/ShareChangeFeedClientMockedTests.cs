@@ -176,7 +176,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         [Test]
         public async Task GetChanges_FlagOff_NoMetadata_ReturnsEmpty()
         {
-            Harness h = Harness.Create(this, metaBlobExists: false, includeUnfinalizedEvents: false);
+            Harness h = Harness.Create(this, metaBlobExists: false, includeNonFinalizedEvents: false);
 
             List<ShareChangeFeedEvent> collected = new List<ShareChangeFeedEvent>();
             if (IsAsync)
@@ -208,7 +208,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 ShareChangeFeedClientMockedTests test,
                 bool metaBlobExists = true,
                 string metaSegmentsJson = null,
-                bool includeUnfinalizedEvents = false)
+                bool includeNonFinalizedEvents = false)
             {
                 Harness h = new Harness();
 
@@ -272,7 +272,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     h.ShareClient.Object,
                     new Uri("https://account.file.core.windows.net"),
                     "myshare",
-                    new ShareChangeFeedClientOptions { IncludeUnfinalizedEvents = includeUnfinalizedEvents });
+                    new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = includeNonFinalizedEvents });
                 return h;
             }
 

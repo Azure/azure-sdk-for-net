@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         private readonly ShareClient _shareClient;
         internal readonly BlobServiceClient _blobServiceClient;
         internal readonly long? _maxTransferSize;
-        internal readonly bool _includeUnfinalizedEvents;
+        internal readonly bool _includeNonFinalizedEvents;
 
         // Lazily resolved after the first call to DiscoverContainerNameAsync.
         private string _containerName;
@@ -43,7 +43,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (string.IsNullOrEmpty(connectionString)) throw new ArgumentNullException(nameof(connectionString));
             if (string.IsNullOrEmpty(shareName)) throw new ArgumentNullException(nameof(shareName));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
-            _includeUnfinalizedEvents = changeFeedOptions?.IncludeUnfinalizedEvents ?? false;
+            _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
 
             ShareServiceClient shareServiceClient = new ShareServiceClient(connectionString);
             _shareClient = shareServiceClient.GetShareClient(shareName);
@@ -63,7 +63,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (fileServiceUri == null) throw new ArgumentNullException(nameof(fileServiceUri));
             if (string.IsNullOrEmpty(shareName)) throw new ArgumentNullException(nameof(shareName));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
-            _includeUnfinalizedEvents = changeFeedOptions?.IncludeUnfinalizedEvents ?? false;
+            _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
 
             ShareServiceClient shareServiceClient = new ShareServiceClient(fileServiceUri, credential);
             _shareClient = shareServiceClient.GetShareClient(shareName);
@@ -88,7 +88,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 throw new ArgumentNullException(nameof(shareName));
 
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
-            _includeUnfinalizedEvents = changeFeedOptions?.IncludeUnfinalizedEvents ?? false;
+            _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
 
             ShareServiceClient shareServiceClient = new ShareServiceClient(fileServiceUri, credential);
             _shareClient = shareServiceClient.GetShareClient(shareName);
@@ -112,7 +112,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 throw new ArgumentNullException(nameof(shareName));
 
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
-            _includeUnfinalizedEvents = changeFeedOptions?.IncludeUnfinalizedEvents ?? false;
+            _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
 
             ShareServiceClient shareServiceClient = new ShareServiceClient(fileServiceUri);
             _shareClient = shareServiceClient.GetShareClient(shareName);
@@ -139,7 +139,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             _blobServiceClient = blobServiceClient;
             _shareClient = shareClient;
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
-            _includeUnfinalizedEvents = changeFeedOptions?.IncludeUnfinalizedEvents ?? false;
+            _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
         }
         #endregion ctors
 
@@ -167,13 +167,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// Returns all change feed events for the file share.
         /// </summary>
         public virtual Pageable<ShareChangeFeedEvent> GetChanges()
-            => new ShareChangeFeedPageable(this, _maxTransferSize, _includeUnfinalizedEvents);
+            => new ShareChangeFeedPageable(this, _maxTransferSize, _includeNonFinalizedEvents);
 
         /// <summary>
         /// Returns all change feed events for the file share.
         /// </summary>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync()
-            => new ShareChangeFeedAsyncPageable(this, _maxTransferSize, _includeUnfinalizedEvents);
+            => new ShareChangeFeedAsyncPageable(this, _maxTransferSize, _includeNonFinalizedEvents);
 
         /// <summary>
         /// Returns change feed events within the specified time range.
@@ -189,7 +189,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             => new ShareChangeFeedPageable(
                 this,
                 _maxTransferSize,
-                _includeUnfinalizedEvents,
+                _includeNonFinalizedEvents,
                 startTime: start,
                 endTime: end);
 
@@ -207,7 +207,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             => new ShareChangeFeedAsyncPageable(
                 this,
                 _maxTransferSize,
-                _includeUnfinalizedEvents,
+                _includeNonFinalizedEvents,
                 startTime: start,
                 endTime: end);
 
@@ -219,7 +219,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             => new ShareChangeFeedPageable(
                 this,
                 _maxTransferSize,
-                _includeUnfinalizedEvents,
+                _includeNonFinalizedEvents,
                 continuation: continuationToken);
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             => new ShareChangeFeedAsyncPageable(
                 this,
                 _maxTransferSize,
-                _includeUnfinalizedEvents,
+                _includeNonFinalizedEvents,
                 continuation: continuationToken);
         #endregion GetChanges
 

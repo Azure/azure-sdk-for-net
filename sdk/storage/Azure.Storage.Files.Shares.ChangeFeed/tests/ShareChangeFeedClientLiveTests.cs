@@ -312,12 +312,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Verifies that <see cref="ShareChangeFeedClientOptions.IncludeUnfinalizedEvents"/>
+        /// Verifies that <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
         /// allows reading events past the change feed's last consumable watermark.
         /// </summary>
         [Test]
-        [Ignore("Requires unfinalized segments in the change feed, which cannot be reproduced deterministically in playback.")]
-        public async Task GetChanges_IncludeUnfinalizedEvents_ReturnsEventsPastLastConsumable()
+        [Ignore("Requires non-finalized segments in the change feed, which cannot be reproduced deterministically in playback.")]
+        public async Task GetChanges_IncludeNonFinalizedEvents_ReturnsEventsPastLastConsumable()
         {
             // Arrange - provision a fresh change-feed-enabled share and seed it with events.
             ShareClient shareClient = await CreateChangeFeedEnabledShareAsync();
@@ -328,7 +328,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 {
                     await shareClient.GetDirectoryClient($"dir-{i}").CreateAsync();
                 }
-                // Give the service a moment to surface the new events into the unfinalized segment index.
+                // Give the service a moment to surface the new events into the non-finalized segment index.
                 await Task.Delay(TimeSpan.FromSeconds(30));
 
                 ShareChangeFeedClient tailing = new ShareChangeFeedClient(
@@ -337,7 +337,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
-                    new ShareChangeFeedClientOptions { IncludeUnfinalizedEvents = true });
+                    new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = true });
 
                 // Snapshot the current watermark. On a freshly-created share with no finalized
                 // segments yet this will be null, in which case every event the tailing reader
@@ -359,8 +359,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                         tailingEvents.Add(e);
                 }
 
-                // Assert - tailing reader surfaces unfinalized events past the watermark.
-                CollectionAssert.IsNotEmpty(tailingEvents, "Tailing reader should surface events from the unfinalized segment.");
+                // Assert - tailing reader surfaces non-finalized events past the watermark.
+                CollectionAssert.IsNotEmpty(tailingEvents, "Tailing reader should surface events from the non-finalized segment.");
                 if (lastConsumable.HasValue)
                 {
                     Assert.IsTrue(

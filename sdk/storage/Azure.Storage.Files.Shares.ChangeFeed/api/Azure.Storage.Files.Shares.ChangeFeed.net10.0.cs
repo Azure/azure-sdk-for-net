@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     public partial class ShareChangeFeedClientOptions
     {
         public ShareChangeFeedClientOptions() { }
-        public bool IncludeUnfinalizedEvents { get { throw null; } set { } }
+        public bool IncludeNonFinalizedEvents { get { throw null; } set { } }
         public long? MaximumTransferSize { get { throw null; } set { } }
     }
     public partial class ShareChangeFeedEvent

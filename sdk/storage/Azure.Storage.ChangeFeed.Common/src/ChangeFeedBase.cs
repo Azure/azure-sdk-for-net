@@ -31,7 +31,7 @@ namespace Azure.Storage.ChangeFeed.Common
 
         private DateTimeOffset? _startTime;
         private DateTimeOffset? _endTime;
-        private readonly bool _includeUnfinalizedEvents;
+        private readonly bool _includeNonFinalizedEvents;
         private bool _empty;
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="startTime">Optional inclusive start time for the change feed window.</param>
         /// <param name="endTime">Optional exclusive end time for the change feed window.</param>
         /// <param name="config">Change feed configuration.</param>
-        /// <param name="includeUnfinalizedEvents">
+        /// <param name="includeNonFinalizedEvents">
         /// Whether the producing run was reading past the finalized watermark. Recorded into the
         /// emitted continuation token so that <see cref="ChangeFeedFactoryBase{TEvent}"/> can
         /// reject incompatible replays.
@@ -61,7 +61,7 @@ namespace Azure.Storage.ChangeFeed.Common
             DateTimeOffset? startTime,
             DateTimeOffset? endTime,
             ChangeFeedConfiguration<TEvent> config,
-            bool includeUnfinalizedEvents = false)
+            bool includeNonFinalizedEvents = false)
         {
             _containerClient = containerClient;
             _segmentFactory = segmentFactory;
@@ -72,7 +72,7 @@ namespace Azure.Storage.ChangeFeed.Common
             _startTime = startTime;
             _endTime = endTime;
             _config = config;
-            _includeUnfinalizedEvents = includeUnfinalizedEvents;
+            _includeNonFinalizedEvents = includeNonFinalizedEvents;
             _empty = false;
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Storage.ChangeFeed.Common
                 urlHost: _containerClient.Uri.Host,
                 endDateTime: _endTime,
                 currentSegmentCursor: _currentSegment.GetCursor(),
-                includeUnfinalizedEvents: _includeUnfinalizedEvents);
+                includeNonFinalizedEvents: _includeNonFinalizedEvents);
 
         /// <summary>
         /// Advances to the next segment if the current one is exhausted, loading segments from the next year if needed.

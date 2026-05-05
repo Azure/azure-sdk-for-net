@@ -118,21 +118,21 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         [Test]
-        public void Constructor_IncludeUnfinalizedEvents_DefaultsToFalse()
+        public void Constructor_IncludeNonFinalizedEvents_DefaultsToFalse()
         {
             ShareChangeFeedClient client = new ShareChangeFeedClient(
                 FileServiceUriWithSas,
                 TestShareName);
 
-            Assert.IsFalse(client._includeUnfinalizedEvents);
+            Assert.IsFalse(client._includeNonFinalizedEvents);
         }
 
         [Test]
-        public void Constructor_IncludeUnfinalizedEvents_FlowsFromOptions()
+        public void Constructor_IncludeNonFinalizedEvents_FlowsFromOptions()
         {
             ShareChangeFeedClientOptions options = new ShareChangeFeedClientOptions
             {
-                IncludeUnfinalizedEvents = true,
+                IncludeNonFinalizedEvents = true,
             };
 
             ShareChangeFeedClient client = new ShareChangeFeedClient(
@@ -140,7 +140,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 TestShareName,
                 options);
 
-            Assert.IsTrue(client._includeUnfinalizedEvents);
+            Assert.IsTrue(client._includeNonFinalizedEvents);
         }
 
         // Gap 34: connection-string ctor must reject null/empty connection strings.

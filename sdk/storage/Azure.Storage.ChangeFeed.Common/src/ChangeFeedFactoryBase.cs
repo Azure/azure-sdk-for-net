@@ -20,7 +20,7 @@ namespace Azure.Storage.ChangeFeed.Common
         private readonly SegmentFactoryBase<TEvent> _segmentFactory;
         private readonly BlobContainerClient _containerClient;
         private readonly ChangeFeedConfiguration<TEvent> _config;
-        private readonly bool _includeUnfinalizedEvents;
+        private readonly bool _includeNonFinalizedEvents;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChangeFeedFactoryBase{TEvent}"/> class,
@@ -29,7 +29,7 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="containerClient">Container client for the change feed container.</param>
         /// <param name="maxTransferSize">Optional override for the chunk download block size.</param>
         /// <param name="config">Change feed configuration.</param>
-        /// <param name="includeUnfinalizedEvents">
+        /// <param name="includeNonFinalizedEvents">
         /// When <c>true</c>, segment enumeration is not capped at the change feed's last consumable
         /// timestamp. Used by callers that opt in to reading from non-finalized segments. Defaults
         /// to <c>false</c> to preserve the historical behavior of capping at the watermark.
@@ -38,11 +38,11 @@ namespace Azure.Storage.ChangeFeed.Common
             BlobContainerClient containerClient,
             long? maxTransferSize,
             ChangeFeedConfiguration<TEvent> config,
-            bool includeUnfinalizedEvents = false)
+            bool includeNonFinalizedEvents = false)
         {
             _containerClient = containerClient;
             _config = config;
-            _includeUnfinalizedEvents = includeUnfinalizedEvents;
+            _includeNonFinalizedEvents = includeNonFinalizedEvents;
             _segmentFactory = new SegmentFactoryBase<TEvent>(
                 _containerClient,
                 new ShardFactoryBase<TEvent>(
@@ -62,7 +62,7 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="containerClient">Container client for the change feed container.</param>
         /// <param name="segmentFactory">Pre-built segment factory.</param>
         /// <param name="config">Change feed configuration.</param>
-        /// <param name="includeUnfinalizedEvents">
+        /// <param name="includeNonFinalizedEvents">
         /// When <c>true</c>, segment enumeration is not capped at the change feed's last consumable
         /// timestamp.
         /// </param>
@@ -70,12 +70,12 @@ namespace Azure.Storage.ChangeFeed.Common
             BlobContainerClient containerClient,
             SegmentFactoryBase<TEvent> segmentFactory,
             ChangeFeedConfiguration<TEvent> config,
-            bool includeUnfinalizedEvents = false)
+            bool includeNonFinalizedEvents = false)
         {
             _containerClient = containerClient;
             _segmentFactory = segmentFactory;
             _config = config;
-            _includeUnfinalizedEvents = includeUnfinalizedEvents;
+            _includeNonFinalizedEvents = includeNonFinalizedEvents;
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.Storage.ChangeFeed.Common
             if (continuation != null)
             {
                 cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
-                ValidateCursor(_containerClient, cursor, _includeUnfinalizedEvents);
+                ValidateCursor(_containerClient, cursor, _includeNonFinalizedEvents);
                 startTime = ChangeFeedExtensionsBase.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
                 endTime = cursor.EndTime;
             }
@@ -130,10 +130,10 @@ namespace Azure.Storage.ChangeFeed.Common
             {
                 lastConsumable = lastConsumableNullable.Value;
             }
-            else if (_includeUnfinalizedEvents)
+            else if (_includeNonFinalizedEvents)
             {
                 // No watermark exists yet (e.g. brand-new change feed). Caller opted in to
-                // unfinalized events, so attempt to scan segments anyway.
+                // non-finalized events, so attempt to scan segments anyway.
                 lastConsumable = DateTimeOffset.MinValue;
             }
             else
@@ -152,9 +152,9 @@ namespace Azure.Storage.ChangeFeed.Common
 
             if (years.Count == 0) return ChangeFeedBase<TEvent>.Empty();
 
-            // When _includeUnfinalizedEvents is true, do not cap segment enumeration at the
+            // When _includeNonFinalizedEvents is true, do not cap segment enumeration at the
             // last consumable watermark — pass the user's endTime through directly.
-            DateTimeOffset? effectiveEndTime = _includeUnfinalizedEvents
+            DateTimeOffset? effectiveEndTime = _includeNonFinalizedEvents
                 ? endTime
                 : ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endTime);
 
@@ -189,12 +189,12 @@ namespace Azure.Storage.ChangeFeed.Common
                 startTime,
                 endTime,
                 _config,
-                _includeUnfinalizedEvents);
+                _includeNonFinalizedEvents);
         }
 
         /// <summary>
         /// Validates that a deserialized cursor matches the current storage account, uses a
-        /// supported version, and is compatible with the current run's <c>IncludeUnfinalizedEvents</c>
+        /// supported version, and is compatible with the current run's <c>IncludeNonFinalizedEvents</c>
         /// flag. The flag rule is asymmetric: a cursor produced with the flag on cannot be replayed
         /// with the flag off (would silently skip events past the watermark that the producing
         /// run already consumed).
@@ -202,7 +202,7 @@ namespace Azure.Storage.ChangeFeed.Common
         private static void ValidateCursor(
             BlobContainerClient containerClient,
             ChangeFeedCursor cursor,
-            bool currentIncludeUnfinalizedEvents)
+            bool currentIncludeNonFinalizedEvents)
         {
             if (containerClient.Uri.Host != cursor.UrlHost)
                 throw new ArgumentException("Cursor URL Host does not match container URL host.");
@@ -210,10 +210,10 @@ namespace Azure.Storage.ChangeFeed.Common
             if (cursor.CursorVersion != 1 && cursor.CursorVersion != 2)
                 throw new ArgumentException("Unsupported cursor version.");
 
-            if (cursor.IncludeUnfinalizedEvents && !currentIncludeUnfinalizedEvents)
+            if (cursor.IncludeNonFinalizedEvents && !currentIncludeNonFinalizedEvents)
                 throw new ArgumentException(
-                    "This continuation token was produced with IncludeUnfinalizedEvents=true and cannot be replayed " +
-                    "with IncludeUnfinalizedEvents=false. Re-enable the option on ShareChangeFeedClientOptions, or " +
+                    "This continuation token was produced with IncludeNonFinalizedEvents=true and cannot be replayed " +
+                    "with IncludeNonFinalizedEvents=false. Re-enable the option on ShareChangeFeedClientOptions, or " +
                     "start a fresh read without the cursor.");
         }
 

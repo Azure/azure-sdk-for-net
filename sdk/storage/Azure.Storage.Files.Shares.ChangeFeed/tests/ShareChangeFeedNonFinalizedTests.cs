@@ -17,12 +17,12 @@ using NUnit.Framework;
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 {
     /// <summary>
-    /// Mocked unit tests verifying that <see cref="ShareChangeFeedClientOptions.IncludeUnfinalizedEvents"/>
+    /// Mocked unit tests verifying that <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
     /// causes <see cref="ChangeFeedFactoryBase{TEvent}"/> to bypass the lastConsumable cap when enumerating segments.
     /// </summary>
-    public class ShareChangeFeedUnfinalizedTests : ShareChangeFeedTestBase
+    public class ShareChangeFeedNonFinalizedTests : ShareChangeFeedTestBase
     {
-        public ShareChangeFeedUnfinalizedTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+        public ShareChangeFeedNonFinalizedTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null)
         {
         }
@@ -41,7 +41,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object,
                 ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                includeUnfinalizedEvents: false);
+                includeNonFinalizedEvents: false);
 
             await DrainAsync(factory);
 
@@ -64,7 +64,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object,
                 ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                includeUnfinalizedEvents: true);
+                includeNonFinalizedEvents: true);
 
             await DrainAsync(factory);
 
@@ -88,7 +88,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object,
                 ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                includeUnfinalizedEvents: true);
+                includeNonFinalizedEvents: true);
 
             await DrainAsync(factory);
 
@@ -171,7 +171,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 container.Object,
                 segmentFactory.Object,
                 ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                includeUnfinalizedEvents: false);
+                includeNonFinalizedEvents: false);
 
             DateTimeOffset startTime = new DateTimeOffset(2024, 6, 15, 0, 0, 0, TimeSpan.Zero);
             ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
@@ -198,7 +198,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object,
                 ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                includeUnfinalizedEvents: true);
+                includeNonFinalizedEvents: true);
 
             DateTimeOffset endTime = new DateTimeOffset(2024, 1, 15, 8, 45, 0, TimeSpan.Zero);
             ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
@@ -224,7 +224,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object,
                 ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                includeUnfinalizedEvents: false);
+                includeNonFinalizedEvents: false);
 
             DateTimeOffset endTime = new DateTimeOffset(2024, 1, 15, 8, 45, 0, TimeSpan.Zero);
             ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
@@ -258,7 +258,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object,
                 ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                includeUnfinalizedEvents: currentFlag);
+                includeNonFinalizedEvents: currentFlag);
 
             string continuation = SerializeCursor(cursorFlag);
 
@@ -283,9 +283,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object,
                 ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                includeUnfinalizedEvents: false);
+                includeNonFinalizedEvents: false);
 
-            string continuation = SerializeCursor(includeUnfinalizedEvents: true);
+            string continuation = SerializeCursor(includeNonFinalizedEvents: true);
 
             ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
                 async () => await factory.BuildChangeFeed(
@@ -295,13 +295,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     async: IsAsync,
                     cancellationToken: CancellationToken.None));
 
-            StringAssert.Contains("IncludeUnfinalizedEvents", ex.Message);
+            StringAssert.Contains("IncludeNonFinalizedEvents", ex.Message);
         }
 
         [Test]
         public void V1Cursor_TreatedAsFlagFalse_AllowedWithEitherCurrentFlag()
         {
-            // A cursor JSON without IncludeUnfinalizedEvents (v1 schema) deserializes to flag=false.
+            // A cursor JSON without IncludeNonFinalizedEvents (v1 schema) deserializes to flag=false.
             // Forward-compat: such cursors must replay successfully under either current-flag value.
             string v1Json = System.Text.Json.JsonSerializer.Serialize(new
             {
@@ -320,7 +320,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     containerClient.Object,
                     segmentFactory.Object,
                     ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
-                    includeUnfinalizedEvents: currentFlag);
+                    includeNonFinalizedEvents: currentFlag);
 
                 Assert.DoesNotThrowAsync(
                     async () => await factory.BuildChangeFeed(
@@ -333,13 +333,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             }
         }
 
-        private static string SerializeCursor(bool includeUnfinalizedEvents)
+        private static string SerializeCursor(bool includeNonFinalizedEvents)
         {
             ChangeFeedCursor cursor = new ChangeFeedCursor(
                 urlHost: "account.blob.core.windows.net",
                 endDateTime: null,
                 currentSegmentCursor: new SegmentCursor("idx/segments/2024/01/15/0800/meta.json", new List<ShardCursor>(), null),
-                includeUnfinalizedEvents: includeUnfinalizedEvents);
+                includeNonFinalizedEvents: includeNonFinalizedEvents);
             return System.Text.Json.JsonSerializer.Serialize(cursor);
         }
 
