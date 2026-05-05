@@ -69,7 +69,9 @@ namespace Azure.Core.Tests.Identity.Samples
             #region Snippet:WorkloadIdentityCredentialWithIdentityBinding
             var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
             {
+#pragma warning disable AZID0002 // IsAzureProxyEnabled is experimental
                 IsAzureProxyEnabled = true  // Enable identity binding mode
+#pragma warning restore AZID0002
             });
             #endregion
         }
@@ -87,7 +89,9 @@ namespace Azure.Core.Tests.Identity.Samples
             // After (with identity binding support):
             var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
             {
+#pragma warning disable AZID0002 // IsAzureProxyEnabled is experimental
                 IsAzureProxyEnabled = true
+#pragma warning restore AZID0002
             });
             #endregion
         }
