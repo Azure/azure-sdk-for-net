@@ -52,7 +52,9 @@ namespace Azure.Identity
                 clientAssertionCredentialOptions.MsalClient = options.MsalClient;
 
                 // Configure Kubernetes token proxy if user opted in
+#pragma warning disable AZID0002 // IsAzureProxyEnabled is experimental
                 if (options.IsAzureProxyEnabled)
+#pragma warning restore AZID0002
                 {
                     var proxyConfig = KubernetesProxyConfig.TryCreate();
                     if (proxyConfig != null)
