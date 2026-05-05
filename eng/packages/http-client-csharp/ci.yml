@@ -56,6 +56,7 @@ extends:
       - /sdk/core/Azure.Core.TestFramework/src
     BuildPrereleaseVersion: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
+    UploadPlaygroundBundle: true
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       ${{ if eq(variables['Build.Reason'], 'Manual') }}:
         ShouldPublish: ${{ parameters.ShouldPublish }}
