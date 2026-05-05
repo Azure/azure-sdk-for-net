@@ -15,7 +15,8 @@ public class FileBinaryContent : BinaryContent
 {
     private const string DefaultMediaType = "application/octet-stream";
 
-    private readonly Lazy<BinaryContent> _lazyContent;
+    private readonly Lazy<BinaryContent> _content;
+    private readonly Stream? _stream;
     private bool _disposed;
 
     /// <summary>
@@ -30,8 +31,7 @@ public class FileBinaryContent : BinaryContent
     {
         Argument.AssertNotNull(data, nameof(data));
 
-        BinaryContent content = Create(data);
-        _lazyContent = new Lazy<BinaryContent>(() => content);
+        _content = new Lazy<BinaryContent>(() => Create(data.ToStream()));
         MediaType = data.MediaType ?? mediaType;
     }
 
@@ -50,8 +50,8 @@ public class FileBinaryContent : BinaryContent
     {
         Argument.AssertNotNull(stream, nameof(stream));
 
-        BinaryContent content = Create(stream);
-        _lazyContent = new Lazy<BinaryContent>(() => content);
+        _stream = stream;
+        _content = new Lazy<BinaryContent>(() => Create(stream));
         MediaType = mediaType;
     }
 
@@ -70,7 +70,7 @@ public class FileBinaryContent : BinaryContent
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
-        _lazyContent = new Lazy<BinaryContent>(() =>
+        _content = new Lazy<BinaryContent>(() =>
         {
             FileStream fileStream = File.OpenRead(path);
             try
@@ -100,10 +100,11 @@ public class FileBinaryContent : BinaryContent
             return;
         }
 
-        if (_lazyContent.IsValueCreated)
+        if (_content.IsValueCreated)
         {
-            _lazyContent.Value.Dispose();
+            _content.Value.Dispose();
         }
+        _stream?.Dispose();
         _disposed = true;
     }
 
@@ -112,7 +113,7 @@ public class FileBinaryContent : BinaryContent
     {
         try
         {
-            return _lazyContent.Value.TryComputeLength(out length);
+            return _content.Value.TryComputeLength(out length);
         }
         catch
         {
@@ -123,9 +124,9 @@ public class FileBinaryContent : BinaryContent
 
     /// <inheritdoc/>
     public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
-        => _lazyContent.Value.WriteTo(stream, cancellationToken);
+        => _content.Value.WriteTo(stream, cancellationToken);
 
     /// <inheritdoc/>
     public override Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
-        => _lazyContent.Value.WriteToAsync(stream, cancellationToken);
+        => _content.Value.WriteToAsync(stream, cancellationToken);
 }
