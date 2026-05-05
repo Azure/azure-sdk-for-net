@@ -104,6 +104,6 @@ dotnet run -- --endpoint https://<your-resource>.services.ai.azure.com/ \
 
 ## Further Reading
 
-- [Azure VoiceLive Documentation](https://learn.microsoft.com/en-us/azure/ai-services/voicelive/overview)
-- [Azure AI Foundry Documentation](https://learn.microsoft.com/en-us/azure/ai-studio/what-is-ai-studio)
+- [Azure VoiceLive Documentation](https://learn.microsoft.com/azure/ai-services/voicelive/)
+- [Azure AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/what-is-ai-studio)
 - [VoiceLive SDK for .NET](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/voicelive/Azure.AI.VoiceLive)
