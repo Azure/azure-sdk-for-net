@@ -1,20 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    // Backward-compat shim. v1.14.0 baseline exposed both `EnableAutomaticUpdates` and
-    // `IsAutomaticUpdatesEnabled` for the same wire field; the Is* form is the new
-    // canonical name and Enable* is kept as a deprecated alias for source compatibility.
     public partial class WindowsConfiguration
     {
+        /// <summary> Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. &lt;br&gt;&lt;br&gt; For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? EnableAutomaticUpdates
-        {
-            get => IsAutomaticUpdatesEnabled;
-            set => IsAutomaticUpdatesEnabled = value;
-        }
+        public bool? EnableAutomaticUpdates { get => IsAutomaticUpdatesEnabled; set => IsAutomaticUpdatesEnabled = value; }
     }
 }

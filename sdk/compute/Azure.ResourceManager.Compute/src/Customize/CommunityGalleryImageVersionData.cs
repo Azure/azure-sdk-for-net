@@ -23,8 +23,11 @@ namespace Azure.ResourceManager.Compute
 
         // Backward-compat shim (get-only). v1.14.0 baseline exposed both `ExcludeFromLatest`
         // and `IsExcludedFromLatest`; the Is* form is the new canonical name.
+        /// <summary>
+        /// If set to true, Virtual Machines deployed from the latest version of the Image Definition won&apos;t use this Image Version.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? ExcludeFromLatest => IsExcludedFromLatest;
+        public bool? ExcludeFromLatest { get => IsExcludedFromLatest; }
 
         // Customization: restored as IReadOnlyDictionary<string, string> to preserve the previously-shipped
         // API surface. The new spec emits this as a writable IDictionary, which would be a binary-breaking
