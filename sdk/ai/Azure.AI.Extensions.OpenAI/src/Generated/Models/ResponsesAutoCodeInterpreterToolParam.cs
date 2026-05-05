@@ -20,14 +20,14 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAutoCodeInterpreterToolParam"/>. </summary>
-        /// <param name="type"> Always `auto`. </param>
+        /// <param name="kind"> Always `auto`. </param>
         /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
         /// <param name="memoryLimit"></param>
         /// <param name="networkPolicy"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesAutoCodeInterpreterToolParam(string @type, IList<string> fileIds, ResponsesContainerMemoryLimit? memoryLimit, ResponsesContainerNetworkPolicyParam networkPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesAutoCodeInterpreterToolParam(string kind, IList<string> fileIds, ResponsesContainerMemoryLimit? memoryLimit, ResponsesContainerNetworkPolicyParam networkPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             FileIds = fileIds;
             MemoryLimit = memoryLimit;
             NetworkPolicy = networkPolicy;
@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Always `auto`. </summary>
-        public string Type { get; } = "auto";
+        public string Kind { get; } = "auto";
 
         /// <summary> An optional list of uploaded files to make available to your code. </summary>
         public IList<string> FileIds { get; }

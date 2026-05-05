@@ -19,23 +19,23 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="TelemetryEndpoint"/>. </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        private protected TelemetryEndpoint(TelemetryEndpointKind kind, IEnumerable<TelemetryDataKind> data)
+        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        private protected TelemetryEndpoint(TelemetryEndpointKind kind, IEnumerable<ExportedDataTypes> exportedDataTypes)
         {
             Kind = kind;
-            Data = data.ToList();
+            ExportedDataTypes = exportedDataTypes.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="TelemetryEndpoint"/>. </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="authentication"> Optional authentication configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryDataKind> data, TelemetryEndpointAuth auth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelemetryEndpoint(TelemetryEndpointKind kind, IList<ExportedDataTypes> exportedDataTypes, TelemetryEndpointAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
-            Data = data;
-            Auth = auth;
+            ExportedDataTypes = exportedDataTypes;
+            Authentication = authentication;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,9 +43,9 @@ namespace Azure.AI.Projects.Agents
         internal TelemetryEndpointKind Kind { get; set; }
 
         /// <summary> Data types to export to this endpoint. Use an empty array to export no data. </summary>
-        public IList<TelemetryDataKind> Data { get; }
+        public IList<ExportedDataTypes> ExportedDataTypes { get; }
 
         /// <summary> Optional authentication configuration. </summary>
-        public TelemetryEndpointAuth Auth { get; set; }
+        public TelemetryEndpointAuthentication Authentication { get; set; }
     }
 }

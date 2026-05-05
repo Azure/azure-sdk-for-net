@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
     {
         /// <summary> Initializes a new instance of <see cref="SimpleQnADataGenerationJobOptions"/>. </summary>
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>
-        public SimpleQnADataGenerationJobOptions(int maxSamples) : base(DataGenerationJobType.SimpleQna, maxSamples)
+        public SimpleQnADataGenerationJobOptions(int maxSamples) : base(DataGenerationJobKind.SimpleQna, maxSamples)
         {
             QuestionTypes = new ChangeTrackingList<SimpleQnAFineTuningQuestionType>();
         }
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="questionTypes"> The question types to generate. Used only for fine-tuning scenarios. </param>
-        internal SimpleQnADataGenerationJobOptions(DataGenerationJobType @type, int maxSamples, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<SimpleQnAFineTuningQuestionType> questionTypes) : base(@type, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties)
+        internal SimpleQnADataGenerationJobOptions(DataGenerationJobKind @type, int maxSamples, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<SimpleQnAFineTuningQuestionType> questionTypes) : base(@type, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties)
         {
             QuestionTypes = questionTypes;
         }

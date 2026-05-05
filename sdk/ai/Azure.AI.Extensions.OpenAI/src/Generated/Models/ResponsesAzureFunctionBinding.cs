@@ -24,18 +24,18 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionBinding"/>. </summary>
-        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
+        /// <param name="kind"> The type of binding, which is always 'storage_queue'. </param>
         /// <param name="storageQueue"> Storage queue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesAzureFunctionBinding(string @type, ResponsesAzureFunctionStorageQueue storageQueue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesAzureFunctionBinding(string kind, ResponsesAzureFunctionStorageQueue storageQueue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             StorageQueue = storageQueue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of binding, which is always 'storage_queue'. </summary>
-        public string Type { get; } = "storage_queue";
+        public string Kind { get; } = "storage_queue";
 
         /// <summary> Storage queue. </summary>
         public ResponsesAzureFunctionStorageQueue StorageQueue { get; set; }

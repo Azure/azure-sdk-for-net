@@ -77,7 +77,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("openapi"u8);
-            writer.WriteObjectValue(Openapi, options);
+            writer.WriteObjectValue(OpenApi, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -107,7 +107,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponsesOpenApiFunctionDefinition openapi = default;
+            ResponsesOpenApiFunctionDefinition openApi = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -117,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("openapi"u8))
                 {
-                    openapi = ResponsesOpenApiFunctionDefinition.DeserializeResponsesOpenApiFunctionDefinition(prop.Value, options);
+                    openApi = ResponsesOpenApiFunctionDefinition.DeserializeResponsesOpenApiFunctionDefinition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +125,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesOpenApiTool(@type, additionalBinaryDataProperties, openapi);
+            return new ResponsesOpenApiTool(@type, additionalBinaryDataProperties, openApi);
         }
     }
 }

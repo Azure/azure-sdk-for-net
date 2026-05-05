@@ -22,7 +22,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PatchAgentOptions(AgentEndpointConfig agentEndpoint, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PatchAgentOptions(AgentEndpointConfiguration agentEndpoint, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentEndpoint = agentEndpoint;
             AgentCard = agentCard;
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The endpoint configuration for the agent. </summary>
-        public AgentEndpointConfig AgentEndpoint { get; set; }
+        public AgentEndpointConfiguration AgentEndpoint { get; set; }
 
         /// <summary> Optional agent card for the agent. </summary>
         public AgentCard AgentCard { get; set; }

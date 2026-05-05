@@ -127,6 +127,11 @@ namespace Azure.AI.Projects.Evaluation
             writer.WriteEndArray();
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition, options);
+            if (options.Format != "W" && Optional.IsDefined(GenerationArtifacts))
+            {
+                writer.WritePropertyName("generation_artifacts"u8);
+                writer.WriteObjectValue(GenerationArtifacts, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_by"u8);
@@ -225,6 +230,7 @@ namespace Azure.AI.Projects.Evaluation
             EvaluatorType evaluatorType = default;
             IList<EvaluatorCategory> categories = default;
             EvaluatorDefinition definition = default;
+            EvaluatorGenerationArtifacts generationArtifacts = default;
             string createdBy = default;
             string createdAt = default;
             string modifiedAt = default;
@@ -280,6 +286,15 @@ namespace Azure.AI.Projects.Evaluation
                 if (prop.NameEquals("definition"u8))
                 {
                     definition = EvaluatorDefinition.DeserializeEvaluatorDefinition(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("generation_artifacts"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    generationArtifacts = EvaluatorGenerationArtifacts.DeserializeEvaluatorGenerationArtifacts(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
@@ -349,6 +364,7 @@ namespace Azure.AI.Projects.Evaluation
                 evaluatorType,
                 categories,
                 definition,
+                generationArtifacts,
                 createdBy,
                 createdAt,
                 modifiedAt,

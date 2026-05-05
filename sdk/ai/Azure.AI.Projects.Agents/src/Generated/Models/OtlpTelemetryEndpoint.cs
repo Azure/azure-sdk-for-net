@@ -11,13 +11,13 @@ namespace Azure.AI.Projects.Agents
     public partial class OtlpTelemetryEndpoint : TelemetryEndpoint
     {
         /// <summary> Initializes a new instance of <see cref="OtlpTelemetryEndpoint"/>. </summary>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="endpoint"/> is null. </exception>
-        public OtlpTelemetryEndpoint(IEnumerable<TelemetryDataKind> data, string endpoint, TelemetryTransportProtocol protocol) : base(TelemetryEndpointKind.OTLP, data)
+        /// <exception cref="ArgumentNullException"> <paramref name="exportedDataTypes"/> or <paramref name="endpoint"/> is null. </exception>
+        public OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes, string endpoint, TelemetryTransportProtocol protocol) : base(TelemetryEndpointKind.OTLP, exportedDataTypes)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(exportedDataTypes, nameof(exportedDataTypes));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
@@ -26,12 +26,12 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="OtlpTelemetryEndpoint"/>. </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="authentication"> Optional authentication configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
-        internal OtlpTelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryDataKind> data, TelemetryEndpointAuth auth, IDictionary<string, BinaryData> additionalBinaryDataProperties, string endpoint, TelemetryTransportProtocol protocol) : base(kind, data, auth, additionalBinaryDataProperties)
+        internal OtlpTelemetryEndpoint(TelemetryEndpointKind kind, IList<ExportedDataTypes> exportedDataTypes, TelemetryEndpointAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties, string endpoint, TelemetryTransportProtocol protocol) : base(kind, exportedDataTypes, authentication, additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             Protocol = protocol;

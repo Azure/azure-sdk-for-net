@@ -191,6 +191,18 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
         }
 
+        /// <summary> Initializes a new instance of EvaluatorGenerationJobs. </summary>
+        internal virtual EvaluatorGenerationJobs GetEvaluatorGenerationJobsClient()
+        {
+            return Volatile.Read(ref _cachedEvaluatorGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedEvaluatorGenerationJobs, new EvaluatorGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluatorGenerationJobs;
+        }
+
+        /// <summary> Initializes a new instance of DataGenerationJobs. </summary>
+        internal virtual DataGenerationJobs GetDataGenerationJobsClient()
+        {
+            return Volatile.Read(ref _cachedDataGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedDataGenerationJobs, new DataGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataGenerationJobs;
+        }
+
         /// <summary> Gets the client for managing connections. </summary>
         public virtual AIProjectConnectionsOperations Connections { get => GetAIProjectConnectionsOperationsClient(); }
         /// <summary> Gets the client for managing datasets. </summary>
@@ -210,6 +222,8 @@ namespace Azure.AI.Projects
         public virtual ProjectSchedules Schedules => GetProjectSchedulesClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
+        public EvaluatorGenerationJobs EvaluatorGenerationJobs => GetEvaluatorGenerationJobsClient();
+        public DataGenerationJobs DataGenerationJob => GetDataGenerationJobsClient();
 
         private static PipelineMessageClassifier s_pipelineMessageClassifier;
         internal static PipelineMessageClassifier PipelineMessageClassifier

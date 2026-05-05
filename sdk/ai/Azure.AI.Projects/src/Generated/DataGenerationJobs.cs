@@ -5,10 +5,8 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
@@ -48,14 +46,10 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult GetGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             using PipelineMessage message = CreateGetGenerationJobRequest(jobId, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -71,14 +65,10 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> GetGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             using PipelineMessage message = CreateGetGenerationJobRequest(jobId, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -87,13 +77,9 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DataGenerationJob> GetGenerationJob(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<DataGenerationJob> GetGenerationJob(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             ClientResult result = GetGenerationJob(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
@@ -102,183 +88,11 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DataGenerationJob>> GetGenerationJobAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<DataGenerationJob>> GetGenerationJobAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             ClientResult result = await GetGenerationJobAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Returns a list of data generation jobs.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="scenario"> Filter data generation jobs by their scenario. </param>
-        /// <param name="type"> Filter data generation jobs by their type. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetGenerationJobs(string foundryFeatures, int? limit, string order, string after, string before, string scenario, IEnumerable<DataGenerationJobType> @type, RequestOptions options)
-        {
-            return new DataGenerationJobsGetGenerationJobsCollectionResult(
-                this,
-                foundryFeatures,
-                limit,
-                order,
-                after,
-                before,
-                scenario,
-                @type,
-                options);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Returns a list of data generation jobs.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="scenario"> Filter data generation jobs by their scenario. </param>
-        /// <param name="type"> Filter data generation jobs by their type. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetGenerationJobsAsync(string foundryFeatures, int? limit, string order, string after, string before, string scenario, IEnumerable<DataGenerationJobType> @type, RequestOptions options)
-        {
-            return new DataGenerationJobsGetGenerationJobsAsyncCollectionResult(
-                this,
-                foundryFeatures,
-                limit,
-                order,
-                after,
-                before,
-                scenario,
-                @type,
-                options);
-        }
-
-        /// <summary> Returns a list of data generation jobs. </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="scenario"> Filter data generation jobs by their scenario. </param>
-        /// <param name="type"> Filter data generation jobs by their type. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<DataGenerationJob> GetGenerationJobs(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, DataGenerationJobScenario? scenario = default, IEnumerable<DataGenerationJobType> @type = default, CancellationToken cancellationToken = default)
-        {
-            return new DataGenerationJobsGetGenerationJobsCollectionResultOfT(
-                this,
-                foundryFeatures?.ToSerialString(),
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                scenario?.ToString(),
-                @type,
-                cancellationToken.ToRequestOptions());
-        }
-
-        /// <summary> Returns a list of data generation jobs. </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="scenario"> Filter data generation jobs by their scenario. </param>
-        /// <param name="type"> Filter data generation jobs by their type. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<DataGenerationJob> GetGenerationJobsAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, DataGenerationJobScenario? scenario = default, IEnumerable<DataGenerationJobType> @type = default, CancellationToken cancellationToken = default)
-        {
-            return new DataGenerationJobsGetGenerationJobsAsyncCollectionResultOfT(
-                this,
-                foundryFeatures?.ToSerialString(),
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                scenario?.ToString(),
-                @type,
-                cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -293,13 +107,10 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateGenerationJob(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
+        internal virtual ClientResult CreateGenerationJob(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -316,44 +127,35 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateGenerationJobAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> CreateGenerationJobAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Creates a data generation job. </summary>
-        /// <param name="body"> The job to create. </param>
+        /// <param name="job"> The job to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DataGenerationJob> CreateGenerationJob(DataGenerationJob body, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<DataGenerationJob> CreateGenerationJob(DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
-            ClientResult result = CreateGenerationJob(body, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
+            ClientResult result = CreateGenerationJob(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a data generation job. </summary>
-        /// <param name="body"> The job to create. </param>
+        /// <param name="job"> The job to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DataGenerationJob>> CreateGenerationJobAsync(DataGenerationJob body, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<DataGenerationJob>> CreateGenerationJobAsync(DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
-            ClientResult result = await CreateGenerationJobAsync(body, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateGenerationJobAsync(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
 
@@ -368,14 +170,10 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CancelGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult CancelGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             using PipelineMessage message = CreateCancelGenerationJobRequest(jobId, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -391,14 +189,10 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CancelGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> CancelGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             using PipelineMessage message = CreateCancelGenerationJobRequest(jobId, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -407,13 +201,9 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DataGenerationJob> CancelGenerationJob(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<DataGenerationJob> CancelGenerationJob(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             ClientResult result = CancelGenerationJob(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
@@ -422,13 +212,9 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DataGenerationJob>> CancelGenerationJobAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<DataGenerationJob>> CancelGenerationJobAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             ClientResult result = await CancelGenerationJobAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
@@ -444,14 +230,10 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult DeleteGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult DeleteGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             using PipelineMessage message = CreateDeleteGenerationJobRequest(jobId, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -467,14 +249,10 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             using PipelineMessage message = CreateDeleteGenerationJobRequest(jobId, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -483,13 +261,9 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult DeleteGenerationJob(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult DeleteGenerationJob(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             return DeleteGenerationJob(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
@@ -497,13 +271,9 @@ namespace Azure.AI.Projects
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteGenerationJobAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult> DeleteGenerationJobAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
             return await DeleteGenerationJobAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }

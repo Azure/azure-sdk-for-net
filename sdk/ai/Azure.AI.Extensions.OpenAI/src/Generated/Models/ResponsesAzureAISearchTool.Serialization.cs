@@ -87,7 +87,7 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("azure_ai_search"u8);
-            writer.WriteObjectValue(AzureAiSearch, options);
+            writer.WriteObjectValue(AzureAISearch, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,7 +119,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string description = default;
-            ResponsesAzureAISearchToolResource azureAiSearch = default;
+            ResponsesAzureAISearchToolResource azureAISearch = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -139,7 +139,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("azure_ai_search"u8))
                 {
-                    azureAiSearch = ResponsesAzureAISearchToolResource.DeserializeResponsesAzureAISearchToolResource(prop.Value, options);
+                    azureAISearch = ResponsesAzureAISearchToolResource.DeserializeResponsesAzureAISearchToolResource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesAzureAISearchTool(@type, additionalBinaryDataProperties, name, description, azureAiSearch);
+            return new ResponsesAzureAISearchTool(@type, additionalBinaryDataProperties, name, description, azureAISearch);
         }
     }
 }

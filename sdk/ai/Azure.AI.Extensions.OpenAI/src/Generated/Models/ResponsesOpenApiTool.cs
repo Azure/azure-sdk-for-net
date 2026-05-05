@@ -11,25 +11,25 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesOpenApiTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/>. </summary>
-        /// <param name="openapi"> The openapi function definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openapi"/> is null. </exception>
-        public ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition openapi) : base(ToolType.Openapi)
+        /// <param name="openApi"> The openapi function definition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="openApi"/> is null. </exception>
+        public ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition openApi) : base(ToolType.Openapi)
         {
-            Argument.AssertNotNull(openapi, nameof(openapi));
+            Argument.AssertNotNull(openApi, nameof(openApi));
 
-            Openapi = openapi;
+            OpenApi = openApi;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="openapi"> The openapi function definition. </param>
-        internal ResponsesOpenApiTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesOpenApiFunctionDefinition openapi) : base(@type, additionalBinaryDataProperties)
+        /// <param name="openApi"> The openapi function definition. </param>
+        internal ResponsesOpenApiTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesOpenApiFunctionDefinition openApi) : base(@type, additionalBinaryDataProperties)
         {
-            Openapi = openapi;
+            OpenApi = openApi;
         }
 
         /// <summary> The openapi function definition. </summary>
-        public ResponsesOpenApiFunctionDefinition Openapi { get; set; }
+        public ResponsesOpenApiFunctionDefinition OpenApi { get; set; }
     }
 }

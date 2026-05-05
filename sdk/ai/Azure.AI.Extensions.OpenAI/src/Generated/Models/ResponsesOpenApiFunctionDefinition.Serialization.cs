@@ -84,7 +84,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             writer.WritePropertyName("spec"u8);
             writer.WriteStartObject();
-            foreach (var item in Spec)
+            foreach (var item in Specification)
             {
                 writer.WritePropertyName(item.Key);
                 if (item.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             string name = default;
             string description = default;
-            IDictionary<string, BinaryData> spec = default;
+            IDictionary<string, BinaryData> specification = default;
             ResponsesOpenApiAuthDetails auth = default;
             IList<string> defaultParams = default;
             IReadOnlyList<ResponsesOpenApiFunctionDefinitionFunction> functions = default;
@@ -204,7 +204,7 @@ namespace Azure.AI.Extensions.OpenAI
                             dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
-                    spec = dictionary;
+                    specification = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("auth"u8))
@@ -255,7 +255,7 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesOpenApiFunctionDefinition(
                 name,
                 description,
-                spec,
+                specification,
                 auth,
                 defaultParams ?? new ChangeTrackingList<string>(),
                 functions ?? new ChangeTrackingList<ResponsesOpenApiFunctionDefinitionFunction>(),

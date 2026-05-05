@@ -65,21 +65,17 @@ ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateSessions_SessionsCRUD_Sync
-string sessionKey1 = "sample-isolation-key";
-string sessionKey2 = "sample-isolation-key2";
 string sessionId1 = Guid.NewGuid().ToString();
 string sessionId2 = Guid.NewGuid().ToString();
 ProjectAgentSession session1 = agentsClient.CreateSession(
     agentName: agentVersion.Name,
     agentSessionId: sessionId1,
-    isolationKey: sessionKey1,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
 ProjectAgentSession session2 = agentsClient.CreateSession(
     agentName: agentVersion.Name,
     agentSessionId: sessionId2,
-    isolationKey: sessionKey2,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
@@ -98,21 +94,17 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateSessions_SessionsCRUD_Async
-string sessionKey1 = Guid.NewGuid().ToString();
-string sessionKey2 = Guid.NewGuid().ToString();
 string sessionId1 = Guid.NewGuid().ToString();
 string sessionId2 = Guid.NewGuid().ToString();
 ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId1,
-    isolationKey: sessionKey1,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
 ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId2,
-    isolationKey: sessionKey2,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
@@ -168,12 +160,12 @@ foreach (ProjectAgentSession item in sessions)
 
 Synchronous sample:
 ```C# Snippet:Sample_Delete_SessionsCRUD_Sync
-agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
-agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
+agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Delete_SessionsCRUD_Async
-await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
-await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
+await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
 ```

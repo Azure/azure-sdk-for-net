@@ -21,16 +21,16 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesMCPToolFilter"/>. </summary>
         /// <param name="toolNames"> List of allowed tool names. </param>
-        /// <param name="readOnly">
+        /// <param name="isReadOnly">
         /// Indicates whether or not a tool modifies data or is read-only. If an
         ///   MCP server is [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
         ///   it will match this filter.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesMCPToolFilter(IList<string> toolNames, bool? readOnly, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesMCPToolFilter(IList<string> toolNames, bool? isReadOnly, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ToolNames = toolNames;
-            ReadOnly = readOnly;
+            IsReadOnly = isReadOnly;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,6 +42,6 @@ namespace Azure.AI.Extensions.OpenAI
         ///   MCP server is [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
         ///   it will match this filter.
         /// </summary>
-        public bool? ReadOnly { get; set; }
+        public bool? IsReadOnly { get; set; }
     }
 }

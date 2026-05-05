@@ -387,7 +387,7 @@ public class AgentsTests : AgentsTestBase
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
-        AgentEndpointConfig config = new()
+        AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
             Protocols = { AgentEndpointProtocol.Responses }
@@ -425,13 +425,10 @@ public class AgentsTests : AgentsTestBase
     public async Task TestSessionCRUD()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
-        string sessionKey1 = "sample_session_key1";
-        string sessionKey2 = "sample_session_key2";
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         // Create
         ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            isolationKey: sessionKey1,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         Assert.That(session1.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
@@ -445,10 +442,9 @@ public class AgentsTests : AgentsTestBase
         Assert.That(session1.AgentSessionId, Is.EqualTo(session1.AgentSessionId));
         ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            isolationKey: sessionKey2,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
-        Assert.That(session2.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
+        Assert.That(session2.VersionIndicator, Is.InstanceOf<VersionRefIndicator>());
         Assert.That(((VersionRefIndicator)session2.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
         {
@@ -460,7 +456,7 @@ public class AgentsTests : AgentsTestBase
         // Get
         ProjectAgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         Assert.That(session.AgentSessionId, Is.EqualTo(session1.AgentSessionId));
-        Assert.That(session.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
+        Assert.That(session.VersionIndicator, Is.InstanceOf<VersionRefIndicator>());
         Assert.That(((VersionRefIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         // List
         HashSet<string> sessions = [..await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
@@ -468,12 +464,12 @@ public class AgentsTests : AgentsTestBase
         Assert.That(sessions, Does.Contain(session1.AgentSessionId));
         Assert.That(sessions, Does.Contain(session2.AgentSessionId));
         // Delete
-        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
         Assert.That(sessions, Has.Count.EqualTo(1));
         Assert.That(sessions, Does.Not.Contain(session1.AgentSessionId));
         Assert.That(sessions, Does.Contain(session2.AgentSessionId));
-        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
         Assert.That(sessions, Has.Count.EqualTo(0));
     }
@@ -483,7 +479,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
-        await DeleteAllSessionsAsync(agentsClient, agentVersion.Name, "key_1");
+        await DeleteAllSessionsAsync(agentsClient, agentVersion.Name);
         string sessionIdBase = $"session_{(IsAsync ? "async" : "sync")}_09";
         // Make sure that chronological order is the reverse of session ID alphanumeric order.
         for (int i = 0; i < PAGE_SIZE + 1; i++)
@@ -493,7 +489,6 @@ public class AgentsTests : AgentsTestBase
                 await agentsClient.CreateSessionAsync(
                     agentName: agentVersion.Name,
                     agentSessionId: $"{sessionIdBase}_{PAGE_SIZE - i}",
-                    isolationKey: "key_1",
                     versionIndicator: new VersionRefIndicator(agentVersion.Version)
                 );
             }
@@ -534,21 +529,20 @@ public class AgentsTests : AgentsTestBase
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].AgentSessionId, Is.EqualTo(records[records.Count - 2].AgentSessionId));
         Assert.That(backwards[1].AgentSessionId, Is.EqualTo(records[records.Count - 3].AgentSessionId));
-        await DeleteAllSessionsAsync(agentsClient, agentVersion.Name, "key_1");
+        await DeleteAllSessionsAsync(agentsClient, agentVersion.Name);
     }
 
     [RecordedTest]
     public async Task TestSessionLogs()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
-        string sessionName = IsAsync ? "session_async_12345678" : "session_sync_12345678";
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
+        string sessionName = IsAsync ? "session_async_12345679" : "session_sync_12345679";
         try
         {
             ProjectAgentSession session = await agentsClient.CreateSessionAsync(
                 agentName: agentVersion.Name,
                 agentSessionId: sessionName,
-                isolationKey: "key_1",
                 versionIndicator: new VersionRefIndicator(agentVersion.Version)
             );
         }
@@ -567,7 +561,6 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            isolationKey: "key_1",
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         string fileLocalPath = GetTestFile("weather_openapi.json");
@@ -622,8 +615,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(response.Entries, Has.Count.EqualTo(0));
         await agentsClient.DeleteSessionAsync(
             agentName: agentVersion.Name,
-            sessionId: session.AgentSessionId,
-            isolationKey: $"key_1"
+            sessionId: session.AgentSessionId
         );
     }
 
@@ -779,15 +771,14 @@ public class AgentsTests : AgentsTestBase
     }
 
     #region Helpers
-    public static async Task DeleteAllSessionsAsync(AgentAdministrationClient agentsClient, string agentName, string key)
+    public static async Task DeleteAllSessionsAsync(AgentAdministrationClient agentsClient, string agentName)
     {
         List<string> sessions = await agentsClient.GetSessionsAsync(agentName: agentName).Select(x => x.AgentSessionId).ToListAsync();
         foreach (string session in sessions)
         {
             await agentsClient.DeleteSessionAsync(
                 agentName: agentName,
-                sessionId: session,
-                isolationKey: key
+                sessionId: session
             );
         }
     }

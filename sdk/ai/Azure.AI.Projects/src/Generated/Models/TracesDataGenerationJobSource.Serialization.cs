@@ -81,6 +81,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(AgentId))
+            {
+                writer.WritePropertyName("agent_id"u8);
+                writer.WriteStringValue(AgentId);
+            }
             writer.WritePropertyName("agent_name"u8);
             writer.WriteStringValue(AgentName);
             if (Optional.IsDefined(AgentVersion))
@@ -133,6 +138,7 @@ namespace Azure.AI.Projects
             DataGenerationJobSourceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string description = default;
+            string agentId = default;
             string agentName = default;
             string agentVersion = default;
             DateTimeOffset? startTime = default;
@@ -148,6 +154,11 @@ namespace Azure.AI.Projects
                 if (prop.NameEquals("description"u8))
                 {
                     description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("agent_id"u8))
+                {
+                    agentId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("agent_name"u8))
@@ -196,6 +207,7 @@ namespace Azure.AI.Projects
                 @type,
                 additionalBinaryDataProperties,
                 description,
+                agentId,
                 agentName,
                 agentVersion,
                 startTime,

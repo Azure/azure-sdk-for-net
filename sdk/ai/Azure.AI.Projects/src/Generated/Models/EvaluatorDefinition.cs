@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Base evaluator configuration with discriminator
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeBasedEvaluatorDefinition"/> and <see cref="PromptBasedEvaluatorDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeBasedEvaluatorDefinition"/>, <see cref="PromptBasedEvaluatorDefinition"/>, and <see cref="RubricBasedEvaluatorDefinition"/>.
     /// </summary>
     public abstract partial class EvaluatorDefinition
     {

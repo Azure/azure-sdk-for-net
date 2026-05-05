@@ -7,6 +7,21 @@
 - Added `Name` and `Description` properties to Responses tool classes.
 
 ### Breaking Changes
+- `ComputerScreenshotImage` property `ImageUrl` was renamed to `ImageUri`.
+- `ResponsesAutoCodeInterpreterToolParam` property `Type` was renamed to `Kind`.
+- `ResponsesAzureAISearchTool` property `AzureAiSearch` was renamed to `AzureAISearch`.
+- `ResponsesAzureFunctionBinding` property `Type` was renamed to `Kind`.
+- `ResponsesBingGroundingSearchConfiguration` property `SetLang` was renamed to `Language`.
+- `ResponsesCustomToolParam` property `DeferLoading` was renamed to `ShouldDeferLoading`.
+- `ResponsesFunctionToolParam` property `DeferLoading` was renamed to `ShouldDeferLoading`.
+- `ResponsesFunctionToolParam` property `Strict` was renamed to `IsStrict`.
+- `ResponsesFunctionCallOutputStatusEnum` was renamed to `ResponsesFunctionCallOutputStatus`.
+- `ResponsesMCPToolFilter` property `ReadOnly` was renamed to `IsReadOnly`.
+- `ResponsesMemorySearchPreviewTool` property `UpdateDelay` was renamed to `UpdateDelayInSeconds`.
+- `ResponsesOpenApiFunctionDefinition` property `Spec` was renamed to `Specification`.
+- `ResponsesOpenApiTool` property `Openapi` was renamed to `OpenApi`.
+- `ResponsesStructuredOutputDefinition` property `Strict` was renamed to `IsStrict`.
+- `ResponsesWebSearchApproximateLocation` property `Type` was renamed to `Kind`.
 
 ### Bugs Fixed
 

@@ -108,8 +108,8 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             TelemetryEndpointKind kind = default;
-            IList<TelemetryDataKind> data = default;
-            TelemetryEndpointAuth auth = default;
+            IList<ExportedDataTypes> exportedDataTypes = default;
+            TelemetryEndpointAuthentication authentication = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string endpoint = default;
             TelemetryTransportProtocol protocol = default;
@@ -122,12 +122,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("data"u8))
                 {
-                    List<TelemetryDataKind> array = new List<TelemetryDataKind>();
+                    List<ExportedDataTypes> array = new List<ExportedDataTypes>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new TelemetryDataKind(item.GetString()));
+                        array.Add(new ExportedDataTypes(item.GetString()));
                     }
-                    data = array;
+                    exportedDataTypes = array;
                     continue;
                 }
                 if (prop.NameEquals("auth"u8))
@@ -136,7 +136,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    auth = TelemetryEndpointAuth.DeserializeTelemetryEndpointAuth(prop.Value, options);
+                    authentication = TelemetryEndpointAuthentication.DeserializeTelemetryEndpointAuthentication(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("endpoint"u8))
@@ -156,8 +156,8 @@ namespace Azure.AI.Projects.Agents
             }
             return new OtlpTelemetryEndpoint(
                 kind,
-                data,
-                auth,
+                exportedDataTypes,
+                authentication,
                 additionalBinaryDataProperties,
                 endpoint,
                 protocol);

@@ -14,8 +14,8 @@ using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfig), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfig), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
@@ -406,18 +406,16 @@ public partial class AgentAdministrationClient
     /// enforces session ownership using the provided isolation key for session-mutating operations.
     /// </summary>
     /// <param name="agentName"> The name of the agent to create a session for. </param>
-    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
     /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
     /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="versionIndicator"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
     {
         return CreateSession(
             agentName: agentName,
-            isolationKey: isolationKey,
             versionIndicator:versionIndicator,
             agentSessionId: agentSessionId,
             foundryFeatures: default,
@@ -430,18 +428,16 @@ public partial class AgentAdministrationClient
     /// enforces session ownership using the provided isolation key for session-mutating operations.
     /// </summary>
     /// <param name="agentName"> The name of the agent to create a session for. </param>
-    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
     /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
     /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="versionIndicator"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
     {
         return await CreateSessionAsync(
             agentName: agentName,
-            isolationKey: isolationKey,
             versionIndicator: versionIndicator,
             agentSessionId: agentSessionId,
             foundryFeatures: default,
@@ -538,17 +534,15 @@ public partial class AgentAdministrationClient
     /// </summary>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session identifier. </param>
-    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/>/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/>/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, CancellationToken cancellationToken = default)
+    public virtual ClientResult DeleteSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
         return DeleteSession(
             agentName: agentName,
             sessionId: sessionId,
-            isolationKey: isolationKey,
             foundryFeatures: default,
             cancellationToken: cancellationToken);
     }
@@ -559,17 +553,15 @@ public partial class AgentAdministrationClient
     /// </summary>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session identifier. </param>
-    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
         return await DeleteSessionAsync(
             agentName: agentName,
             sessionId: sessionId,
-            isolationKey: isolationKey,
             foundryFeatures: default,
             cancellationToken: cancellationToken).ConfigureAwait(false);
     }

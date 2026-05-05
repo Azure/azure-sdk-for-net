@@ -88,10 +88,10 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format, options);
             }
-            if (Optional.IsDefined(DeferLoading))
+            if (Optional.IsDefined(ShouldDeferLoading))
             {
                 writer.WritePropertyName("defer_loading"u8);
-                writer.WriteBooleanValue(DeferLoading.Value);
+                writer.WriteBooleanValue(ShouldDeferLoading.Value);
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.AI.Extensions.OpenAI
             string name = default;
             string description = default;
             ResponsesCustomToolParamFormat format = default;
-            bool? deferLoading = default;
+            bool? shouldDeferLoading = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -158,7 +158,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    deferLoading = prop.Value.GetBoolean();
+                    shouldDeferLoading = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 description,
                 format,
-                deferLoading);
+                shouldDeferLoading);
         }
     }
 }

@@ -656,14 +656,14 @@ namespace Azure.AI.Projects.Agents
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OtlpTelemetryEndpoint"/>.
         /// </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="authentication"> Optional authentication configuration. </param>
         /// <returns> A new <see cref="Agents.TelemetryEndpoint"/> instance for mocking. </returns>
-        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default)
+        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default)
         {
-            data ??= new ChangeTrackingList<TelemetryDataKind>();
+            exportedDataTypes ??= new ChangeTrackingList<ExportedDataTypes>();
 
-            return new UnknownTelemetryEndpoint(new TelemetryEndpointKind(kind), data.ToList(), auth, additionalBinaryDataProperties: null);
+            return new UnknownTelemetryEndpoint(new TelemetryEndpointKind(kind), exportedDataTypes.ToList(), authentication, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -671,10 +671,10 @@ namespace Azure.AI.Projects.Agents
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HeaderTelemetryEndpointAuth"/>.
         /// </summary>
         /// <param name="type"> The authentication type. </param>
-        /// <returns> A new <see cref="Agents.TelemetryEndpointAuth"/> instance for mocking. </returns>
-        public static TelemetryEndpointAuth TelemetryEndpointAuth(string @type = default)
+        /// <returns> A new <see cref="Agents.TelemetryEndpointAuthentication"/> instance for mocking. </returns>
+        public static TelemetryEndpointAuthentication TelemetryEndpointAuthentication(string @type = default)
         {
-            return new UnknownTelemetryEndpointAuth(new TelemetryEndpointAuthType(@type), additionalBinaryDataProperties: null);
+            return new UnknownTelemetryEndpointAuthentication(new TelemetryEndpointAuthenticationKind(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
@@ -684,23 +684,23 @@ namespace Azure.AI.Projects.Agents
         /// <returns> A new <see cref="Agents.HeaderTelemetryEndpointAuth"/> instance for mocking. </returns>
         public static HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = default, string secretId = default, string secretKey = default)
         {
-            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthType.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
+            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthenticationKind.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
         }
 
         /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="authentication"> Optional authentication configuration. </param>
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
         /// <returns> A new <see cref="Agents.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
-        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
+        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
         {
-            data ??= new ChangeTrackingList<TelemetryDataKind>();
+            exportedDataTypes ??= new ChangeTrackingList<ExportedDataTypes>();
 
             return new OtlpTelemetryEndpoint(
                 TelemetryEndpointKind.OTLP,
-                data.ToList(),
-                auth,
+                exportedDataTypes.ToList(),
+                authentication,
                 additionalBinaryDataProperties: null,
                 endpoint,
                 protocol);
@@ -803,17 +803,17 @@ namespace Azure.AI.Projects.Agents
             return new ManagedAgentIdentityBlueprintReference(AgentBlueprintReferenceType.ManagedAgentIdentityBlueprint, additionalBinaryDataProperties: null, blueprintId);
         }
 
-        /// <summary> The AgentEndpointConfig. </summary>
+        /// <summary> The AgentEndpointConfiguration. </summary>
         /// <param name="versionSelector"> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </param>
         /// <param name="protocols"> The protocols that the agent supports. </param>
         /// <param name="authorizationSchemes"> The authorization schemes supported by the agent endpoint. </param>
-        /// <returns> A new <see cref="Agents.AgentEndpointConfig"/> instance for mocking. </returns>
-        public static AgentEndpointConfig AgentEndpointConfig(VersionSelector versionSelector = default, IEnumerable<AgentEndpointProtocol> protocols = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default)
+        /// <returns> A new <see cref="Agents.AgentEndpointConfiguration"/> instance for mocking. </returns>
+        public static AgentEndpointConfiguration AgentEndpointConfiguration(VersionSelector versionSelector = default, IEnumerable<AgentEndpointProtocol> protocols = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default)
         {
             protocols ??= new ChangeTrackingList<AgentEndpointProtocol>();
             authorizationSchemes ??= new ChangeTrackingList<AgentEndpointAuthorizationScheme>();
 
-            return new AgentEndpointConfig(versionSelector, protocols.ToList(), authorizationSchemes.ToList(), additionalBinaryDataProperties: null);
+            return new AgentEndpointConfiguration(versionSelector, protocols.ToList(), authorizationSchemes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The VersionSelector. </summary>
@@ -859,36 +859,10 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The EntraAuthorizationScheme. </summary>
-        /// <param name="isolationKeySource"></param>
         /// <returns> A new <see cref="Agents.EntraAuthorizationScheme"/> instance for mocking. </returns>
-        public static EntraAuthorizationScheme EntraAuthorizationScheme(IsolationKeySource isolationKeySource = default)
+        public static EntraAuthorizationScheme EntraAuthorizationScheme()
         {
-            return new EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType.Entra, additionalBinaryDataProperties: null, isolationKeySource);
-        }
-
-        /// <summary>
-        /// The IsolationKeySource.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.EntraIsolationKeySource"/> and <see cref="Agents.HeaderIsolationKeySource"/>.
-        /// </summary>
-        /// <param name="kind"></param>
-        /// <returns> A new <see cref="Agents.IsolationKeySource"/> instance for mocking. </returns>
-        public static IsolationKeySource IsolationKeySource(string kind = default)
-        {
-            return new UnknownIsolationKeySource(new IsolationKeySourceKind(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The EntraIsolationKeySource. </summary>
-        /// <returns> A new <see cref="Agents.EntraIsolationKeySource"/> instance for mocking. </returns>
-        public static EntraIsolationKeySource EntraIsolationKeySource()
-        {
-            return new EntraIsolationKeySource(IsolationKeySourceKind.Entra, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The HeaderIsolationKeySource. </summary>
-        /// <returns> A new <see cref="Agents.HeaderIsolationKeySource"/> instance for mocking. </returns>
-        public static HeaderIsolationKeySource HeaderIsolationKeySource()
-        {
-            return new HeaderIsolationKeySource(IsolationKeySourceKind.Header, additionalBinaryDataProperties: null);
+            return new EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType.Entra, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The BotServiceAuthorizationScheme. </summary>
@@ -1182,7 +1156,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <returns> A new <see cref="Agents.PatchAgentOptions"/> instance for mocking. </returns>
-        public static PatchAgentOptions PatchAgentOptions(AgentEndpointConfig agentEndpoint = default, AgentCard agentCard = default)
+        public static PatchAgentOptions PatchAgentOptions(AgentEndpointConfiguration agentEndpoint = default, AgentCard agentCard = default)
         {
             return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
         }

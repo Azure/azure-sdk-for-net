@@ -11,25 +11,15 @@ namespace Azure.AI.Projects.Agents
     public partial class EntraAuthorizationScheme : AgentEndpointAuthorizationScheme
     {
         /// <summary> Initializes a new instance of <see cref="EntraAuthorizationScheme"/>. </summary>
-        /// <param name="isolationKeySource"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="isolationKeySource"/> is null. </exception>
-        public EntraAuthorizationScheme(IsolationKeySource isolationKeySource) : base(AgentEndpointAuthorizationSchemeType.Entra)
+        public EntraAuthorizationScheme() : base(AgentEndpointAuthorizationSchemeType.Entra)
         {
-            Argument.AssertNotNull(isolationKeySource, nameof(isolationKeySource));
-
-            IsolationKeySource = isolationKeySource;
         }
 
         /// <summary> Initializes a new instance of <see cref="EntraAuthorizationScheme"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="isolationKeySource"></param>
-        internal EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IsolationKeySource isolationKeySource) : base(@type, additionalBinaryDataProperties)
+        internal EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
-            IsolationKeySource = isolationKeySource;
         }
-
-        /// <summary> Gets or sets the IsolationKeySource. </summary>
-        public IsolationKeySource IsolationKeySource { get; set; }
     }
 }

@@ -133,15 +133,14 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent to create a session for. </param>
-        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CreateSession(string agentName, string isolationKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult CreateSession(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateSessionRequest(agentName, isolationKey, content, foundryFeatures, options);
+            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -156,15 +155,14 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent to create a session for. </param>
-        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateSessionAsync(string agentName, string isolationKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> CreateSessionAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateSessionRequest(agentName, isolationKey, content, foundryFeatures, options);
+            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -174,16 +172,15 @@ namespace Azure.AI.Projects.Agents
         /// enforces session ownership using the provided isolation key for session-mutating operations.
         /// </summary>
         /// <param name="agentName"> The name of the agent to create a session for. </param>
-        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
         /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
-            ClientResult result = CreateSession(agentName, isolationKey, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = CreateSession(agentName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
         }
 
@@ -193,16 +190,15 @@ namespace Azure.AI.Projects.Agents
         /// enforces session ownership using the provided isolation key for session-mutating operations.
         /// </summary>
         /// <param name="agentName"> The name of the agent to create a session for. </param>
-        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
         /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
-            ClientResult result = await CreateSessionAsync(agentName, isolationKey, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateSessionAsync(agentName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
         }
 
@@ -281,14 +277,13 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult DeleteSession(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, isolationKey, foundryFeatures, options);
+            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -303,14 +298,13 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, isolationKey, foundryFeatures, options);
+            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -320,13 +314,12 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult DeleteSession(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return DeleteSession(agentName, sessionId, isolationKey, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return DeleteSession(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -335,13 +328,12 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteSessionAsync(agentName, sessionId, isolationKey, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await DeleteSessionAsync(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>

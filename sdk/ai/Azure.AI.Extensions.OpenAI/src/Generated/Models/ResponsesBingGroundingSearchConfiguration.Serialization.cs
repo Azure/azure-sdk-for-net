@@ -82,10 +82,10 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WritePropertyName("market"u8);
                 writer.WriteStringValue(Market);
             }
-            if (Optional.IsDefined(SetLang))
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("set_lang"u8);
-                writer.WriteStringValue(SetLang);
+                writer.WriteStringValue(Language);
             }
             if (Optional.IsDefined(Count))
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             string projectConnectionId = default;
             string market = default;
-            string setLang = default;
+            string language = default;
             long? count = default;
             string freshness = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -159,7 +159,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("set_lang"u8))
                 {
-                    setLang = prop.Value.GetString();
+                    language = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("count"u8))
@@ -184,7 +184,7 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesBingGroundingSearchConfiguration(
                 projectConnectionId,
                 market,
-                setLang,
+                language,
                 count,
                 freshness,
                 additionalBinaryDataProperties);

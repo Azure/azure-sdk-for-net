@@ -586,9 +586,9 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
-        /// <param name="temperature"> The temperature parameter for sampling. </param>
-        /// <param name="topP"> The top-p parameter for nucleus sampling. </param>
-        /// <param name="seed"> The random seed for reproducibility. </param>
+        /// <param name="temperature"> The temperature parameter for sampling. Defaults to 1.0. </param>
+        /// <param name="topP"> The top-p parameter for nucleus sampling. Defaults to 1.0. </param>
+        /// <param name="seed"> The random seed for reproducibility. Defaults to 42. </param>
         /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
         /// <returns> A new <see cref="Evaluation.ModelSamplingParams"/> instance for mocking. </returns>
         public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
@@ -666,6 +666,7 @@ namespace Azure.AI.Projects
         /// <param name="evaluatorType"> The type of the evaluator. </param>
         /// <param name="categories"> The categories of the evaluator. </param>
         /// <param name="definition"> Definition of the evaluator. </param>
+        /// <param name="generationArtifacts"> Provenance artifacts from the generation pipeline. Read-only; present only on evaluator versions created via an EvaluatorGenerationJob. Each artifact resolves to a versioned Foundry Dataset. </param>
         /// <param name="createdBy"> Creator of the evaluator. </param>
         /// <param name="createdAt"> Creation date/time of the evaluator. </param>
         /// <param name="modifiedAt"> Last modified date/time of the evaluator. </param>
@@ -675,7 +676,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
-        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, EvaluatorDefinition definition = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             categories ??= new ChangeTrackingList<EvaluatorCategory>();
@@ -687,6 +688,7 @@ namespace Azure.AI.Projects
                 evaluatorType,
                 categories.ToList(),
                 definition,
+                generationArtifacts,
                 createdBy,
                 createdAt,
                 modifiedAt,
@@ -700,7 +702,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base evaluator configuration with discriminator
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> and <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, and <see cref="Projects.RubricBasedEvaluatorDefinition"/>.
         /// </summary>
         /// <param name="type"> The type of evaluator definition. </param>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
@@ -776,6 +778,150 @@ namespace Azure.AI.Projects
                 metrics,
                 additionalBinaryDataProperties: null,
                 promptText);
+        }
+
+        /// <summary> Rubric-based evaluator definition — stores rubric criteria produced by the generate API. Used for both quality and safety evaluators. </summary>
+        /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
+        /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
+        /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
+        /// <param name="rubricCriteria"> Rubric criteria — the scoring blueprint used by the LLM judge. Quality evaluators include a non-editable residual criterion with rubric_id 'general_quality' (always_applicable: true); safety evaluators include 'general_policy_compliance'. Both use the same rubric structure. </param>
+        /// <returns> A new <see cref="Projects.RubricBasedEvaluatorDefinition"/> instance for mocking. </returns>
+        public static RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, IEnumerable<RubricCriterion> rubricCriteria = default)
+        {
+            metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
+            rubricCriteria ??= new ChangeTrackingList<RubricCriterion>();
+
+            return new RubricBasedEvaluatorDefinition(
+                EvaluatorDefinitionType.Rubrics,
+                initParameters,
+                dataSchema,
+                metrics,
+                additionalBinaryDataProperties: null,
+                rubricCriteria.ToList());
+        }
+
+        /// <summary> A single rubric criterion — one measurable quality dimension in an evaluator's scoring blueprint. </summary>
+        /// <param name="rubricId"> Stable identifier for this rubric criterion (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated catalog; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
+        /// <param name="description"> What this criterion measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
+        /// <param name="weight"> Relative weight of this criterion (1-10). The generation pipeline assigns exactly one criterion weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
+        /// <param name="alwaysApplicable"> When true, the LLM judge always scores this criterion regardless of relevance (skips applicability assessment). The service-generated general quality/policy criterion has this set to true and is non-editable. Users may set this on their own custom criteria. </param>
+        /// <returns> A new <see cref="Projects.RubricCriterion"/> instance for mocking. </returns>
+        public static RubricCriterion RubricCriterion(string rubricId = default, string description = default, int weight = default, bool? alwaysApplicable = default)
+        {
+            return new RubricCriterion(rubricId, description, weight, alwaysApplicable, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Service-managed provenance artifacts produced by an evaluator generation job. Present only on EvaluatorVersion resources created via the generation pipeline. The combined-JSONL Foundry Dataset is read-only and resolves to a versioned dataset in a service-reserved namespace. </summary>
+        /// <param name="dataset"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
+        /// <param name="kinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
+        /// <returns> A new <see cref="Projects.EvaluatorGenerationArtifacts"/> instance for mocking. </returns>
+        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(DatasetReference dataset = default, IEnumerable<string> kinds = default)
+        {
+            kinds ??= new ChangeTrackingList<string>();
+
+            return new EvaluatorGenerationArtifacts(dataset, kinds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reference to a versioned Foundry Dataset. </summary>
+        /// <param name="name"> Dataset name. </param>
+        /// <param name="version"> Dataset version. </param>
+        /// <returns> A new <see cref="Projects.DatasetReference"/> instance for mocking. </returns>
+        public static DatasetReference DatasetReference(string name = default, string version = default)
+        {
+            return new DatasetReference(name, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Caller-supplied inputs for an evaluator generation job. </summary>
+        /// <param name="name"> Display name for this generation job. </param>
+        /// <param name="sources"> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </param>
+        /// <param name="category"> Category determines the rubric generation focus: 'quality' (default) produces quality-focused rubric criteria, 'safety' produces policy-derived safety rubric criteria. Both use the same rubric structure. Singular because quality and safety generation are mutually exclusive pipelines — the output EvaluatorVersion.categories is an array (e.g., ['agents', 'quality']). </param>
+        /// <param name="model"> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </param>
+        /// <param name="evaluatorName"> The evaluator name to create or update. If an evaluator with this name already exists, the service retrieves the latest version's criteria as context for improvement. </param>
+        /// <returns> A new <see cref="Projects.EvaluatorGenerationInputs"/> instance for mocking. </returns>
+        public static EvaluatorGenerationInputs EvaluatorGenerationInputs(string name = default, IEnumerable<EvaluatorGenerationJobSource> sources = default, EvaluatorCategory? category = default, string model = default, string evaluatorName = default)
+        {
+            sources ??= new ChangeTrackingList<EvaluatorGenerationJobSource>();
+
+            return new EvaluatorGenerationInputs(
+                name,
+                sources.ToList(),
+                category,
+                model,
+                evaluatorName,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The base source model for evaluator generation jobs. Polymorphic over `type`.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.PromptEvaluatorGenerationJobSource"/>, <see cref="Projects.AgentEvaluatorGenerationJobSource"/>, <see cref="Projects.TracesEvaluatorGenerationJobSource"/>, and <see cref="Projects.DatasetEvaluatorGenerationJobSource"/>.
+        /// </summary>
+        /// <param name="type"> The type of source. </param>
+        /// <returns> A new <see cref="Projects.EvaluatorGenerationJobSource"/> instance for mocking. </returns>
+        public static EvaluatorGenerationJobSource EvaluatorGenerationJobSource(string @type = default)
+        {
+            return new UnknownEvaluatorGenerationJobSource(new EvaluatorGenerationJobSourceType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Prompt source for evaluator generation jobs — inline text provided by the user. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
+        /// <returns> A new <see cref="Projects.PromptEvaluatorGenerationJobSource"/> instance for mocking. </returns>
+        public static PromptEvaluatorGenerationJobSource PromptEvaluatorGenerationJobSource(string description = default, string prompt = default)
+        {
+            return new PromptEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType.Prompt, additionalBinaryDataProperties: null, description, prompt);
+        }
+
+        /// <summary> Agent source for evaluator generation jobs — references an agent to fetch instructions and metadata from. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="agentName"> The agent name to fetch instructions from. </param>
+        /// <param name="agentVersion"> The agent version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Projects.AgentEvaluatorGenerationJobSource"/> instance for mocking. </returns>
+        public static AgentEvaluatorGenerationJobSource AgentEvaluatorGenerationJobSource(string description = default, string agentName = default, string agentVersion = default)
+        {
+            return new AgentEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType.Agent, additionalBinaryDataProperties: null, description, agentName, agentVersion);
+        }
+
+        /// <summary> Traces source for evaluator generation jobs — conversation traces from Application Insights. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="agentId"> The unique agent ID used to filter traces. Optional — when omitted, traces are filtered by `agent_name` (and `agent_version` if specified). </param>
+        /// <param name="agentName"> The agent name to fetch traces for. </param>
+        /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
+        /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endTime"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="maxTraces"> Maximum number of traces to retrieve. </param>
+        /// <returns> A new <see cref="Projects.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
+        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, int? maxTraces = default)
+        {
+            return new TracesEvaluatorGenerationJobSource(
+                EvaluatorGenerationJobSourceType.Traces,
+                additionalBinaryDataProperties: null,
+                description,
+                agentId,
+                agentName,
+                agentVersion,
+                startTime,
+                endTime,
+                maxTraces);
+        }
+
+        /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="name"> The name of the dataset. </param>
+        /// <param name="version"> The version of the dataset. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Projects.DatasetEvaluatorGenerationJobSource"/> instance for mocking. </returns>
+        public static DatasetEvaluatorGenerationJobSource DatasetEvaluatorGenerationJobSource(string description = default, string name = default, string version = default)
+        {
+            return new DatasetEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType.Dataset, additionalBinaryDataProperties: null, description, name, version);
+        }
+
+        /// <summary> Token consumption summary for an evaluator generation job. Populated when the job reaches a terminal state. </summary>
+        /// <param name="inputTokens"> Number of input (prompt) tokens consumed. </param>
+        /// <param name="outputTokens"> Number of output (completion) tokens generated. </param>
+        /// <param name="totalTokens"> Total tokens consumed (input + output). </param>
+        /// <returns> A new <see cref="Projects.EvaluatorGenerationTokenUsage"/> instance for mocking. </returns>
+        public static EvaluatorGenerationTokenUsage EvaluatorGenerationTokenUsage(long inputTokens = default, long outputTokens = default, long totalTokens = default)
+        {
+            return new EvaluatorGenerationTokenUsage(inputTokens, outputTokens, totalTokens, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response body for cluster insights. </summary>
@@ -1350,18 +1496,20 @@ namespace Azure.AI.Projects
 
         /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="agentId"> The unique agent ID used to filter traces. Optional — when omitted, traces are filtered by `agent_name` (and `agent_version` if specified). </param>
         /// <param name="agentName"> The agent name to fetch traces for. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
         /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
         /// <param name="endTime"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <param name="maxTraces"> Maximum number of traces to retrieve. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentName = default, string agentVersion = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, int? maxTraces = default)
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, int? maxTraces = default)
         {
             return new TracesDataGenerationJobSource(
                 DataGenerationJobSourceType.Traces,
                 additionalBinaryDataProperties: null,
                 description,
+                agentId,
                 agentName,
                 agentVersion,
                 startTime,
@@ -1390,7 +1538,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Options for managing data generation jobs.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobOptions"/>, <see cref="Projects.TracesDataGenerationJobOptions"/>, <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/>, and <see cref="Projects.TaskDataGenerationJobOptions"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobOptions"/>, <see cref="Projects.TracesDataGenerationJobOptions"/>, and <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/>.
         /// </summary>
         /// <param name="type"> The data generation job type. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>
@@ -1399,7 +1547,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Projects.DataGenerationJobOptions"/> instance for mocking. </returns>
         public static DataGenerationJobOptions DataGenerationJobOptions(string @type = default, int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
         {
-            return new UnknownDataGenerationJobOptions(new DataGenerationJobType(@type), maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new UnknownDataGenerationJobOptions(new DataGenerationJobKind(@type), maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> LLM model options for data generation jobs. </summary>
@@ -1421,7 +1569,7 @@ namespace Azure.AI.Projects
             questionTypes ??= new ChangeTrackingList<SimpleQnAFineTuningQuestionType>();
 
             return new SimpleQnADataGenerationJobOptions(
-                DataGenerationJobType.SimpleQna,
+                DataGenerationJobKind.SimpleQna,
                 maxSamples,
                 trainSplit,
                 modelOptions,
@@ -1436,7 +1584,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobOptions"/> instance for mocking. </returns>
         public static TracesDataGenerationJobOptions TracesDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
         {
-            return new TracesDataGenerationJobOptions(DataGenerationJobType.Traces, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new TracesDataGenerationJobOptions(DataGenerationJobKind.Traces, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The options for a data generation job with ToolUse type. Used only for fine-tuning scenarios. </summary>
@@ -1446,17 +1594,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/> instance for mocking. </returns>
         public static ToolUseFineTuningDataGenerationJobOptions ToolUseFineTuningDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
         {
-            return new ToolUseFineTuningDataGenerationJobOptions(DataGenerationJobType.ToolUse, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The options for a data generation job with Task type. </summary>
-        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
-        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
-        /// <param name="modelOptions"> The LLM model options. </param>
-        /// <returns> A new <see cref="Projects.TaskDataGenerationJobOptions"/> instance for mocking. </returns>
-        public static TaskDataGenerationJobOptions TaskDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
-        {
-            return new TaskDataGenerationJobOptions(DataGenerationJobType.Task, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new ToolUseFineTuningDataGenerationJobOptions(DataGenerationJobKind.ToolUse, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result produced by a successful data generation job. </summary>
@@ -1520,6 +1658,27 @@ namespace Azure.AI.Projects
         public static DataGenerationTokenUsage DataGenerationTokenUsage(long? promptTokens = default, long? completionTokens = default, long? totalTokens = default)
         {
             return new DataGenerationTokenUsage(promptTokens, completionTokens, totalTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Evaluator Definition. </summary>
+        /// <param name="displayName"> Display Name for evaluator. It helps to find the evaluator easily in AI Foundry. It does not need to be unique. </param>
+        /// <param name="metadata"> Metadata about the evaluator. </param>
+        /// <param name="evaluatorType"> The type of the evaluator. </param>
+        /// <param name="categories"> The categories of the evaluator. </param>
+        /// <param name="definition"> Definition of the evaluator. </param>
+        /// <param name="createdBy"> Creator of the evaluator. </param>
+        /// <param name="createdAt"> Creation date/time of the evaluator. </param>
+        /// <param name="modifiedAt"> Last modified date/time of the evaluator. </param>
+        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The version of the resource. </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags)
+        {
+            return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, definition: definition, generationArtifacts: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
         }
 
         /// <summary> Evaluator Metric. </summary>

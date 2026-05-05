@@ -16,17 +16,17 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiFunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
-        /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
+        /// <param name="specification"> The openapi function shape, described as a JSON Schema object. </param>
         /// <param name="auth"> Open API authentication details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="spec"/> or <paramref name="auth"/> is null. </exception>
-        public ResponsesOpenApiFunctionDefinition(string name, IDictionary<string, BinaryData> spec, ResponsesOpenApiAuthDetails auth)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="specification"/> or <paramref name="auth"/> is null. </exception>
+        public ResponsesOpenApiFunctionDefinition(string name, IDictionary<string, BinaryData> specification, ResponsesOpenApiAuthDetails auth)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(spec, nameof(spec));
+            Argument.AssertNotNull(specification, nameof(specification));
             Argument.AssertNotNull(auth, nameof(auth));
 
             Name = name;
-            Spec = spec;
+            Specification = specification;
             Auth = auth;
             DefaultParams = new ChangeTrackingList<string>();
             Functions = new ChangeTrackingList<ResponsesOpenApiFunctionDefinitionFunction>();
@@ -35,16 +35,16 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiFunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
-        /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
+        /// <param name="specification"> The openapi function shape, described as a JSON Schema object. </param>
         /// <param name="auth"> Open API authentication details. </param>
         /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesOpenApiFunctionDefinition(string name, string description, IDictionary<string, BinaryData> spec, ResponsesOpenApiAuthDetails auth, IList<string> defaultParams, IReadOnlyList<ResponsesOpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesOpenApiFunctionDefinition(string name, string description, IDictionary<string, BinaryData> specification, ResponsesOpenApiAuthDetails auth, IList<string> defaultParams, IReadOnlyList<ResponsesOpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
-            Spec = spec;
+            Specification = specification;
             Auth = auth;
             DefaultParams = defaultParams;
             Functions = functions;
@@ -83,7 +83,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Spec { get; }
+        public IDictionary<string, BinaryData> Specification { get; }
 
         /// <summary> Open API authentication details. </summary>
         public ResponsesOpenApiAuthDetails Auth { get; set; }

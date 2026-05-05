@@ -42,7 +42,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetGenerationJobsRequest(string foundryFeatures, int? limit, string order, string after, string before, string scenario, IEnumerable<DataGenerationJobType> @type, RequestOptions options)
+        internal PipelineMessage CreateGetGenerationJobsRequest(string foundryFeatures, int? limit, string order, string after, string before, string scenario, IEnumerable<DataGenerationJobKind> @type, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -67,7 +67,7 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("scenario", scenario, true);
             }
-            if (@type != null && !(@type is ChangeTrackingList<DataGenerationJobType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (@type != null && !(@type is ChangeTrackingList<DataGenerationJobKind> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("type", @type, ",", escape: true);
             }

@@ -18,9 +18,9 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the structured output. </param>
         /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
         /// <param name="schema"> The JSON schema for the structured output. </param>
-        /// <param name="strict"> Whether to enforce strict validation. Default `true`. </param>
+        /// <param name="isStrict"> Whether to enforce strict validation. Default `true`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="schema"/> is null. </exception>
-        public ResponsesStructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? strict)
+        public ResponsesStructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? isStrict)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(description, nameof(description));
@@ -29,21 +29,21 @@ namespace Azure.AI.Extensions.OpenAI
             Name = name;
             Description = description;
             Schema = schema;
-            Strict = strict;
+            IsStrict = isStrict;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesStructuredOutputDefinition"/>. </summary>
         /// <param name="name"> The name of the structured output. </param>
         /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
         /// <param name="schema"> The JSON schema for the structured output. </param>
-        /// <param name="strict"> Whether to enforce strict validation. Default `true`. </param>
+        /// <param name="isStrict"> Whether to enforce strict validation. Default `true`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesStructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? strict, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesStructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? isStrict, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Schema = schema;
-            Strict = strict;
+            IsStrict = isStrict;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -82,6 +82,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, BinaryData> Schema { get; }
 
         /// <summary> Whether to enforce strict validation. Default `true`. </summary>
-        public bool? Strict { get; set; }
+        public bool? IsStrict { get; set; }
     }
 }

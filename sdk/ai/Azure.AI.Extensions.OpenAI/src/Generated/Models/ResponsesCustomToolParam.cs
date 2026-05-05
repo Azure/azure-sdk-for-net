@@ -26,13 +26,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
         /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
         /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
-        /// <param name="deferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
-        internal ResponsesCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesCustomToolParamFormat format, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
+        /// <param name="shouldDeferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
+        internal ResponsesCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesCustomToolParamFormat format, bool? shouldDeferLoading) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Format = format;
-            DeferLoading = deferLoading;
+            ShouldDeferLoading = shouldDeferLoading;
         }
 
         /// <summary> The name of the custom tool, used to identify it in tool calls. </summary>
@@ -45,6 +45,6 @@ namespace Azure.AI.Extensions.OpenAI
         public ResponsesCustomToolParamFormat Format { get; set; }
 
         /// <summary> Whether this tool should be deferred and discovered via tool search. </summary>
-        public bool? DeferLoading { get; set; }
+        public bool? ShouldDeferLoading { get; set; }
     }
 }
