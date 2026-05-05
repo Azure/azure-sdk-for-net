@@ -6,10 +6,6 @@
 
 - Added `WidgetAnalyticsClientSettings` to support creating a `WidgetAnalyticsClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
-### Other Changes
-
-- Clarified the README guidance for lightweight template-package validation scenarios.
-
 ## 1.0.3-beta.20 (2022-04-26)
 
 ### Other Changes
