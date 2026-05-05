@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DiskControllerType))
+            if (Optional.IsDefined(DiskControllerKind))
             {
                 writer.WritePropertyName("diskControllerType"u8);
-                writer.WriteStringValue(DiskControllerType.Value.ToString());
+                writer.WriteStringValue(DiskControllerKind.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
             ImageReference imageReference = default;
             VirtualMachineScaleSetOSDisk osDisk = default;
             IList<VirtualMachineScaleSetDataDisk> dataDisks = default;
-            DiskControllerType? diskControllerType = default;
+            DiskControllerType? diskControllerKind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskControllerType = new DiskControllerType(prop.Value.GetString());
+                    diskControllerKind = new DiskControllerType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetStorageProfile(imageReference, osDisk, dataDisks ?? new ChangeTrackingList<VirtualMachineScaleSetDataDisk>(), diskControllerType, additionalBinaryDataProperties);
+            return new VirtualMachineScaleSetStorageProfile(imageReference, osDisk, dataDisks ?? new ChangeTrackingList<VirtualMachineScaleSetDataDisk>(), diskControllerKind, additionalBinaryDataProperties);
         }
     }
 }
