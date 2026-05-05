@@ -14,8 +14,8 @@ using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpoint), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpoint), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfig), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfig), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
@@ -25,8 +25,8 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentVersionsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetInternalAgentResponsesClient")]
-[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpoint), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpoint), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]

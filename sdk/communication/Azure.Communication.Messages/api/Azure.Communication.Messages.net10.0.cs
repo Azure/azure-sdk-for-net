@@ -330,6 +330,14 @@ namespace Azure.Communication.Messages
         public virtual System.Threading.Tasks.Task<Azure.Response> TerminateConversationAsync(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class ConversationAdministrationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddConversationAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddConversationAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Communication.Messages.ConversationAdministrationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedConversationAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedConversationAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Communication.Messages.ConversationAdministrationClientSettings> configureSettings) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class ConversationAdministrationClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public ConversationAdministrationClientSettings() { }
@@ -446,6 +454,14 @@ namespace Azure.Communication.Messages
         public virtual Azure.Response SendMessage(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.SendConversationMessageResult>> SendMessageAsync(string conversationId, Azure.Communication.Messages.SendConversationMessageOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendMessageAsync(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class ConversationThreadClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddConversationThreadClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddConversationThreadClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Communication.Messages.ConversationThreadClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedConversationThreadClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedConversationThreadClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Communication.Messages.ConversationThreadClientSettings> configureSettings) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class ConversationThreadClientSettings : System.ClientModel.Primitives.ClientSettings
@@ -726,6 +742,14 @@ namespace Azure.Communication.Messages
         public virtual Azure.AsyncPageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplatesAsync(System.Guid channelId, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class MessageTemplateClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedMessageTemplateClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedMessageTemplateClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Communication.Messages.MessageTemplateClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddMessageTemplateClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddMessageTemplateClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Communication.Messages.MessageTemplateClientSettings> configureSettings) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class MessageTemplateClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public MessageTemplateClientSettings() { }
@@ -918,6 +942,14 @@ namespace Azure.Communication.Messages
         public virtual Azure.Response SendReadReceipt(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendReadReceiptAsync(Azure.Communication.Messages.ReadReceiptContent readReceiptContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendReadReceiptAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class NotificationMessagesClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedNotificationMessagesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedNotificationMessagesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Communication.Messages.NotificationMessagesClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddNotificationMessagesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddNotificationMessagesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Communication.Messages.NotificationMessagesClientSettings> configureSettings) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class NotificationMessagesClientSettings : System.ClientModel.Primitives.ClientSettings

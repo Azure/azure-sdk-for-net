@@ -39,6 +39,14 @@ namespace Azure.AI.Language.Conversations
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState>> GetAnalyzeConversationJobStatusAsync(System.Guid jobId, bool? showStatistics = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class ConversationAnalysisClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddConversationAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddConversationAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.Conversations.ConversationAnalysisClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedConversationAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedConversationAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.Conversations.ConversationAnalysisClientSettings> configureSettings) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class ConversationAnalysisClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public ConversationAnalysisClientSettings() { }

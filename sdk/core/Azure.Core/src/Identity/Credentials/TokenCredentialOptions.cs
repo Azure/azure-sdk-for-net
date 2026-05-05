@@ -67,6 +67,14 @@ namespace Azure.Identity
         public bool IsUnsafeSupportLoggingEnabled { get; set; }
 
         /// <summary>
+        /// Gets or sets extra query parameters that will be appended to the authentication request sent to Microsoft Entra ID.
+        /// Each entry maps a parameter name to its value and a flag that controls whether the parameter is part of the token cache key.
+        /// This property is only honored by MSAL-backed credentials.
+        /// </summary>
+        [Experimental("AZID0001")]
+        public IDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get; } = new Dictionary<string, (string Value, bool IncludeInCacheKey)>();
+
+        /// <summary>
         /// Gets or sets whether this credential is part of a chained credential.
         /// </summary>
         internal bool IsChainedCredential { get; set; }
@@ -82,6 +90,11 @@ namespace Azure.Identity
             clone.AuthorityHost = AuthorityHost;
 
             clone.IsUnsafeSupportLoggingEnabled = IsUnsafeSupportLoggingEnabled;
+
+            // copy AdditionalQueryParameters (deep copy to avoid shared mutable state)
+#pragma warning disable AZID0001 // AdditionalQueryParameters is experimental
+            CloneListItems(AdditionalQueryParameters, clone.AdditionalQueryParameters);
+#pragma warning restore AZID0001
 
             // copy TokenCredentialDiagnosticsOptions specific options
             clone.Diagnostics.IsAccountIdentifierLoggingEnabled = Diagnostics.IsAccountIdentifierLoggingEnabled;
@@ -132,7 +145,7 @@ namespace Azure.Identity
             return clone;
         }
 
-        private static void CloneListItems<T>(IList<T> original, IList<T> clone)
+        private static void CloneListItems<T>(ICollection<T> original, ICollection<T> clone)
         {
             clone.Clear();
 

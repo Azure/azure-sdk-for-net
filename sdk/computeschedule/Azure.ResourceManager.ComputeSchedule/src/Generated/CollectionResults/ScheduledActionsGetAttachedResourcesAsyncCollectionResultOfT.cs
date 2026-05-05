@@ -15,7 +15,7 @@ using Azure.ResourceManager.ComputeSchedule.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
-    internal partial class ScheduledActionsGetAttachedResourcesAsyncCollectionResultOfT : AsyncPageable<ScheduledActionResourceData>
+    internal partial class ScheduledActionsGetAttachedResourcesAsyncCollectionResultOfT : AsyncPageable<ScheduledActionResourceDetails>
     {
         private readonly ScheduledActions _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ScheduledActionsGetAttachedResourcesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ScheduledActionResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ScheduledActionResourceDetails>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                     yield break;
                 }
                 ResourceListResponse result = ResourceListResponse.FromResponse(response);
-                yield return Page<ScheduledActionResourceData>.FromValues((IReadOnlyList<ScheduledActionResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ScheduledActionResourceDetails>.FromValues((IReadOnlyList<ScheduledActionResourceDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
