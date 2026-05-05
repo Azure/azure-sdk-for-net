@@ -99,7 +99,14 @@ namespace Azure.Storage.Blobs.Batch.Models
                 throw new FormatException($"The model {nameof(SubmitBatchRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("body"u8);
-            writer.WriteBase64StringValue(Body.ToArray(), "D");
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(Body);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Body))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -148,7 +155,7 @@ namespace Azure.Storage.Blobs.Batch.Models
             {
                 if (prop.NameEquals("body"u8))
                 {
-                    body = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    body = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
