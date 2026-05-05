@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             string timezone = default;
             string operationTimezone = default;
             ResourceOperationError resourceOperationError = default;
-            FallbackOperationInfo fallbackOperationInfo = default;
+            ScheduledActionFallbackInfo fallbackOperationInfo = default;
             DateTimeOffset? completedOn = default;
             UserRequestRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    fallbackOperationInfo = FallbackOperationInfo.DeserializeFallbackOperationInfo(prop.Value, options);
+                    fallbackOperationInfo = ScheduledActionFallbackInfo.DeserializeScheduledActionFallbackInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("completedAt"u8))

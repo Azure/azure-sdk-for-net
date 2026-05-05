@@ -156,7 +156,7 @@ IsDisabled = true,
             ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ScheduledActionResourceData item in scheduledAction.GetAttachedResourcesAsync())
+            await foreach (ScheduledActionResourceDetails item in scheduledAction.GetAttachedResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -185,9 +185,9 @@ IsDisabled = true,
             ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
 
             // invoke the operation
-            ScheduledActionResourceAttachContent content = new ScheduledActionResourceAttachContent(new ScheduledActionResourceData[]
+            ScheduledActionResourceAttachContent content = new ScheduledActionResourceAttachContent(new ScheduledActionResourceDetails[]
             {
-new ScheduledActionResourceData(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
+new ScheduledActionResourceDetails(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
 {
 NotificationSettings = {new NotificationSettings("wbhryycyolvnypjxzlawwvb", NotificationType.Email, NotificationLanguage.EnUs)
 {
@@ -248,9 +248,9 @@ IsDisabled = true,
             ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
 
             // invoke the operation
-            ScheduledActionResourcePatchContent content = new ScheduledActionResourcePatchContent(new ScheduledActionResourceData[]
+            ScheduledActionResourcePatch content = new ScheduledActionResourcePatch(new ScheduledActionResourceDetails[]
             {
-new ScheduledActionResourceData(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
+new ScheduledActionResourceDetails(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
 {
 NotificationSettings = {new NotificationSettings("wbhryycyolvnypjxzlawwvb", NotificationType.Email, NotificationLanguage.EnUs)
 {
