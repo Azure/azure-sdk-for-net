@@ -1,5 +1,15 @@
 # Release History
 
+## 4.12.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 4.11.0-beta.1 (Unreleased)
 
 ### Features Added
@@ -9,6 +19,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.11.0 (2026-05-05)
+
+### Other Changes
+
+- Updated dependency on `Azure.Core` to `1.54.0`, which includes fixes for duplicate schema registration.
 
 ## 4.10.0 (2026-04-13)
 
