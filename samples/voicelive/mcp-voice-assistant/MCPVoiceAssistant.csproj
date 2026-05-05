@@ -8,7 +8,6 @@
     <AssemblyName>MCPVoiceAssistant</AssemblyName>
     <RootNamespace>Azure.AI.VoiceLive.Samples</RootNamespace>
     <IsSamplesProject>true</IsSamplesProject>
-    <SupportsNetStandard20>false</SupportsNetStandard20>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,3 +38,4 @@
   </Target>
 
 </Project>
+
