@@ -4,9 +4,9 @@
     "AzureClients": {
       "type": "object",
       "properties": {
-        "AnalyzeDocumentsClient": {
+        "DocumentAnalysisClient": {
           "type": "object",
-          "description": "Configuration for AnalyzeDocumentsClient.",
+          "description": "Configuration for DocumentAnalysisClient.",
           "properties": {
             "Endpoint": {
               "type": "string",
@@ -16,7 +16,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/analyzeDocumentsClientOptions"
+              "$ref": "#/definitions/documentAnalysisClientOptions"
             }
           }
         }
@@ -28,7 +28,7 @@
     }
   },
   "definitions": {
-    "analyzeDocumentsClientOptions": {
+    "documentAnalysisClientOptions": {
       "allOf": [
         {
           "$ref": "#/definitions/azureOptions"

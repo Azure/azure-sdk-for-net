@@ -16,43 +16,43 @@ namespace Microsoft.Extensions.Azure
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class LanguageDocumentsClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="AnalyzeDocumentsClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="DocumentAnalysisClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public static IAzureClientBuilder<AnalyzeDocumentsClient, AnalyzeDocumentsClientOptions> AddAnalyzeDocumentsClient<TBuilder>(this TBuilder builder, string endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<DocumentAnalysisClient, DocumentAnalysisClientOptions> AddDocumentAnalysisClient<TBuilder>(this TBuilder builder, string endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            return builder.RegisterClientFactory<AnalyzeDocumentsClient, AnalyzeDocumentsClientOptions>(options => new AnalyzeDocumentsClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<DocumentAnalysisClient, DocumentAnalysisClientOptions>(options => new DocumentAnalysisClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="AnalyzeDocumentsClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="DocumentAnalysisClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public static IAzureClientBuilder<AnalyzeDocumentsClient, AnalyzeDocumentsClientOptions> AddAnalyzeDocumentsClient<TBuilder>(this TBuilder builder, string endpoint)
+        public static IAzureClientBuilder<DocumentAnalysisClient, DocumentAnalysisClientOptions> AddDocumentAnalysisClient<TBuilder>(this TBuilder builder, string endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
 
-            return builder.RegisterClientFactory<AnalyzeDocumentsClient, AnalyzeDocumentsClientOptions>((options, credential) => new AnalyzeDocumentsClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<DocumentAnalysisClient, DocumentAnalysisClientOptions>((options, credential) => new DocumentAnalysisClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="AnalyzeDocumentsClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="DocumentAnalysisClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<AnalyzeDocumentsClient, AnalyzeDocumentsClientOptions> AddAnalyzeDocumentsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<DocumentAnalysisClient, DocumentAnalysisClientOptions> AddDocumentAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<AnalyzeDocumentsClient, AnalyzeDocumentsClientOptions>(configuration);
+            return builder.RegisterClientFactory<DocumentAnalysisClient, DocumentAnalysisClientOptions>(configuration);
         }
     }
 }

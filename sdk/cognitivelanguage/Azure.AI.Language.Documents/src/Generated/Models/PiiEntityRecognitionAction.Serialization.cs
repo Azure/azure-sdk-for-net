@@ -13,51 +13,51 @@ using System.Text.Json;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Contains the analyze text PIIEntityRecognition LRO task. </summary>
-    public partial class PiiLROTask : AnalyzeDocumentsOperationAction, IJsonModel<PiiLROTask>
+    public partial class PiiEntityRecognitionAction : AnalyzeDocumentsOperationAction, IJsonModel<PiiEntityRecognitionAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeDocumentsOperationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PiiEntityRecognitionAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePiiLROTask(document.RootElement, options);
+                        return DeserializePiiEntityRecognitionAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PiiLROTask)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PiiEntityRecognitionAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PiiEntityRecognitionAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PiiLROTask)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PiiEntityRecognitionAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PiiLROTask>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PiiEntityRecognitionAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PiiLROTask IPersistableModel<PiiLROTask>.Create(BinaryData data, ModelReaderWriterOptions options) => (PiiLROTask)PersistableModelCreateCore(data, options);
+        PiiEntityRecognitionAction IPersistableModel<PiiEntityRecognitionAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (PiiEntityRecognitionAction)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PiiLROTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PiiEntityRecognitionAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PiiLROTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PiiEntityRecognitionAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,10 +68,10 @@ namespace Azure.AI.Language.Documents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PiiEntityRecognitionAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PiiLROTask)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PiiEntityRecognitionAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Parameters))
@@ -83,24 +83,24 @@ namespace Azure.AI.Language.Documents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PiiLROTask IJsonModel<PiiLROTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PiiLROTask)JsonModelCreateCore(ref reader, options);
+        PiiEntityRecognitionAction IJsonModel<PiiEntityRecognitionAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PiiEntityRecognitionAction)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeDocumentsOperationAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PiiLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PiiEntityRecognitionAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PiiLROTask)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PiiEntityRecognitionAction)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePiiLROTask(document.RootElement, options);
+            return DeserializePiiEntityRecognitionAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PiiLROTask DeserializePiiLROTask(JsonElement element, ModelReaderWriterOptions options)
+        internal static PiiEntityRecognitionAction DeserializePiiEntityRecognitionAction(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.AI.Language.Documents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PiiLROTask(name, kind, additionalBinaryDataProperties, parameters);
+            return new PiiEntityRecognitionAction(name, kind, additionalBinaryDataProperties, parameters);
         }
     }
 }

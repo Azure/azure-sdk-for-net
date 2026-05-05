@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Contains the analyze text PIIEntityRecognition LRO task. </summary>
-    public partial class PiiLROTask : AnalyzeDocumentsOperationAction
+    public partial class PiiEntityRecognitionAction : AnalyzeDocumentsOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="PiiLROTask"/>. </summary>
-        public PiiLROTask() : base(AnalyzeDocumentsOperationActionKind.PiiEntityRecognition)
+        /// <summary> Initializes a new instance of <see cref="PiiEntityRecognitionAction"/>. </summary>
+        public PiiEntityRecognitionAction() : base(AnalyzeDocumentsOperationActionKind.PiiEntityRecognition)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PiiLROTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiEntityRecognitionAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Pii task parameters. </param>
-        internal PiiLROTask(string name, AnalyzeDocumentsOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, PiiActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal PiiEntityRecognitionAction(string name, AnalyzeDocumentsOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, PiiActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }

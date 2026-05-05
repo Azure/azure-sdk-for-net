@@ -318,7 +318,7 @@ namespace Azure.AI.Language.Documents
 
         /// <summary>
         /// The long running task to be performed by the service on the input documents.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.PiiLROTask"/>, <see cref="Documents.ExtractiveSummarizationOperationAction"/>, and <see cref="Documents.AbstractiveSummarizationOperationAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.PiiEntityRecognitionAction"/>, <see cref="Documents.ExtractiveSummarizationOperationAction"/>, and <see cref="Documents.AbstractiveSummarizationOperationAction"/>.
         /// </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
@@ -331,10 +331,10 @@ namespace Azure.AI.Language.Documents
         /// <summary> Contains the analyze text PIIEntityRecognition LRO task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Pii task parameters. </param>
-        /// <returns> A new <see cref="Documents.PiiLROTask"/> instance for mocking. </returns>
-        public static PiiLROTask PiiLROTask(string name = default, PiiActionContent parameters = default)
+        /// <returns> A new <see cref="Documents.PiiEntityRecognitionAction"/> instance for mocking. </returns>
+        public static PiiEntityRecognitionAction PiiEntityRecognitionAction(string name = default, PiiActionContent parameters = default)
         {
-            return new PiiLROTask(name, AnalyzeDocumentsOperationActionKind.PiiEntityRecognition, additionalBinaryDataProperties: null, parameters);
+            return new PiiEntityRecognitionAction(name, AnalyzeDocumentsOperationActionKind.PiiEntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> Supported parameters for a PII Entities Recognition task. </summary>
