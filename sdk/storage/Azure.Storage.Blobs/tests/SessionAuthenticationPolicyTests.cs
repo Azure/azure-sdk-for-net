@@ -645,6 +645,187 @@ namespace Azure.Storage.Blobs.Tests
         }
         #endregion
 
+        #region Session Acquisition Cooldown
+        [Test]
+        public async Task SessionAcquireFails_500_CooldownPreventsRepeatAcquisition()
+        {
+            const int requestCount = 5;
+            var mockBearer = CreateMockBearerPolicy();
+
+            // Only one CreateSession response queued. If a second acquisition were
+            // attempted within the cooldown window, the inner MockTransport would
+            // throw, failing the test.
+            var innerTransport = new MockTransport(CreateSessionErrorResponse(500, "InternalError"));
+            var innerOptions = new BlobClientOptions { Transport = innerTransport };
+            innerOptions.Retry.MaxRetries = 0;
+            var serviceClient = new BlobServiceClient(
+                ServiceUri,
+                new StorageSharedKeyCredential(AccountName, s_accountKey),
+                innerOptions);
+
+            var policy = new SessionAuthenticationPolicy(
+                bearerTokenPolicy: mockBearer.Object,
+                blobServiceClientFactory: () => serviceClient,
+                sessionOptions: EnabledOptions);
+
+            for (int i = 0; i < requestCount; i++)
+            {
+                await SendBlobGetAsync(
+                    policy,
+                    BlobUri,
+                    RequestMethod.Get,
+                    CreateBlobGetResponse(200));
+            }
+
+            // Every request should have fallen back to bearer.
+            VerifyBearerPolicyInvoked(mockBearer, Times.Exactly(requestCount));
+            // Exactly one CreateSession attempt — the sentinel cached after the first
+            // failure prevented re-acquisition for all subsequent requests.
+            Assert.AreEqual(1, innerTransport.Requests.Count,
+                "Cooldown should prevent re-acquisition; expected exactly one CreateSession call.");
+        }
+
+        [Test]
+        public async Task SessionAcquireFails_CooldownIsPerContainer()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+
+            // Two CreateSession responses on a single inner transport:
+            //   1. containerA's first acquire fails (eligible 500).
+            //   2. containerB's first acquire succeeds with tokenB.
+            // If containerA's cooldown weren't per-container, a re-acquire on A would
+            // steal containerB's queued response and break this test.
+            var innerTransport = new MockTransport(
+                CreateSessionErrorResponse(500, "InternalError"),
+                CreateSessionMockResponse(sessionToken: "tokenB"));
+            var innerOptions = new BlobClientOptions { Transport = innerTransport };
+            innerOptions.Retry.MaxRetries = 0;
+            var serviceClient = new BlobServiceClient(
+                ServiceUri,
+                new StorageSharedKeyCredential(AccountName, s_accountKey),
+                innerOptions);
+
+            var policy = new SessionAuthenticationPolicy(
+                bearerTokenPolicy: mockBearer.Object,
+                blobServiceClientFactory: () => serviceClient,
+                sessionOptions: EnabledOptions);
+
+            var containerAUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerA/{BlobName}");
+            var containerBUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerB/{BlobName}");
+
+            // 3 requests to A — all should fall back to bearer.
+            for (int i = 0; i < 3; i++)
+            {
+                await SendBlobGetAsync(
+                    policy,
+                    containerAUri,
+                    RequestMethod.Get,
+                    CreateBlobGetResponse(200));
+            }
+
+            // 3 requests to B — all should sign with tokenB.
+            for (int i = 0; i < 3; i++)
+            {
+                var (_, transportB) = await SendBlobGetAsync(
+                    policy,
+                    containerBUri,
+                    RequestMethod.Get,
+                    CreateBlobGetResponse(200));
+
+                Assert.IsTrue(transportB.Requests[0].Headers.TryGetValue("Authorization", out string authB));
+                Assert.IsTrue(authB.StartsWith("Session tokenB:"),
+                    $"Expected containerB to sign with tokenB, got: {authB}");
+            }
+
+            // Bearer was invoked once per A request; containerB's requests went through
+            // the session path (not bearer).
+            VerifyBearerPolicyInvoked(mockBearer, Times.Exactly(3));
+            // Exactly two CreateSession attempts: one A (failed → cooldown), one B (succeeded → cached).
+            Assert.AreEqual(2, innerTransport.Requests.Count,
+                "Cooldown should be scoped per container; expected one CreateSession per container.");
+        }
+
+        [Test]
+        public async Task Concurrent_SessionAcquireFails_CooldownPreventsThunderingHerd()
+        {
+            const int parallelism = 50;
+            var mockBearer = CreateMockBearerPolicy();
+
+            // Only one CreateSession response queued. A second acquisition would
+            // underrun the inner transport and throw, failing the test.
+            var innerTransport = new MockTransport(
+                CreateSessionErrorResponse(503, "ServerBusy"));
+            var innerOptions = new BlobClientOptions { Transport = innerTransport };
+            innerOptions.Retry.MaxRetries = 0;
+            var serviceClient = new BlobServiceClient(
+                ServiceUri,
+                new StorageSharedKeyCredential(AccountName, s_accountKey),
+                innerOptions);
+
+            var policy = new SessionAuthenticationPolicy(
+                bearerTokenPolicy: mockBearer.Object,
+                blobServiceClientFactory: () => serviceClient,
+                sessionOptions: EnabledOptions);
+
+            var outerResponses = new ConcurrentQueue<MockResponse>();
+            for (int i = 0; i < parallelism; i++)
+            {
+                outerResponses.Enqueue(CreateBlobGetResponse(200));
+            }
+            var capturedAuthHeaders = new ConcurrentQueue<string>();
+            var outerTransport = CreateConcurrentOuterTransport(outerResponses, capturedAuthHeaders);
+            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
+
+            using var startGate = new ManualResetEventSlim(false);
+            var tasks = new Task[parallelism];
+            for (int i = 0; i < parallelism; i++)
+            {
+                int index = i;
+                tasks[i] = Task.Run(async () =>
+                {
+                    startGate.Wait();
+                    var blobUri = new Uri($"https://{AccountName}.blob.core.windows.net/{ContainerName}/blob{index}");
+                    var message = pipeline.CreateMessage();
+                    message.Request.Method = RequestMethod.Get;
+                    message.Request.Uri.Reset(blobUri);
+                    await SendAsync(pipeline, message);
+                });
+            }
+            startGate.Set();
+            await Task.WhenAll(tasks);
+
+            // Every concurrent request fell back to bearer.
+            VerifyBearerPolicyInvoked(mockBearer, Times.Exactly(parallelism));
+            // Exactly one CreateSession attempt across all 50 concurrent callers — proves
+            // both (a) the cache's TCS coalescing handled concurrent first-callers, and
+            // (b) the cooldown prevented post-failure callers from re-attempting.
+            Assert.AreEqual(1, innerTransport.Requests.Count,
+                "Concurrent failed acquires should coalesce to a single CreateSession call.");
+        }
+
+        [Test]
+        public void SessionTokenInfo_FallbackSentinel_RefreshOnIsBeforeExpiry()
+        {
+            TimeSpan cooldown = TimeSpan.FromMinutes(5);
+            TimeSpan refreshBuffer = TimeSpan.FromSeconds(30);
+
+            DateTimeOffset before = DateTimeOffset.UtcNow;
+            SessionAuthenticationPolicy.SessionTokenInfo sentinel =
+                SessionAuthenticationPolicy.SessionTokenInfo.CreateFallbackToBearer(cooldown, refreshBuffer);
+            DateTimeOffset after = DateTimeOffset.UtcNow;
+
+            Assert.IsTrue(sentinel.IsFallbackToBearer, "Sentinel must signal fallback to bearer.");
+            Assert.GreaterOrEqual(sentinel.ExpiresOn, before + cooldown,
+                "ExpiresOn must be at least UtcNow + cooldown at construction time.");
+            Assert.LessOrEqual(sentinel.ExpiresOn, after + cooldown,
+                "ExpiresOn must be at most UtcNow + cooldown at construction time.");
+            // Locks in the contract that a background refresh probes the service
+            // refreshBuffer before the cooldown expires.
+            Assert.AreEqual(sentinel.ExpiresOn - refreshBuffer, sentinel.RefreshOn,
+                "RefreshOn must precede ExpiresOn by exactly refreshBuffer to enable proactive recovery.");
+        }
+        #endregion
+
         #region Response Handling
         [Test]
         public async Task SuccessResponse_ReturnsNormally()

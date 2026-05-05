@@ -47,6 +47,13 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private static readonly TimeSpan BackgroundAcquireTimeout = TimeSpan.FromSeconds(30);
 
+        /// <summary>
+        /// Cooldown applied to the fallback-to-bearer sentinel returned by
+        /// <see cref="AcquireSessionAsync"/> after a fallback-eligible CreateSession failure.
+        /// See <see cref="SessionTokenInfo.CreateFallbackToBearer"/>.
+        /// </summary>
+        private static readonly TimeSpan AcquireFailureCooldown = TimeSpan.FromMinutes(5);
+
         private const string SessionsUnavailable = "SessionOperationsTemporarilyUnavailable";
         private const string FeatureNotEnabled = "FeatureNotEnabled";
         private const string SessionSchemeNotSupported = "Authentication scheme Session is not supported.";
@@ -176,8 +183,7 @@ namespace Azure.Storage.Blobs
         /// A tuple containing the resulting <see cref="AuthState"/> and, when the
         /// state is <see cref="AuthState.SentWithSession"/>, the
         /// <see cref="SessionTokenInfo"/> that was used to sign the request.
-        /// The token is <c>default</c> when the state is
-        /// <see cref="AuthState.UseBearerToken"/>.
+        /// The token is default when the state is <see cref="AuthState.UseBearerToken"/>.
         /// </returns>
         private async ValueTask<(AuthState State, SessionTokenInfo SentWith)> TryAcquireSignAndSendAsync(
             HttpMessage message,
@@ -187,14 +193,9 @@ namespace Azure.Storage.Blobs
         {
             AutoRefreshingCache<SessionTokenInfo> cache = GetOrCreateCache(containerName);
 
-            SessionTokenInfo sessionInfo;
-            try
+            SessionTokenInfo sessionInfo = await cache.GetAsync(async, message.CancellationToken).ConfigureAwait(false);
+            if (sessionInfo.IsFallbackToBearer)
             {
-                sessionInfo = await cache.GetAsync(async, message.CancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException ex) when (ShouldFallbackCreateSessionFailure(ex))
-            {
-                // Session creation failed with a service error — signal bearer fallback.
                 return (AuthState.UseBearerToken, default);
             }
 
@@ -285,8 +286,9 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Acquire delegate called by <see cref="AutoRefreshingCache{TValue}"/> to create
-        /// a new session via the Container REST API.
+        /// Acquire delegate called by <see cref="AutoRefreshingCache{TValue}"/> to create a
+        /// new session via the Container REST API. Fallback-eligible failures are converted
+        /// to a sentinel via <see cref="SessionTokenInfo.CreateFallbackToBearer"/>.
         /// </summary>
         private async ValueTask<SessionTokenInfo> AcquireSessionAsync(
             string containerName, bool async, CancellationToken cancellationToken)
@@ -294,9 +296,17 @@ namespace Azure.Storage.Blobs
             BlobContainerClient containerClient = _blobServiceClientFactory().GetBlobContainerClient(containerName);
             CreateSessionConfiguration config = new CreateSessionConfiguration(AuthenticationType.Hmac);
 
-            Response<CreateSessionResponse> response = async
-                ? await containerClient.CreateSessionAsync(config: config, cancellationToken: cancellationToken).ConfigureAwait(false)
-                : containerClient.CreateSession(config: config, cancellationToken: cancellationToken);
+            Response<CreateSessionResponse> response;
+            try
+            {
+                response = async
+                    ? await containerClient.CreateSessionAsync(config: config, cancellationToken: cancellationToken).ConfigureAwait(false)
+                    : containerClient.CreateSession(config: config, cancellationToken: cancellationToken);
+            }
+            catch (RequestFailedException ex) when (ShouldFallbackCreateSessionFailure(ex))
+            {
+                return SessionTokenInfo.CreateFallbackToBearer(AcquireFailureCooldown, SessionRefreshBuffer);
+            }
 
             CreateSessionResponse session = response.Value;
             DateTimeOffset expiresOn = session.Expiration ?? DateTimeOffset.UtcNow.AddMinutes(5);
@@ -306,7 +316,8 @@ namespace Azure.Storage.Blobs
                 sessionToken: session.Credentials.SessionToken,
                 sessionKey: session.Credentials.SessionKey,
                 expiresOn: expiresOn,
-                refreshOn: refreshOn);
+                refreshOn: refreshOn,
+                isFallbackToBearer: false);
         }
 
         /// <summary>
@@ -335,7 +346,9 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Cached session token information returned by the Create Session API.
+        /// Cached session token information returned by the Create Session API, or a
+        /// fallback-to-bearer sentinel when <see cref="AcquireSessionAsync"/> encountered
+        /// an error classified by <see cref="ShouldFallbackCreateSessionFailure"/>.
         /// </summary>
         internal readonly struct SessionTokenInfo : IExpiringValue, IEquatable<SessionTokenInfo>
         {
@@ -344,16 +357,50 @@ namespace Azure.Storage.Blobs
             public DateTimeOffset ExpiresOn { get; }
             public DateTimeOffset RefreshOn { get; }
 
-            public SessionTokenInfo(string sessionToken, string sessionKey, DateTimeOffset expiresOn, DateTimeOffset refreshOn)
+            /// <summary>
+            /// When true, this instance is a sentinel indicating that callers
+            /// should fall back to bearer authentication for the duration of the cached
+            /// entry. <see cref="SessionToken"/> and <see cref="SessionKey"/> are null
+            /// in this state and must not be used to sign requests.
+            /// </summary>
+            public bool IsFallbackToBearer { get; }
+
+            public SessionTokenInfo(
+                string sessionToken,
+                string sessionKey,
+                DateTimeOffset expiresOn,
+                DateTimeOffset refreshOn,
+                bool isFallbackToBearer)
             {
                 SessionToken = sessionToken;
                 SessionKey = sessionKey;
                 ExpiresOn = expiresOn;
                 RefreshOn = refreshOn;
+                IsFallbackToBearer = isFallbackToBearer;
+            }
+
+            /// <summary>
+            /// Creates a sentinel value that signals callers to fall back to bearer
+            /// authentication. The sentinel is treated as a normal cached value by
+            /// <see cref="AutoRefreshingCache{TValue}"/> and expires after
+            /// <paramref name="cooldown"/>. <paramref name="refreshBuffer"/> before
+            /// expiry, exactly one caller triggers a background re-acquisition while
+            /// other callers continue to fall back to bearer with no added latency.
+            /// </summary>
+            public static SessionTokenInfo CreateFallbackToBearer(TimeSpan cooldown, TimeSpan refreshBuffer)
+            {
+                DateTimeOffset expiresOn = DateTimeOffset.UtcNow + cooldown;
+                DateTimeOffset refreshOn = expiresOn - refreshBuffer;
+                return new SessionTokenInfo(
+                    sessionToken: null,
+                    sessionKey: null,
+                    expiresOn: expiresOn,
+                    refreshOn: refreshOn,
+                    isFallbackToBearer: true);
             }
 
             public IExpiringValue WithRefreshOn(DateTimeOffset refreshOn) =>
-                new SessionTokenInfo(SessionToken, SessionKey, ExpiresOn, refreshOn);
+                new SessionTokenInfo(SessionToken, SessionKey, ExpiresOn, refreshOn, IsFallbackToBearer);
 
             public bool Equals(SessionTokenInfo other) =>
                 string.Equals(SessionToken, other.SessionToken);
