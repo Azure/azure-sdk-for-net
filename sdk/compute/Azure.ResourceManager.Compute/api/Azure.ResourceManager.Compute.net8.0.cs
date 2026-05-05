@@ -3078,7 +3078,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetRollingUpgradeData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgradeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgradeData>
     {
-        internal VirtualMachineScaleSetRollingUpgradeData() { }
+        public VirtualMachineScaleSetRollingUpgradeData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Compute.Models.ComputeApiError Error { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradePolicy Policy { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradeProgressInfo Progress { get { throw null; } }
@@ -4845,6 +4845,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ComputeSecurityPostureReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference>
     {
+        public ComputeSecurityPostureReference() { }
         public ComputeSecurityPostureReference(Azure.Core.ResourceIdentifier id) { }
         public System.Collections.Generic.IList<string> ExcludeExtensionNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> ExcludeExtensions { get { throw null; } }
@@ -7312,6 +7313,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class KeyVaultAndKeyReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.KeyVaultAndKeyReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.KeyVaultAndKeyReference>
     {
+        public KeyVaultAndKeyReference(Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault, System.Uri keyUri) { }
         public KeyVaultAndKeyReference(System.Uri keyUri) { }
         public System.Uri KeyUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
@@ -7327,6 +7329,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class KeyVaultAndSecretReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.KeyVaultAndSecretReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.KeyVaultAndSecretReference>
     {
+        public KeyVaultAndSecretReference(Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault, System.Uri secretUri) { }
         public KeyVaultAndSecretReference(System.Uri secretUri) { }
         public System.Uri SecretUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
@@ -7343,6 +7346,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class KeyVaultKeyReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.KeyVaultKeyReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.KeyVaultKeyReference>
     {
         public KeyVaultKeyReference(System.Uri keyUri) { }
+        public KeyVaultKeyReference(System.Uri keyUri, Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault) { }
         public System.Uri KeyUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.KeyVaultKeyReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7358,6 +7362,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class KeyVaultSecretReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.KeyVaultSecretReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.KeyVaultSecretReference>
     {
         public KeyVaultSecretReference(System.Uri secretUri) { }
+        public KeyVaultSecretReference(System.Uri secretUri, Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault) { }
         public System.Uri SecretUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.KeyVaultSecretReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7698,6 +7703,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class MigrateToVirtualMachineScaleSetInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>
     {
         public MigrateToVirtualMachineScaleSetInput() { }
+        public MigrateToVirtualMachineScaleSetInput(Azure.ResourceManager.Resources.Models.WritableSubResource virtualMachineScaleSetFlexible) { }
         public Azure.Core.ResourceIdentifier VirtualMachineScaleSetFlexibleId { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10030,7 +10036,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class VirtualMachineCaptureResult : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineCaptureResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineCaptureResult>
     {
-        internal VirtualMachineCaptureResult() { }
+        public VirtualMachineCaptureResult() { }
         public string ContentVersion { get { throw null; } }
         public System.BinaryData Parameters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.BinaryData> Resources { get { throw null; } }

@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,6 +18,14 @@ namespace Azure.ResourceManager.Compute.Models
     [JsonConverter(typeof(KeyVaultSecretReferenceConverter))]
     public partial class KeyVaultSecretReference
     {
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/>. </summary>
+        /// <param name="secretUri"> Url pointing to a key or secret in KeyVault. </param>
+        /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. </param>
+        public KeyVaultSecretReference(Uri secretUri, WritableSubResource sourceVault) : this(secretUri)
+        {
+            SourceVaultId = sourceVault?.Id;
+        }
+
         internal partial class KeyVaultSecretReferenceConverter : JsonConverter<KeyVaultSecretReference>
         {
             /// <inheritdoc />

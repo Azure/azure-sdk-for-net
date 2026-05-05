@@ -9,19 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Output of virtual machine capture operation. </summary>
     public partial class VirtualMachineCaptureResult : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureResult"/>. </summary>
-        internal VirtualMachineCaptureResult()
-        {
-            Resources = new ChangeTrackingList<BinaryData>();
-        }
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureResult"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

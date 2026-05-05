@@ -11,6 +11,12 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeSecurityPostureReference
     {
+        /// <summary> Initializes a new instance of <see cref="ComputeSecurityPostureReference"/>. </summary>
+        public ComputeSecurityPostureReference()
+        {
+            ExcludeExtensions = new ChangeTrackingList<VirtualMachineExtensionData>();
+        }
+
         /// <summary> List of virtual machine extension names to exclude when applying the security posture. Only applicable when the security posture reference is in the resource group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<string> ExcludeExtensionNames => ExcludeExtensions.Select(e => e.Name).ToList();

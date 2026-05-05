@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </summary>
     public partial class ComputeSecurityPostureReference : IJsonModel<ComputeSecurityPostureReference>
     {
-        /// <summary> Initializes a new instance of <see cref="ComputeSecurityPostureReference"/> for deserialization. </summary>
-        internal ComputeSecurityPostureReference()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ComputeSecurityPostureReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

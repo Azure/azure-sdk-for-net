@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetRollingUpgradeData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal VirtualMachineScaleSetRollingUpgradeData(AzureLocation location) : base(location)
+        public VirtualMachineScaleSetRollingUpgradeData(AzureLocation location) : base(location)
         {
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The status of the latest virtual machine scale set rolling upgrade. </summary>
-        internal VirtualMachineScaleSetRollingUpgradeProperties Properties { get; }
+        internal VirtualMachineScaleSetRollingUpgradeProperties Properties { get; set; }
 
         /// <summary> The rolling upgrade policies applied for this upgrade. </summary>
         public RollingUpgradePolicy Policy
