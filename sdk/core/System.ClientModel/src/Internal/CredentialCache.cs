@@ -37,7 +37,13 @@ internal static class CredentialCache
         string sectionKey = CredentialSectionHasher.ComputeKey(mergedSection);
         if (sectionKey.Length == 0)
         {
-            return factory(mergedSection, resolver);
+            // ComputeKey returns the empty string only for a null section.
+            // The engine guards against this before reaching the cache, but if
+            // some future caller bypasses the engine and passes null we have
+            // no meaningful cache key and no resolver could produce a useful
+            // provider from a null section. Return null instead of invoking
+            // the factory.
+            return null;
         }
 
         // Reference-identity hash bypasses any user GetHashCode override on
