@@ -122,5 +122,3 @@ without changing the spec.
   `Program.cs`, configuration. Service authors continue to own these.
 - Generating client SDKs from the same spec — that is the job of
   `@azure-typespec/http-client-csharp` and friends.
-- Multi-language server codegen (Java, Go, Python). The MTG pipeline is
-  .NET-only by design.
