@@ -85,6 +85,32 @@ public class CredentialResolverTests
     }
 
     [Test]
+    public void CredentialCache_NullMergedSection_ReturnsNullWithoutInvokingFactory()
+    {
+        // The engine guards against null/!Exists() sections before reaching the cache,
+        // so in production mergedSection is always non-null. CredentialSectionHasher
+        // returns an empty key string only for a null section; if that ever happens
+        // (e.g., a future caller bypasses the engine), the cache must not invoke the
+        // factory: a resolver expecting an IConfigurationSection cannot produce a
+        // meaningful provider from null. Pin that contract here.
+        Type cacheType = typeof(AuthenticationTokenProvider).Assembly
+            .GetType("System.ClientModel.Primitives.CredentialCache", throwOnError: true)!;
+        MethodInfo getOrTryCreate = cacheType.GetMethod(
+            "GetOrTryCreate", BindingFlags.Public | BindingFlags.Static)!;
+
+        bool factoryInvoked = false;
+        Func<IConfigurationSection, CredentialResolver, AuthenticationTokenProvider?> factory =
+            (_, _) => { factoryInvoked = true; return null; };
+
+        var result = getOrTryCreate.Invoke(
+            null,
+            new object?[] { null, new ScopedRecordingResolver("Anything", "x"), factory });
+
+        Assert.That(result, Is.Null);
+        Assert.That(factoryInvoked, Is.False, "factory must not run when the merged section is null");
+    }
+
+    [Test]
     public void GetCredential_ResolverThrows_ExceptionPropagates()
     {
         // A throwing resolver indicates a real bug in the resolver
