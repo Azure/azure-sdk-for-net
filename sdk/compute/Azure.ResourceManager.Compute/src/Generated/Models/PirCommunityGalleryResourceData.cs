@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="PirCommunityGalleryResourceData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="identifier"> The identifier information of community gallery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PirCommunityGalleryResourceData(string name, AzureLocation? location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PirCommunityGalleryResourceData(string name, AzureLocation? location, ResourceType? resourceType, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;
-            Type = @type;
+            ResourceType = resourceType;
             Identifier = identifier;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         public AzureLocation? Location { get; }
 
         /// <summary> Resource type. </summary>
-        public string Type { get; }
+        public ResourceType? ResourceType { get; }
 
         /// <summary> The identifier information of community gallery. </summary>
         internal CommunityGalleryIdentifier Identifier { get; }

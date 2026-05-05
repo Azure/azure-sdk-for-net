@@ -4153,18 +4153,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="communityMetadata"> The metadata of community gallery. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryData"/> instance for mocking. </returns>
-        public static CommunityGalleryData CommunityGalleryData(string name = default, AzureLocation? location = default, string @type = default, string uniqueId = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, CommunityGalleryMetadata communityMetadata = default)
+        public static CommunityGalleryData CommunityGalleryData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, CommunityGalleryMetadata communityMetadata = default)
         {
             return new CommunityGalleryData(
                 name,
                 location,
-                @type,
+                resourceType,
                 uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null),
                 additionalBinaryDataProperties: null,
                 disclaimer is null && artifactTags is null && communityMetadata is null ? default : new CommunityGalleryProperties(disclaimer, artifactTags, communityMetadata, null));
@@ -4192,17 +4192,17 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
         /// <returns> A new <see cref="Models.PirCommunityGalleryResourceData"/> instance for mocking. </returns>
-        public static PirCommunityGalleryResourceData PirCommunityGalleryResourceData(string name = default, AzureLocation? location = default, string @type = default, string uniqueId = default)
+        public static PirCommunityGalleryResourceData PirCommunityGalleryResourceData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default)
         {
-            return new PirCommunityGalleryResourceData(name, location, @type, uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null), additionalBinaryDataProperties: null);
+            return new PirCommunityGalleryResourceData(name, location, resourceType, uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
@@ -4219,12 +4219,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageData CommunityGalleryImageData(string name = default, AzureLocation? location = default, string @type = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, CommunityGalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
+        public static CommunityGalleryImageData CommunityGalleryImageData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, CommunityGalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
         {
             return new CommunityGalleryImageData(
                 name,
                 location,
-                @type,
+                resourceType,
                 uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null),
                 additionalBinaryDataProperties: null,
                 osType is null && osState is null && endOfLifeOn is null && imageIdentifier is null && recommended is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && disclaimer is null && artifactTags is null && disallowedDiskTypes is null ? default : new CommunityGalleryImageProperties(
@@ -4257,7 +4257,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
@@ -4266,12 +4266,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, AzureLocation? location = default, string @type = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default)
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default)
         {
             return new CommunityGalleryImageVersionData(
                 name,
                 location,
-                @type,
+                resourceType,
                 uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null),
                 additionalBinaryDataProperties: null,
                 publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && disclaimer is null && artifactTags is null ? default : new CommunityGalleryImageVersionProperties(
@@ -5953,41 +5953,6 @@ namespace Azure.ResourceManager.Compute.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryData"/>. </summary>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
-        /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
-        /// <param name="communityMetadata"> The metadata of community gallery. </param>
-        /// <returns> A new <see cref="Compute.CommunityGalleryData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CommunityGalleryData CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, string disclaimer, IReadOnlyDictionary<string, string> artifactTags, CommunityGalleryMetadata communityMetadata)
-        {
-            artifactTags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CommunityGalleryData(
-                name,
-                location,
-                default,
-                default,
-                additionalBinaryDataProperties: null,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PirCommunityGalleryResourceData"/>. </summary>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        /// <returns> A new <see cref="Models.PirCommunityGalleryResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PirCommunityGalleryResourceData PirCommunityGalleryResourceData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId)
-        {
-            return new PirCommunityGalleryResourceData(name, location, default, default, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryImageData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
@@ -6018,33 +5983,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new CommunityGalleryImageData(
                 name,
                 location,
-                default,
-                default,
-                additionalBinaryDataProperties: null,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryImageVersionData"/>. </summary>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
-        /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
-        /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
-        /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
-        /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, string disclaimer, IReadOnlyDictionary<string, string> artifactTags)
-        {
-            artifactTags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CommunityGalleryImageVersionData(
-                name,
-                location,
-                default,
+                resourceType,
                 default,
                 additionalBinaryDataProperties: null,
                 default);
@@ -7055,13 +6994,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunityGalleryData CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId)
         {
-            return new CommunityGalleryData(
-                name,
-                location,
-                default,
-                default,
-                additionalBinaryDataProperties: null,
-                default);
+            return CommunityGalleryData(name, location, resourceType, uniqueId, disclaimer: default, artifactTags: default, communityMetadata: default);
         }
 
         /// <param name="name"></param>
@@ -7083,16 +7016,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunityGalleryImageData CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, HyperVGeneration? hyperVGeneration, IEnumerable<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula)
         {
-            disallowedDiskTypes ??= new ChangeTrackingList<string>();
-            features ??= new ChangeTrackingList<GalleryImageFeature>();
-
-            return new CommunityGalleryImageData(
-                name,
-                location,
-                default,
-                default,
-                additionalBinaryDataProperties: null,
-                default);
+            return CommunityGalleryImageData(name, location, resourceType, uniqueId, osType, osState, endOfLifeOn, imageIdentifier, recommended, hyperVGeneration, features, purchasePlan, architecture, privacyStatementUri, eula, disclaimer: default, artifactTags: default, disallowedDiskTypes);
         }
 
         /// <param name="name"></param>
@@ -7106,13 +7030,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
         {
-            return new CommunityGalleryImageVersionData(
-                name,
-                location,
-                default,
-                default,
-                additionalBinaryDataProperties: null,
-                default);
+            return CommunityGalleryImageVersionData(name, location, resourceType, uniqueId, publishedOn, endOfLifeOn, isExcludedFromLatest, storageProfile, disclaimer: default, artifactTags: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.GalleryData"/>. </summary>

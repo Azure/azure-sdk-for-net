@@ -8130,7 +8130,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal PirCommunityGalleryResourceData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public string UniqueId { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8659,6 +8659,7 @@ namespace Azure.ResourceManager.Compute.Models
         public RestorePointSourceVmDataDisk() { }
         public Azure.ResourceManager.Compute.Models.CachingType? Caching { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskRestorePointAttributes DiskRestorePoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskRestorePointId { get { throw null; } }
         public int? DiskSizeGB { get { throw null; } }
         public int? Lun { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk ManagedDisk { get { throw null; } set { } }
@@ -8679,6 +8680,7 @@ namespace Azure.ResourceManager.Compute.Models
         public RestorePointSourceVmOSDisk() { }
         public Azure.ResourceManager.Compute.Models.CachingType? Caching { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskRestorePointAttributes DiskRestorePoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskRestorePointId { get { throw null; } }
         public int? DiskSizeGB { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskEncryptionSettings EncryptionSettings { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk ManagedDisk { get { throw null; } set { } }

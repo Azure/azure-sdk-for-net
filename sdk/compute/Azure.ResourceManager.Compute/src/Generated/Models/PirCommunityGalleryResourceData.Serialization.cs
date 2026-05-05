@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Identifier))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             AzureLocation? location = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             CommunityGalleryIdentifier identifier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,7 +160,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identifier"u8))
@@ -177,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PirCommunityGalleryResourceData(name, location, @type, identifier, additionalBinaryDataProperties);
+            return new PirCommunityGalleryResourceData(name, location, resourceType, identifier, additionalBinaryDataProperties);
         }
     }
 }

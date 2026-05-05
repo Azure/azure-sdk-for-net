@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="identifier"> The identifier information of community gallery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of a community gallery. </param>
-        internal CommunityGalleryData(string name, AzureLocation? location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryProperties properties) : base(name, location, @type, identifier, additionalBinaryDataProperties)
+        internal CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryProperties properties) : base(name, location, resourceType, identifier, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

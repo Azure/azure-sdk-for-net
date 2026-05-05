@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute
             }
             string name = default;
             AzureLocation? location = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             CommunityGalleryIdentifier identifier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CommunityGalleryImageVersionProperties properties = default;
@@ -140,7 +140,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identifier"u8))
@@ -169,7 +173,7 @@ namespace Azure.ResourceManager.Compute
             return new CommunityGalleryImageVersionData(
                 name,
                 location,
-                @type,
+                resourceType,
                 identifier,
                 additionalBinaryDataProperties,
                 properties);
