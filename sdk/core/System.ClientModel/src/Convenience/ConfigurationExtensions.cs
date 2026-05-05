@@ -140,6 +140,7 @@ public static class ConfigurationExtensions
     /// service. Idempotent by implementation type — calling twice with the
     /// same <typeparamref name="T"/> registers a single instance.
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="services"/> is null.</exception>
     public static IServiceCollection AddCredentialResolver<T>(this IServiceCollection services)
         where T : CredentialResolver, new()
     {
@@ -156,6 +157,7 @@ public static class ConfigurationExtensions
     /// Registers <typeparamref name="T"/> as a <see cref="CredentialResolver"/>
     /// service on the host's service collection.
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="builder"/> is null.</exception>
     public static IHostApplicationBuilder AddCredentialResolver<T>(this IHostApplicationBuilder builder)
         where T : CredentialResolver, new()
     {
