@@ -3173,9 +3173,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resourceArmId"> arm id of the soft-deleted resource. </param>
         /// <param name="softDeletedArtifactType"> artifact type of the soft-deleted resource. </param>
-        /// <param name="softDeletedTime"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
+        /// <param name="softDeletedOn"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
         /// <returns> A new <see cref="Models.GallerySoftDeletedResourceDetails"/> instance for mocking. </returns>
-        public static GallerySoftDeletedResourceDetails GallerySoftDeletedResourceDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier resourceArmId = default, GallerySoftDeletedArtifactType? softDeletedArtifactType = default, string softDeletedTime = default)
+        public static GallerySoftDeletedResourceDetails GallerySoftDeletedResourceDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier resourceArmId = default, GallerySoftDeletedArtifactType? softDeletedArtifactType = default, DateTimeOffset? softDeletedOn = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3187,7 +3187,7 @@ namespace Azure.ResourceManager.Compute.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                resourceArmId is null && softDeletedArtifactType is null && softDeletedTime is null ? default : new GallerySoftDeletedResourceProperties(resourceArmId, softDeletedArtifactType, softDeletedTime, null));
+                resourceArmId is null && softDeletedArtifactType is null && softDeletedOn is null ? default : new GallerySoftDeletedResourceProperties(resourceArmId, softDeletedArtifactType, softDeletedOn, null));
         }
 
         /// <summary> Specifies information about the gallery sharing profile update. </summary>
@@ -6478,33 +6478,6 @@ namespace Azure.ResourceManager.Compute.Models
                 default,
                 tags,
                 additionalBinaryDataProperties: null,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GallerySoftDeletedResourceDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resourceArmId"> arm id of the soft-deleted resource. </param>
-        /// <param name="softDeletedArtifactType"> artifact type of the soft-deleted resource. </param>
-        /// <param name="softDeletedOn"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
-        /// <returns> A new <see cref="Models.GallerySoftDeletedResourceDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GallerySoftDeletedResourceDetails GallerySoftDeletedResourceDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier resourceArmId, GallerySoftDeletedArtifactType? softDeletedArtifactType, DateTimeOffset? softDeletedOn)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new GallerySoftDeletedResourceDetails(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
                 default);
         }
 

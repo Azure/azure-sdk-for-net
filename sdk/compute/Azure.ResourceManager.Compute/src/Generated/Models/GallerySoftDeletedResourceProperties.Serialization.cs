@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("softDeletedArtifactType"u8);
                 writer.WriteStringValue(SoftDeletedArtifactType.Value.ToString());
             }
-            if (Optional.IsDefined(SoftDeletedTime))
+            if (Optional.IsDefined(SoftDeletedOn))
             {
                 writer.WritePropertyName("softDeletedTime"u8);
-                writer.WriteStringValue(SoftDeletedTime);
+                writer.WriteStringValue(SoftDeletedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             ResourceIdentifier resourceArmId = default;
             GallerySoftDeletedArtifactType? softDeletedArtifactType = default;
-            string softDeletedTime = default;
+            DateTimeOffset? softDeletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,7 +158,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("softDeletedTime"u8))
                 {
-                    softDeletedTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    softDeletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GallerySoftDeletedResourceProperties(resourceArmId, softDeletedArtifactType, softDeletedTime, additionalBinaryDataProperties);
+            return new GallerySoftDeletedResourceProperties(resourceArmId, softDeletedArtifactType, softDeletedOn, additionalBinaryDataProperties);
         }
     }
 }

@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The timestamp for when the resource is soft-deleted. In dateTime offset format. </summary>
-        public string SoftDeletedTime
+        public DateTimeOffset? SoftDeletedOn
         {
             get
             {
-                return Properties is null ? default : Properties.SoftDeletedTime;
+                return Properties is null ? default : Properties.SoftDeletedOn;
             }
         }
     }
