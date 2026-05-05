@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("extendedLocationReplicaCount"u8);
                 writer.WriteNumberValue(ExtendedLocationReplicaCount.Value);
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(GalleryStorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
-                writer.WriteStringValue(StorageAccountType.Value.ToString());
+                writer.WriteStringValue(GalleryStorageAccountType.Value.ToString());
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             GalleryExtendedLocation extendedLocation = default;
             int? extendedLocationReplicaCount = default;
-            EdgeZoneStorageAccountType? storageAccountType = default;
+            EdgeZoneStorageAccountType? galleryStorageAccountType = default;
             EncryptionImages encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageAccountType = new EdgeZoneStorageAccountType(prop.Value.GetString());
+                    galleryStorageAccountType = new EdgeZoneStorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 extendedLocation,
                 extendedLocationReplicaCount,
-                storageAccountType,
+                galleryStorageAccountType,
                 encryption,
                 additionalBinaryDataProperties);
         }

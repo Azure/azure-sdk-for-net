@@ -6858,8 +6858,9 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.EncryptionImages Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public int? ExtendedLocationReplicaCount { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType? GalleryStorageAccountType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.EdgeZoneStorageAccountType? StorageAccountType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ImageStorageAccountType? StorageAccountType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryTargetExtendedLocation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryTargetExtendedLocation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
