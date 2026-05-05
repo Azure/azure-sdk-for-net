@@ -118,6 +118,6 @@ You can modify these servers in the `MCPVoiceAssistant.cs` file in the `SetupSes
 
 ## Further Reading
 
-- [Azure VoiceLive Documentation](https://learn.microsoft.com/azure/ai-services/voicelive/)
+- [Azure VoiceLive Documentation](https://learn.microsoft.com/azure/ai-services/)
 - [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
 - [VoiceLive SDK for .NET](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/voicelive/Azure.AI.VoiceLive)

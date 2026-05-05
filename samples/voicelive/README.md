@@ -16,7 +16,7 @@ This folder contains samples demonstrating how to use the [Azure VoiceLive SDK f
 
 ## Samples
 
-### [Agent Voice Assistant](/samples/voicelive/agent-voice-assistant/)
+### [Agent Voice Assistant](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/voicelive/agent-voice-assistant)
 
 Demonstrates connecting to an **Azure AI Foundry agent** with voice interaction using the VoiceLive Agent V2 API. This sample shows how to:
 
@@ -30,7 +30,7 @@ Demonstrates connecting to an **Azure AI Foundry agent** with voice interaction 
 - Azure AI Foundry project with a deployed agent
 - Azure CLI authentication or managed identity
 
-### [MCP Voice Assistant](/samples/voicelive/mcp-voice-assistant/)
+### [MCP Voice Assistant](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/voicelive/mcp-voice-assistant)
 
 Demonstrates using the Azure VoiceLive SDK with **MCP (Model Context Protocol) servers** to augment the voice assistant with external tools and data sources. This sample shows how to:
 
@@ -56,7 +56,7 @@ Demonstrates using the Azure VoiceLive SDK with **MCP (Model Context Protocol) s
 
 ## More Information
 
-- [Azure VoiceLive Documentation](https://learn.microsoft.com/azure/ai-services/voicelive/)
+- [Azure VoiceLive Documentation](https://learn.microsoft.com/azure/ai-services/)
 - [Azure AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/what-is-ai-studio)
 - [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
 - [Azure SDK for .NET](https://github.com/Azure/azure-sdk-for-net)
