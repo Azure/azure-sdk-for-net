@@ -110,25 +110,25 @@ namespace Azure.Storage.Files.Shares.Models
             if (Optional.IsDefined(CreationTime))
             {
                 writer.WriteStartElement("CreationTime");
-                writer.WriteStringValue(CreationTime.Value, "R");
+                writer.WriteStringValue(CreationTime.Value, "O");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(LastAccessTime))
             {
                 writer.WriteStartElement("LastAccessTime");
-                writer.WriteStringValue(LastAccessTime.Value, "R");
+                writer.WriteStringValue(LastAccessTime.Value, "O");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(LastWriteTime))
             {
                 writer.WriteStartElement("LastWriteTime");
-                writer.WriteStringValue(LastWriteTime.Value, "R");
+                writer.WriteStringValue(LastWriteTime.Value, "O");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(ChangeTime))
             {
                 writer.WriteStartElement("ChangeTime");
-                writer.WriteStringValue(ChangeTime.Value, "R");
+                writer.WriteStringValue(ChangeTime.Value, "O");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(LastModified))
@@ -172,22 +172,22 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "CreationTime")
                 {
-                    creationTime = child.GetDateTimeOffset("R");
+                    creationTime = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "LastAccessTime")
                 {
-                    lastAccessTime = child.GetDateTimeOffset("R");
+                    lastAccessTime = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "LastWriteTime")
                 {
-                    lastWriteTime = child.GetDateTimeOffset("R");
+                    lastWriteTime = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "ChangeTime")
                 {
-                    changeTime = child.GetDateTimeOffset("R");
+                    changeTime = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "Last-Modified")

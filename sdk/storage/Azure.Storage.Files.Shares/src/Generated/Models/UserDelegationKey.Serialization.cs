@@ -125,10 +125,10 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteValue(SignedTenantId);
             writer.WriteEndElement();
             writer.WriteStartElement("SignedStart");
-            writer.WriteStringValue(SignedStartsOn, "R");
+            writer.WriteStringValue(SignedStartsOn, "O");
             writer.WriteEndElement();
             writer.WriteStartElement("SignedExpiry");
-            writer.WriteStringValue(SignedExpiresOn, "R");
+            writer.WriteStringValue(SignedExpiresOn, "O");
             writer.WriteEndElement();
             writer.WriteStartElement("SignedService");
             writer.WriteValue(SignedService);
@@ -180,12 +180,12 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "SignedStart")
                 {
-                    signedStartsOn = child.GetDateTimeOffset("R");
+                    signedStartsOn = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "SignedExpiry")
                 {
-                    signedExpiresOn = child.GetDateTimeOffset("R");
+                    signedExpiresOn = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "SignedService")
