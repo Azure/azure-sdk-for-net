@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> This is the gallery image definition identifier. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new GalleryImageIdentifier Identifier => ImageIdentifier;
+
         // Customization: restored as IReadOnlyList<GalleryImageFeature> to preserve the previously-shipped
         // API surface. The new spec emits this as a writable IList, which would be a binary-breaking change
         // for existing consumers.

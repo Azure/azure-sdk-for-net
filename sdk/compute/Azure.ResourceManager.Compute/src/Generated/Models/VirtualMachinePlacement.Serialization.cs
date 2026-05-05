@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(VirtualMachinePlacement)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ZonePlacementPolicy))
+            if (Optional.IsDefined(ZonePlacementPolicyType))
             {
                 writer.WritePropertyName("zonePlacementPolicy"u8);
-                writer.WriteStringValue(ZonePlacementPolicy.Value.ToString());
+                writer.WriteStringValue(ZonePlacementPolicyType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(IncludeZones))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ZonePlacementPolicyType? zonePlacementPolicy = default;
+            ZonePlacementPolicyType? zonePlacementPolicyType = default;
             IList<string> includeZones = default;
             IList<string> excludeZones = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    zonePlacementPolicy = new ZonePlacementPolicyType(prop.Value.GetString());
+                    zonePlacementPolicyType = new ZonePlacementPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("includeZones"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachinePlacement(zonePlacementPolicy, includeZones ?? new ChangeTrackingList<string>(), excludeZones ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new VirtualMachinePlacement(zonePlacementPolicyType, includeZones ?? new ChangeTrackingList<string>(), excludeZones ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
