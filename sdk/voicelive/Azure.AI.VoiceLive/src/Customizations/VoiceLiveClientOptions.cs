@@ -54,6 +54,5 @@ namespace Azure.AI.VoiceLive
         /// Additional headers to include on the initial connection.
         /// </summary>
         public IDictionary<string, string> Headers { get; }
-
     }
 }
