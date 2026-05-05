@@ -316,7 +316,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         /// allows reading events past the change feed's last consumable watermark.
         /// </summary>
         [Test]
-        [Ignore(Reason = "Requires unfinalized segments in the change feed, which cannot be reproduced deterministically in playback.")]
+        [Ignore("Requires unfinalized segments in the change feed, which cannot be reproduced deterministically in playback.")]
         public async Task GetChanges_IncludeUnfinalizedEvents_ReturnsEventsPastLastConsumable()
         {
             // Arrange - provision a fresh change-feed-enabled share and seed it with events.
