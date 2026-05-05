@@ -50,7 +50,7 @@ steps:
       parameters:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
-  - ${{ if eq(variables['Build.Reason'], 'Manual') }}:
+  - ${{ if in(variables['Build.Reason'], 'PullRequest', 'Manual') }}:
     # Run CODEOWNERS verification before artifacts are produced and uploaded to
     # prevent artifact collisions.
     - template: /eng/common/pipelines/templates/steps/verify-codeowners.yml
