@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("provisionVMAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpdates))
+            if (Optional.IsDefined(IsAutomaticUpdatesEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpdates"u8);
-                writer.WriteBooleanValue(EnableAutomaticUpdates.Value);
+                writer.WriteBooleanValue(IsAutomaticUpdatesEnabled.Value);
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool? provisionVmAgent = default;
-            bool? enableAutomaticUpdates = default;
+            bool? isAutomaticUpdatesEnabled = default;
             string timeZone = default;
             IList<AdditionalUnattendContent> additionalUnattendContent = default;
             PatchSettings patchSettings = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    enableAutomaticUpdates = prop.Value.GetBoolean();
+                    isAutomaticUpdatesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("timeZone"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new WindowsConfiguration(
                 provisionVmAgent,
-                enableAutomaticUpdates,
+                isAutomaticUpdatesEnabled,
                 timeZone,
                 additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(),
                 patchSettings,

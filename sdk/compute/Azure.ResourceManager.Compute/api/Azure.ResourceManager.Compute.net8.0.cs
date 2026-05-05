@@ -629,6 +629,7 @@ namespace Azure.ResourceManager.Compute
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public bool? ExcludeFromLatest { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public bool? IsExcludedFromLatest { get { throw null; } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SharedGalleryImageVersionStorageProfile StorageProfile { get { throw null; } }
         protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1607,6 +1608,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
+        public bool? Restore { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionSafetyProfile SafetyProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionUefiSettings SecurityUefiSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
@@ -2313,6 +2315,7 @@ namespace Azure.ResourceManager.Compute
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public bool? ExcludeFromLatest { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public bool? IsExcludedFromLatest { get { throw null; } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SharedGalleryImageVersionStorageProfile StorageProfile { get { throw null; } }
         protected override Azure.ResourceManager.Compute.Models.PirResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6056,6 +6059,7 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryArtifactPublishingProfileBase() { }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
         public bool? ExcludeFromLatest { get { throw null; } set { } }
+        public bool? IsExcludedFromLatest { get { throw null; } set { } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public int? ReplicaCount { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryReplicationMode? ReplicationMode { get { throw null; } set { } }
@@ -6309,10 +6313,10 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GalleryImageVersionPatch : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GalleryImageVersionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GalleryImageVersionPatch>
     {
         public GalleryImageVersionPatch() { }
-        public bool? IsRestoreEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
+        public bool? Restore { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionSafetyProfile SafetyProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionUefiSettings SecurityUefiSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
@@ -7436,6 +7440,8 @@ namespace Azure.ResourceManager.Compute.Models
         public LinuxConfiguration() { }
         public bool? DisablePasswordAuthentication { get { throw null; } set { } }
         public bool? EnableVmAgentPlatformUpdates { get { throw null; } set { } }
+        public bool? IsPasswordAuthenticationDisabled { get { throw null; } set { } }
+        public bool? IsVmAgentPlatformUpdatesEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.LinuxPatchSettings PatchSettings { get { throw null; } set { } }
         public bool? ProvisionVmAgent { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SshPublicKeyConfiguration> SshPublicKeys { get { throw null; } }
@@ -8397,8 +8403,8 @@ namespace Azure.ResourceManager.Compute.Models
         public ResiliencyPolicy() { }
         public Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy AutomaticZoneRebalancingPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperationRecoverySettings OperationRecoverySettings { get { throw null; } set { } }
-        public bool? ResilientVMCreationPolicyEnabled { get { throw null; } set { } }
-        public bool? ResilientVMDeletionPolicyEnabled { get { throw null; } set { } }
+        public bool? ResilientVmCreationPolicyEnabled { get { throw null; } set { } }
+        public bool? ResilientVmDeletionPolicyEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy ZoneAllocationPolicy { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.ResiliencyPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -12113,6 +12119,7 @@ namespace Azure.ResourceManager.Compute.Models
         public WindowsConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.AdditionalUnattendContent> AdditionalUnattendContent { get { throw null; } }
         public bool? EnableAutomaticUpdates { get { throw null; } set { } }
+        public bool? IsAutomaticUpdatesEnabled { get { throw null; } set { } }
         public bool? IsVmAgentPlatformUpdatesEnabled { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.PatchSettings PatchSettings { get { throw null; } set { } }
         public bool? ProvisionVmAgent { get { throw null; } set { } }

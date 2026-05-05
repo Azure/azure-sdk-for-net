@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile, options);
             }
-            if (Optional.IsDefined(IsRestoreEnabled))
+            if (Optional.IsDefined(Restore))
             {
                 writer.WritePropertyName("restore"u8);
-                writer.WriteBooleanValue(IsRestoreEnabled.Value);
+                writer.WriteBooleanValue(Restore.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ValidationsProfile))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
             GalleryImageVersionSafetyProfile safetyProfile = default;
             ReplicationStatus replicationStatus = default;
             ImageVersionSecurityProfile securityProfile = default;
-            bool? isRestoreEnabled = default;
+            bool? restore = default;
             GalleryImageValidationsProfile validationsProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    isRestoreEnabled = prop.Value.GetBoolean();
+                    restore = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("validationsProfile"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute.Models
                 safetyProfile,
                 replicationStatus,
                 securityProfile,
-                isRestoreEnabled,
+                restore,
                 validationsProfile,
                 additionalBinaryDataProperties);
         }

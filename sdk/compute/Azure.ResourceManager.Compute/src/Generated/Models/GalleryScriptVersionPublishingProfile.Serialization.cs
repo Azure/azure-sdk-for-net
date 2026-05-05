@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             IList<TargetRegion> targetRegions = default;
             int? replicaCount = default;
-            bool? excludeFromLatest = default;
+            bool? isExcludedFromLatest = default;
             DateTimeOffset? publishedOn = default;
             DateTimeOffset? endOfLifeOn = default;
             ImageStorageAccountType? storageAccountType = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    excludeFromLatest = prop.Value.GetBoolean();
+                    isExcludedFromLatest = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publishedDate"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryScriptVersionPublishingProfile(
                 targetRegions ?? new ChangeTrackingList<TargetRegion>(),
                 replicaCount,
-                excludeFromLatest,
+                isExcludedFromLatest,
                 publishedOn,
                 endOfLifeOn,
                 storageAccountType,

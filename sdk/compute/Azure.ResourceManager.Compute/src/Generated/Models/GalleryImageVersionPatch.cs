@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Indicates if this is a soft-delete resource restoration request. </summary>
-        public bool? IsRestoreEnabled
+        public bool? Restore
         {
             get
             {
-                return Properties is null ? default : Properties.IsRestoreEnabled;
+                return Properties is null ? default : Properties.Restore;
             }
             set
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryImageVersionProperties();
                 }
-                Properties.IsRestoreEnabled = value;
+                Properties.Restore = value;
             }
         }
 

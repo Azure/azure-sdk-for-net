@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (Optional.IsDefined(ExcludeFromLatest))
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
-                writer.WriteBooleanValue(ExcludeFromLatest.Value);
+                writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(PublishedOn))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             IList<TargetRegion> targetRegions = default;
             int? replicaCount = default;
-            bool? excludeFromLatest = default;
+            bool? isExcludedFromLatest = default;
             DateTimeOffset? publishedOn = default;
             DateTimeOffset? endOfLifeOn = default;
             ImageStorageAccountType? storageAccountType = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    excludeFromLatest = prop.Value.GetBoolean();
+                    isExcludedFromLatest = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publishedDate"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryArtifactPublishingProfileBase(
                 targetRegions ?? new ChangeTrackingList<TargetRegion>(),
                 replicaCount,
-                excludeFromLatest,
+                isExcludedFromLatest,
                 publishedOn,
                 endOfLifeOn,
                 storageAccountType,

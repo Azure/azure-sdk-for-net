@@ -229,20 +229,20 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <param name="provisionVmAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
-        /// <param name="enableAutomaticUpdates"> Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning. </param>
+        /// <param name="isAutomaticUpdatesEnabled"> Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning. </param>
         /// <param name="timeZone"> Specifies the time zone of the virtual machine. e.g. "Pacific Standard Time". Possible values can be [TimeZoneInfo.Id](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id) value from time zones returned by [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.getsystemtimezones). </param>
         /// <param name="additionalUnattendContent"> Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
         /// <param name="winRMListeners"> The list of Windows Remote Management listeners. </param>
         /// <param name="isVmAgentPlatformUpdatesEnabled"> Indicates whether VMAgent Platform Updates are enabled for the Windows Virtual Machine. </param>
         /// <returns> A new <see cref="Models.WindowsConfiguration"/> instance for mocking. </returns>
-        public static WindowsConfiguration WindowsConfiguration(bool? provisionVmAgent = default, bool? enableAutomaticUpdates = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, PatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default, bool? isVmAgentPlatformUpdatesEnabled = default)
+        public static WindowsConfiguration WindowsConfiguration(bool? provisionVmAgent = default, bool? isAutomaticUpdatesEnabled = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, PatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default, bool? isVmAgentPlatformUpdatesEnabled = default)
         {
             additionalUnattendContent ??= new ChangeTrackingList<AdditionalUnattendContent>();
 
             return new WindowsConfiguration(
                 provisionVmAgent,
-                enableAutomaticUpdates,
+                isAutomaticUpdatesEnabled,
                 timeZone,
                 additionalUnattendContent.ToList(),
                 patchSettings,
@@ -3221,10 +3221,49 @@ namespace Azure.ResourceManager.Compute.Models
                     null));
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="publishingProfile"> The publishing profile of a gallery image Version. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
+        /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
+        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="restore"> Indicates if this is a soft-delete resource restoration request. </param>
+        /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
+        /// <param name="securityUefiSettings"> Contains UEFI settings for the image version. </param>
+        /// <returns> A new <see cref="Compute.GalleryImageVersionData"/> instance for mocking. </returns>
+        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? restore = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new GalleryImageVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && restore is null && validationsProfile is null && securityUefiSettings is null ? default : new GalleryImageVersionProperties(
+                    publishingProfile,
+                    provisioningState,
+                    storageProfile,
+                    safetyProfile,
+                    replicationStatus,
+                    new ImageVersionSecurityProfile(securityUefiSettings, null),
+                    restore,
+                    validationsProfile,
+                    null));
+        }
+
         /// <summary> The publishing profile of a gallery image Version. </summary>
         /// <param name="targetRegions"> The target regions where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </param>
-        /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="publishedOn"> The timestamp for when the gallery image version is published. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. Cannot be specified along with storageAccountStrategy. This property is not updatable. </param>
@@ -3232,7 +3271,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="storageAccountStrategy"> Specifies the strategy to be used when selecting the storage account type. Cannot be specified along with storageAccountType, but can be overridden per region by specifying targetRegions[].storageAccountType. This property is not updatable. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionPublishingProfile"/> instance for mocking. </returns>
-        public static GalleryImageVersionPublishingProfile GalleryImageVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions = default, int? replicaCount = default, bool? excludeFromLatest = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, ImageStorageAccountType? storageAccountType = default, GalleryReplicationMode? replicationMode = default, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = default, StorageAccountStrategy? storageAccountStrategy = default)
+        public static GalleryImageVersionPublishingProfile GalleryImageVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions = default, int? replicaCount = default, bool? isExcludedFromLatest = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, ImageStorageAccountType? storageAccountType = default, GalleryReplicationMode? replicationMode = default, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = default, StorageAccountStrategy? storageAccountStrategy = default)
         {
             targetRegions ??= new ChangeTrackingList<TargetRegion>();
             targetExtendedLocations ??= new ChangeTrackingList<GalleryTargetExtendedLocation>();
@@ -3240,7 +3279,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryImageVersionPublishingProfile(
                 targetRegions.ToList(),
                 replicaCount,
-                excludeFromLatest,
+                isExcludedFromLatest,
                 publishedOn,
                 endOfLifeOn,
                 storageAccountType,
@@ -3253,7 +3292,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Describes the basic gallery artifact publishing profile. </summary>
         /// <param name="targetRegions"> The target regions where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </param>
-        /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="publishedOn"> The timestamp for when the gallery image version is published. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. Cannot be specified along with storageAccountStrategy. This property is not updatable. </param>
@@ -3261,7 +3300,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="storageAccountStrategy"> Specifies the strategy to be used when selecting the storage account type. Cannot be specified along with storageAccountType, but can be overridden per region by specifying targetRegions[].storageAccountType. This property is not updatable. </param>
         /// <returns> A new <see cref="Models.GalleryArtifactPublishingProfileBase"/> instance for mocking. </returns>
-        public static GalleryArtifactPublishingProfileBase GalleryArtifactPublishingProfileBase(IEnumerable<TargetRegion> targetRegions = default, int? replicaCount = default, bool? excludeFromLatest = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, ImageStorageAccountType? storageAccountType = default, GalleryReplicationMode? replicationMode = default, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = default, StorageAccountStrategy? storageAccountStrategy = default)
+        public static GalleryArtifactPublishingProfileBase GalleryArtifactPublishingProfileBase(IEnumerable<TargetRegion> targetRegions = default, int? replicaCount = default, bool? isExcludedFromLatest = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, ImageStorageAccountType? storageAccountType = default, GalleryReplicationMode? replicationMode = default, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = default, StorageAccountStrategy? storageAccountStrategy = default)
         {
             targetRegions ??= new ChangeTrackingList<TargetRegion>();
             targetExtendedLocations ??= new ChangeTrackingList<GalleryTargetExtendedLocation>();
@@ -3269,7 +3308,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryArtifactPublishingProfileBase(
                 targetRegions.ToList(),
                 replicaCount,
-                excludeFromLatest,
+                isExcludedFromLatest,
                 publishedOn,
                 endOfLifeOn,
                 storageAccountType,
@@ -3441,11 +3480,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
+        /// <param name="restore"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="securityUefiSettings"> Contains UEFI settings for the image version. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionPatch"/> instance for mocking. </returns>
-        public static GalleryImageVersionPatch GalleryImageVersionPatch(string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? isRestoreEnabled = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default)
+        public static GalleryImageVersionPatch GalleryImageVersionPatch(string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? restore = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3455,14 +3494,14 @@ namespace Azure.ResourceManager.Compute.Models
                 @type,
                 tags,
                 additionalBinaryDataProperties: null,
-                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && isRestoreEnabled is null && validationsProfile is null && securityUefiSettings is null ? default : new GalleryImageVersionProperties(
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && restore is null && validationsProfile is null && securityUefiSettings is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
                     new ImageVersionSecurityProfile(securityUefiSettings, null),
-                    isRestoreEnabled,
+                    restore,
                     validationsProfile,
                     null));
         }
@@ -3553,7 +3592,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The publishing profile of a gallery image version. </summary>
         /// <param name="targetRegions"> The target regions where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </param>
-        /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="publishedOn"> The timestamp for when the gallery image version is published. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. Cannot be specified along with storageAccountStrategy. This property is not updatable. </param>
@@ -3567,7 +3606,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableHealthCheck"> Optional. Whether or not this application reports health. </param>
         /// <param name="customActions"> A list of custom actions that can be performed with this Gallery Application Version. </param>
         /// <returns> A new <see cref="Models.GalleryApplicationVersionPublishingProfile"/> instance for mocking. </returns>
-        public static GalleryApplicationVersionPublishingProfile GalleryApplicationVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions = default, int? replicaCount = default, bool? excludeFromLatest = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, ImageStorageAccountType? storageAccountType = default, GalleryReplicationMode? replicationMode = default, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = default, StorageAccountStrategy? storageAccountStrategy = default, UserArtifactSource source = default, UserArtifactManagement manageActions = default, UserArtifactSettings settings = default, IDictionary<string, string> advancedSettings = default, bool? enableHealthCheck = default, IEnumerable<GalleryApplicationCustomAction> customActions = default)
+        public static GalleryApplicationVersionPublishingProfile GalleryApplicationVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions = default, int? replicaCount = default, bool? isExcludedFromLatest = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, ImageStorageAccountType? storageAccountType = default, GalleryReplicationMode? replicationMode = default, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = default, StorageAccountStrategy? storageAccountStrategy = default, UserArtifactSource source = default, UserArtifactManagement manageActions = default, UserArtifactSettings settings = default, IDictionary<string, string> advancedSettings = default, bool? enableHealthCheck = default, IEnumerable<GalleryApplicationCustomAction> customActions = default)
         {
             targetRegions ??= new ChangeTrackingList<TargetRegion>();
             targetExtendedLocations ??= new ChangeTrackingList<GalleryTargetExtendedLocation>();
@@ -3577,7 +3616,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryApplicationVersionPublishingProfile(
                 targetRegions.ToList(),
                 replicaCount,
-                excludeFromLatest,
+                isExcludedFromLatest,
                 publishedOn,
                 endOfLifeOn,
                 storageAccountType,
@@ -3731,7 +3770,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The publishing profile of a gallery image version. </summary>
         /// <param name="targetRegions"> The target regions where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </param>
-        /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="publishedOn"> The timestamp for when the gallery image version is published. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. Cannot be specified along with storageAccountStrategy. This property is not updatable. </param>
@@ -3740,7 +3779,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageAccountStrategy"> Specifies the strategy to be used when selecting the storage account type. Cannot be specified along with storageAccountType, but can be overridden per region by specifying targetRegions[].storageAccountType. This property is not updatable. </param>
         /// <param name="source"> The source script from which the Script Version is going to be created. </param>
         /// <returns> A new <see cref="Models.GalleryScriptVersionPublishingProfile"/> instance for mocking. </returns>
-        public static GalleryScriptVersionPublishingProfile GalleryScriptVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions = default, int? replicaCount = default, bool? excludeFromLatest = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, ImageStorageAccountType? storageAccountType = default, GalleryReplicationMode? replicationMode = default, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = default, StorageAccountStrategy? storageAccountStrategy = default, ScriptSource source = default)
+        public static GalleryScriptVersionPublishingProfile GalleryScriptVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions = default, int? replicaCount = default, bool? isExcludedFromLatest = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, ImageStorageAccountType? storageAccountType = default, GalleryReplicationMode? replicationMode = default, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = default, StorageAccountStrategy? storageAccountStrategy = default, ScriptSource source = default)
         {
             targetRegions ??= new ChangeTrackingList<TargetRegion>();
             targetExtendedLocations ??= new ChangeTrackingList<GalleryTargetExtendedLocation>();
@@ -3748,7 +3787,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryScriptVersionPublishingProfile(
                 targetRegions.ToList(),
                 replicaCount,
-                excludeFromLatest,
+                isExcludedFromLatest,
                 publishedOn,
                 endOfLifeOn,
                 storageAccountType,
@@ -4074,16 +4113,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageVersionData"/> instance for mocking. </returns>
-        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, AzureLocation? location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? excludeFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IDictionary<string, string> artifactTags = default)
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, AzureLocation? location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IDictionary<string, string> artifactTags = default)
         {
-            return new SharedGalleryImageVersionData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null), publishedOn is null && endOfLifeOn is null && excludeFromLatest is null && storageProfile is null && artifactTags is null ? default : new SharedGalleryImageVersionProperties(
+            return new SharedGalleryImageVersionData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null), publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && artifactTags is null ? default : new SharedGalleryImageVersionProperties(
                 publishedOn,
                 endOfLifeOn,
-                excludeFromLatest,
+                isExcludedFromLatest,
                 storageProfile,
                 artifactTags,
                 null));
@@ -4238,12 +4277,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, AzureLocation? location = default, string @type = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? excludeFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default)
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, AzureLocation? location = default, string @type = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default)
         {
             return new CommunityGalleryImageVersionData(
                 name,
@@ -4251,10 +4290,10 @@ namespace Azure.ResourceManager.Compute.Models
                 @type,
                 uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null),
                 additionalBinaryDataProperties: null,
-                publishedOn is null && endOfLifeOn is null && excludeFromLatest is null && storageProfile is null && disclaimer is null && artifactTags is null ? default : new CommunityGalleryImageVersionProperties(
+                publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && disclaimer is null && artifactTags is null ? default : new CommunityGalleryImageVersionProperties(
                     publishedOn,
                     endOfLifeOn,
-                    excludeFromLatest,
+                    isExcludedFromLatest,
                     storageProfile,
                     disclaimer,
                     artifactTags,
@@ -6108,24 +6147,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new SharedGalleryImageData(name, location, additionalBinaryDataProperties: null, identifier, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryImageVersionData"/>. </summary>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
-        /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
-        /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
-        /// <returns> A new <see cref="Compute.SharedGalleryImageVersionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, IReadOnlyDictionary<string, string> artifactTags)
-        {
-            artifactTags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SharedGalleryImageVersionData(name, location, additionalBinaryDataProperties: null, default, default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.GalleryPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -6332,7 +6353,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <returns> A new <see cref="Compute.GalleryImageVersionData"/> instance for mocking. </returns>
-        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, GalleryImageVersionUefiSettings securityUefiSettings = default, bool? isRestoreEnabled = default, GalleryImageValidationsProfile validationsProfile = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, GalleryImageVersionUefiSettings securityUefiSettings, bool? isRestoreEnabled, GalleryImageValidationsProfile validationsProfile)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -6527,28 +6549,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GalleryApplicationVersionPublishingProfile GalleryApplicationVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions, int? replicaCount, bool? isExcludedFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations, UserArtifactSource source, UserArtifactManagement manageActions, UserArtifactSettings settings, IDictionary<string, string> advancedSettings, bool? enableHealthCheck, IEnumerable<GalleryApplicationCustomAction> customActions)
         {
-            targetRegions ??= new ChangeTrackingList<TargetRegion>();
-            targetExtendedLocations ??= new ChangeTrackingList<GalleryTargetExtendedLocation>();
-            advancedSettings ??= new ChangeTrackingDictionary<string, string>();
-            customActions ??= new ChangeTrackingList<GalleryApplicationCustomAction>();
-
-            return new GalleryApplicationVersionPublishingProfile(
-                targetRegions.ToList(),
-                replicaCount,
-                default,
-                publishedOn,
-                endOfLifeOn,
-                storageAccountType,
-                replicationMode,
-                targetExtendedLocations.ToList(),
-                default,
-                additionalBinaryDataProperties: null,
-                source,
-                manageActions,
-                settings,
-                advancedSettings,
-                enableHealthCheck,
-                customActions.ToList());
+            return GalleryApplicationVersionPublishingProfile(targetRegions, replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations, storageAccountStrategy: default, source, manageActions, settings, advancedSettings, enableHealthCheck, customActions);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryArtifactPublishingProfileBase"/>. </summary>
@@ -6564,20 +6565,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GalleryArtifactPublishingProfileBase GalleryArtifactPublishingProfileBase(IEnumerable<TargetRegion> targetRegions, int? replicaCount, bool? isExcludedFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations)
         {
-            targetRegions ??= new ChangeTrackingList<TargetRegion>();
-            targetExtendedLocations ??= new ChangeTrackingList<GalleryTargetExtendedLocation>();
-
-            return new GalleryArtifactPublishingProfileBase(
-                targetRegions.ToList(),
-                replicaCount,
-                default,
-                publishedOn,
-                endOfLifeOn,
-                storageAccountType,
-                replicationMode,
-                targetExtendedLocations.ToList(),
-                default,
-                additionalBinaryDataProperties: null);
+            return GalleryArtifactPublishingProfileBase(targetRegions, replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations, storageAccountStrategy: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryImageVersionPublishingProfile"/>. </summary>
@@ -6593,20 +6581,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GalleryImageVersionPublishingProfile GalleryImageVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions, int? replicaCount, bool? isExcludedFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations)
         {
-            targetRegions ??= new ChangeTrackingList<TargetRegion>();
-            targetExtendedLocations ??= new ChangeTrackingList<GalleryTargetExtendedLocation>();
-
-            return new GalleryImageVersionPublishingProfile(
-                targetRegions.ToList(),
-                replicaCount,
-                default,
-                publishedOn,
-                endOfLifeOn,
-                storageAccountType,
-                replicationMode,
-                targetExtendedLocations.ToList(),
-                default,
-                additionalBinaryDataProperties: null);
+            return GalleryImageVersionPublishingProfile(targetRegions, replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations, storageAccountStrategy: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.RestorePointGroupData"/>. </summary>
@@ -7149,7 +7124,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus)
         {
-            return GalleryImageVersionData(id, name, resourceType, systemData, tags, location, publishingProfile, provisioningState, storageProfile, safetyProfile, replicationStatus, isRestoreEnabled: default, validationsProfile: default, securityUefiSettings: default);
+            return GalleryImageVersionData(id, name, resourceType, systemData, tags, location, publishingProfile, provisioningState, storageProfile, safetyProfile, replicationStatus, restore: default, validationsProfile: default, securityUefiSettings: default);
         }
 
         /// <param name="name"></param>
@@ -7195,7 +7170,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
         {
-            return new SharedGalleryImageVersionData(name, location, additionalBinaryDataProperties: null, default, default);
+            return SharedGalleryImageVersionData(name, location, uniqueId, publishedOn, endOfLifeOn, isExcludedFromLatest, storageProfile, artifactTags: default);
         }
 
         /// <param name="name"></param>
@@ -7397,7 +7372,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, GalleryImageVersionUefiSettings securityUefiSettings)
         {
-            return GalleryImageVersionData(id, name, resourceType, systemData, tags, location, publishingProfile, provisioningState, storageProfile, safetyProfile, replicationStatus, isRestoreEnabled: default, validationsProfile: default, securityUefiSettings);
+            return GalleryImageVersionData(id, name, resourceType, systemData, tags, location, publishingProfile, provisioningState, storageProfile, safetyProfile, replicationStatus, restore: default, validationsProfile: default, securityUefiSettings);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryImageVersionSafetyProfile"/>. </summary>

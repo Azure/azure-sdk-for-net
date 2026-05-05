@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ResilientVMCreationPolicy))
+            if (Optional.IsDefined(ResilientVmCreationPolicy))
             {
                 writer.WritePropertyName("resilientVMCreationPolicy"u8);
-                writer.WriteObjectValue(ResilientVMCreationPolicy, options);
+                writer.WriteObjectValue(ResilientVmCreationPolicy, options);
             }
-            if (Optional.IsDefined(ResilientVMDeletionPolicy))
+            if (Optional.IsDefined(ResilientVmDeletionPolicy))
             {
                 writer.WritePropertyName("resilientVMDeletionPolicy"u8);
-                writer.WriteObjectValue(ResilientVMDeletionPolicy, options);
+                writer.WriteObjectValue(ResilientVmDeletionPolicy, options);
             }
             if (Optional.IsDefined(AutomaticZoneRebalancingPolicy))
             {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ResilientVMCreationPolicy resilientVMCreationPolicy = default;
-            ResilientVMDeletionPolicy resilientVMDeletionPolicy = default;
+            ResilientVMCreationPolicy resilientVmCreationPolicy = default;
+            ResilientVMDeletionPolicy resilientVmDeletionPolicy = default;
             AutomaticZoneRebalancingPolicy automaticZoneRebalancingPolicy = default;
             ZoneAllocationPolicy zoneAllocationPolicy = default;
             OperationRecoverySettings operationRecoverySettings = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    resilientVMCreationPolicy = ResilientVMCreationPolicy.DeserializeResilientVMCreationPolicy(prop.Value, options);
+                    resilientVmCreationPolicy = ResilientVMCreationPolicy.DeserializeResilientVMCreationPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resilientVMDeletionPolicy"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    resilientVMDeletionPolicy = ResilientVMDeletionPolicy.DeserializeResilientVMDeletionPolicy(prop.Value, options);
+                    resilientVmDeletionPolicy = ResilientVMDeletionPolicy.DeserializeResilientVMDeletionPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("automaticZoneRebalancingPolicy"u8))
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new ResiliencyPolicy(
-                resilientVMCreationPolicy,
-                resilientVMDeletionPolicy,
+                resilientVmCreationPolicy,
+                resilientVmDeletionPolicy,
                 automaticZoneRebalancingPolicy,
                 zoneAllocationPolicy,
                 operationRecoverySettings,

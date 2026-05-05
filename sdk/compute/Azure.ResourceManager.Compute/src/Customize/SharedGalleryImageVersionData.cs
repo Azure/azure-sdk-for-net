@@ -21,10 +21,14 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier Id { get; internal set; }
 
+        // Backward-compat shim (get-only). v1.14.0 baseline exposed both `ExcludeFromLatest`
+        // and `IsExcludedFromLatest`; the Is* form is the new canonical name.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? ExcludeFromLatest => IsExcludedFromLatest;
+
         // Customization: restored as IReadOnlyDictionary<string, string> to preserve the previously-shipped
         // API surface. The new spec emits this as a writable IDictionary, which would be a binary-breaking
         // change for existing consumers.
-        /// <summary> The artifact tags of a shared gallery resource. </summary>
         public IReadOnlyDictionary<string, string> ArtifactTags
         {
             get

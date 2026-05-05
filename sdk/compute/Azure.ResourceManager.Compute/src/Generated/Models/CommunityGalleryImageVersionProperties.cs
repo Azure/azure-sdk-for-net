@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionProperties"/>. </summary>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityGalleryImageVersionProperties(DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? excludeFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, string disclaimer, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommunityGalleryImageVersionProperties(DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, string disclaimer, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublishedOn = publishedOn;
             EndOfLifeOn = endOfLifeOn;
-            ExcludeFromLatest = excludeFromLatest;
+            IsExcludedFromLatest = isExcludedFromLatest;
             StorageProfile = storageProfile;
             Disclaimer = disclaimer;
             ArtifactTags = artifactTags;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? EndOfLifeOn { get; }
 
         /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </summary>
-        public bool? ExcludeFromLatest { get; }
+        public bool? IsExcludedFromLatest { get; }
 
         /// <summary> Describes the storage profile of the image version. </summary>
         public SharedGalleryImageVersionStorageProfile StorageProfile { get; }

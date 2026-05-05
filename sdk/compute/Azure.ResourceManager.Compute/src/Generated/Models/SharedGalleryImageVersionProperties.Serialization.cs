@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (Optional.IsDefined(ExcludeFromLatest))
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
-                writer.WriteBooleanValue(ExcludeFromLatest.Value);
+                writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
             if (Optional.IsDefined(StorageProfile))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             DateTimeOffset? publishedOn = default;
             DateTimeOffset? endOfLifeOn = default;
-            bool? excludeFromLatest = default;
+            bool? isExcludedFromLatest = default;
             SharedGalleryImageVersionStorageProfile storageProfile = default;
             IDictionary<string, string> artifactTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    excludeFromLatest = prop.Value.GetBoolean();
+                    isExcludedFromLatest = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new SharedGalleryImageVersionProperties(
                 publishedOn,
                 endOfLifeOn,
-                excludeFromLatest,
+                isExcludedFromLatest,
                 storageProfile,
                 artifactTags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);

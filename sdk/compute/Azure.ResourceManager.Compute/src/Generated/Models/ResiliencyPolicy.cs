@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResiliencyPolicy"/>. </summary>
-        /// <param name="resilientVMCreationPolicy"> The configuration parameters used while performing resilient VM creation. </param>
-        /// <param name="resilientVMDeletionPolicy"> The configuration parameters used while performing resilient VM deletion. </param>
+        /// <param name="resilientVmCreationPolicy"> The configuration parameters used while performing resilient VM creation. </param>
+        /// <param name="resilientVmDeletionPolicy"> The configuration parameters used while performing resilient VM deletion. </param>
         /// <param name="automaticZoneRebalancingPolicy"> The configuration parameters used while performing automatic AZ balancing. </param>
         /// <param name="zoneAllocationPolicy"> The configuration parameters used while performing zone allocation. </param>
         /// <param name="operationRecoverySettings"> The configuration parameters used for operation recovery settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResiliencyPolicy(ResilientVMCreationPolicy resilientVMCreationPolicy, ResilientVMDeletionPolicy resilientVMDeletionPolicy, AutomaticZoneRebalancingPolicy automaticZoneRebalancingPolicy, ZoneAllocationPolicy zoneAllocationPolicy, OperationRecoverySettings operationRecoverySettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResiliencyPolicy(ResilientVMCreationPolicy resilientVmCreationPolicy, ResilientVMDeletionPolicy resilientVmDeletionPolicy, AutomaticZoneRebalancingPolicy automaticZoneRebalancingPolicy, ZoneAllocationPolicy zoneAllocationPolicy, OperationRecoverySettings operationRecoverySettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ResilientVMCreationPolicy = resilientVMCreationPolicy;
-            ResilientVMDeletionPolicy = resilientVMDeletionPolicy;
+            ResilientVmCreationPolicy = resilientVmCreationPolicy;
+            ResilientVmDeletionPolicy = resilientVmDeletionPolicy;
             AutomaticZoneRebalancingPolicy = automaticZoneRebalancingPolicy;
             ZoneAllocationPolicy = zoneAllocationPolicy;
             OperationRecoverySettings = operationRecoverySettings;
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The configuration parameters used while performing resilient VM creation. </summary>
-        internal ResilientVMCreationPolicy ResilientVMCreationPolicy { get; set; }
+        internal ResilientVMCreationPolicy ResilientVmCreationPolicy { get; set; }
 
         /// <summary> The configuration parameters used while performing resilient VM deletion. </summary>
-        internal ResilientVMDeletionPolicy ResilientVMDeletionPolicy { get; set; }
+        internal ResilientVMDeletionPolicy ResilientVmDeletionPolicy { get; set; }
 
         /// <summary> The configuration parameters used while performing automatic AZ balancing. </summary>
         public AutomaticZoneRebalancingPolicy AutomaticZoneRebalancingPolicy { get; set; }
@@ -54,36 +54,36 @@ namespace Azure.ResourceManager.Compute.Models
         public OperationRecoverySettings OperationRecoverySettings { get; set; }
 
         /// <summary> Specifies whether resilient VM creation should be enabled on the virtual machine scale set. The default value is false. </summary>
-        public bool? ResilientVMCreationPolicyEnabled
+        public bool? ResilientVmCreationPolicyEnabled
         {
             get
             {
-                return ResilientVMCreationPolicy is null ? default : ResilientVMCreationPolicy.Enabled;
+                return ResilientVmCreationPolicy is null ? default : ResilientVmCreationPolicy.Enabled;
             }
             set
             {
-                if (ResilientVMCreationPolicy is null)
+                if (ResilientVmCreationPolicy is null)
                 {
-                    ResilientVMCreationPolicy = new ResilientVMCreationPolicy();
+                    ResilientVmCreationPolicy = new ResilientVMCreationPolicy();
                 }
-                ResilientVMCreationPolicy.Enabled = value;
+                ResilientVmCreationPolicy.Enabled = value;
             }
         }
 
         /// <summary> Specifies whether resilient VM deletion should be enabled on the virtual machine scale set. The default value is false. </summary>
-        public bool? ResilientVMDeletionPolicyEnabled
+        public bool? ResilientVmDeletionPolicyEnabled
         {
             get
             {
-                return ResilientVMDeletionPolicy is null ? default : ResilientVMDeletionPolicy.Enabled;
+                return ResilientVmDeletionPolicy is null ? default : ResilientVmDeletionPolicy.Enabled;
             }
             set
             {
-                if (ResilientVMDeletionPolicy is null)
+                if (ResilientVmDeletionPolicy is null)
                 {
-                    ResilientVMDeletionPolicy = new ResilientVMDeletionPolicy();
+                    ResilientVmDeletionPolicy = new ResilientVMDeletionPolicy();
                 }
-                ResilientVMDeletionPolicy.Enabled = value;
+                ResilientVmDeletionPolicy.Enabled = value;
             }
         }
     }

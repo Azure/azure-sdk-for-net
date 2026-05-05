@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </summary>
-        public bool? ExcludeFromLatest
+        public bool? IsExcludedFromLatest
         {
             get
             {
-                return Properties is null ? default : Properties.ExcludeFromLatest;
+                return Properties is null ? default : Properties.IsExcludedFromLatest;
             }
         }
 
