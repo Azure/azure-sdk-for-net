@@ -70,5 +70,6 @@ steps:
       -UserReviewers "${{ parameters.GHReviewers }}"
       -TeamReviewers "${{ parameters.GHTeamReviewers }}"
       -Assignees "${{ parameters.GHAssignees }}"
+      -MaintainerCanModify $${{ eq(parameters.PROwner, parameters.RepoOwner) }}
       -CloseAfterOpenForTesting $${{ coalesce(parameters.CloseAfterOpenForTesting, 'false') }}
       -OpenAsDraft $${{ parameters.OpenAsDraft }}
