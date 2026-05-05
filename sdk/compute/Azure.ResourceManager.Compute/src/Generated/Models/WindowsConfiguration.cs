@@ -62,9 +62,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. </summary>
         internal WinRMConfiguration WinRM { get; set; }
 
-        /// <summary> Indicates whether VMAgent Platform Updates are enabled for the Windows Virtual Machine. </summary>
-        public bool? IsVmAgentPlatformUpdatesEnabled { get; }
-
         /// <summary> The list of Windows Remote Management listeners. </summary>
         public IList<WinRMListener> WinRMListeners
         {
