@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);SCME0004</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
