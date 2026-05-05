@@ -207,6 +207,12 @@
       ]
     },
     {
+      "filename": "**/samples/voicelive/customer-service-bot/CustomerServiceFunctions.cs",
+      "words": [
+        "cust"
+      ]
+    },
+    {
       "filename": "**/sdk/agricultureplatform/**/*.cs",
       "words": [
         "agri",
