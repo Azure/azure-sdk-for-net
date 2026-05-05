@@ -4,6 +4,8 @@
 
 ### Features Added
 - Replaced `BinaryData` with new `RequireApprovalOption` typed property on `VoiceLiveMcpServerDefinition.RequireApproval`. Customers can now set approval directly (`server.RequireApproval = MCPApprovalType.Never`) instead of using `BinaryData.FromObjectAsJson()`.
+- Added OpenTelemetry distributed tracing support. The SDK now emits spans via `System.Diagnostics.ActivitySource` named `"Azure.AI.VoiceLive"` — no extra instrumentation package required. Spans are emitted for connect, send, recv, and close operations with standard [GenAI semantic convention](https://opentelemetry.io/docs/specs/semconv/gen-ai/) attributes including token usage, first-token latency, turn count, and interruption count. Content recording (message payloads in span events) is opt-in via the `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` environment variable.
+- Added `VoiceLiveMeter` for OpenTelemetry metrics support, emitting `gen_ai.client.operation.duration` and `gen_ai.client.token.usage` metrics in compliance with GenAI semantic conventions.
 
 ### Breaking Changes
 - `VoiceLiveMcpServerDefinition.RequireApproval` property type changed from `BinaryData` to `RequireApprovalOption`.
