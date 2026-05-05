@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.Compute": "2026-04-06-preview"
+  }
+}
