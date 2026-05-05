@@ -4,8 +4,8 @@ This sample demonstrates how to compare two evaluation runs and generate compari
 
 1. Define helper methods for parsing protocol-level responses. The `ParseClientResult` method extracts string values from the JSON response.
 
-```C# Snippet:Sample_GetStringValues_EvaluationCompareInsight
-private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+```C# Snippet:Sample_ParseClientResult_EvaluationSampleBase
+protected static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -20,7 +20,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
             }
         }
     }
-    List<string> notFoundItems = [..expectedProperties.Where((key) => !results.ContainsKey(key))];
+    List<string> notFoundItems = [.. expectedProperties.Where((key) => !results.ContainsKey(key))];
     if (notFoundItems.Count > 0)
     {
         StringBuilder sbNotFound = new();
@@ -40,8 +40,8 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
 
 2. Define a helper to extract error messages from the response.
 
-```C# Snippet:Sample_GetError_EvaluationCompareInsight
-private static string GetErrorMessageOrEmpty(ClientResult result)
+```C# Snippet:Sample_GetErrorMessageOrEmpty_EvaluationSampleBase
+protected static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());

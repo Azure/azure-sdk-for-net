@@ -160,6 +160,11 @@ namespace Azure.Core.Tests.Identity
 
         private void AssertOptionsCloned(CloneTestOptions original, CloneTestOptions clone)
         {
+#pragma warning disable AZID0001 // AdditionalQueryParameters is experimental
+            CollectionAssert.AreEqual(original.AdditionalQueryParameters, clone.AdditionalQueryParameters);
+            Assert.AreNotSame(original.AdditionalQueryParameters, clone.AdditionalQueryParameters, "AdditionalQueryParameters should be deep-copied, not shared.");
+#pragma warning restore AZID0001
+
             if (original is ISupportsAdditionallyAllowedTenants && clone is ISupportsAdditionallyAllowedTenants)
             {
                 CollectionAssert.AreEqual(original.AdditionallyAllowedTenants, clone.AdditionallyAllowedTenants);
@@ -247,6 +252,13 @@ namespace Azure.Core.Tests.Identity
                     TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
                     AuthorityHost = AzureAuthorityHosts.AzureChina,
                     IsUnsafeSupportLoggingEnabled = true,
+#pragma warning disable AZID0001 // AdditionalQueryParameters is experimental
+                    AdditionalQueryParameters =
+                    {
+                        ["feature"] = ("agenticSession", false),
+                        ["session_id"] = (Guid.NewGuid().ToString(), true)
+                    },
+#pragma warning restore AZID0001
                     Retry =
                     {
                         MaxRetries = 15,
@@ -358,6 +370,84 @@ namespace Azure.Core.Tests.Identity
             {
                 Assert.AreEqual(stiSource.TenantId, stiDestination.TenantId);
             }
+
+#pragma warning disable AZID0001 // AdditionalQueryParameters is experimental
+            // AdditionalQueryParameters is on TokenCredentialOptions (base class), so it should always be cloned
+            var sourceOptions = (TokenCredentialOptions)source;
+            sourceOptions.AdditionalQueryParameters["test"] = ("value", true);
+
+            // Clone again after populating AdditionalQueryParameters to verify it's copied
+            var clonedDest = (TokenCredentialOptions)sourceType
+                .GetMethod("Clone", BindingFlags.Instance | BindingFlags.NonPublic)
+                .MakeGenericMethod(destinationType)
+                .Invoke(source, null);
+
+            Assert.AreEqual(1, clonedDest.AdditionalQueryParameters.Count);
+            Assert.AreEqual(("value", true), clonedDest.AdditionalQueryParameters["test"]);
+            Assert.AreNotSame(sourceOptions.AdditionalQueryParameters, clonedDest.AdditionalQueryParameters);
+#pragma warning restore AZID0001
         }
+
+#pragma warning disable AZID0001 // AdditionalQueryParameters is experimental
+        [Test]
+        public void AdditionalQueryParametersDefaultsToEmpty()
+        {
+            var options = new TokenCredentialOptions();
+            Assert.IsNotNull(options.AdditionalQueryParameters);
+            Assert.AreEqual(0, options.AdditionalQueryParameters.Count);
+        }
+
+        [Test]
+        public void AdditionalQueryParametersCanBePopulated()
+        {
+            var options = new TokenCredentialOptions();
+            options.AdditionalQueryParameters["feature"] = ("agenticSession", false);
+            options.AdditionalQueryParameters["session_id"] = ("abc-123", true);
+
+            Assert.AreEqual(2, options.AdditionalQueryParameters.Count);
+            Assert.AreEqual(("agenticSession", false), options.AdditionalQueryParameters["feature"]);
+            Assert.AreEqual(("abc-123", true), options.AdditionalQueryParameters["session_id"]);
+        }
+
+        [Test]
+        public void AdditionalQueryParametersCanBeCleared()
+        {
+            var options = new TokenCredentialOptions();
+            options.AdditionalQueryParameters["key"] = ("value", false);
+
+            options.AdditionalQueryParameters.Clear();
+            Assert.AreEqual(0, options.AdditionalQueryParameters.Count);
+        }
+
+        [Test]
+        public void CloneWithEmptyAdditionalQueryParametersReturnsEmpty()
+        {
+            var options = new TokenCredentialOptions();
+            var clone = options.Clone<TokenCredentialOptions>();
+
+            Assert.IsNotNull(clone.AdditionalQueryParameters);
+            Assert.AreEqual(0, clone.AdditionalQueryParameters.Count);
+        }
+
+        [Test]
+        public void CloneDeepCopiesAdditionalQueryParameters()
+        {
+            var options = new TokenCredentialOptions();
+            options.AdditionalQueryParameters["feature"] = ("agenticSession", false);
+            options.AdditionalQueryParameters["session_id"] = ("abc-123", true);
+
+            var clone = options.Clone<TokenCredentialOptions>();
+
+            // Verify values are equal
+            CollectionAssert.AreEqual(options.AdditionalQueryParameters, clone.AdditionalQueryParameters);
+
+            // Verify it's a different instance (deep copy)
+            Assert.AreNotSame(options.AdditionalQueryParameters, clone.AdditionalQueryParameters);
+
+            // Verify mutation of clone doesn't affect original
+            clone.AdditionalQueryParameters["new_param"] = ("new_value", false);
+            Assert.IsFalse(options.AdditionalQueryParameters.ContainsKey("new_param"));
+        }
+#pragma warning restore AZID0001
     }
 }

@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `AzureLocation.DenmarkEast` for the Denmark East Azure region.
+- Added experimental `AdditionalQueryParameters` property to `TokenCredentialOptions` to enable forwarding extra query string parameters to MSAL during authentication.
 
 ### Breaking Changes
 
