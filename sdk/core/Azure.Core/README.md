@@ -7,6 +7,7 @@ A more complete list of client libraries using Azure.Core can be found [here](ht
 
 Azure.Core allows client libraries to expose common functionality in a consistent fashion,
 so that once you learn how to use these APIs in one client library, you will know how to use them in other client libraries.
+It also serves as the direct package-change target for this PR CODEOWNERS rerun scenario.
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs]
 

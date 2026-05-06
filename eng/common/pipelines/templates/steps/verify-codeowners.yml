@@ -2,6 +2,9 @@ parameters:
   - name: ArtifactPath
     type: string
     default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: EnablePrValidation
+    type: boolean
+    default: false
   - name: DiffDirectory
     type: string
     default: $(Build.ArtifactStagingDirectory)/CodeownersPrDiff
@@ -18,11 +21,9 @@ parameters:
       - datamovement
 
 steps:
-  - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
-    parameters:
-      Condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+  - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.EnablePrValidation, true)) }}:
+    - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
 
-  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     - task: PowerShell@2
       displayName: Generate PR Diff for Codeowners
       condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
@@ -48,7 +49,11 @@ steps:
           -PrDiffFile '${{ parameters.DiffDirectory }}/diff.json'
         workingDirectory: $(Build.SourcesDirectory)
 
-  - ${{ else }}:
+  - ${{ elseif eq(variables['Build.Reason'], 'Manual') }}:
+    - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
+      parameters:
+        Condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+
     - task: PowerShell@2
       displayName: Verify Codeowners
       condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
