@@ -162,6 +162,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="kubernetesVersion"> The version of Kubernetes running on this machine. </param>
         /// <param name="machineClusterVersion"> The cluster version that has been applied to this machine during deployment or a version update. </param>
         /// <param name="machineRoles"> The list of roles that are assigned to the cluster node running on this machine. </param>
+        /// <param name="monitoringConfigurationStatus"> The monitoring configuration status of the bare metal machine. </param>
         /// <param name="oamIPv4Address"> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </param>
         /// <param name="oamIPv6Address"> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </param>
         /// <param name="osImage"> The image that is currently provisioned to the OS disk. </param>
@@ -714,6 +715,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
         /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
+        /// <param name="lastSuccessfulVersionUpdateOn"> The date and time of the end of the last successful version update for the cluster. </param>
+        /// <param name="managedCredentials"> The list of credentials that are managed for the cluster and can be rotated on-demand. </param>
         /// <param name="manualActionCount"> The count of Manual Action Taken (MAT) events that have not been validated. </param>
         /// <param name="supportExpireOn"> The support end date of the runtime version of the cluster. </param>
         /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
@@ -1052,7 +1055,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="targetClusterVersion"> The version to be applied to the cluster during update. </param>
         /// <returns> A new <see cref="Models.ClusterUpdateVersionContent"/> instance for mocking. </returns>
-        public static ClusterUpdateVersionContent ClusterUpdateVersionContent(string targetClusterVersion = default)
+        public static ClusterUpdateVersionContent ClusterUpdateVersionContent(ClusterUpdateVersionSafeguardMode? safeguardMode = default, string targetClusterVersion = default)
         {
             return new ClusterUpdateVersionContent(targetClusterVersion, default);
         }
@@ -1784,11 +1787,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
-        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
-        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
+        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="caCertificate"> The CA certificate information issued by the platform for connecting to TLS interfaces for the storage appliance. Callers add this certificate to their trusted CA store to allow secure communication with the storage appliance. </param>
         /// <param name="capacity"> The total capacity of the storage appliance. Measured in GiB. </param>
         /// <param name="capacityUsed"> The amount of storage consumed. Measured in GiB. </param>
@@ -1799,6 +1802,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="managementIPv4Address"> The endpoint for the management interface of the storage appliance. </param>
         /// <param name="manufacturer"> The manufacturer of the storage appliance. </param>
         /// <param name="model"> The model of the storage appliance. </param>
+        /// <param name="monitoringConfigurationStatus"> The monitoring configuration status of the storage appliance. </param>
         /// <param name="remoteVendorManagementFeature"> The indicator of whether the storage appliance supports remote vendor management. </param>
         /// <param name="remoteVendorManagementStatus"> The indicator of whether the remote vendor management feature is enabled or disabled, or unsupported if it is an unsupported feature. </param>
         /// <param name="secretRotationStatus"> The list of statuses that represent secret rotation activity. </param>
@@ -1806,7 +1810,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="provisioningState"> The provisioning state of the storage appliance. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rackId"/>, <paramref name="storageApplianceSkuId"/>, <paramref name="serialNumber"/> or <paramref name="administratorCredentials"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="administratorCredentials"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/> or <paramref name="storageApplianceSkuId"/> is null. </exception>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudStorageApplianceData"/> instance for mocking. </returns>
         public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier rackId = default, string storageApplianceSkuId = default, long rackSlot = default, string serialNumber = default, AdministrativeCredentials administratorCredentials = default, NetworkCloudCertificateInfo caCertificate = default, long? capacity = default, long? capacityUsed = default, ResourceIdentifier clusterId = default, StorageApplianceDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<StorageApplianceExpansionShelf> expansionShelves = default, IPAddress managementIPv4Address = default, string manufacturer = default, string model = default, RemoteVendorManagementFeature? remoteVendorManagementFeature = default, RemoteVendorManagementStatus? remoteVendorManagementStatus = default, IEnumerable<SecretRotationStatus> secretRotationStatus = default, string version = default, StorageApplianceProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
         {
@@ -1852,6 +1856,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static StorageApplianceExpansionShelf StorageApplianceExpansionShelf(string model = default, string version = default)
         {
             return new StorageApplianceExpansionShelf(model, version, default);
+        }
+
+        /// <summary> The monitoring configuration status of the storage appliance. </summary>
+        /// <param name="logLevel"> The log level for the monitoring configuration status of the storage appliance. </param>
+        /// <param name="metricsLevel"> The metrics level for the monitoring configuration status of the storage appliance. </param>
+        /// <returns> A new <see cref="Models.StorageApplianceMonitoringConfigurationStatus"/> instance for mocking. </returns>
+        public static StorageApplianceMonitoringConfigurationStatus StorageApplianceMonitoringConfigurationStatus(StorageApplianceMetricsConfigurationStatusLogLevel? logLevel = default, StorageApplianceMetricsConfigurationStatusMetricsLevel? metricsLevel = default)
+        {
+            return new StorageApplianceMonitoringConfigurationStatus(logLevel, metricsLevel, additionalBinaryDataProperties: null);
         }
 
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>

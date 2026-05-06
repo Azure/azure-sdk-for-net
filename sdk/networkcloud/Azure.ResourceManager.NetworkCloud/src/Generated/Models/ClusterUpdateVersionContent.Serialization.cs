@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 throw new FormatException($"The model {nameof(ClusterUpdateVersionContent)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(SafeguardMode))
+            {
+                writer.WritePropertyName("safeguardMode"u8);
+                writer.WriteStringValue(SafeguardMode.Value.ToString());
+            }
             writer.WritePropertyName("targetClusterVersion"u8);
             writer.WriteStringValue(TargetClusterVersion);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -134,10 +139,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
+            ClusterUpdateVersionSafeguardMode? safeguardMode = default;
             string targetClusterVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("safeguardMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    safeguardMode = new ClusterUpdateVersionSafeguardMode(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("targetClusterVersion"u8))
                 {
                     targetClusterVersion = prop.Value.GetString();
@@ -148,7 +163,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterUpdateVersionContent(targetClusterVersion, additionalBinaryDataProperties);
+            return new ClusterUpdateVersionContent(safeguardMode, targetClusterVersion, additionalBinaryDataProperties);
         }
     }
 }
