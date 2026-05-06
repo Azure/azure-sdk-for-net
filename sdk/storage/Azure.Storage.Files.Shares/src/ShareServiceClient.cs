@@ -343,6 +343,26 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.Pipeline,
                 _uri.AbsoluteUri,
                 _clientConfiguration.ClientOptions.Version.ToVersionString());
+        /// <summary>
+        /// Returns the shared key credential associated with this client so that derived
+        /// classes in other assemblies (e.g., Files Change Feed) can propagate
+        /// authentication without needing <c>InternalsVisibleTo</c>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static StorageSharedKeyCredential GetSharedKeyCredential(
+            ShareServiceClient client)
+            => client._clientConfiguration?.SharedKeyCredential;
+
+        /// <summary>
+        /// Returns the token credential associated with this client so that derived
+        /// classes in other assemblies (e.g., Files Change Feed) can propagate
+        /// authentication without needing <c>InternalsVisibleTo</c>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static TokenCredential GetTokenCredential(
+            ShareServiceClient client)
+            => client._clientConfiguration?.TokenCredential;
+
         #endregion ctors
 
         /// <summary>

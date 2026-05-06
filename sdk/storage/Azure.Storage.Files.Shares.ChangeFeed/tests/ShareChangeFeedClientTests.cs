@@ -1,0 +1,302 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using Azure.Core.TestFramework;
+using Azure.Storage.Files.Shares;
+using NUnit.Framework;
+
+namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
+{
+    /// <summary>
+    /// Verifies that <see cref="ShareChangeFeedClient"/> constructors correctly
+    /// create both the internal <see cref="Azure.Storage.Files.Shares.ShareClient"/>
+    /// and <see cref="Azure.Storage.Blobs.BlobServiceClient"/> for each supported
+    /// authentication type.
+    /// </summary>
+    public class ShareChangeFeedClientTests : ShareChangeFeedTestBase
+    {
+        private const string TestShareName = "myshare";
+        private static readonly Uri FileServiceUri = new Uri("https://account.file.core.windows.net");
+        private static readonly Uri FileServiceUriWithSas = new Uri("https://account.file.core.windows.net?sv=2024-01-01&ss=f&srt=sco&sig=fakesig");
+
+        public ShareChangeFeedClientTests(
+            bool async,
+            ShareClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null)
+        {
+        }
+
+        [Test]
+        public void Constructor_SharedKey_CreatesBlobClientWithBlobEndpoint()
+        {
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(
+                "account",
+                Convert.ToBase64String(new byte[64]));
+
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUri,
+                TestShareName,
+                credential);
+
+            Assert.IsNotNull(client._blobServiceClient);
+            Assert.AreEqual(
+                "https://account.blob.core.windows.net/",
+                client._blobServiceClient.Uri.ToString());
+        }
+
+        [Test]
+        public void Constructor_TokenCredential_CreatesBlobClientWithBlobEndpoint()
+        {
+            MockCredential credential = new MockCredential();
+
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUri,
+                TestShareName,
+                credential);
+
+            Assert.IsNotNull(client._blobServiceClient);
+            Assert.AreEqual(
+                "https://account.blob.core.windows.net/",
+                client._blobServiceClient.Uri.ToString());
+        }
+
+        [Test]
+        public void Constructor_SasUri_CreatesBlobClientWithSasPreserved()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            Assert.IsNotNull(client._blobServiceClient);
+            string blobUri = client._blobServiceClient.Uri.ToString();
+            Assert.That(blobUri, Does.StartWith("https://account.blob.core.windows.net/"));
+            Assert.That(blobUri, Does.Contain("sig=fakesig"));
+        }
+
+        [Test]
+        public void Constructor_ConnectionString_CreatesBlobClient()
+        {
+            string connectionString =
+                "DefaultEndpointsProtocol=https;" +
+                "AccountName=account;" +
+                "AccountKey=" + Convert.ToBase64String(new byte[64]) + ";" +
+                "EndpointSuffix=core.windows.net";
+
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                connectionString,
+                TestShareName);
+
+            Assert.IsNotNull(client._blobServiceClient);
+        }
+
+        [Test]
+        public void Constructor_NullUri_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new ShareChangeFeedClient(
+                    (Uri)null,
+                    TestShareName));
+        }
+
+        [Test]
+        public void Constructor_NullShareName_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new ShareChangeFeedClient(
+                    FileServiceUri,
+                    null));
+        }
+
+        [Test]
+        public void Constructor_EmptyShareName_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new ShareChangeFeedClient(
+                    FileServiceUri,
+                    string.Empty));
+        }
+
+        [Test]
+        public void Constructor_IncludeNonFinalizedEvents_DefaultsToFalse()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            Assert.IsFalse(client._includeNonFinalizedEvents);
+        }
+
+        [Test]
+        public void Constructor_IncludeNonFinalizedEvents_FlowsFromOptions()
+        {
+            ShareChangeFeedClientOptions options = new ShareChangeFeedClientOptions
+            {
+                IncludeNonFinalizedEvents = true,
+            };
+
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName,
+                options);
+
+            Assert.IsTrue(client._includeNonFinalizedEvents);
+        }
+
+        // Gap 34: connection-string ctor must reject null/empty connection strings.
+        [TestCase(null)]
+        [TestCase("")]
+        public void Constructor_NullOrEmptyConnectionString_Throws(string connectionString)
+        {
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedClient(connectionString, TestShareName));
+            Assert.AreEqual("connectionString", ex.ParamName);
+        }
+
+        // Gap 35: MaximumTransferSize option flows from options into the client and on into
+        // ChangeFeedConfiguration / chunk download path.
+        [Test]
+        public void Constructor_MaximumTransferSize_FlowsFromOptions()
+        {
+            ShareChangeFeedClientOptions options = new ShareChangeFeedClientOptions
+            {
+                MaximumTransferSize = 4 * 1024 * 1024,
+            };
+
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName,
+                options);
+
+            Assert.AreEqual(4 * 1024 * 1024L, client._maxTransferSize);
+        }
+
+        [Test]
+        public void Constructor_MaximumTransferSize_DefaultsToNull()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            Assert.IsNull(client._maxTransferSize);
+        }
+
+        // GetChanges(continuationToken) must reject any non-null continuation when
+        // IncludeNonFinalizedEvents is enabled, since pages produced in that mode
+        // never carry a continuation token.
+
+        [Test]
+        public void GetChanges_WithContinuation_IncludeNonFinalizedEventsTrue_Throws()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName,
+                new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = true });
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => client.GetChanges("any-continuation-token"));
+
+            StringAssert.Contains(nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents), ex.Message);
+            Assert.AreEqual("continuationToken", ex.ParamName);
+        }
+
+        [Test]
+        public void GetChangesAsync_WithContinuation_IncludeNonFinalizedEventsTrue_Throws()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName,
+                new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = true });
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => client.GetChangesAsync("any-continuation-token"));
+
+            StringAssert.Contains(nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents), ex.Message);
+            Assert.AreEqual("continuationToken", ex.ParamName);
+        }
+
+        [Test]
+        public void GetChanges_WithContinuation_IncludeNonFinalizedEventsFalse_DoesNotThrow()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName,
+                new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = false });
+
+            // Constructing the pageable should not throw; we deliberately do not enumerate
+            // (which would issue a service call against the synthetic SAS URI).
+            Assert.DoesNotThrow(() => client.GetChanges("any-continuation-token"));
+            Assert.DoesNotThrow(() => client.GetChangesAsync("any-continuation-token"));
+        }
+
+        [Test]
+        public void GetChanges_StartGreaterThanEnd_Throws()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            DateTimeOffset start = new DateTimeOffset(2024, 6, 1, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset end = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => client.GetChanges(start, end));
+
+            Assert.AreEqual("start", ex.ParamName);
+            StringAssert.Contains(start.ToString("O"), ex.Message);
+            StringAssert.Contains(end.ToString("O"), ex.Message);
+        }
+
+        [Test]
+        public void GetChangesAsync_StartGreaterThanEnd_Throws()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            DateTimeOffset start = new DateTimeOffset(2024, 6, 1, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset end = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => client.GetChangesAsync(start, end));
+
+            Assert.AreEqual("start", ex.ParamName);
+            StringAssert.Contains(start.ToString("O"), ex.Message);
+            StringAssert.Contains(end.ToString("O"), ex.Message);
+        }
+
+        [Test]
+        public void GetChanges_StartEqualsEnd_DoesNotThrow()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            DateTimeOffset boundary = new DateTimeOffset(2024, 3, 15, 12, 0, 0, TimeSpan.Zero);
+
+            // A zero-duration interval is well-formed (will return empty); the public-API
+            // guard rejects only strict start > end.
+            Assert.DoesNotThrow(() => client.GetChanges(boundary, boundary));
+            Assert.DoesNotThrow(() => client.GetChangesAsync(boundary, boundary));
+        }
+
+        [Test]
+        public void GetChanges_StartOrEndNull_DoesNotThrow()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            DateTimeOffset t = new DateTimeOffset(2024, 3, 15, 12, 0, 0, TimeSpan.Zero);
+
+            // Either-side-null cases bypass the guard entirely; this protects the
+            // HasValue short-circuit from being tightened by accident.
+            Assert.DoesNotThrow(() => client.GetChanges(null, null));
+            Assert.DoesNotThrow(() => client.GetChanges(t, null));
+            Assert.DoesNotThrow(() => client.GetChanges(null, t));
+            Assert.DoesNotThrow(() => client.GetChangesAsync(null, null));
+            Assert.DoesNotThrow(() => client.GetChangesAsync(t, null));
+            Assert.DoesNotThrow(() => client.GetChangesAsync(null, t));
+        }
+    }
+}

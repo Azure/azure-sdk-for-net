@@ -521,6 +521,52 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// Files ChangeFeed constant values.
+        /// </summary>
+        internal static class FilesChangeFeed
+        {
+            public const string SegmentPrefix = "idx/segments/";
+            public const string SnapshotsPrefix = "idx/snapshots/";
+            public const string MetaSegmentsPath = "meta/segments.json";
+            public const string InitializationSegment = "1601";
+            public const int DefaultPageSize = 5000;
+            public const long ChunkBlockDownloadSize = 256 * MB;
+            public const int LazyLoadingBlobStreamBlockSize = 3 * Constants.KB;
+            public const int TimeWindowMinutes = 15;
+            public const string ChangeFeedContainerHeader = "x-ms-file-blob-container-for-xfiles-change-feed";
+
+            internal static class Event
+            {
+                public const string SchemaVersion = "SchemaVersion";
+                public const string Reason = "Reason";
+                public const string Protocol = "Protocol";
+                public const string EventTime = "EventTime";
+                public const string Id = "Id";
+                public const string Cvnt = "Cvnt";
+                public const string Data = "Data";
+            }
+
+            internal static class EventData
+            {
+                public const string FileId = "FileId";
+                public const string ParentFileId = "ParentFileId";
+                public const string Etag = "Etag";
+                public const string FileName = "FileName";
+                public const string FullFilePath = "FullFilePath";
+                public const string Identity = "Identity";
+                public const string Description = "Description";
+                public const string Initiator = "Initiator";
+                public const string IsDirectory = "IsDirectory";
+            }
+
+            internal static class EventIdentity
+            {
+                public const string EntraOID = "EntraOID";
+                public const string SID = "SID";
+            }
+        }
+
+        /// <summary>
         /// Quick Query constant values.
         /// </summary>
         internal static class QuickQuery
