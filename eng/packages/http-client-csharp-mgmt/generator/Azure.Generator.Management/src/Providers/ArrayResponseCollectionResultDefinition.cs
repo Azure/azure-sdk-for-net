@@ -93,13 +93,17 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildName()
         {
-            // Use CrossLanguageDefinitionId (e.g., "Compute.VirtualMachineExtensionImages.listVersions")
+            // Prefer CrossLanguageDefinitionId (e.g., "Compute.VirtualMachineExtensionImages.listVersions")
             // converted to a valid C# identifier. CrossLanguageDefinitionId is stable across @@clientName
             // customizations and uniquely identifies the operation, which avoids name collisions when
             // multiple operations on the same enclosing type are surfaced under one user-facing method
             // name (e.g., a tuple resource collection exposing two list operations both as "GetAll").
+            // Fall back to the enclosing type and method name if the CrossLanguageDefinitionId is not available.
             var asyncSuffix = _isAsync ? "Async" : string.Empty;
-            return $"{_serviceMethod.CrossLanguageDefinitionId.ToIdentifierName()}{asyncSuffix}CollectionResultOfT";
+            var operationIdentifier = !string.IsNullOrEmpty(_serviceMethod.CrossLanguageDefinitionId)
+                ? _serviceMethod.CrossLanguageDefinitionId.ToIdentifierName()
+                : $"{_enclosingTypeName}_{_methodName}".ToIdentifierName();
+            return $"{operationIdentifier}{asyncSuffix}CollectionResultOfT";
         }
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>

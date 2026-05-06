@@ -653,7 +653,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new FooResourceGetDependenciesAsyncCollectionResultOfT(
+            return new MgmtTypeSpecFoosListDependenciesAsyncCollectionResultOfT(
                 _foosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -691,7 +691,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new FooResourceGetDependenciesCollectionResultOfT(
+            return new MgmtTypeSpecFoosListDependenciesCollectionResultOfT(
                 _foosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
