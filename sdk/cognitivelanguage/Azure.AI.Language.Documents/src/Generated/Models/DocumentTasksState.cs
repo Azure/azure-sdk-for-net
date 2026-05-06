@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Container for the tasks status for the LRO job. </summary>
-    public partial class DocumentActions
+    public partial class DocumentTasksState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentActions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTasksState"/>. </summary>
         /// <param name="completed"> Count of completed tasks. </param>
         /// <param name="failed"> Count of failed tasks. </param>
         /// <param name="inProgress"> Count of inprogress tasks. </param>
         /// <param name="total"> Count of total tasks. </param>
-        internal DocumentActions(int completed, int failed, int inProgress, int total)
+        internal DocumentTasksState(int completed, int failed, int inProgress, int total)
         {
             Completed = completed;
             Failed = failed;
@@ -30,14 +30,14 @@ namespace Azure.AI.Language.Documents
             Items = new ChangeTrackingList<AnalyzeDocumentsOperationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentActions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTasksState"/>. </summary>
         /// <param name="completed"> Count of completed tasks. </param>
         /// <param name="failed"> Count of failed tasks. </param>
         /// <param name="inProgress"> Count of inprogress tasks. </param>
         /// <param name="total"> Count of total tasks. </param>
         /// <param name="items"> Enumerable of Analyze documents job results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentActions(int completed, int failed, int inProgress, int total, IList<AnalyzeDocumentsOperationResult> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTasksState(int completed, int failed, int inProgress, int total, IList<AnalyzeDocumentsOperationResult> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Completed = completed;
             Failed = failed;

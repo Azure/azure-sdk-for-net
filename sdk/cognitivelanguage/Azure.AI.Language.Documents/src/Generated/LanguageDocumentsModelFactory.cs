@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <returns> A new <see cref="Documents.AnalyzeDocumentsJobState"/> instance for mocking. </returns>
-        public static AnalyzeDocumentsJobState AnalyzeDocumentsJobState(string displayName = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, DocumentActionState status = default, IEnumerable<AnalyzeDocumentsError> errors = default, string nextLink = default, DocumentActions tasks = default, RequestStatistics statistics = default)
+        public static AnalyzeDocumentsJobState AnalyzeDocumentsJobState(string displayName = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, DocumentActionState status = default, IEnumerable<AnalyzeDocumentsError> errors = default, string nextLink = default, DocumentTasksState tasks = default, RequestStatistics statistics = default)
         {
             errors ??= new ChangeTrackingList<AnalyzeDocumentsError>();
 
@@ -90,12 +90,12 @@ namespace Azure.AI.Language.Documents
         /// <param name="inProgress"> Count of inprogress tasks. </param>
         /// <param name="total"> Count of total tasks. </param>
         /// <param name="items"> Enumerable of Analyze documents job results. </param>
-        /// <returns> A new <see cref="Documents.DocumentActions"/> instance for mocking. </returns>
-        public static DocumentActions DocumentActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeDocumentsOperationResult> items = default)
+        /// <returns> A new <see cref="Documents.DocumentTasksState"/> instance for mocking. </returns>
+        public static DocumentTasksState DocumentTasksState(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeDocumentsOperationResult> items = default)
         {
             items ??= new ChangeTrackingList<AnalyzeDocumentsOperationResult>();
 
-            return new DocumentActions(
+            return new DocumentTasksState(
                 completed,
                 failed,
                 inProgress,

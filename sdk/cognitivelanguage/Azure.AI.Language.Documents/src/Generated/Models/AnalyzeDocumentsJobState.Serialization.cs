@@ -179,7 +179,7 @@ namespace Azure.AI.Language.Documents
             DocumentActionState status = default;
             IList<AnalyzeDocumentsError> errors = default;
             string nextLink = default;
-            DocumentActions tasks = default;
+            DocumentTasksState tasks = default;
             RequestStatistics statistics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -239,7 +239,7 @@ namespace Azure.AI.Language.Documents
                 }
                 if (prop.NameEquals("tasks"u8))
                 {
-                    tasks = DocumentActions.DeserializeDocumentActions(prop.Value, options);
+                    tasks = DocumentTasksState.DeserializeDocumentTasksState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("statistics"u8))
