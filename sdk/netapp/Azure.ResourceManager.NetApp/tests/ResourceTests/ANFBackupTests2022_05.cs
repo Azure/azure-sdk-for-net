@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         private readonly string _pool1Name = "pool1";
         private readonly AzureLocation _defaultLocation = AzureLocation.WestUS2;
         //private new readonly AzureLocation _defaultLocationString = _defaultLocation;
-        internal NetAppAccountBackupCollection _accountBackupCollection;
-#pragma warning disable CS0649
-        internal NetAppVolumeBackupCollection _volumeBackupCollection;
-#pragma warning restore CS0649
         internal NetAppVolumeResource _volumeResource;
 
         public ANFBackupTests2022_05(bool isAsync, string apiVersion) : base(isAsync, NetAppVolumeResource.ResourceType, apiVersion)
@@ -52,9 +48,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             var volumeName = Recording.GenerateAssetName("volumeName-");
             await CreateVirtualNetwork(location: _defaultLocation);
             _volumeResource = await CreateVolume(_defaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId);
-            _accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
-            // TODO: GetNetAppVolumeBackups not available in new API
-            // _volumeBackupCollection = _volumeResource.GetNetAppVolumeBackups();
             watch.Stop();
             TestContext.WriteLine($"Setup elapsed time {watch.ElapsedMilliseconds} ms {watch.Elapsed}");
         }
@@ -69,7 +62,6 @@ namespace Azure.ResourceManager.NetApp.Tests
                 _ = await _capacityPoolCollection.ExistsAsync(_capacityPool.Id.Name);
                 CapacityPoolCollection poolCollection = _netAppAccount.GetCapacityPools();
                 List<CapacityPoolResource> poolList = await poolCollection.GetAllAsync().ToEnumerableAsync();
-                string lastBackupName = string.Empty;
                 foreach (CapacityPoolResource pool in poolList)
                 {
                     NetAppVolumeCollection volumeCollection = pool.GetNetAppVolumes();
@@ -107,12 +99,6 @@ namespace Azure.ResourceManager.NetApp.Tests
                 //remove
                 //await _capacityPool.DeleteAsync(WaitUntil.Completed);
                 //await LiveDelay(40000);
-                NetAppAccountBackupCollection accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
-                if (!string.IsNullOrWhiteSpace(lastBackupName))
-                {
-                    NetAppAccountBackupResource backupResource = await accountBackupCollection.GetAsync(lastBackupName);
-                    await backupResource.DeleteAsync(WaitUntil.Completed);
-                }
                 await LiveDelay(20000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
@@ -184,63 +170,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             getVolumeResource2022_05 = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             // TODO: IsBackupEnabled not available in new API
             // Assert.IsFalse(getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled);
-        }
-
-        private async Task WaitForBackupSucceeded(NetAppVolumeBackupCollection volumeBackupCollection, string backupName)
-        {
-            Console.WriteLine($"WaitForBackupSucceeded for Backup {volumeBackupCollection.Id}/backups/{backupName}");
-            var maxDelay = TimeSpan.FromSeconds(500);
-            int count = 0;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                maxDelay = TimeSpan.FromMilliseconds(50);
-            }
-            Console.WriteLine($"...decorrelated maxdelay {maxDelay}");
-            IEnumerable<TimeSpan> delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(20), retryCount: 500)
-                    .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks))); // use jitter strategy in the retry algorithm to prevent retries bunching into further spikes of load, with ceiling on delays (for larger retrycount)
-
-            Polly.Retry.AsyncRetryPolicy<bool> retryPolicy = Policy
-                .HandleResult<bool>(false) // retry if delegate executed asynchronously returns false
-                .WaitAndRetryAsync(delay);
-
-            try
-            {
-                await retryPolicy.ExecuteAsync(async () =>
-                    {
-                        count++;
-                        NetAppVolumeBackupResource backup = await volumeBackupCollection.GetAsync(backupName);
-                        Console.WriteLine($"{DateTime.Now.ToLongTimeString()} GetBackupStatus run: {count} provisioning state is {backup.Data.ProvisioningState}");
-                        if (backup.Data.ProvisioningState.Equals("Succeeded") || backup.Data.ProvisioningState.Equals("Failed"))
-                        {
-                            //Check status as well
-                            NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetLatestStatusAsync()).Value;
-                            if (backup.Data.ProvisioningState.Equals("Failed"))  //we want to report the backupStatus and FailureReason
-                            {
-                                //no use retrying
-                                throw new Exception($"Backup failed ProvisioningState: {backup.Data.ProvisioningState} FailureReason: \"{backup.Data.FailureReason}\" BackupStatus.MirrorState: {backupStatus.MirrorState}, BackupStatus.ErrorMessage: \"{backupStatus.ErrorMessage}\",  BackupStatus.Relationship status {backupStatus.RelationshipStatus}");
-                            }
-                            Console.WriteLine($"Get BackupStatus state run {count} BackupStatus.MirrorState: {backupStatus.MirrorState}, BackupStatus.RelationshipStatus: {backupStatus.RelationshipStatus}");
-                            if (backupStatus.MirrorState == NetAppMirrorState.Mirrored)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                );
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Final Throw {ex.Message}");
-                throw;
-            }
         }
 
         private async Task WaitForVolumeSucceeded(NetAppVolumeCollection volumeCollection, NetAppVolumeResource volumeResource = null)
