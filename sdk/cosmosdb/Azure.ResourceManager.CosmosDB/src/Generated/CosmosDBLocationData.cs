@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Cosmos DB location metadata. </param>
-        internal CosmosDBLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, LocationProperties properties) : base(id, name, resourceType, systemData)
+        internal CosmosDBLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDBLocationProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Cosmos DB location metadata. </summary>
         [WirePath("properties")]
-        public LocationProperties Properties { get; set; }
+        public CosmosDBLocationProperties Properties { get; set; }
     }
 }

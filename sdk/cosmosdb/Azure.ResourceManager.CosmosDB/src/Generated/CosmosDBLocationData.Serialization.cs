@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            LocationProperties properties = default;
+            CosmosDBLocationProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         continue;
                     }
-                    properties = LocationProperties.DeserializeLocationProperties(prop.Value, options);
+                    properties = CosmosDBLocationProperties.DeserializeCosmosDBLocationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -15,12 +15,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class GraphApiComputeServiceProperties : CosmosDBServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="GraphApiComputeServiceProperties"/>. </summary>
-        public GraphApiComputeServiceProperties() : base(CosmosDBServiceType.GraphApiCompute)
-        {
-            Locations = new ChangeTrackingList<GraphApiComputeRegionalService>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GraphApiComputeServiceProperties"/>. </summary>
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>

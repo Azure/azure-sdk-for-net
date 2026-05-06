@@ -15,11 +15,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Services response resource. </summary>
     public partial class CosmosDBServiceProperties : IJsonModel<CosmosDBServiceProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceProperties"/> for deserialization. </summary>
-        internal CosmosDBServiceProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CosmosDBServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

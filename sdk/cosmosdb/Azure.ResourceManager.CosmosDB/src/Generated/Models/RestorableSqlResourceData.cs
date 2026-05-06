@@ -7,12 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Specific Databases to restore. </summary>
-    public partial class RestorableSqlResourceData
+    /// <summary> The List operation response, that contains the SQL resource events and their properties. </summary>
+    public partial class RestorableSqlResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,33 +26,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableSqlResourceData"/>. </summary>
-        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
-        /// <param name="name"> The name of the ARM resource. </param>
-        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> The name of the database available for restore. </param>
         /// <param name="collectionNames"> The names of the collections available for restore. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableSqlResourceData(string id, string name, string @type, string databaseName, IReadOnlyList<string> collectionNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableSqlResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string databaseName, IReadOnlyList<string> collectionNames) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             DatabaseName = databaseName;
             CollectionNames = collectionNames;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The unique resource identifier of the ARM resource. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
-        /// <summary> The name of the ARM resource. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The type of Azure resource. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The name of the database available for restore. </summary>
         [WirePath("databaseName")]

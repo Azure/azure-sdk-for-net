@@ -3078,7 +3078,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Cosmos DB location metadata. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBLocationData"/> instance for mocking. </returns>
-        public static CosmosDBLocationData CosmosDBLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LocationProperties properties = default)
+        public static CosmosDBLocationData CosmosDBLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBLocationProperties properties = default)
         {
             return new CosmosDBLocationData(
                 id,
@@ -3096,12 +3096,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="isSubscriptionRegionAccessAllowedForRegular"> Flag indicating whether the subscription have access in region for Non-Availability Zones. </param>
         /// <param name="isSubscriptionRegionAccessAllowedForAz"> Flag indicating whether the subscription have access in region for Availability Zones(Az). </param>
         /// <param name="status"> Enum to indicate current buildout status of the region. </param>
-        /// <returns> A new <see cref="Models.LocationProperties"/> instance for mocking. </returns>
-        public static LocationProperties LocationProperties(bool? doesSupportAvailabilityZone = default, bool? isResidencyRestricted = default, IEnumerable<CosmosDBBackupStorageRedundancy> backupStorageRedundancies = default, bool? isSubscriptionRegionAccessAllowedForRegular = default, bool? isSubscriptionRegionAccessAllowedForAz = default, CosmosDBStatus? status = default)
+        /// <returns> A new <see cref="Models.CosmosDBLocationProperties"/> instance for mocking. </returns>
+        public static CosmosDBLocationProperties CosmosDBLocationProperties(bool? doesSupportAvailabilityZone = default, bool? isResidencyRestricted = default, IEnumerable<CosmosDBBackupStorageRedundancy> backupStorageRedundancies = default, bool? isSubscriptionRegionAccessAllowedForRegular = default, bool? isSubscriptionRegionAccessAllowedForAz = default, CosmosDBStatus? status = default)
         {
             backupStorageRedundancies ??= new ChangeTrackingList<CosmosDBBackupStorageRedundancy>();
 
-            return new LocationProperties(
+            return new CosmosDBLocationProperties(
                 doesSupportAvailabilityZone,
                 isResidencyRestricted,
                 backupStorageRedundancies.ToList(),
@@ -3613,24 +3613,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 self);
         }
 
-        /// <summary> Specific Databases to restore. </summary>
-        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
-        /// <param name="name"> The name of the ARM resource. </param>
-        /// <param name="type"> The type of Azure resource. </param>
+        /// <summary> The List operation response, that contains the SQL resource events and their properties. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="databaseName"> The name of the database available for restore. </param>
         /// <param name="collectionNames"> The names of the collections available for restore. </param>
         /// <returns> A new <see cref="Models.RestorableSqlResourceData"/> instance for mocking. </returns>
-        public static RestorableSqlResourceData RestorableSqlResourceData(string id = default, string name = default, string @type = default, string databaseName = default, IEnumerable<string> collectionNames = default)
+        public static RestorableSqlResourceData RestorableSqlResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string databaseName = default, IEnumerable<string> collectionNames = default)
         {
             collectionNames ??= new ChangeTrackingList<string>();
 
             return new RestorableSqlResourceData(
                 id,
                 name,
-                @type,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 databaseName,
-                collectionNames.ToList(),
-                additionalBinaryDataProperties: null);
+                collectionNames.ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3711,24 +3713,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Specific Databases to restore. </summary>
-        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
-        /// <param name="name"> The name of the ARM resource. </param>
-        /// <param name="type"> The type of Azure resource. </param>
+        /// <summary> The List operation response, that contains the MongoDB resource events and their properties. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="databaseName"> The name of the database available for restore. </param>
         /// <param name="collectionNames"> The names of the collections available for restore. </param>
         /// <returns> A new <see cref="Models.RestorableMongoDBResourceData"/> instance for mocking. </returns>
-        public static RestorableMongoDBResourceData RestorableMongoDBResourceData(string id = default, string name = default, string @type = default, string databaseName = default, IEnumerable<string> collectionNames = default)
+        public static RestorableMongoDBResourceData RestorableMongoDBResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string databaseName = default, IEnumerable<string> collectionNames = default)
         {
             collectionNames ??= new ChangeTrackingList<string>();
 
             return new RestorableMongoDBResourceData(
                 id,
                 name,
-                @type,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 databaseName,
-                collectionNames.ToList(),
-                additionalBinaryDataProperties: null);
+                collectionNames.ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3809,24 +3813,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Specific Databases to restore. </summary>
-        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
-        /// <param name="name"> The name of the ARM resource. </param>
-        /// <param name="type"> The type of Azure resource. </param>
+        /// <summary> The List operation response, that contains the Gremlin resource events and their properties. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="databaseName"> The name of the gremlin database available for restore. </param>
         /// <param name="graphNames"> The names of the graphs available for restore. </param>
         /// <returns> A new <see cref="Models.RestorableGremlinResourceData"/> instance for mocking. </returns>
-        public static RestorableGremlinResourceData RestorableGremlinResourceData(string id = default, string name = default, string @type = default, string databaseName = default, IEnumerable<string> graphNames = default)
+        public static RestorableGremlinResourceData RestorableGremlinResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string databaseName = default, IEnumerable<string> graphNames = default)
         {
             graphNames ??= new ChangeTrackingList<string>();
 
             return new RestorableGremlinResourceData(
                 id,
                 name,
-                @type,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 databaseName,
-                graphNames.ToList(),
-                additionalBinaryDataProperties: null);
+                graphNames.ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5152,52 +5158,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return CassandraClusterProperties(provisioningState, restoreFromBackupId, delegatedManagementSubnetId, cassandraVersion, clusterNameOverride, authenticationMethod, initialCassandraAdminPassword, prometheusEndpointIPAddress, isRepairEnabled, autoReplicate: default, clientCertificates, externalGossipCertificates, gossipCertificates, externalSeedNodes, seedNodes, externalDataCenters: default, hoursBetweenBackups, isDeallocated, isCassandraAuditLoggingEnabled, clusterType: default, provisionError, extensions: default, backupSchedules: default, scheduledEventStrategy: default, azureConnectionMethod, privateLinkResourceId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterDataCenterNodeItem"/>. </summary>
-        /// <param name="address"> The node's IP address. </param>
-        /// <param name="state"> The state of the node in Cassandra ring. </param>
-        /// <param name="status"></param>
-        /// <param name="cassandraProcessStatus"> Cassandra service status on this node. </param>
-        /// <param name="load"> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </param>
-        /// <param name="tokens"> List of tokens this node covers. </param>
-        /// <param name="size"></param>
-        /// <param name="hostId"> The network ID of the node. </param>
-        /// <param name="rack"> The rack this node is part of. </param>
-        /// <param name="timestamp"> The timestamp when these statistics were captured. </param>
-        /// <param name="diskUsedKB"> The amount of disk used, in kB, of the directory /var/lib/cassandra. </param>
-        /// <param name="diskFreeKB"> The amount of disk free, in kB, of the directory /var/lib/cassandra. </param>
-        /// <param name="memoryUsedKB"> Used memory (calculated as total - free - buffers - cache), in kB. </param>
-        /// <param name="memoryBuffersAndCachedKB"> Memory used by kernel buffers (Buffers in /proc/meminfo) and page cache and slabs (Cached and SReclaimable in /proc/meminfo), in kB. </param>
-        /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
-        /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
-        /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
-        /// <returns> A new <see cref="Models.CassandraClusterDataCenterNodeItem"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CassandraClusterDataCenterNodeItem CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IEnumerable<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
-        {
-            tokens ??= new ChangeTrackingList<string>();
-
-            return new CassandraClusterDataCenterNodeItem(
-                address,
-                state,
-                status,
-                cassandraProcessStatus,
-                load,
-                tokens.ToList(),
-                size,
-                hostId,
-                rack,
-                timestamp,
-                diskUsedKB,
-                diskFreeKB,
-                memoryUsedKB,
-                memoryBuffersAndCachedKB,
-                memoryFreeKB,
-                memoryTotalKB,
-                cpuUsage,
-                default,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="CosmosDB.RestorableCosmosDBAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -5274,72 +5234,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, IEnumerable<CosmosDBUniqueKey> uniqueKeys, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IEnumerable<ComputedProperty> computedProperties, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings, FullTextPolicy fullTextPolicy, string self, string rid, float? timestamp, ETag? etag)
         {
             return RestorableSqlContainerPropertiesResourceContainer(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys, conflictResolutionPolicy, clientEncryptionPolicy, analyticalStorageTtl, restoreParameters, createMode, materializedViewDefinition: default, materializedViews: default, materializedViewsThroughputBucketForBuild: default, computedProperties, vectorEmbeddings, fullTextPolicy, dataMaskingPolicy: default, rid, timestamp, etag, self);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableSqlResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="databaseName"> The name of the database available for restore. </param>
-        /// <param name="collectionNames"> The names of the collections available for restore. </param>
-        /// <returns> A new <see cref="Models.RestorableSqlResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RestorableSqlResourceData RestorableSqlResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, IEnumerable<string> collectionNames)
-        {
-            collectionNames ??= new ChangeTrackingList<string>();
-
-            return new RestorableSqlResourceData(
-                id,
-                name,
-                default,
-                databaseName,
-                collectionNames.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableMongoDBResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="databaseName"> The name of the database available for restore. </param>
-        /// <param name="collectionNames"> The names of the collections available for restore. </param>
-        /// <returns> A new <see cref="Models.RestorableMongoDBResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RestorableMongoDBResourceData RestorableMongoDBResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, IEnumerable<string> collectionNames)
-        {
-            collectionNames ??= new ChangeTrackingList<string>();
-
-            return new RestorableMongoDBResourceData(
-                id,
-                name,
-                default,
-                databaseName,
-                collectionNames.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableGremlinResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="databaseName"> The name of the gremlin database available for restore. </param>
-        /// <param name="graphNames"> The names of the graphs available for restore. </param>
-        /// <returns> A new <see cref="Models.RestorableGremlinResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RestorableGremlinResourceData RestorableGremlinResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, IEnumerable<string> graphNames)
-        {
-            graphNames ??= new ChangeTrackingList<string>();
-
-            return new RestorableGremlinResourceData(
-                id,
-                name,
-                default,
-                databaseName,
-                graphNames.ToList(),
-                additionalBinaryDataProperties: null);
         }
     }
 }

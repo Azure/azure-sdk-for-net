@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.CosmosDB
         private const string TagFallbackUnsupportedMessage =
             "AddTag/SetTags/RemoveTag fall back to the resource PUT operation when the subscription does not have tag-resource privileges, but the underlying PUT body type for CassandraResource is a different model from its data type, so the fallback is not supported. See https://github.com/Azure/azure-sdk-for-net/issues/58747.";
 
-        internal Task<ArmOperation<CassandraResource>> UpdateAsync(WaitUntil waitUntil, ThroughputSettingsData data, CancellationToken cancellationToken = default) =>
+        internal Task<ArmOperation<CassandraResource>> UpdateAsync(WaitUntil waitUntil, ThroughputSettingData data, CancellationToken cancellationToken = default) =>
             throw new NotSupportedException(TagFallbackUnsupportedMessage);
 
-        internal ArmOperation<CassandraResource> Update(WaitUntil waitUntil, ThroughputSettingsData data, CancellationToken cancellationToken = default) =>
+        internal ArmOperation<CassandraResource> Update(WaitUntil waitUntil, ThroughputSettingData data, CancellationToken cancellationToken = default) =>
             throw new NotSupportedException(TagFallbackUnsupportedMessage);
     }
 }
