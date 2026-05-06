@@ -204,11 +204,28 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult Delete(string jobId, CancellationToken cancellationToken = default)
+    public virtual void Delete(string jobId, CancellationToken cancellationToken = default)
     {
-        return Delete(
+        Delete(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken);
+    }
+
+    /// <summary>
+    /// Deletes an evaluator generation job by its ID. Deletes the job record only;
+    /// the generated evaluator (if any) is preserved.
+    /// </summary>
+    /// <param name="jobId"> The ID of the job to delete. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task DeleteAsync(string jobId, CancellationToken cancellationToken = default)
+    {
+        await DeleteAsync(
+            jobId: jobId,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }
