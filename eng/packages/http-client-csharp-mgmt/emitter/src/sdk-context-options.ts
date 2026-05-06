@@ -115,8 +115,9 @@ export const flattenPropertyDecorator =
   "Azure.ResourceManager.@flattenProperty";
 
 // https://azure.github.io/typespec-azure/docs/libraries/typespec-client-generator-core/reference/decorators#@Azure.ClientGenerator.Core.clientOption
-// Propagated to InputModelType.Decorators / InputModelProperty.Decorators so the
-// generator can read per-model / per-property opt-outs (e.g. "disable-safe-flatten").
+// Propagated onto InputModelType.Decorators so the management generator can read
+// per-model opt-outs (e.g. "disable-safe-flatten") that aren't consumed during
+// resource detection in the emitter.
 const clientOptionRegex = "Azure\\.ClientGenerator\\.Core\\.@clientOption";
 
 // TypeSpec validation decorators for resource name constraints
