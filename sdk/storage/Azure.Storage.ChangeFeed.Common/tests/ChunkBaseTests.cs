@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
@@ -127,6 +128,56 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             Assert.AreEqual(42L, evt.Cvnt);
             Assert.AreEqual(blockOffset, chunk.BlockOffset);
             Assert.AreEqual(eventIndex, chunk.EventIndex);
+        }
+
+        /// <summary>
+        /// Verifies BuildChunk forwards <c>allowModifications</c> through to the
+        /// <see cref="BlobOpenReadOptions"/> used to open both the data and head streams.
+        /// </summary>
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task BuildChunk_PropagatesAllowModifications(bool allowModifications)
+        {
+            long blockOffset = 5;
+            long eventIndex = 10;
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            Mock<AvroReaderFactory> avroReaderFactory = new Mock<AvroReaderFactory>(MockBehavior.Strict);
+            Mock<AvroReader> avroReader = new Mock<AvroReader>(MockBehavior.Strict);
+
+            List<BlobOpenReadOptions> capturedOptions = new List<BlobOpenReadOptions>();
+
+            containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+            blobClient.Setup(r => r.OpenReadAsync(It.IsAny<BlobOpenReadOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<BlobOpenReadOptions, CancellationToken>((opts, _) => capturedOptions.Add(opts))
+                .ReturnsAsync(Stream.Null);
+            blobClient.Setup(r => r.OpenRead(It.IsAny<BlobOpenReadOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<BlobOpenReadOptions, CancellationToken>((opts, _) => capturedOptions.Add(opts))
+                .Returns(Stream.Null);
+            avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>(), It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<long>()))
+                .Returns(avroReader.Object);
+            avroReader.Setup(r => r.Initalize(It.IsAny<bool>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            ChunkFactoryBase<TestEvent> chunkFactory = new ChunkFactoryBase<TestEvent>(
+                containerClient.Object,
+                avroReaderFactory.Object,
+                4 * Constants.MB,
+                CreateTestConfig(),
+                allowModifications: allowModifications);
+
+            await chunkFactory.BuildChunk(IsAsync, "chunkPath", blockOffset, eventIndex);
+
+            // BuildChunk opens two streams when blockOffset != 0 (data and head).
+            Assert.AreEqual(2, capturedOptions.Count);
+            // AllowModifications is internal in Azure.Storage.Blobs and not visible to this test
+            // assembly, so read it via reflection.
+            PropertyInfo allowModificationsProperty = typeof(BlobOpenReadOptions)
+                .GetProperty("AllowModifications", BindingFlags.Instance | BindingFlags.NonPublic);
+            foreach (BlobOpenReadOptions opts in capturedOptions)
+            {
+                Assert.AreEqual(allowModifications, (bool)allowModificationsProperty.GetValue(opts));
+            }
         }
     }
 }

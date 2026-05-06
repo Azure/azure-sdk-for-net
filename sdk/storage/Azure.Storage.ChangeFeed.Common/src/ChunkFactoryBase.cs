@@ -20,6 +20,7 @@ namespace Azure.Storage.ChangeFeed.Common
         private readonly BlobContainerClient _containerClient;
         private readonly long? _maxTransferSize;
         private readonly ChangeFeedConfiguration<TEvent> _config;
+        private readonly bool _allowModifications;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChunkFactoryBase{TEvent}"/> class.
@@ -28,16 +29,24 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="avroReaderFactory">Factory for creating Avro readers.</param>
         /// <param name="maxTransferSize">Optional override for the download buffer size.</param>
         /// <param name="config">Change feed configuration.</param>
+        /// <param name="allowModifications">
+        /// Value passed to <see cref="BlobOpenReadOptions"/>'s <c>AllowModifications</c> when opening
+        /// chunk streams. Set to <c>true</c> only when the consumer has opted in to non-finalized
+        /// events, since finalized chunks are immutable and a mid-read modification indicates a
+        /// real fault.
+        /// </param>
         public ChunkFactoryBase(
             BlobContainerClient containerClient,
             AvroReaderFactory avroReaderFactory,
             long? maxTransferSize,
-            ChangeFeedConfiguration<TEvent> config)
+            ChangeFeedConfiguration<TEvent> config,
+            bool allowModifications = false)
         {
             _containerClient = containerClient;
             _avroReaderFactory = avroReaderFactory;
             _maxTransferSize = maxTransferSize;
             _config = config;
+            _allowModifications = allowModifications;
         }
 
         /// <summary>
@@ -59,7 +68,7 @@ namespace Azure.Storage.ChangeFeed.Common
             BlobClient blobClient = _containerClient.GetBlobClient(chunkPath);
             AvroReader avroReader;
 
-            BlobOpenReadOptions dataOptions = new BlobOpenReadOptions(allowModifications: true)
+            BlobOpenReadOptions dataOptions = new BlobOpenReadOptions(allowModifications: _allowModifications)
             {
                 Position = blockOffset,
                 BufferSize = (int)(_maxTransferSize ?? _config.ChunkBlockDownloadSize),
@@ -73,7 +82,7 @@ namespace Azure.Storage.ChangeFeed.Common
             {
                 // When resuming mid-block, two streams are needed: a "head" stream reads from offset 0
                 // to parse the Avro header/schema, while the "data" stream reads from blockOffset for the actual events.
-                BlobOpenReadOptions headOptions = new BlobOpenReadOptions(allowModifications: true)
+                BlobOpenReadOptions headOptions = new BlobOpenReadOptions(allowModifications: _allowModifications)
                 {
                     Position = 0,
                     BufferSize = (int)_config.AvroHeaderDownloadSize,

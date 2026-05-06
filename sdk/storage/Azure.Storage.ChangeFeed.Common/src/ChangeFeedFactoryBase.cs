@@ -51,7 +51,8 @@ namespace Azure.Storage.ChangeFeed.Common
                         _containerClient,
                         new AvroReaderFactory(),
                         maxTransferSize,
-                        config)),
+                        config,
+                        allowModifications: includeNonFinalizedEvents)),
                 config);
         }
 
