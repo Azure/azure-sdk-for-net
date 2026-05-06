@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.NetApp
 {
     // Custom additions for NetAppBackupVaultBackupResource:
     // - RestoreFilesBackupsUnderBackupVault* preserve the previous SDK's longer method names.
-    // - The IJsonModel<NetAppBackupData>/IPersistableModel<NetAppBackupData> implementations
-    //   delegate to Data. The generator declares the interfaces on the resource (because the
-    //   data class is renamed asymmetrically via [CodeGenType] from NetAppBackupVaultBackupData
-    //   to NetAppBackupData) but does not emit the method bodies, so they are provided here.
+    // - The generated resource serialization partial declares IJsonModel<NetAppBackupData>
+    //   but only emits the shared deserialization instance. IJsonModel inherits the
+    //   persistable-model contract, so this cannot be solved only by adding a test
+    //   exception; the class would fail to compile without these explicit implementations.
     public partial class NetAppBackupVaultBackupResource : ArmResource, IJsonModel<NetAppBackupData>, IPersistableModel<NetAppBackupData>
     {
         /// <summary> Restore files from a backup. </summary>

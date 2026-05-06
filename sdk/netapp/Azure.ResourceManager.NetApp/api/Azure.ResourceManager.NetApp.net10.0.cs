@@ -1715,8 +1715,10 @@ namespace Azure.ResourceManager.NetApp
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppVolumeSnapshotData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppVolumeSnapshotData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppVolumeSnapshotResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeSnapshotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This overload is no longer supported because NetAppVolumeSnapshotData is not accepted by the snapshot PATCH operation. Use Update(WaitUntil, NetAppVolumeSnapshotPatch, CancellationToken) instead.", false)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppVolumeSnapshotResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.NetAppVolumeSnapshotData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppVolumeSnapshotResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.Models.NetAppVolumeSnapshotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This overload is no longer supported because NetAppVolumeSnapshotData is not accepted by the snapshot PATCH operation. Use UpdateAsync(WaitUntil, NetAppVolumeSnapshotPatch, CancellationToken) instead.", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.NetAppVolumeSnapshotResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetApp.NetAppVolumeSnapshotData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RansomwareReportCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.RansomwareReportResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.RansomwareReportResource>, System.Collections.IEnumerable
@@ -3490,6 +3492,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter left, Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("This type is deprecated. Use NetAppVolumeExportPolicyRule instead.", false)]
     public partial class ExportPolicyRule : Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule
     {
         public ExportPolicyRule() { }
@@ -4980,7 +4983,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? AllowNfsV3Protocol { get { throw null; } set { } }
         public bool? AllowNfsV41Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppChownMode? ChownMode { get { throw null; } set { } }
-        public bool? Cifs { get { throw null; } set { } }
         public bool? HasRootAccess { get { throw null; } set { } }
         public bool? IsKerberos5iReadOnly { get { throw null; } set { } }
         public bool? IsKerberos5iReadWrite { get { throw null; } set { } }
@@ -4990,17 +4992,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsKerberos5ReadWrite { get { throw null; } set { } }
         public bool? IsUnixReadOnly { get { throw null; } set { } }
         public bool? IsUnixReadWrite { get { throw null; } set { } }
-        public bool? Kerberos5IReadOnly { get { throw null; } set { } }
-        public bool? Kerberos5IReadWrite { get { throw null; } set { } }
-        public bool? Kerberos5PReadOnly { get { throw null; } set { } }
-        public bool? Kerberos5PReadWrite { get { throw null; } set { } }
-        public bool? Kerberos5ReadOnly { get { throw null; } set { } }
-        public bool? Kerberos5ReadWrite { get { throw null; } set { } }
-        public bool? Nfsv3 { get { throw null; } set { } }
-        public bool? Nfsv41 { get { throw null; } set { } }
         public int? RuleIndex { get { throw null; } set { } }
-        public bool? UnixReadOnly { get { throw null; } set { } }
-        public bool? UnixReadWrite { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
