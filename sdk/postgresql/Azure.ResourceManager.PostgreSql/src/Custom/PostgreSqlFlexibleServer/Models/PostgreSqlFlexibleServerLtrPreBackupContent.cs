@@ -4,17 +4,19 @@
 #nullable disable
 
 using System;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    // Preserves the previous backupSettings-based constructor. The new emitter flattens `backupSettings.backupName` into a `string backupName` ctor parameter,
-    // but the base class (PostgreSqlBackupContent) only has constructors taking
-    // PostgreSqlFlexibleServerBackupSettings, causing CS1503. Suppress the flattened ctor and
-    // provide the legacy backupSettings-based ctor for backward compatibility.
-    [CodeGenSuppress("PostgreSqlFlexibleServerLtrPreBackupContent", typeof(string))]
+    // Preserves both the flattened backupName constructor and the previous backupSettings-based constructor.
     public partial class PostgreSqlFlexibleServerLtrPreBackupContent
     {
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/>. </summary>
+        /// <param name="backupName"> Backup Name for the current backup. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        public PostgreSqlFlexibleServerLtrPreBackupContent(string backupName) : this(new PostgreSqlFlexibleServerBackupSettings(backupName))
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>

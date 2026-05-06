@@ -13,8 +13,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a server to be updated. </summary>
     public partial class PostgreSqlFlexibleServerPatch
     {
-        private AzureLocation? _location;
-
         /// <summary> Max storage allowed for a server. </summary>
         [WirePath("properties.storage.storageSizeGB")]
         public int? StorageSizeInGB
@@ -41,14 +39,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The geo-affinity location. </summary>
         [WirePath("location")]
-        public AzureLocation? Location
-        {
-            get => _location;
-            set
-            {
-                // Backward compatibility: previous SDK exposed Location on the patch model; generated PATCH serialization does not use it.
-                _location = value;
-            }
-        }
+        public AzureLocation? Location { get; set; }
     }
 }

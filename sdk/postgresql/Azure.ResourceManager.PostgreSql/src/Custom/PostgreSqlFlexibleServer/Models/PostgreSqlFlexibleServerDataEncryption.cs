@@ -8,23 +8,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     // Preserves previous settable encryption-key status properties while the generated members remain readonly.
     public partial class PostgreSqlFlexibleServerDataEncryption
     {
-        private PostgreSqlKeyStatus? _primaryEncryptionKeyStatusOverride;
-        private PostgreSqlKeyStatus? _geoBackupEncryptionKeyStatusOverride;
-
         /// <summary> Primary encryption key status. </summary>
         [WirePath("primaryEncryptionKeyStatus")]
-        public PostgreSqlKeyStatus? PrimaryEncryptionKeyStatus
-        {
-            get => _primaryEncryptionKeyStatusOverride;
-            set => _primaryEncryptionKeyStatusOverride = value;
-        }
+        public PostgreSqlKeyStatus? PrimaryEncryptionKeyStatus { get; set; }
 
         /// <summary> Geo-backup encryption key status. </summary>
         [WirePath("geoBackupEncryptionKeyStatus")]
-        public PostgreSqlKeyStatus? GeoBackupEncryptionKeyStatus
-        {
-            get => _geoBackupEncryptionKeyStatusOverride;
-            set => _geoBackupEncryptionKeyStatusOverride = value;
-        }
+        public PostgreSqlKeyStatus? GeoBackupEncryptionKeyStatus { get; set; }
     }
 }

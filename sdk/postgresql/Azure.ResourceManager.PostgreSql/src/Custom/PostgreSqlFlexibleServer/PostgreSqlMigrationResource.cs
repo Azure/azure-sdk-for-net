@@ -9,15 +9,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     // The TypeSpec cancel operation uses ArmResourceDeleteSync<Migration>, so generation emits Delete overloads
     // returning ArmOperation<PostgreSqlMigrationResource>. Preserve the previous GA non-generic ArmOperation
     // Delete overloads while still routing them to the service's cancel migration request.
-    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class PostgreSqlMigrationResource
     {
         /// <summary> Cancels an active migration. </summary>
