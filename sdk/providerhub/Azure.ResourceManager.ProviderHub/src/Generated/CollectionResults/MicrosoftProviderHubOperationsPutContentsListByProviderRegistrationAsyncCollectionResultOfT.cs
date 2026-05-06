@@ -18,7 +18,7 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    internal partial class OperationsPutContentResourceGetAsyncCollectionResultOfT : AsyncPageable<OperationsDefinition>
+    internal partial class MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT : AsyncPageable<OperationsDefinition>
     {
         private readonly Operations _client;
         private readonly Guid _subscriptionId;
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of OperationsPutContentResourceGetAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Operations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OperationsPutContentResourceGetAsyncCollectionResultOfT(Operations client, Guid subscriptionId, string providerNamespace, RequestContext context, string diagnosticScope)
+        public MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT(Operations client, Guid subscriptionId, string providerNamespace, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ProviderHub
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of OperationsPutContentResourceGetAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of OperationsPutContentResourceGetAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<OperationsDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
