@@ -5,6 +5,27 @@
 // - Type (string → ResourceType?)
 // - IsRestoring (add setter)
 // - DataStoreResourceId (IReadOnlyList<string> → IReadOnlyList<ResourceIdentifier>)
+//
+// Per PR review (deferred — needs spec update + regen, both currently blocked):
+//
+// 1. ResourceType: spec should @@alternateType `type` from string → Azure.Core.armResourceType
+//    so the generator emits `ResourceType?` natively. The wrapper here would then become
+//    redundant and can be deleted. TODO: file/track via the same regen-cleanup follow-up.
+//
+// 2. IsRestoring: the no-op setter exists because v1.15 GA exposed a settable property
+//    even though the field is read-only on the service side. The right fix is to add
+//    @visibility(Lifecycle.Read) on the spec property and drop the setter here. We have
+//    not yet verified whether the spec already marks `isRestoring` read-only (which would
+//    explain why the generated property has no setter). TODO: investigate and either
+//    drop the no-op setter (if @visibility is in place) or add @visibility to the spec.
+//
+// 3. DataStoreResourceId: spec should @@alternateType the list element from string →
+//    Azure.Core.armResourceIdentifier so the generator emits IReadOnlyList<ResourceIdentifier>
+//    natively. The wrapper here would then become redundant and can be deleted.
+//
+// All three cleanups are blocked by the same pre-existing duplicate-name collision that
+// prevents NetApp regen on this branch (see Custom/Models/NetAppVolumeExportPolicyRule.cs
+// header and Volume.tsp:832 / client.tsp:192).
 
 #nullable disable
 

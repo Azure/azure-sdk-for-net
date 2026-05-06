@@ -9,6 +9,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Mocking
 {
+    // Per PR review (deferred — both items need spec update + regen, currently blocked
+    // by the pre-existing duplicate-name collision in the spec — see
+    // Custom/Models/NetAppVolumeExportPolicyRule.cs header):
+    //
+    // 1. GetNetAppVolumeResource: once Volume is properly renamed in spec via
+    //    @@clientName(Volume, "NetAppVolume", "csharp") the generator should emit this
+    //    extension-getter automatically. Custom shim can then be deleted.
+    //
+    // 2. GetNetAppSubscriptionQuotaItemResource: the mgmt emitter does not auto-generate
+    //    ArmClient resource-getters for resources routed via @@clientLocation. Reviewer
+    //    suggested excluding csharp scope from that @@clientLocation in spec so the
+    //    generator emits the standard pattern. TODO: try `@@clientLocation(...; "!csharp")`
+    //    or move the routing to a csharp-only client.tsp with the location dropped, and
+    //    verify the generator then emits this getter.
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public partial class MockableNetAppArmClient : ArmResource
     {

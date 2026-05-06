@@ -12,6 +12,30 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
+    // Per PR review: "why are these properties needed in custom code?"
+    //
+    // The GENERATED NetAppVolumePatch (Generated/Models/NetAppVolumePatch.cs) exposes only
+    // an internal ctor, no public ctor, and only TWO public properties: `CoolAccess` and
+    // `SnapshotDirectoryVisible`. The new spec dropped the wider patch surface (the
+    // service no longer accepts these fields on PATCH).
+    //
+    // The 18 [EditorBrowsable(Never)] auto-properties below are source-compat stubs for
+    // the v1.15.0 GA surface (ServiceLevel, UsageThreshold, ProtocolTypes, ThroughputMibps,
+    // ExportRules, IsDefaultQuotaEnabled, DefaultUserQuotaInKiBs, DefaultGroupQuotaInKiBs,
+    // UnixPermissions, IsCoolAccessEnabled, CoolnessPeriod, CoolAccessRetrievalPolicy,
+    // CoolAccessTieringPolicy, IsSnapshotDirectoryVisible, SmbAccessBasedEnumeration,
+    // SmbNonBrowsable, ProtocolTypes, plus the AzureLocation ctor and DataProtection /
+    // SnapshotPolicyId helpers). They accept values but silently discard them — the wire
+    // request only carries the two real properties from the generated model.
+    //
+    // The IJsonModel/IPersistableModel implementations all throw NotSupportedException
+    // because this type's serialization is delegated to the generated base via
+    // ModelReaderWriter.Write, and re-implementing Write here would recurse infinitely.
+    //
+    // TODO (future cleanup): consider marking each stub [Obsolete] so callers see a
+    // build-time deprecation warning that their PATCH values are being dropped, since
+    // the silent no-op is arguably worse than a hard break. Deferred to keep this PR
+    // focused.
     /// <summary> Volume patch resource. </summary>
     public partial class NetAppVolumePatch : TrackedResourceData, IJsonModel<NetAppVolumePatch>, IPersistableModel<NetAppVolumePatch>
     {
