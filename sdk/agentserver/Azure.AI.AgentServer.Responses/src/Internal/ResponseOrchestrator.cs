@@ -7,6 +7,8 @@ using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -996,3 +998,5 @@ internal sealed class ResponseOrchestrator
         return (inputItems, historyItemIds);
     }
 }
+
+#pragma warning restore AZC0100

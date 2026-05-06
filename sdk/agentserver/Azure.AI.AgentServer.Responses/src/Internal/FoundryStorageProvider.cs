@@ -6,6 +6,8 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -221,3 +223,5 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         return StorageEnvelopeSerializer.DeserializeHistoryIds(body);
     }
 }
+
+#pragma warning restore AZC0100

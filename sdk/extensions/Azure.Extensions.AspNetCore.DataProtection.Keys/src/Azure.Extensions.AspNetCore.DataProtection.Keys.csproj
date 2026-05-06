@@ -8,7 +8,6 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.6.2</ApiCompatVersion>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <NoWarn>$(NoWarn);AZC0102</NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
@@ -21,5 +20,4 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
   </ItemGroup>
-
 </Project>

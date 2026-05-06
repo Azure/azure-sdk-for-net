@@ -6,6 +6,8 @@ using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -163,3 +165,5 @@ internal sealed class SseReplayResult : IResult
         }
     }
 }
+
+#pragma warning restore AZC0100

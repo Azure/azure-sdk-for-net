@@ -5,6 +5,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Core.Internal;
 
 /// <summary>
@@ -81,3 +83,5 @@ internal sealed partial class InboundRequestLoggingMiddleware : IMiddleware
     [LoggerMessage(Level = LogLevel.Warning, Message = "Inbound {Method} {Path} failed HTTP {StatusCode} in {DurationMs}ms (x-request-id: {XRequestId}, x-ms-client-request-id: {ClientRequestId}, trace-id: {TraceId})")]
     private partial void LogRequestFailed(string method, string path, int statusCode, long durationMs, string? xRequestId, string? clientRequestId, string? traceId);
 }
+
+#pragma warning restore AZC0100

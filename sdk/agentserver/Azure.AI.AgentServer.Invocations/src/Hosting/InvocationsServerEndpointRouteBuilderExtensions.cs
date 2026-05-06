@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Invocations;
 
 /// <summary>
@@ -81,3 +83,5 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
         return group;
     }
 }
+
+#pragma warning restore AZC0100

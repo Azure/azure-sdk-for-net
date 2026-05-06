@@ -6,6 +6,8 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Responses.Models;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -112,3 +114,5 @@ internal sealed class SseWriter : IDisposable
         _writeLock.Dispose();
     }
 }
+
+#pragma warning restore AZC0100

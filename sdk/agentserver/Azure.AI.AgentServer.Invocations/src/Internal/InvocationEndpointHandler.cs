@@ -5,6 +5,8 @@ using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Invocations.Internal;
 
 /// <summary>
@@ -163,3 +165,5 @@ internal sealed class InvocationEndpointHandler
         }
     }
 }
+
+#pragma warning restore AZC0100

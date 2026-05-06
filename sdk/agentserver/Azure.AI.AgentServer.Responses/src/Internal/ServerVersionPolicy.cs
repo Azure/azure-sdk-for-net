@@ -5,6 +5,8 @@ using Azure.AI.AgentServer.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -68,3 +70,5 @@ internal sealed class ServerVersionPolicy : HttpPipelinePolicy
         }
     }
 }
+
+#pragma warning restore AZC0100

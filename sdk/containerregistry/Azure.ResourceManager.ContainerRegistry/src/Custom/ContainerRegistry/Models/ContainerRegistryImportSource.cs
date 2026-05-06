@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
+#pragma warning disable CS0618 // Type or member is obsolete - intentional backward compatibility wrapper
     public partial class ContainerRegistryImportSource
     {
         /// <summary> The address of the source registry (e.g. 'mcr.microsoft.com'). </summary>
@@ -26,4 +27,5 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             set => RegistryUri = value == null ? null : new Uri(value);
         }
     }
+#pragma warning restore CS0618
 }

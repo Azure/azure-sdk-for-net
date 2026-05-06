@@ -7,6 +7,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -244,3 +246,5 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
     [LoggerMessage(Level = LogLevel.Error, Message = "Foundry storage {Method} {Uri} completed with no response and no exception after {DurationMs}ms — pipeline may have been short-circuited (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent})")]
     private partial void LogTransportFailureNoException(string method, string uri, long durationMs, string clientRequestId, string? traceParent);
 }
+
+#pragma warning restore AZC0100
