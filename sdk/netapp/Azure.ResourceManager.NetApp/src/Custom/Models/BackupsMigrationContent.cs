@@ -8,10 +8,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    // Backward-compat: BackupsMigrationContent is custom because the previous SDK exposed both a
-    // string ctor and a (deprecated) ResourceIdentifier ctor for `backupVaultId`. The generated
-    // model only emits the `string` ctor (matching the spec's `@@alternateType` to string), so
-    // we add the EBV-hidden ResourceIdentifier overload for source compatibility.
+    // Backward-compat: the GENERATED `BackupsMigrationContent` (Generated/Models/BackupsMigrationContent.cs)
+    // exposes ONLY an `internal` constructor — there is no way for users to construct it.
+    // The custom string ctor below is therefore required to expose a public construction
+    // path at all. The deprecated ResourceIdentifier overload is then retained on top of
+    // that for v1.15 source-compat (GA used a ResourceIdentifier-typed `BackupVaultId`).
     public partial class BackupsMigrationContent
     {
         /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>

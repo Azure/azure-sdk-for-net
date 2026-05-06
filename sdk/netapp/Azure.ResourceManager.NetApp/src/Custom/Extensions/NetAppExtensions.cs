@@ -128,10 +128,13 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Gets the region info resources for a subscription and location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("GetRegionInfoResources is not supported. Use GetRegionInfoResource instead.", false)]
+#pragma warning disable CS0618
         public static RegionInfoResourceCollection GetRegionInfoResources(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             return GetMockableNetAppSubscriptionResource(subscriptionResource).GetRegionInfoResources(location);
         }
+#pragma warning restore CS0618
 
         /// <summary> Gets a region info resource. </summary>
         [ForwardsClientCalls]

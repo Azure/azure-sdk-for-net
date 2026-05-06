@@ -12,6 +12,11 @@ namespace Azure.ResourceManager.NetApp.Models
     // declares it `ipAddress` so the generator emits `IpAddress`. @@clientName could rename
     // it to "IPAddress" but that would *break* GA users still calling `IpAddress`; keep both
     // by aliasing here.
+    //
+    // TODO: tracked by https://github.com/Azure/azure-sdk-for-net/issues/58989 — once the
+    // spec is updated to type IP fields as Azure.Core.ipV4Address (so the generator emits
+    // `IPAddress` typed as System.Net.IPAddress directly), revisit whether this casing
+    // shim is still needed.
     public partial class NetAppVolumeMountTarget
     {
         /// <summary> The mount target's IPv4 address (legacy alias for <see cref="IpAddress"/>). </summary>

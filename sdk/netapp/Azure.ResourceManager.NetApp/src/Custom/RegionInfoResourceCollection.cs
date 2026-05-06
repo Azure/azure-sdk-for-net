@@ -14,11 +14,13 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    // RegionInfoResourceCollection retained from the GA SDK. The new spec replaces this
-    // subscription-region-scoped collection with a single RegionInfoResource (subscription-scoped
-    // queryRegionInfo action). Members throw — callers should migrate.
+    // Per PR review: every member here throws — mark the type itself [Obsolete] (with
+    // error: true) so consumers see a build-time error instead of discovering it at
+    // runtime. The type is retained so existing user code compiles after a package
+    // upgrade, but using it must be flagged.
     /// <summary> Legacy region-info collection (replaced by <see cref="RegionInfoResource"/>). </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("The RegionInfoResourceCollection type is no longer supported because the resource scope changed in the new API. Use RegionInfoResource directly.", false)]
     public partial class RegionInfoResourceCollection : ArmCollection, IEnumerable<RegionInfoResource>, IAsyncEnumerable<RegionInfoResource>
     {
         /// <summary> Initializes a new instance for mocking. </summary>

@@ -189,7 +189,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("GetRegionInfoResources is not supported. Use GetRegionInfoResource instead.", false)]
+#pragma warning disable CS0618
         public virtual RegionInfoResourceCollection GetRegionInfoResources(AzureLocation location)
+#pragma warning restore CS0618
         {
             throw new NotSupportedException("GetRegionInfoResources is not supported. Use GetRegionInfoResource instead.");
         }
