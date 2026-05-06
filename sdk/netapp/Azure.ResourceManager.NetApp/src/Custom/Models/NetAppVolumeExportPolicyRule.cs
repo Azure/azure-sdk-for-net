@@ -7,11 +7,21 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    // Backward compatibility: v1.15.0 exposed the protocol/permission flags with bare
-    // names (UnixReadOnly, Cifs, Nfsv3, etc.). They were renamed in this migration to
-    // the `Is...`/`Allow...Protocol` style for naming consistency. The old names are
-    // preserved here as `[EditorBrowsable(Never)]` forwarding shims so existing user
-    // code continues to compile while new code uses the renamed properties.
+    // FINDING (2026-05): The header comment previously claimed v1.15.0 exposed bare
+    // names (UnixReadOnly, Cifs, Nfsv3, etc.) and that these shims preserve backcompat
+    // for that surface. That premise is INCORRECT. Inspection of the v1.15.0 GA tag
+    // (Azure.ResourceManager.NetApp_1.15.0) shows the released API already used
+    // `IsUnixReadOnly`, `IsKerberos5*ReadOnly/ReadWrite`, `AllowCifsProtocol`,
+    // `AllowNfsV3Protocol`, `AllowNfsV41Protocol` — i.e. the SAME names the new
+    // generator currently produces. The bare-name properties below were never part of
+    // any released NetApp SDK surface, so they are NOT required for ApiCompat.
+    //
+    // This whole file should be deleted as part of a follow-up regen pass. It is left
+    // in place for now only because removing it forces a full regen, and the spec
+    // currently has a duplicate `@clientName("NetAppVolumeExportPolicyRule", "csharp")`
+    // collision (see Volume.tsp:832 vs client.tsp:192) that blocks regen until the
+    // spec PR is updated. New code (tests, samples, customizations) MUST use the
+    // generated `Is*` / `Allow*Protocol` names rather than the shims below.
     public partial class NetAppVolumeExportPolicyRule
     {
         // Formerly UnixReadOnly; renamed to IsUnixReadOnly.

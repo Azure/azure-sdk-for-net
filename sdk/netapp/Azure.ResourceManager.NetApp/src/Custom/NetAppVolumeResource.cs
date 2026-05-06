@@ -69,6 +69,16 @@ namespace Azure.ResourceManager.NetApp
         public virtual Task<Response<NetAppRestoreStatus>> GetVolumeLatestRestoreStatusBackupAsync(CancellationToken cancellationToken = default)
             => GetVolumeLatestRestoreStatusAsync(cancellationToken);
 
+        // FINDING (2026-05): The generated `ReplicationStatus` / `ReplicationStatusAsync`
+        // method names drop the `Get` verb prefix and are not idiomatic — v1.15.0 GA
+        // exposed `GetReplicationStatus` / `GetReplicationStatusAsync`. The preferred
+        // fix is a spec-side `@@clientName(Volumes.replicationStatus, "GetReplicationStatus", "csharp")`
+        // in client.tsp, which would make the obsolete forwarders below unnecessary.
+        // That fix is currently BLOCKED by a TCGC/generator regression: applying
+        // `@@clientName` to an `ArmResourceActionSync` operation drops the public
+        // method entirely, leaving only the internal `CreateGetReplicationStatusRequest`
+        // REST helper. Until the generator handles `@@clientName` on action operations
+        // correctly, these `[Obsolete]` shims are the only way to expose the GA name.
         /// <summary> Get the replication status for a volume. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future release. Use ReplicationStatus instead.", false)]
