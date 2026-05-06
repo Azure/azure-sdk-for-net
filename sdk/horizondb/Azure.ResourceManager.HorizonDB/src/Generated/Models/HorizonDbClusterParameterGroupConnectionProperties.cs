@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Connection information for HorizonDb parameter group. </summary>
-    public partial class HorizonDbClusterParameterGroupConnectionProperties
+    public partial class HorizonDBClusterParameterGroupConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterParameterGroupConnectionProperties"/>. </summary>
-        public HorizonDbClusterParameterGroupConnectionProperties()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterParameterGroupConnectionProperties"/>. </summary>
+        public HorizonDBClusterParameterGroupConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterParameterGroupConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterParameterGroupConnectionProperties"/>. </summary>
         /// <param name="id"> The resource ID of the connected parameter group. </param>
         /// <param name="syncStatus"> Indication of if parameter group is applied on HorizonDb resource. </param>
         /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbClusterParameterGroupConnectionProperties(ResourceIdentifier id, string syncStatus, bool? applyImmediately, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterParameterGroupConnectionProperties(ResourceIdentifier id, string syncStatus, bool? applyImmediately, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SyncStatus = syncStatus;

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary></summary>
-    internal partial class HorizonDbFirewallRuleOperationSource : IOperationSource<HorizonDbFirewallRuleResource>
+    internal partial class HorizonDBFirewallRuleOperationSource : IOperationSource<HorizonDBFirewallRuleResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal HorizonDbFirewallRuleOperationSource(ArmClient client)
+        internal HorizonDBFirewallRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        HorizonDbFirewallRuleResource IOperationSource<HorizonDbFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HorizonDBFirewallRuleResource IOperationSource<HorizonDBFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HorizonDbFirewallRuleData data = HorizonDbFirewallRuleData.DeserializeHorizonDbFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HorizonDbFirewallRuleResource(_client, data);
+            HorizonDBFirewallRuleData data = HorizonDBFirewallRuleData.DeserializeHorizonDBFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HorizonDBFirewallRuleResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<HorizonDbFirewallRuleResource> IOperationSource<HorizonDbFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HorizonDBFirewallRuleResource> IOperationSource<HorizonDBFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HorizonDbFirewallRuleData data = HorizonDbFirewallRuleData.DeserializeHorizonDbFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HorizonDbFirewallRuleResource(_client, data);
+            HorizonDBFirewallRuleData data = HorizonDBFirewallRuleData.DeserializeHorizonDBFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HorizonDBFirewallRuleResource(_client, data);
         }
     }
 }

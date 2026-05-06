@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary></summary>
-    public partial class HorizonDbFirewallRuleResource : IJsonModel<HorizonDbFirewallRuleData>
+    public partial class HorizonDBFirewallRuleResource : IJsonModel<HorizonDBFirewallRuleData>
     {
-        private static IJsonModel<HorizonDbFirewallRuleData> s_dataDeserializationInstance;
+        private static IJsonModel<HorizonDBFirewallRuleData> s_dataDeserializationInstance;
 
-        private static IJsonModel<HorizonDbFirewallRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HorizonDbFirewallRuleData();
+        private static IJsonModel<HorizonDBFirewallRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HorizonDBFirewallRuleData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HorizonDbFirewallRuleData>)Data).Write(writer, options);
+        void IJsonModel<HorizonDBFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HorizonDBFirewallRuleData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbFirewallRuleData IJsonModel<HorizonDbFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        HorizonDBFirewallRuleData IJsonModel<HorizonDBFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HorizonDbFirewallRuleData>(Data, options, AzureResourceManagerHorizonDBContext.Default);
+        BinaryData IPersistableModel<HorizonDBFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HorizonDBFirewallRuleData>(Data, options, AzureResourceManagerHorizonDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbFirewallRuleData IPersistableModel<HorizonDbFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HorizonDbFirewallRuleData>(data, options, AzureResourceManagerHorizonDBContext.Default);
+        HorizonDBFirewallRuleData IPersistableModel<HorizonDBFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HorizonDBFirewallRuleData>(data, options, AzureResourceManagerHorizonDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<HorizonDBFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

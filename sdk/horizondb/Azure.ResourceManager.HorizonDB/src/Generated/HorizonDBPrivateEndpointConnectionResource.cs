@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HorizonDbClusterResource"/> using the GetPrivateEndpointConnectionResources method.
+    /// A class representing a HorizonDBPrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HorizonDBPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HorizonDBClusterResource"/> using the GetHorizonDBPrivateEndpointConnections method.
     /// </summary>
-    public partial class PrivateEndpointConnectionResource : ArmResource
+    public partial class HorizonDBPrivateEndpointConnectionResource : ArmResource
     {
-        private readonly ClientDiagnostics _horizonDbPrivateEndpointConnectionsClientDiagnostics;
-        private readonly HorizonDbPrivateEndpointConnections _horizonDbPrivateEndpointConnectionsRestClient;
-        private readonly PrivateEndpointConnectionResourceData _data;
+        private readonly ClientDiagnostics _horizonDBPrivateEndpointConnectionsClientDiagnostics;
+        private readonly HorizonDBPrivateEndpointConnections _horizonDBPrivateEndpointConnectionsRestClient;
+        private readonly HorizonDBPrivateEndpointConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HorizonDb/clusters/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionResource for mocking. </summary>
-        protected PrivateEndpointConnectionResource()
+        /// <summary> Initializes a new instance of HorizonDBPrivateEndpointConnectionResource for mocking. </summary>
+        protected HorizonDBPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionResource(ArmClient client, PrivateEndpointConnectionResourceData data) : this(client, data.Id)
+        internal HorizonDBPrivateEndpointConnectionResource(ArmClient client, HorizonDBPrivateEndpointConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string privateEndpointConnectionResourceApiVersion);
-            _horizonDbPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDbPrivateEndpointConnectionsRestClient = new HorizonDbPrivateEndpointConnections(_horizonDbPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionResourceApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(ResourceType, out string horizonDBPrivateEndpointConnectionApiVersion);
+            _horizonDBPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
+            _horizonDBPrivateEndpointConnectionsRestClient = new HorizonDBPrivateEndpointConnections(_horizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, horizonDBPrivateEndpointConnectionApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HorizonDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual PrivateEndpointConnectionResourceData Data
+        public virtual HorizonDBPrivateEndpointConnectionData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HorizonDBPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbPrivateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _horizonDBPrivateEndpointConnectionsClientDiagnostics.CreateScope("HorizonDBPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PrivateEndpointConnectionResourceData> response = Response.FromValue(PrivateEndpointConnectionResourceData.FromResponse(result), result);
+                Response<HorizonDBPrivateEndpointConnectionData> response = Response.FromValue(HorizonDBPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HorizonDBPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDbPrivateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _horizonDBPrivateEndpointConnectionsClientDiagnostics.CreateScope("HorizonDBPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _horizonDBPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PrivateEndpointConnectionResourceData> response = Response.FromValue(PrivateEndpointConnectionResourceData.FromResponse(result), result);
+                Response<HorizonDBPrivateEndpointConnectionData> response = Response.FromValue(HorizonDBPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -1,6 +1,6 @@
 directory: specification/horizondb/resource-manager/Microsoft.HorizonDb/HorizonDb
-commit: 5685afa7f69ca476bf06b723baa4af53b721a8e3
+commit: 0d020df3ebc7b87c94655f4731125bb85de0745f
 repo: Azure/azure-rest-api-specs
-additionalDirectories: 
+additionalDirectories:
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

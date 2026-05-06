@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbPrivateEndpointConnections
+    internal partial class HorizonDBPrivateEndpointConnections
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of HorizonDbPrivateEndpointConnections for mocking. </summary>
-        protected HorizonDbPrivateEndpointConnections()
+        /// <summary> Initializes a new instance of HorizonDBPrivateEndpointConnections for mocking. </summary>
+        protected HorizonDBPrivateEndpointConnections()
         {
         }
 
-        /// <summary> Initializes a new instance of HorizonDbPrivateEndpointConnections. </summary>
+        /// <summary> Initializes a new instance of HorizonDBPrivateEndpointConnections. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal HorizonDbPrivateEndpointConnections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal HorizonDBPrivateEndpointConnections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HorizonDB
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointConnectionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdatePrivateEndpointConnectionRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointConnectionName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HorizonDB
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointConnectionName, RequestContext context)
+        internal HttpMessage CreateDeletePrivateEndpointConnectionRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointConnectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

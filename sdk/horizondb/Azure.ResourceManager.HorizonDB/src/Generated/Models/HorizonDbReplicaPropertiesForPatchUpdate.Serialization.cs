@@ -14,51 +14,51 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of a HorizonDb replica for update operations. </summary>
-    internal partial class HorizonDbReplicaPropertiesForPatchUpdate : IJsonModel<HorizonDbReplicaPropertiesForPatchUpdate>
+    internal partial class HorizonDBReplicaPropertiesForPatchUpdate : IJsonModel<HorizonDBReplicaPropertiesForPatchUpdate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbReplicaPropertiesForPatchUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HorizonDBReplicaPropertiesForPatchUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbReplicaPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBReplicaPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDbReplicaPropertiesForPatchUpdate(document.RootElement, options);
+                        return DeserializeHorizonDBReplicaPropertiesForPatchUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbReplicaPropertiesForPatchUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBReplicaPropertiesForPatchUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbReplicaPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBReplicaPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbReplicaPropertiesForPatchUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBReplicaPropertiesForPatchUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbReplicaPropertiesForPatchUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBReplicaPropertiesForPatchUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbReplicaPropertiesForPatchUpdate IPersistableModel<HorizonDbReplicaPropertiesForPatchUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HorizonDBReplicaPropertiesForPatchUpdate IPersistableModel<HorizonDBReplicaPropertiesForPatchUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbReplicaPropertiesForPatchUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBReplicaPropertiesForPatchUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbReplicaPropertiesForPatchUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBReplicaPropertiesForPatchUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbReplicaPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBReplicaPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbReplicaPropertiesForPatchUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBReplicaPropertiesForPatchUpdate)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Role))
             {
@@ -98,30 +98,30 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbReplicaPropertiesForPatchUpdate IJsonModel<HorizonDbReplicaPropertiesForPatchUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HorizonDBReplicaPropertiesForPatchUpdate IJsonModel<HorizonDBReplicaPropertiesForPatchUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbReplicaPropertiesForPatchUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HorizonDBReplicaPropertiesForPatchUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbReplicaPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBReplicaPropertiesForPatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbReplicaPropertiesForPatchUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBReplicaPropertiesForPatchUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDbReplicaPropertiesForPatchUpdate(document.RootElement, options);
+            return DeserializeHorizonDBReplicaPropertiesForPatchUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDbReplicaPropertiesForPatchUpdate DeserializeHorizonDbReplicaPropertiesForPatchUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBReplicaPropertiesForPatchUpdate DeserializeHorizonDBReplicaPropertiesForPatchUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ReplicaRole? role = default;
+            HorizonDBReplicaRole? role = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    role = new ReplicaRole(prop.Value.GetString());
+                    role = new HorizonDBReplicaRole(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDbReplicaPropertiesForPatchUpdate(role, additionalBinaryDataProperties);
+            return new HorizonDBReplicaPropertiesForPatchUpdate(role, additionalBinaryDataProperties);
         }
     }
 }

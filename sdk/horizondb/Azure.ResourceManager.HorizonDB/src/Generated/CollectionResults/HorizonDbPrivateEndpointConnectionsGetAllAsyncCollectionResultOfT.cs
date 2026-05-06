@@ -15,21 +15,21 @@ using Azure.ResourceManager.HorizonDB.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT : AsyncPageable<PrivateEndpointConnectionResourceData>
+    internal partial class HorizonDBPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT : AsyncPageable<HorizonDBPrivateEndpointConnectionData>
     {
-        private readonly HorizonDbPrivateEndpointConnections _client;
+        private readonly HorizonDBPrivateEndpointConnections _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _clusterName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of HorizonDbPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The HorizonDbPrivateEndpointConnections client used to send requests. </param>
+        /// <summary> Initializes a new instance of HorizonDBPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The HorizonDBPrivateEndpointConnections client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the HorizonDb cluster. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HorizonDbPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(HorizonDbPrivateEndpointConnections client, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public HorizonDBPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(HorizonDBPrivateEndpointConnections client, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.HorizonDB
             _context = context;
         }
 
-        /// <summary> Gets the pages of HorizonDbPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of HorizonDBPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of HorizonDbPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<PrivateEndpointConnectionResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of HorizonDBPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<HorizonDBPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HorizonDB
                     yield break;
                 }
                 PrivateEndpointConnectionResourceListResult result = PrivateEndpointConnectionResourceListResult.FromResponse(response);
-                yield return Page<PrivateEndpointConnectionResourceData>.FromValues((IReadOnlyList<PrivateEndpointConnectionResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HorizonDBPrivateEndpointConnectionData>.FromValues((IReadOnlyList<HorizonDBPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HorizonDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDBPrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

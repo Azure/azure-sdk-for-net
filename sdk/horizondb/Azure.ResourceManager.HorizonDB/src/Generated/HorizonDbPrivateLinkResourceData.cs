@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary> Represents the HorizonDb private link resource. </summary>
-    public partial class HorizonDbPrivateLinkResourceData : ResourceData
+    public partial class HorizonDBPrivateLinkResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateLinkResourceData"/>. </summary>
-        internal HorizonDbPrivateLinkResourceData()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResourceData"/>. </summary>
+        internal HorizonDBPrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal HorizonDbPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HorizonDBPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
+        internal HorizonDBPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HorizonDBPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

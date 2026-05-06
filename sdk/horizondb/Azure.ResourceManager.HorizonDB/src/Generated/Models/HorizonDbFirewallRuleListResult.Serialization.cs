@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (HorizonDbFirewallRuleData item in Value)
+            foreach (HorizonDBFirewallRuleData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            IList<HorizonDbFirewallRuleData> value = default;
+            IList<HorizonDBFirewallRuleData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<HorizonDbFirewallRuleData> array = new List<HorizonDbFirewallRuleData>();
+                    List<HorizonDBFirewallRuleData> array = new List<HorizonDBFirewallRuleData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HorizonDbFirewallRuleData.DeserializeHorizonDbFirewallRuleData(item, options));
+                        array.Add(HorizonDBFirewallRuleData.DeserializeHorizonDBFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

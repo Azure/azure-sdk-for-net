@@ -14,23 +14,23 @@ using Azure.ResourceManager.HorizonDB.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbFirewallRulesGetAllCollectionResultOfT : Pageable<HorizonDbFirewallRuleData>
+    internal partial class HorizonDBFirewallRulesGetAllCollectionResultOfT : Pageable<HorizonDBFirewallRuleData>
     {
-        private readonly HorizonDbFirewallRules _client;
+        private readonly HorizonDBFirewallRules _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _clusterName;
         private readonly string _poolName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of HorizonDbFirewallRulesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The HorizonDbFirewallRules client used to send requests. </param>
+        /// <summary> Initializes a new instance of HorizonDBFirewallRulesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The HorizonDBFirewallRules client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the HorizonDb cluster. </param>
         /// <param name="poolName"> The name of the HorizonDb pool. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HorizonDbFirewallRulesGetAllCollectionResultOfT(HorizonDbFirewallRules client, Guid subscriptionId, string resourceGroupName, string clusterName, string poolName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public HorizonDBFirewallRulesGetAllCollectionResultOfT(HorizonDBFirewallRules client, Guid subscriptionId, string resourceGroupName, string clusterName, string poolName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.HorizonDB
             _context = context;
         }
 
-        /// <summary> Gets the pages of HorizonDbFirewallRulesGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of HorizonDBFirewallRulesGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of HorizonDbFirewallRulesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<HorizonDbFirewallRuleData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of HorizonDBFirewallRulesGetAllCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<HorizonDBFirewallRuleData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HorizonDB
                     yield break;
                 }
                 HorizonDbFirewallRuleListResult result = HorizonDbFirewallRuleListResult.FromResponse(response);
-                yield return Page<HorizonDbFirewallRuleData>.FromValues((IReadOnlyList<HorizonDbFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HorizonDBFirewallRuleData>.FromValues((IReadOnlyList<HorizonDBFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HorizonDB
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _poolName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _clusterName, _poolName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDbFirewallRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.GetAll");
             scope.Start();
             try
             {

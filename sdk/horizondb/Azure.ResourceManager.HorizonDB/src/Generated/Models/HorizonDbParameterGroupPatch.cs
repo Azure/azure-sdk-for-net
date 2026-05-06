@@ -12,22 +12,22 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> HorizonDb parameter group for update operations. </summary>
-    public partial class HorizonDbParameterGroupPatch
+    public partial class HorizonDBParameterGroupPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupPatch"/>. </summary>
-        public HorizonDbParameterGroupPatch()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupPatch"/>. </summary>
+        public HorizonDBParameterGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDb parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbParameterGroupPatch(IDictionary<string, string> tags, HorizonDbParameterGroupPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupPatch(IDictionary<string, string> tags, HorizonDBParameterGroupPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The properties that can be updated for a HorizonDb parameter group. </summary>
-        public HorizonDbParameterGroupPropertiesForPatchUpdate Properties { get; set; }
+        public HorizonDBParameterGroupPropertiesForPatchUpdate Properties { get; set; }
     }
 }

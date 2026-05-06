@@ -18,68 +18,68 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary> Represents the HorizonDb replica. </summary>
-    public partial class HorizonDbReplicaData : ResourceData, IJsonModel<HorizonDbReplicaData>
+    public partial class HorizonDBReplicaData : ResourceData, IJsonModel<HorizonDBReplicaData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBReplicaData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDbReplicaData(document.RootElement, options);
+                        return DeserializeHorizonDBReplicaData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbReplicaData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBReplicaData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBReplicaData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbReplicaData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBReplicaData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbReplicaData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBReplicaData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbReplicaData IPersistableModel<HorizonDbReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HorizonDbReplicaData)PersistableModelCreateCore(data, options);
+        HorizonDBReplicaData IPersistableModel<HorizonDBReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HorizonDBReplicaData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="horizonDbReplicaData"> The <see cref="HorizonDbReplicaData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HorizonDbReplicaData horizonDbReplicaData)
+        /// <param name="horizonDBReplicaData"> The <see cref="HorizonDBReplicaData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HorizonDBReplicaData horizonDBReplicaData)
         {
-            if (horizonDbReplicaData == null)
+            if (horizonDBReplicaData == null)
             {
                 return null;
             }
-            return RequestContent.Create(horizonDbReplicaData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(horizonDBReplicaData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDbReplicaData"/> from. </param>
-        internal static HorizonDbReplicaData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBReplicaData"/> from. </param>
+        internal static HorizonDBReplicaData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHorizonDbReplicaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHorizonDBReplicaData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBReplicaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbReplicaData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBReplicaData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.HorizonDB
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbReplicaData IJsonModel<HorizonDbReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HorizonDbReplicaData)JsonModelCreateCore(ref reader, options);
+        HorizonDBReplicaData IJsonModel<HorizonDBReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HorizonDBReplicaData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBReplicaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbReplicaData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBReplicaData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDbReplicaData(document.RootElement, options);
+            return DeserializeHorizonDBReplicaData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDbReplicaData DeserializeHorizonDbReplicaData(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBReplicaData DeserializeHorizonDBReplicaData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HorizonDB
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            HorizonDbReplicaProperties properties = default;
+            HorizonDBReplicaProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         continue;
                     }
-                    properties = HorizonDbReplicaProperties.DeserializeHorizonDbReplicaProperties(prop.Value, options);
+                    properties = HorizonDBReplicaProperties.DeserializeHorizonDBReplicaProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HorizonDB
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDbReplicaData(
+            return new HorizonDBReplicaData(
                 id,
                 name,
                 resourceType,

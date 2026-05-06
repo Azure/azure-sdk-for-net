@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary></summary>
-    internal partial class HorizonDbReplicaOperationSource : IOperationSource<HorizonDbReplicaResource>
+    internal partial class HorizonDBReplicaOperationSource : IOperationSource<HorizonDBReplicaResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal HorizonDbReplicaOperationSource(ArmClient client)
+        internal HorizonDBReplicaOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        HorizonDbReplicaResource IOperationSource<HorizonDbReplicaResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HorizonDBReplicaResource IOperationSource<HorizonDBReplicaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HorizonDbReplicaData data = HorizonDbReplicaData.DeserializeHorizonDbReplicaData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HorizonDbReplicaResource(_client, data);
+            HorizonDBReplicaData data = HorizonDBReplicaData.DeserializeHorizonDBReplicaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HorizonDBReplicaResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<HorizonDbReplicaResource> IOperationSource<HorizonDbReplicaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HorizonDBReplicaResource> IOperationSource<HorizonDBReplicaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HorizonDbReplicaData data = HorizonDbReplicaData.DeserializeHorizonDbReplicaData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HorizonDbReplicaResource(_client, data);
+            HorizonDBReplicaData data = HorizonDBReplicaData.DeserializeHorizonDBReplicaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HorizonDBReplicaResource(_client, data);
         }
     }
 }

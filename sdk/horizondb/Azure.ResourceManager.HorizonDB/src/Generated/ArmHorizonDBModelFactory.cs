@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDbClusterData"/> instance for mocking. </returns>
-        public static HorizonDbClusterData HorizonDbClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDbClusterProperties properties = default)
+        /// <returns> A new <see cref="HorizonDB.HorizonDBClusterData"/> instance for mocking. </returns>
+        public static HorizonDBClusterData HorizonDBClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBClusterProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDbClusterData(
+            return new HorizonDBClusterData(
                 id,
                 name,
                 resourceType,
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
         /// <param name="zonePlacementPolicy"> Defines how replicas are placed across availability zones. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
-        /// <returns> A new <see cref="Models.HorizonDbClusterProperties"/> instance for mocking. </returns>
-        public static HorizonDbClusterProperties HorizonDbClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, CreateModeCluster? createMode = default, DateTimeOffset? pointInTimeUTC = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, PublicNetworkAccessState? publicNetworkAccess = default, State? state = default, string fullyQualifiedDomainName = default, string readonlyEndpoint = default, ProvisioningState? provisioningState = default, ZonePlacementPolicy? zonePlacementPolicy = default, HorizonDbClusterParameterGroupConnectionProperties parameterGroup = default)
+        /// <returns> A new <see cref="Models.HorizonDBClusterProperties"/> instance for mocking. </returns>
+        public static HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, HorizonDBCreateModeCluster? createMode = default, DateTimeOffset? pointInTimeUTC = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, HorizonDBPublicNetworkAccessState? publicNetworkAccess = default, HorizonDBClusterState? state = default, string fullyQualifiedDomainName = default, string readonlyEndpoint = default, HorizonDBProvisioningState? provisioningState = default, HorizonDBZonePlacementPolicy? zonePlacementPolicy = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default)
         {
-            return new HorizonDbClusterProperties(
+            return new HorizonDBClusterProperties(
                 administratorLogin,
                 administratorLoginPassword,
                 version,
@@ -88,21 +88,21 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="id"> The resource ID of the connected parameter group. </param>
         /// <param name="syncStatus"> Indication of if parameter group is applied on HorizonDb resource. </param>
         /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
-        /// <returns> A new <see cref="Models.HorizonDbClusterParameterGroupConnectionProperties"/> instance for mocking. </returns>
-        public static HorizonDbClusterParameterGroupConnectionProperties HorizonDbClusterParameterGroupConnectionProperties(ResourceIdentifier id = default, string syncStatus = default, bool? applyImmediately = default)
+        /// <returns> A new <see cref="Models.HorizonDBClusterParameterGroupConnectionProperties"/> instance for mocking. </returns>
+        public static HorizonDBClusterParameterGroupConnectionProperties HorizonDBClusterParameterGroupConnectionProperties(ResourceIdentifier id = default, string syncStatus = default, bool? applyImmediately = default)
         {
-            return new HorizonDbClusterParameterGroupConnectionProperties(id, syncStatus, applyImmediately, additionalBinaryDataProperties: null);
+            return new HorizonDBClusterParameterGroupConnectionProperties(id, syncStatus, applyImmediately, additionalBinaryDataProperties: null);
         }
 
         /// <summary> HorizonDb cluster for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDb cluster. </param>
-        /// <returns> A new <see cref="Models.HorizonDbClusterPatch"/> instance for mocking. </returns>
-        public static HorizonDbClusterPatch HorizonDbClusterPatch(IDictionary<string, string> tags = default, HorizonDbClusterPropertiesForPatchUpdate properties = default)
+        /// <returns> A new <see cref="Models.HorizonDBClusterPatch"/> instance for mocking. </returns>
+        public static HorizonDBClusterPatch HorizonDBClusterPatch(IDictionary<string, string> tags = default, HorizonDBClusterPropertiesForPatchUpdate properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDbClusterPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new HorizonDBClusterPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the HorizonDb pool. </summary>
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDbPoolData"/> instance for mocking. </returns>
-        public static HorizonDbPoolData HorizonDbPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDbPoolProperties properties = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="HorizonDB.HorizonDBPoolData"/> instance for mocking. </returns>
+        public static HorizonDBPoolData HorizonDBPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBPoolProperties properties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDbPoolData(
+            return new HorizonDBPoolData(
                 id,
                 name,
                 resourceType,
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="version"> The version of the HorizonDb pool. </param>
         /// <param name="createMode"> The create mode for the pool. </param>
         /// <param name="provisioningState"> The provisioning state of the pool. </param>
-        /// <returns> A new <see cref="Models.HorizonDbPoolProperties"/> instance for mocking. </returns>
-        public static HorizonDbPoolProperties HorizonDbPoolProperties(AzureLocation? location = default, State? state = default, int? replicaCount = default, string version = default, CreateModePool? createMode = default, ProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.HorizonDBPoolProperties"/> instance for mocking. </returns>
+        public static HorizonDBPoolProperties HorizonDBPoolProperties(AzureLocation? location = default, HorizonDBClusterState? state = default, int? replicaCount = default, string version = default, HorizonDBCreateModePool? createMode = default, HorizonDBProvisioningState? provisioningState = default)
         {
-            return new HorizonDbPoolProperties(
+            return new HorizonDBPoolProperties(
                 location,
                 state,
                 replicaCount,
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDbReplicaData"/> instance for mocking. </returns>
-        public static HorizonDbReplicaData HorizonDbReplicaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDbReplicaProperties properties = default)
+        /// <returns> A new <see cref="HorizonDB.HorizonDBReplicaData"/> instance for mocking. </returns>
+        public static HorizonDBReplicaData HorizonDBReplicaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBReplicaProperties properties = default)
         {
-            return new HorizonDbReplicaData(
+            return new HorizonDBReplicaData(
                 id,
                 name,
                 resourceType,
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the replica. </param>
         /// <param name="availabilityZone"> The availability zone of the replica. </param>
         /// <param name="provisioningState"> The provisioning state of the replica. </param>
-        /// <returns> A new <see cref="Models.HorizonDbReplicaProperties"/> instance for mocking. </returns>
-        public static HorizonDbReplicaProperties HorizonDbReplicaProperties(ReplicaRole? role = default, State? status = default, string fullyQualifiedDomainName = default, string availabilityZone = default, ProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.HorizonDBReplicaProperties"/> instance for mocking. </returns>
+        public static HorizonDBReplicaProperties HorizonDBReplicaProperties(HorizonDBReplicaRole? role = default, HorizonDBClusterState? status = default, string fullyQualifiedDomainName = default, string availabilityZone = default, HorizonDBProvisioningState? provisioningState = default)
         {
-            return new HorizonDbReplicaProperties(
+            return new HorizonDBReplicaProperties(
                 role,
                 status,
                 fullyQualifiedDomainName,
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDbFirewallRuleData"/> instance for mocking. </returns>
-        public static HorizonDbFirewallRuleData HorizonDbFirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDbFirewallRuleProperties properties = default)
+        /// <returns> A new <see cref="HorizonDB.HorizonDBFirewallRuleData"/> instance for mocking. </returns>
+        public static HorizonDBFirewallRuleData HorizonDBFirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBFirewallRuleProperties properties = default)
         {
-            return new HorizonDbFirewallRuleData(
+            return new HorizonDBFirewallRuleData(
                 id,
                 name,
                 resourceType,
@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="endIpAddress"> The end IP address of the firewall rule (IPv4). </param>
         /// <param name="description"> The description of the HorizonDb firewall rule. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
-        /// <returns> A new <see cref="Models.HorizonDbFirewallRuleProperties"/> instance for mocking. </returns>
-        public static HorizonDbFirewallRuleProperties HorizonDbFirewallRuleProperties(string startIpAddress = default, string endIpAddress = default, string description = default, ProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.HorizonDBFirewallRuleProperties"/> instance for mocking. </returns>
+        public static HorizonDBFirewallRuleProperties HorizonDBFirewallRuleProperties(string startIpAddress = default, string endIpAddress = default, string description = default, HorizonDBProvisioningState? provisioningState = default)
         {
-            return new HorizonDbFirewallRuleProperties(startIpAddress, endIpAddress, description, provisioningState, additionalBinaryDataProperties: null);
+            return new HorizonDBFirewallRuleProperties(startIpAddress, endIpAddress, description, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A private endpoint connection resource. </summary>
@@ -218,10 +218,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <returns> A new <see cref="HorizonDB.PrivateEndpointConnectionResourceData"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionResourceData PrivateEndpointConnectionResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        /// <returns> A new <see cref="HorizonDB.HorizonDBPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static HorizonDBPrivateEndpointConnectionData HorizonDBPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
         {
-            return new PrivateEndpointConnectionResourceData(
+            return new HorizonDBPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDbPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static HorizonDbPrivateLinkResourceData HorizonDbPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBPrivateLinkResourceProperties properties = default)
+        /// <returns> A new <see cref="HorizonDB.HorizonDBPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static HorizonDBPrivateLinkResourceData HorizonDBPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBPrivateLinkResourceProperties properties = default)
         {
-            return new HorizonDbPrivateLinkResourceData(
+            return new HorizonDBPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
@@ -299,12 +299,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDbParameterGroupData"/> instance for mocking. </returns>
-        public static HorizonDbParameterGroupData HorizonDbParameterGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDbParameterGroupProperties properties = default)
+        /// <returns> A new <see cref="HorizonDB.HorizonDBParameterGroupData"/> instance for mocking. </returns>
+        public static HorizonDBParameterGroupData HorizonDBParameterGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBParameterGroupProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDbParameterGroupData(
+            return new HorizonDBParameterGroupData(
                 id,
                 name,
                 resourceType,
@@ -322,12 +322,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="version"> Current version of the parameter group. </param>
         /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="provisioningState"> The provisioning state of the parameter group. </param>
-        /// <returns> A new <see cref="Models.HorizonDbParameterGroupProperties"/> instance for mocking. </returns>
-        public static HorizonDbParameterGroupProperties HorizonDbParameterGroupProperties(IEnumerable<ParameterProperties> parameters = default, string description = default, int? pgVersion = default, int? version = default, bool? applyImmediately = default, ProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.HorizonDBParameterGroupProperties"/> instance for mocking. </returns>
+        public static HorizonDBParameterGroupProperties HorizonDBParameterGroupProperties(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, int? pgVersion = default, int? version = default, bool? applyImmediately = default, HorizonDBProvisioningState? provisioningState = default)
         {
-            parameters ??= new ChangeTrackingList<ParameterProperties>();
+            parameters ??= new ChangeTrackingList<HorizonDBParameterProperties>();
 
-            return new HorizonDbParameterGroupProperties(
+            return new HorizonDBParameterGroupProperties(
                 parameters.ToList(),
                 description,
                 pgVersion,
@@ -347,10 +347,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="isReadOnly"> Whether the parameter is a read-only parameter. </param>
         /// <param name="documentationLink"> Link to parameter documentation. </param>
         /// <param name="unit"> The unit of measurement for the parameter. </param>
-        /// <returns> A new <see cref="Models.ParameterProperties"/> instance for mocking. </returns>
-        public static ParameterProperties ParameterProperties(string name = default, string description = default, string value = default, string dataType = default, string allowedValues = default, bool? isDynamic = default, bool? isReadOnly = default, Uri documentationLink = default, string unit = default)
+        /// <returns> A new <see cref="Models.HorizonDBParameterProperties"/> instance for mocking. </returns>
+        public static HorizonDBParameterProperties HorizonDBParameterProperties(string name = default, string description = default, string value = default, string dataType = default, string allowedValues = default, bool? isDynamic = default, bool? isReadOnly = default, Uri documentationLink = default, string unit = default)
         {
-            return new ParameterProperties(
+            return new HorizonDBParameterProperties(
                 name,
                 description,
                 value,
@@ -366,34 +366,34 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> HorizonDb parameter group for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDb parameter group. </param>
-        /// <returns> A new <see cref="Models.HorizonDbParameterGroupPatch"/> instance for mocking. </returns>
-        public static HorizonDbParameterGroupPatch HorizonDbParameterGroupPatch(IDictionary<string, string> tags = default, HorizonDbParameterGroupPropertiesForPatchUpdate properties = default)
+        /// <returns> A new <see cref="Models.HorizonDBParameterGroupPatch"/> instance for mocking. </returns>
+        public static HorizonDBParameterGroupPatch HorizonDBParameterGroupPatch(IDictionary<string, string> tags = default, HorizonDBParameterGroupPropertiesForPatchUpdate properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDbParameterGroupPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new HorizonDBParameterGroupPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Properties of a HorizonDb parameter group for update operations. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
         /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
-        /// <returns> A new <see cref="Models.HorizonDbParameterGroupPropertiesForPatchUpdate"/> instance for mocking. </returns>
-        public static HorizonDbParameterGroupPropertiesForPatchUpdate HorizonDbParameterGroupPropertiesForPatchUpdate(IEnumerable<ParameterProperties> parameters = default, string description = default, bool? applyImmediately = default)
+        /// <returns> A new <see cref="Models.HorizonDBParameterGroupPropertiesForPatchUpdate"/> instance for mocking. </returns>
+        public static HorizonDBParameterGroupPropertiesForPatchUpdate HorizonDBParameterGroupPropertiesForPatchUpdate(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, bool? applyImmediately = default)
         {
-            parameters ??= new ChangeTrackingList<ParameterProperties>();
+            parameters ??= new ChangeTrackingList<HorizonDBParameterProperties>();
 
-            return new HorizonDbParameterGroupPropertiesForPatchUpdate(parameters.ToList(), description, applyImmediately, additionalBinaryDataProperties: null);
+            return new HorizonDBParameterGroupPropertiesForPatchUpdate(parameters.ToList(), description, applyImmediately, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Connection information for HorizonDb parameter group. </summary>
         /// <param name="name"> The name of the connected resource. </param>
         /// <param name="id"> The resource ID of the connected resource. </param>
         /// <param name="type"> The type of the resource. </param>
-        /// <returns> A new <see cref="Models.HorizonDbParameterGroupConnectionProperties"/> instance for mocking. </returns>
-        public static HorizonDbParameterGroupConnectionProperties HorizonDbParameterGroupConnectionProperties(string name = default, ResourceIdentifier id = default, string @type = default)
+        /// <returns> A new <see cref="Models.HorizonDBParameterGroupConnectionProperties"/> instance for mocking. </returns>
+        public static HorizonDBParameterGroupConnectionProperties HorizonDBParameterGroupConnectionProperties(string name = default, ResourceIdentifier id = default, string @type = default)
         {
-            return new HorizonDbParameterGroupConnectionProperties(name, id, @type, additionalBinaryDataProperties: null);
+            return new HorizonDBParameterGroupConnectionProperties(name, id, @type, additionalBinaryDataProperties: null);
         }
     }
 }

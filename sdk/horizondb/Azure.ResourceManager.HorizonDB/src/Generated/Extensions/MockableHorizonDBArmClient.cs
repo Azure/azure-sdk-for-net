@@ -26,67 +26,67 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="HorizonDbClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HorizonDbClusterResource"/> object. </returns>
-        public virtual HorizonDbClusterResource GetHorizonDbClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBClusterResource"/> object. </returns>
+        public virtual HorizonDBClusterResource GetHorizonDBClusterResource(ResourceIdentifier id)
         {
-            HorizonDbClusterResource.ValidateResourceId(id);
-            return new HorizonDbClusterResource(Client, id);
+            HorizonDBClusterResource.ValidateResourceId(id);
+            return new HorizonDBClusterResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HorizonDbPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HorizonDbPoolResource"/> object. </returns>
-        public virtual HorizonDbPoolResource GetHorizonDbPoolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBPoolResource"/> object. </returns>
+        public virtual HorizonDBPoolResource GetHorizonDBPoolResource(ResourceIdentifier id)
         {
-            HorizonDbPoolResource.ValidateResourceId(id);
-            return new HorizonDbPoolResource(Client, id);
+            HorizonDBPoolResource.ValidateResourceId(id);
+            return new HorizonDBPoolResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HorizonDbReplicaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBReplicaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HorizonDbReplicaResource"/> object. </returns>
-        public virtual HorizonDbReplicaResource GetHorizonDbReplicaResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBReplicaResource"/> object. </returns>
+        public virtual HorizonDBReplicaResource GetHorizonDBReplicaResource(ResourceIdentifier id)
         {
-            HorizonDbReplicaResource.ValidateResourceId(id);
-            return new HorizonDbReplicaResource(Client, id);
+            HorizonDBReplicaResource.ValidateResourceId(id);
+            return new HorizonDBReplicaResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HorizonDbFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HorizonDbFirewallRuleResource"/> object. </returns>
-        public virtual HorizonDbFirewallRuleResource GetHorizonDbFirewallRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBFirewallRuleResource"/> object. </returns>
+        public virtual HorizonDBFirewallRuleResource GetHorizonDBFirewallRuleResource(ResourceIdentifier id)
         {
-            HorizonDbFirewallRuleResource.ValidateResourceId(id);
-            return new HorizonDbFirewallRuleResource(Client, id);
+            HorizonDBFirewallRuleResource.ValidateResourceId(id);
+            return new HorizonDBFirewallRuleResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual HorizonDBPrivateEndpointConnectionResource GetHorizonDBPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            HorizonDBPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new HorizonDBPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HorizonDbPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HorizonDbPrivateLinkResource"/> object. </returns>
-        public virtual HorizonDbPrivateLinkResource GetHorizonDbPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBPrivateLinkResource"/> object. </returns>
+        public virtual HorizonDBPrivateLinkResource GetHorizonDBPrivateLinkResource(ResourceIdentifier id)
         {
-            HorizonDbPrivateLinkResource.ValidateResourceId(id);
-            return new HorizonDbPrivateLinkResource(Client, id);
+            HorizonDBPrivateLinkResource.ValidateResourceId(id);
+            return new HorizonDBPrivateLinkResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HorizonDbParameterGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBParameterGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HorizonDbParameterGroupResource"/> object. </returns>
-        public virtual HorizonDbParameterGroupResource GetHorizonDbParameterGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBParameterGroupResource"/> object. </returns>
+        public virtual HorizonDBParameterGroupResource GetHorizonDBParameterGroupResource(ResourceIdentifier id)
         {
-            HorizonDbParameterGroupResource.ValidateResourceId(id);
-            return new HorizonDbParameterGroupResource(Client, id);
+            HorizonDBParameterGroupResource.ValidateResourceId(id);
+            return new HorizonDBParameterGroupResource(Client, id);
         }
     }
 }

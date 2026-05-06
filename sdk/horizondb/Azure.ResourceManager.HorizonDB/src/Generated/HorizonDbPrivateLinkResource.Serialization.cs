@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary></summary>
-    public partial class HorizonDbPrivateLinkResource : IJsonModel<HorizonDbPrivateLinkResourceData>
+    public partial class HorizonDBPrivateLinkResource : IJsonModel<HorizonDBPrivateLinkResourceData>
     {
-        private static IJsonModel<HorizonDbPrivateLinkResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<HorizonDBPrivateLinkResourceData> s_dataDeserializationInstance;
 
-        private static IJsonModel<HorizonDbPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HorizonDbPrivateLinkResourceData();
+        private static IJsonModel<HorizonDBPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HorizonDBPrivateLinkResourceData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HorizonDbPrivateLinkResourceData>)Data).Write(writer, options);
+        void IJsonModel<HorizonDBPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HorizonDBPrivateLinkResourceData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbPrivateLinkResourceData IJsonModel<HorizonDbPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        HorizonDBPrivateLinkResourceData IJsonModel<HorizonDBPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HorizonDbPrivateLinkResourceData>(Data, options, AzureResourceManagerHorizonDBContext.Default);
+        BinaryData IPersistableModel<HorizonDBPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HorizonDBPrivateLinkResourceData>(Data, options, AzureResourceManagerHorizonDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbPrivateLinkResourceData IPersistableModel<HorizonDbPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HorizonDbPrivateLinkResourceData>(data, options, AzureResourceManagerHorizonDBContext.Default);
+        HorizonDBPrivateLinkResourceData IPersistableModel<HorizonDBPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HorizonDBPrivateLinkResourceData>(data, options, AzureResourceManagerHorizonDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<HorizonDBPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HorizonDbPoolResource"/> and their operations.
-    /// Each <see cref="HorizonDbPoolResource"/> in the collection will belong to the same instance of <see cref="HorizonDbClusterResource"/>.
-    /// To get a <see cref="HorizonDbPoolCollection"/> instance call the GetHorizonDbPools method from an instance of <see cref="HorizonDbClusterResource"/>.
+    /// A class representing a collection of <see cref="HorizonDBPoolResource"/> and their operations.
+    /// Each <see cref="HorizonDBPoolResource"/> in the collection will belong to the same instance of <see cref="HorizonDBClusterResource"/>.
+    /// To get a <see cref="HorizonDBPoolCollection"/> instance call the GetHorizonDBPools method from an instance of <see cref="HorizonDBClusterResource"/>.
     /// </summary>
-    public partial class HorizonDbPoolCollection : ArmCollection, IEnumerable<HorizonDbPoolResource>, IAsyncEnumerable<HorizonDbPoolResource>
+    public partial class HorizonDBPoolCollection : ArmCollection, IEnumerable<HorizonDBPoolResource>, IAsyncEnumerable<HorizonDBPoolResource>
     {
-        private readonly ClientDiagnostics _horizonDbPoolsClientDiagnostics;
-        private readonly HorizonDbPools _horizonDbPoolsRestClient;
+        private readonly ClientDiagnostics _horizonDBPoolsClientDiagnostics;
+        private readonly HorizonDBPools _horizonDBPoolsRestClient;
 
-        /// <summary> Initializes a new instance of HorizonDbPoolCollection for mocking. </summary>
-        protected HorizonDbPoolCollection()
+        /// <summary> Initializes a new instance of HorizonDBPoolCollection for mocking. </summary>
+        protected HorizonDBPoolCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPoolCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPoolCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HorizonDbPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HorizonDBPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HorizonDbPoolResource.ResourceType, out string horizonDbPoolApiVersion);
-            _horizonDbPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDbPoolResource.ResourceType.Namespace, Diagnostics);
-            _horizonDbPoolsRestClient = new HorizonDbPools(_horizonDbPoolsClientDiagnostics, Pipeline, Endpoint, horizonDbPoolApiVersion ?? "2026-01-20-preview");
+            TryGetApiVersion(HorizonDBPoolResource.ResourceType, out string horizonDBPoolApiVersion);
+            _horizonDBPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBPoolResource.ResourceType.Namespace, Diagnostics);
+            _horizonDBPoolsRestClient = new HorizonDBPools(_horizonDBPoolsClientDiagnostics, Pipeline, Endpoint, horizonDBPoolApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.HorizonDB
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HorizonDbClusterResource.ResourceType)
+            if (id.ResourceType != HorizonDBClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDbClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HorizonDBClusterResource.ResourceType), id);
             }
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HorizonDbPoolResource>> GetAsync(string poolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBPoolResource>> GetAsync(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using DiagnosticScope scope = _horizonDbPoolsClientDiagnostics.CreateScope("HorizonDbPoolCollection.Get");
+            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolCollection.Get");
             scope.Start();
             try
             {
@@ -87,14 +87,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDbPoolData> response = Response.FromValue(HorizonDbPoolData.FromResponse(result), result);
+                Response<HorizonDBPoolData> response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HorizonDbPoolResource> Get(string poolName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBPoolResource> Get(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using DiagnosticScope scope = _horizonDbPoolsClientDiagnostics.CreateScope("HorizonDbPoolCollection.Get");
+            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolCollection.Get");
             scope.Start();
             try
             {
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDbPoolData> response = Response.FromValue(HorizonDbPoolData.FromResponse(result), result);
+                Response<HorizonDBPoolData> response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HorizonDbPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HorizonDBPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDbPoolData, HorizonDbPoolResource>(new HorizonDbPoolsGetAllAsyncCollectionResultOfT(_horizonDbPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDbPoolResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBPoolData, HorizonDBPoolResource>(new HorizonDBPoolsGetAllAsyncCollectionResultOfT(_horizonDBPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDBPoolResource(Client, data));
         }
 
         /// <summary>
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDbPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HorizonDbPoolResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HorizonDBPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDbPoolData, HorizonDbPoolResource>(new HorizonDbPoolsGetAllCollectionResultOfT(_horizonDbPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDbPoolResource(Client, data));
+            return new PageableWrapper<HorizonDBPoolData, HorizonDBPoolResource>(new HorizonDBPoolsGetAllCollectionResultOfT(_horizonDBPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HorizonDBPoolResource(Client, data));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using DiagnosticScope scope = _horizonDbPoolsClientDiagnostics.CreateScope("HorizonDbPoolCollection.Exists");
+            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolCollection.Exists");
             scope.Start();
             try
             {
@@ -241,17 +241,17 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HorizonDbPoolData> response = default;
+                Response<HorizonDBPoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbPoolData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbPoolData)null, result);
+                        response = Response.FromValue((HorizonDBPoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using DiagnosticScope scope = _horizonDbPoolsClientDiagnostics.CreateScope("HorizonDbPoolCollection.Exists");
+            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolCollection.Exists");
             scope.Start();
             try
             {
@@ -298,17 +298,17 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HorizonDbPoolData> response = default;
+                Response<HorizonDBPoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbPoolData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbPoolData)null, result);
+                        response = Response.FromValue((HorizonDBPoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -343,11 +343,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<HorizonDbPoolResource>> GetIfExistsAsync(string poolName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<HorizonDBPoolResource>> GetIfExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using DiagnosticScope scope = _horizonDbPoolsClientDiagnostics.CreateScope("HorizonDbPoolCollection.GetIfExists");
+            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -355,26 +355,26 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HorizonDbPoolData> response = default;
+                Response<HorizonDBPoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbPoolData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbPoolData)null, result);
+                        response = Response.FromValue((HorizonDBPoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<HorizonDbPoolResource>(response.GetRawResponse());
+                    return new NoValueResponse<HorizonDBPoolResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<HorizonDbPoolResource> GetIfExists(string poolName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<HorizonDBPoolResource> GetIfExists(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using DiagnosticScope scope = _horizonDbPoolsClientDiagnostics.CreateScope("HorizonDbPoolCollection.GetIfExists");
+            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -416,26 +416,26 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDbPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HorizonDbPoolData> response = default;
+                Response<HorizonDBPoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HorizonDbPoolData.FromResponse(result), result);
+                        response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HorizonDbPoolData)null, result);
+                        response = Response.FromValue((HorizonDBPoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<HorizonDbPoolResource>(response.GetRawResponse());
+                    return new NoValueResponse<HorizonDBPoolResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new HorizonDbPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.HorizonDB
             }
         }
 
-        IEnumerator<HorizonDbPoolResource> IEnumerable<HorizonDbPoolResource>.GetEnumerator()
+        IEnumerator<HorizonDBPoolResource> IEnumerable<HorizonDBPoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<HorizonDbPoolResource> IAsyncEnumerable<HorizonDbPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HorizonDBPoolResource> IAsyncEnumerable<HorizonDBPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

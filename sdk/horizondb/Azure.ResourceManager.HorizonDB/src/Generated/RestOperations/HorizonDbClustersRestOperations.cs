@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbClusters
+    internal partial class HorizonDBClusters
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of HorizonDbClusters for mocking. </summary>
-        protected HorizonDbClusters()
+        /// <summary> Initializes a new instance of HorizonDBClusters for mocking. </summary>
+        protected HorizonDBClusters()
         {
         }
 
-        /// <summary> Initializes a new instance of HorizonDbClusters. </summary>
+        /// <summary> Initializes a new instance of HorizonDBClusters. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal HorizonDbClusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal HorizonDBClusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

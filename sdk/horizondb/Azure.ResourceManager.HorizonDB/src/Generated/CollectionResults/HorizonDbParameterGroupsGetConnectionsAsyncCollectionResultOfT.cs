@@ -15,21 +15,21 @@ using Azure.ResourceManager.HorizonDB.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbParameterGroupsGetConnectionsAsyncCollectionResultOfT : AsyncPageable<HorizonDbParameterGroupConnectionProperties>
+    internal partial class HorizonDBParameterGroupsGetConnectionsAsyncCollectionResultOfT : AsyncPageable<HorizonDBParameterGroupConnectionProperties>
     {
-        private readonly HorizonDbParameterGroups _client;
+        private readonly HorizonDBParameterGroups _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _parameterGroupName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of HorizonDbParameterGroupsGetConnectionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The HorizonDbParameterGroups client used to send requests. </param>
+        /// <summary> Initializes a new instance of HorizonDBParameterGroupsGetConnectionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The HorizonDBParameterGroups client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HorizonDbParameterGroupsGetConnectionsAsyncCollectionResultOfT(HorizonDbParameterGroups client, Guid subscriptionId, string resourceGroupName, string parameterGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public HorizonDBParameterGroupsGetConnectionsAsyncCollectionResultOfT(HorizonDBParameterGroups client, Guid subscriptionId, string resourceGroupName, string parameterGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.HorizonDB
             _context = context;
         }
 
-        /// <summary> Gets the pages of HorizonDbParameterGroupsGetConnectionsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of HorizonDBParameterGroupsGetConnectionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of HorizonDbParameterGroupsGetConnectionsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<HorizonDbParameterGroupConnectionProperties>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of HorizonDBParameterGroupsGetConnectionsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<HorizonDBParameterGroupConnectionProperties>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HorizonDB
                     yield break;
                 }
                 HorizonDbParameterGroupConnectionPropertiesListResult result = HorizonDbParameterGroupConnectionPropertiesListResult.FromResponse(response);
-                yield return Page<HorizonDbParameterGroupConnectionProperties>.FromValues((IReadOnlyList<HorizonDbParameterGroupConnectionProperties>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HorizonDBParameterGroupConnectionProperties>.FromValues((IReadOnlyList<HorizonDBParameterGroupConnectionProperties>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HorizonDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetConnectionsRequest(nextLink, _subscriptionId, _resourceGroupName, _parameterGroupName, _context) : _client.CreateGetConnectionsRequest(_subscriptionId, _resourceGroupName, _parameterGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.GetConnections");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.GetConnections");
             scope.Start();
             try
             {

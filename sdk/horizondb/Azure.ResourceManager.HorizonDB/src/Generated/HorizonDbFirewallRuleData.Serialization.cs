@@ -18,68 +18,68 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary> Represents the HorizonDb firewall rule. </summary>
-    public partial class HorizonDbFirewallRuleData : ResourceData, IJsonModel<HorizonDbFirewallRuleData>
+    public partial class HorizonDBFirewallRuleData : ResourceData, IJsonModel<HorizonDBFirewallRuleData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDbFirewallRuleData(document.RootElement, options);
+                        return DeserializeHorizonDBFirewallRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbFirewallRuleData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBFirewallRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbFirewallRuleData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBFirewallRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbFirewallRuleData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBFirewallRuleData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbFirewallRuleData IPersistableModel<HorizonDbFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HorizonDbFirewallRuleData)PersistableModelCreateCore(data, options);
+        HorizonDBFirewallRuleData IPersistableModel<HorizonDBFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HorizonDBFirewallRuleData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="horizonDbFirewallRuleData"> The <see cref="HorizonDbFirewallRuleData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HorizonDbFirewallRuleData horizonDbFirewallRuleData)
+        /// <param name="horizonDBFirewallRuleData"> The <see cref="HorizonDBFirewallRuleData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HorizonDBFirewallRuleData horizonDBFirewallRuleData)
         {
-            if (horizonDbFirewallRuleData == null)
+            if (horizonDBFirewallRuleData == null)
             {
                 return null;
             }
-            return RequestContent.Create(horizonDbFirewallRuleData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(horizonDBFirewallRuleData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDbFirewallRuleData"/> from. </param>
-        internal static HorizonDbFirewallRuleData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBFirewallRuleData"/> from. </param>
+        internal static HorizonDBFirewallRuleData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHorizonDbFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHorizonDBFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbFirewallRuleData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBFirewallRuleData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.HorizonDB
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbFirewallRuleData IJsonModel<HorizonDbFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HorizonDbFirewallRuleData)JsonModelCreateCore(ref reader, options);
+        HorizonDBFirewallRuleData IJsonModel<HorizonDBFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HorizonDBFirewallRuleData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbFirewallRuleData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBFirewallRuleData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDbFirewallRuleData(document.RootElement, options);
+            return DeserializeHorizonDBFirewallRuleData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDbFirewallRuleData DeserializeHorizonDbFirewallRuleData(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBFirewallRuleData DeserializeHorizonDBFirewallRuleData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HorizonDB
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            HorizonDbFirewallRuleProperties properties = default;
+            HorizonDBFirewallRuleProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         continue;
                     }
-                    properties = HorizonDbFirewallRuleProperties.DeserializeHorizonDbFirewallRuleProperties(prop.Value, options);
+                    properties = HorizonDBFirewallRuleProperties.DeserializeHorizonDBFirewallRuleProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HorizonDB
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDbFirewallRuleData(
+            return new HorizonDBFirewallRuleData(
                 id,
                 name,
                 resourceType,

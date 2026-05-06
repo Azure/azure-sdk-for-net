@@ -14,21 +14,21 @@ using Azure.ResourceManager.HorizonDB.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbPrivateLinkResourcesGetAllCollectionResultOfT : Pageable<HorizonDbPrivateLinkResourceData>
+    internal partial class HorizonDBPrivateLinkResourcesGetAllCollectionResultOfT : Pageable<HorizonDBPrivateLinkResourceData>
     {
-        private readonly HorizonDbPrivateLinkResources _client;
+        private readonly HorizonDBPrivateLinkResources _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _clusterName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of HorizonDbPrivateLinkResourcesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The HorizonDbPrivateLinkResources client used to send requests. </param>
+        /// <summary> Initializes a new instance of HorizonDBPrivateLinkResourcesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The HorizonDBPrivateLinkResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the HorizonDb cluster. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HorizonDbPrivateLinkResourcesGetAllCollectionResultOfT(HorizonDbPrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public HorizonDBPrivateLinkResourcesGetAllCollectionResultOfT(HorizonDBPrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.HorizonDB
             _context = context;
         }
 
-        /// <summary> Gets the pages of HorizonDbPrivateLinkResourcesGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of HorizonDBPrivateLinkResourcesGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of HorizonDbPrivateLinkResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<HorizonDbPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of HorizonDBPrivateLinkResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<HorizonDBPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HorizonDB
                     yield break;
                 }
                 HorizonDbPrivateLinkResourceListResult result = HorizonDbPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<HorizonDbPrivateLinkResourceData>.FromValues((IReadOnlyList<HorizonDbPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HorizonDBPrivateLinkResourceData>.FromValues((IReadOnlyList<HorizonDBPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HorizonDB
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDbPrivateLinkResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDBPrivateLinkResourceCollection.GetAll");
             scope.Start();
             try
             {

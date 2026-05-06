@@ -15,23 +15,23 @@ using Azure.ResourceManager.HorizonDB.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbParameterGroupsGetVersionsAsyncCollectionResultOfT : AsyncPageable<HorizonDbParameterGroupData>
+    internal partial class HorizonDBParameterGroupsGetVersionsAsyncCollectionResultOfT : AsyncPageable<HorizonDBParameterGroupData>
     {
-        private readonly HorizonDbParameterGroups _client;
+        private readonly HorizonDBParameterGroups _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _parameterGroupName;
         private readonly int? _version;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of HorizonDbParameterGroupsGetVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The HorizonDbParameterGroups client used to send requests. </param>
+        /// <summary> Initializes a new instance of HorizonDBParameterGroupsGetVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The HorizonDBParameterGroups client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
         /// <param name="version"> The version number to filter by. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HorizonDbParameterGroupsGetVersionsAsyncCollectionResultOfT(HorizonDbParameterGroups client, Guid subscriptionId, string resourceGroupName, string parameterGroupName, int? version, RequestContext context) : base(context?.CancellationToken ?? default)
+        public HorizonDBParameterGroupsGetVersionsAsyncCollectionResultOfT(HorizonDBParameterGroups client, Guid subscriptionId, string resourceGroupName, string parameterGroupName, int? version, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.HorizonDB
             _context = context;
         }
 
-        /// <summary> Gets the pages of HorizonDbParameterGroupsGetVersionsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of HorizonDBParameterGroupsGetVersionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of HorizonDbParameterGroupsGetVersionsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<HorizonDbParameterGroupData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of HorizonDBParameterGroupsGetVersionsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<HorizonDBParameterGroupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HorizonDB
                     yield break;
                 }
                 HorizonDbParameterGroupListResult result = HorizonDbParameterGroupListResult.FromResponse(response);
-                yield return Page<HorizonDbParameterGroupData>.FromValues((IReadOnlyList<HorizonDbParameterGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HorizonDBParameterGroupData>.FromValues((IReadOnlyList<HorizonDBParameterGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HorizonDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetVersionsRequest(nextLink, _subscriptionId, _resourceGroupName, _parameterGroupName, _version, _context) : _client.CreateGetVersionsRequest(_subscriptionId, _resourceGroupName, _parameterGroupName, _version, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDbParameterGroupResource.GetVersions");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HorizonDBParameterGroupResource.GetVersions");
             scope.Start();
             try
             {

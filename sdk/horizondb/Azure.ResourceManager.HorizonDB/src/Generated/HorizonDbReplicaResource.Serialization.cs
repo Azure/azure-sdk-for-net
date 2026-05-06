@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary></summary>
-    public partial class HorizonDbReplicaResource : IJsonModel<HorizonDbReplicaData>
+    public partial class HorizonDBReplicaResource : IJsonModel<HorizonDBReplicaData>
     {
-        private static IJsonModel<HorizonDbReplicaData> s_dataDeserializationInstance;
+        private static IJsonModel<HorizonDBReplicaData> s_dataDeserializationInstance;
 
-        private static IJsonModel<HorizonDbReplicaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HorizonDbReplicaData();
+        private static IJsonModel<HorizonDBReplicaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HorizonDBReplicaData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HorizonDbReplicaData>)Data).Write(writer, options);
+        void IJsonModel<HorizonDBReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HorizonDBReplicaData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbReplicaData IJsonModel<HorizonDbReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        HorizonDBReplicaData IJsonModel<HorizonDBReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbReplicaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HorizonDbReplicaData>(Data, options, AzureResourceManagerHorizonDBContext.Default);
+        BinaryData IPersistableModel<HorizonDBReplicaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HorizonDBReplicaData>(Data, options, AzureResourceManagerHorizonDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbReplicaData IPersistableModel<HorizonDbReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HorizonDbReplicaData>(data, options, AzureResourceManagerHorizonDBContext.Default);
+        HorizonDBReplicaData IPersistableModel<HorizonDBReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HorizonDBReplicaData>(data, options, AzureResourceManagerHorizonDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<HorizonDBReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

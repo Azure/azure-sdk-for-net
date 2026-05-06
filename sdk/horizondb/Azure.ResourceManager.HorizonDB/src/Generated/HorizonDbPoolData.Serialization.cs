@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary> Represents the HorizonDb pool. </summary>
-    public partial class HorizonDbPoolData : ResourceData, IJsonModel<HorizonDbPoolData>
+    public partial class HorizonDBPoolData : ResourceData, IJsonModel<HorizonDBPoolData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPoolData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDbPoolData(document.RootElement, options);
+                        return DeserializeHorizonDBPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbPoolData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPoolData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbPoolData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbPoolData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBPoolData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbPoolData IPersistableModel<HorizonDbPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HorizonDbPoolData)PersistableModelCreateCore(data, options);
+        HorizonDBPoolData IPersistableModel<HorizonDBPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HorizonDBPoolData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDbPoolData"/> from. </param>
-        internal static HorizonDbPoolData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBPoolData"/> from. </param>
+        internal static HorizonDBPoolData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHorizonDbPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHorizonDBPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbPoolData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBPoolData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.HorizonDB
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbPoolData IJsonModel<HorizonDbPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HorizonDbPoolData)JsonModelCreateCore(ref reader, options);
+        HorizonDBPoolData IJsonModel<HorizonDBPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HorizonDBPoolData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbPoolData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBPoolData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDbPoolData(document.RootElement, options);
+            return DeserializeHorizonDBPoolData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDbPoolData DeserializeHorizonDbPoolData(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBPoolData DeserializeHorizonDBPoolData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HorizonDB
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            HorizonDbPoolProperties properties = default;
+            HorizonDBPoolProperties properties = default;
             IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         continue;
                     }
-                    properties = HorizonDbPoolProperties.DeserializeHorizonDbPoolProperties(prop.Value, options);
+                    properties = HorizonDBPoolProperties.DeserializeHorizonDBPoolProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.HorizonDB
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDbPoolData(
+            return new HorizonDBPoolData(
                 id,
                 name,
                 resourceType,

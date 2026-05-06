@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    internal partial class HorizonDbPrivateLinkResources
+    internal partial class HorizonDBPrivateLinkResources
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of HorizonDbPrivateLinkResources for mocking. </summary>
-        protected HorizonDbPrivateLinkResources()
+        /// <summary> Initializes a new instance of HorizonDBPrivateLinkResources for mocking. </summary>
+        protected HorizonDBPrivateLinkResources()
         {
         }
 
-        /// <summary> Initializes a new instance of HorizonDbPrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of HorizonDBPrivateLinkResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal HorizonDbPrivateLinkResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal HorizonDBPrivateLinkResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

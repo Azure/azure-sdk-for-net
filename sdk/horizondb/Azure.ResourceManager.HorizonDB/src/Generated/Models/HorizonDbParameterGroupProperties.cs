@@ -12,18 +12,18 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties of a HorizonDb parameter group. </summary>
-    public partial class HorizonDbParameterGroupProperties
+    public partial class HorizonDBParameterGroupProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupProperties"/>. </summary>
-        public HorizonDbParameterGroupProperties()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupProperties"/>. </summary>
+        public HorizonDBParameterGroupProperties()
         {
-            Parameters = new ChangeTrackingList<ParameterProperties>();
+            Parameters = new ChangeTrackingList<HorizonDBParameterProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupProperties"/>. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
         /// <param name="pgVersion"> PostgreSQL version for the parameter group. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="applyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="provisioningState"> The provisioning state of the parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbParameterGroupProperties(IList<ParameterProperties> parameters, string description, int? pgVersion, int? version, bool? applyImmediately, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupProperties(IList<HorizonDBParameterProperties> parameters, string description, int? pgVersion, int? version, bool? applyImmediately, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Description = description;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Parameters in the parameter group. </summary>
-        public IList<ParameterProperties> Parameters { get; }
+        public IList<HorizonDBParameterProperties> Parameters { get; }
 
         /// <summary> Description of the parameter group. </summary>
         public string Description { get; set; }
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public bool? ApplyImmediately { get; set; }
 
         /// <summary> The provisioning state of the parameter group. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HorizonDBProvisioningState? ProvisioningState { get; }
     }
 }
