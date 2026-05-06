@@ -537,7 +537,7 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 Configure an Agent endpoint for Responses protocol.
 
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
-AgentEndpoint config = new()
+AgentEndpointConfig config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
     Protocols = { AgentEndpointProtocol.Responses }

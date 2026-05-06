@@ -591,6 +591,14 @@ For more information about memory stores please refer [this article](https://lea
 Evaluation in Azure AI Project client library provides quantitative, AI-assisted quality and safety metrics to asses
 performance and Evaluate LLM Models, GenAI Application and Agents. Metrics are defined as evaluators. Built-in or
 custom evaluators can provide comprehensive evaluation insights.
+The evaluations in `Azure.AI.Projects` are based of `OpenAI` package's `EvaluationClient`. To initialize it please run the code:
+
+```C# Snippet:Sample_CreateClients_Evaluations
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
+```
 
 #### Agent evaluation
 
@@ -734,8 +742,8 @@ if (runStatus == "failed")
 
 Get the results using `GetResultsListAsync` method. It calls `GetEvaluationRunOutputItemsAsync` on the `EvaluationClient` returning the object representing `ClientResult`, which contains binary encoded JSON response that can be retrieved using `GetRawResponse()`.
 
-```C# Snippet:Sample_GetResultsList_Evaluations_Async
-private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
+```C# Snippet:Sample_GetResultsListAsync_EvaluationSampleBase
+protected static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
 {
     List<string> resultJsons = [];
     bool hasMore = false;
