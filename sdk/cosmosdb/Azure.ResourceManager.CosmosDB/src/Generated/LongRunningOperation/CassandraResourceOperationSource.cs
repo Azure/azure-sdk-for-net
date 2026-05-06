@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB
         CassandraResource IOperationSource<CassandraResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ThroughputSettingsData data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ThroughputSettingData data = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CassandraResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB
         async ValueTask<CassandraResource> IOperationSource<CassandraResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ThroughputSettingsData data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ThroughputSettingData data = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CassandraResource(_client, data);
         }
     }

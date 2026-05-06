@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="data"> The parameters to provide for the current Gremlin database. </param>
+        /// <param name="content"> The parameters to provide for the current Gremlin database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GremlinDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseName, GremlinDatabaseCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GremlinDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseName, GremlinDatabaseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, GremlinDatabaseCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, GremlinDatabaseCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<GremlinDatabaseResource> operation = new CosmosDBArmOperation<GremlinDatabaseResource>(
                     new GremlinDatabaseOperationSource(Client),
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="data"> The parameters to provide for the current Gremlin database. </param>
+        /// <param name="content"> The parameters to provide for the current Gremlin database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GremlinDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string databaseName, GremlinDatabaseCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GremlinDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string databaseName, GremlinDatabaseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseCollection.CreateOrUpdate");
             scope.Start();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, GremlinDatabaseCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, GremlinDatabaseCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<GremlinDatabaseResource> operation = new CosmosDBArmOperation<GremlinDatabaseResource>(
                     new GremlinDatabaseOperationSource(Client),

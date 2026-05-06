@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionData"/>. </summary>
-        internal MongoDBUserDefinitionData()
+        public MongoDBUserDefinitionData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Properties related to the User Definition. </summary>
         [WirePath("properties")]
-        internal MongoUserDefinitionResource Properties { get; }
+        internal MongoUserDefinitionResource Properties { get; set; }
 
         /// <summary> The user name for User Definition. </summary>
         [WirePath("properties.userName")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.UserName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoUserDefinitionResource();
+                }
+                Properties.UserName = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.Password;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoUserDefinitionResource();
+                }
+                Properties.Password = value;
+            }
         }
 
         /// <summary> The database name for which access is being granted for this User Definition. </summary>
@@ -68,6 +84,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.DatabaseName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoUserDefinitionResource();
+                }
+                Properties.DatabaseName = value;
             }
         }
 
@@ -79,6 +103,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.CustomData;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoUserDefinitionResource();
+                }
+                Properties.CustomData = value;
+            }
         }
 
         /// <summary> The set of roles inherited by the User Definition. </summary>
@@ -87,7 +119,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.Roles;
+                if (Properties is null)
+                {
+                    Properties = new MongoUserDefinitionResource();
+                }
+                return Properties.Roles;
             }
         }
 
@@ -98,6 +134,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.Mechanisms;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoUserDefinitionResource();
+                }
+                Properties.Mechanisms = value;
             }
         }
     }

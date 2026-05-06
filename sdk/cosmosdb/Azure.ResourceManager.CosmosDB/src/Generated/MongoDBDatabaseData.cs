@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal MongoDBDatabaseData(AzureLocation location) : base(location)
+        public MongoDBDatabaseData(AzureLocation location) : base(location)
         {
         }
 
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The properties of an Azure Cosmos DB MongoDB database. </summary>
         [WirePath("properties")]
-        internal MongoDBDatabaseProperties Properties { get; }
+        internal MongoDBDatabaseProperties Properties { get; set; }
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; set; }
 
-        /// <summary> Gets the Resource. </summary>
+        /// <summary> Gets or sets the Resource. </summary>
         [WirePath("properties.resource")]
         public ExtendedMongoDBDatabaseResourceInfo Resource
         {
@@ -58,15 +58,31 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.Resource;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoDBDatabaseProperties();
+                }
+                Properties.Resource = value;
+            }
         }
 
-        /// <summary> Gets the Options. </summary>
+        /// <summary> Gets or sets the Options. </summary>
         [WirePath("properties.options")]
         public MongoDBDatabasePropertiesConfig Options
         {
             get
             {
                 return Properties is null ? default : Properties.Options;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoDBDatabaseProperties();
+                }
+                Properties.Options = value;
             }
         }
     }

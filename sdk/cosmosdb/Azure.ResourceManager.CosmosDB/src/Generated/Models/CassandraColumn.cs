@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CassandraColumn"/>. </summary>
         /// <param name="name"> Name of the Cosmos DB Cassandra table column. </param>
-        /// <param name="type"> Type of the Cosmos DB Cassandra table column. </param>
+        /// <param name="cassandraColumnType"> Type of the Cosmos DB Cassandra table column. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraColumn(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraColumn(string name, string cassandraColumnType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            CassandraColumnType = cassandraColumnType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Type of the Cosmos DB Cassandra table column. </summary>
         [WirePath("type")]
-        public string Type { get; set; }
+        public string CassandraColumnType { get; set; }
     }
 }

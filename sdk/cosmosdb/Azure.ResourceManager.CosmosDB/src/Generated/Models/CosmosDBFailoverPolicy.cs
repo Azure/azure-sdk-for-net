@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="locationName"> The name of the region in which the database account exists. </param>
         /// <param name="failoverPriority"> The failover priority of the region. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBFailoverPolicy(string id, string locationName, int? failoverPriority, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBFailoverPolicy(string id, AzureLocation? locationName, int? failoverPriority, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             LocationName = locationName;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The name of the region in which the database account exists. </summary>
         [WirePath("locationName")]
-        public string LocationName { get; set; }
+        public AzureLocation? LocationName { get; set; }
 
         /// <summary> The failover priority of the region. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </summary>
         [WirePath("failoverPriority")]

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="FleetspaceProperties"/>. </summary>
         public FleetspaceProperties()
         {
+            DataRegions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FleetspaceProperties"/>. </summary>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="dataRegions"> List of data regions assigned to the fleetspace. Eg [westus2]. </param>
         /// <param name="throughputPoolConfiguration"> Configuration for throughput pool in the fleetspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetspaceProperties(CosmosDBStatus? provisioningState, CosmosDBFleetspaceApiKind? fleetspaceApiKind, CosmosDBFleetspaceServiceTier? serviceTier, AzureLocation? dataRegions, CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetspaceProperties(CosmosDBStatus? provisioningState, CosmosDBFleetspaceApiKind? fleetspaceApiKind, CosmosDBFleetspaceServiceTier? serviceTier, IList<AzureLocation> dataRegions, CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             FleetspaceApiKind = fleetspaceApiKind;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> List of data regions assigned to the fleetspace. Eg [westus2]. </summary>
         [WirePath("dataRegions")]
-        public AzureLocation? DataRegions { get; set; }
+        public IList<AzureLocation> DataRegions { get; } = new ChangeTrackingList<AzureLocation>();
 
         /// <summary> Configuration for throughput pool in the fleetspace. </summary>
         [WirePath("throughputPoolConfiguration")]

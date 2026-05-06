@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBServiceData"/>. </summary>
-        internal CosmosDBServiceData()
+        public CosmosDBServiceData()
         {
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Services response resource. </summary>
         [WirePath("properties")]
-        public CosmosDBServiceProperties Properties { get; }
+        public CosmosDBServiceProperties Properties { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="wrappedDataEncryptionKey"> Wrapped (encrypted) form of the key represented as a byte array. </param>
         /// <param name="keyWrapMetadata"> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBSqlClientEncryptionKeyResourceInfo(string id, string encryptionAlgorithm, BinaryData wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBSqlClientEncryptionKeyResourceInfo(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             EncryptionAlgorithm = encryptionAlgorithm;
@@ -44,25 +44,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Encryption algorithm that will be used along with this client encryption key to encrypt/decrypt data. </summary>
         [WirePath("encryptionAlgorithm")]
         public string EncryptionAlgorithm { get; set; }
-
-        /// <summary>
-        /// Wrapped (encrypted) form of the key represented as a byte array.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("wrappedDataEncryptionKey")]
-        public BinaryData WrappedDataEncryptionKey { get; set; }
 
         /// <summary> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </summary>
         [WirePath("keyWrapMetadata")]

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBLocationData"/>. </summary>
-        internal CosmosDBLocationData()
+        public CosmosDBLocationData()
         {
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Cosmos DB location metadata. </summary>
         [WirePath("properties")]
-        public LocationProperties Properties { get; }
+        public LocationProperties Properties { get; set; }
     }
 }

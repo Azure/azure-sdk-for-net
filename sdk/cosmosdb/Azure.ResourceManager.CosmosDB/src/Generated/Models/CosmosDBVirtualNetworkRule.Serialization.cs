@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(IgnoreMissingVNetServiceEndpoint))
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVNetServiceEndpoint"u8);
-                writer.WriteBooleanValue(IgnoreMissingVNetServiceEndpoint.Value);
+                writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            bool? ignoreMissingVNetServiceEndpoint = default;
+            bool? ignoreMissingVnetServiceEndpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    ignoreMissingVNetServiceEndpoint = prop.Value.GetBoolean();
+                    ignoreMissingVnetServiceEndpoint = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CosmosDBVirtualNetworkRule(id, ignoreMissingVNetServiceEndpoint, additionalBinaryDataProperties);
+            return new CosmosDBVirtualNetworkRule(id, ignoreMissingVnetServiceEndpoint, additionalBinaryDataProperties);
         }
     }
 }

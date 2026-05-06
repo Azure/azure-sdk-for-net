@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBSqlContainerPropertiesConfig : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlContainerPropertiesConfig"/>. </summary>
-        internal CosmosDBSqlContainerPropertiesConfig()
+        public CosmosDBSqlContainerPropertiesConfig()
         {
         }
 

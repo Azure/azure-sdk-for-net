@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MaterializedViewsBuilderServiceProperties : CosmosDBServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="MaterializedViewsBuilderServiceProperties"/>. </summary>
-        internal MaterializedViewsBuilderServiceProperties() : base(CosmosDBServiceType.MaterializedViewsBuilder)
+        public MaterializedViewsBuilderServiceProperties() : base(CosmosDBServiceType.MaterializedViewsBuilder)
         {
             Locations = new ChangeTrackingList<MaterializedViewsBuilderRegionalService>();
         }

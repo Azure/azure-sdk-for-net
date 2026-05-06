@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
-        /// <param name="data"> The parameters to provide for the current MongoDB Collection. </param>
+        /// <param name="content"> The parameters to provide for the current MongoDB Collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MongoDBCollectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectionName, MongoDBCollectionCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MongoDBCollectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectionName, MongoDBCollectionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, MongoDBCollectionCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, MongoDBCollectionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<MongoDBCollectionResource> operation = new CosmosDBArmOperation<MongoDBCollectionResource>(
                     new MongoDBCollectionOperationSource(Client),
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
-        /// <param name="data"> The parameters to provide for the current MongoDB Collection. </param>
+        /// <param name="content"> The parameters to provide for the current MongoDB Collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MongoDBCollectionResource> CreateOrUpdate(WaitUntil waitUntil, string collectionName, MongoDBCollectionCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MongoDBCollectionResource> CreateOrUpdate(WaitUntil waitUntil, string collectionName, MongoDBCollectionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.CreateOrUpdate");
             scope.Start();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, MongoDBCollectionCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, MongoDBCollectionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<MongoDBCollectionResource> operation = new CosmosDBArmOperation<MongoDBCollectionResource>(
                     new MongoDBCollectionOperationSource(Client),

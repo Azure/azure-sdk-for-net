@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             CassandraProvisioningState? provisioningState = default;
             string restoreFromBackupId = default;
-            string delegatedManagementSubnetId = default;
+            ResourceIdentifier delegatedManagementSubnetId = default;
             string cassandraVersion = default;
             string clusterNameOverride = default;
             CassandraAuthenticationMethod? authenticationMethod = default;
@@ -342,7 +342,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("delegatedManagementSubnetId"u8))
                 {
-                    delegatedManagementSubnetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delegatedManagementSubnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("cassandraVersion"u8))

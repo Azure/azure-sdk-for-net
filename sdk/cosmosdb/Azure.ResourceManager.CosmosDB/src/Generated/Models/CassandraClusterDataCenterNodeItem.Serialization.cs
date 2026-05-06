@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (Optional.IsDefined(HostID))
+            if (Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostID"u8);
-                writer.WriteStringValue(HostID);
+                writer.WriteStringValue(HostId);
             }
             if (Optional.IsDefined(Rack))
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string load = default;
             IReadOnlyList<string> tokens = default;
             int? size = default;
-            string hostID = default;
+            string hostId = default;
             string rack = default;
             string timestamp = default;
             long? diskUsedKB = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("hostID"u8))
                 {
-                    hostID = prop.Value.GetString();
+                    hostId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("rack"u8))
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 load,
                 tokens ?? new ChangeTrackingList<string>(),
                 size,
-                hostID,
+                hostId,
                 rack,
                 timestamp,
                 diskUsedKB,

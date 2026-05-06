@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(LatestRestorableTimestamp))
             {
                 writer.WritePropertyName("latestRestorableTimestamp"u8);
-                writer.WriteStringValue(LatestRestorableTimestamp);
+                writer.WriteStringValue(LatestRestorableTimestamp.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,13 +121,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            string latestRestorableTimestamp = default;
+            DateTimeOffset? latestRestorableTimestamp = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("latestRestorableTimestamp"u8))
                 {
-                    latestRestorableTimestamp = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    latestRestorableTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")

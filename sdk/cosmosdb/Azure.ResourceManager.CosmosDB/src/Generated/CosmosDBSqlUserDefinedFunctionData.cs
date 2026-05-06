@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal CosmosDBSqlUserDefinedFunctionData(AzureLocation location) : base(location)
+        public CosmosDBSqlUserDefinedFunctionData(AzureLocation location) : base(location)
         {
         }
 
@@ -44,19 +44,27 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The properties of an Azure Cosmos DB userDefinedFunction. </summary>
         [WirePath("properties")]
-        internal CosmosDBSqlUserDefinedFunctionProperties Properties { get; }
+        internal CosmosDBSqlUserDefinedFunctionProperties Properties { get; set; }
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; set; }
 
-        /// <summary> Gets the Resource. </summary>
+        /// <summary> Gets or sets the Resource. </summary>
         [WirePath("properties.resource")]
         public ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo Resource
         {
             get
             {
                 return Properties is null ? default : Properties.Resource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBSqlUserDefinedFunctionProperties();
+                }
+                Properties.Resource = value;
             }
         }
     }

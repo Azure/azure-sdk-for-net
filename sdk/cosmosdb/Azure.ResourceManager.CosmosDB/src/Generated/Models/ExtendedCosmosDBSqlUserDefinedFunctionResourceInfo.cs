@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>
         /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
-        internal ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(string functionName) : base(functionName)
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        public ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(string functionName) : base(functionName)
         {
+            Argument.AssertNotNull(functionName, nameof(functionName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>

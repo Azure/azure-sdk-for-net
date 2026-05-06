@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class GremlinDatabasePropertiesConfig : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of <see cref="GremlinDatabasePropertiesConfig"/>. </summary>
-        internal GremlinDatabasePropertiesConfig()
+        public GremlinDatabasePropertiesConfig()
         {
         }
 

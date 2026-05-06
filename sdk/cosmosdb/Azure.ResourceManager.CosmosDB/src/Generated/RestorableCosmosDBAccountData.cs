@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of a restorable database account. </param>
         /// <param name="location"> The location of the resource group to which the resource belongs. </param>
-        internal RestorableCosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorableDatabaseAccountProperties properties, string location) : base(id, name, resourceType, systemData)
+        internal RestorableCosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorableDatabaseAccountProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The location of the resource group to which the resource belongs. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> The name of the global database account. </summary>
         [WirePath("properties.accountName")]

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AccountLocation))
             {
                 writer.WritePropertyName("accountLocation"u8);
-                writer.WriteStringValue(AccountLocation.Value);
+                writer.WriteStringValue(AccountLocation);
             }
             if (options.Format != "W" && Optional.IsDefined(AccountInstanceId))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             CosmosDBStatus? provisioningState = default;
             ResourceIdentifier accountResourceIdentifier = default;
-            AzureLocation? accountLocation = default;
+            string accountLocation = default;
             string accountInstanceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,11 +164,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("accountLocation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    accountLocation = new AzureLocation(prop.Value.GetString());
+                    accountLocation = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("accountInstanceId"u8))

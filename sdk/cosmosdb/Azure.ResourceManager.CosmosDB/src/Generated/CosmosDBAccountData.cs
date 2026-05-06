@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal CosmosDBAccountData(AzureLocation location) : base(location)
+        public CosmosDBAccountData(AzureLocation location) : base(location)
         {
         }
 
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Properties for the database account. </summary>
         [WirePath("properties")]
-        internal CosmosDBAccountProperties Properties { get; }
+        internal CosmosDBAccountProperties Properties { get; set; }
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
         [WirePath("kind")]
-        public CosmosDBAccountKind? Kind { get; }
+        public CosmosDBAccountKind? Kind { get; set; }
 
         /// <summary> The provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
@@ -92,7 +92,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.IpRules;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                return Properties.IpRules;
             }
         }
 
@@ -104,6 +108,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.IsVirtualNetworkFilterEnabled;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.IsVirtualNetworkFilterEnabled = value;
+            }
         }
 
         /// <summary> Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account. </summary>
@@ -113,6 +125,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.EnableAutomaticFailover;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.EnableAutomaticFailover = value;
             }
         }
 
@@ -124,6 +144,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.ConsistencyPolicy;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.ConsistencyPolicy = value;
+            }
         }
 
         /// <summary> List of Cosmos DB capabilities for the account. </summary>
@@ -132,7 +160,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.Capabilities;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                return Properties.Capabilities;
             }
         }
 
@@ -142,7 +174,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.WriteLocations;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                return Properties.WriteLocations;
             }
         }
 
@@ -152,7 +188,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.ReadLocations;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                return Properties.ReadLocations;
             }
         }
 
@@ -162,7 +202,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.Locations;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                return Properties.Locations;
             }
         }
 
@@ -172,7 +216,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.FailoverPolicies;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                return Properties.FailoverPolicies;
             }
         }
 
@@ -182,7 +230,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.VirtualNetworkRules;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                return Properties.VirtualNetworkRules;
             }
         }
 
@@ -192,7 +244,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateEndpointConnections;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                return Properties.PrivateEndpointConnections;
             }
         }
 
@@ -204,6 +260,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.EnableMultipleWriteLocations;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.EnableMultipleWriteLocations = value;
+            }
         }
 
         /// <summary> Enables the cassandra connector on the Cosmos DB C* account. </summary>
@@ -213,6 +277,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.EnableCassandraConnector;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.EnableCassandraConnector = value;
             }
         }
 
@@ -224,6 +296,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.ConnectorOffer;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.ConnectorOffer = value;
+            }
         }
 
         /// <summary> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </summary>
@@ -233,6 +313,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.DisableKeyBasedMetadataWriteAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.DisableKeyBasedMetadataWriteAccess = value;
             }
         }
 
@@ -244,6 +332,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.KeyVaultKeyUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.KeyVaultKeyUri = value;
+            }
         }
 
         /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </summary>
@@ -253,6 +349,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.DefaultIdentity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.DefaultIdentity = value;
             }
         }
 
@@ -264,6 +368,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.PublicNetworkAccess;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
         }
 
         /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
@@ -274,6 +386,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.IsFreeTierEnabled;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.IsFreeTierEnabled = value;
+            }
         }
 
         /// <summary> Flag to indicate whether to enable storage analytics. </summary>
@@ -283,6 +403,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.IsAnalyticalStorageEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.IsAnalyticalStorageEnabled = value;
             }
         }
 
@@ -304,6 +432,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.CreateMode;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.CreateMode = value;
+            }
         }
 
         /// <summary> Parameters to indicate the information about the restore. </summary>
@@ -313,6 +449,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.RestoreParameters;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.RestoreParameters = value;
             }
         }
 
@@ -324,6 +468,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.BackupPolicy;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.BackupPolicy = value;
+            }
         }
 
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
@@ -332,7 +484,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.Cors;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                return Properties.Cors;
             }
         }
 
@@ -344,6 +500,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.NetworkAclBypass;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.NetworkAclBypass = value;
+            }
         }
 
         /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
@@ -352,7 +516,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.NetworkAclBypassResourceIds;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                return Properties.NetworkAclBypassResourceIds;
             }
         }
 
@@ -364,6 +532,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.DisableLocalAuth;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.DisableLocalAuth = value;
+            }
         }
 
         /// <summary> Indicates the capacityMode of the Cosmos DB account. </summary>
@@ -373,6 +549,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.CapacityMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.CapacityMode = value;
             }
         }
 
@@ -384,6 +568,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.CapacityModeChangeTransitionState;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.CapacityModeChangeTransitionState = value;
+            }
         }
 
         /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
@@ -393,6 +585,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.EnableMaterializedViews;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.EnableMaterializedViews = value;
             }
         }
 
@@ -414,6 +614,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.EnablePartitionMerge;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.EnablePartitionMerge = value;
+            }
         }
 
         /// <summary> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </summary>
@@ -423,6 +631,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.EnableBurstCapacity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.EnableBurstCapacity = value;
             }
         }
 
@@ -434,6 +650,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.MinimalTlsVersion;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.MinimalTlsVersion = value;
+            }
         }
 
         /// <summary> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </summary>
@@ -443,6 +667,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.CustomerManagedKeyStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.CustomerManagedKeyStatus = value;
             }
         }
 
@@ -464,6 +696,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.EnablePriorityBasedExecution;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.EnablePriorityBasedExecution = value;
+            }
         }
 
         /// <summary> Enum to indicate default Priority Level of request for Priority Based Execution. </summary>
@@ -473,6 +713,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.DefaultPriorityLevel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.DefaultPriorityLevel = value;
             }
         }
 
@@ -484,6 +732,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.EnablePerRegionPerPartitionAutoscale;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.EnablePerRegionPerPartitionAutoscale = value;
+            }
         }
 
         /// <summary> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </summary>
@@ -493,6 +749,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.EnableAllVersionsAndDeletesChangeFeed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.EnableAllVersionsAndDeletesChangeFeed = value;
             }
         }
 
@@ -504,6 +768,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.ThroughputPoolDedicatedRUs;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.ThroughputPoolDedicatedRUs = value;
+            }
         }
 
         /// <summary> When this account is part of a fleetspace with throughput pooling enabled, this is the maximum additional throughput (RU/s) that can be consumed from the pool, summed across all shared throughput databases and dedicated throughput containers in the account for 1 region.  READ ONLY. </summary>
@@ -513,6 +785,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.ThroughputPoolMaxConsumableRUs;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.ThroughputPoolMaxConsumableRUs = value;
             }
         }
 
@@ -524,6 +804,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.ApiServerVersion;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.ApiServerVersion = value;
+            }
         }
 
         /// <summary> Describes the types of schema for analytical storage. </summary>
@@ -533,6 +821,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.AnalyticalStorageSchemaType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.AnalyticalStorageSchemaType = value;
             }
         }
 
@@ -544,6 +840,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.DiagnosticLogEnableFullTextQuery;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.DiagnosticLogEnableFullTextQuery = value;
+            }
         }
 
         /// <summary> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </summary>
@@ -553,6 +857,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.CapacityTotalThroughputLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.CapacityTotalThroughputLimit = value;
             }
         }
     }

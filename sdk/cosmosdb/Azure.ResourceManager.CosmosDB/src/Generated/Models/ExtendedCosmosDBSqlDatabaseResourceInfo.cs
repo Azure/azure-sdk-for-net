@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
-        internal ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName) : base(databaseName)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName) : base(databaseName)
         {
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlDatabaseResourceInfo"/>. </summary>
@@ -54,10 +57,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> A system generated property that specified the addressable path of the collections resource. </summary>
         [WirePath("_colls")]
-        public string Colls { get; }
+        public string Colls { get; set; }
 
         /// <summary> A system generated property that specifies the addressable path of the users resource. </summary>
         [WirePath("_users")]
-        public string Users { get; }
+        public string Users { get; set; }
     }
 }

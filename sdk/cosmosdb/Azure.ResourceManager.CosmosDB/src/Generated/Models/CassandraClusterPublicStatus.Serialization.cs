@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(ReaperStatus))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            string eTag = default;
+            ETag? eTag = default;
             CassandraReaperStatus reaperStatus = default;
             IReadOnlyList<CassandraConnectionError> connectionErrors = default;
             IReadOnlyList<CassandraError> errors = default;
@@ -174,7 +174,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (prop.NameEquals("eTag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reaperStatus"u8))

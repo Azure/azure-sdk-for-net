@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoUserDefinitionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="mongoUserDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MongoDBUserDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mongoUserDefinitionId, MongoUserDefinitionCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MongoDBUserDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mongoUserDefinitionId, MongoDBUserDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mongoUserDefinitionId, nameof(mongoUserDefinitionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoUserDefinitionId, MongoUserDefinitionCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoUserDefinitionId, MongoDBUserDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<MongoDBUserDefinitionResource> operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(
                     new MongoDBUserDefinitionOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoUserDefinitionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="mongoUserDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MongoDBUserDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string mongoUserDefinitionId, MongoUserDefinitionCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MongoDBUserDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string mongoUserDefinitionId, MongoDBUserDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mongoUserDefinitionId, nameof(mongoUserDefinitionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoUserDefinitionId, MongoUserDefinitionCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoUserDefinitionId, MongoDBUserDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<MongoDBUserDefinitionResource> operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(
                     new MongoDBUserDefinitionOperationSource(Client),

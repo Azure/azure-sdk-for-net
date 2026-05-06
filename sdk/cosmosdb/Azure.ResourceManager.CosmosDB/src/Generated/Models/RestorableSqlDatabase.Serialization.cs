@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The RestorableSqlDatabase. </summary>
+    /// <summary> An Azure Cosmos DB SQL database event. </summary>
     public partial class RestorableSqlDatabase : ResourceData, IJsonModel<RestorableSqlDatabase>
     {
         /// <param name="data"> The data to parse. </param>

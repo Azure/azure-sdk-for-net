@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraKeyspacePropertiesConfig : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of <see cref="CassandraKeyspacePropertiesConfig"/>. </summary>
-        internal CassandraKeyspacePropertiesConfig()
+        public CassandraKeyspacePropertiesConfig()
         {
         }
 

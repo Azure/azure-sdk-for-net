@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The properties required to create or update a Role Definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<MongoDBRoleDefinitionResource>> UpdateAsync(WaitUntil waitUntil, MongoRoleDefinitionCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MongoDBRoleDefinitionResource>> UpdateAsync(WaitUntil waitUntil, MongoDBRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoRoleDefinitionCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBRoleDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<MongoDBRoleDefinitionResource> operation = new CosmosDBArmOperation<MongoDBRoleDefinitionResource>(
                     new MongoDBRoleDefinitionOperationSource(Client),
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The properties required to create or update a Role Definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<MongoDBRoleDefinitionResource> Update(WaitUntil waitUntil, MongoRoleDefinitionCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MongoDBRoleDefinitionResource> Update(WaitUntil waitUntil, MongoDBRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoRoleDefinitionCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBRoleDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<MongoDBRoleDefinitionResource> operation = new CosmosDBArmOperation<MongoDBRoleDefinitionResource>(
                     new MongoDBRoleDefinitionOperationSource(Client),

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="scope"> The data plane resource path for which access is being granted through this Role Assignment. </param>
         /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlRoleAssignmentResource(ResourceIdentifier roleDefinitionId, string scope, string principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlRoleAssignmentResource(ResourceIdentifier roleDefinitionId, string scope, Guid? principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleDefinitionId = roleDefinitionId;
             Scope = scope;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </summary>
         [WirePath("principalId")]
-        public string PrincipalId { get; set; }
+        public Guid? PrincipalId { get; set; }
     }
 }

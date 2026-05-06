@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MongoDBRoleDefinitionData"/>. </summary>
-        internal MongoDBRoleDefinitionData()
+        public MongoDBRoleDefinitionData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Properties related to the Mongo Role Definition. </summary>
         [WirePath("properties")]
-        internal MongoRoleDefinitionResource Properties { get; }
+        internal MongoRoleDefinitionResource Properties { get; set; }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>
         [WirePath("properties.roleName")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.RoleName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoRoleDefinitionResource();
+                }
+                Properties.RoleName = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.RoleDefinitionType;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoRoleDefinitionResource();
+                }
+                Properties.RoleDefinitionType = value;
+            }
         }
 
         /// <summary> The database name for which access is being granted for this Role Definition. </summary>
@@ -69,6 +85,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.DatabaseName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoRoleDefinitionResource();
+                }
+                Properties.DatabaseName = value;
+            }
         }
 
         /// <summary> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </summary>
@@ -77,7 +101,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.Privileges;
+                if (Properties is null)
+                {
+                    Properties = new MongoRoleDefinitionResource();
+                }
+                return Properties.Privileges;
             }
         }
 
@@ -87,7 +115,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.Roles;
+                if (Properties is null)
+                {
+                    Properties = new MongoRoleDefinitionResource();
+                }
+                return Properties.Roles;
             }
         }
     }

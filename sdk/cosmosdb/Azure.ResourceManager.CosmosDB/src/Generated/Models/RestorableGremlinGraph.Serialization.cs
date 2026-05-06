@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The RestorableGremlinGraph. </summary>
+    /// <summary> An Azure Cosmos DB Gremlin graph event. </summary>
     public partial class RestorableGremlinGraph : ResourceData, IJsonModel<RestorableGremlinGraph>
     {
         /// <param name="data"> The data to parse. </param>

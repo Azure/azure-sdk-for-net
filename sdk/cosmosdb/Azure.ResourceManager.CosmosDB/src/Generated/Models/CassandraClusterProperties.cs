@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="azureConnectionMethod"> How to connect to the azure services needed for running the cluster. </param>
         /// <param name="privateLinkResourceId"> If the Connection Method is Vpn, this is the Id of the private link resource that the datacenters need to connect to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, string delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, CassandraAutoReplicateForm? autoReplicate, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, IList<string> externalDataCenters, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraClusterType? clusterType, CassandraError provisionError, IList<string> extensions, IList<CassandraClusterBackupSchedule> backupSchedules, ScheduledEventStrategy? scheduledEventStrategy, ServiceConnectionType? azureConnectionMethod, ResourceIdentifier privateLinkResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, CassandraAutoReplicateForm? autoReplicate, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, IList<string> externalDataCenters, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraClusterType? clusterType, CassandraError provisionError, IList<string> extensions, IList<CassandraClusterBackupSchedule> backupSchedules, ScheduledEventStrategy? scheduledEventStrategy, ServiceConnectionType? azureConnectionMethod, ResourceIdentifier privateLinkResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             RestoreFromBackupId = restoreFromBackupId;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Resource id of a subnet that this cluster's management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </summary>
         [WirePath("delegatedManagementSubnetId")]
-        public string DelegatedManagementSubnetId { get; set; }
+        public ResourceIdentifier DelegatedManagementSubnetId { get; set; }
 
         /// <summary> Which version of Cassandra should this cluster converge to running (e.g., 3.11). When updated, the cluster may take some time to migrate to the new version. </summary>
         [WirePath("cassandraVersion")]
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> IP address of this seed node. </summary>
         [WirePath("prometheusEndpoint.ipAddress")]
-        public string PrometheusEndpointIpAddress
+        public string PrometheusEndpointIPAddress
         {
             get
             {
-                return PrometheusEndpoint is null ? default : PrometheusEndpoint.IpAddress;
+                return PrometheusEndpoint is null ? default : PrometheusEndpoint.IPAddress;
             }
             set
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     PrometheusEndpoint = new CassandraDataCenterSeedNode();
                 }
-                PrometheusEndpoint.IpAddress = value;
+                PrometheusEndpoint.IPAddress = value;
             }
         }
     }

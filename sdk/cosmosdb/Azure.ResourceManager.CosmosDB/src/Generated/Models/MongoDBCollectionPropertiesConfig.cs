@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MongoDBCollectionPropertiesConfig : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of <see cref="MongoDBCollectionPropertiesConfig"/>. </summary>
-        internal MongoDBCollectionPropertiesConfig()
+        public MongoDBCollectionPropertiesConfig()
         {
         }
 

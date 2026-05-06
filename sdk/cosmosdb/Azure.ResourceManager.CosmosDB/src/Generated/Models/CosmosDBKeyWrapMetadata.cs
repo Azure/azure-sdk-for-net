@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBKeyWrapMetadata"/>. </summary>
         /// <param name="name"> The name of associated KeyEncryptionKey (aka CustomerManagedKey). </param>
-        /// <param name="type"> ProviderName of KeyStoreProvider. </param>
+        /// <param name="cosmosDBKeyWrapMetadataType"> ProviderName of KeyStoreProvider. </param>
         /// <param name="value"> Reference / link to the KeyEncryptionKey. </param>
         /// <param name="algorithm"> Algorithm used in wrapping and unwrapping of the data encryption key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBKeyWrapMetadata(string name, string @type, string value, string algorithm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBKeyWrapMetadata(string name, string cosmosDBKeyWrapMetadataType, string value, string algorithm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            CosmosDBKeyWrapMetadataType = cosmosDBKeyWrapMetadataType;
             Value = value;
             Algorithm = algorithm;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> ProviderName of KeyStoreProvider. </summary>
         [WirePath("type")]
-        public string Type { get; set; }
+        public string CosmosDBKeyWrapMetadataType { get; set; }
 
         /// <summary> Reference / link to the KeyEncryptionKey. </summary>
         [WirePath("value")]

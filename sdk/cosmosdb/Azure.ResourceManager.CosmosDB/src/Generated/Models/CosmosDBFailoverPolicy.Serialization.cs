@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
-                writer.WriteStringValue(LocationName);
+                writer.WriteStringValue(LocationName.Value);
             }
             if (Optional.IsDefined(FailoverPriority))
             {
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            string locationName = default;
+            AzureLocation? locationName = default;
             int? failoverPriority = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -144,7 +145,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("locationName"u8))
                 {
-                    locationName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    locationName = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("failoverPriority"u8))

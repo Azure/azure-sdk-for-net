@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBBaseConfig"/>. </summary>
-        internal CosmosDBBaseConfig()
+        public CosmosDBBaseConfig()
         {
         }
 
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </summary>
         [WirePath("throughput")]
-        public int? Throughput { get; }
+        public int? Throughput { get; set; }
 
         /// <summary> Specifies the Autoscale settings. </summary>
         [WirePath("autoscaleSettings")]
-        internal AutoscaleSettings AutoscaleSettings { get; }
+        internal AutoscaleSettings AutoscaleSettings { get; set; }
 
         /// <summary> Represents maximum throughput, the resource can scale up to. </summary>
         [WirePath("autoscaleSettings.maxThroughput")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get
             {
                 return AutoscaleSettings is null ? default : AutoscaleSettings.MaxThroughput;
+            }
+            set
+            {
+                if (AutoscaleSettings is null)
+                {
+                    AutoscaleSettings = new AutoscaleSettings();
+                }
+                AutoscaleSettings.MaxThroughput = value;
             }
         }
     }

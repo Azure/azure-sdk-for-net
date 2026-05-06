@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location name. </param>
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaterializedViewsBuilderRegionalService(string name, string location, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, location, status, additionalBinaryDataProperties)
+        internal MaterializedViewsBuilderRegionalService(string name, AzureLocation? location, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, location, status, additionalBinaryDataProperties)
         {
         }
     }

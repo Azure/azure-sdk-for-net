@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedGremlinDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB Gremlin database. </param>
-        internal ExtendedGremlinDatabaseResourceInfo(string databaseName) : base(databaseName)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public ExtendedGremlinDatabaseResourceInfo(string databaseName) : base(databaseName)
         {
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedGremlinDatabaseResourceInfo"/>. </summary>

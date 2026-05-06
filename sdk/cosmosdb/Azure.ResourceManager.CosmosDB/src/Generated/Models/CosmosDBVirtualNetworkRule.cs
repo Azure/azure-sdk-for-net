@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
-        /// <param name="ignoreMissingVNetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
+        /// <param name="ignoreMissingVnetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBVirtualNetworkRule(ResourceIdentifier id, bool? ignoreMissingVNetServiceEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBVirtualNetworkRule(ResourceIdentifier id, bool? ignoreMissingVnetServiceEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            IgnoreMissingVNetServiceEndpoint = ignoreMissingVNetServiceEndpoint;
+            IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Create firewall rule before the virtual network has vnet service endpoint enabled. </summary>
         [WirePath("ignoreMissingVNetServiceEndpoint")]
-        public bool? IgnoreMissingVNetServiceEndpoint { get; set; }
+        public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
     }
 }

@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlContainerResourceInfo"/>. </summary>
         /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
-        internal ExtendedCosmosDBSqlContainerResourceInfo(string containerName) : base(containerName)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        public ExtendedCosmosDBSqlContainerResourceInfo(string containerName) : base(containerName)
         {
+            Argument.AssertNotNull(containerName, nameof(containerName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlContainerResourceInfo"/>. </summary>

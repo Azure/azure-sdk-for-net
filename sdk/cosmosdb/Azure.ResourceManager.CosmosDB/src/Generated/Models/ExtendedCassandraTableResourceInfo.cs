@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedCassandraTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
-        internal ExtendedCassandraTableResourceInfo(string tableName) : base(tableName)
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public ExtendedCassandraTableResourceInfo(string tableName) : base(tableName)
         {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCassandraTableResourceInfo"/>. </summary>

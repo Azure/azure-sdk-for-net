@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The RestorableTable. </summary>
+    /// <summary> An Azure Cosmos DB Table event. </summary>
     public partial class RestorableTable : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

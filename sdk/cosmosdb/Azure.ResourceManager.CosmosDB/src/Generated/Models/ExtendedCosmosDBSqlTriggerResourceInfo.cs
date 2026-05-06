@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlTriggerResourceInfo"/>. </summary>
         /// <param name="triggerName"> Name of the Cosmos DB SQL trigger. </param>
-        internal ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName) : base(triggerName)
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName) : base(triggerName)
         {
+            Argument.AssertNotNull(triggerName, nameof(triggerName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlTriggerResourceInfo"/>. </summary>

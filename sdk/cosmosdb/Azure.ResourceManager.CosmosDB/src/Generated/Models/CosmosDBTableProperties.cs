@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBTableProperties"/>. </summary>
-        internal CosmosDBTableProperties()
+        public CosmosDBTableProperties()
         {
         }
 
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Resource. </summary>
+        /// <summary> Gets or sets the Resource. </summary>
         [WirePath("resource")]
-        public CosmosDBTablePropertiesResource Resource { get; }
+        public CosmosDBTablePropertiesResource Resource { get; set; }
 
-        /// <summary> Gets the Options. </summary>
+        /// <summary> Gets or sets the Options. </summary>
         [WirePath("options")]
-        public CosmosDBTablePropertiesOptions Options { get; }
+        public CosmosDBTablePropertiesOptions Options { get; set; }
     }
 }

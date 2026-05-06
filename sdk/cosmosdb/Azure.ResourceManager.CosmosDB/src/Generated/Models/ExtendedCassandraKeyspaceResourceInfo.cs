@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedCassandraKeyspaceResourceInfo"/>. </summary>
         /// <param name="keyspaceName"> Name of the Cosmos DB Cassandra keyspace. </param>
-        internal ExtendedCassandraKeyspaceResourceInfo(string keyspaceName) : base(keyspaceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
+        public ExtendedCassandraKeyspaceResourceInfo(string keyspaceName) : base(keyspaceName)
         {
+            Argument.AssertNotNull(keyspaceName, nameof(keyspaceName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCassandraKeyspaceResourceInfo"/>. </summary>

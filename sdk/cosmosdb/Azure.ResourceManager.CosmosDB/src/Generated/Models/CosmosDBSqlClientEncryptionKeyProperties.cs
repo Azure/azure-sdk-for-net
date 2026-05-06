@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBSqlClientEncryptionKeyProperties : CosmosDBSqlClientEncryptionKeyResourceInfo
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyProperties"/>. </summary>
-        internal CosmosDBSqlClientEncryptionKeyProperties()
+        public CosmosDBSqlClientEncryptionKeyProperties()
         {
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal CosmosDBSqlClientEncryptionKeyProperties(string id, string encryptionAlgorithm, BinaryData wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, ETag? eTag) : base(id, encryptionAlgorithm, wrappedDataEncryptionKey, keyWrapMetadata, additionalBinaryDataProperties)
+        internal CosmosDBSqlClientEncryptionKeyProperties(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, ETag? eTag) : base(id, encryptionAlgorithm, wrappedDataEncryptionKey, keyWrapMetadata, additionalBinaryDataProperties)
         {
             Rid = rid;
             Timestamp = timestamp;

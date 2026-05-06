@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(IndexType.ToString());
             if (Optional.IsDefined(QuantizationByteSize))
             {
                 writer.WritePropertyName("quantizationByteSize"u8);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string path = default;
-            CosmosDBVectorIndexType @type = default;
+            CosmosDBVectorIndexType indexType = default;
             long? quantizationByteSize = default;
             long? indexingSearchListSize = default;
             IList<string> vectorIndexShardKey = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new CosmosDBVectorIndexType(prop.Value.GetString());
+                    indexType = new CosmosDBVectorIndexType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("quantizationByteSize"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             return new CosmosDBVectorIndex(
                 path,
-                @type,
+                indexType,
                 quantizationByteSize,
                 indexingSearchListSize,
                 vectorIndexShardKey ?? new ChangeTrackingList<string>(),

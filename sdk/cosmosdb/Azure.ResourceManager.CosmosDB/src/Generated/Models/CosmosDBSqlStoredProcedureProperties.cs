@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlStoredProcedureProperties"/>. </summary>
-        internal CosmosDBSqlStoredProcedureProperties()
+        public CosmosDBSqlStoredProcedureProperties()
         {
         }
 
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Resource. </summary>
+        /// <summary> Gets or sets the Resource. </summary>
         [WirePath("resource")]
-        public ExtendedCosmosDBSqlStoredProcedureResourceInfo Resource { get; }
+        public ExtendedCosmosDBSqlStoredProcedureResourceInfo Resource { get; set; }
     }
 }

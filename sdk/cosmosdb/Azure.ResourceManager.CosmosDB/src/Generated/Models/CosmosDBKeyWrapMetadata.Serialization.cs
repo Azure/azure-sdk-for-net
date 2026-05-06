@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(CosmosDBKeyWrapMetadataType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(CosmosDBKeyWrapMetadataType);
             }
             if (Optional.IsDefined(Value))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string name = default;
-            string @type = default;
+            string cosmosDBKeyWrapMetadataType = default;
             string value = default;
             string algorithm = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    cosmosDBKeyWrapMetadataType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CosmosDBKeyWrapMetadata(name, @type, value, algorithm, additionalBinaryDataProperties);
+            return new CosmosDBKeyWrapMetadata(name, cosmosDBKeyWrapMetadataType, value, algorithm, additionalBinaryDataProperties);
         }
     }
 }

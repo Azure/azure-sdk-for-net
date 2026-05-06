@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> List of keys for each MongoDB collection in the Azure Cosmos DB service. </summary>
         [WirePath("key.keys")]
-        public IList<string> KeyKeys
+        public IList<string> Keys
         {
             get
             {

@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedGremlinGraphResourceInfo"/>. </summary>
         /// <param name="graphName"> Name of the Cosmos DB Gremlin graph. </param>
-        internal ExtendedGremlinGraphResourceInfo(string graphName) : base(graphName)
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        public ExtendedGremlinGraphResourceInfo(string graphName) : base(graphName)
         {
+            Argument.AssertNotNull(graphName, nameof(graphName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedGremlinGraphResourceInfo"/>. </summary>

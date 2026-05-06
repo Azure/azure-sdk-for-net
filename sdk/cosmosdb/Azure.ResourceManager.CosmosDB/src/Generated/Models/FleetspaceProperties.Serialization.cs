@@ -90,10 +90,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("serviceTier"u8);
                 writer.WriteStringValue(ServiceTier.Value.ToString());
             }
-            if (Optional.IsDefined(DataRegions))
+            if (Optional.IsCollectionDefined(DataRegions))
             {
                 writer.WritePropertyName("dataRegions"u8);
-                writer.WriteStringValue(DataRegions.Value);
+                writer.WriteStartArray();
+                foreach (AzureLocation item in DataRegions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(ThroughputPoolConfiguration))
             {
@@ -145,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CosmosDBStatus? provisioningState = default;
             CosmosDBFleetspaceApiKind? fleetspaceApiKind = default;
             CosmosDBFleetspaceServiceTier? serviceTier = default;
-            AzureLocation? dataRegions = default;
+            IList<AzureLocation> dataRegions = default;
             CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -183,7 +188,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    dataRegions = new AzureLocation(prop.Value.GetString());
+                    List<AzureLocation> array = new List<AzureLocation>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new AzureLocation(item.GetString()));
+                    }
+                    dataRegions = array;
                     continue;
                 }
                 if (prop.NameEquals("throughputPoolConfiguration"u8))
@@ -204,7 +214,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 provisioningState,
                 fleetspaceApiKind,
                 serviceTier,
-                dataRegions,
+                dataRegions ?? new ChangeTrackingList<AzureLocation>(),
                 throughputPoolConfiguration,
                 additionalBinaryDataProperties);
         }

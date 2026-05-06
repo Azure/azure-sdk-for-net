@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The RestorableGremlinDatabase. </summary>
+    /// <summary> An Azure Cosmos DB Gremlin database event. </summary>
     public partial class RestorableGremlinDatabase : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

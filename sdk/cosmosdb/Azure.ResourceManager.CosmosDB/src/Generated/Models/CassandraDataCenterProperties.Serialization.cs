@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(DataCenterLocation))
             {
                 writer.WritePropertyName("dataCenterLocation"u8);
-                writer.WriteStringValue(DataCenterLocation);
+                writer.WriteStringValue(DataCenterLocation.Value);
             }
             if (Optional.IsDefined(DelegatedSubnetId))
             {
@@ -154,10 +155,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("provisionError"u8);
                 writer.WriteObjectValue(ProvisionError, options);
             }
-            if (Optional.IsDefined(PrivateEndpointIpAddress))
+            if (Optional.IsDefined(PrivateEndpointIPAddress))
             {
                 writer.WritePropertyName("privateEndpointIpAddress"u8);
-                writer.WriteStringValue(PrivateEndpointIpAddress);
+                writer.WriteStringValue(PrivateEndpointIPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -202,8 +203,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             CassandraProvisioningState? provisioningState = default;
-            string dataCenterLocation = default;
-            string delegatedSubnetId = default;
+            AzureLocation? dataCenterLocation = default;
+            ResourceIdentifier delegatedSubnetId = default;
             int? nodeCount = default;
             IReadOnlyList<CassandraDataCenterSeedNode> seedNodes = default;
             string base64EncodedCassandraYamlFragment = default;
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AuthenticationMethodLdapProperties authenticationMethodLdapProperties = default;
             bool? deallocated = default;
             CassandraError provisionError = default;
-            string privateEndpointIpAddress = default;
+            string privateEndpointIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -231,12 +232,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("dataCenterLocation"u8))
                 {
-                    dataCenterLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataCenterLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("delegatedSubnetId"u8))
                 {
-                    delegatedSubnetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delegatedSubnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("nodeCount"u8))
@@ -342,7 +351,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("privateEndpointIpAddress"u8))
                 {
-                    privateEndpointIpAddress = prop.Value.GetString();
+                    privateEndpointIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -366,7 +375,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 authenticationMethodLdapProperties,
                 deallocated,
                 provisionError,
-                privateEndpointIpAddress,
+                privateEndpointIPAddress,
                 additionalBinaryDataProperties);
         }
     }

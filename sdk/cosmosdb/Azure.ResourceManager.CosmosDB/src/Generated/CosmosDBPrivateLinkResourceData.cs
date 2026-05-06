@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateLinkResourceData"/>. </summary>
-        internal CosmosDBPrivateLinkResourceData()
+        public CosmosDBPrivateLinkResourceData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal CosmosDBPrivateLinkResourceProperties Properties { get; }
+        internal CosmosDBPrivateLinkResourceProperties Properties { get; set; }
 
         /// <summary> The private link resource group id. </summary>
         [WirePath("properties.groupId")]
@@ -57,7 +57,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredMembers;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredMembers;
             }
         }
 
@@ -67,7 +71,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredZoneNames;
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredZoneNames;
             }
         }
     }

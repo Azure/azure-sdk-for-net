@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentData"/>. </summary>
-        internal CosmosDBSqlRoleAssignmentData()
+        public CosmosDBSqlRoleAssignmentData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Properties related to the Role Assignment. </summary>
         [WirePath("properties")]
-        internal SqlRoleAssignmentResource Properties { get; }
+        internal SqlRoleAssignmentResource Properties { get; set; }
 
         /// <summary> The unique identifier for the associated Role Definition. </summary>
         [WirePath("properties.roleDefinitionId")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.RoleDefinitionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlRoleAssignmentResource();
+                }
+                Properties.RoleDefinitionId = value;
             }
         }
 
@@ -59,15 +67,31 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.Scope;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlRoleAssignmentResource();
+                }
+                Properties.Scope = value;
+            }
         }
 
         /// <summary> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </summary>
         [WirePath("properties.principalId")]
-        public string PrincipalId
+        public Guid? PrincipalId
         {
             get
             {
                 return Properties is null ? default : Properties.PrincipalId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlRoleAssignmentResource();
+                }
+                Properties.PrincipalId = value;
             }
         }
     }

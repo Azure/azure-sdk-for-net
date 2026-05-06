@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class ExtendedThroughputSettingsResourceInfo : ThroughputSettingsResourceInfo
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedThroughputSettingsResourceInfo"/>. </summary>
-        internal ExtendedThroughputSettingsResourceInfo()
+        public ExtendedThroughputSettingsResourceInfo()
         {
         }
 

@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL userDefinedFunction. </param>
+        /// <param name="content"> The parameters to provide for the current SQL userDefinedFunction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CosmosDBSqlUserDefinedFunctionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBSqlUserDefinedFunctionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBSqlUserDefinedFunctionResource> operation = new CosmosDBArmOperation<CosmosDBSqlUserDefinedFunctionResource>(
                     new CosmosDBSqlUserDefinedFunctionOperationSource(Client),
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL userDefinedFunction. </param>
+        /// <param name="content"> The parameters to provide for the current SQL userDefinedFunction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CosmosDBSqlUserDefinedFunctionResource> CreateOrUpdate(WaitUntil waitUntil, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBSqlUserDefinedFunctionResource> CreateOrUpdate(WaitUntil waitUntil, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.CreateOrUpdate");
             scope.Start();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBSqlUserDefinedFunctionResource> operation = new CosmosDBArmOperation<CosmosDBSqlUserDefinedFunctionResource>(
                     new CosmosDBSqlUserDefinedFunctionOperationSource(Client),

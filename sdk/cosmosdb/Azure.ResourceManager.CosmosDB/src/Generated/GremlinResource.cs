@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         private readonly ClientDiagnostics _gremlinResourcesClientDiagnostics;
         private readonly GremlinResources _gremlinResourcesRestClient;
-        private readonly ThroughputSettingsData _data;
+        private readonly ThroughputSettingData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs/throughputSettings";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of <see cref="GremlinResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GremlinResource(ArmClient client, ThroughputSettingsData data) : this(client, data.Id)
+        internal GremlinResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)
         {
             this.HasData = true;
             _data = data;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ThroughputSettingsData Data
+        public virtual ThroughputSettingData Data
         {
             get
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -554,12 +554,12 @@ namespace Azure.ResourceManager.CosmosDB
                     };
                     HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                     return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ThroughputSettingsData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ThroughputSettingData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
                     ArmOperation<GremlinResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -597,12 +597,12 @@ namespace Azure.ResourceManager.CosmosDB
                     };
                     HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                     return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ThroughputSettingsData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    ThroughputSettingData current = this.Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
                     ArmOperation<GremlinResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -639,12 +639,12 @@ namespace Azure.ResourceManager.CosmosDB
                     };
                     HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                     return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ThroughputSettingsData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ThroughputSettingData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
                     ArmOperation<GremlinResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -681,12 +681,12 @@ namespace Azure.ResourceManager.CosmosDB
                     };
                     HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                     return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ThroughputSettingsData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    ThroughputSettingData current = this.Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
                     ArmOperation<GremlinResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -722,12 +722,12 @@ namespace Azure.ResourceManager.CosmosDB
                     };
                     HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                     return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ThroughputSettingsData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ThroughputSettingData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
                     ArmOperation<GremlinResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -763,12 +763,12 @@ namespace Azure.ResourceManager.CosmosDB
                     };
                     HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinGraphThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ThroughputSettingsData> response = Response.FromValue(ThroughputSettingsData.FromResponse(result), result);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                     return Response.FromValue(new GremlinResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ThroughputSettingsData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    ThroughputSettingData current = this.Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
                     ArmOperation<GremlinResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());

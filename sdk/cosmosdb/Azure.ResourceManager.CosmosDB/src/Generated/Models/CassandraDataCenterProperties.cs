@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -39,9 +40,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="authenticationMethodLdapProperties"> Ldap authentication method properties. This feature is in preview. </param>
         /// <param name="deallocated"> Whether the data center has been deallocated. </param>
         /// <param name="provisionError"> Error related to resource provisioning. </param>
-        /// <param name="privateEndpointIpAddress"> Ip of the VPN Endpoint for this data center. </param>
+        /// <param name="privateEndpointIPAddress"> Ip of the VPN Endpoint for this data center. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, string dataCenterLocation, string delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, AuthenticationMethodLdapProperties authenticationMethodLdapProperties, bool? deallocated, CassandraError provisionError, string privateEndpointIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, AuthenticationMethodLdapProperties authenticationMethodLdapProperties, bool? deallocated, CassandraError provisionError, string privateEndpointIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DataCenterLocation = dataCenterLocation;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AuthenticationMethodLdapProperties = authenticationMethodLdapProperties;
             Deallocated = deallocated;
             ProvisionError = provisionError;
-            PrivateEndpointIpAddress = privateEndpointIpAddress;
+            PrivateEndpointIPAddress = privateEndpointIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -68,11 +69,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The region this data center should be created in. </summary>
         [WirePath("dataCenterLocation")]
-        public string DataCenterLocation { get; set; }
+        public AzureLocation? DataCenterLocation { get; set; }
 
         /// <summary> Resource id of a subnet the nodes in this data center should have their network interfaces connected to. The subnet must be in the same region specified in 'dataCenterLocation' and must be able to route to the subnet specified in the cluster's 'delegatedManagementSubnetId' property. This resource id will be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </summary>
         [WirePath("delegatedSubnetId")]
-        public string DelegatedSubnetId { get; set; }
+        public ResourceIdentifier DelegatedSubnetId { get; set; }
 
         /// <summary> The number of nodes the data center should have. This is the desired number. After it is set, it may take some time for the data center to be scaled to match. To monitor the number of nodes and their status, use the fetchNodeStatus method on the cluster. </summary>
         [WirePath("nodeCount")]
@@ -124,6 +125,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Ip of the VPN Endpoint for this data center. </summary>
         [WirePath("privateEndpointIpAddress")]
-        public string PrivateEndpointIpAddress { get; set; }
+        public string PrivateEndpointIPAddress { get; set; }
     }
 }

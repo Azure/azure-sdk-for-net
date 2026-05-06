@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location name. </param>
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBRegionalService(string name, string location, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBRegionalService(string name, AzureLocation? location, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The location name. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> Describes the status of a service. </summary>
         [WirePath("status")]

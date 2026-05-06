@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
-                writer.WriteStringValue(LocationName);
+                writer.WriteStringValue(LocationName.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(RegionalDatabaseAccountInstanceId))
             {
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            string locationName = default;
+            AzureLocation? locationName = default;
             string regionalDatabaseAccountInstanceId = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? deletedOn = default;
@@ -145,7 +146,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (prop.NameEquals("locationName"u8))
                 {
-                    locationName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    locationName = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("regionalDatabaseAccountInstanceId"u8))

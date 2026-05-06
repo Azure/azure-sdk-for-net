@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class GraphApiComputeServiceProperties : CosmosDBServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="GraphApiComputeServiceProperties"/>. </summary>
-        internal GraphApiComputeServiceProperties() : base(CosmosDBServiceType.GraphAPICompute)
+        public GraphApiComputeServiceProperties() : base(CosmosDBServiceType.GraphApiCompute)
         {
             Locations = new ChangeTrackingList<GraphApiComputeRegionalService>();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> GraphAPICompute endpoint for the service. </summary>
         [WirePath("graphApiComputeEndpoint")]
-        public string GraphApiComputeEndpoint { get; }
+        public string GraphApiComputeEndpoint { get; set; }
 
         /// <summary> An array that contains all of the locations for the service. </summary>
         [WirePath("locations")]

@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
-        /// <param name="data"> The properties required to create or update a Role Assignment. </param>
+        /// <param name="content"> The properties required to create or update a Role Assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CosmosDBSqlRoleAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleAssignmentId, CosmosDBSqlRoleAssignmentCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBSqlRoleAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleAssignmentId, CosmosDBSqlRoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, CosmosDBSqlRoleAssignmentCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, CosmosDBSqlRoleAssignmentCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBSqlRoleAssignmentResource> operation = new CosmosDBArmOperation<CosmosDBSqlRoleAssignmentResource>(
                     new CosmosDBSqlRoleAssignmentOperationSource(Client),
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
-        /// <param name="data"> The properties required to create or update a Role Assignment. </param>
+        /// <param name="content"> The properties required to create or update a Role Assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CosmosDBSqlRoleAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string roleAssignmentId, CosmosDBSqlRoleAssignmentCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBSqlRoleAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string roleAssignmentId, CosmosDBSqlRoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, CosmosDBSqlRoleAssignmentCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, CosmosDBSqlRoleAssignmentCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBSqlRoleAssignmentResource> operation = new CosmosDBArmOperation<CosmosDBSqlRoleAssignmentResource>(
                     new CosmosDBSqlRoleAssignmentOperationSource(Client),

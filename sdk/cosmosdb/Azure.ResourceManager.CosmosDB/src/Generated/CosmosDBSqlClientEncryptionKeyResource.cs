@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters to provide for the client encryption key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<CosmosDBSqlClientEncryptionKeyResource>> UpdateAsync(WaitUntil waitUntil, ClientEncryptionKeyCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBSqlClientEncryptionKeyResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ClientEncryptionKeyCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource> operation = new CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource>(
                     new CosmosDBSqlClientEncryptionKeyOperationSource(Client),
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters to provide for the client encryption key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<CosmosDBSqlClientEncryptionKeyResource> Update(WaitUntil waitUntil, ClientEncryptionKeyCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBSqlClientEncryptionKeyResource> Update(WaitUntil waitUntil, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ClientEncryptionKeyCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource> operation = new CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource>(
                     new CosmosDBSqlClientEncryptionKeyOperationSource(Client),

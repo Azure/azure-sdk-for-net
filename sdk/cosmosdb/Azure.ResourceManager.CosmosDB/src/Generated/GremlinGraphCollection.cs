@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="graphName"> Cosmos DB graph name. </param>
-        /// <param name="data"> The parameters to provide for the current Gremlin graph. </param>
+        /// <param name="content"> The parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GremlinGraphResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string graphName, GremlinGraphCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GremlinGraphResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string graphName, GremlinGraphCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, GremlinGraphCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, GremlinGraphCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<GremlinGraphResource> operation = new CosmosDBArmOperation<GremlinGraphResource>(
                     new GremlinGraphOperationSource(Client),
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="graphName"> Cosmos DB graph name. </param>
-        /// <param name="data"> The parameters to provide for the current Gremlin graph. </param>
+        /// <param name="content"> The parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GremlinGraphResource> CreateOrUpdate(WaitUntil waitUntil, string graphName, GremlinGraphCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GremlinGraphResource> CreateOrUpdate(WaitUntil waitUntil, string graphName, GremlinGraphCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.CreateOrUpdate");
             scope.Start();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, GremlinGraphCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, GremlinGraphCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<GremlinGraphResource> operation = new CosmosDBArmOperation<GremlinGraphResource>(
                     new GremlinGraphOperationSource(Client),

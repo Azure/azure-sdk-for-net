@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The RestorableGremlinDatabase. </summary>
+    /// <summary> An Azure Cosmos DB Gremlin database event. </summary>
     public partial class RestorableGremlinDatabase : ResourceData, IJsonModel<RestorableGremlinDatabase>
     {
         /// <param name="data"> The data to parse. </param>

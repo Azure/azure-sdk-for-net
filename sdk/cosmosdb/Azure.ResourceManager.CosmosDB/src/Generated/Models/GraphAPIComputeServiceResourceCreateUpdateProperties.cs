@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Properties for Create or Update request for GraphAPIComputeServiceResource. </summary>
-    public partial class GraphAPIComputeServiceResourceCreateUpdateProperties : ServiceResourceCreateUpdateProperties
+    public partial class GraphApiComputeServiceResourceCreateUpdateProperties : ServiceResourceCreateUpdateProperties
     {
-        /// <summary> Initializes a new instance of <see cref="GraphAPIComputeServiceResourceCreateUpdateProperties"/>. </summary>
-        public GraphAPIComputeServiceResourceCreateUpdateProperties() : base(CosmosDBServiceType.GraphAPICompute)
+        /// <summary> Initializes a new instance of <see cref="GraphApiComputeServiceResourceCreateUpdateProperties"/>. </summary>
+        public GraphApiComputeServiceResourceCreateUpdateProperties() : base(CosmosDBServiceType.GraphApiCompute)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GraphAPIComputeServiceResourceCreateUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphApiComputeServiceResourceCreateUpdateProperties"/>. </summary>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GraphAPIComputeServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceSize, instanceCount, serviceType, additionalBinaryDataProperties)
+        internal GraphApiComputeServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceSize, instanceCount, serviceType, additionalBinaryDataProperties)
         {
         }
     }

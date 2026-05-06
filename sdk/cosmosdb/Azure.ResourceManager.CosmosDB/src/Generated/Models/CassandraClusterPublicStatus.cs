@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="errors"> List relevant information about any errors about cluster, data center and connection error. </param>
         /// <param name="dataCenters"> List of the status of each datacenter in this cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterPublicStatus(string eTag, CassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraError> errors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraClusterPublicStatus(ETag? eTag, CassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraError> errors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             ReaperStatus = reaperStatus;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Gets the ETag. </summary>
         [WirePath("eTag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Gets the ReaperStatus. </summary>
         [WirePath("reaperStatus")]

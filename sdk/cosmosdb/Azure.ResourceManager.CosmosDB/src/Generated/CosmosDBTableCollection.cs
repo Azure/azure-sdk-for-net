@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="tableName"> Cosmos DB table name. </param>
-        /// <param name="data"> The parameters to provide for the current Table. </param>
+        /// <param name="content"> The parameters to provide for the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CosmosDBTableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tableName, CosmosDBTableCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBTableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tableName, CosmosDBTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, CosmosDBTableCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, CosmosDBTableCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBTableResource> operation = new CosmosDBArmOperation<CosmosDBTableResource>(
                     new CosmosDBTableOperationSource(Client),
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="tableName"> Cosmos DB table name. </param>
-        /// <param name="data"> The parameters to provide for the current Table. </param>
+        /// <param name="content"> The parameters to provide for the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CosmosDBTableResource> CreateOrUpdate(WaitUntil waitUntil, string tableName, CosmosDBTableCreateUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBTableResource> CreateOrUpdate(WaitUntil waitUntil, string tableName, CosmosDBTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableCollection.CreateOrUpdate");
             scope.Start();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, CosmosDBTableCreateUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, CosmosDBTableCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBTableResource> operation = new CosmosDBArmOperation<CosmosDBTableResource>(
                     new CosmosDBTableOperationSource(Client),

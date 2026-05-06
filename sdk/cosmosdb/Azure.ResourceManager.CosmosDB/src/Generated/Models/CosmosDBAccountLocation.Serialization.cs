@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
-                writer.WriteStringValue(LocationName);
+                writer.WriteStringValue(LocationName.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DocumentEndpoint))
             {
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            string locationName = default;
+            AzureLocation? locationName = default;
             string documentEndpoint = default;
             string provisioningState = default;
             int? failoverPriority = default;
@@ -162,7 +163,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("locationName"u8))
                 {
-                    locationName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    locationName = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("documentEndpoint"u8))

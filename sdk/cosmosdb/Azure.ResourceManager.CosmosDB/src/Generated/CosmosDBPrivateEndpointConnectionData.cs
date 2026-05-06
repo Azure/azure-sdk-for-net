@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
-        public CosmosDBPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState
+        public CosmosDBPrivateLinkServiceConnectionStateProperty ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 

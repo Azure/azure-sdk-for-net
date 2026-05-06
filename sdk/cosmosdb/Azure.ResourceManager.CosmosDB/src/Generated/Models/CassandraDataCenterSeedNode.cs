@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CassandraDataCenterSeedNode(string ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP address of this seed node. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
     }
 }

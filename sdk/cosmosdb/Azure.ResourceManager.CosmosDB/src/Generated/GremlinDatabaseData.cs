@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Initializes a new instance of <see cref="GremlinDatabaseData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal GremlinDatabaseData(AzureLocation location) : base(location)
+        public GremlinDatabaseData(AzureLocation location) : base(location)
         {
         }
 
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The properties of an Azure Cosmos DB SQL database. </summary>
         [WirePath("properties")]
-        internal GremlinDatabaseProperties Properties { get; }
+        internal GremlinDatabaseProperties Properties { get; set; }
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; set; }
 
-        /// <summary> Gets the Resource. </summary>
+        /// <summary> Gets or sets the Resource. </summary>
         [WirePath("properties.resource")]
         public ExtendedGremlinDatabaseResourceInfo Resource
         {
@@ -58,15 +58,31 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.Resource;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GremlinDatabaseProperties();
+                }
+                Properties.Resource = value;
+            }
         }
 
-        /// <summary> Gets the Options. </summary>
+        /// <summary> Gets or sets the Options. </summary>
         [WirePath("properties.options")]
         public GremlinDatabasePropertiesConfig Options
         {
             get
             {
                 return Properties is null ? default : Properties.Options;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GremlinDatabaseProperties();
+                }
+                Properties.Options = value;
             }
         }
     }

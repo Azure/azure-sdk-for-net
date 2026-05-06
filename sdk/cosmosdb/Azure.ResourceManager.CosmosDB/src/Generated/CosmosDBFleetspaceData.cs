@@ -89,19 +89,15 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> List of data regions assigned to the fleetspace. Eg [westus2]. </summary>
         [WirePath("properties.dataRegions")]
-        public AzureLocation? DataRegions
+        public IList<AzureLocation> DataRegions
         {
             get
-            {
-                return Properties is null ? default : Properties.DataRegions;
-            }
-            set
             {
                 if (Properties is null)
                 {
                     Properties = new FleetspaceProperties();
                 }
-                Properties.DataRegions = value;
+                return Properties.DataRegions;
             }
         }
 

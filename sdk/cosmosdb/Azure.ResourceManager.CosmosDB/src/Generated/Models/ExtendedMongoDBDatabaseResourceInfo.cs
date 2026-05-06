@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedMongoDBDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB MongoDB database. </param>
-        internal ExtendedMongoDBDatabaseResourceInfo(string databaseName) : base(databaseName)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public ExtendedMongoDBDatabaseResourceInfo(string databaseName) : base(databaseName)
         {
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedMongoDBDatabaseResourceInfo"/>. </summary>

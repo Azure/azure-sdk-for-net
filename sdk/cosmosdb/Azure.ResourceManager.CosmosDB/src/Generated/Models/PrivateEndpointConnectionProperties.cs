@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
+        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="groupId"> Group id of the private endpoint. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(PrivateEndpointProperty privateEndpoint, CosmosDBPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string groupId, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(PrivateEndpointProperty privateEndpoint, CosmosDBPrivateLinkServiceConnectionStateProperty connectionState, string groupId, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             GroupId = groupId;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public CosmosDBPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+        public CosmosDBPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
 
         /// <summary> Group id of the private endpoint. </summary>
         [WirePath("groupId")]

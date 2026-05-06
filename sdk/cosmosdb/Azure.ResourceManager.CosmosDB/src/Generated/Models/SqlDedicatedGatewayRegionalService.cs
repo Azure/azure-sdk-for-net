@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sqlDedicatedGatewayEndpoint"> The regional endpoint for SqlDedicatedGateway. </param>
-        internal SqlDedicatedGatewayRegionalService(string name, string location, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sqlDedicatedGatewayEndpoint) : base(name, location, status, additionalBinaryDataProperties)
+        internal SqlDedicatedGatewayRegionalService(string name, AzureLocation? location, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sqlDedicatedGatewayEndpoint) : base(name, location, status, additionalBinaryDataProperties)
         {
             SqlDedicatedGatewayEndpoint = sqlDedicatedGatewayEndpoint;
         }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LocationProperties"/>. </summary>
-        internal LocationProperties()
+        public LocationProperties()
         {
             BackupStorageRedundancies = new ChangeTrackingList<CosmosDBBackupStorageRedundancy>();
         }

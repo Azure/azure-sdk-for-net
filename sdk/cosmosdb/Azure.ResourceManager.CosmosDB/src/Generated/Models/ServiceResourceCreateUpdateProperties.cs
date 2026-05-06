@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
     /// Properties in ServiceResourceCreateUpdateParameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>, <see cref="GraphAPIComputeServiceResourceCreateUpdateProperties"/>, and <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>, <see cref="GraphApiComputeServiceResourceCreateUpdateProperties"/>, and <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>.
     /// </summary>
     public abstract partial class ServiceResourceCreateUpdateProperties
     {

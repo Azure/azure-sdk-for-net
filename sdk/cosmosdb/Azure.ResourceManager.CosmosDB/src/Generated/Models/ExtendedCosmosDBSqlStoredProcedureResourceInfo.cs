@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>
         /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
-        internal ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName) : base(storedProcedureName)
+        /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
+        public ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName) : base(storedProcedureName)
         {
+            Argument.AssertNotNull(storedProcedureName, nameof(storedProcedureName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>

@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The RestorableMongoDBDatabase. </summary>
+    /// <summary> An Azure Cosmos DB MongoDB database event. </summary>
     public partial class RestorableMongoDBDatabase : ResourceData, IJsonModel<RestorableMongoDBDatabase>
     {
         /// <param name="data"> The data to parse. </param>

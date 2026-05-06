@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The location of  global database account in the throughputPool. </summary>
         [WirePath("properties.accountLocation")]
-        public AzureLocation? AccountLocation
+        public string AccountLocation
         {
             get
             {

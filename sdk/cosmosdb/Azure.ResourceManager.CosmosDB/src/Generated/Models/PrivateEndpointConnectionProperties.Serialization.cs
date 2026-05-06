@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (Optional.IsDefined(GroupId))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             PrivateEndpointProperty privateEndpoint = default;
-            CosmosDBPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
+            CosmosDBPrivateLinkServiceConnectionStateProperty connectionState = default;
             string groupId = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = CosmosDBPrivateLinkServiceConnectionStateProperty.DeserializeCosmosDBPrivateLinkServiceConnectionStateProperty(prop.Value, options);
+                    connectionState = CosmosDBPrivateLinkServiceConnectionStateProperty.DeserializeCosmosDBPrivateLinkServiceConnectionStateProperty(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("groupId"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, groupId, provisioningState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(privateEndpoint, connectionState, groupId, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

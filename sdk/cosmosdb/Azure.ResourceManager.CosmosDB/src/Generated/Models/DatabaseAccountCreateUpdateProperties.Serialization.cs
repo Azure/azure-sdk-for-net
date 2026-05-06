@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -85,12 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteObjectValue(ConsistencyPolicy, options);
             }
             writer.WritePropertyName("locations"u8);
-            writer.WriteStartArray();
-            foreach (CosmosDBAccountLocation item in Locations)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            writer.WriteStringValue(Locations);
             writer.WritePropertyName("databaseAccountOfferType"u8);
             writer.WriteStringValue(DatabaseAccountOfferType);
             if (Optional.IsCollectionDefined(IpRules))
@@ -346,7 +342,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             ConsistencyPolicy consistencyPolicy = default;
-            IList<CosmosDBAccountLocation> locations = default;
+            AzureLocation locations = default;
             string databaseAccountOfferType = default;
             IList<CosmosDBIPAddressOrRange> ipRules = default;
             bool? isVirtualNetworkFilterEnabled = default;
@@ -398,12 +394,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("locations"u8))
                 {
-                    List<CosmosDBAccountLocation> array = new List<CosmosDBAccountLocation>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(CosmosDBAccountLocation.DeserializeCosmosDBAccountLocation(item, options));
-                    }
-                    locations = array;
+                    locations = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("databaseAccountOfferType"u8))

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 throw new FormatException($"The model {nameof(CosmosDBIPAddressOrRange)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpAddressOrRange))
+            if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("ipAddressOrRange"u8);
-                writer.WriteStringValue(IpAddressOrRange);
+                writer.WriteStringValue(IPAddressOrRange);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

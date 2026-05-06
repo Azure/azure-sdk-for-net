@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class DataTransferServiceProperties : CosmosDBServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataTransferServiceProperties"/>. </summary>
-        internal DataTransferServiceProperties() : base(CosmosDBServiceType.DataTransfer)
+        public DataTransferServiceProperties() : base(CosmosDBServiceType.DataTransfer)
         {
             Locations = new ChangeTrackingList<DataTransferRegionalService>();
         }

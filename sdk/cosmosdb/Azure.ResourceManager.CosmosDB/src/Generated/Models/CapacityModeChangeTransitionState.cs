@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CapacityModeChangeTransitionState"/>. </summary>
-        internal CapacityModeChangeTransitionState()
+        public CapacityModeChangeTransitionState()
         {
         }
 
@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The transition status of capacity mode. </summary>
         [WirePath("capacityModeTransitionStatus")]
-        public CapacityModeTransitionStatus? CapacityModeTransitionStatus { get; }
+        public CapacityModeTransitionStatus? CapacityModeTransitionStatus { get; set; }
 
         /// <summary> Indicates the current capacity mode of the account. </summary>
         [WirePath("currentCapacityMode")]
-        public CapacityMode? CurrentCapacityMode { get; }
+        public CapacityMode? CurrentCapacityMode { get; set; }
 
         /// <summary> Indicates the previous capacity mode of the account before successful transition. </summary>
         [WirePath("previousCapacityMode")]
-        public CapacityMode? PreviousCapacityMode { get; }
+        public CapacityMode? PreviousCapacityMode { get; set; }
 
         /// <summary> Begin time in UTC of the capacity mode change. </summary>
         [WirePath("capacityModeTransitionBeginTimestamp")]

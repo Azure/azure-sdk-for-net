@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleDefinitionData"/>. </summary>
-        internal CosmosDBSqlRoleDefinitionData()
+        public CosmosDBSqlRoleDefinitionData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Properties related to the Role Definition. </summary>
         [WirePath("properties")]
-        internal SqlRoleDefinitionResource Properties { get; }
+        internal SqlRoleDefinitionResource Properties { get; set; }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>
         [WirePath("properties.roleName")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.RoleName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlRoleDefinitionResource();
+                }
+                Properties.RoleName = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return Properties is null ? default : Properties.RoleDefinitionType;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlRoleDefinitionResource();
+                }
+                Properties.RoleDefinitionType = value;
+            }
         }
 
         /// <summary> A set of fully qualified Scopes at or below which Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </summary>
@@ -67,7 +83,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.AssignableScopes;
+                if (Properties is null)
+                {
+                    Properties = new SqlRoleDefinitionResource();
+                }
+                return Properties.AssignableScopes;
             }
         }
 
@@ -77,7 +97,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.Permissions;
+                if (Properties is null)
+                {
+                    Properties = new SqlRoleDefinitionResource();
+                }
+                return Properties.Permissions;
             }
         }
     }

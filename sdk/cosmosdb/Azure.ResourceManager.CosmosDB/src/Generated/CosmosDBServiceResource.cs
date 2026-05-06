@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The Service resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<CosmosDBServiceResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBServiceCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBServiceResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBServiceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBServiceCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _serviceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBServiceCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBServiceResource> operation = new CosmosDBArmOperation<CosmosDBServiceResource>(
                     new CosmosDBServiceOperationSource(Client),
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The Service resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<CosmosDBServiceResource> Update(WaitUntil waitUntil, CosmosDBServiceCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBServiceResource> Update(WaitUntil waitUntil, CosmosDBServiceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBServiceCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _serviceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBServiceCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBServiceResource> operation = new CosmosDBArmOperation<CosmosDBServiceResource>(
                     new CosmosDBServiceOperationSource(Client),

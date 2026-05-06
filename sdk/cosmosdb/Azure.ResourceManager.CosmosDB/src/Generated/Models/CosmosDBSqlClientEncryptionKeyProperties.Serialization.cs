@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string id = default;
             string encryptionAlgorithm = default;
-            BinaryData wrappedDataEncryptionKey = default;
+            byte[] wrappedDataEncryptionKey = default;
             CosmosDBKeyWrapMetadata keyWrapMetadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string rid = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    wrappedDataEncryptionKey = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    wrappedDataEncryptionKey = prop.Value.GetBytesFromBase64("D");
                     continue;
                 }
                 if (prop.NameEquals("keyWrapMetadata"u8))

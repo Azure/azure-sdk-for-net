@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyData"/>. </summary>
-        internal CosmosDBSqlClientEncryptionKeyData()
+        public CosmosDBSqlClientEncryptionKeyData()
         {
         }
 
@@ -39,15 +39,23 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The properties of a ClientEncryptionKey. </summary>
         [WirePath("properties")]
-        internal ClientEncryptionKeyGetProperties Properties { get; }
+        internal ClientEncryptionKeyGetProperties Properties { get; set; }
 
-        /// <summary> Gets the Resource. </summary>
+        /// <summary> Gets or sets the Resource. </summary>
         [WirePath("properties.resource")]
         public CosmosDBSqlClientEncryptionKeyProperties Resource
         {
             get
             {
                 return Properties is null ? default : Properties.Resource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClientEncryptionKeyGetProperties();
+                }
+                Properties.Resource = value;
             }
         }
     }

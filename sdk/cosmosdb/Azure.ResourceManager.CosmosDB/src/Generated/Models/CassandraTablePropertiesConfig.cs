@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraTablePropertiesConfig : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of <see cref="CassandraTablePropertiesConfig"/>. </summary>
-        internal CassandraTablePropertiesConfig()
+        public CassandraTablePropertiesConfig()
         {
         }
 

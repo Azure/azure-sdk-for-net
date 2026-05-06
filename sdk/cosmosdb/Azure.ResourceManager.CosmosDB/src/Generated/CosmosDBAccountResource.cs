@@ -2898,7 +2898,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> RegenerateKeyAsync(WaitUntil waitUntil, CosmosDBAccountRegenerateKeyInfo content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RegenerateKeyAsync(WaitUntil waitUntil, CosmosDBAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2910,7 +2910,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountRegenerateKeyInfo.ToRequestContent(content), context);
+                HttpMessage message = _databaseAccountsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2951,7 +2951,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation RegenerateKey(WaitUntil waitUntil, CosmosDBAccountRegenerateKeyInfo content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RegenerateKey(WaitUntil waitUntil, CosmosDBAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2963,7 +2963,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountRegenerateKeyInfo.ToRequestContent(content), context);
+                HttpMessage message = _databaseAccountsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

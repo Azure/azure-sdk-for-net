@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="keyKind"> Kind of the connection string key. </param>
         /// <param name="keyType"> Type of the connection string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBAccountConnectionString(string connectionString, string description, CosmosDBKind? keyKind, Type? keyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBAccountConnectionString(string connectionString, string description, CosmosDBKind? keyKind, CosmosDBType? keyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             Description = description;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Type of the connection string. </summary>
         [WirePath("type")]
-        public Type? KeyType { get; }
+        public CosmosDBType? KeyType { get; }
     }
 }

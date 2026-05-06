@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string connectionString = default;
             string description = default;
             CosmosDBKind? keyKind = default;
-            Type? keyType = default;
+            CosmosDBType? keyType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    keyType = new Type(prop.Value.GetString());
+                    keyType = new CosmosDBType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
