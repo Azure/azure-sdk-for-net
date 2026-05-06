@@ -194,13 +194,13 @@ namespace Azure.Generator.Mgmt.Tests
             // Realize all models in the chain so visitors run on each.
             var resourceModel = plugin.Object.TypeFactory.CreateModel(multiPropResource);
             var model = plugin.Object.TypeFactory.CreateModel(patchModel);
-            Assert.IsNotNull(resourceModel);
-            Assert.IsNotNull(model);
+            Assert.That(resourceModel, Is.Not.Null);
+            Assert.That(model, Is.Not.Null);
 
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
 
             foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
             {
@@ -219,17 +219,17 @@ namespace Azure.Generator.Mgmt.Tests
         {
             var publicConstructor = model.Constructors.SingleOrDefault(
                 c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsNotNull(publicConstructor, $"{label} should keep a public constructor");
-            Assert.AreEqual(1, publicConstructor!.Signature.Parameters.Count, $"{label} should expose a single required location parameter");
-            Assert.AreEqual("location", publicConstructor.Signature.Parameters[0].Name);
-            Assert.AreEqual("AzureLocation", publicConstructor.Signature.Parameters[0].Type.Name);
+            Assert.That(publicConstructor, Is.Not.Null, $"{label} should keep a public constructor");
+            Assert.That(publicConstructor!.Signature.Parameters.Count, Is.EqualTo(1), $"{label} should expose a single required location parameter");
+            Assert.That(publicConstructor.Signature.Parameters[0].Name, Is.EqualTo("location"));
+            Assert.That(publicConstructor.Signature.Parameters[0].Type.Name, Is.EqualTo("AzureLocation"));
 
             var initializer = publicConstructor.Signature.Initializer;
-            Assert.IsNotNull(initializer, $"{label}'s public constructor should delegate to a base constructor");
-            Assert.IsTrue(initializer!.IsBase, $"{label}'s public constructor should use a base initializer");
-            Assert.AreEqual(1, initializer.Arguments.Count);
+            Assert.That(initializer, Is.Not.Null, $"{label}'s public constructor should delegate to a base constructor");
+            Assert.That(initializer!.IsBase, Is.True, $"{label}'s public constructor should use a base initializer");
+            Assert.That(initializer.Arguments.Count, Is.EqualTo(1));
             Assert.That(initializer.Arguments[0], Is.TypeOf<VariableExpression>());
-            Assert.AreEqual("location", ((VariableExpression)initializer.Arguments[0]).Declaration.RequestedName);
+            Assert.That(((VariableExpression)initializer.Arguments[0]).Declaration.RequestedName, Is.EqualTo("location"));
         }
 
         /// <summary>
