@@ -78,8 +78,8 @@ steps:
         if [[ "$(uname)" == "Darwin" ]]; then
           export DOTNET_ROOT="$HOME/.dotnet"
         fi
-        echo "nohup $(PROXY_EXE) start -u --storage-location ${{ parameters.rootFolder }} -- --urls ${{ parameters.proxyUrl }} 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &"
-        nohup $(PROXY_EXE) start -u --storage-location ${{ parameters.rootFolder }} -- --urls ${{ parameters.proxyUrl }} 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &
+        echo "nohup $(PROXY_EXE) start -u --storage-location ${{ parameters.rootFolder }} -- --urls \"${{ parameters.proxyUrl }}\" 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &"
+        nohup $(PROXY_EXE) start -u --storage-location ${{ parameters.rootFolder }} -- --urls "${{ parameters.proxyUrl }}" 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &
 
         echo $! > $(Build.SourcesDirectory)/test-proxy.pid
 
