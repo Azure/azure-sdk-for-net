@@ -18,7 +18,7 @@ using Azure.ResourceManager.HDInsight.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    internal partial class HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT : AsyncPageable<HDInsightClusterHostInfo>
+    internal partial class MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT : AsyncPageable<HDInsightClusterHostInfo>
     {
         private readonly VirtualMachines _client;
         private readonly string _subscriptionId;
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HDInsight
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachines client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT(VirtualMachines client, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context, string diagnosticScope)
+        public MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT(VirtualMachines client, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.HDInsight
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<HDInsightClusterHostInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
