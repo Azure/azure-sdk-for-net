@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/17842bc766fcf93b9e18c7c0294761173d7a8b17/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
-tag: package-preview-2025-12-15-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/c5044e9d381c2bf1b3119011b4696e777f819f76/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
+tag: package-2026-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -70,7 +70,6 @@ override-operation-name:
   NetAppResourceQuotaLimits_List: GetNetAppQuotaLimits
   Volumes_ReplicationStatus: GetReplicationStatus
   VolumeGroups_ListByNetAppAccount: GetVolumeGroups
-  ElasticCapacityPools_CheckVolumeFilePathAvailability: CheckElasticVolumeFilePathAvailability
   Buckets_GenerateAkvCredentials: GenerateKeyVaultCredentials
 
 request-path-is-non-resource:
@@ -91,23 +90,6 @@ prepend-rp-prefix:
   - CacheProperties
   - CacheProvisioningState
   - EndpointType
-  - ElasticAccount
-  - ElasticAccountProperties
-  - ElasticBackup
-  - ElasticBackupProperties
-  - ElasticBackupPolicy
-  - ElasticBackupPolicyProperties
-  - ElasticBackupType
-  - ElasticBackupVault
-  - ElasticBackupVaultProperties
-  - ElasticCapacityPool
-  - ElasticCapacityPoolProperties
-  - ElasticSnapshot
-  - ElasticSnapshotProperties
-  - ElasticSnapshotPolicy
-  - ElasticSnapshotPolicyProperties
-  - ElasticVolume
-  - ElasticVolumeProperties
   - EntraIdConfig
   - EntraIdConfigPatch
   - LdapConfiguration
@@ -139,7 +121,6 @@ prepend-rp-prefix:
   - KeyVaultPrivateEndpoint
   - ReplicationType
   - VolumeLanguage
-  - ElasticEncryption
   - ManagedServiceIdentityType
   - BucketCredentialsExpiry
   - BucketGenerateCredentials
@@ -308,11 +289,6 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
-  ElasticResourceAvailabilityStatus: NetAppElasticResourceAvailabilityState
-  CheckElasticVolumeFilePathAvailabilityRequest: ElasticVolumeFilePathAvailabilityContent
-  CheckElasticResourceAvailabilityResponse: ElasticResourceAvailabilityResult
-  CheckElasticResourceAvailabilityStatus: ElasticResourceAvailabilityStatus
-  CheckElasticResourceAvailabilityReason: ElasticResourceAvailabilityReason
   BreakthroughMode: NetAppBreakthroughMode
   CertificateAkvDetails: CertificateKeyVaultDetails
   CifsChangeNotifyState: NetAppCifsChangeNotifyState

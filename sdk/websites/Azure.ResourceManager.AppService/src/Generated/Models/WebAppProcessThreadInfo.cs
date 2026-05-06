@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Process Thread Information. </summary>
+    /// <summary>
+    /// Process Thread Information.
+    /// Serialized Name: ProcessThreadInfo
+    /// </summary>
     public partial class WebAppProcessThreadInfo : ResourceData
     {
         /// <summary>
@@ -57,8 +60,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> ProcessThreadInfo resource specific properties. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="properties">
+        /// ProcessThreadInfo resource specific properties
+        /// Serialized Name: ProcessThreadInfo.properties
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebAppProcessThreadProperties properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -67,10 +76,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ProcessThreadInfo resource specific properties. </summary>
+        /// <summary>
+        /// ProcessThreadInfo resource specific properties
+        /// Serialized Name: ProcessThreadInfo.properties
+        /// </summary>
         [WirePath("properties")]
         public WebAppProcessThreadProperties Properties { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
@@ -134,11 +134,11 @@ namespace Azure.Generator.Management.Tests.Providers
                 clients: () => [client]);
 
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
-            Assert.NotNull(outputLibrary);
+            Assert.That(outputLibrary, Is.Not.Null);
 
             // Verify that TWO separate OperationSources are created, not just one
             var operationSources = outputLibrary!.OperationSourceDict;
-            Assert.AreEqual(2, operationSources.Count,
+            Assert.That(operationSources.Count, Is.EqualTo(2),
                 "Should generate 2 OperationSources for 2 resources sharing the same data model");
 
             // Verify the OperationSource names and types
@@ -146,8 +146,8 @@ namespace Azure.Generator.Management.Tests.Providers
             var names = operationSourcesList.Select(os => os.Name).OrderBy(n => n).ToList();
 
             // Both resources should have their own OperationSource
-            Assert.Contains("SiteOperationSource", names, "Should have SiteResourceOperationSource");
-            Assert.Contains("SitesBySubscriptionOperationSource", names, "Should have SitesBySubscriptionResourceOperationSource");
+            Assert.That(names, Does.Contain("SiteOperationSource"), "Should have SiteResourceOperationSource");
+            Assert.That(names, Does.Contain("SitesBySubscriptionOperationSource"), "Should have SitesBySubscriptionResourceOperationSource");
 
             // Verify each OperationSource implements IOperationSource<CorrectResourceType>
             var siteOperationSource = operationSourcesList.First(os => os.Name == "SiteOperationSource");
@@ -155,14 +155,14 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // Check that the OperationSource implements IOperationSource<T> with the correct T
             var siteImplements = siteOperationSource.Implements;
-            Assert.AreEqual(1, siteImplements.Count);
-            Assert.IsTrue(siteImplements[0].Name.Contains("IOperationSource"));
-            Assert.AreEqual("SiteResource", siteImplements[0].Arguments[0].Name);
+            Assert.That(siteImplements.Count, Is.EqualTo(1));
+            Assert.That(siteImplements[0].Name.Contains("IOperationSource"), Is.True);
+            Assert.That(siteImplements[0].Arguments[0].Name, Is.EqualTo("SiteResource"));
 
             var sitesBySubImplements = sitesBySubOperationSource.Implements;
-            Assert.AreEqual(1, sitesBySubImplements.Count);
-            Assert.IsTrue(sitesBySubImplements[0].Name.Contains("IOperationSource"));
-            Assert.AreEqual("SitesBySubscriptionResource", sitesBySubImplements[0].Arguments[0].Name);
+            Assert.That(sitesBySubImplements.Count, Is.EqualTo(1));
+            Assert.That(sitesBySubImplements[0].Name.Contains("IOperationSource"), Is.True);
+            Assert.That(sitesBySubImplements[0].Arguments[0].Name, Is.EqualTo("SitesBySubscriptionResource"));
         }
 
         [TestCase]
@@ -172,17 +172,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = validateIdMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.None));
-            Assert.IsTrue(signature.Parameters.Count == 2);
-            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)));
-            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
-            Assert.AreEqual(signature.ReturnType?.Name, "ResponseTypeResource");
+            Assert.That(signature.Modifiers.Equals(MethodSignatureModifiers.None), Is.True);
+            Assert.That(signature.Parameters.Count == 2, Is.True);
+            Assert.That(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)), Is.True);
+            Assert.That(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)), Is.True);
+            Assert.That("ResponseTypeResource", Is.EqualTo(signature.ReturnType?.Name));
 
             // verify the method body
             var bodyStatements = validateIdMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(exptected));
         }
 
         [TestCase]
@@ -192,24 +192,24 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = validateIdMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Async));
-            Assert.IsTrue(signature.Parameters.Count == 2);
-            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)));
-            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
-            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(ValueTask<>));
+            Assert.That(signature.Modifiers.Equals(MethodSignatureModifiers.Async), Is.True);
+            Assert.That(signature.Parameters.Count == 2, Is.True);
+            Assert.That(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)), Is.True);
+            Assert.That(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)), Is.True);
+            Assert.That(typeof(ValueTask<>), Is.EqualTo(signature.ReturnType?.FrameworkType));
 
             // verify the method body
             var bodyStatements = validateIdMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(exptected));
         }
 
         private static MethodProvider GetOperationSourceProviderMethodByName(string methodName)
         {
             OperationSourceProvider resourceProvider = GetOperationSourceProvider();
             var method = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == methodName);
-            Assert.NotNull(method);
+            Assert.That(method, Is.Not.Null);
             return method!;
         }
 
@@ -291,9 +291,9 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [responseModel], clients: () => [client]);
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
-            Assert.NotNull(outputLibrary);
+            Assert.That(outputLibrary, Is.Not.Null);
             var operationSourceProvider = outputLibrary!.OperationSourceDict.Values.FirstOrDefault();
-            Assert.NotNull(operationSourceProvider);
+            Assert.That(operationSourceProvider, Is.Not.Null);
             return operationSourceProvider!;
         }
 

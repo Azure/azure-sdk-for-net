@@ -141,14 +141,14 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            CompoundFilterType @type = default;
+            FileSearchToolFiltersType1 @type = default;
             IList<BinaryData> filters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToCompoundFilterType();
+                    @type = prop.Value.GetString().ToFileSearchToolFiltersType1();
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))

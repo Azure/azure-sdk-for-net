@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     Properties = new KafkaConfigurationProperties();
                 }
-                Properties.EventHubType = value.Value;
+                Properties.EventHubType = value;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     Properties = new KafkaConfigurationProperties();
                 }
-                Properties.EventStreamingState = value.Value;
+                Properties.EventStreamingState = value;
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     Properties = new KafkaConfigurationProperties();
                 }
-                Properties.EventStreamingType = value.Value;
+                Properties.EventStreamingType = value;
             }
         }
     }

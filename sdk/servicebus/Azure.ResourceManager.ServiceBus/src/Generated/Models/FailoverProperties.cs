@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     Properties = new FailoverPropertiesProperties();
                 }
-                Properties.IsSafeFailover = value.Value;
+                Properties.IsSafeFailover = value;
             }
         }
     }

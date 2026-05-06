@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 throw new FormatException($"The model {nameof(ClusterPeerCommandResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PeerAcceptCommand))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("peerAcceptCommand"u8);
-                writer.WriteStringValue(PeerAcceptCommand);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,14 +76,18 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string peerAcceptCommand = default;
+            ClusterPeerCommandResponseProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("peerAcceptCommand"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    peerAcceptCommand = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ClusterPeerCommandResponseProperties.DeserializeClusterPeerCommandResponseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterPeerCommandResult(peerAcceptCommand, serializedAdditionalRawData);
+            return new ClusterPeerCommandResult(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterPeerCommandResult>.Write(ModelReaderWriterOptions options)

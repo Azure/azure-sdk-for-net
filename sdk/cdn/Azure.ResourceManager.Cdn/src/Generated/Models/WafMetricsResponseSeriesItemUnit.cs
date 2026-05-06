@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafMetricsResponseSeriesItemUnit. </summary>
+    /// <summary></summary>
     public readonly partial struct WafMetricsResponseSeriesItemUnit : IEquatable<WafMetricsResponseSeriesItemUnit>
     {
         private readonly string _value;
+        private const string CountValue = "count";
 
         /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesItemUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WafMetricsResponseSeriesItemUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CountValue = "count";
-
-        /// <summary> count. </summary>
+        /// <summary> Gets the Count. </summary>
         public static WafMetricsResponseSeriesItemUnit Count { get; } = new WafMetricsResponseSeriesItemUnit(CountValue);
+
         /// <summary> Determines if two <see cref="WafMetricsResponseSeriesItemUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WafMetricsResponseSeriesItemUnit left, WafMetricsResponseSeriesItemUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WafMetricsResponseSeriesItemUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WafMetricsResponseSeriesItemUnit left, WafMetricsResponseSeriesItemUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WafMetricsResponseSeriesItemUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WafMetricsResponseSeriesItemUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WafMetricsResponseSeriesItemUnit(string value) => new WafMetricsResponseSeriesItemUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WafMetricsResponseSeriesItemUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WafMetricsResponseSeriesItemUnit?(string value) => value == null ? null : new WafMetricsResponseSeriesItemUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WafMetricsResponseSeriesItemUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WafMetricsResponseSeriesItemUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

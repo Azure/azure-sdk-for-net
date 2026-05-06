@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ExtensionProperties();
                 }
-                Properties.ShouldAutoUpgradeMinorVersion = value.Value;
+                Properties.ShouldAutoUpgradeMinorVersion = value;
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ExtensionProperties();
                 }
-                Properties.EnableAutomaticUpgrade = value.Value;
+                Properties.EnableAutomaticUpgrade = value;
             }
         }
     }

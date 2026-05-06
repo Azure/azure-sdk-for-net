@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupPropertiesProperties();
                 }
-                Properties.RestartPolicy = value.Value;
+                Properties.RestartPolicy = value;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupPropertiesProperties();
                 }
-                Properties.ContainerGroupOSType = value.Value;
+                Properties.ContainerGroupOSType = value;
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupPropertiesProperties();
                 }
-                Properties.Sku = value.Value;
+                Properties.Sku = value;
             }
         }
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupPropertiesProperties();
                 }
-                Properties.Priority = value.Value;
+                Properties.Priority = value;
             }
         }
 

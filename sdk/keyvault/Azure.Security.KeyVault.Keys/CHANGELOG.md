@@ -1,14 +1,10 @@
 # Release History
 
-## 4.10.0-beta.1 (Unreleased)
+## 4.10.0 (2026-05-05)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `KeyProperties.KeySize` to expose the key size in bits.
 
 ## 4.9.0 (2026-03-04)
 

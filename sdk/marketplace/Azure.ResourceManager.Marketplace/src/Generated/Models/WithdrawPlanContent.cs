@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Withdraw properties. </summary>
     public partial class WithdrawPlanContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WithdrawPlanContent"/>. </summary>
         public WithdrawPlanContent()
@@ -51,19 +22,49 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WithdrawPlanContent"/>. </summary>
-        /// <param name="planId"> Gets or sets Plan Id. </param>
-        /// <param name="publisherId"> The offer's publisher id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WithdrawPlanContent(string planId, string publisherId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Withdraw properties details. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WithdrawPlanContent(WithdrawDetails properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PlanId = planId;
-            PublisherId = publisherId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Withdraw properties details. </summary>
+        internal WithdrawDetails Properties { get; set; }
+
         /// <summary> Gets or sets Plan Id. </summary>
-        public string PlanId { get; set; }
+        public string PlanId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlanId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WithdrawDetails();
+                }
+                Properties.PlanId = value;
+            }
+        }
+
         /// <summary> The offer's publisher id. </summary>
-        public string PublisherId { get; set; }
+        public string PublisherId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublisherId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WithdrawDetails();
+                }
+                Properties.PublisherId = value;
+            }
+        }
     }
 }

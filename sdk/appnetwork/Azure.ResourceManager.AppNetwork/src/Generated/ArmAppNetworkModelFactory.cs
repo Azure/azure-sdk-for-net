@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             return new AppLinkMemberProperties(
                 clusterType,
-                metadataResourceId is null ? default : new Metadata(metadataResourceId, null),
+                new Metadata(metadataResourceId, null),
                 upgradeProfile,
                 observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(new MetricsProfile(observabilityMetricsEndpoint, null), null),
                 connectivityProfile,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <returns> A new <see cref="Models.AppLinkAvailableVersionProperties"/> instance for mocking. </returns>
         public static AppLinkAvailableVersionProperties AppLinkAvailableVersionProperties(string kubernetesVersion = default, IEnumerable<AppLinkReleaseChannelInfo> fullyManagedVersionsReleaseChannels = default, IEnumerable<AppLinkVersionInfo> selfManagedVersionDetailVersions = default, AppLinkProvisioningState? provisioningState = default)
         {
-            return new AppLinkAvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>()).ToList(), null), selfManagedVersionDetailVersions is null ? default : new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<AppLinkVersionInfo>()).ToList(), null), provisioningState, additionalBinaryDataProperties: null);
+            return new AppLinkAvailableVersionProperties(kubernetesVersion, new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>()).ToList(), null), new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<AppLinkVersionInfo>()).ToList(), null), provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Release channel information. </summary>

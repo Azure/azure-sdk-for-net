@@ -35,30 +35,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetAppActiveDirectoryConfigResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppActiveDirectoryConfigResource.CreateResourceIdentifier" /> to create a <see cref="NetAppActiveDirectoryConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppActiveDirectoryConfigResource"/> object. </returns>
-        public virtual NetAppActiveDirectoryConfigResource GetNetAppActiveDirectoryConfigResource(ResourceIdentifier id)
-        {
-            NetAppActiveDirectoryConfigResource.ValidateResourceId(id);
-            return new NetAppActiveDirectoryConfigResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppElasticAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppElasticAccountResource.CreateResourceIdentifier" /> to create a <see cref="NetAppElasticAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppElasticAccountResource"/> object. </returns>
-        public virtual NetAppElasticAccountResource GetNetAppElasticAccountResource(ResourceIdentifier id)
-        {
-            NetAppElasticAccountResource.ValidateResourceId(id);
-            return new NetAppElasticAccountResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="RegionInfoResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RegionInfoResource.CreateResourceIdentifier" /> to create a <see cref="RegionInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -80,90 +56,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
         {
             NetAppAccountResource.ValidateResourceId(id);
             return new NetAppAccountResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppElasticBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppElasticBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="NetAppElasticBackupPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppElasticBackupPolicyResource"/> object. </returns>
-        public virtual NetAppElasticBackupPolicyResource GetNetAppElasticBackupPolicyResource(ResourceIdentifier id)
-        {
-            NetAppElasticBackupPolicyResource.ValidateResourceId(id);
-            return new NetAppElasticBackupPolicyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppElasticBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppElasticBackupVaultResource.CreateResourceIdentifier" /> to create a <see cref="NetAppElasticBackupVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppElasticBackupVaultResource"/> object. </returns>
-        public virtual NetAppElasticBackupVaultResource GetNetAppElasticBackupVaultResource(ResourceIdentifier id)
-        {
-            NetAppElasticBackupVaultResource.ValidateResourceId(id);
-            return new NetAppElasticBackupVaultResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppElasticBackupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppElasticBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppElasticBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppElasticBackupResource"/> object. </returns>
-        public virtual NetAppElasticBackupResource GetNetAppElasticBackupResource(ResourceIdentifier id)
-        {
-            NetAppElasticBackupResource.ValidateResourceId(id);
-            return new NetAppElasticBackupResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppElasticCapacityPoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppElasticCapacityPoolResource.CreateResourceIdentifier" /> to create a <see cref="NetAppElasticCapacityPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppElasticCapacityPoolResource"/> object. </returns>
-        public virtual NetAppElasticCapacityPoolResource GetNetAppElasticCapacityPoolResource(ResourceIdentifier id)
-        {
-            NetAppElasticCapacityPoolResource.ValidateResourceId(id);
-            return new NetAppElasticCapacityPoolResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppElasticVolumeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppElasticVolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetAppElasticVolumeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppElasticVolumeResource"/> object. </returns>
-        public virtual NetAppElasticVolumeResource GetNetAppElasticVolumeResource(ResourceIdentifier id)
-        {
-            NetAppElasticVolumeResource.ValidateResourceId(id);
-            return new NetAppElasticVolumeResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppElasticSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppElasticSnapshotResource.CreateResourceIdentifier" /> to create a <see cref="NetAppElasticSnapshotResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppElasticSnapshotResource"/> object. </returns>
-        public virtual NetAppElasticSnapshotResource GetNetAppElasticSnapshotResource(ResourceIdentifier id)
-        {
-            NetAppElasticSnapshotResource.ValidateResourceId(id);
-            return new NetAppElasticSnapshotResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppElasticSnapshotPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppElasticSnapshotPolicyResource.CreateResourceIdentifier" /> to create a <see cref="NetAppElasticSnapshotPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppElasticSnapshotPolicyResource"/> object. </returns>
-        public virtual NetAppElasticSnapshotPolicyResource GetNetAppElasticSnapshotPolicyResource(ResourceIdentifier id)
-        {
-            NetAppElasticSnapshotPolicyResource.ValidateResourceId(id);
-            return new NetAppElasticSnapshotPolicyResource(Client, id);
         }
 
         /// <summary>

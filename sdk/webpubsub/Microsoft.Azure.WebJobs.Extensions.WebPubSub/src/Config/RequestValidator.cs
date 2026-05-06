@@ -7,6 +7,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Azure.Core;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Primitives;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub;
@@ -18,12 +20,41 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 /// </summary>
 internal class RequestValidator
 {
+    private static bool _noConnectionWarningLogged;
     private readonly Dictionary<string, WebPubSubServiceAccess> _allowedHosts;
     private readonly bool _skipValidation;
 
-    public RequestValidator(WebPubSubServiceAccess[]? accesses)
+    public RequestValidator(WebPubSubServiceAccess[]? accesses, ILogger? logger = null)
     {
         var normalizedAccesses = accesses ?? [];
+
+        // Defensive validation: every access and its endpoint must be non-null before
+        // we run any LINQ that dereferences them. A null slipping through produces a
+        // confusing NullReferenceException deep inside GroupBy/ToDictionary; convert
+        // it into an explicit ArgumentException that names the offending index.
+        for (var i = 0; i < normalizedAccesses.Length; i++)
+        {
+            var access = normalizedAccesses[i];
+            if (access is null)
+            {
+                throw new ArgumentException(
+                    $"Element at index {i} of accesses is null.",
+                    nameof(accesses));
+            }
+            if (access.ServiceEndpoint is null)
+            {
+                throw new ArgumentException(
+                    $"Element at index {i} of accesses has a null ServiceEndpoint.",
+                    nameof(accesses));
+            }
+            if (access.ServiceEndpoint.Host is null)
+            {
+                throw new ArgumentException(
+                    $"Element at index {i} of accesses has a ServiceEndpoint with a null Host.",
+                    nameof(accesses));
+            }
+        }
+
         // Explicitly validate for duplicate hosts to provide a clear error message
         var duplicateHostGroup = normalizedAccesses
             .GroupBy(a => a.ServiceEndpoint.Host)
@@ -36,6 +67,16 @@ internal class RequestValidator
         }
         _allowedHosts = normalizedAccesses.ToDictionary(a => a.ServiceEndpoint.Host, a => a);
         _skipValidation = _allowedHosts.Count == 0;
+
+        if (_skipValidation && !_noConnectionWarningLogged)
+        {
+            _noConnectionWarningLogged = true;
+            (logger ?? NullLogger.Instance).LogWarning(
+                "No Web PubSub connection is configured for signature / abuse-protection validation. " +
+                "All upstream requests will be accepted without verification. " +
+                "Configure '{DefaultSection}' or set the 'Connections' property on the trigger / context binding to enable validation.",
+                Constants.WebPubSubConnectionStringName);
+        }
     }
 
     public static bool IsValidationRequest(string? method, StringValues originHeader, out List<string>? requestHosts)

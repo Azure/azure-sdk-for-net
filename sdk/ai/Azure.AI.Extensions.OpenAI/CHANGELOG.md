@@ -3,6 +3,8 @@
 ## 2.1.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added `ResponsesToolboxSearchPreviewTool` for discovering deferred tools via `search_tools` queries at runtime.
+- Added `Name` and `Description` properties to Responses tool classes.
 
 ### Breaking Changes
 

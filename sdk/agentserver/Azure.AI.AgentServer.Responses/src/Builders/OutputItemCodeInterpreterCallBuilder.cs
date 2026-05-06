@@ -38,7 +38,7 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     {
         var item = new OutputItemCodeInterpreterToolCall(
             id: _itemId,
-            status: OutputItemCodeInterpreterToolCallStatus.InProgress,
+            status: ItemCodeInterpreterToolCallStatus.InProgress,
             containerId: "",
             code: "",
             outputs: Array.Empty<BinaryData>());
@@ -142,7 +142,7 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     {
         var item = new OutputItemCodeInterpreterToolCall(
             id: _itemId,
-            status: OutputItemCodeInterpreterToolCallStatus.Completed,
+            status: ItemCodeInterpreterToolCallStatus.Completed,
             containerId: "",
             code: _finalCode ?? "",
             outputs: Array.Empty<BinaryData>());

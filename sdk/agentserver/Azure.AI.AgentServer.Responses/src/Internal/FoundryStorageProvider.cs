@@ -76,12 +76,12 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
 
         if (isolation.UserIsolationKey is not null)
         {
-            request.Headers.SetValue(IsolationContext.UserIsolationKeyHeaderName, isolation.UserIsolationKey);
+            request.Headers.SetValue(PlatformHeaders.UserIsolationKey, isolation.UserIsolationKey);
         }
 
         if (isolation.ChatIsolationKey is not null)
         {
-            request.Headers.SetValue(IsolationContext.ChatIsolationKeyHeaderName, isolation.ChatIsolationKey);
+            request.Headers.SetValue(PlatformHeaders.ChatIsolationKey, isolation.ChatIsolationKey);
         }
     }
 

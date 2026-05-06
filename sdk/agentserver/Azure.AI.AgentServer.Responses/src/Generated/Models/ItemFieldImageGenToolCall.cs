@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal ItemFieldImageGenToolCall(string id, OutputItemImageGenToolCallStatus status, string result) : base(ItemFieldType.ImageGenerationCall)
+        internal ItemFieldImageGenToolCall(string id, ItemImageGenToolCallStatus status, string result) : base(ItemFieldType.ImageGenerationCall)
         {
             Id = id;
             Status = status;
@@ -29,7 +29,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal ItemFieldImageGenToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemImageGenToolCallStatus status, string result) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldImageGenToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemImageGenToolCallStatus status, string result) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -40,7 +40,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Id { get; }
 
         /// <summary> The status of the image generation call. </summary>
-        public OutputItemImageGenToolCallStatus Status { get; }
+        public ItemImageGenToolCallStatus Status { get; }
 
         /// <summary> Gets the Result. </summary>
         public string Result { get; }

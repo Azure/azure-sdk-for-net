@@ -23,13 +23,13 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of <see cref="DiskCustomerManagedKey"/>. </summary>
         /// <param name="identityReference"> The reference of one of the pool identities to encrypt Disk. This identity will be used to access the KeyVault. </param>
-        /// <param name="keyUrl"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
+        /// <param name="keyUri"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of the Disk Encryption to the latest key version. Default is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskCustomerManagedKey(BatchPoolIdentityReference identityReference, Uri keyUrl, bool? rotationToLatestKeyVersionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskCustomerManagedKey(BatchPoolIdentityReference identityReference, Uri keyUri, bool? rotationToLatestKeyVersionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityReference = identityReference;
-            KeyUrl = keyUrl;
+            KeyUri = keyUri;
             RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,7 +38,7 @@ namespace Azure.Compute.Batch
         public BatchPoolIdentityReference IdentityReference { get; set; }
 
         /// <summary> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </summary>
-        public Uri KeyUrl { get; set; }
+        public Uri KeyUri { get; set; }
 
         /// <summary> Set this flag to true to enable auto-updating of the Disk Encryption to the latest key version. Default is false. </summary>
         public bool? RotationToLatestKeyVersionEnabled { get; set; }

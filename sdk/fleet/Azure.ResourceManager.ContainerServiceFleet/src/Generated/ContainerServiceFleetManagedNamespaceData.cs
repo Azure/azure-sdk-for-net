@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Action if the managed namespace with the same name already exists. Default is Never. </summary>
-        public ContainerServiceFleetAdoptionPolicy AdoptionPolicy
+        public ContainerServiceFleetAdoptionPolicy? AdoptionPolicy
         {
             get
             {
@@ -84,16 +84,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new FleetManagedNamespaceProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new FleetManagedNamespaceProperties();
+                    }
+                    Properties.AdoptionPolicy = value.Value;
                 }
-                Properties.AdoptionPolicy = value;
             }
         }
 
         /// <summary> Delete options of a fleet managed namespace. Default is Keep. </summary>
-        public ContainerServiceFleetDeletePolicy DeletePolicy
+        public ContainerServiceFleetDeletePolicy? DeletePolicy
         {
             get
             {
@@ -101,11 +104,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new FleetManagedNamespaceProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new FleetManagedNamespaceProperties();
+                    }
+                    Properties.DeletePolicy = value.Value;
                 }
-                Properties.DeletePolicy = value;
             }
         }
 

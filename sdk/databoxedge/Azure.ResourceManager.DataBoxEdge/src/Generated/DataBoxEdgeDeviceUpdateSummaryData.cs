@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new UpdateSummaryProperties();
                 }
-                Properties.DeviceLastScannedOn = value.Value;
+                Properties.DeviceLastScannedOn = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new UpdateSummaryProperties();
                 }
-                Properties.LastCompletedScanJobOn = value.Value;
+                Properties.LastCompletedScanJobOn = value;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new UpdateSummaryProperties();
                 }
-                Properties.LastSuccessfulScanJobOn = value.Value;
+                Properties.LastSuccessfulScanJobOn = value;
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new UpdateSummaryProperties();
                 }
-                Properties.LastSuccessfulInstallJobOn = value.Value;
+                Properties.LastSuccessfulInstallJobOn = value;
             }
         }
 

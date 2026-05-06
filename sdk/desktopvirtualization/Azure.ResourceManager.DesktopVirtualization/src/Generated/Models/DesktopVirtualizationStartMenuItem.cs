@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new StartMenuItemProperties();
                 }
-                Properties.IconIndex = value.Value;
+                Properties.IconIndex = value;
             }
         }
     }

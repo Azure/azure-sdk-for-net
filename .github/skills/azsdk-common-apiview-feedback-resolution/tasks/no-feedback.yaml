@@ -1,0 +1,16 @@
+id: apiview-no-feedback-001
+name: No APIView Feedback Found
+description: |
+  Test that the skill handles the case where no APIView comments exist
+  and advises the user to proceed.
+tags:
+  - basic
+  - no-feedback
+inputs:
+  prompt: "Check if there are any APIView comments on my .NET SDK PR that I need to address before release."
+expected:
+  output_contains:
+    - "APIView"
+  behavior:
+    max_tool_calls: 3
+    max_response_time_ms: 15000

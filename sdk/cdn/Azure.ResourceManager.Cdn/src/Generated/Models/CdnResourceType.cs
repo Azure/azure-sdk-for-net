@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,33 +15,49 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CdnResourceType : IEquatable<CdnResourceType>
     {
         private readonly string _value;
+        private const string MicrosoftCdnProfilesEndpointsValue = "Microsoft.Cdn/Profiles/Endpoints";
+        private const string MicrosoftCdnProfilesAfdEndpointsValue = "Microsoft.Cdn/Profiles/AfdEndpoints";
 
         /// <summary> Initializes a new instance of <see cref="CdnResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CdnResourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EndpointsValue = "Microsoft.Cdn/Profiles/Endpoints";
-        private const string FrontDoorEndpointsValue = "Microsoft.Cdn/Profiles/AfdEndpoints";
         /// <summary> Determines if two <see cref="CdnResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CdnResourceType left, CdnResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CdnResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CdnResourceType left, CdnResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CdnResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CdnResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CdnResourceType(string value) => new CdnResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CdnResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CdnResourceType?(string value) => value == null ? null : new CdnResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CdnResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CdnResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

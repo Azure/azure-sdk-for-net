@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
         /// <param name="agentCard"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentRecord(string @object, string id, string name, AgentObjectVersions versions, AgentEndpoint agentEndpoint, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentRecord(string @object, string id, string name, AgentObjectVersions versions, AgentEndpointConfig agentEndpoint, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Id = id;
@@ -56,7 +56,7 @@ namespace Azure.AI.Projects.Agents
         public string Name { get; }
 
         /// <summary> The endpoint configuration for the agent. </summary>
-        public AgentEndpoint AgentEndpoint { get; }
+        public AgentEndpointConfig AgentEndpoint { get; }
 
         /// <summary> The instance identity of the agent. </summary>
         public AgentIdentity InstanceIdentity { get; }

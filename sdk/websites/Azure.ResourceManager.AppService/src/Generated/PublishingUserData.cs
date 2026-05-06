@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the PublishingUser data model.
     /// User credentials used for publishing activity.
+    /// Serialized Name: User
     /// </summary>
     public partial class PublishingUserData : ResourceData
     {
@@ -60,41 +61,77 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="publishingUserName"> Username used for publishing. </param>
-        /// <param name="publishingPassword"> Password used for publishing. </param>
-        /// <param name="publishingPasswordHash"> Password hash used for publishing. </param>
-        /// <param name="publishingPasswordHashSalt"> Password hash salt used for publishing. </param>
-        /// <param name="scmUri"> Url of SCM site. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: User.kind
+        /// </param>
+        /// <param name="publishingUserName">
+        /// Username used for publishing.
+        /// Serialized Name: User.properties.publishingUserName
+        /// </param>
+        /// <param name="publishingPassword">
+        /// Password used for publishing.
+        /// Serialized Name: User.properties.publishingPassword
+        /// </param>
+        /// <param name="publishingPasswordHash">
+        /// Password hash used for publishing.
+        /// Serialized Name: User.properties.publishingPasswordHash
+        /// </param>
+        /// <param name="publishingPasswordHashSalt">
+        /// Password hash salt used for publishing.
+        /// Serialized Name: User.properties.publishingPasswordHashSalt
+        /// </param>
+        /// <param name="scmUri">
+        /// Url of SCM site.
+        /// Serialized Name: User.properties.scmUri
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublishingUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PublishingUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             PublishingUserName = publishingUserName;
             PublishingPassword = publishingPassword;
             PublishingPasswordHash = publishingPasswordHash;
             PublishingPasswordHashSalt = publishingPasswordHashSalt;
             ScmUri = scmUri;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Username used for publishing. </summary>
-        [WirePath("properties.publishingUserName")]
-        public string PublishingUserName { get; set; }
-        /// <summary> Password used for publishing. </summary>
-        [WirePath("properties.publishingPassword")]
-        public string PublishingPassword { get; set; }
-        /// <summary> Password hash used for publishing. </summary>
-        [WirePath("properties.publishingPasswordHash")]
-        public string PublishingPasswordHash { get; set; }
-        /// <summary> Password hash salt used for publishing. </summary>
-        [WirePath("properties.publishingPasswordHashSalt")]
-        public string PublishingPasswordHashSalt { get; set; }
-        /// <summary> Url of SCM site. </summary>
-        [WirePath("properties.scmUri")]
-        public Uri ScmUri { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: User.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// Username used for publishing.
+        /// Serialized Name: User.properties.publishingUserName
+        /// </summary>
+        [WirePath("properties.publishingUserName")]
+        public string PublishingUserName { get; set; }
+        /// <summary>
+        /// Password used for publishing.
+        /// Serialized Name: User.properties.publishingPassword
+        /// </summary>
+        [WirePath("properties.publishingPassword")]
+        public string PublishingPassword { get; set; }
+        /// <summary>
+        /// Password hash used for publishing.
+        /// Serialized Name: User.properties.publishingPasswordHash
+        /// </summary>
+        [WirePath("properties.publishingPasswordHash")]
+        public string PublishingPasswordHash { get; set; }
+        /// <summary>
+        /// Password hash salt used for publishing.
+        /// Serialized Name: User.properties.publishingPasswordHashSalt
+        /// </summary>
+        [WirePath("properties.publishingPasswordHashSalt")]
+        public string PublishingPasswordHashSalt { get; set; }
+        /// <summary>
+        /// Url of SCM site.
+        /// Serialized Name: User.properties.scmUri
+        /// </summary>
+        [WirePath("properties.scmUri")]
+        public Uri ScmUri { get; set; }
     }
 }

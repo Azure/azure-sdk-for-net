@@ -18,21 +18,21 @@ namespace Azure.Communication.Messages
     {
         private readonly MessageTemplateClient _client;
         private readonly Guid _channelId;
-        private readonly int? _maxPageSize;
+        private readonly int? _maxpagesize;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MessageTemplateClientGetTemplatesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The MessageTemplateClient client used to send requests. </param>
         /// <param name="channelId"> The registration ID of the channel. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MessageTemplateClientGetTemplatesAsyncCollectionResultOfT(MessageTemplateClient client, Guid channelId, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MessageTemplateClientGetTemplatesAsyncCollectionResultOfT(MessageTemplateClient client, Guid channelId, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _channelId = channelId;
-            _maxPageSize = maxPageSize;
+            _maxpagesize = maxpagesize;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -66,7 +66,7 @@ namespace Azure.Communication.Messages
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTemplatesRequest(nextLink, _channelId, _maxPageSize, _context) : _client.CreateGetTemplatesRequest(_channelId, _maxPageSize, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTemplatesRequest(nextLink, _channelId, _maxpagesize, _context) : _client.CreateGetTemplatesRequest(_channelId, _maxpagesize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

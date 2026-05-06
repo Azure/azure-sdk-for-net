@@ -259,8 +259,7 @@ namespace BasicTypeSpec
                 dictionaryFoo,
                 dictionaryOfDictionaryFoo,
                 dictionaryListFoo,
-                listOfDictionaryFoo.ToList(),
-                additionalBinaryDataProperties: null);
+                listOfDictionaryFoo.ToList());
         }
 
         /// <summary> An item model for XML array testing. </summary>
@@ -270,7 +269,7 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.XmlItem"/> instance for mocking. </returns>
         public static XmlItem XmlItem(string itemName = default, int itemValue = default, string itemId = default)
         {
-            return new XmlItem(itemName, itemValue, itemId, additionalBinaryDataProperties: null);
+            return new XmlItem(itemName, itemValue, itemId);
         }
 
         /// <summary> A nested model for XML testing. </summary>
@@ -279,7 +278,7 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.XmlNestedModel"/> instance for mocking. </returns>
         public static XmlNestedModel XmlNestedModel(string value = default, int nestedId = default)
         {
-            return new XmlNestedModel(value, nestedId, additionalBinaryDataProperties: null);
+            return new XmlNestedModel(value, nestedId);
         }
 
         /// <summary> The XmlModelWithNamespace. </summary>
@@ -287,7 +286,7 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.XmlModelWithNamespace"/> instance for mocking. </returns>
         public static XmlModelWithNamespace XmlModelWithNamespace(string foo = default)
         {
-            return new XmlModelWithNamespace(foo, additionalBinaryDataProperties: null);
+            return new XmlModelWithNamespace(foo);
         }
 
         /// <summary> Tree is a specific type of plant. </summary>
