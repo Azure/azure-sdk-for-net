@@ -84,7 +84,7 @@ openssl pkcs12 -export \
     -password "pass:${PFX_PASSWORD}"
 
 # Remove OpenSSL serial number tracking file; it is regenerated on each run.
-rm -f "$SCRIPT_DIR/ca.srl"
+rm -f "$SCRIPT_DIR/dotnet-devcert.srl"
 
 echo ""
 echo "Created files:"
