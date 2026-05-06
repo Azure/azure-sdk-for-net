@@ -53,20 +53,8 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
         {
             // One representative type per ASP.NET Core MVC assembly we emit
             // types from.
-            var seedTypes = new[]
-            {
-                typeof(ControllerBase),  // Microsoft.AspNetCore.Mvc.Core
-                typeof(IActionResult),   // Microsoft.AspNetCore.Mvc.Abstractions
-            };
-
-            foreach (var seed in seedTypes)
-            {
-                var location = seed.Assembly.Location;
-                if (!string.IsNullOrEmpty(location))
-                {
-                    AddMetadataReference(MetadataReference.CreateFromFile(location));
-                }
-            }
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(ControllerBase).Assembly.Location));   // Microsoft.AspNetCore.Mvc.Core
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(IActionResult).Assembly.Location));    // Microsoft.AspNetCore.Mvc.Abstractions
         }
     }
 }
