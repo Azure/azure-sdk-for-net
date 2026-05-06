@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The CreateSessionResponse. </summary>
-    public partial class CreateSessionResponse
+    internal partial class CreateSessionResponse
     {
         /// <summary> Initializes a new instance of <see cref="CreateSessionResponse"/>. </summary>
         internal CreateSessionResponse()

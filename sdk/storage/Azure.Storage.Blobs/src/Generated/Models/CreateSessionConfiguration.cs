@@ -8,7 +8,7 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The CreateSessionConfiguration. </summary>
-    public partial class CreateSessionConfiguration
+    internal partial class CreateSessionConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="CreateSessionConfiguration"/>. </summary>
         /// <param name="authenticationType"> The type of authentication required to create the session. The only type currently supported is HMAC. </param>

@@ -8,7 +8,7 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The SessionCredentials. </summary>
-    public partial class SessionCredentials
+    internal partial class SessionCredentials
     {
         /// <summary> Initializes a new instance of <see cref="SessionCredentials"/>. </summary>
         internal SessionCredentials()

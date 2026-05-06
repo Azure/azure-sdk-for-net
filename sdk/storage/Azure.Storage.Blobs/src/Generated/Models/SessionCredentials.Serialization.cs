@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class SessionCredentials
+    internal partial class SessionCredentials
     {
         internal static SessionCredentials DeserializeSessionCredentials(XElement element)
         {

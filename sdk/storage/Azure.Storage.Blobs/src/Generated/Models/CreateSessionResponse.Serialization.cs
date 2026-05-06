@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class CreateSessionResponse
+    internal partial class CreateSessionResponse
     {
         internal static CreateSessionResponse DeserializeCreateSessionResponse(XElement element)
         {
