@@ -50,8 +50,29 @@ function Get-NpmLatestVersion([string]$PackageName) {
     return "unavailable"
 }
 
+function Test-NpmVersionExists([string]$PackageName, [string]$Version) {
+    if (-not $PackageName -or -not $Version -or $Version -eq "unavailable")
+    {
+        return $false
+    }
+    try {
+        $result = npm view "$PackageName@$Version" version --registry=https://registry.npmjs.org/ 2>$null
+        if ($LASTEXITCODE -eq 0 -and $result) {
+            return $true
+        }
+    }
+    catch {}
+
+    return $false
+}
+
+
 function Get-NpmVersionLink([string]$PackageName, [string]$Version) {
-    return "https://www.npmjs.com/package/$PackageName/v/$Version"
+    if (-not (Test-NpmVersionExists $PackageName $Version)) {
+        return $Version
+    }
+    $url = "https://www.npmjs.com/package/$PackageName/v/$Version"
+    return "[$Version]($url)"
 }
 
 function Get-ShortVersion([string]$Version) {
@@ -198,9 +219,9 @@ $md = @"
 
 | Emitter | Depends On | Dependency Version | Latest on npm | Dependency Commit |
 |---|---|---|---|---|
-| ``@azure-typespec/http-client-csharp`` | ``@typespec/http-client-csharp`` | [$baseDep_azure]($linkBaseDep) | [$latestBase]($linkLatestBase) | $(if ($commitBaseLink) { "[$($commitBase.Short)]($commitBaseLink)" } else { $commitBase.Short }) |
-| ``@azure-typespec/http-client-csharp-mgmt`` | ``@azure-typespec/http-client-csharp`` | [$azureDep_mgmt]($linkAzureDep) | [$latestAzure]($linkLatestAzure) | $(if ($commitLinkAzure) { "[$($commitAzure.Short)]($commitLinkAzure)" } else { $commitAzure.Short }) |
-| ``@azure-typespec/http-client-csharp-provisioning`` | ``@azure-typespec/http-client-csharp-mgmt`` | [$mgmtDep_prov]($linkMgmtDep) | [$latestMgmt]($linkLatestMgmt) | $(if ($commitLinkMgmt) { "[$($commitMgmt.Short)]($commitLinkMgmt)" } else { $commitMgmt.Short }) |
+| ``@azure-typespec/http-client-csharp`` | ``@typespec/http-client-csharp`` | $linkBaseDep | $linkLatestBase | $(if ($commitBaseLink) { "[$($commitBase.Short)]($commitBaseLink)" } else { $commitBase.Short }) |
+| ``@azure-typespec/http-client-csharp-mgmt`` | ``@azure-typespec/http-client-csharp`` | $linkAzureDep | $linkLatestAzure | $(if ($commitLinkAzure) { "[$($commitAzure.Short)]($commitLinkAzure)" } else { $commitAzure.Short }) |
+| ``@azure-typespec/http-client-csharp-provisioning`` | ``@azure-typespec/http-client-csharp-mgmt`` | $linkMgmtDep | $linkLatestMgmt | $(if ($commitLinkMgmt) { "[$($commitMgmt.Short)]($commitLinkMgmt)" } else { $commitMgmt.Short }) |
 
 ## Source Files
 
