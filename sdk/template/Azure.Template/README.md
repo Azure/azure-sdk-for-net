@@ -1,7 +1,6 @@
 # Azure Template client library for .NET
 
 Azure Template is a template project for creating Azure SDK libraries generated from TypeSpec.
-This README is the direct package-change target for the S2 PR CODEOWNERS rerun scenario.
 
 Use this template as a starting point for:
 
