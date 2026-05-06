@@ -13,7 +13,7 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NetApp account properties for PATCH operations. </summary>
+    /// <summary> NetApp account patch properties. </summary>
     internal partial class AccountPropertiesPatch : IJsonModel<AccountPropertiesPatch>
     {
         /// <param name="data"> The data to parse. </param>
@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EntraIdConfig))
-            {
-                writer.WritePropertyName("entraIdConfig"u8);
-                writer.WriteObjectValue(EntraIdConfig, options);
-            }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
@@ -99,15 +94,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("nfsV4IDDomain"u8);
                 writer.WriteStringValue(NfsV4IdDomain);
             }
-            if (Optional.IsDefined(MultiAdStatus))
-            {
-                writer.WritePropertyName("multiAdStatus"u8);
-                writer.WriteStringValue(MultiAdStatus.Value.ToString());
-            }
             if (Optional.IsDefined(LdapConfiguration))
             {
                 writer.WritePropertyName("ldapConfiguration"u8);
                 writer.WriteObjectValue(LdapConfiguration, options);
+            }
+            if (Optional.IsDefined(EntraIdConfig))
+            {
+                writer.WritePropertyName("entraIdConfig"u8);
+                writer.WriteObjectValue(EntraIdConfig, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -152,11 +147,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
-            EntraIdConfigPatch entraIdConfig = default;
             NetAppAccountEncryption encryption = default;
             string nfsV4IdDomain = default;
-            MultiAdStatus? multiAdStatus = default;
-            LdapConfigurationPatch ldapConfiguration = default;
+            LdapConfiguration ldapConfiguration = default;
+            EntraIdConfigPatch entraIdConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,15 +166,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
                     }
                     activeDirectories = array;
-                    continue;
-                }
-                if (prop.NameEquals("entraIdConfig"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    entraIdConfig = EntraIdConfigPatch.DeserializeEntraIdConfigPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))
@@ -202,22 +187,22 @@ namespace Azure.ResourceManager.NetApp.Models
                     nfsV4IdDomain = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("multiAdStatus"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    multiAdStatus = new MultiAdStatus(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("ldapConfiguration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ldapConfiguration = LdapConfigurationPatch.DeserializeLdapConfigurationPatch(prop.Value, options);
+                    ldapConfiguration = LdapConfiguration.DeserializeLdapConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("entraIdConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    entraIdConfig = EntraIdConfigPatch.DeserializeEntraIdConfigPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -227,11 +212,10 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             return new AccountPropertiesPatch(
                 activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
-                entraIdConfig,
                 encryption,
                 nfsV4IdDomain,
-                multiAdStatus,
                 ldapConfiguration,
+                entraIdConfig,
                 additionalBinaryDataProperties);
         }
     }

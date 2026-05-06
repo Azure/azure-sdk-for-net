@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string netAppElasticSnapshotPolicyApiVersion);
             _elasticSnapshotPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _elasticSnapshotPoliciesRestClient = new ElasticSnapshotPolicies(_elasticSnapshotPoliciesClientDiagnostics, Pipeline, Endpoint, netAppElasticSnapshotPolicyApiVersion ?? "2025-12-15-preview");
+            _elasticSnapshotPoliciesRestClient = new ElasticSnapshotPolicies(_elasticSnapshotPoliciesClientDiagnostics, Pipeline, Endpoint, netAppElasticSnapshotPolicyApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

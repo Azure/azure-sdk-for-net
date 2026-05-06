@@ -22,15 +22,24 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SvmPeerCommandResult"/>. </summary>
-        /// <param name="svmPeeringCommand"> A command that needs to be run on the external ONTAP to accept svm peering.  Will only be present if &lt;code&gt;svmPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </param>
+        /// <param name="properties"> Represents the properties of the SVM peer command response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SvmPeerCommandResult(string svmPeeringCommand, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SvmPeerCommandResult(SvmPeerCommandResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SvmPeeringCommand = svmPeeringCommand;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Represents the properties of the SVM peer command response. </summary>
+        internal SvmPeerCommandResponseProperties Properties { get; }
+
         /// <summary> A command that needs to be run on the external ONTAP to accept svm peering.  Will only be present if &lt;code&gt;svmPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </summary>
-        public string SvmPeeringCommand { get; }
+        public string SvmPeeringCommand
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SvmPeeringCommand;
+            }
+        }
     }
 }

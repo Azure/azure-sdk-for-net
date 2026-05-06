@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string capacityPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, capacityPoolApiVersion ?? "2025-12-15-preview");
+            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, capacityPoolApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     CapacityPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CapacityPoolPatch patch = new CapacityPoolPatch();
+                    CapacityPoolPatch patch = new CapacityPoolPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     CapacityPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CapacityPoolPatch patch = new CapacityPoolPatch();
+                    CapacityPoolPatch patch = new CapacityPoolPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     CapacityPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CapacityPoolPatch patch = new CapacityPoolPatch();
+                    CapacityPoolPatch patch = new CapacityPoolPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<CapacityPoolResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     CapacityPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CapacityPoolPatch patch = new CapacityPoolPatch();
+                    CapacityPoolPatch patch = new CapacityPoolPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<CapacityPoolResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     CapacityPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CapacityPoolPatch patch = new CapacityPoolPatch();
+                    CapacityPoolPatch patch = new CapacityPoolPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     CapacityPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CapacityPoolPatch patch = new CapacityPoolPatch();
+                    CapacityPoolPatch patch = new CapacityPoolPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

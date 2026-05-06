@@ -93,15 +93,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
         }
 
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzureLocation location = default;
-            string name = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AccountPropertiesPatch properties = default;
-            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -148,6 +148,11 @@ namespace Azure.ResourceManager.NetApp.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -173,9 +178,13 @@ namespace Azure.ResourceManager.NetApp.Models
                     location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    name = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -208,15 +217,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     properties = AccountPropertiesPatch.DeserializeAccountPropertiesPatch(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerNetAppContext.Default);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -224,14 +224,14 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             return new NetAppAccountPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 location,
-                name,
+                identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                properties,
-                identity);
+                properties);
         }
     }
 }

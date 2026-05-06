@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeBreakFileLocksContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClientIp))
+            if (Optional.IsDefined(ClientIP))
             {
                 writer.WritePropertyName("clientIp"u8);
-                writer.WriteStringValue(ClientIp);
+                writer.WriteStringValue(ClientIP.ToString());
             }
             if (Optional.IsDefined(ConfirmRunningDisruptiveOperation))
             {
@@ -137,14 +138,18 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string clientIp = default;
+            IPAddress clientIP = default;
             bool? confirmRunningDisruptiveOperation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clientIp"u8))
                 {
-                    clientIp = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientIP = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("confirmRunningDisruptiveOperation"u8))
@@ -161,7 +166,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetAppVolumeBreakFileLocksContent(clientIp, confirmRunningDisruptiveOperation, additionalBinaryDataProperties);
+            return new NetAppVolumeBreakFileLocksContent(clientIP, confirmRunningDisruptiveOperation, additionalBinaryDataProperties);
         }
     }
 }

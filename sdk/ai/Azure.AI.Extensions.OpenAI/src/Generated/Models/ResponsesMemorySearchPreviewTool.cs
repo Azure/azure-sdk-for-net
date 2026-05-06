@@ -30,6 +30,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ResponsesMemorySearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>
         /// <param name="scope">
         /// The namespace used to group and isolate memories, such as a user ID.
@@ -38,13 +40,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelay"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
-        internal ResponsesMemorySearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string memoryStoreName, string scope, ResponsesMemorySearchOptions searchOptions, int? updateDelay) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesMemorySearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, string memoryStoreName, string scope, ResponsesMemorySearchOptions searchOptions, int? updateDelay) : base(@type, additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
             MemoryStoreName = memoryStoreName;
             Scope = scope;
             SearchOptions = searchOptions;
             UpdateDelay = updateDelay;
         }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary> The name of the memory store to use. </summary>
         public string MemoryStoreName { get; set; }

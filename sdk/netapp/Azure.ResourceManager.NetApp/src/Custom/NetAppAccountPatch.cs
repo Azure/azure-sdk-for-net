@@ -28,5 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         [Obsolete("This property is obsolete and will be removed in a future release. Read DisableShowmount from NetAppAccountData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? DisableShowmount => throw new NotSupportedException("DisableShowmount is no longer available on NetAppAccountPatch. Read it from NetAppAccountData instead.");
+
+        /// <summary> MultiAD Status for the account. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release. Read MultiAdStatus from NetAppAccountData instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public MultiAdStatus? MultiAdStatus => throw new NotSupportedException("MultiAdStatus is no longer available on NetAppAccountPatch. Read it from NetAppAccountData instead.");
     }
 }

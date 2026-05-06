@@ -146,6 +146,11 @@ namespace Azure.Security.KeyVault.Keys
         public KeyAttestation Attestation { get => _attributes.Attestation; }
 
         /// <summary>
+        /// Gets the key size in bits for keys. For example: 128, 192, or 256 for AES keys.
+        /// </summary>
+        public int? KeySize { get => _attributes.KeySize; internal set => _attributes.KeySize = value; }
+
+        /// <summary>
         /// Parses the key identifier into the <see cref="VaultUri"/>, <see cref="Name"/>, and <see cref="Version"/> of the key.
         /// </summary>
         /// <param name="id">The key vault object identifier.</param>

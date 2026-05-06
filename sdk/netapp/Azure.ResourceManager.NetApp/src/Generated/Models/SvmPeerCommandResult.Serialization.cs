@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(SvmPeerCommandResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SvmPeeringCommand))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("svmPeeringCommand"u8);
-                writer.WriteStringValue(SvmPeeringCommand);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,13 +129,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string svmPeeringCommand = default;
+            SvmPeerCommandResponseProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("svmPeeringCommand"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    svmPeeringCommand = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = SvmPeerCommandResponseProperties.DeserializeSvmPeerCommandResponseProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SvmPeerCommandResult(svmPeeringCommand, additionalBinaryDataProperties);
+            return new SvmPeerCommandResult(properties, additionalBinaryDataProperties);
         }
     }
 }

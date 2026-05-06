@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new DeepCreatedOriginProperties();
                 }
-                Properties.HttpPort = value.Value;
+                Properties.HttpPort = value;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new DeepCreatedOriginProperties();
                 }
-                Properties.HttpsPort = value.Value;
+                Properties.HttpsPort = value;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new DeepCreatedOriginProperties();
                 }
-                Properties.Priority = value.Value;
+                Properties.Priority = value;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new DeepCreatedOriginProperties();
                 }
-                Properties.Weight = value.Value;
+                Properties.Weight = value;
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new DeepCreatedOriginProperties();
                 }
-                Properties.Enabled = value.Value;
+                Properties.Enabled = value;
             }
         }
 

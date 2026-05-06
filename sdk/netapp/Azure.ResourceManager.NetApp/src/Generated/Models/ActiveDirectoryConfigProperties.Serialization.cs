@@ -110,11 +110,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("organizationalUnit"u8);
                 writer.WriteStringValue(OrganizationalUnit);
             }
-            if (Optional.IsDefined(Site))
-            {
-                writer.WritePropertyName("site"u8);
-                writer.WriteStringValue(Site);
-            }
+            writer.WritePropertyName("site"u8);
+            writer.WriteStringValue(Site);
             if (Optional.IsCollectionDefined(BackupOperators))
             {
                 writer.WritePropertyName("backupOperators"u8);

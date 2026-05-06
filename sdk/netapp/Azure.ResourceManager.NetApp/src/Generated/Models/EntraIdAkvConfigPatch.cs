@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Using AKV config, certificate will be fetched, which will contain private key &amp; public certificate, that correspond to the public certificate which is uploaded on the application created by customer. This will be used further for authentication. </summary>
+    /// <summary> Entra ID Patch configuration for the account. </summary>
     public partial class EntraIdAkvConfigPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// The AgentResponseItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, <see cref="MemorySearchToolCallResponseItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, <see cref="A2AToolCallOutput"/>, <see cref="OutputItemFunctionToolCallOutput"/>, <see cref="OutputItemComputerToolCallOutput"/>, <see cref="OutputItemToolSearchCall"/>, <see cref="OutputItemToolSearchOutput"/>, <see cref="OutputItemLocalShellToolCallOutput"/>, <see cref="OutputItemMcpApprovalResponseResource"/>, and <see cref="OutputItemCustomToolCallOutputResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, <see cref="MemorySearchToolCallResponseItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="FabricIQToolCall"/>, <see cref="FabricIQToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, <see cref="A2AToolCallOutput"/>, <see cref="OutputItemFunctionToolCallOutput"/>, <see cref="OutputItemComputerToolCallOutput"/>, <see cref="OutputItemToolSearchCall"/>, <see cref="OutputItemToolSearchOutput"/>, <see cref="OutputItemLocalShellToolCallOutput"/>, <see cref="OutputItemMcpApprovalResponseResource"/>, and <see cref="OutputItemCustomToolCallOutputResource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentResponseItem))]
     public abstract partial class AgentResponseItem : IJsonModel<AgentResponseItem>
@@ -177,6 +177,10 @@ namespace Azure.AI.Extensions.OpenAI
                         return FabricDataAgentToolCall.DeserializeFabricDataAgentToolCall(element, options);
                     case "fabric_dataagent_preview_call_output":
                         return FabricDataAgentToolCallOutput.DeserializeFabricDataAgentToolCallOutput(element, options);
+                    case "fabric_iq_preview_call":
+                        return FabricIQToolCall.DeserializeFabricIQToolCall(element, options);
+                    case "fabric_iq_preview_call_output":
+                        return FabricIQToolCallOutput.DeserializeFabricIQToolCallOutput(element, options);
                     case "azure_function_call":
                         return AzureFunctionToolCall.DeserializeAzureFunctionToolCall(element, options);
                     case "azure_function_call_output":

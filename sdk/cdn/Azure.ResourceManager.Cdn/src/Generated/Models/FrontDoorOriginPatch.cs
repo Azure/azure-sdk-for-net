@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new FrontDoorOriginUpdatePropertiesParameters();
                 }
-                Properties.HttpPort = value.Value;
+                Properties.HttpPort = value;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new FrontDoorOriginUpdatePropertiesParameters();
                 }
-                Properties.HttpsPort = value.Value;
+                Properties.HttpsPort = value;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new FrontDoorOriginUpdatePropertiesParameters();
                 }
-                Properties.Priority = value.Value;
+                Properties.Priority = value;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new FrontDoorOriginUpdatePropertiesParameters();
                 }
-                Properties.Weight = value.Value;
+                Properties.Weight = value;
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new FrontDoorOriginUpdatePropertiesParameters();
                 }
-                Properties.EnabledState = value.Value;
+                Properties.EnabledState = value;
             }
         }
 
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new FrontDoorOriginUpdatePropertiesParameters();
                 }
-                Properties.EnforceCertificateNameCheck = value.Value;
+                Properties.EnforceCertificateNameCheck = value;
             }
         }
 

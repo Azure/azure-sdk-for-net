@@ -573,19 +573,27 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Information about cluster peering process. </summary>
-        /// <param name="peerAcceptCommand"> A command that needs to be run on the external ONTAP to accept cluster peering.  Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </param>
+        /// <param name="properties"> Represents the properties of the cluster peer command response. </param>
         /// <returns> A new <see cref="Models.ClusterPeerCommandResult"/> instance for mocking. </returns>
-        public static ClusterPeerCommandResult ClusterPeerCommandResult(string peerAcceptCommand = default)
+        public static ClusterPeerCommandResult ClusterPeerCommandResult(ClusterPeerCommandResponseProperties properties = default)
         {
-            return new ClusterPeerCommandResult(peerAcceptCommand, additionalBinaryDataProperties: null);
+            return new ClusterPeerCommandResult(properties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Information about svm peering process. </summary>
+        /// <summary> Properties of the cluster peer command response. </summary>
+        /// <param name="clusterPeeringCommand"> ClusterPeeringCommand to run to accept cluster peer. Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </param>
+        /// <param name="passphrase"> Passphrase for use with cluster peer command. </param>
+        /// <returns> A new <see cref="Models.ClusterPeerCommandResponseProperties"/> instance for mocking. </returns>
+        public static ClusterPeerCommandResponseProperties ClusterPeerCommandResponseProperties(string clusterPeeringCommand = default, string passphrase = default)
+        {
+            return new ClusterPeerCommandResponseProperties(clusterPeeringCommand, passphrase, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="svmPeeringCommand"> A command that needs to be run on the external ONTAP to accept svm peering.  Will only be present if &lt;code&gt;svmPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </param>
         /// <returns> A new <see cref="Models.SvmPeerCommandResult"/> instance for mocking. </returns>
         public static SvmPeerCommandResult SvmPeerCommandResult(string svmPeeringCommand = default)
         {
-            return new SvmPeerCommandResult(svmPeeringCommand, additionalBinaryDataProperties: null);
+            return new SvmPeerCommandResult(svmPeeringCommand is null ? default : new SvmPeerCommandResponseProperties(svmPeeringCommand, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Pool change request. </summary>
@@ -1009,7 +1017,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Stores the origin cluster information associated to a cache. </summary>
-        /// <param name="peerClusterName"> ONTAP cluster name of external cluster hosting the origin volume. </param>
+        /// <param name="peerClusterName"> ONTAP cluster name of external cluster hosting the origin volume. Must match the exact cluster name. </param>
         /// <param name="peerAddresses"> ONTAP Intercluster LIF IP addresses. One IP address per cluster node is required. </param>
         /// <param name="peerVserverName"> External Vserver (SVM) name  name of the SVM hosting the origin volume. </param>
         /// <param name="peerVolumeName"> External origin volume name associated to this cache. </param>
@@ -1872,60 +1880,38 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="name"> Resource name. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="activeDirectories"> Active Directories. </param>
-        /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
-        /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
-        /// <param name="identity"> The identity used for the resource. </param>
+        /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
         /// <returns> A new <see cref="Models.NetAppAccountPatch"/> instance for mocking. </returns>
-        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string name = default, IDictionary<string, string> tags = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, EntraIdConfigPatch entraIdConfig = default, NetAppAccountEncryption encryption = default, string nfsV4IdDomain = default, MultiAdStatus? multiAdStatus = default, LdapConfigurationPatch ldapConfiguration = default, ManagedServiceIdentity identity = default)
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, NetAppAccountEncryption encryption = default, string nfsV4IdDomain = default, LdapConfiguration ldapConfiguration = default, EntraIdConfigPatch entraIdConfig = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new NetAppAccountPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                name,
+                identity,
                 tags,
-                activeDirectories is null && entraIdConfig is null && encryption is null && nfsV4IdDomain is null && multiAdStatus is null && ldapConfiguration is null ? default : new AccountPropertiesPatch(
+                activeDirectories is null && encryption is null && nfsV4IdDomain is null && ldapConfiguration is null && entraIdConfig is null ? default : new AccountPropertiesPatch(
                     (activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>()).ToList(),
-                    entraIdConfig,
                     encryption,
                     nfsV4IdDomain,
-                    multiAdStatus,
                     ldapConfiguration,
-                    null),
-                identity);
-        }
-
-        /// <summary> LDAP configuration for PATCH operations (no default values). </summary>
-        /// <param name="domain"> Name of the LDAP configuration domain. </param>
-        /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
-        /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
-        /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
-        /// <returns> A new <see cref="Models.LdapConfigurationPatch"/> instance for mocking. </returns>
-        public static LdapConfigurationPatch LdapConfigurationPatch(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default)
-        {
-            ldapServers ??= new ChangeTrackingList<IPAddress>();
-
-            return new LdapConfigurationPatch(
-                domain,
-                ldapServers.ToList(),
-                isLdapOverTlsEnabled,
-                serverCACertificate,
-                certificateCNHost,
-                additionalBinaryDataProperties: null);
+                    entraIdConfig,
+                    null));
         }
 
         /// <summary> Encryption transition request. </summary>

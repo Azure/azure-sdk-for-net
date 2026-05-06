@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(ClusterPeerCommandResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PeerAcceptCommand))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("peerAcceptCommand"u8);
-                writer.WriteStringValue(PeerAcceptCommand);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,13 +129,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string peerAcceptCommand = default;
+            ClusterPeerCommandResponseProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("peerAcceptCommand"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    peerAcceptCommand = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ClusterPeerCommandResponseProperties.DeserializeClusterPeerCommandResponseProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterPeerCommandResult(peerAcceptCommand, additionalBinaryDataProperties);
+            return new ClusterPeerCommandResult(properties, additionalBinaryDataProperties);
         }
     }
 }

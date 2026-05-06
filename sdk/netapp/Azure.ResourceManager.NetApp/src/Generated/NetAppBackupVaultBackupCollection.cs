@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(NetAppBackupVaultBackupResource.ResourceType, out string netAppBackupVaultBackupApiVersion);
             _backupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppBackupVaultBackupResource.ResourceType.Namespace, Diagnostics);
-            _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Endpoint, netAppBackupVaultBackupApiVersion ?? "2025-12-15-preview");
+            _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Endpoint, netAppBackupVaultBackupApiVersion ?? "2026-01-15-preview");
             _backupsUnderBackupVaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppBackupVaultBackupResource.ResourceType.Namespace, Diagnostics);
-            _backupsUnderBackupVaultRestClient = new BackupsUnderBackupVault(_backupsUnderBackupVaultClientDiagnostics, Pipeline, Endpoint, netAppBackupVaultBackupApiVersion ?? "2025-12-15-preview");
+            _backupsUnderBackupVaultRestClient = new BackupsUnderBackupVault(_backupsUnderBackupVaultClientDiagnostics, Pipeline, Endpoint, netAppBackupVaultBackupApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

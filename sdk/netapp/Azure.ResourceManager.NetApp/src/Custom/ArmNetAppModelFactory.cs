@@ -46,6 +46,17 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppBackupData(id, name, resourceType, systemData, null, properties) { Location = location };
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ClusterPeerCommandResult"/>. </summary>
+        /// <param name="peerAcceptCommand"> Cluster peering command to run to accept the cluster peer. Kept with this name for backward compatibility. </param>
+        /// <returns> A new <see cref="Models.ClusterPeerCommandResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ClusterPeerCommandResult ClusterPeerCommandResult(string peerAcceptCommand = null)
+        {
+            return new ClusterPeerCommandResult(
+                new ClusterPeerCommandResponseProperties(peerAcceptCommand, passphrase: null, additionalBinaryDataProperties: null),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupMetadata"/>. </summary>
         /// <param name="groupDescription"> Group Description. </param>
         /// <param name="applicationType"> Application Type. </param>

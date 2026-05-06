@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             migrationEndpointMappings ??= new ChangeTrackingList<MigrationEndpointMapping>();
 
-            return new CdnMigrationToAfdContent(skuName is null ? default : new CdnSku(skuName, null), migrationEndpointMappings.ToList(), additionalBinaryDataProperties: null);
+            return new CdnMigrationToAfdContent(new CdnSku(skuName, null), migrationEndpointMappings.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="resourceId"> Resource ID. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.CanMigrateContent"/> instance for mocking. </returns>
         public static CanMigrateContent CanMigrateContent(ResourceIdentifier classicResourceReferenceId = default)
         {
-            return new CanMigrateContent(classicResourceReferenceId is null ? default : new CdnResourceReference(classicResourceReferenceId, null), additionalBinaryDataProperties: null);
+            return new CanMigrateContent(new CdnResourceReference(classicResourceReferenceId, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="skuName"> Name of the pricing tier. </param>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             migrationWebApplicationFirewallMappings ??= new ChangeTrackingList<MigrationWebApplicationFirewallMapping>();
 
-            return new MigrationContent(skuName is null ? default : new CdnSku(skuName, null), classicResourceReferenceId is null ? default : new CdnResourceReference(classicResourceReferenceId, null), profileName, migrationWebApplicationFirewallMappings.ToList(), additionalBinaryDataProperties: null);
+            return new MigrationContent(new CdnSku(skuName, null), new CdnResourceReference(classicResourceReferenceId, null), profileName, migrationWebApplicationFirewallMappings.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             parameterNameOverride ??= new ChangeTrackingList<UriSigningParamIdentifier>();
 
-            return new FrontDoorUrlSigningActionContent(typeName, keyGroupReferenceId is null ? default : new CdnResourceReference(keyGroupReferenceId, null), algorithm, parameterNameOverride.ToList(), additionalBinaryDataProperties: null);
+            return new FrontDoorUrlSigningActionContent(typeName, new CdnResourceReference(keyGroupReferenceId, null), algorithm, parameterNameOverride.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the parameters for the Url Signing action. </summary>
@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new CustomerCertificateProperties(
                 SecretType.CustomerCertificate,
                 additionalBinaryDataProperties: null,
-                secretSourceId is null ? default : new CdnResourceReference(secretSourceId, null),
+                new CdnResourceReference(secretSourceId, null),
                 secretVersion,
                 useLatestVersion,
                 subject,
@@ -1363,7 +1363,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorSecretMtlsCertificateChain"/> instance for mocking. </returns>
         public static FrontDoorSecretMtlsCertificateChain FrontDoorSecretMtlsCertificateChain(ResourceIdentifier secretSourceId = default, string secretVersion = default, DateTimeOffset? expireOn = default)
         {
-            return new FrontDoorSecretMtlsCertificateChain(SecretType.MtlsCertificateChain, additionalBinaryDataProperties: null, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, null), secretVersion, expireOn);
+            return new FrontDoorSecretMtlsCertificateChain(SecretType.MtlsCertificateChain, additionalBinaryDataProperties: null, new CdnResourceReference(secretSourceId, null), secretVersion, expireOn);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1885,7 +1885,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 additionalBinaryDataProperties: null,
                 description is null && sourceType is null && uri is null && updateFrequency is null && lastRefreshedOn is null && provisioningState is null ? default : new KnowledgeSourceProperties(
                     description,
-                    sourceType.Value,
+                    sourceType.GetValueOrDefault(),
                     uri,
                     updateFrequency,
                     lastRefreshedOn,
@@ -1993,7 +1993,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.ValidateSecretContent"/> instance for mocking. </returns>
         public static ValidateSecretContent ValidateSecretContent(SecretType secretType = default, ResourceIdentifier secretSourceId = default, string secretVersion = default)
         {
-            return new ValidateSecretContent(secretType, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, null), secretVersion, additionalBinaryDataProperties: null);
+            return new ValidateSecretContent(secretType, new CdnResourceReference(secretSourceId, null), secretVersion, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Output of the validated secret. </summary>
@@ -2020,7 +2020,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.ProfileChangeSkuWafMapping"/> instance for mocking. </returns>
         public static ProfileChangeSkuWafMapping ProfileChangeSkuWafMapping(string securityPolicyName = default, ResourceIdentifier changeToWafPolicyId = default)
         {
-            return new ProfileChangeSkuWafMapping(securityPolicyName, changeToWafPolicyId is null ? default : new CdnResourceReference(changeToWafPolicyId, null), additionalBinaryDataProperties: null);
+            return new ProfileChangeSkuWafMapping(securityPolicyName, new CdnResourceReference(changeToWafPolicyId, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Metrics Response. </summary>

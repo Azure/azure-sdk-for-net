@@ -89,6 +89,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(ContentHash))
+            {
+                writer.WritePropertyName("content_hash"u8);
+                writer.WriteStringValue(ContentHash);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +138,7 @@ namespace Azure.AI.Projects.Agents
             }
             string runtime = default;
             IList<string> entryPoint = default;
+            string contentHash = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,12 +164,17 @@ namespace Azure.AI.Projects.Agents
                     entryPoint = array;
                     continue;
                 }
+                if (prop.NameEquals("content_hash"u8))
+                {
+                    contentHash = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CodeConfiguration(runtime, entryPoint, additionalBinaryDataProperties);
+            return new CodeConfiguration(runtime, entryPoint, contentHash, additionalBinaryDataProperties);
         }
     }
 }

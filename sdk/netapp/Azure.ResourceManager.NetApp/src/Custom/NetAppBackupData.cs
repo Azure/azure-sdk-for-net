@@ -6,9 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
+using AzureLocation = Azure.Core.AzureLocation;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [CodeGenType("NetAppBackupVaultBackupData")]
-    public partial class NetAppBackupData : ResourceData
+    public partial class NetAppBackupData
     {
         /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
         /// <param name="location"> Resource location. </param>

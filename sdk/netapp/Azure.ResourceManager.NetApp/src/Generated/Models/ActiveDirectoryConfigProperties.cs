@@ -19,15 +19,18 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ActiveDirectoryConfigProperties"/>. </summary>
+        /// <param name="site"> The Active Directory site the service will limit Domain Controller discovery to. </param>
         /// <param name="domain"> Name of the Active Directory domain. </param>
         /// <param name="secretPassword"> Access password from Azure KeyVault Secrets to connect Active Directory. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> or <paramref name="secretPassword"/> is null. </exception>
-        public ActiveDirectoryConfigProperties(string domain, SecretPassword secretPassword)
+        /// <exception cref="ArgumentNullException"> <paramref name="site"/>, <paramref name="domain"/> or <paramref name="secretPassword"/> is null. </exception>
+        public ActiveDirectoryConfigProperties(string site, string domain, SecretPassword secretPassword)
         {
+            Argument.AssertNotNull(site, nameof(site));
             Argument.AssertNotNull(domain, nameof(domain));
             Argument.AssertNotNull(secretPassword, nameof(secretPassword));
 
             Dns = new ChangeTrackingList<IPAddress>();
+            Site = site;
             BackupOperators = new ChangeTrackingList<string>();
             Administrators = new ChangeTrackingList<string>();
             SecurityOperators = new ChangeTrackingList<string>();

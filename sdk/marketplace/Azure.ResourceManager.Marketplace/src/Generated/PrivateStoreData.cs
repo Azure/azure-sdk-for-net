@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreProperties();
                 }
-                Properties.Availability = value.Value;
+                Properties.Availability = value;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreProperties();
                 }
-                Properties.ETag = value.Value;
+                Properties.ETag = value;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreProperties();
                 }
-                Properties.TenantId = value.Value;
+                Properties.TenantId = value;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreProperties();
                 }
-                Properties.IsGov = value.Value;
+                Properties.IsGov = value;
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreProperties();
                 }
-                Properties.SendToAllMarketplaceAdmins = value.Value;
+                Properties.SendToAllMarketplaceAdmins = value;
             }
         }
     }

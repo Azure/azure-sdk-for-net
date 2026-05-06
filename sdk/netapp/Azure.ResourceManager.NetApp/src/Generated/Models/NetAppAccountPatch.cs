@@ -26,26 +26,26 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountPatch"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="name"> Resource name. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> NetApp Account properties. </param>
-        /// <param name="identity"> The identity used for the resource. </param>
-        internal NetAppAccountPatch(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, string name, IDictionary<string, string> tags, AccountPropertiesPatch properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ManagedServiceIdentity identity, IDictionary<string, string> tags, AccountPropertiesPatch properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
             Identity = identity;
+            Properties = properties;
         }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> NetApp Account properties. </summary>
         internal AccountPropertiesPatch Properties { get; set; }
-
-        /// <summary> The identity used for the resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Active Directories. </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories
@@ -57,23 +57,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     Properties = new AccountPropertiesPatch();
                 }
                 return Properties.ActiveDirectories;
-            }
-        }
-
-        /// <summary> Entra ID configuration for the account. </summary>
-        public EntraIdConfigPatch EntraIdConfig
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EntraIdConfig;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountPropertiesPatch();
-                }
-                Properties.EntraIdConfig = value;
             }
         }
 
@@ -111,25 +94,8 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <summary> MultiAD Status for the account. </summary>
-        public MultiAdStatus? MultiAdStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MultiAdStatus;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountPropertiesPatch();
-                }
-                Properties.MultiAdStatus = value;
-            }
-        }
-
         /// <summary> LDAP Configuration for the account. </summary>
-        public LdapConfigurationPatch LdapConfiguration
+        public LdapConfiguration LdapConfiguration
         {
             get
             {
@@ -142,6 +108,23 @@ namespace Azure.ResourceManager.NetApp.Models
                     Properties = new AccountPropertiesPatch();
                 }
                 Properties.LdapConfiguration = value;
+            }
+        }
+
+        /// <summary> Entra ID configuration for the account. </summary>
+        public EntraIdConfigPatch EntraIdConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EntraIdConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountPropertiesPatch();
+                }
+                Properties.EntraIdConfig = value;
             }
         }
     }

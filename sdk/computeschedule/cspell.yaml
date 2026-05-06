@@ -1,0 +1,10 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/computeschedule/**/*.cs'
+    words:
+      - dscp
+      - nvme
+      - ssdlrs
+      - ssdzrs
+      - unattend

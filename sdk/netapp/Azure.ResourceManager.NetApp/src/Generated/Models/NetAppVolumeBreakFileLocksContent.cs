@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -22,18 +23,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBreakFileLocksContent"/>. </summary>
-        /// <param name="clientIp"> To clear file locks on a volume for a particular client. </param>
+        /// <param name="clientIP"> To clear file locks on a volume for a particular client. </param>
         /// <param name="confirmRunningDisruptiveOperation"> Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeBreakFileLocksContent(string clientIp, bool? confirmRunningDisruptiveOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeBreakFileLocksContent(IPAddress clientIP, bool? confirmRunningDisruptiveOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClientIp = clientIp;
+            ClientIP = clientIP;
             ConfirmRunningDisruptiveOperation = confirmRunningDisruptiveOperation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> To clear file locks on a volume for a particular client. </summary>
-        public string ClientIp { get; set; }
+        public IPAddress ClientIP { get; set; }
 
         /// <summary> Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true. </summary>
         public bool? ConfirmRunningDisruptiveOperation { get; set; }

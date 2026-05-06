@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        internal HttpMessage CreateGetByCapacityPoolsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string poolName, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string accountName, string poolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        internal HttpMessage CreateNextGetByCapacityPoolsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string poolName, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string poolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
