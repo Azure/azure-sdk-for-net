@@ -406,6 +406,7 @@ extends:
                 - Azure
 
           - pwsh: |
+              git fetch origin $(branchName)
               git switch $(branchName)
             displayName: 'Checkout PR branch $(branchName)'  
 
