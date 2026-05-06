@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute
             string name = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SharedGalleryIdentifier identifier = default;
+            SharedGalleryIdentifier galleryIdentifier = default;
             SharedGalleryImageProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    identifier = SharedGalleryIdentifier.DeserializeSharedGalleryIdentifier(prop.Value, options);
+                    galleryIdentifier = SharedGalleryIdentifier.DeserializeSharedGalleryIdentifier(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharedGalleryImageData(name, location, additionalBinaryDataProperties, identifier, properties);
+            return new SharedGalleryImageData(name, location, additionalBinaryDataProperties, galleryIdentifier, properties);
         }
     }
 }

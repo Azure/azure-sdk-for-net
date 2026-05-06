@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PropertiesValue = "properties";
+        private const string PropertiesValue = "Properties";
 
         /// <summary> Properties. </summary>
         public static GetVirtualMachineImagesWithPropertiesExpand Properties { get; } = new GetVirtualMachineImagesWithPropertiesExpand(PropertiesValue);

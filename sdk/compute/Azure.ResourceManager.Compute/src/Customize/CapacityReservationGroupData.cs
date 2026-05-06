@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -12,7 +13,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> A list of all capacity reservation instance views. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations
+        public IReadOnlyList<CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations
         {
             get => InstanceView?.CapacityReservations;
         }

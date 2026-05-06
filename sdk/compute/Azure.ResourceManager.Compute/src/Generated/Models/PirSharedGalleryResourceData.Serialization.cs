@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(PirSharedGalleryResourceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identifier))
+            if (Optional.IsDefined(GalleryIdentifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier, options);
+                writer.WriteObjectValue(GalleryIdentifier, options);
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SharedGalleryIdentifier identifier = default;
+            SharedGalleryIdentifier galleryIdentifier = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    identifier = SharedGalleryIdentifier.DeserializeSharedGalleryIdentifier(prop.Value, options);
+                    galleryIdentifier = SharedGalleryIdentifier.DeserializeSharedGalleryIdentifier(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PirSharedGalleryResourceData(name, location, additionalBinaryDataProperties, identifier);
+            return new PirSharedGalleryResourceData(name, location, additionalBinaryDataProperties, galleryIdentifier);
         }
     }
 }

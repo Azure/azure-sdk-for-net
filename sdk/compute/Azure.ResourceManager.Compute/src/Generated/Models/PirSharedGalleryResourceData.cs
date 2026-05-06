@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="identifier"> The identifier information of shared gallery. </param>
-        internal PirSharedGalleryResourceData(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier) : base(name, location, additionalBinaryDataProperties)
+        /// <param name="galleryIdentifier"> The identifier information of shared gallery. </param>
+        internal PirSharedGalleryResourceData(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier galleryIdentifier) : base(name, location, additionalBinaryDataProperties)
         {
-            Identifier = identifier;
+            GalleryIdentifier = galleryIdentifier;
         }
 
         /// <summary> The identifier information of shared gallery. </summary>
-        internal SharedGalleryIdentifier Identifier { get; }
+        internal SharedGalleryIdentifier GalleryIdentifier { get; }
 
         /// <summary> The unique id of this shared gallery. </summary>
         public string UniqueId
         {
             get
             {
-                return Identifier is null ? default : Identifier.UniqueId;
+                return GalleryIdentifier is null ? default : GalleryIdentifier.UniqueId;
             }
         }
     }

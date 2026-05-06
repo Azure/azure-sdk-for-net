@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +16,6 @@ namespace Azure.ResourceManager.Compute.Models
         // value with no wire serialization, matching the historical no-op behavior of the
         // base accessor for sibling derived types.
         /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Uri Uri { get; set; }
     }
 }

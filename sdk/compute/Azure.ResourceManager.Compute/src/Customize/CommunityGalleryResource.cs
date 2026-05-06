@@ -93,6 +93,24 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Get a community gallery image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryImageResource"/></description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -106,6 +124,24 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Get a community gallery image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryImageResource"/></description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,6 +155,24 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Get a community gallery by gallery public name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryResource"/></description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -129,6 +183,24 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Get a community gallery by gallery public name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryResource"/></description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]

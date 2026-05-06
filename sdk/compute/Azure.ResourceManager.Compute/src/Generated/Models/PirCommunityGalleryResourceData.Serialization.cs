@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Identifier))
+            if (Optional.IsDefined(GalleryIdentifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier, options);
+                writer.WriteObjectValue(GalleryIdentifier, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             AzureLocation? location = default;
             ResourceType? resourceType = default;
-            CommunityGalleryIdentifier identifier = default;
+            CommunityGalleryIdentifier galleryIdentifier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    identifier = CommunityGalleryIdentifier.DeserializeCommunityGalleryIdentifier(prop.Value, options);
+                    galleryIdentifier = CommunityGalleryIdentifier.DeserializeCommunityGalleryIdentifier(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PirCommunityGalleryResourceData(name, location, resourceType, identifier, additionalBinaryDataProperties);
+            return new PirCommunityGalleryResourceData(name, location, resourceType, galleryIdentifier, additionalBinaryDataProperties);
         }
     }
 }

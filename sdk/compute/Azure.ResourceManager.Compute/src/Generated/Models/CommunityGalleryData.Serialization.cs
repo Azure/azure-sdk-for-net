@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute
             string name = default;
             AzureLocation? location = default;
             ResourceType? resourceType = default;
-            CommunityGalleryIdentifier identifier = default;
+            CommunityGalleryIdentifier galleryIdentifier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CommunityGalleryProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    identifier = CommunityGalleryIdentifier.DeserializeCommunityGalleryIdentifier(prop.Value, options);
+                    galleryIdentifier = CommunityGalleryIdentifier.DeserializeCommunityGalleryIdentifier(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute
                 name,
                 location,
                 resourceType,
-                identifier,
+                galleryIdentifier,
                 additionalBinaryDataProperties,
                 properties);
         }

@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,7 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
         // this type in the current spec (it now lives on the sibling GalleryDiskImageSource),
         // so this override preserves the API shape with in-memory-only storage.
         /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public override Uri Uri { get; set; }
     }
 }

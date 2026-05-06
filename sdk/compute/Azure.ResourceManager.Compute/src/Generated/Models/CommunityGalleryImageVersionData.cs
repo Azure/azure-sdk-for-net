@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="identifier"> The identifier information of community gallery. </param>
+        /// <param name="galleryIdentifier"> The identifier information of community gallery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of a gallery image version. </param>
-        internal CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryImageVersionProperties properties) : base(name, location, resourceType, identifier, additionalBinaryDataProperties)
+        internal CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, CommunityGalleryIdentifier galleryIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryImageVersionProperties properties) : base(name, location, resourceType, galleryIdentifier, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

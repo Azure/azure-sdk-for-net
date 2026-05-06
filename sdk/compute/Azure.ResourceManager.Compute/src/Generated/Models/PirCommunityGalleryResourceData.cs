@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="identifier"> The identifier information of community gallery. </param>
+        /// <param name="galleryIdentifier"> The identifier information of community gallery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PirCommunityGalleryResourceData(string name, AzureLocation? location, ResourceType? resourceType, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PirCommunityGalleryResourceData(string name, AzureLocation? location, ResourceType? resourceType, CommunityGalleryIdentifier galleryIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;
             ResourceType = resourceType;
-            Identifier = identifier;
+            GalleryIdentifier = galleryIdentifier;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Compute.Models
         public ResourceType? ResourceType { get; }
 
         /// <summary> The identifier information of community gallery. </summary>
-        internal CommunityGalleryIdentifier Identifier { get; }
+        internal CommunityGalleryIdentifier GalleryIdentifier { get; }
 
         /// <summary> The unique id of this community gallery. </summary>
         public string UniqueId
         {
             get
             {
-                return Identifier is null ? default : Identifier.UniqueId;
+                return GalleryIdentifier is null ? default : GalleryIdentifier.UniqueId;
             }
         }
     }

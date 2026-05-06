@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> This is the gallery image definition identifier. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new GalleryImageIdentifier Identifier => new GalleryImageIdentifier()
+        public GalleryImageIdentifier Identifier => new GalleryImageIdentifier()
         {
             Publisher = ImageIdentifier.Publisher,
             Offer = ImageIdentifier.Offer,

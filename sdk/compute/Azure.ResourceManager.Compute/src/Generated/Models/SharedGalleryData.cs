@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="identifier"> The identifier information of shared gallery. </param>
+        /// <param name="galleryIdentifier"> The identifier information of shared gallery. </param>
         /// <param name="properties"> Specifies the properties of a shared gallery. </param>
-        internal SharedGalleryData(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryProperties properties) : base(name, location, additionalBinaryDataProperties, identifier)
+        internal SharedGalleryData(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier galleryIdentifier, SharedGalleryProperties properties) : base(name, location, additionalBinaryDataProperties, galleryIdentifier)
         {
             Properties = properties;
         }
