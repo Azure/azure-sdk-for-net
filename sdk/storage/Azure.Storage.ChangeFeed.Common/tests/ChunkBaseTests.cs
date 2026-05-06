@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Internal.Avro;
 using Moq;
 using NUnit.Framework;
@@ -33,18 +34,18 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
             Mock<AvroReaderFactory> avroReaderFactory = new Mock<AvroReaderFactory>(MockBehavior.Strict);
             Mock<AvroReader> avroReader = new Mock<AvroReader>(MockBehavior.Strict);
-            Mock<LazyLoadingBlobStreamFactory> streamFactory = new Mock<LazyLoadingBlobStreamFactory>(MockBehavior.Strict);
-            Mock<LazyLoadingBlobStream> stream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
 
             containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
-            streamFactory.Setup(r => r.BuildLazyLoadingBlobStream(It.IsAny<BlobClient>(), It.IsAny<long>(), It.IsAny<long>()))
-                .Returns(stream.Object);
+            blobClient.Setup(r => r.OpenReadAsync(It.IsAny<BlobOpenReadOptions>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Stream.Null);
+            blobClient.Setup(r => r.OpenRead(It.IsAny<BlobOpenReadOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Stream.Null);
             avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>())).Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(true);
             avroReader.Setup(r => r.Initalize(It.IsAny<bool>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
             ChunkFactoryBase<TestEvent> chunkFactory = new ChunkFactoryBase<TestEvent>(
-                containerClient.Object, streamFactory.Object, avroReaderFactory.Object, 4 * Constants.MB, CreateTestConfig());
+                containerClient.Object, avroReaderFactory.Object, 4 * Constants.MB, CreateTestConfig());
             ChunkBase<TestEvent> chunk = await chunkFactory.BuildChunk(IsAsync, "chunkPath");
 
             Assert.IsTrue(chunk.HasNext());
@@ -61,18 +62,18 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
             Mock<AvroReaderFactory> avroReaderFactory = new Mock<AvroReaderFactory>(MockBehavior.Strict);
             Mock<AvroReader> avroReader = new Mock<AvroReader>(MockBehavior.Strict);
-            Mock<LazyLoadingBlobStreamFactory> streamFactory = new Mock<LazyLoadingBlobStreamFactory>(MockBehavior.Strict);
-            Mock<LazyLoadingBlobStream> stream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
 
             containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
-            streamFactory.Setup(r => r.BuildLazyLoadingBlobStream(It.IsAny<BlobClient>(), It.IsAny<long>(), It.IsAny<long>()))
-                .Returns(stream.Object);
+            blobClient.Setup(r => r.OpenReadAsync(It.IsAny<BlobOpenReadOptions>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Stream.Null);
+            blobClient.Setup(r => r.OpenRead(It.IsAny<BlobOpenReadOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Stream.Null);
             avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>())).Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(false);
             avroReader.Setup(r => r.Initalize(It.IsAny<bool>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
             ChunkFactoryBase<TestEvent> chunkFactory = new ChunkFactoryBase<TestEvent>(
-                containerClient.Object, streamFactory.Object, avroReaderFactory.Object, 4 * Constants.MB, CreateTestConfig());
+                containerClient.Object, avroReaderFactory.Object, 4 * Constants.MB, CreateTestConfig());
             ChunkBase<TestEvent> chunk = await chunkFactory.BuildChunk(IsAsync, "chunkPath");
 
             Assert.IsFalse(chunk.HasNext());
@@ -99,15 +100,14 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
             Mock<AvroReaderFactory> avroReaderFactory = new Mock<AvroReaderFactory>(MockBehavior.Strict);
             Mock<AvroReader> avroReader = new Mock<AvroReader>(MockBehavior.Strict);
-            Mock<LazyLoadingBlobStreamFactory> streamFactory = new Mock<LazyLoadingBlobStreamFactory>(MockBehavior.Strict);
-            // Two streams: data stream for reading events, head stream for reading schema on resume
-            Mock<LazyLoadingBlobStream> dataStream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
-            Mock<LazyLoadingBlobStream> headStream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
 
             containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
-            streamFactory.SetupSequence(r => r.BuildLazyLoadingBlobStream(It.IsAny<BlobClient>(), It.IsAny<long>(), It.IsAny<long>()))
-                .Returns(dataStream.Object)
-                .Returns(headStream.Object);
+            // BuildChunk opens two streams when blockOffset != 0 (data stream at blockOffset, head stream at 0).
+            // The AvroReader is mocked and never reads from the streams, so both can return the same dummy stream.
+            blobClient.Setup(r => r.OpenReadAsync(It.IsAny<BlobOpenReadOptions>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Stream.Null);
+            blobClient.Setup(r => r.OpenRead(It.IsAny<BlobOpenReadOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Stream.Null);
             avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>(), It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<long>()))
                 .Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(true);
@@ -117,7 +117,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             avroReader.Setup(r => r.ObjectIndex).Returns(eventIndex);
 
             ChunkFactoryBase<TestEvent> chunkFactory = new ChunkFactoryBase<TestEvent>(
-                containerClient.Object, streamFactory.Object, avroReaderFactory.Object, 4 * Constants.MB, CreateTestConfig());
+                containerClient.Object, avroReaderFactory.Object, 4 * Constants.MB, CreateTestConfig());
             ChunkBase<TestEvent> chunk = await chunkFactory.BuildChunk(IsAsync, "chunkPath", blockOffset, eventIndex);
 
             TestEvent evt = await chunk.Next(IsAsync);

@@ -49,7 +49,6 @@ namespace Azure.Storage.ChangeFeed.Common
                     _containerClient,
                     new ChunkFactoryBase<TEvent>(
                         _containerClient,
-                        new LazyLoadingBlobStreamFactory(),
                         new AvroReaderFactory(),
                         maxTransferSize,
                         config)),

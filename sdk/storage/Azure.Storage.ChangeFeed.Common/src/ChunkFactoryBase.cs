@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Internal.Avro;
 
 namespace Azure.Storage.ChangeFeed.Common
@@ -15,7 +16,6 @@ namespace Azure.Storage.ChangeFeed.Common
     /// </summary>
     internal class ChunkFactoryBase<TEvent> where TEvent : IChangeFeedEvent
     {
-        private readonly LazyLoadingBlobStreamFactory _lazyLoadingBlobStreamFactory;
         private readonly AvroReaderFactory _avroReaderFactory;
         private readonly BlobContainerClient _containerClient;
         private readonly long? _maxTransferSize;
@@ -25,19 +25,16 @@ namespace Azure.Storage.ChangeFeed.Common
         /// Initializes a new instance of the <see cref="ChunkFactoryBase{TEvent}"/> class.
         /// </summary>
         /// <param name="containerClient">Container client for the change feed container.</param>
-        /// <param name="lazyLoadingBlobStreamFactory">Factory for creating lazy-loading blob streams.</param>
         /// <param name="avroReaderFactory">Factory for creating Avro readers.</param>
-        /// <param name="maxTransferSize">Optional override for the download block size.</param>
+        /// <param name="maxTransferSize">Optional override for the download buffer size.</param>
         /// <param name="config">Change feed configuration.</param>
         public ChunkFactoryBase(
             BlobContainerClient containerClient,
-            LazyLoadingBlobStreamFactory lazyLoadingBlobStreamFactory,
             AvroReaderFactory avroReaderFactory,
             long? maxTransferSize,
             ChangeFeedConfiguration<TEvent> config)
         {
             _containerClient = containerClient;
-            _lazyLoadingBlobStreamFactory = lazyLoadingBlobStreamFactory;
             _avroReaderFactory = avroReaderFactory;
             _maxTransferSize = maxTransferSize;
             _config = config;
@@ -61,19 +58,30 @@ namespace Azure.Storage.ChangeFeed.Common
         {
             BlobClient blobClient = _containerClient.GetBlobClient(chunkPath);
             AvroReader avroReader;
-            Stream dataStream = _lazyLoadingBlobStreamFactory.BuildLazyLoadingBlobStream(
-                blobClient,
-                offset: blockOffset,
-                blockSize: _maxTransferSize ?? _config.ChunkBlockDownloadSize);
+
+            BlobOpenReadOptions dataOptions = new BlobOpenReadOptions(allowModifications: true)
+            {
+                Position = blockOffset,
+                BufferSize = (int)(_maxTransferSize ?? _config.ChunkBlockDownloadSize),
+            };
+
+            Stream dataStream = async
+                ? await blobClient.OpenReadAsync(dataOptions, cancellationToken).ConfigureAwait(false)
+                : blobClient.OpenRead(dataOptions, cancellationToken);
 
             if (blockOffset != 0)
             {
                 // When resuming mid-block, two streams are needed: a "head" stream reads from offset 0
                 // to parse the Avro header/schema, while the "data" stream reads from blockOffset for the actual events.
-                Stream headStream = _lazyLoadingBlobStreamFactory.BuildLazyLoadingBlobStream(
-                    blobClient,
-                    offset: 0,
-                    blockSize: _config.AvroHeaderDownloadSize);
+                BlobOpenReadOptions headOptions = new BlobOpenReadOptions(allowModifications: true)
+                {
+                    Position = 0,
+                    BufferSize = (int)_config.AvroHeaderDownloadSize,
+                };
+
+                Stream headStream = async
+                    ? await blobClient.OpenReadAsync(headOptions, cancellationToken).ConfigureAwait(false)
+                    : blobClient.OpenRead(headOptions, cancellationToken);
 
                 avroReader = _avroReaderFactory.BuildAvroReader(dataStream, headStream, blockOffset, eventIndex);
             }

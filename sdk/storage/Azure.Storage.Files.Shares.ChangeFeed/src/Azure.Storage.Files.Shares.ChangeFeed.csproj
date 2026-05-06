@@ -69,8 +69,6 @@
     <Compile Include="$(AzureStorageChangeFeedCommonSources)ShardFactoryBase.cs" LinkBase="Shared\ChangeFeed" />
     <Compile Include="$(AzureStorageChangeFeedCommonSources)ChunkBase.cs" LinkBase="Shared\ChangeFeed" />
     <Compile Include="$(AzureStorageChangeFeedCommonSources)ChunkFactoryBase.cs" LinkBase="Shared\ChangeFeed" />
-    <Compile Include="$(AzureStorageChangeFeedCommonSources)LazyLoadingBlobStream.cs" LinkBase="Shared\ChangeFeed" />
-    <Compile Include="$(AzureStorageChangeFeedCommonSources)LazyLoadingBlobStreamFactory.cs" LinkBase="Shared\ChangeFeed" />
     <Compile Include="$(AzureStorageChangeFeedCommonSources)AvroReaderFactory.cs" LinkBase="Shared\ChangeFeed" />
     <Compile Include="$(AzureStorageChangeFeedCommonSources)Models\ChangeFeedCursor.cs" LinkBase="Shared\ChangeFeed" />
     <Compile Include="$(AzureStorageChangeFeedCommonSources)Models\SegmentCursor.cs" LinkBase="Shared\ChangeFeed" />
