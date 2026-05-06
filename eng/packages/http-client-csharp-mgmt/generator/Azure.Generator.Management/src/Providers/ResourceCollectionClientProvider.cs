@@ -393,7 +393,11 @@ namespace Azure.Generator.Management.Providers
             }
 
             var methods = new List<MethodProvider>(_getAlls.Count * 2);
-            var seenSignatures = new HashSet<string>(StringComparer.Ordinal);
+            // Track signatures of emitted GetAll overloads using structural CSharpType
+            // comparison so we don't accidentally emit two overloads with identical C#
+            // signatures (which would produce CS0111). CSharpType.Equals is structural
+            // (namespace + name + nullability + arguments), unlike Type.ToString().
+            var seenSignatures = new List<IReadOnlyList<CSharpType>>(_getAlls.Count);
             for (int i = 0; i < _getAlls.Count; i++)
             {
                 var listMethod = _getAlls[i];
@@ -408,11 +412,12 @@ namespace Azure.Generator.Management.Providers
                 }
 
                 // De-dup by sync signature to avoid emitting two GetAll overloads with identical C# signatures.
-                var key = string.Join(",", sync.Signature.Parameters.Select(p => p.Type.ToString()));
-                if (!seenSignatures.Add(key))
+                var paramTypes = sync.Signature.Parameters.Select(p => p.Type).ToArray();
+                if (seenSignatures.Any(existing => existing.SequenceEqual(paramTypes)))
                 {
                     continue;
                 }
+                seenSignatures.Add(paramTypes);
                 methods.Add(async);
                 methods.Add(sync);
             }
