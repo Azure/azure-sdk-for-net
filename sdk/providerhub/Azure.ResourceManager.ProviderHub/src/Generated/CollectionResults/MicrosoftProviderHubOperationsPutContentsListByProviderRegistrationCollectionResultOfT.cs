@@ -13,52 +13,46 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.OracleDatabase.Models;
+using Azure.ResourceManager.ProviderHub.Models;
 
-namespace Azure.ResourceManager.OracleDatabase
+namespace Azure.ResourceManager.ProviderHub
 {
-    internal partial class CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT : Pageable<PrivateIPAddressResult>
+    internal partial class MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationCollectionResultOfT : Pageable<OperationsDefinition>
     {
-        private readonly CloudVmClusters _client;
+        private readonly Operations _client;
         private readonly Guid _subscriptionId;
-        private readonly string _resourceGroupName;
-        private readonly string _cloudvmclustername;
-        private readonly RequestContent _content;
+        private readonly string _providerNamespace;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The CloudVmClusters client used to send requests. </param>
+        /// <summary> Initializes a new instance of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Operations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT(CloudVmClusters client, Guid subscriptionId, string resourceGroupName, string cloudvmclustername, RequestContent content, RequestContext context, string diagnosticScope)
+        public MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationCollectionResultOfT(Operations client, Guid subscriptionId, string providerNamespace, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
-            _cloudvmclustername = cloudvmclustername;
-            _content = content;
+            _providerNamespace = providerNamespace;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PrivateIPAddressResult>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<OperationsDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<PrivateIPAddressResult> result = ParseArrayFromResponse(response);
-            yield return Page<PrivateIPAddressResult>.FromValues(result, null, response);
+            IReadOnlyList<OperationsDefinition> result = ParseArrayFromResponse(response);
+            yield return Page<OperationsDefinition>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -66,7 +60,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetPrivateIPAddressesRequest(_subscriptionId, _resourceGroupName, _cloudvmclustername, _content, _context);
+            HttpMessage message = _client.CreateGetByProviderRegistrationRequest(_subscriptionId, _providerNamespace, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -83,14 +77,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<PrivateIPAddressResult> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<OperationsDefinition> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<PrivateIPAddressResult> result = new List<PrivateIPAddressResult>();
+            List<OperationsDefinition> result = new List<OperationsDefinition>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<PrivateIPAddressResult>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOracleDatabaseContext.Default));
+                result.Add(ModelReaderWriter.Read<OperationsDefinition>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerProviderHubContext.Default));
             }
             return result;
         }
