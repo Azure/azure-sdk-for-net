@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -18,7 +17,7 @@ using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class FooResourceGetDependenciesAsyncCollectionResultOfT : AsyncPageable<FooDependency>
+    internal partial class MgmtTypeSpecFoosListDependenciesCollectionResultOfT : Pageable<FooDependency>
     {
         private readonly Foos _client;
         private readonly Guid _subscriptionId;
@@ -27,14 +26,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of FooResourceGetDependenciesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MgmtTypeSpecFoosListDependenciesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Foos client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public FooResourceGetDependenciesAsyncCollectionResultOfT(Foos client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context, string diagnosticScope)
+        public MgmtTypeSpecFoosListDependenciesCollectionResultOfT(Foos client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,13 +43,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of FooResourceGetDependenciesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MgmtTypeSpecFoosListDependenciesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of FooResourceGetDependenciesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<FooDependency>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MgmtTypeSpecFoosListDependenciesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<FooDependency>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
@@ -62,14 +61,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetDependenciesRequest(_subscriptionId, _resourceGroupName, _fooName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {
