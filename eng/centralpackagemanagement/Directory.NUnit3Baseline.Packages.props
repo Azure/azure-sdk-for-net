@@ -326,6 +326,7 @@
         $(MSBuildProjectName) == 'Azure.Storage.Blobs.ChangeFeed.Tests' or
         $(MSBuildProjectName) == 'Azure.Storage.Blobs.Samples.Tests' or
         $(MSBuildProjectName) == 'Azure.Storage.Blobs.Tests' or
+        $(MSBuildProjectName) == 'Azure.Storage.ChangeFeed.Common.Tests' or
         $(MSBuildProjectName) == 'Azure.Storage.Common.AesGcm.Tests' or
         $(MSBuildProjectName) == 'Azure.Storage.Common.Samples.Tests' or
         $(MSBuildProjectName) == 'Azure.Storage.Common.Tests' or
@@ -339,6 +340,7 @@
         $(MSBuildProjectName) == 'Azure.Storage.DataMovement.Tests' or
         $(MSBuildProjectName) == 'Azure.Storage.Files.DataLake.Samples.Tests' or
         $(MSBuildProjectName) == 'Azure.Storage.Files.DataLake.Tests' or
+        $(MSBuildProjectName) == 'Azure.Storage.Files.Shares.ChangeFeed.Tests' or
         $(MSBuildProjectName) == 'Azure.Storage.Files.Shares.Samples.Tests' or
         $(MSBuildProjectName) == 'Azure.Storage.Files.Shares.Tests' or
         $(MSBuildProjectName) == 'Azure.Storage.Internal.Avro.Tests' or
