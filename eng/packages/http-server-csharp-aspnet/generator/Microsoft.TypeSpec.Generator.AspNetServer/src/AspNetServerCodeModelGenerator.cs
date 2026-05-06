@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
@@ -54,23 +52,17 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
         private void AddMvcMetadataReferences()
         {
             // One representative type per ASP.NET Core MVC assembly we emit
-            // types from; the framework split is multiple assemblies, so we
-            // dedupe by Assembly.Location.
+            // types from.
             var seedTypes = new[]
             {
-                typeof(ControllerBase),                  // Microsoft.AspNetCore.Mvc.Core
-                typeof(ApiControllerAttribute),          // Microsoft.AspNetCore.Mvc.Core
-                typeof(FromRouteAttribute),              // Microsoft.AspNetCore.Mvc.Core
-                typeof(HttpGetAttribute),                // Microsoft.AspNetCore.Mvc.Core
-                typeof(ActionResult<>),                  // Microsoft.AspNetCore.Mvc.Core
-                typeof(IActionResult),                   // Microsoft.AspNetCore.Mvc.Abstractions
+                typeof(ControllerBase),  // Microsoft.AspNetCore.Mvc.Core
+                typeof(IActionResult),   // Microsoft.AspNetCore.Mvc.Abstractions
             };
 
-            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var seed in seedTypes)
             {
                 var location = seed.Assembly.Location;
-                if (!string.IsNullOrEmpty(location) && seen.Add(location))
+                if (!string.IsNullOrEmpty(location))
                 {
                     AddMetadataReference(MetadataReference.CreateFromFile(location));
                 }
