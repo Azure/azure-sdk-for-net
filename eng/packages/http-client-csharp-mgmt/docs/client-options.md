@@ -18,6 +18,7 @@ Defines RBAC (Role-Based Access Control) role definitions for a resource. Used b
 
 ```typespec
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles for provisioning"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "RBAC roles for provisioning"
 @@clientOption(Vault,
   "resource-rbac-roles",
   #{
@@ -100,6 +101,8 @@ Use this when the inner model is part of the public API surface that consumers a
 **Effect:** The C# generator skips the safe-flatten step for the targeted model wherever it appears as a single-property inner type. The model is emitted as a regular public type, and the parent property continues to expose it directly (i.e. `parent.AllInstancesDown.AutomaticallyApprove` rather than `parent.AutomaticallyApprove`).
 
 **Scope:** Inner-model. One decorator covers every parent that uses the model. There is no per-call-site granularity.
+
+The C# generator only honors decorators scoped to `"csharp"` (or with no scope, which TCGC treats as "all languages"); decorators explicitly scoped to another language (e.g. `"java"`, `"python"`) are ignored.
 
 ## Notes
 

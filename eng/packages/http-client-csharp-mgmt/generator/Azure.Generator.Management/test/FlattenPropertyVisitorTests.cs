@@ -978,7 +978,35 @@ namespace Azure.Generator.Mgmt.Tests
                 $"[{scenario}] No flattened mirror property should be promoted when safe-flatten is disabled");
         }
 
-        private static InputDecoratorInfo BuildClientOptionDecorator(string optionName, BinaryData value)
+        /// <summary>
+        /// A decorator scoped to a different language (e.g. <c>"java"</c>) must be ignored
+        /// by the C# generator, even when the key and value match.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenStillAppliedWhenDisableSafeFlattenScopeIsNotCSharp()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(true), scope: "java")],
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "disable-safe-flatten=true scoped to \"java\"");
+        }
+
+        /// <summary>
+        /// A decorator with no scope argument is treated by TCGC as "all languages" and must
+        /// be honored by the C# generator.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenSkippedWhenDisableSafeFlattenHasNoScope()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(true), scope: null)],
+                runVisitors: true);
+
+            AssertSafeFlattenSkipped(parentModelProvider, "disable-safe-flatten=true with no scope (all languages)");
+        }
+
+        private static InputDecoratorInfo BuildClientOptionDecorator(string optionName, BinaryData value, string? scope = "csharp")
         {
             // Mirrors the shape that TCGC propagates for @@clientOption: positional-named
             // parameters surface as a Dictionary<string, BinaryData>. The second positional
@@ -988,8 +1016,11 @@ namespace Azure.Generator.Mgmt.Tests
             {
                 ["name"] = BinaryData.FromObjectAsJson(optionName),
                 ["value"] = value,
-                ["scope"] = BinaryData.FromObjectAsJson("csharp"),
             };
+            if (scope is not null)
+            {
+                arguments["scope"] = BinaryData.FromObjectAsJson(scope);
+            }
             return new InputDecoratorInfo("Azure.ClientGenerator.Core.@clientOption", arguments);
         }
 
