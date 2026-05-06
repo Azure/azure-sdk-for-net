@@ -200,6 +200,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             V2025_11_15_Preview = 4,
         }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class ConversationAnalysisAuthoringHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddConversationAnalysisAuthoring(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddConversationAnalysisAuthoring(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedConversationAnalysisAuthoring(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedConversationAnalysisAuthoring(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringSettings> configureSettings) { throw null; }
+    }
     public static partial class ConversationAnalysisAuthoringModelFactory
     {
         public static Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringConfusionMatrixRow AnalyzeConversationAuthoringConfusionMatrixRow(System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new DeepCreatedOriginGroupProperties();
                 }
-                Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = value.Value;
+                Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = value;
             }
         }
 

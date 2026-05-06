@@ -19,7 +19,7 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="AutoScaleRunError"/>. </summary>
         internal AutoScaleRunError()
         {
-            Values = new ChangeTrackingList<NameValuePair>();
+            Values = new ChangeTrackingList<BatchNameValuePair>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoScaleRunError"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the autoscale error, intended to be suitable for display in a user interface. </param>
         /// <param name="values"> A list of additional error details related to the autoscale error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoScaleRunError(string code, string message, IList<NameValuePair> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutoScaleRunError(string code, string message, IList<BatchNameValuePair> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -42,6 +42,6 @@ namespace Azure.Compute.Batch
         public string Message { get; }
 
         /// <summary> A list of additional error details related to the autoscale error. </summary>
-        public IList<NameValuePair> Values { get; }
+        public IList<BatchNameValuePair> Values { get; }
     }
 }

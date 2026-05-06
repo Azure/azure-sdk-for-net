@@ -3,8 +3,11 @@
 
 import {
   DecoratedType,
-  getClientOptions
+  getClientOptions,
+  SdkHttpOperation,
+  SdkMethod
 } from "@azure-tools/typespec-client-generator-core";
+import pluralize from "pluralize";
 
 // ─── Path utilities ─────────────────────────────────────────────────────────
 
@@ -473,15 +476,17 @@ export enum ResourceOperationKind {
 }
 
 /**
- * Resolves the API versions for a resource from its methods.
- * Uses the Create method's versions if available, otherwise falls back to the Read method's versions.
- * @param methods - The resource's methods
- * @param methodApiVersionsMap - A map from methodId to its API versions
+ * Resolves the API versions for a resource based on its methods.
+ * The Create method is preferred for determining api versions if available.
+ * Otherwise, the Read method is used. If neither exists, an empty array is returned.
+ *
+ * @param methods - The methods of the resource
+ * @param methodMap - A map from methodId to its SdkMethod (used to look up apiVersions)
  * @returns The API versions for the resource
  */
 export function resolveResourceApiVersions(
   methods: ResourceMethod[],
-  methodApiVersionsMap: Map<string, string[]>
+  methodMap: ReadonlyMap<string, SdkMethod<SdkHttpOperation>>
 ): string[] {
   const createMethod = methods.find(
     (m) => m.kind === ResourceOperationKind.Create
@@ -489,7 +494,7 @@ export function resolveResourceApiVersions(
   const readMethod = methods.find((m) => m.kind === ResourceOperationKind.Read);
   const primaryMethod = createMethod ?? readMethod;
   return primaryMethod
-    ? methodApiVersionsMap.get(primaryMethod.methodId) ?? []
+    ? methodMap.get(primaryMethod.methodId)?.apiVersions ?? []
     : [];
 }
 
@@ -629,18 +634,104 @@ export interface ParentResourceLookupContext {
 }
 
 /**
- * Post-processes ARM resources to populate parent IDs, merge incomplete resources,
- * populate resource scopes, sort methods, and filter invalid resources.
+ * Picks among multiple candidate parents that share a primary lookup key (model
+ * id in the legacy path, or resourceInstancePath in the resolveArmResources
+ * path) but differ in their substituted `resourceIdPattern` — for example,
+ * resources expanded from a `{parentType}` dynamic segment.
  *
- * This is a shared post-processing step used by both resolveArmResources
- * and buildArmProviderSchema to ensure consistent behavior.
- *
- * @param resources - Initial list of resources to process
- * @param nonResourceMethods - Array to collect non-resource methods
- * @param parentLookup - Context for looking up parent resources
- * @returns Processed list of valid resources
+ * The resource's own `resourceIdPattern` is built by appending child segments
+ * onto the parent's substituted pattern, so the correct candidate is the one
+ * whose `resourceIdPattern.path` is a prefix of the resource's
+ * `resourceIdPattern.path`.
  */
+export function isResourceIdPatternPrefixMatch(
+  resource: ArmResourceSchema,
+  candidate: ArmResourceSchema
+): boolean {
+  const candidatePath = candidate.metadata.resourceIdPattern?.path;
+  const resourcePath = resource.metadata.resourceIdPattern?.path;
+  if (!candidatePath || !resourcePath) return true;
+  // Prefix must be followed by a path separator to avoid matching a partial
+  // segment (e.g., "/topics" vs "/topicspaces").
+  return (
+    resourcePath === candidatePath ||
+    resourcePath.startsWith(candidatePath + "/")
+  );
+}
+
+/**
+ * Expands resources whose parent has a dynamic type segment (e.g.
+ * `{parentType}/{parentName}` where `{parentType}` is an enum) into one
+ * concrete resource per enum value. Both detection paths run this step before
+ * post-processing so they can compute parent-lookup contexts against the
+ * post-expansion resource list.
+ *
+ * @returns The post-expansion list and a map from each expanded resource back
+ *   to its original (pre-expansion) schema.
+ */
+export function expandArmResources(
+  resources: ArmResourceSchema[],
+  options?: ExpandArmResourcesOptions
+): ExpandArmResourcesResult {
+  if (!options?.serviceMethods) {
+    return { expandedResources: resources, expandedToOriginal: new Map() };
+  }
+  const expandedToOriginal = new Map<ArmResourceSchema, ArmResourceSchema>();
+  const expandedResources = expandDynamicParentResourcesInSchema(
+    resources,
+    options.serviceMethods,
+    options.diagnosticReporter,
+    (expanded, original) => {
+      expandedToOriginal.set(expanded, original);
+    }
+  );
+  return { expandedResources, expandedToOriginal };
+}
+
+export interface ExpandArmResourcesOptions {
+  serviceMethods?: Map<string, SdkMethod<SdkHttpOperation>>;
+  diagnosticReporter?: (message: string) => void;
+}
+
+export interface ExpandArmResourcesResult {
+  expandedResources: ArmResourceSchema[];
+  expandedToOriginal: ReadonlyMap<ArmResourceSchema, ArmResourceSchema>;
+}
+
+/**
+ * Post-processes ARM resources: populates parent IDs, merges incomplete
+ * resources, populates resource scopes, sorts methods, and filters invalid
+ * resources. Callers must run {@link expandArmResources} first and then build
+ * the {@link ParentResourceLookupContext} themselves so this function takes a
+ * fully-constructed parent lookup (no callback indirection).
+ *
+ * @param resources - Post-expansion resource list (output of {@link expandArmResources}).
+ * @param nonResourceMethods - Array to collect non-resource methods.
+ * @param parentLookup - Caller-built parent lookup context.
+ * @param options - Optional settings.
+ * @param options.methodResponseModelIdMap - Optional map used by cross-resource
+ *   list action relocation.
+ * @returns The list of valid resources after post-processing.
+ */
+export interface PostProcessArmResourcesOptions {
+  methodResponseModelIdMap?: Map<string, string>;
+}
+
 export function postProcessArmResources(
+  resources: ArmResourceSchema[],
+  nonResourceMethods: NonResourceMethod[],
+  parentLookup: ParentResourceLookupContext,
+  options?: PostProcessArmResourcesOptions
+): ValidArmResourceSchema[] {
+  return postProcessExpandedArmResources(
+    resources,
+    nonResourceMethods,
+    parentLookup,
+    options?.methodResponseModelIdMap
+  );
+}
+
+function postProcessExpandedArmResources(
   resources: ArmResourceSchema[],
   nonResourceMethods: NonResourceMethod[],
   parentLookup: ParentResourceLookupContext,
@@ -1091,4 +1182,223 @@ function relocateCrossResourceListActions(
     // Add to target (already classified as List)
     targetResource.metadata.methods.push(method);
   }
+}
+function replacePathVariable(
+  path: RequestPath,
+  paramName: string,
+  value: string
+): RequestPath {
+  const variableSegment = `{${paramName}}`;
+  return RequestPath.fromSegments(
+    path.segments.map((segment) =>
+      segment === variableSegment ? value : segment
+    )
+  );
+}
+
+const preferredExpansionMethodKinds = [
+  ResourceOperationKind.Read,
+  ResourceOperationKind.Create,
+  ResourceOperationKind.Update,
+  ResourceOperationKind.Delete
+];
+
+function getExpansionPath(resource: ArmResourceSchema): RequestPath | undefined {
+  return (
+    resource.metadata.resourceIdPattern ??
+    resource.metadata.methods.find((m) =>
+      preferredExpansionMethodKinds.includes(m.kind)
+    )?.operationPath
+  );
+}
+
+function capitalizeFirst(s: string): string {
+  return s.length === 0 ? s : s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function buildExpandedResourceName(
+  enumValue: string,
+  baseResourceName: string
+): string {
+  const singular = pluralize.singular(enumValue);
+  return `${capitalizeFirst(singular)}${baseResourceName}`;
+}
+
+/**
+ * Expands resources with dynamic parent type segments in the ArmResourceSchema array.
+ * This is a shared utility used by both the legacy and modern resource detection paths.
+ *
+ * @param onExpand Optional callback invoked for each expanded resource with a reference
+ * to its original (un-expanded) resource. Callers can use it to mirror entries into
+ * auxiliary maps keyed by ArmResourceSchema (e.g., schemaToResolvedResource).
+ */
+export function expandDynamicParentResourcesInSchema(
+  resources: ArmResourceSchema[],
+  serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>,
+  diagnosticReporter?: (message: string) => void,
+  onExpand?: (
+    expanded: ArmResourceSchema,
+    original: ArmResourceSchema
+  ) => void
+): ArmResourceSchema[] {
+  const resourcesToRemove: Set<ArmResourceSchema> = new Set();
+  const resourcesToAdd: ArmResourceSchema[] = [];
+
+  for (const resource of resources) {
+    const path = getExpansionPath(resource);
+    if (!path) continue;
+
+    const dynamicSegments = detectDynamicTypeSegments(path);
+    if (dynamicSegments.length === 0) continue;
+
+    if (dynamicSegments.length > 1) {
+      diagnosticReporter?.(
+        `Resource at path '${path}' has ${dynamicSegments.length} dynamic type segments. Only single dynamic parent type expansion is supported.`
+      );
+      continue;
+    }
+
+    const dynamicSegment = dynamicSegments[0];
+    const enumValues = findEnumValuesForPathParam(
+      resource.metadata.methods,
+      serviceMethods,
+      dynamicSegment.typeParamName
+    );
+
+    if (!enumValues || enumValues.length === 0) {
+      diagnosticReporter?.(
+        `Resource at path '${path}' has dynamic type segment '{${dynamicSegment.typeParamName}}' but no enum values could be found. Resource will not be expanded.`
+      );
+      continue;
+    }
+
+    for (const enumValue of enumValues) {
+      const expandedIdPattern = resource.metadata.resourceIdPattern
+        ? replacePathVariable(
+            resource.metadata.resourceIdPattern,
+            dynamicSegment.typeParamName,
+            enumValue
+          )
+        : undefined;
+
+      const expandedMethods: ResourceMethod[] = resource.metadata.methods.map(
+        (m) => ({
+          ...m,
+          operationPath: replacePathVariable(
+            m.operationPath,
+            dynamicSegment.typeParamName,
+            enumValue
+          )
+        })
+      );
+
+      const expandedResourceType = expandedIdPattern
+        ? expandedIdPattern.resourceType ?? ""
+        : "";
+
+      const expandedResourceName = buildExpandedResourceName(
+        enumValue,
+        resource.metadata.resourceName
+      );
+
+      const expanded: ArmResourceSchema = {
+        resourceModelId: resource.resourceModelId,
+        metadata: {
+          resourceIdPattern: expandedIdPattern,
+          resourceType: expandedResourceType,
+          methods: expandedMethods,
+          scope: { ...resource.metadata.scope },
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          singletonResourceName: resource.metadata.singletonResourceName,
+          resourceName: expandedResourceName,
+          nameConstraints: resource.metadata.nameConstraints,
+          apiVersions: resource.metadata.apiVersions,
+          rbacRoles: resource.metadata.rbacRoles
+        }
+      };
+      resourcesToAdd.push(expanded);
+      onExpand?.(expanded, resource);
+    }
+
+    resourcesToRemove.add(resource);
+  }
+
+  if (resourcesToRemove.size === 0) {
+    return resources;
+  }
+
+  return [
+    ...resources.filter((r) => !resourcesToRemove.has(r)),
+    ...resourcesToAdd
+  ];
+}
+
+function detectDynamicTypeSegments(
+  path: RequestPath
+): Array<{ typeParamName: string; nameParamName: string; typeIndex: number }> {
+  const results: Array<{
+    typeParamName: string;
+    nameParamName: string;
+    typeIndex: number;
+  }> = [];
+  let providerIndex = -1;
+  for (let i = 0; i < path.segments.length; i++) {
+    if (path.segments[i].toLowerCase() === "providers") {
+      providerIndex = i;
+    }
+  }
+  if (providerIndex === -1) return results;
+
+  const segments = path.segments.slice(providerIndex + 1);
+  for (let i = 1; i < segments.length - 1; i += 2) {
+    if (isVariableSegment(segments[i])) {
+      const typeParamName = segments[i].slice(1, -1);
+      const nameParamName =
+        i + 1 < segments.length ? segments[i + 1].slice(1, -1) : "";
+      results.push({ typeParamName, nameParamName, typeIndex: i });
+    }
+  }
+  return results;
+}
+
+function findEnumValuesForPathParam(
+  methods: ResourceMethod[],
+  serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>,
+  paramName: string
+): string[] | undefined {
+  const getEnumValues = (method: ResourceMethod): string[] | undefined => {
+    const sdkMethod = serviceMethods.get(method.methodId);
+    if (!sdkMethod?.operation) return undefined;
+    for (const param of sdkMethod.operation.parameters) {
+      if (
+        param.kind === "path" &&
+        param.serializedName === paramName &&
+        param.type.kind === "enum"
+      ) {
+        return param.type.values
+          .map((v) => v.value)
+          .filter((v): v is string => typeof v === "string");
+      }
+    }
+    return undefined;
+  };
+
+  // Iterate preferred kinds first, then any remaining methods. This ensures we
+  // pick the enum from CRUD operations (most likely to have the param typed as
+  // an enum) before falling back to other operation kinds.
+  const preferred = preferredExpansionMethodKinds.flatMap((kind) =>
+    methods.filter((m) => m.kind === kind)
+  );
+  const others = methods.filter(
+    (m) => !preferredExpansionMethodKinds.includes(m.kind)
+  );
+  for (const method of [...preferred, ...others]) {
+    const enumValues = getEnumValues(method);
+    if (enumValues && enumValues.length > 0) {
+      return enumValues;
+    }
+  }
+
+  return undefined;
 }

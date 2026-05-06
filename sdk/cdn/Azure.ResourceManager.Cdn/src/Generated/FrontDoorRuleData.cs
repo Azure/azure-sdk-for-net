@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new CdnRuleProperties();
                 }
-                Properties.Order = value.Value;
+                Properties.Order = value;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new CdnRuleProperties();
                 }
-                Properties.MatchProcessingBehavior = value.Value;
+                Properties.MatchProcessingBehavior = value;
             }
         }
 

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     Properties = new PurviewAccountProperties();
                 }
-                Properties.ManagedEventHubState = value.Value;
+                Properties.ManagedEventHubState = value;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     Properties = new PurviewAccountProperties();
                 }
-                Properties.ManagedResourcesPublicNetworkAccess = value.Value;
+                Properties.ManagedResourcesPublicNetworkAccess = value;
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     Properties = new PurviewAccountProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     Properties = new PurviewAccountProperties();
                 }
-                Properties.TenantEndpointState = value.Value;
+                Properties.TenantEndpointState = value;
             }
         }
 

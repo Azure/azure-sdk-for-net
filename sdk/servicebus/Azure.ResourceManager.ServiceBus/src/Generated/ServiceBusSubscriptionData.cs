@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.LockDuration = value.Value;
+                Properties.LockDuration = value;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.RequiresSession = value.Value;
+                Properties.RequiresSession = value;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.DefaultMessageTimeToLive = value.Value;
+                Properties.DefaultMessageTimeToLive = value;
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.DeadLetteringOnFilterEvaluationExceptions = value.Value;
+                Properties.DeadLetteringOnFilterEvaluationExceptions = value;
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.DeadLetteringOnMessageExpiration = value.Value;
+                Properties.DeadLetteringOnMessageExpiration = value;
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.DuplicateDetectionHistoryTimeWindow = value.Value;
+                Properties.DuplicateDetectionHistoryTimeWindow = value;
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.MaxDeliveryCount = value.Value;
+                Properties.MaxDeliveryCount = value;
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.EnableBatchedOperations = value.Value;
+                Properties.EnableBatchedOperations = value;
             }
         }
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.AutoDeleteOnIdle = value.Value;
+                Properties.AutoDeleteOnIdle = value;
             }
         }
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBSubscriptionProperties();
                 }
-                Properties.IsClientAffine = value.Value;
+                Properties.IsClientAffine = value;
             }
         }
 

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     Properties = new FrontDoorProperties();
                 }
-                Properties.EnabledState = value.Value;
+                Properties.EnabledState = value;
             }
         }
 

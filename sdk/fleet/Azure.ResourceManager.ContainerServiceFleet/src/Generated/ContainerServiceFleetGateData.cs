@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> The type of the Gate determines how it is completed. </summary>
-        public ContainerServiceFleetGateType GateType
+        public ContainerServiceFleetGateType? GateType
         {
             get
             {
@@ -81,11 +81,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new GateProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new GateProperties();
+                    }
+                    Properties.GateType = value.Value;
                 }
-                Properties.GateType = value;
             }
         }
 
@@ -107,7 +110,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> The state of the Gate. </summary>
-        public ContainerServiceFleetGateState State
+        public ContainerServiceFleetGateState? State
         {
             get
             {
@@ -115,11 +118,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new GateProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new GateProperties();
+                    }
+                    Properties.State = value.Value;
                 }
-                Properties.State = value;
             }
         }
     }

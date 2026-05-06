@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Primitives;
 using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -181,7 +182,24 @@ namespace Azure.Generator.Management.Utilities
             }
             else
             {
-                setter.Add(internalPropertyExpression.Assign(New.Instance(innerModel.Type, Value)).Terminate());
+                // When the inner property is itself a flattened property (chained safe-flatten across
+                // 3+ levels of single-property models), `new innerModel(value)` is invalid because the
+                // value's type does not match any constructor parameter on innerModel. In that case we
+                // fall back to the safe pattern of constructing innerModel via its parameterless
+                // (internal) constructor and delegating the assignment through innerProperty's own
+                // flattened setter. See https://github.com/microsoft/typespec/issues/7380.
+                if (innerProperty is FlattenedPropertyProvider)
+                {
+                    setter.Add(new IfStatement(internalPropertyExpression.Is(Null))
+                    {
+                        internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate()
+                    });
+                    setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(Value).Terminate());
+                }
+                else
+                {
+                    setter.Add(internalPropertyExpression.Assign(New.Instance(innerModel.Type, Value)).Terminate());
+                }
             }
             return setter;
         }

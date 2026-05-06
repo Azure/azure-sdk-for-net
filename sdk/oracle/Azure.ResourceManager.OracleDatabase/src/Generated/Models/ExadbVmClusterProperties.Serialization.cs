@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("totalEcpuCount"u8);
             writer.WriteNumberValue(TotalEcpuCount);
             writer.WritePropertyName("vmFileSystemStorage"u8);
-            writer.WriteObjectValue(VmFileSystemStorage, options);
+            writer.WriteObjectValue(VmFileSystem, options);
             if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
             {
                 writer.WritePropertyName("lifecycleDetails"u8);
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string systemVersion = default;
             string timeZone = default;
             int totalEcpuCount = default;
-            ExadbVmClusterStorageDetails vmFileSystemStorage = default;
+            ExadbVmClusterStorageDetails vmFileSystem = default;
             string lifecycleDetails = default;
             string scanDnsName = default;
             IReadOnlyList<string> scanIPIds = default;
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (prop.NameEquals("vmFileSystemStorage"u8))
                 {
-                    vmFileSystemStorage = ExadbVmClusterStorageDetails.DeserializeExadbVmClusterStorageDetails(prop.Value, options);
+                    vmFileSystem = ExadbVmClusterStorageDetails.DeserializeExadbVmClusterStorageDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lifecycleDetails"u8))
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 systemVersion,
                 timeZone,
                 totalEcpuCount,
-                vmFileSystemStorage,
+                vmFileSystem,
                 lifecycleDetails,
                 scanDnsName,
                 scanIPIds ?? new ChangeTrackingList<string>(),

@@ -734,6 +734,98 @@ namespace Azure.Generator.Mgmt.Tests
                 "Filtered list should contain no WirePath attribute");
         }
 
+        /// <summary>
+        /// Verifies the fix for https://github.com/microsoft/typespec/issues/7380.
+        ///
+        /// When SafeFlatten chains across 3+ levels of single-property models the immediate
+        /// `innerProperty` on a parent is itself a <see cref="FlattenedPropertyProvider"/>.
+        /// Previously the generator emitted `internalProperty = new InnerModel(value)` for the
+        /// flattened setter, but the value's type does not match any constructor on InnerModel
+        /// (its only ctor takes the deeper inner model). The fix detects the chained case and
+        /// emits the safe `if (internal == null) internal = new InnerModel(); internal.X = value;`
+        /// pattern instead, delegating through the inner flattened setter.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenChainedThreeLevelsEmitsSafeSetter()
+        {
+            // Level 3: leaf model with a single required string property.
+            var valueProp = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var levelThreeModel = InputFactory.Model(
+                "LevelThreeModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProp]);
+
+            // Level 2: single required property of LevelThreeModel — triggers SafeFlatten.
+            // Required ensures LevelTwoModel has no public parameterless constructor.
+            var levelThreeProp = InputFactory.Property("levelThree", levelThreeModel, isRequired: true, serializedName: "levelThree");
+            var levelTwoModel = InputFactory.Model(
+                "LevelTwoModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [levelThreeProp]);
+
+            // Level 1: single required property of LevelTwoModel — triggers SafeFlatten again.
+            // After Level 2 is flattened, its single public property is itself a
+            // FlattenedPropertyProvider (Value), so flattening Level 1 hits the chained case.
+            var levelTwoProp = InputFactory.Property("levelTwo", levelTwoModel, isRequired: true, serializedName: "levelTwo");
+            var levelOneModel = InputFactory.Model(
+                "LevelOneModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [levelTwoProp]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [levelOneModel, levelTwoModel, levelThreeModel]);
+
+            var levelOne = plugin.Object.TypeFactory.CreateModel(levelOneModel);
+            var levelTwo = plugin.Object.TypeFactory.CreateModel(levelTwoModel);
+            var levelThree = plugin.Object.TypeFactory.CreateModel(levelThreeModel);
+            Assert.That(levelOne, Is.Not.Null);
+            Assert.That(levelTwo, Is.Not.Null);
+            Assert.That(levelThree, Is.Not.Null);
+
+            // Precondition: LevelTwoModel has no public parameterless ctor (required prop).
+            Assert.That(
+                levelTwo!.Constructors.Any(c =>
+                    c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                    !c.Signature.Parameters.Any()),
+                Is.False,
+                "Precondition: LevelTwoModel should have no public parameterless constructor");
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            // Visit child models first so SafeFlatten on LevelOneModel sees the already-flattened
+            // FlattenedPropertyProvider as the inner property.
+            foreach (var model in new[] { levelThree, levelTwo, levelOne })
+            {
+                foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+                {
+                    visitTypeCore!.Invoke(visitor, [model!]);
+                }
+            }
+
+            var rendered = new TypeProviderWriter(levelOne!).Write().Content;
+
+            // The buggy form would be: `LevelTwo = new LevelTwoModel(value);` — which doesn't
+            // compile because LevelTwoModel only has a (LevelThreeModel) constructor.
+            Assert.That(
+                rendered,
+                Does.Not.Match(@"LevelTwo\s*=\s*new\s+[\w\.:]*LevelTwoModel\s*\(\s*value\s*\)"),
+                "Chained safe-flatten setter must not call a non-existent `new LevelTwoModel(value)` constructor");
+
+            // The fixed form delegates through the flattened inner setter, with a parameterless
+            // construction of the intermediate model.
+            Assert.That(
+                rendered,
+                Does.Match(@"LevelTwo\s*=\s*new\s+[\w\.:]*LevelTwoModel\s*\(\s*\)"),
+                "Chained safe-flatten setter should construct the intermediate model with the parameterless ctor");
+            Assert.That(
+                rendered,
+                Does.Match(@"LevelTwo\.LevelThreeValue\s*=\s*value"),
+                "Chained safe-flatten setter should delegate assignment through the inner flattened property");
+        }
+
         private class ObsoletePropertyCustomCodeView : TypeProvider
         {
             private readonly TypeProvider _enclosingType;

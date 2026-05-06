@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.AllowedCopyScope = value.Value;
+                Properties.AllowedCopyScope = value;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.AccessTier = value.Value;
+                Properties.AccessTier = value;
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.EnableHttpsTrafficOnly = value.Value;
+                Properties.EnableHttpsTrafficOnly = value;
             }
         }
 
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.IsSftpEnabled = value.Value;
+                Properties.IsSftpEnabled = value;
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.IsLocalUserEnabled = value.Value;
+                Properties.IsLocalUserEnabled = value;
             }
         }
 
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.IsHnsEnabled = value.Value;
+                Properties.IsHnsEnabled = value;
             }
         }
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.LargeFileSharesState = value.Value;
+                Properties.LargeFileSharesState = value;
             }
         }
 
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.AllowBlobPublicAccess = value.Value;
+                Properties.AllowBlobPublicAccess = value;
             }
         }
 
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.MinimumTlsVersion = value.Value;
+                Properties.MinimumTlsVersion = value;
             }
         }
 
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.AllowSharedKeyAccess = value.Value;
+                Properties.AllowSharedKeyAccess = value;
             }
         }
 
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.AllowCrossTenantReplication = value.Value;
+                Properties.AllowCrossTenantReplication = value;
             }
         }
 
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.DnsEndpointType = value.Value;
+                Properties.DnsEndpointType = value;
             }
         }
 
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.KeyExpirationPeriodInDays = value.Value;
+                Properties.KeyExpirationPeriodInDays = value;
             }
         }
 
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.IsBlobEnabled = value.Value;
+                Properties.IsBlobEnabled = value;
             }
         }
     }

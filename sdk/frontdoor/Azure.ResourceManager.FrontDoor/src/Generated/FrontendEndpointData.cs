@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     Properties = new FrontendEndpointProperties();
                 }
-                Properties.SessionAffinityEnabledState = value.Value;
+                Properties.SessionAffinityEnabledState = value;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     Properties = new FrontendEndpointProperties();
                 }
-                Properties.SessionAffinityTtlInSeconds = value.Value;
+                Properties.SessionAffinityTtlInSeconds = value;
             }
         }
 

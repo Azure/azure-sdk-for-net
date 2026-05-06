@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new OrderProperties();
                 }
-                Properties.ShipmentType = value.Value;
+                Properties.ShipmentType = value;
             }
         }
     }

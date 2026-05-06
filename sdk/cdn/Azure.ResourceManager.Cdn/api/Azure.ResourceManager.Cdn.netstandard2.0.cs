@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Cdn
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? LastRefreshedOn { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType SourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType? SourceType { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency? UpdateFrequency { get { throw null; } set { } }
         public string Uri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

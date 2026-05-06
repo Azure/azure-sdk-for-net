@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new RouteUpdatePropertiesParameters();
                 }
-                Properties.ForwardingProtocol = value.Value;
+                Properties.ForwardingProtocol = value;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new RouteUpdatePropertiesParameters();
                 }
-                Properties.LinkToDefaultDomain = value.Value;
+                Properties.LinkToDefaultDomain = value;
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new RouteUpdatePropertiesParameters();
                 }
-                Properties.HttpsRedirect = value.Value;
+                Properties.HttpsRedirect = value;
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new RouteUpdatePropertiesParameters();
                 }
-                Properties.EnabledState = value.Value;
+                Properties.EnabledState = value;
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new RouteUpdatePropertiesParameters();
                 }
-                Properties.GrpcState = value.Value;
+                Properties.GrpcState = value;
             }
         }
 

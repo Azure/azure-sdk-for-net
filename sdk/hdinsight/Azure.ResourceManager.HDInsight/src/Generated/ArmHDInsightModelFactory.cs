@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightPrivateLinkConfiguration"/> instance for mocking. </returns>
         public static HDInsightPrivateLinkConfiguration HDInsightPrivateLinkConfiguration(string id = default, string name = default, ResourceType? resourceType = default, string groupId = default, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default, IEnumerable<HDInsightIPConfiguration> ipConfigurations = default)
         {
-            return new HDInsightPrivateLinkConfiguration(id, name, resourceType, groupId is null && provisioningState is null && ipConfigurations is null ? default : new PrivateLinkConfigurationProperties(groupId, provisioningState, (ipConfigurations ?? new ChangeTrackingList<HDInsightIPConfiguration>()).ToList(), null), additionalBinaryDataProperties: null);
+            return new HDInsightPrivateLinkConfiguration(id, name, resourceType, new PrivateLinkConfigurationProperties(groupId, provisioningState, (ipConfigurations ?? new ChangeTrackingList<HDInsightIPConfiguration>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> The private link IP configuration id. </param>

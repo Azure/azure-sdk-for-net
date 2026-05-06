@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new EndpointPropertiesUpdateParameters();
                 }
-                Properties.IsCompressionEnabled = value.Value;
+                Properties.IsCompressionEnabled = value;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new EndpointPropertiesUpdateParameters();
                 }
-                Properties.IsHttpAllowed = value.Value;
+                Properties.IsHttpAllowed = value;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new EndpointPropertiesUpdateParameters();
                 }
-                Properties.IsHttpsAllowed = value.Value;
+                Properties.IsHttpsAllowed = value;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new EndpointPropertiesUpdateParameters();
                 }
-                Properties.QueryStringCachingBehavior = value.Value;
+                Properties.QueryStringCachingBehavior = value;
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new EndpointPropertiesUpdateParameters();
                 }
-                Properties.OptimizationType = value.Value;
+                Properties.OptimizationType = value;
             }
         }
 

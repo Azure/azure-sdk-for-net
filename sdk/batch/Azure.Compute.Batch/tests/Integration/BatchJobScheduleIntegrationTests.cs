@@ -217,7 +217,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // update the job schedule
                 int jobCount = 0;
-                await foreach (BatchJob item in client.GetJobsFromSchedulesAsync(jobScheduleId))
+                await foreach (BatchJob item in client.GetJobsFromScheduleAsync(jobScheduleId))
                 {
                     jobCount++;
                 }

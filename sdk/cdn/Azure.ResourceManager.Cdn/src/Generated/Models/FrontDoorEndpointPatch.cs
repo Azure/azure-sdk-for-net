@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new FrontDoorEndpointPropertiesUpdateParameters();
                 }
-                Properties.EnabledState = value.Value;
+                Properties.EnabledState = value;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new FrontDoorEndpointPropertiesUpdateParameters();
                 }
-                Properties.EnforceMtls = value.Value;
+                Properties.EnforceMtls = value;
             }
         }
     }

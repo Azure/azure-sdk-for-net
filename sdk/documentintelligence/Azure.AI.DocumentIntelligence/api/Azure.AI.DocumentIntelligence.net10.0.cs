@@ -902,6 +902,14 @@ namespace Azure.AI.DocumentIntelligence
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.DocumentIntelligenceResourceDetails>> GetResourceDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class DocumentIntelligenceAdministrationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentIntelligenceAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentIntelligenceAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentIntelligenceAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentIntelligenceAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClientSettings> configureSettings) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class DocumentIntelligenceAdministrationClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public DocumentIntelligenceAdministrationClientSettings() { }
@@ -955,6 +963,14 @@ namespace Azure.AI.DocumentIntelligence
         public virtual Azure.Response<System.BinaryData> GetAnalyzeResultPdf(string modelId, string resultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAnalyzeResultPdfAsync(string modelId, string resultId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetAnalyzeResultPdfAsync(string modelId, string resultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class DocumentIntelligenceClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentIntelligenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentIntelligenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.DocumentIntelligence.DocumentIntelligenceClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentIntelligenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentIntelligenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.DocumentIntelligence.DocumentIntelligenceClientSettings> configureSettings) { throw null; }
     }
     public partial class DocumentIntelligenceClientOptions : Azure.Core.ClientOptions
     {

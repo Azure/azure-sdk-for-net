@@ -459,7 +459,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     WorkloadNetworkSegmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData();
+                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -507,7 +507,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     WorkloadNetworkSegmentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData();
+                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -554,7 +554,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     WorkloadNetworkSegmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData();
+                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<WorkloadNetworkSegmentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -597,7 +597,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     WorkloadNetworkSegmentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData();
+                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<WorkloadNetworkSegmentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -639,7 +639,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     WorkloadNetworkSegmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData();
+                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -685,7 +685,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     WorkloadNetworkSegmentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData();
+                    WorkloadNetworkSegmentData patch = new WorkloadNetworkSegmentData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

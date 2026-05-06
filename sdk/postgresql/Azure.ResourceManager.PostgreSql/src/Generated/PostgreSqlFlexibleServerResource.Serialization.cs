@@ -8,22 +8,34 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class PostgreSqlFlexibleServerResource : IJsonModel<PostgreSqlFlexibleServerData>
+    /// <summary></summary>
+    public partial class PostgreSqlFlexibleServerResource : ArmResource, IJsonModel<PostgreSqlFlexibleServerData>
     {
-        private static PostgreSqlFlexibleServerData s_dataDeserializationInstance;
-        private static PostgreSqlFlexibleServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PostgreSqlFlexibleServerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PostgreSqlFlexibleServerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PostgreSqlFlexibleServerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PostgreSqlFlexibleServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerData>)Data).Write(writer, options);
 
-        PostgreSqlFlexibleServerData IJsonModel<PostgreSqlFlexibleServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PostgreSqlFlexibleServerData IJsonModel<PostgreSqlFlexibleServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PostgreSqlFlexibleServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServerData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PostgreSqlFlexibleServerData IPersistableModel<PostgreSqlFlexibleServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlFlexibleServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PostgreSqlFlexibleServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

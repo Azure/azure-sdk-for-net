@@ -30,11 +30,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="CodeConfiguration"/>. </summary>
         /// <param name="runtime"> The runtime identifier for code execution (e.g., 'python_3_11', 'python_3_12', 'python_3_13'). </param>
         /// <param name="entryPoint"> The entry point command and arguments for the code execution. </param>
+        /// <param name="contentHash"> The SHA-256 hex digest of the uploaded code zip. Set by the service from the `x-ms-code-zip-sha256` request header; read-only in responses and never accepted in request payloads. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CodeConfiguration(string runtime, IList<string> entryPoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CodeConfiguration(string runtime, IList<string> entryPoint, string contentHash, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Runtime = runtime;
             EntryPoint = entryPoint;
+            ContentHash = contentHash;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,5 +45,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The entry point command and arguments for the code execution. </summary>
         public IList<string> EntryPoint { get; }
+
+        /// <summary> The SHA-256 hex digest of the uploaded code zip. Set by the service from the `x-ms-code-zip-sha256` request header; read-only in responses and never accepted in request payloads. </summary>
+        public string ContentHash { get; }
     }
 }

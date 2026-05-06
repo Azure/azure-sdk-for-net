@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     Properties = new BackupAndExportResponseProperties();
                 }
-                Properties.DatasourceSizeInBytes = value.Value;
+                Properties.DatasourceSizeInBytes = value;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     Properties = new BackupAndExportResponseProperties();
                 }
-                Properties.DataTransferredInBytes = value.Value;
+                Properties.DataTransferredInBytes = value;
             }
         }
 

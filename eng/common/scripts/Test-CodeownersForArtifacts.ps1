@@ -3,6 +3,7 @@ param(
     [string] $AzsdkPath,
     [string] $PackageInfoDirectory,
     [array] $SdkTypes,
+    [string] $ArtifactsJson,
     [string] $Repo
 )
 
@@ -12,9 +13,24 @@ Set-StrictMode -Version 3
 $ErrorActionPreference = 'Stop'
 
 $failedPackages = @()
+$excludedArtifacts = @()
+$artifacts = $ArtifactsJson | ConvertFrom-Json
+
+foreach ($artifact in $artifacts) {
+    if ($artifact.PSObject.Properties.Name -contains "skipCodeownersVerification" -and $artifact.skipCodeownersVerification) {
+        $excludedArtifacts += $artifact.Name
+    }
+}
+
+Write-Host "Excluded artifacts: $($excludedArtifacts -join ', ')"
 
 foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter '*.json' -File) {
     $pkgProperties = Get-Content -Raw -Path $pkgPropertiesFile | ConvertFrom-Json
+
+    if ($excludedArtifacts -contains $pkgProperties.Name) {
+        Write-Host "Skipping package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath) because it is in the list of artifacts to exclude from validation."
+        continue
+    }
     if ($SdkTypes -notcontains $pkgProperties.SdkType) {
         Write-Host "Skipping package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath) because its SdkType '$($pkgProperties.SdkType)' is not in the list of SdkTypes to validate."
         continue
