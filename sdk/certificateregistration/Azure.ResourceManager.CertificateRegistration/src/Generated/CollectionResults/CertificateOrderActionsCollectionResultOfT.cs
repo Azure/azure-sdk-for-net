@@ -17,7 +17,7 @@ using Azure.ResourceManager.CertificateRegistration.Models;
 
 namespace Azure.ResourceManager.CertificateRegistration
 {
-    internal partial class MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateActionsCollectionResultOfT : Pageable<CertificateOrderAction>
+    internal partial class CertificateOrderActionsCollectionResultOfT : Pageable<CertificateOrderAction>
     {
         private readonly AppServiceCertificateOrders _client;
         private readonly string _subscriptionId;
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.CertificateRegistration
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateActionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of CertificateOrderActionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AppServiceCertificateOrders client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Name of the certificate order.. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateActionsCollectionResultOfT(AppServiceCertificateOrders client, string subscriptionId, string resourceGroupName, string name, RequestContext context, string diagnosticScope)
+        public CertificateOrderActionsCollectionResultOfT(AppServiceCertificateOrders client, string subscriptionId, string resourceGroupName, string name, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.CertificateRegistration
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateActionsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of CertificateOrderActionsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateActionsCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of CertificateOrderActionsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<CertificateOrderAction>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
