@@ -22,11 +22,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_SwapDeployments
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
             string deploymentName1 = "{deploymentName1}";
             string deploymentName2 = "{deploymentName2}";
             ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
-            Operation operation = client.SwapDeployments(WaitUntil.Completed, projectName, swapDetails);
+            Operation operation = projectClient.SwapDeployments(WaitUntil.Completed, projectName, swapDetails);
 
             // Extract operation-location from response headers
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
@@ -44,12 +46,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_SwapDeploymentsAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
             string deploymentName1 = "{deploymentName1}";
             string deploymentName2 = "{deploymentName2}";
             ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
 
-            Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, projectName, swapDetails);
+            Operation operation = await projectClient.SwapDeploymentsAsync(WaitUntil.Completed, projectName, swapDetails);
 
             // Extract operation-location from response headers
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";

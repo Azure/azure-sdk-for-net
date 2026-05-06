@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Site redundancy mode. </summary>
+    /// <summary>
+    /// Site redundancy mode
+    /// Serialized Name: RedundancyMode
+    /// </summary>
     public enum RedundancyMode
     {
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: RedundancyMode.None
+        /// </summary>
         None,
-        /// <summary> Manual. </summary>
+        /// <summary>
+        /// Manual
+        /// Serialized Name: RedundancyMode.Manual
+        /// </summary>
         Manual,
-        /// <summary> Failover. </summary>
+        /// <summary>
+        /// Failover
+        /// Serialized Name: RedundancyMode.Failover
+        /// </summary>
         Failover,
-        /// <summary> ActiveActive. </summary>
+        /// <summary>
+        /// ActiveActive
+        /// Serialized Name: RedundancyMode.ActiveActive
+        /// </summary>
         ActiveActive,
-        /// <summary> GeoRedundant. </summary>
+        /// <summary>
+        /// GeoRedundant
+        /// Serialized Name: RedundancyMode.GeoRedundant
+        /// </summary>
         GeoRedundant
     }
 }

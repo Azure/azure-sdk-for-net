@@ -93,11 +93,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            if (Optional.IsDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -143,7 +138,6 @@ namespace Azure.Search.Documents.Indexes.Models
             string storageConnectionString = default;
             IList<KnowledgeStoreProjection> projections = default;
             SearchIndexerDataIdentity identity = default;
-            SearchIndexerKnowledgeStoreParameters parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,21 +166,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("parameters"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    parameters = SearchIndexerKnowledgeStoreParameters.DeserializeSearchIndexerKnowledgeStoreParameters(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KnowledgeStore(storageConnectionString, projections, identity, parameters, additionalBinaryDataProperties);
+            return new KnowledgeStore(storageConnectionString, projections, identity, additionalBinaryDataProperties);
         }
     }
 }

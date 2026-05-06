@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Grafana
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Grafana
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
     }

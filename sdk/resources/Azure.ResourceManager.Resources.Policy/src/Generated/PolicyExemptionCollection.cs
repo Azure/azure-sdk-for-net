@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateCreateOrUpdateRequest(Id, policyExemptionName, PolicyExemptionData.ToRequestContent(data), context);
+                HttpMessage message = _policyExemptionsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), policyExemptionName, PolicyExemptionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyExemptionData> response = Response.FromValue(PolicyExemptionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateCreateOrUpdateRequest(Id, policyExemptionName, PolicyExemptionData.ToRequestContent(data), context);
+                HttpMessage message = _policyExemptionsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), policyExemptionName, PolicyExemptionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyExemptionData> response = Response.FromValue(PolicyExemptionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id, policyExemptionName, context);
+                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id.ToString(), policyExemptionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyExemptionData> response = Response.FromValue(PolicyExemptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id, policyExemptionName, context);
+                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id.ToString(), policyExemptionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyExemptionData> response = Response.FromValue(PolicyExemptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id, policyExemptionName, context);
+                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id.ToString(), policyExemptionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyExemptionData> response = default;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id, policyExemptionName, context);
+                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id.ToString(), policyExemptionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyExemptionData> response = default;
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id, policyExemptionName, context);
+                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id.ToString(), policyExemptionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyExemptionData> response = default;
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id, policyExemptionName, context);
+                HttpMessage message = _policyExemptionsRestClient.CreateGetRequest(Id.ToString(), policyExemptionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyExemptionData> response = default;

@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ResourceGraph
       safeName: AzureResourceManagerResourceGraph
+    - name: Azure.Provisioning.ResourceGraph
+      safeName: AzureProvisioningResourceGraph

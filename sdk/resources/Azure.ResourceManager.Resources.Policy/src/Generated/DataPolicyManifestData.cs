@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties.Namespaces;
+                return Properties is null ? default : Properties.Namespaces;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties.PolicyMode;
+                return Properties is null ? default : Properties.PolicyMode;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties.IsBuiltInOnly;
+                return Properties is null ? default : Properties.IsBuiltInOnly;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties.ResourceTypeAliases;
+                return Properties is null ? default : Properties.ResourceTypeAliases;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties.Effects;
+                return Properties is null ? default : Properties.Effects;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties.FieldValues;
+                return Properties is null ? default : Properties.FieldValues;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties.Standard;
+                return Properties is null ? default : Properties.Standard;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties.Custom;
+                return Properties is null ? default : Properties.Custom;
             }
         }
     }

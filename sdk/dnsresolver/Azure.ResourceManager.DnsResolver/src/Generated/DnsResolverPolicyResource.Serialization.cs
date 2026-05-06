@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DnsResolver
 {
+    /// <summary></summary>
     public partial class DnsResolverPolicyResource : IJsonModel<DnsResolverPolicyData>
     {
-        private static DnsResolverPolicyData s_dataDeserializationInstance;
-        private static DnsResolverPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DnsResolverPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DnsResolverPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DnsResolverPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DnsResolverPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverPolicyData>)Data).Write(writer, options);
 
-        DnsResolverPolicyData IJsonModel<DnsResolverPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnsResolverPolicyData IJsonModel<DnsResolverPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DnsResolverPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsResolverPolicyData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DnsResolverPolicyData IPersistableModel<DnsResolverPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverPolicyData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        string IPersistableModel<DnsResolverPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DnsResolverPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

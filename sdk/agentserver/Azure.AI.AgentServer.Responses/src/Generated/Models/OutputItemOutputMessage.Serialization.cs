@@ -89,6 +89,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Phase))
+            {
+                writer.WritePropertyName("phase"u8);
+                writer.WriteStringValue(Phase.Value.ToSerialString());
+            }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
         }
@@ -126,7 +131,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             string role = default;
             IList<OutputMessageContent> content = default;
-            OutputItemOutputMessageStatus status = default;
+            MessagePhase? phase = default;
+            ItemOutputMessageStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -177,9 +183,19 @@ namespace Azure.AI.AgentServer.Responses.Models
                     content = array;
                     continue;
                 }
+                if (prop.NameEquals("phase"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        phase = null;
+                        continue;
+                    }
+                    phase = prop.Value.GetString().ToMessagePhase();
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemOutputMessageStatus();
+                    status = prop.Value.GetString().ToItemOutputMessageStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,6 +212,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 id,
                 role,
                 content,
+                phase,
                 status);
         }
     }

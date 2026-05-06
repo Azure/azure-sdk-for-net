@@ -46,83 +46,83 @@ namespace Azure.AI.VoiceLive.Samples
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-    public static async Task<int> Main(string[] args)
-    {
-        var rootCommand = new RootCommand("Basic Voice Assistant using Azure VoiceLive SDK");
-
-        var apiKeyOption = new Option<string?>("--api-key")
+        public static async Task<int> Main(string[] args)
         {
-            Description = "Azure VoiceLive API key. If not provided, will use AZURE_VOICELIVE_API_KEY environment variable."
-        };
+            var rootCommand = new RootCommand("Basic Voice Assistant using Azure VoiceLive SDK");
 
-        var endpointOption = new Option<string>("--endpoint")
-        {
-            Description = "Azure VoiceLive endpoint"
-        };
-
-        var modelOption = new Option<string>("--model")
-        {
-            Description = "VoiceLive model to use"
-        };
-
-        var voiceOption = new Option<string>("--voice")
-        {
-            Description = "Voice to use for the assistant"
-        };
-
-        var instructionsOption = new Option<string>("--instructions")
-        {
-            Description = "System instructions for the AI assistant"
-        };
-
-        var useTokenCredentialOption = new Option<bool>("--use-token-credential")
-        {
-            Description = "Use Azure token credential instead of API key"
-        };
-
-        var verboseOption = new Option<bool>("--verbose")
-        {
-            Description = "Enable verbose logging"
-        };
-
-        rootCommand.Add(apiKeyOption);
-        rootCommand.Add(endpointOption);
-        rootCommand.Add(modelOption);
-        rootCommand.Add(voiceOption);
-        rootCommand.Add(instructionsOption);
-        rootCommand.Add(useTokenCredentialOption);
-        rootCommand.Add(verboseOption);
-
-        var parseResult = rootCommand.Parse(args);
-        if (parseResult.Errors.Count > 0)
-        {
-            foreach (var error in parseResult.Errors)
+            var apiKeyOption = new Option<string?>("--api-key")
             {
-                Console.WriteLine(error.Message);
+                Description = "Azure VoiceLive API key. If not provided, will use AZURE_VOICELIVE_API_KEY environment variable."
+            };
+
+            var endpointOption = new Option<string>("--endpoint")
+            {
+                Description = "Azure VoiceLive endpoint"
+            };
+
+            var modelOption = new Option<string>("--model")
+            {
+                Description = "VoiceLive model to use"
+            };
+
+            var voiceOption = new Option<string>("--voice")
+            {
+                Description = "Voice to use for the assistant"
+            };
+
+            var instructionsOption = new Option<string>("--instructions")
+            {
+                Description = "System instructions for the AI assistant"
+            };
+
+            var useTokenCredentialOption = new Option<bool>("--use-token-credential")
+            {
+                Description = "Use Azure token credential instead of API key"
+            };
+
+            var verboseOption = new Option<bool>("--verbose")
+            {
+                Description = "Enable verbose logging"
+            };
+
+            rootCommand.Add(apiKeyOption);
+            rootCommand.Add(endpointOption);
+            rootCommand.Add(modelOption);
+            rootCommand.Add(voiceOption);
+            rootCommand.Add(instructionsOption);
+            rootCommand.Add(useTokenCredentialOption);
+            rootCommand.Add(verboseOption);
+
+            var parseResult = rootCommand.Parse(args);
+            if (parseResult.Errors.Count > 0)
+            {
+                foreach (var error in parseResult.Errors)
+                {
+                    Console.WriteLine(error.Message);
+                }
+                return 1;
             }
-            return 1;
+
+            var apiKey = parseResult.GetValue(apiKeyOption);
+            var endpoint = parseResult.GetValue(endpointOption) ?? "wss://api.voicelive.com/v1";
+            var model = parseResult.GetValue(modelOption) ?? "gpt-4o";
+            var voice = parseResult.GetValue(voiceOption) ?? "en-US-AvaNeural";
+            var instructions = parseResult.GetValue(instructionsOption) ?? "You are a helpful AI assistant. Respond naturally and conversationally. Keep your responses concise but engaging.";
+            var useTokenCredential = parseResult.GetValue(useTokenCredentialOption);
+            var verbose = parseResult.GetValue(verboseOption);
+
+            await RunVoiceAssistantAsync(apiKey, endpoint, model, voice, instructions, useTokenCredential, verbose).ConfigureAwait(false);
+            return 0;
         }
 
-        var apiKey = parseResult.GetValue(apiKeyOption);
-        var endpoint = parseResult.GetValue(endpointOption) ?? "wss://api.voicelive.com/v1";
-        var model = parseResult.GetValue(modelOption) ?? "gpt-4o";
-        var voice = parseResult.GetValue(voiceOption) ?? "en-US-AvaNeural";
-        var instructions = parseResult.GetValue(instructionsOption) ?? "You are a helpful AI assistant. Respond naturally and conversationally. Keep your responses concise but engaging.";
-        var useTokenCredential = parseResult.GetValue(useTokenCredentialOption);
-        var verbose = parseResult.GetValue(verboseOption);
-
-        await RunVoiceAssistantAsync(apiKey, endpoint, model, voice, instructions, useTokenCredential, verbose).ConfigureAwait(false);
-        return 0;
-    }
-
-    private static async Task RunVoiceAssistantAsync(
-            string? apiKey,
-            string endpoint,
-            string model,
-            string voice,
-            string instructions,
-            bool useTokenCredential,
-            bool verbose)
+        private static async Task RunVoiceAssistantAsync(
+                string? apiKey,
+                string endpoint,
+                string model,
+                string voice,
+                string instructions,
+                bool useTokenCredential,
+                bool verbose)
         {
             // Setup configuration
             var configuration = new ConfigurationBuilder()

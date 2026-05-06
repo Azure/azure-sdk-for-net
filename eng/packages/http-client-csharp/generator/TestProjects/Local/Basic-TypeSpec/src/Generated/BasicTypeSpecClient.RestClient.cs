@@ -231,7 +231,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetUnknownValueRequest(string accept, RequestContext context)
+        internal HttpMessage CreateGetUnknownValueRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -240,7 +240,7 @@ namespace BasicTypeSpec
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", accept);
+            request.Headers.SetValue("Accept", "text/plain");
             return message;
         }
 

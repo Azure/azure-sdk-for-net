@@ -32,3 +32,11 @@ description: Samples for the Azure.Messaging.ServiceBus client library
 - [Long-running processing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample18_LongRunningProcessing.md)
 - [Distributed tracing and monitoring](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample19_DistributedTracing.md)
 - [Performance patterns](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample20_PerformancePatterns.md)
+
+## Application samples
+
+These samples demonstrate end-to-end application scenarios using Azure Service Bus.
+
+- [Dead-letter queues](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/servicebus/dead-letter-queue/README.md)
+- [Topic filters](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/servicebus/topic-filters/README.md)
+- [Plugin extensibility pattern](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/servicebus/plugin-sample/README.md)

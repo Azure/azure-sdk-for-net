@@ -12,7 +12,10 @@ import {
 } from "./sdk-context-options.js";
 import { updateClients } from "./resource-detection.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
-import { AzureMgmtEmitterOptions } from "./options.js";
+import {
+  AzureMgmtEmitterOptions,
+  filterSuppressedDiagnostics
+} from "./options.js";
 import { transformSubscriptionIdParameters } from "./subscription-id-transformer.js";
 import {
   deduplicateApiVersionEnums,
@@ -25,7 +28,7 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
   const [, diagnostics] = await emitAzureCodeModel(context, updateCodeModel);
-  context.program.reportDiagnostics(diagnostics);
+  context.program.reportDiagnostics(filterSuppressedDiagnostics(diagnostics));
 
   function updateCodeModel(
     codeModel: CodeModel,

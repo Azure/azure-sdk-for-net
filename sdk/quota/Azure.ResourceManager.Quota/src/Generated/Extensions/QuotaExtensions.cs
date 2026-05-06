@@ -169,40 +169,44 @@ namespace Azure.ResourceManager.Quota
         /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetSubscriptionQuotaAllocationsList(ResourceIdentifier, AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetSubscriptionQuotaAllocationsList(ResourceIdentifier, string, string, AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(this ArmClient client, ResourceIdentifier scope, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(this ArmClient client, ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableQuotaArmClient(client).GetSubscriptionQuotaAllocationsList(scope, location, cancellationToken);
+            return GetMockableQuotaArmClient(client).GetSubscriptionQuotaAllocationsList(scope, groupQuotaName, resourceProviderName, location, cancellationToken);
         }
 
         /// <summary>
         /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetSubscriptionQuotaAllocationsListAsync(ResourceIdentifier, AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetSubscriptionQuotaAllocationsListAsync(ResourceIdentifier, string, string, AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(this ArmClient client, ResourceIdentifier scope, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(this ArmClient client, ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableQuotaArmClient(client).GetSubscriptionQuotaAllocationsListAsync(scope, location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableQuotaArmClient(client).GetSubscriptionQuotaAllocationsListAsync(scope, groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -227,58 +231,64 @@ namespace Azure.ResourceManager.Quota
         /// Gets a collection of <see cref="QuotaAllocationRequestStatusCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaAllocationRequestStatuses(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaAllocationRequestStatuses(ResourceIdentifier, string, string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="QuotaAllocationRequestStatusResource"/> objects. </returns>
-        public static QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(this ArmClient client, ResourceIdentifier scope)
+        public static QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(this ArmClient client, ResourceIdentifier scope, string groupQuotaName, string resourceProviderName)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableQuotaArmClient(client).GetQuotaAllocationRequestStatuses(scope);
+            return GetMockableQuotaArmClient(client).GetQuotaAllocationRequestStatuses(scope, groupQuotaName, resourceProviderName);
         }
 
         /// <summary>
         /// Get the quota allocation request status for the subscriptionId by allocationId.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaAllocationRequestStatus(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaAllocationRequestStatus(ResourceIdentifier, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
         /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(this ArmClient client, ResourceIdentifier scope, string allocationId, CancellationToken cancellationToken = default)
+        public static Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(this ArmClient client, ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableQuotaArmClient(client).GetQuotaAllocationRequestStatus(scope, allocationId, cancellationToken);
+            return GetMockableQuotaArmClient(client).GetQuotaAllocationRequestStatus(scope, groupQuotaName, resourceProviderName, allocationId, cancellationToken);
         }
 
         /// <summary>
         /// Get the quota allocation request status for the subscriptionId by allocationId.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaAllocationRequestStatusAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaAllocationRequestStatusAsync(ResourceIdentifier, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
         /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(this ArmClient client, ResourceIdentifier scope, string allocationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(this ArmClient client, ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableQuotaArmClient(client).GetQuotaAllocationRequestStatusAsync(scope, allocationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableQuotaArmClient(client).GetQuotaAllocationRequestStatusAsync(scope, groupQuotaName, resourceProviderName, allocationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

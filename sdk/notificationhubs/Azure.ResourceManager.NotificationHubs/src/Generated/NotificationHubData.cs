@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     Properties = new NotificationHubProperties();
                 }
-                Properties.RegistrationTtl = value.Value;
+                Properties.RegistrationTtl = value;
             }
         }
 

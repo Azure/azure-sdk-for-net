@@ -1,0 +1,36 @@
+parameters:
+  - name: ArtifactPath
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: Artifacts
+    type: object
+    default: []
+  - name: Repo
+    type: string
+    default: $(Build.Repository.Name)
+  - name: SdkTypes
+    type: object
+    default:
+      - client
+      - compat
+      - data
+      - functions
+      - datamovement
+
+steps:
+  - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
+    parameters:
+      Condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+
+  - task: PowerShell@2
+    displayName: Verify Codeowners
+    condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+    inputs:
+      pwsh: true
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Test-CodeownersForArtifacts.ps1
+      arguments: >-
+        -AzsdkPath '$(AZSDK)'
+        -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
+        -SdkTypes ${{ join(',', parameters.SdkTypes) }}
+        -ArtifactsJson '${{ convertToJson(parameters.Artifacts) }}'
+        -Repo '${{ parameters.Repo }}'

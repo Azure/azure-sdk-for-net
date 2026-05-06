@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    internal class DownloadURLOperationSource : IOperationSource<DownloadURL>
+    /// <summary></summary>
+    internal partial class DownloadURLOperationSource : IOperationSource<DownloadURL>
     {
-        DownloadURL IOperationSource<DownloadURL>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal DownloadURLOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return DownloadURL.DeserializeDownloadURL(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        DownloadURL IOperationSource<DownloadURL>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DownloadURL result = DownloadURL.DeserializeDownloadURL(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DownloadURL> IOperationSource<DownloadURL>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return DownloadURL.DeserializeDownloadURL(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DownloadURL result = DownloadURL.DeserializeDownloadURL(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

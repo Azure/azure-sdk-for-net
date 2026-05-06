@@ -120,10 +120,10 @@ public class GreetingHandlerFullControl : ResponseHandler
         var input = await context.GetInputTextAsync(cancellationToken: cancellationToken);
         var reply = $"Hello! You said: \"{input}\"";
         yield return text.EmitDelta(reply);  // response.output_text.delta
-        yield return text.EmitDone(reply);   // response.output_text.done
+        yield return text.EmitTextDone(reply);   // response.output_text.done
 
         // Close the content, message, and response.
-        yield return message.EmitContentDone(text);  // response.content_part.done
+        yield return text.EmitDone();  // response.content_part.done
         yield return message.EmitDone();              // response.output_item.done
         yield return stream.EmitCompleted();          // response.completed
     }

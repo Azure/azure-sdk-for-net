@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
-public class Sample_EvaluatorsCatalog : SamplesBase
+public class Sample_EvaluatorsCatalog : EvaluationSampleBase
 {
     #region Snippet:Sample_PromptEvaluator_EvaluatorsCatalog
     private static EvaluatorVersion GetPromptEvaluatorVersion()

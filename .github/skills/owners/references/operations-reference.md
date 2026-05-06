@@ -76,6 +76,24 @@ Same parameters as add counterparts.
 **MCP:** `azsdk_engsys_codeowner_remove_label_owner` (`github_user`, `label`, `owner_type`: AzSdkOwner|PrLabel|ServiceOwner, `repo`)
 **CLI:** `azsdk config codeowners remove-label-owner --github-user user1 --label Storage --owner-type ServiceOwner --repo Azure/azure-sdk-for-python`
 
+## Check Package
+
+Verify that a package has sufficient owners, PR labels, and service owners. Useful for diagnosing why a PR or release is blocked.
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `directoryPath` | Path to the package directory (required) | `sdk/storage/azure-storage-blob` |
+| `repo` | Repository (owner/repo) | `Azure/azure-sdk-for-python` |
+| `codeownersCachePath` | Path to a local cache file (optional) | |
+
+**MCP:** `azsdk_engsys_codeowner_check_package`
+
+## Update Cache
+
+Run the CODEOWNERS cache update pipeline to propagate ownership changes. Use this after making add/remove changes to ensure PRs, releases, and other pipelines pick up the new ownership data. Takes no parameters.
+
+**MCP:** `azsdk_engsys_codeowner_update_cache`
+
 ## CLI Fallback
 
 When MCP is unavailable, all operations can be performed via the `azsdk` CLI. The base command is:

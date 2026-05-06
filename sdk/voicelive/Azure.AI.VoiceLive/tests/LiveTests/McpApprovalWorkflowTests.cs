@@ -42,13 +42,13 @@ namespace Azure.AI.VoiceLive.Tests
         {
         }
 
-        private VoiceLiveMcpServerDefinition CreateMicrosoftLearnMcpServer(string requireApproval = "never")
+        private VoiceLiveMcpServerDefinition CreateMicrosoftLearnMcpServer(MCPApprovalType? requireApproval = null)
         {
             return new VoiceLiveMcpServerDefinition(
                 serverLabel: TestConstants.MicrosoftLearnMcpServerLabel,
                 serverUrl: TestConstants.MicrosoftLearnMcpServerUrl)
             {
-                RequireApproval = BinaryData.FromString($"\"{requireApproval}\"")
+                RequireApproval = requireApproval ?? MCPApprovalType.Never
             };
         }
 
@@ -58,7 +58,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));
 
-            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: "always");
+            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: MCPApprovalType.Always);
 
             var options = new VoiceLiveSessionOptions
             {
@@ -139,12 +139,12 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-       // [Ignore("Approval not requested")]
+        // [Ignore("Approval not requested")]
         public async Task ShouldExecuteToolAfterApprovalGranted()
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));
 
-            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: "always");
+            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: MCPApprovalType.Always);
 
             var options = new VoiceLiveSessionOptions
             {
@@ -389,7 +389,7 @@ namespace Azure.AI.VoiceLive.Tests
         public async Task ShouldHandleToolApprovalDenied()
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));
-            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: "always");
+            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: MCPApprovalType.Always);
 
             var options = new VoiceLiveSessionOptions { Model = "gpt-4o" };
             options.Tools.Add(mcpServerWithApproval);
@@ -448,7 +448,7 @@ namespace Azure.AI.VoiceLive.Tests
         public async Task ShouldNotRequestApprovalWhenRequireApprovalNever()
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));
-            var mcpServerNoApproval = CreateMicrosoftLearnMcpServer(requireApproval: "never");
+            var mcpServerNoApproval = CreateMicrosoftLearnMcpServer(requireApproval: MCPApprovalType.Never);
 
             var options = new VoiceLiveSessionOptions { Model = "gpt-4o" };
             options.Tools.Add(mcpServerNoApproval);

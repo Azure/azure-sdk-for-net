@@ -321,88 +321,6 @@ namespace Azure.Search.Documents.Tests.Models
         }
 
         [Test]
-        public void QueryRewritesOptionWithNoCount()
-        {
-            SearchOptions searchOptions = new();
-            searchOptions.SemanticSearch = new SemanticSearchOptions();
-
-            Assert.IsNull(searchOptions.SemanticSearch.QueryRewrites);
-
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites(QueryRewritesType.None);
-            Assert.AreEqual($"{QueryRewritesType.None}", searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryRewrites.Count);
-
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites(QueryRewritesType.Generative);
-            Assert.AreEqual($"{QueryRewritesType.Generative}", searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryRewrites.Count);
-
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites("none");
-            Assert.AreEqual(QueryRewritesType.None, searchOptions.SemanticSearch.QueryRewrites.RewritesType);
-            Assert.IsNull(searchOptions.SemanticSearch.QueryRewrites.Count);
-        }
-
-        [Test]
-        public void QueryRewritesOptionWithCount()
-        {
-            SearchOptions searchOptions = new();
-            searchOptions.SemanticSearch = new SemanticSearchOptions();
-
-            Assert.IsNull(searchOptions.SemanticSearch.QueryRewrites);
-
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites(QueryRewritesType.Generative);
-            searchOptions.SemanticSearch.QueryRewrites.Count = 0;
-            Assert.AreEqual(0, searchOptions.SemanticSearch.QueryRewrites.Count);
-            Assert.AreEqual("generative|count-0", searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
-            Assert.AreEqual(QueryRewritesType.Generative, searchOptions.SemanticSearch.QueryRewrites.RewritesType);
-
-            searchOptions.SemanticSearch.QueryRewrites.Count = 100;
-            Assert.AreEqual(100, searchOptions.SemanticSearch.QueryRewrites.Count);
-            Assert.AreEqual("generative|count-100", searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
-            Assert.AreEqual(QueryRewritesType.Generative, searchOptions.SemanticSearch.QueryRewrites.RewritesType);
-
-            searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw = "unknown|count-3";
-            Assert.AreEqual(3, searchOptions.SemanticSearch.QueryRewrites.Count);
-            Assert.AreEqual("unknown", $"{searchOptions.SemanticSearch.QueryRewrites.RewritesType}");
-        }
-
-        [Test]
-        public void QueryRewritesOption()
-        {
-            SearchOptions searchOptions = new();
-            searchOptions.SemanticSearch = new SemanticSearchOptions();
-
-            // We can set `QueryRewrites` to one of the known values, using either a string or a pre-defined value.
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites("none") { Count = 3 };
-            Assert.AreEqual($"{QueryRewritesType.None}|count-{searchOptions.SemanticSearch.QueryRewrites.Count}",
-                searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
-
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites(QueryRewritesType.None) { Count = 4 };
-            Assert.AreEqual($"{QueryRewritesType.None}|count-{searchOptions.SemanticSearch.QueryRewrites.Count}",
-                searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
-
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites("generative") { Count = 5 };
-            Assert.AreEqual($"{QueryRewritesType.Generative}|count-{searchOptions.SemanticSearch.QueryRewrites.Count}",
-                searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
-
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites(QueryRewritesType.Generative) { Count = 6 };
-            Assert.AreEqual($"{QueryRewritesType.Generative}|count-{searchOptions.SemanticSearch.QueryRewrites.Count}",
-                searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
-
-            // We can also set `QueryRewrites` to a value unknown to the SDK.
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites("unknown") { Count = 7 };
-            Assert.AreEqual($"unknown|count-{searchOptions.SemanticSearch.QueryRewrites.Count}",
-                searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
-
-            searchOptions.SemanticSearch.QueryRewrites = new QueryRewrites(new QueryRewritesType("unknown")) { Count = 8 };
-            Assert.AreEqual($"unknown|count-{searchOptions.SemanticSearch.QueryRewrites.Count}",
-                searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
-
-            searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw = "unknown|count-9";
-            Assert.AreEqual("unknown", $"{searchOptions.SemanticSearch.QueryRewrites.RewritesType}");
-            Assert.AreEqual(9, searchOptions.SemanticSearch.QueryRewrites.Count);
-        }
-
-        [Test]
         public void SearchOptionsForSemanticSearch()
         {
             var searchOptions = new SearchOptions
@@ -413,13 +331,11 @@ namespace Azure.Search.Documents.Tests.Models
                     SemanticConfigurationName = "my-semantic-config",
                     QueryCaption = new(QueryCaptionType.Extractive) { MaxCharLength = 300 },
                     QueryAnswer = new(QueryAnswerType.Extractive) { Count = 5, Threshold = 0.8, MaxCharLength = 300 },
-                    QueryRewrites = new(QueryRewritesType.Generative) { Count = 3 }
                 },
             };
 
             Assert.AreEqual("extractive|count-5,threshold-0.8,maxcharlength-300", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
             Assert.AreEqual("extractive|highlight-True,maxcharlength-300", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
-            Assert.AreEqual("generative|count-3", searchOptions.SemanticSearch.QueryRewrites.QueryRewritesRaw);
         }
 
         [Test]

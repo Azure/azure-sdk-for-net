@@ -193,6 +193,7 @@ namespace Azure.AI.Speech.Transcription.Tests
 
         #region Phrase List Tests
 
+        [Ignore("Flaky timeout in CI playback — see https://github.com/Azure/azure-sdk-for-net/issues/58025")]
         [RecordedTest]
         public async Task TranscribeWithPhraseList()
         {

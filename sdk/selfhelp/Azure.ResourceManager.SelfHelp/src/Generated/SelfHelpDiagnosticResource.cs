@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpDiagnosticData> response = Response.FromValue(SelfHelpDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpDiagnosticData> response = Response.FromValue(SelfHelpDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id.Parent, Id.Name, SelfHelpDiagnosticData.ToRequestContent(data), context);
+                HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, SelfHelpDiagnosticData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpDiagnosticResource> operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(
                     new SelfHelpDiagnosticOperationSource(Client),
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id.Parent, Id.Name, SelfHelpDiagnosticData.ToRequestContent(data), context);
+                HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, SelfHelpDiagnosticData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpDiagnosticResource> operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(
                     new SelfHelpDiagnosticOperationSource(Client),

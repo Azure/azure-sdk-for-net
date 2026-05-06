@@ -37,6 +37,9 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     // --- Response envelopes ---
     private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
 
+    // --- Chat isolation keys (response ID → creation-time chat isolation key) ---
+    private readonly ConcurrentDictionary<string, string> _chatIsolationKeys = new();
+
     // --- Item store (all items by ID) ---
     private readonly ConcurrentDictionary<string, OutputItem> _itemStore = new();
 
@@ -97,6 +100,12 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             throw new InvalidOperationException($"Response '{response.Id}' already exists.");
         }
 
+        // Record the creation-time chat isolation key for enforcement on subsequent operations
+        if (isolation.ChatIsolationKey is not null)
+        {
+            _chatIsolationKeys[response.Id] = isolation.ChatIsolationKey;
+        }
+
         // Store input items in the item store and track their ordered IDs
         var inputIds = new List<string>();
         foreach (var item in inputItems)
@@ -132,7 +141,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
     {
-        // Deleted response → 400 (distinguish from never-existed → 404)
+        // Deleted response → 404 (spec: post-deletion, response not found)
         bool isDeleted;
         lock (_deletedResponseIds)
         {
@@ -141,13 +150,15 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
         if (isDeleted)
         {
-            throw new BadRequestException($"Response '{responseId}' has been deleted.");
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
         if (!_responses.TryGetValue(responseId, out var response))
         {
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
+
+        EnforceChatIsolation(responseId, isolation);
 
         return Task.FromResult(response);
     }
@@ -174,6 +185,14 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
     {
+        // Check existence first (before isolation) to maintain consistent 404 for unknown IDs
+        if (!_responses.ContainsKey(responseId))
+        {
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+        }
+
+        EnforceChatIsolation(responseId, isolation);
+
         if (!_responses.TryRemove(responseId, out _))
         {
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
@@ -186,7 +205,25 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             _deletedResponseIds.Add(responseId);
         }
 
+        // Clean up isolation key tracking
+        _chatIsolationKeys.TryRemove(responseId, out _);
+
         return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Enforces chat isolation key for persisted responses.
+    /// If the response was created with a chat isolation key, the caller must
+    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// cross-chat information leakage.
+    /// </summary>
+    private void EnforceChatIsolation(string responseId, IsolationContext isolation)
+    {
+        if (_chatIsolationKeys.TryGetValue(responseId, out var expectedKey)
+            && !string.Equals(expectedKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
+        {
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+        }
     }
 
     private static bool IsTerminal(ResponseStatus status) =>
@@ -203,7 +240,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         string? before = null,
         CancellationToken cancellationToken = default)
     {
-        // Deleted response → 400
+        // Deleted response → 404
         bool isDeleted;
         lock (_deletedResponseIds)
         {
@@ -212,7 +249,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
         if (isDeleted)
         {
-            throw new BadRequestException($"Response '{responseId}' has been deleted.");
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
         // Never existed → 404
@@ -220,6 +257,8 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         {
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
+
+        EnforceChatIsolation(responseId, isolation);
 
         // Combine history + current input items by resolving IDs from the item store
         var allItems = new List<OutputItem>();
@@ -454,7 +493,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     {
         if (!_subjects.TryGetValue(responseId, out var subject))
         {
-            throw new InvalidOperationException($"No event stream found for response '{responseId}'.");
+            throw new BadRequestException($"Event stream is not available for response '{responseId}'.");
         }
 
         // Wrap the caller's observer in an adapter that unwraps the (SeqNo, Event) tuple

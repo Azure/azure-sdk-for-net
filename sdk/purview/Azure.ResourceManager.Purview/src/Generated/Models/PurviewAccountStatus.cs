@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Purview.Models
         {
             get
             {
-                return Error.ErrorDetails;
+                return Error is null ? default : Error.ErrorDetails;
             }
         }
     }

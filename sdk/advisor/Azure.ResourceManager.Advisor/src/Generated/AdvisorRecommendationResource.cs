@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreatePatchRequest(Id.Parent, Id.Name, AdvisorRecommendationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreatePatchRequest(Id.Parent.ToString(), Id.Name, AdvisorRecommendationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreatePatchRequest(Id.Parent, Id.Name, AdvisorRecommendationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreatePatchRequest(Id.Parent.ToString(), Id.Name, AdvisorRecommendationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
                 if (response.Value == null)

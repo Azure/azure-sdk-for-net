@@ -5,7 +5,29 @@ import {
   AzureEmitterOptions,
   AzureEmitterOptionsSchema
 } from "@azure-typespec/http-client-csharp";
-import { JSONSchemaType } from "@typespec/compiler";
+import { Diagnostic, JSONSchemaType } from "@typespec/compiler";
+
+/**
+ * Upstream diagnostic codes that are not meaningful for management plane code generation
+ * and should be suppressed to avoid noisy output.
+ */
+export const suppressedUpstreamDiagnosticCodes: ReadonlySet<string> = new Set([
+  // TCGC reports this for generic decorator arguments, which don't affect mgmt plane codegen
+  "@azure-tools/typespec-client-generator-core/unsupported-generic-decorator-arg-type",
+  // Base emitter reports this for PATCH convenience methods, which mgmt plane doesn't use
+  "@typespec/http-client-csharp/unsupported-patch-convenience-method"
+]);
+
+/**
+ * Filters out upstream diagnostics that are not meaningful for management plane.
+ */
+export function filterSuppressedDiagnostics(
+  diagnostics: readonly Diagnostic[]
+): readonly Diagnostic[] {
+  return diagnostics.filter(
+    (d) => !suppressedUpstreamDiagnosticCodes.has(d.code)
+  );
+}
 
 export interface AzureMgmtEmitterOptions extends AzureEmitterOptions {
   "enable-wire-path-attribute"?: boolean;

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Http logs to azure blob storage configuration. </summary>
+    /// <summary>
+    /// Http logs to azure blob storage configuration.
+    /// Serialized Name: AzureBlobStorageHttpLogsConfig
+    /// </summary>
     public partial class AppServiceBlobStorageHttpLogsConfig
     {
         /// <summary>
@@ -51,13 +54,20 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceBlobStorageHttpLogsConfig"/>. </summary>
-        /// <param name="sasUri"> SAS url to a azure blob container with read/write/list/delete permissions. </param>
+        /// <param name="sasUri">
+        /// SAS url to a azure blob container with read/write/list/delete permissions.
+        /// Serialized Name: AzureBlobStorageHttpLogsConfig.sasUrl
+        /// </param>
         /// <param name="retentionInDays">
         /// Retention in days.
         /// Remove blobs older than X days.
         /// 0 or lower means no retention.
+        /// Serialized Name: AzureBlobStorageHttpLogsConfig.retentionInDays
         /// </param>
-        /// <param name="isEnabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
+        /// <param name="isEnabled">
+        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
+        /// Serialized Name: AzureBlobStorageHttpLogsConfig.enabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceBlobStorageHttpLogsConfig(Uri sasUri, int? retentionInDays, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,17 +77,24 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SAS url to a azure blob container with read/write/list/delete permissions. </summary>
+        /// <summary>
+        /// SAS url to a azure blob container with read/write/list/delete permissions.
+        /// Serialized Name: AzureBlobStorageHttpLogsConfig.sasUrl
+        /// </summary>
         [WirePath("sasUrl")]
         public Uri SasUri { get; set; }
         /// <summary>
         /// Retention in days.
         /// Remove blobs older than X days.
         /// 0 or lower means no retention.
+        /// Serialized Name: AzureBlobStorageHttpLogsConfig.retentionInDays
         /// </summary>
         [WirePath("retentionInDays")]
         public int? RetentionInDays { get; set; }
-        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        /// <summary>
+        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
+        /// Serialized Name: AzureBlobStorageHttpLogsConfig.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }

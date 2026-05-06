@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
 
         private ClientDiagnostics GeoCatalogsClientDiagnostics => _geoCatalogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GeoCatalogs GeoCatalogsRestClient => _geoCatalogsRestClient ??= new GeoCatalogs(GeoCatalogsClientDiagnostics, Pipeline, Endpoint, "2025-02-11-preview");
+        private GeoCatalogs GeoCatalogsRestClient => _geoCatalogsRestClient ??= new GeoCatalogs(GeoCatalogsClientDiagnostics, Pipeline, Endpoint, "2026-04-15");
 
         /// <summary>
         /// List GeoCatalog resources by subscription ID
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>

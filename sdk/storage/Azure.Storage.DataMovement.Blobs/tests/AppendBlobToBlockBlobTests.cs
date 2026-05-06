@@ -282,6 +282,50 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
         }
 
+        protected override async Task<string> CreateSnapshotAsync(
+            BlobContainerClient containerClient,
+            AppendBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobSnapshotInfo> snapshotResponse = await objectClient.CreateSnapshotAsync(cancellationToken: cancellationToken);
+            return snapshotResponse.Value.Snapshot;
+        }
+
+        protected override AppendBlobClient GetSnapshotObjectClient(
+            AppendBlobClient objectClient,
+            string snapshotId)
+            => objectClient.WithSnapshot(snapshotId);
+
+        protected override async Task<string> CreateVersionAsync(
+            BlobContainerClient containerClient,
+            AppendBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            // Get the current version ID before we modify the blob
+            Response<BlobProperties> propertiesResponse = await objectClient.GetPropertiesAsync(cancellationToken: cancellationToken);
+            string versionId = propertiesResponse.Value.VersionId;
+
+            // Modify the blob to create a new version
+            // For append blobs, we append a small block to create a new version
+            byte[] newData = new byte[1];
+            using MemoryStream stream = new MemoryStream(newData);
+            await objectClient.AppendBlockAsync(stream, cancellationToken: cancellationToken);
+
+            // Return the version ID from before the modification
+            return versionId;
+        }
+
+        protected override AppendBlobClient GetVersionObjectClient(
+            AppendBlobClient objectClient,
+            string versionId)
+        {
+            AppendBlobClient versionClient = objectClient.WithVersion(versionId);
+            Uri versionSasUri = versionClient.GenerateSasUri(
+                BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.Read,
+                Recording.UtcNow.AddDays(1));
+            return InstrumentClient(new AppendBlobClient(versionSasUri, GetOptions()));
+        }
+
         public BlobClientOptions GetOptions()
         {
             var options = new BlobClientOptions(_serviceVersion)

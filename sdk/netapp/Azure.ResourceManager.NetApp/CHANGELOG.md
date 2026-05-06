@@ -1,20 +1,21 @@
 # Release History
 
-## 1.16.0-beta.3 (Unreleased)
+
+## 1.16.0 (2026-05-01)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-2025-12-01' to 'package-2026-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c5044e9d381c2bf1b3119011b4696e777f819f76/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added `NetAppBucketResource` and related bucket models, including credential generation and Key Vault integration support.
+- Added `NetAppCacheResource` for NetApp cache scenarios.
+- Added `NetAppSecretPassword` model and Key Vault-backed credential models (e.g., `CertificateKeyVaultDetails`, `CredentialsKeyVaultDetails`, `EntraIdKeyVaultConfig`, `EntraIdKeyVaultConfigPatch`).
+- Added `NetAppDayOfWeek` enum and additional supporting models and enums (e.g., file system user, NFS user, SMB settings, peering passphrases, origin cluster information, change-zone content; policy/encryption/credential/breakthrough/volume-size/snapshot/Kerberos/global-file-locking/large-volume/SMB-encryption/CIFS-change-notify/write-back/LDAP/certificate-conflict/snapshot-directory-visibility/external-replication enums).
 
 ## 1.16.0-beta.2 (2026-03-26)
 
 ### Breaking Changes
 
-- Renaming of models to align with the Azure SDK naming convention: 
+- Renaming of models to align with the Azure SDK naming convention:
 Added NetApp prefix to models: CacheResource, BucketResource, NetAppBucketResource, ActiveDirectoryConfigResource, SecretPassword, NetAppSecretPassword, LdapConfiguration, DayOfWeek renamed to NetAppDayOfWeek,
 FileSystemUser, NfsUser, SmbSettings, PeeringPassphrases, OriginClusterInformation, ChangeZoneContent
 - Added NetApp prefix to Enums: PolicyStatus, EncryptionState, CredentialsStatus, BreakthroughMode, VolumeSize, SnapshotUsage, KerberosState, GlobalFileLockingState, LargeVolumeType, SmbEncryptionState, CifsChangeNotifyState,

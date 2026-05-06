@@ -43,7 +43,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="containerConfiguration"> Container-based deployment configuration. Provide this for image-based deployments. Mutually exclusive with code_configuration — the service validates that exactly one is set. </param>
         /// <param name="protocolVersions"> The protocols that the agent supports for ingress communication. </param>
         /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
-        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProjectsAgentTool> tools, IList<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image, ContainerConfiguration containerConfiguration, IList<ProtocolVersionRecord> protocolVersions, CodeConfiguration codeConfiguration) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
+        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProjectsAgentTool> tools, IList<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image, ContainerConfiguration containerConfiguration, IList<ProtocolVersionRecord> protocolVersions, CodeConfiguration codeConfiguration, TelemetryConfig telemetryConfig) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Tools = tools;
             Versions = versions;
@@ -54,6 +55,7 @@ namespace Azure.AI.Projects.Agents
             ContainerConfiguration = containerConfiguration;
             ProtocolVersions = protocolVersions;
             CodeConfiguration = codeConfiguration;
+            TelemetryConfig = telemetryConfig;
         }
 
         /// <summary>
@@ -85,5 +87,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </summary>
         public CodeConfiguration CodeConfiguration { get; set; }
+
+        /// <summary> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
+        public TelemetryConfig TelemetryConfig { get; set; }
     }
 }

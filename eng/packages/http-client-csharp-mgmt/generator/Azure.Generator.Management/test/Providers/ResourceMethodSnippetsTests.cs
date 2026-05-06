@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Snippets;
@@ -19,7 +19,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var messageVar = new VariableExpression(typeof(Azure.Core.HttpMessage), "message");
             var contextVar = new VariableExpression(typeof(Azure.RequestContext), "context");
             CSharpType responseType = typeof(OperationStatusResult);
-            Assert.IsTrue(responseType.IsFrameworkType, "OperationStatusResult should be a framework type");
+            Assert.That(responseType.IsFrameworkType, Is.True, "OperationStatusResult should be a framework type");
 
             // Act
             var statements = ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.LastRefreshedScore;
+                return Properties is null ? default : Properties.LastRefreshedScore;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.TimeSeries;
+                return Properties is null ? default : Properties.TimeSeries;
             }
         }
     }

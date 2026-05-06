@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Cdn
 {
+    /// <summary></summary>
     public partial class CdnWebApplicationFirewallPolicyResource : IJsonModel<CdnWebApplicationFirewallPolicyData>
     {
-        private static CdnWebApplicationFirewallPolicyData s_dataDeserializationInstance;
-        private static CdnWebApplicationFirewallPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CdnWebApplicationFirewallPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CdnWebApplicationFirewallPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CdnWebApplicationFirewallPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CdnWebApplicationFirewallPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CdnWebApplicationFirewallPolicyData>)Data).Write(writer, options);
 
-        CdnWebApplicationFirewallPolicyData IJsonModel<CdnWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnWebApplicationFirewallPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CdnWebApplicationFirewallPolicyData IJsonModel<CdnWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CdnWebApplicationFirewallPolicyData>(Data, options, AzureResourceManagerCdnContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CdnWebApplicationFirewallPolicyData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<CdnWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CdnWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

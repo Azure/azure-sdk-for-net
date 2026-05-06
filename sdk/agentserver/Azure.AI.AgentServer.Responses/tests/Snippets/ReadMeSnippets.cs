@@ -33,14 +33,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_ReadMe_ConfigureServer_Manual
 
-            var builder = WebApplication.CreateBuilder();
-
-            builder.Services.AddResponsesServer();
-            builder.Services.AddScoped<ResponseHandler, EchoHandler>();
-
-            var app = builder.Build();
-            app.MapResponsesServer();
-            app.Run();
+            var builder = AgentHost.CreateBuilder();
+            builder.AddResponses<EchoHandler>();
+            builder.Build().Run();
 
             #endregion
         }
@@ -133,9 +128,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var text = message.AddTextContent();
                 yield return text.EmitAdded();
                 yield return text.EmitDelta("Hello, world!");
-                yield return text.EmitDone("Hello, world!");
+                yield return text.EmitTextDone("Hello, world!");
 
-                yield return message.EmitContentDone(text);
+                yield return text.EmitDone();
                 yield return message.EmitDone();
                 yield return stream.EmitCompleted();
             }

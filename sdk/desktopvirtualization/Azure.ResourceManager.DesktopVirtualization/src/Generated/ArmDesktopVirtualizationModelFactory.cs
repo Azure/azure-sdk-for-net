@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolId"/> is null. </exception>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationGroupData"/> instance for mocking. </returns>
-        public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, ResourceIdentifier hostPoolId = default, ResourceIdentifier workspaceId = default, VirtualApplicationGroupType? applicationGroupType = default, bool? isCloudPCResource = default, bool? showInFeed = default, string oboTenantId = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, ManagedServiceIdentity identity = default, ETag? etag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
+        public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, ResourceIdentifier hostPoolId = default, ResourceIdentifier workspaceId = default, VirtualApplicationGroupType applicationGroupType = default, bool? isCloudPCResource = default, bool? showInFeed = default, string oboTenantId = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, ManagedServiceIdentity identity = default, ETag? etag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -221,13 +221,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                objectId is null && description is null && friendlyName is null && hostPoolId is null && workspaceId is null && applicationGroupType is null && isCloudPCResource is null && showInFeed is null && oboTenantId is null && deploymentScope is null ? default : new ApplicationGroupProperties(
+                new ApplicationGroupProperties(
                     objectId,
                     description,
                     friendlyName,
                     hostPoolId,
                     workspaceId,
-                    applicationGroupType.Value,
+                    applicationGroupType,
                     isCloudPCResource,
                     showInFeed,
                     oboTenantId,
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="DesktopVirtualization.HostPoolData"/> instance for mocking. </returns>
-        public static HostPoolData HostPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string friendlyName = default, string description = default, HostPoolType? hostPoolType = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, string customRdpProperty = default, int? maxSessionLimit = default, HostPoolLoadBalancerType? loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfo registrationInfo = default, string vmTemplate = default, IEnumerable<string> applicationGroupReferences = default, IEnumerable<string> appAttachPackageReferences = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType? preferredAppGroupType = default, bool? startVmOnConnect = default, bool? isCloudPCResource = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdateProperties agentUpdate = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default, DesktopVirtualizationDirectUdp? directUdp = default, DesktopVirtualizationPublicUdp? publicUdp = default, DesktopVirtualizationRelayUdp? relayUdp = default, DesktopVirtualizationManagementType? managementType = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, string oboTenantId = default, AllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default, ManagedServiceIdentity identity = default, ETag? etag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
+        public static HostPoolData HostPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string friendlyName = default, string description = default, HostPoolType hostPoolType = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, string customRdpProperty = default, int? maxSessionLimit = default, HostPoolLoadBalancerType loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfo registrationInfo = default, string vmTemplate = default, IEnumerable<string> applicationGroupReferences = default, IEnumerable<string> appAttachPackageReferences = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType preferredAppGroupType = default, bool? startVmOnConnect = default, bool? isCloudPCResource = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdateProperties agentUpdate = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default, DesktopVirtualizationDirectUdp? directUdp = default, DesktopVirtualizationPublicUdp? publicUdp = default, DesktopVirtualizationRelayUdp? relayUdp = default, DesktopVirtualizationManagementType? managementType = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, string oboTenantId = default, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default, ManagedServiceIdentity identity = default, ETag? etag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -387,15 +387,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                objectId is null && friendlyName is null && description is null && hostPoolType is null && personalDesktopAssignmentType is null && customRdpProperty is null && maxSessionLimit is null && loadBalancerType is null && ring is null && isValidationEnvironment is null && registrationInfo is null && vmTemplate is null && applicationGroupReferences is null && appAttachPackageReferences is null && ssoAdfsAuthority is null && ssoClientId is null && ssoClientSecretKeyVaultPath is null && ssoSecretType is null && preferredAppGroupType is null && startVmOnConnect is null && isCloudPCResource is null && publicNetworkAccess is null && agentUpdate is null && privateEndpointConnections is null && managedPrivateUdp is null && directUdp is null && publicUdp is null && relayUdp is null && managementType is null && deploymentScope is null && oboTenantId is null && allowRdpShortPathWithPrivateLink is null ? default : new HostPoolProperties(
+                new HostPoolProperties(
                     objectId,
                     friendlyName,
                     description,
-                    hostPoolType.Value,
+                    hostPoolType,
                     personalDesktopAssignmentType,
                     customRdpProperty,
                     maxSessionLimit,
-                    loadBalancerType.Value,
+                    loadBalancerType,
                     ring,
                     isValidationEnvironment,
                     registrationInfo,
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     ssoClientId,
                     ssoClientSecretKeyVaultPath,
                     ssoSecretType,
-                    preferredAppGroupType.Value,
+                    preferredAppGroupType,
                     startVmOnConnect,
                     isCloudPCResource,
                     publicNetworkAccess,
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="allowRdpShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.HostPoolPatch"/> instance for mocking. </returns>
-        public static HostPoolPatch HostPoolPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string friendlyName = default, string description = default, string customRdpProperty = default, int? maxSessionLimit = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, HostPoolLoadBalancerType? loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfoPatch registrationInfo = default, string vmTemplate = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType? preferredAppGroupType = default, bool? startVmOnConnect = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdatePatchProperties agentUpdate = default, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default, DesktopVirtualizationDirectUdp? directUdp = default, DesktopVirtualizationPublicUdp? publicUdp = default, DesktopVirtualizationRelayUdp? relayUdp = default, AllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default, ManagedServiceIdentity identity = default)
+        public static HostPoolPatch HostPoolPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string friendlyName = default, string description = default, string customRdpProperty = default, int? maxSessionLimit = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, HostPoolLoadBalancerType? loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfoPatch registrationInfo = default, string vmTemplate = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType? preferredAppGroupType = default, bool? startVmOnConnect = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdatePatchProperties agentUpdate = default, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default, DesktopVirtualizationDirectUdp? directUdp = default, DesktopVirtualizationPublicUdp? publicUdp = default, DesktopVirtualizationRelayUdp? relayUdp = default, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -738,11 +738,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Request body for listing scoped registration tokens for a session host. </summary>
-        /// <param name="expirationTimeInUtc"> Expiration time of the registration token in UTC. </param>
-        /// <returns> A new <see cref="Models.ScopedRegistrationTokenProperties"/> instance for mocking. </returns>
-        public static ScopedRegistrationTokenProperties ScopedRegistrationTokenProperties(DateTimeOffset expirationTimeInUtc = default)
+        /// <param name="expirationOn"> Expiration time of the registration token in UTC. </param>
+        /// <returns> A new <see cref="Models.ScopedRegistrationTokenContent"/> instance for mocking. </returns>
+        public static ScopedRegistrationTokenContent ScopedRegistrationTokenContent(DateTimeOffset expirationOn = default)
         {
-            return new ScopedRegistrationTokenProperties(expirationTimeInUtc, additionalBinaryDataProperties: null);
+            return new ScopedRegistrationTokenContent(expirationOn, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                daysOfWeek is null && rampUpStartTime is null && rampUpAutoStartHosts is null && rampUpStartVmOnConnect is null && rampUpActionOnDisconnect is null && rampUpMinutesToWaitOnDisconnect is null && rampUpActionOnLogoff is null && rampUpMinutesToWaitOnLogoff is null && peakStartTime is null && peakStartVmOnConnect is null && peakActionOnDisconnect is null && peakMinutesToWaitOnDisconnect is null && peakActionOnLogoff is null && peakMinutesToWaitOnLogoff is null && rampDownStartTime is null && rampDownStartVmOnConnect is null && rampDownActionOnDisconnect is null && rampDownMinutesToWaitOnDisconnect is null && rampDownActionOnLogoff is null && rampDownMinutesToWaitOnLogoff is null && offPeakStartTime is null && offPeakStartVmOnConnect is null && offPeakActionOnDisconnect is null && offPeakMinutesToWaitOnDisconnect is null && offPeakActionOnLogoff is null && offPeakMinutesToWaitOnLogoff is null ? default : new ScalingPlanPersonalScheduleProperties(
+                new ScalingPlanPersonalScheduleProperties(
                     (daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>()).ToList(),
                     rampUpStartTime,
                     rampUpAutoStartHosts,
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                scheduleName is null && daysOfWeek is null && scalingMethod is null && createDelete is null && rampUpStartTime is null && rampUpLoadBalancingAlgorithm is null && rampUpMinimumHostsPct is null && rampUpCapacityThresholdPct is null && peakStartTime is null && peakLoadBalancingAlgorithm is null && rampDownStartTime is null && rampDownLoadBalancingAlgorithm is null && rampDownMinimumHostsPct is null && rampDownCapacityThresholdPct is null && rampDownForceLogoffUsers is null && rampDownStopHostsWhen is null && rampDownWaitTimeMinutes is null && rampDownNotificationMessage is null && offPeakStartTime is null && offPeakLoadBalancingAlgorithm is null ? default : new ScalingPlanPooledScheduleProperties(
+                new ScalingPlanPooledScheduleProperties(
                     scheduleName,
                     (daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>()).ToList(),
                     scalingMethod,
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                imagePath is null && packageName is null && packageFamilyName is null && displayName is null && packageRelativePath is null && isRegularRegistration is null && isActive is null && packageDependencies is null && version is null && lastUpdatedOn is null && packageApplications is null ? default : new MSIXPackageProperties(
+                new MSIXPackageProperties(
                     imagePath,
                     packageName,
                     packageFamilyName,
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="vmAdminCredentials"> Local Admin credentials for session hosts. </param>
         /// <param name="bootDiagnosticsInfo"> Boot Diagnostics information. </param>
         /// <returns> A new <see cref="Models.ActiveSessionHostConfigurationProperties"/> instance for mocking. </returns>
-        public static ActiveSessionHostConfigurationProperties ActiveSessionHostConfigurationProperties(DateTimeOffset? version = default, string friendlyName = default, IDictionary<string, string> vmTags = default, AzureLocation? vmLocation = default, string vmResourceGroup = default, string vmNamePrefix = default, IEnumerable<int> availabilityZones = default, DesktopVirtualizationNetworkInfoProperties networkInfo = default, string vmSizeId = default, DesktopVirtualizationDiskInfoProperties diskInfo = default, Uri customConfigurationScriptUri = default, DesktopVirtualizationImageInfoProperties imageInfo = default, DesktopVirtualizationDomainInfoProperties domainInfo = default, DesktopVirtualizationSecurityInfoProperties securityInfo = default, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials = default, BootDiagnosticsInfoProperties bootDiagnosticsInfo = default)
+        public static ActiveSessionHostConfigurationProperties ActiveSessionHostConfigurationProperties(DateTimeOffset? version = default, string friendlyName = default, IDictionary<string, string> vmTags = default, AzureLocation? vmLocation = default, string vmResourceGroup = default, string vmNamePrefix = default, IEnumerable<int> availabilityZones = default, DesktopVirtualizationNetworkInfoProperties networkInfo = default, string vmSizeId = default, DesktopVirtualizationDiskInfoProperties diskInfo = default, Uri customConfigurationScriptUri = default, DesktopVirtualizationImageInfoProperties imageInfo = default, DesktopVirtualizationDomainInfoProperties domainInfo = default, DesktopVirtualizationSecurityInfoProperties securityInfo = default, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials = default, DesktopVirtualizationBootDiagnosticsInfoProperties bootDiagnosticsInfo = default)
         {
             vmTags ??= new ChangeTrackingDictionary<string, string>();
             availabilityZones ??= new ChangeTrackingList<int>();
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="vmAdminCredentials"> Local Admin credentials for session hosts.". </param>
         /// <param name="bootDiagnosticsInfo"> Boot Diagnostics Information. </param>
         /// <returns> A new <see cref="Models.SessionHostConfigurationProperties"/> instance for mocking. </returns>
-        public static SessionHostConfigurationProperties SessionHostConfigurationProperties(DateTimeOffset? version = default, string friendlyName = default, ProvisioningStateSessionHostConfiguration? provisioningState = default, IDictionary<string, string> vmTags = default, AzureLocation? vmLocation = default, string vmResourceGroup = default, string vmNamePrefix = default, IEnumerable<int> availabilityZones = default, DesktopVirtualizationNetworkInfoProperties networkInfo = default, string vmSizeId = default, DesktopVirtualizationDiskInfoProperties diskInfo = default, Uri customConfigurationScriptUri = default, DesktopVirtualizationImageInfoProperties imageInfo = default, DesktopVirtualizationDomainInfoProperties domainInfo = default, DesktopVirtualizationSecurityInfoProperties securityInfo = default, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials = default, BootDiagnosticsInfoProperties bootDiagnosticsInfo = default)
+        public static SessionHostConfigurationProperties SessionHostConfigurationProperties(DateTimeOffset? version = default, string friendlyName = default, SessionHostConfigurationProvisioningState? provisioningState = default, IDictionary<string, string> vmTags = default, AzureLocation? vmLocation = default, string vmResourceGroup = default, string vmNamePrefix = default, IEnumerable<int> availabilityZones = default, DesktopVirtualizationNetworkInfoProperties networkInfo = default, string vmSizeId = default, DesktopVirtualizationDiskInfoProperties diskInfo = default, Uri customConfigurationScriptUri = default, DesktopVirtualizationImageInfoProperties imageInfo = default, DesktopVirtualizationDomainInfoProperties domainInfo = default, DesktopVirtualizationSecurityInfoProperties securityInfo = default, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials = default, DesktopVirtualizationBootDiagnosticsInfoProperties bootDiagnosticsInfo = default)
         {
             vmTags ??= new ChangeTrackingDictionary<string, string>();
             availabilityZones ??= new ChangeTrackingList<int>();
@@ -1191,7 +1191,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="vmAdminCredentials"> Local Admin credentials for session hosts.". </param>
         /// <param name="bootDiagnosticsInfo"> Boot Diagnostics Information. </param>
         /// <returns> A new <see cref="Models.SessionHostConfigurationPatchProperties"/> instance for mocking. </returns>
-        public static SessionHostConfigurationPatchProperties SessionHostConfigurationPatchProperties(string friendlyName = default, IDictionary<string, string> vmTags = default, AzureLocation? vmLocation = default, string vmResourceGroup = default, string vmNamePrefix = default, IEnumerable<int> availabilityZones = default, DesktopVirtualizationNetworkInfoPatchProperties networkInfo = default, string vmSizeId = default, DesktopVirtualizationDiskInfoProperties diskInfo = default, Uri customConfigurationScriptUri = default, DesktopVirtualizationImageInfoPatchProperties imageInfo = default, DesktopVirtualizationKeyVaultCredentialsPatchProperties activeDirectoryInfoDomainCredentials = default, DesktopVirtualizationSecurityInfoPatchProperties securityInfo = default, DesktopVirtualizationKeyVaultCredentialsPatchProperties vmAdminCredentials = default, BootDiagnosticsInfoPatchProperties bootDiagnosticsInfo = default)
+        public static SessionHostConfigurationPatchProperties SessionHostConfigurationPatchProperties(string friendlyName = default, IDictionary<string, string> vmTags = default, AzureLocation? vmLocation = default, string vmResourceGroup = default, string vmNamePrefix = default, IEnumerable<int> availabilityZones = default, DesktopVirtualizationNetworkInfoPatchProperties networkInfo = default, string vmSizeId = default, DesktopVirtualizationDiskInfoProperties diskInfo = default, Uri customConfigurationScriptUri = default, DesktopVirtualizationImageInfoPatchProperties imageInfo = default, DesktopVirtualizationKeyVaultCredentialsPatchProperties activeDirectoryInfoDomainCredentials = default, DesktopVirtualizationSecurityInfoPatchProperties securityInfo = default, DesktopVirtualizationKeyVaultCredentialsPatchProperties vmAdminCredentials = default, DesktopVirtualizationBootDiagnosticsInfoPatchProperties bootDiagnosticsInfo = default)
         {
             vmTags ??= new ChangeTrackingDictionary<string, string>();
             availabilityZones ??= new ChangeTrackingList<int>();

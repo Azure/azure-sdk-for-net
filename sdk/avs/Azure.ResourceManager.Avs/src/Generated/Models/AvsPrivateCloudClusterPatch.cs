@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     Properties = new ClusterUpdateProperties();
                 }
-                Properties.ClusterSize = value.Value;
+                Properties.ClusterSize = value;
             }
         }
 

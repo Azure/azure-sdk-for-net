@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
     /// The Credentials.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureKeyVaultSmbCredentials"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureKeyVaultS3WithHmacCredentials"/> and <see cref="AzureKeyVaultSmbCredentials"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCredentials))]
     public abstract partial class StorageMoverCredentials : IJsonModel<StorageMoverCredentials>
@@ -125,6 +125,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AzureKeyVaultS3WithHMAC":
+                        return AzureKeyVaultS3WithHmacCredentials.DeserializeAzureKeyVaultS3WithHmacCredentials(element, options);
                     case "AzureKeyVaultSmb":
                         return AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(element, options);
                 }

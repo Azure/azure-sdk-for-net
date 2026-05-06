@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> App Dapr configuration. </summary>
+    /// <summary>
+    /// App Dapr configuration.
+    /// Serialized Name: DaprConfig
+    /// </summary>
     public partial class AppDaprConfig
     {
         /// <summary>
@@ -51,13 +54,34 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppDaprConfig"/>. </summary>
-        /// <param name="isEnabled"> Boolean indicating if the Dapr side car is enabled. </param>
-        /// <param name="appId"> Dapr application identifier. </param>
-        /// <param name="appPort"> Tells Dapr which port your application is listening on. </param>
-        /// <param name="httpReadBufferSize"> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </param>
-        /// <param name="httpMaxRequestSize"> Increasing max size of request body http servers parameter in MB to handle uploading of big files. Default is 4 MB. </param>
-        /// <param name="logLevel"> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </param>
-        /// <param name="isApiLoggingEnabled"> Enables API logging for the Dapr sidecar. </param>
+        /// <param name="isEnabled">
+        /// Boolean indicating if the Dapr side car is enabled
+        /// Serialized Name: DaprConfig.enabled
+        /// </param>
+        /// <param name="appId">
+        /// Dapr application identifier
+        /// Serialized Name: DaprConfig.appId
+        /// </param>
+        /// <param name="appPort">
+        /// Tells Dapr which port your application is listening on
+        /// Serialized Name: DaprConfig.appPort
+        /// </param>
+        /// <param name="httpReadBufferSize">
+        /// Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB.
+        /// Serialized Name: DaprConfig.httpReadBufferSize
+        /// </param>
+        /// <param name="httpMaxRequestSize">
+        /// Increasing max size of request body http servers parameter in MB to handle uploading of big files. Default is 4 MB.
+        /// Serialized Name: DaprConfig.httpMaxRequestSize
+        /// </param>
+        /// <param name="logLevel">
+        /// Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info.
+        /// Serialized Name: DaprConfig.logLevel
+        /// </param>
+        /// <param name="isApiLoggingEnabled">
+        /// Enables API logging for the Dapr sidecar
+        /// Serialized Name: DaprConfig.enableApiLogging
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppDaprConfig(bool? isEnabled, string appId, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, AppDaprLogLevel? logLevel, bool? isApiLoggingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,25 +95,46 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Boolean indicating if the Dapr side car is enabled. </summary>
+        /// <summary>
+        /// Boolean indicating if the Dapr side car is enabled
+        /// Serialized Name: DaprConfig.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary> Dapr application identifier. </summary>
+        /// <summary>
+        /// Dapr application identifier
+        /// Serialized Name: DaprConfig.appId
+        /// </summary>
         [WirePath("appId")]
         public string AppId { get; set; }
-        /// <summary> Tells Dapr which port your application is listening on. </summary>
+        /// <summary>
+        /// Tells Dapr which port your application is listening on
+        /// Serialized Name: DaprConfig.appPort
+        /// </summary>
         [WirePath("appPort")]
         public int? AppPort { get; set; }
-        /// <summary> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </summary>
+        /// <summary>
+        /// Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB.
+        /// Serialized Name: DaprConfig.httpReadBufferSize
+        /// </summary>
         [WirePath("httpReadBufferSize")]
         public int? HttpReadBufferSize { get; set; }
-        /// <summary> Increasing max size of request body http servers parameter in MB to handle uploading of big files. Default is 4 MB. </summary>
+        /// <summary>
+        /// Increasing max size of request body http servers parameter in MB to handle uploading of big files. Default is 4 MB.
+        /// Serialized Name: DaprConfig.httpMaxRequestSize
+        /// </summary>
         [WirePath("httpMaxRequestSize")]
         public int? HttpMaxRequestSize { get; set; }
-        /// <summary> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </summary>
+        /// <summary>
+        /// Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info.
+        /// Serialized Name: DaprConfig.logLevel
+        /// </summary>
         [WirePath("logLevel")]
         public AppDaprLogLevel? LogLevel { get; set; }
-        /// <summary> Enables API logging for the Dapr sidecar. </summary>
+        /// <summary>
+        /// Enables API logging for the Dapr sidecar
+        /// Serialized Name: DaprConfig.enableApiLogging
+        /// </summary>
         [WirePath("enableApiLogging")]
         public bool? IsApiLoggingEnabled { get; set; }
     }

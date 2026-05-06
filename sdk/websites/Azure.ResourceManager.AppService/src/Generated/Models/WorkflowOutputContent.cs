@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The workflow output parameter. </summary>
+    /// <summary>
+    /// The workflow output parameter.
+    /// Serialized Name: WorkflowOutputParameter
+    /// </summary>
     public partial class WorkflowOutputContent : WorkflowContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkflowOutputContent"/>. </summary>
@@ -19,12 +22,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowOutputContent"/>. </summary>
-        /// <param name="webAppParameterType"> The type. </param>
-        /// <param name="value"> The value. </param>
-        /// <param name="metadata"> The metadata. </param>
-        /// <param name="description"> The description. </param>
+        /// <param name="webAppParameterType">
+        /// The type.
+        /// Serialized Name: WorkflowParameter.type
+        /// </param>
+        /// <param name="value">
+        /// The value.
+        /// Serialized Name: WorkflowParameter.value
+        /// </param>
+        /// <param name="metadata">
+        /// The metadata.
+        /// Serialized Name: WorkflowParameter.metadata
+        /// </param>
+        /// <param name="description">
+        /// The description.
+        /// Serialized Name: WorkflowParameter.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="error"> Gets the error. </param>
+        /// <param name="error">
+        /// Gets the error.
+        /// Serialized Name: WorkflowOutputParameter.error
+        /// </param>
         internal WorkflowOutputContent(WebAppParameterType? webAppParameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData error) : base(webAppParameterType, value, metadata, description, serializedAdditionalRawData)
         {
             Error = error;
@@ -32,6 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary>
         /// Gets the error.
+        /// Serialized Name: WorkflowOutputParameter.error
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

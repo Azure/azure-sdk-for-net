@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Support
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Support
         {
             get
             {
-                return Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpireOn;
             }
         }
     }

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.Count = value.Value;
+                Properties.Count = value;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.OSDiskSizeInGB = value.Value;
+                Properties.OSDiskSizeInGB = value;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.OSDiskType = value.Value;
+                Properties.OSDiskType = value;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.KubeletDiskType = value.Value;
+                Properties.KubeletDiskType = value;
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.WorkloadRuntime = value.Value;
+                Properties.WorkloadRuntime = value;
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.PodIPAllocationMode = value.Value;
+                Properties.PodIPAllocationMode = value;
             }
         }
 
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.MaxPods = value.Value;
+                Properties.MaxPods = value;
             }
         }
 
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.OSType = value.Value;
+                Properties.OSType = value;
             }
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.OSSku = value.Value;
+                Properties.OSSku = value;
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.MaxCount = value.Value;
+                Properties.MaxCount = value;
             }
         }
 
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.MinCount = value.Value;
+                Properties.MinCount = value;
             }
         }
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsAutoScalingEnabled = value.Value;
+                Properties.IsAutoScalingEnabled = value;
             }
         }
 
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.ScaleDownMode = value.Value;
+                Properties.ScaleDownMode = value;
             }
         }
 
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.AgentPoolType = value.Value;
+                Properties.AgentPoolType = value;
             }
         }
 
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.Mode = value.Value;
+                Properties.Mode = value;
             }
         }
 
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.UpgradeStrategy = value.Value;
+                Properties.UpgradeStrategy = value;
             }
         }
 
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsOSDiskFullCachingEnabled = value.Value;
+                Properties.IsOSDiskFullCachingEnabled = value;
             }
         }
 
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsNodePublicIpEnabled = value.Value;
+                Properties.IsNodePublicIpEnabled = value;
             }
         }
 
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.ScaleSetPriority = value.Value;
+                Properties.ScaleSetPriority = value;
             }
         }
 
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.ScaleSetEvictionPolicy = value.Value;
+                Properties.ScaleSetEvictionPolicy = value;
             }
         }
 
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.SpotMaxPrice = value.Value;
+                Properties.SpotMaxPrice = value;
             }
         }
 
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsEncryptionAtHostEnabled = value.Value;
+                Properties.IsEncryptionAtHostEnabled = value;
             }
         }
 
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsUltraSsdEnabled = value.Value;
+                Properties.IsUltraSsdEnabled = value;
             }
         }
 
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsFipsEnabled = value.Value;
+                Properties.IsFipsEnabled = value;
             }
         }
 
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.GpuInstanceProfile = value.Value;
+                Properties.GpuInstanceProfile = value;
             }
         }
 
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.PowerStateCode = value.Value;
+                Properties.PowerStateCode = value;
             }
         }
 
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsOutboundNatDisabled = value.Value;
+                Properties.IsOutboundNatDisabled = value;
             }
         }
 
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.GatewayPublicIPPrefixSize = value.Value;
+                Properties.GatewayPublicIPPrefixSize = value;
             }
         }
 
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsArtifactStreamingEnabled = value.Value;
+                Properties.IsArtifactStreamingEnabled = value;
             }
         }
 

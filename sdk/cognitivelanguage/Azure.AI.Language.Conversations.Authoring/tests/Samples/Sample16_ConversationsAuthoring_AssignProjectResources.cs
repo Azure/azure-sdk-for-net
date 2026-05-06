@@ -24,6 +24,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample16_ConversationsAuthoring_AssignProjectResources
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             // Arrange
             string sampleProjectName = "{projectName}";
             var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
@@ -37,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             );
 
             // Act
-            Operation sampleOperation = client.AssignProjectResources(
+            Operation sampleOperation = projectClient.AssignProjectResources(
                 WaitUntil.Started,
                 sampleProjectName,
                 sampleAssignDetails
@@ -74,6 +76,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample16_ConversationsAuthoring_AssignProjectResourcesAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             // Arrange
             string sampleProjectName = "{projectName}";
             var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
@@ -87,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             );
 
             // Act
-            Operation sampleOperation = await client.AssignProjectResourcesAsync(
+            Operation sampleOperation = await projectClient.AssignProjectResourcesAsync(
                 WaitUntil.Started,
                 sampleProjectName,
                 sampleAssignDetails

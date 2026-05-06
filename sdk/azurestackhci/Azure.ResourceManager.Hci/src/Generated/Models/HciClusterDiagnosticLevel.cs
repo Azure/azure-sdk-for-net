@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct HciClusterDiagnosticLevel : IEquatable<HciClusterDiagnosticLevel>
     {
         private readonly string _value;
+        /// <summary> No diagnostic data will be emitted. </summary>
+        private const string OffValue = "Off";
+        /// <summary> Basic diagnostic data will be emitted, including essential health metrics. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Enhanced diagnostic data will be emitted, including detailed performance and usage metrics. </summary>
+        private const string EnhancedValue = "Enhanced";
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDiagnosticLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciClusterDiagnosticLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string OffValue = "Off";
-        private const string BasicValue = "Basic";
-        private const string EnhancedValue = "Enhanced";
-
-        /// <summary> Off. </summary>
+        /// <summary> No diagnostic data will be emitted. </summary>
         public static HciClusterDiagnosticLevel Off { get; } = new HciClusterDiagnosticLevel(OffValue);
-        /// <summary> Basic. </summary>
+
+        /// <summary> Basic diagnostic data will be emitted, including essential health metrics. </summary>
         public static HciClusterDiagnosticLevel Basic { get; } = new HciClusterDiagnosticLevel(BasicValue);
-        /// <summary> Enhanced. </summary>
+
+        /// <summary> Enhanced diagnostic data will be emitted, including detailed performance and usage metrics. </summary>
         public static HciClusterDiagnosticLevel Enhanced { get; } = new HciClusterDiagnosticLevel(EnhancedValue);
+
         /// <summary> Determines if two <see cref="HciClusterDiagnosticLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciClusterDiagnosticLevel left, HciClusterDiagnosticLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciClusterDiagnosticLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciClusterDiagnosticLevel left, HciClusterDiagnosticLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciClusterDiagnosticLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciClusterDiagnosticLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciClusterDiagnosticLevel(string value) => new HciClusterDiagnosticLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciClusterDiagnosticLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciClusterDiagnosticLevel?(string value) => value == null ? null : new HciClusterDiagnosticLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciClusterDiagnosticLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciClusterDiagnosticLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

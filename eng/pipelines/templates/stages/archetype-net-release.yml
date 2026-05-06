@@ -295,6 +295,7 @@ stages:
                       displayName: Export API listings
                     - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
                       parameters:
+                        PROwner: Azure
                         RepoName: azure-sdk-for-net
                         BaseBranchName: refs/heads/main
                         PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)

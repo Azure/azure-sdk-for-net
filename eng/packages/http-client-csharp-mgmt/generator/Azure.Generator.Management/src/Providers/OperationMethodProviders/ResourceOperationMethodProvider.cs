@@ -30,8 +30,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         public bool IsLongRunningOperation { get; }
         public bool IsFakeLongRunningOperation { get; }
 
+        /// <summary>
+        /// Determines whether LRO handling should be applied in the method body.
+        /// Subclasses like Exists/GetIfExists override this to false since they should never be LROs.
+        /// </summary>
+        protected virtual bool ShouldApplyLroHandling => IsLongRunningOperation || IsFakeLongRunningOperation;
+
         protected readonly TypeProvider _enclosingType;
         protected readonly OperationContext _operationContext;
+        protected readonly ParameterProvider? _scopeParameter;
         protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
         protected readonly MethodProvider _convenienceMethod;
@@ -61,6 +68,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="description">Optional override for the method description. If not provided, uses the convenience method description.</param>
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
         /// <param name="explicitResourceClient">Explicit resource client to use when multiple resources share the same model. </param>
+        /// <param name="scopeParameter">Optional scope parameter for extension-scoped non-resource methods. When provided, contextual parameters are extracted from this scope instead of Id.</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             OperationContext operationContext,
@@ -70,10 +78,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             string? methodName = null,
             FormattableString? description = null,
             bool forceLro = false,
-            ResourceClientProvider? explicitResourceClient = null)
+            ResourceClientProvider? explicitResourceClient = null,
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
+            _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
             _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
@@ -210,9 +220,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ];
         }
 
-        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
+        protected virtual IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, IsFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: ShouldApplyLroHandling, scopeParameter: _scopeParameter);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -242,13 +252,18 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             // Populate arguments for the REST client method call
-            var arguments = _parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
+            // When a scope parameter is provided (extension-scoped non-resource methods on ArmClient),
+            // use the scope parameter as the source for contextual parameter extraction instead of Id.
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            var arguments = _parameterMappings.PopulateArguments(idExpression, requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (IsLongRunningOperation || IsFakeLongRunningOperation)
+            if (ShouldApplyLroHandling)
             {
                 tryStatements.AddRange(
                     IsFakeLongRunningOperation ?

@@ -103,10 +103,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("fileUploadError"u8);
                 writer.WriteObjectValue(FileUploadError, options);
             }
-            if (Optional.IsDefined(Default))
+            if (Optional.IsDefined(DefaultExitOptions))
             {
                 writer.WritePropertyName("default"u8);
-                writer.WriteObjectValue(Default, options);
+                writer.WriteObjectValue(DefaultExitOptions, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -154,7 +154,7 @@ namespace Azure.Compute.Batch
             IList<ExitCodeRangeMapping> exitCodeRanges = default;
             ExitOptions preProcessingError = default;
             ExitOptions fileUploadError = default;
-            ExitOptions @default = default;
+            ExitOptions defaultExitOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -210,7 +210,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    @default = ExitOptions.DeserializeExitOptions(prop.Value, options);
+                    defaultExitOptions = ExitOptions.DeserializeExitOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -223,7 +223,7 @@ namespace Azure.Compute.Batch
                 exitCodeRanges ?? new ChangeTrackingList<ExitCodeRangeMapping>(),
                 preProcessingError,
                 fileUploadError,
-                @default,
+                defaultExitOptions,
                 additionalBinaryDataProperties);
         }
     }

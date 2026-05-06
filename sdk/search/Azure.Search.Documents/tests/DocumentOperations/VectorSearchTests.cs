@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2026_04_01)]
     public partial class VectorSearchTests : SearchTestBase
     {
         public VectorSearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -127,8 +127,7 @@ namespace Azure.Search.Documents.Tests
                             ErrorMode = SemanticErrorMode.Partial
                         },
                         QueryType = SearchQueryType.Semantic,
-                        Select = { "hotelId", "hotelName", "description", "category" },
-                        QueryLanguage = QueryLanguage.EnUs
+                        Select = { "hotelId", "hotelName", "description", "category" }
                     });
 
             Assert.NotNull(response.SemanticSearch.Answers);

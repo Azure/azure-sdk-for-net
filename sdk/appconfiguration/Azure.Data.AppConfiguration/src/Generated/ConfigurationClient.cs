@@ -77,7 +77,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label"> The label of the key-value to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="acceptDatetime">
+        /// <param name="acceptDateTime">
         /// Requests the server to respond with the state of the resource at the specified
         /// time.
         /// </param>
@@ -89,13 +89,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetConfigurationSetting(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        internal virtual Response GetConfigurationSetting(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDateTime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, matchConditions, tags, context);
+                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDateTime, matchConditions, tags, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -117,7 +117,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label"> The label of the key-value to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="acceptDatetime">
+        /// <param name="acceptDateTime">
         /// Requests the server to respond with the state of the resource at the specified
         /// time.
         /// </param>
@@ -129,13 +129,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDateTime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, matchConditions, tags, context);
+                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDateTime, matchConditions, tags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

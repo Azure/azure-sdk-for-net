@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The authentication client credentials of the custom Open ID Connect provider. </summary>
+    /// <summary>
+    /// The authentication client credentials of the custom Open ID Connect provider.
+    /// Serialized Name: OpenIdConnectClientCredential
+    /// </summary>
     public partial class OpenIdConnectClientCredential
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenIdConnectClientCredential"/>. </summary>
-        /// <param name="method"> The method that should be used to authenticate the user. </param>
-        /// <param name="clientSecretSettingName"> The app setting that contains the client secret for the custom Open ID Connect provider. </param>
+        /// <param name="method">
+        /// The method that should be used to authenticate the user.
+        /// Serialized Name: OpenIdConnectClientCredential.method
+        /// </param>
+        /// <param name="clientSecretSettingName">
+        /// The app setting that contains the client secret for the custom Open ID Connect provider.
+        /// Serialized Name: OpenIdConnectClientCredential.clientSecretSettingName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OpenIdConnectClientCredential(ClientCredentialMethod? method, string clientSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The method that should be used to authenticate the user. </summary>
+        /// <summary>
+        /// The method that should be used to authenticate the user.
+        /// Serialized Name: OpenIdConnectClientCredential.method
+        /// </summary>
         [WirePath("method")]
         public ClientCredentialMethod? Method { get; set; }
-        /// <summary> The app setting that contains the client secret for the custom Open ID Connect provider. </summary>
+        /// <summary>
+        /// The app setting that contains the client secret for the custom Open ID Connect provider.
+        /// Serialized Name: OpenIdConnectClientCredential.clientSecretSettingName
+        /// </summary>
         [WirePath("clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
     }

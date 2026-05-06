@@ -1,4 +1,4 @@
 directory: specification/dataprotection/resource-manager/Microsoft.DataProtection/DataProtection
-commit: e8b3cbd241db4dc4daf2845a8ab335eda84ca1ec
+commit: 4850dea187a72ae7ceaf0bd61b2e4a4c4b4a3b3e
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

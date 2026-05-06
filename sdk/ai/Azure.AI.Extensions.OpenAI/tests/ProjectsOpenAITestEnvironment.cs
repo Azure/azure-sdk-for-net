@@ -39,6 +39,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests
         public string APPLICATIONINSIGHTS_CONNECTION_STRING => WrappedGetRecordedVariable(nameof(APPLICATIONINSIGHTS_CONNECTION_STRING), isSecret: true);
         public string AGENT_DOCKER_IMAGE => GetRecordedOptionalVariable(nameof(AGENT_DOCKER_IMAGE));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
+        public string FOUNDRY_AGENT_CONTAINER_IMAGE => GetRecordedVariable(nameof(FOUNDRY_AGENT_CONTAINER_IMAGE));
         public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
             try

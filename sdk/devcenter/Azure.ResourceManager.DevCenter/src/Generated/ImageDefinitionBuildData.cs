@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ImageReference;
+                return Properties is null ? default : Properties.ImageReference;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartOn;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndOn;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ErrorDetails;
+                return Properties is null ? default : Properties.ErrorDetails;
             }
         }
     }

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeShareCollection : ArmCollection, IEnumerable<DataBoxEdgeShareResource>, IAsyncEnumerable<DataBoxEdgeShareResource>
     {
-        private readonly ClientDiagnostics _dataBoxEdgeShareSharesClientDiagnostics;
-        private readonly SharesRestOperations _dataBoxEdgeShareSharesRestClient;
+        private readonly ClientDiagnostics _sharesClientDiagnostics;
+        private readonly Shares _sharesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeShareCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataBoxEdgeShareCollection for mocking. </summary>
         protected DataBoxEdgeShareCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeShareCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataBoxEdgeShareCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataBoxEdgeShareSharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeShareResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataBoxEdgeShareResource.ResourceType, out string dataBoxEdgeShareSharesApiVersion);
-            _dataBoxEdgeShareSharesRestClient = new SharesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeShareSharesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataBoxEdgeShareResource.ResourceType, out string dataBoxEdgeShareApiVersion);
+            _sharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeShareResource.ResourceType.Namespace, Diagnostics);
+            _sharesRestClient = new Shares(_sharesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeShareApiVersion ?? "2023-12-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataBoxEdgeDeviceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a new share or updates an existing share on the device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Shares_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The share name. </param>
         /// <param name="data"> The share properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DataBoxEdgeShareResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DataBoxEdgeShareData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataBoxEdgeShareSharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeShareSharesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeShareResource>(new DataBoxEdgeShareOperationSource(Client), _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, _dataBoxEdgeShareSharesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeShareData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation<DataBoxEdgeShareResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeShareResource>(
+                    new DataBoxEdgeShareOperationSource(Client),
+                    _sharesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Creates a new share or updates an existing share on the device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Shares_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The share name. </param>
         /// <param name="data"> The share properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DataBoxEdgeShareResource> CreateOrUpdate(WaitUntil waitUntil, string name, DataBoxEdgeShareData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataBoxEdgeShareSharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeShareSharesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeShareResource>(new DataBoxEdgeShareOperationSource(Client), _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, _dataBoxEdgeShareSharesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeShareData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation<DataBoxEdgeShareResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeShareResource>(
+                    new DataBoxEdgeShareOperationSource(Client),
+                    _sharesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets a share by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Shares_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The share name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataBoxEdgeShareResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dataBoxEdgeShareSharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.Get");
+            using DiagnosticScope scope = _sharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeShareSharesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataBoxEdgeShareData> response = Response.FromValue(DataBoxEdgeShareData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeShareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets a share by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Shares_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The share name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataBoxEdgeShareResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dataBoxEdgeShareSharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.Get");
+            using DiagnosticScope scope = _sharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeShareSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataBoxEdgeShareData> response = Response.FromValue(DataBoxEdgeShareData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeShareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Lists all the shares in a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_ListByDataBoxEdgeDevice</description>
+        /// <term> Operation Id. </term>
+        /// <description> Shares_ListByDataBoxEdgeDevice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeShareResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeShareResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeShareResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeShareResource(Client, DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(e)), _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, "DataBoxEdgeShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataBoxEdgeShareData, DataBoxEdgeShareResource>(new SharesGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+                _sharesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeShareCollection.GetAll"), data => new DataBoxEdgeShareResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the shares in a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_ListByDataBoxEdgeDevice</description>
+        /// <term> Operation Id. </term>
+        /// <description> Shares_ListByDataBoxEdgeDevice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="DataBoxEdgeShareResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeShareResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeShareResource(Client, DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(e)), _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, "DataBoxEdgeShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataBoxEdgeShareData, DataBoxEdgeShareResource>(new SharesGetByDataBoxEdgeDeviceCollectionResultOfT(
+                _sharesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeShareCollection.GetAll"), data => new DataBoxEdgeShareResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Shares_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The share name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dataBoxEdgeShareSharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.Exists");
+            using DiagnosticScope scope = _sharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeShareSharesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataBoxEdgeShareData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataBoxEdgeShareData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataBoxEdgeShareData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Shares_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The share name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dataBoxEdgeShareSharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.Exists");
+            using DiagnosticScope scope = _sharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeShareSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataBoxEdgeShareData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataBoxEdgeShareData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataBoxEdgeShareData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Shares_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The share name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataBoxEdgeShareResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dataBoxEdgeShareSharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.GetIfExists");
+            using DiagnosticScope scope = _sharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeShareSharesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataBoxEdgeShareData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataBoxEdgeShareData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataBoxEdgeShareData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataBoxEdgeShareResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeShareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Shares_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The share name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataBoxEdgeShareResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dataBoxEdgeShareSharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.GetIfExists");
+            using DiagnosticScope scope = _sharesClientDiagnostics.CreateScope("DataBoxEdgeShareCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeShareSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataBoxEdgeShareData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataBoxEdgeShareData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataBoxEdgeShareData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataBoxEdgeShareResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeShareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataBoxEdgeShareResource> IAsyncEnumerable<DataBoxEdgeShareResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
