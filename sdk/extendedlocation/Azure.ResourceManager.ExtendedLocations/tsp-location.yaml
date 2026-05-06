@@ -1,0 +1,4 @@
+directory: specification/extendedlocation/resource-manager/Microsoft.ExtendedLocation/CustomLocations
+commit: main
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
