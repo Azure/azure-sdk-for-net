@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -31,7 +30,6 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
         public AspNetServerCodeModelGenerator(GeneratorContext context) : base(context)
         {
             TypeFactory = new AspNetServerTypeFactory();
-            RegisterAdditionalMetadataReferences();
         }
 
         /// <inheritdoc/>
@@ -40,19 +38,24 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
         /// <inheritdoc/>
         public override AspNetServerOutputLibrary OutputLibrary { get; } = new();
 
-        /// <summary>
-        /// Registers metadata references for assemblies whose types the generator
-        /// emits via fully-qualified names (e.g. <c>Microsoft.AspNetCore.Mvc.*</c>).
-        /// Without these, Roslyn's <c>Simplifier</c> cannot resolve the symbols
-        /// during post-processing and leaves them fully qualified instead of
-        /// shortening them under the matching <c>using</c> directive.
-        /// </summary>
-        private void RegisterAdditionalMetadataReferences()
+        /// <inheritdoc/>
+        protected override void Configure()
         {
-            // One representative type per ASP.NET Core assembly we reference.
-            // The shared framework loads many split assemblies; pick a type per
-            // assembly so all of them are made known to the post-processing
-            // workspace.
+            base.Configure();
+
+            // Make ASP.NET Core MVC assemblies known to the post-processing
+            // Roslyn workspace so the Simplifier can shorten emitted type names
+            // (e.g. Microsoft.AspNetCore.Mvc.ControllerBase -> ControllerBase
+            // under the matching using directive). Without these, Roslyn cannot
+            // resolve the symbols and leaves them fully qualified.
+            AddMvcMetadataReferences();
+        }
+
+        private void AddMvcMetadataReferences()
+        {
+            // One representative type per ASP.NET Core MVC assembly we emit
+            // types from; the framework split is multiple assemblies, so we
+            // dedupe by Assembly.Location.
             var seedTypes = new[]
             {
                 typeof(ControllerBase),                  // Microsoft.AspNetCore.Mvc.Core
@@ -63,21 +66,15 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
                 typeof(IActionResult),                   // Microsoft.AspNetCore.Mvc.Abstractions
             };
 
-            var seenAssemblies = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var seed in seedTypes)
             {
-                AddAssemblyReference(seed.Assembly, seenAssemblies);
+                var location = seed.Assembly.Location;
+                if (!string.IsNullOrEmpty(location) && seen.Add(location))
+                {
+                    AddMetadataReference(MetadataReference.CreateFromFile(location));
+                }
             }
-        }
-
-        private void AddAssemblyReference(Assembly assembly, HashSet<string> seen)
-        {
-            var location = assembly.Location;
-            if (string.IsNullOrEmpty(location) || !seen.Add(location))
-            {
-                return;
-            }
-            AddMetadataReference(MetadataReference.CreateFromFile(location));
         }
     }
 }
