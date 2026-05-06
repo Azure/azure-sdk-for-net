@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Threat status of the recovery point. </summary>
-    public readonly partial struct ThreatStatus : IEquatable<ThreatStatus>
+    public readonly partial struct BackupThreatStatus : IEquatable<BackupThreatStatus>
     {
         private readonly string _value;
         /// <summary> Threat status is unknown. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Threat status is not available. </summary>
         private const string NotAvailableValue = "NotAvailable";
 
-        /// <summary> Initializes a new instance of <see cref="ThreatStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupThreatStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ThreatStatus(string value)
+        public BackupThreatStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Threat status is unknown. </summary>
-        public static ThreatStatus Unknown { get; } = new ThreatStatus(UnknownValue);
+        public static BackupThreatStatus Unknown { get; } = new BackupThreatStatus(UnknownValue);
 
         /// <summary> Recovery point is healthy. </summary>
-        public static ThreatStatus Healthy { get; } = new ThreatStatus(HealthyValue);
+        public static BackupThreatStatus Healthy { get; } = new BackupThreatStatus(HealthyValue);
 
         /// <summary> Recovery point is unhealthy. </summary>
-        public static ThreatStatus UnHealthy { get; } = new ThreatStatus(UnHealthyValue);
+        public static BackupThreatStatus UnHealthy { get; } = new BackupThreatStatus(UnHealthyValue);
 
         /// <summary> Recovery point has warning-level threats. </summary>
-        public static ThreatStatus Warning { get; } = new ThreatStatus(WarningValue);
+        public static BackupThreatStatus Warning { get; } = new BackupThreatStatus(WarningValue);
 
         /// <summary> Threat status is not available. </summary>
-        public static ThreatStatus NotAvailable { get; } = new ThreatStatus(NotAvailableValue);
+        public static BackupThreatStatus NotAvailable { get; } = new BackupThreatStatus(NotAvailableValue);
 
-        /// <summary> Determines if two <see cref="ThreatStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BackupThreatStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ThreatStatus left, ThreatStatus right) => left.Equals(right);
+        public static bool operator ==(BackupThreatStatus left, BackupThreatStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ThreatStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BackupThreatStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ThreatStatus left, ThreatStatus right) => !left.Equals(right);
+        public static bool operator !=(BackupThreatStatus left, BackupThreatStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ThreatStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupThreatStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatStatus(string value) => new ThreatStatus(value);
+        public static implicit operator BackupThreatStatus(string value) => new BackupThreatStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ThreatStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupThreatStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatStatus?(string value) => value == null ? null : new ThreatStatus(value);
+        public static implicit operator BackupThreatStatus?(string value) => value == null ? null : new BackupThreatStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ThreatStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is BackupThreatStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ThreatStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BackupThreatStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

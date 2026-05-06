@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             string objectType = "AzureFileShareRecoveryPoint";
-            ThreatStatus? threatStatus = default;
-            IList<ThreatInfo> threatInfo = default;
+            BackupThreatStatus? threatStatus = default;
+            IList<BackupThreatInfo> threatInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string recoveryPointType = default;
             DateTimeOffset? recoveryPointOn = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatStatus = new ThreatStatus(prop.Value.GetString());
+                    threatStatus = new BackupThreatStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("threatInfo"u8))
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<ThreatInfo> array = new List<ThreatInfo>();
+                    List<BackupThreatInfo> array = new List<BackupThreatInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ThreatInfo.DeserializeThreatInfo(item, options));
+                        array.Add(BackupThreatInfo.DeserializeBackupThreatInfo(item, options));
                     }
                     threatInfo = array;
                     continue;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new FileShareRecoveryPoint(
                 objectType,
                 threatStatus,
-                threatInfo ?? new ChangeTrackingList<ThreatInfo>(),
+                threatInfo ?? new ChangeTrackingList<BackupThreatInfo>(),
                 additionalBinaryDataProperties,
                 recoveryPointType,
                 recoveryPointOn,

@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Type of the protection policy. </summary>
-    public readonly partial struct VMWorkloadPolicyType : IEquatable<VMWorkloadPolicyType>
+    public readonly partial struct VmWorkloadPolicyType : IEquatable<VmWorkloadPolicyType>
     {
         private readonly string _value;
         /// <summary> Invalid policy type. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Streaming policy type. </summary>
         private const string StreamingValue = "Streaming";
 
-        /// <summary> Initializes a new instance of <see cref="VMWorkloadPolicyType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VMWorkloadPolicyType(string value)
+        public VmWorkloadPolicyType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Invalid policy type. </summary>
-        public static VMWorkloadPolicyType Invalid { get; } = new VMWorkloadPolicyType(InvalidValue);
+        public static VmWorkloadPolicyType Invalid { get; } = new VmWorkloadPolicyType(InvalidValue);
 
         /// <summary> Snapshot V1 policy type. </summary>
-        public static VMWorkloadPolicyType SnapshotV1 { get; } = new VMWorkloadPolicyType(SnapshotV1Value);
+        public static VmWorkloadPolicyType SnapshotV1 { get; } = new VmWorkloadPolicyType(SnapshotV1Value);
 
         /// <summary> Snapshot V2 policy type. </summary>
-        public static VMWorkloadPolicyType SnapshotV2 { get; } = new VMWorkloadPolicyType(SnapshotV2Value);
+        public static VmWorkloadPolicyType SnapshotV2 { get; } = new VmWorkloadPolicyType(SnapshotV2Value);
 
         /// <summary> Streaming policy type. </summary>
-        public static VMWorkloadPolicyType Streaming { get; } = new VMWorkloadPolicyType(StreamingValue);
+        public static VmWorkloadPolicyType Streaming { get; } = new VmWorkloadPolicyType(StreamingValue);
 
-        /// <summary> Determines if two <see cref="VMWorkloadPolicyType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VmWorkloadPolicyType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VMWorkloadPolicyType left, VMWorkloadPolicyType right) => left.Equals(right);
+        public static bool operator ==(VmWorkloadPolicyType left, VmWorkloadPolicyType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VMWorkloadPolicyType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VmWorkloadPolicyType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VMWorkloadPolicyType left, VMWorkloadPolicyType right) => !left.Equals(right);
+        public static bool operator !=(VmWorkloadPolicyType left, VmWorkloadPolicyType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VMWorkloadPolicyType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VmWorkloadPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMWorkloadPolicyType(string value) => new VMWorkloadPolicyType(value);
+        public static implicit operator VmWorkloadPolicyType(string value) => new VmWorkloadPolicyType(value);
 
-        /// <summary> Converts a string to a <see cref="VMWorkloadPolicyType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VmWorkloadPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMWorkloadPolicyType?(string value) => value == null ? null : new VMWorkloadPolicyType(value);
+        public static implicit operator VmWorkloadPolicyType?(string value) => value == null ? null : new VmWorkloadPolicyType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VMWorkloadPolicyType other && Equals(other);
+        public override bool Equals(object obj) => obj is VmWorkloadPolicyType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VMWorkloadPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VmWorkloadPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Threat summary for the container. </summary>
-    public readonly partial struct SourceSideScanSummary : IEquatable<SourceSideScanSummary>
+    public readonly partial struct BackupSourceSideScanSummary : IEquatable<BackupSourceSideScanSummary>
     {
         private readonly string _value;
         /// <summary> Scan summary is unknown. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Scan summary indicates healthy state. </summary>
         private const string HealthyValue = "Healthy";
 
-        /// <summary> Initializes a new instance of <see cref="SourceSideScanSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSourceSideScanSummary"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SourceSideScanSummary(string value)
+        public BackupSourceSideScanSummary(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Scan summary is unknown. </summary>
-        public static SourceSideScanSummary Unknown { get; } = new SourceSideScanSummary(UnknownValue);
+        public static BackupSourceSideScanSummary Unknown { get; } = new BackupSourceSideScanSummary(UnknownValue);
 
         /// <summary> Scan summary is not applicable. </summary>
-        public static SourceSideScanSummary NotApplicable { get; } = new SourceSideScanSummary(NotApplicableValue);
+        public static BackupSourceSideScanSummary NotApplicable { get; } = new BackupSourceSideScanSummary(NotApplicableValue);
 
         /// <summary> Scan summary is suspicious. </summary>
-        public static SourceSideScanSummary Suspicious { get; } = new SourceSideScanSummary(SuspiciousValue);
+        public static BackupSourceSideScanSummary Suspicious { get; } = new BackupSourceSideScanSummary(SuspiciousValue);
 
         /// <summary> Scan summary indicates healthy state. </summary>
-        public static SourceSideScanSummary Healthy { get; } = new SourceSideScanSummary(HealthyValue);
+        public static BackupSourceSideScanSummary Healthy { get; } = new BackupSourceSideScanSummary(HealthyValue);
 
-        /// <summary> Determines if two <see cref="SourceSideScanSummary"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BackupSourceSideScanSummary"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SourceSideScanSummary left, SourceSideScanSummary right) => left.Equals(right);
+        public static bool operator ==(BackupSourceSideScanSummary left, BackupSourceSideScanSummary right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SourceSideScanSummary"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BackupSourceSideScanSummary"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SourceSideScanSummary left, SourceSideScanSummary right) => !left.Equals(right);
+        public static bool operator !=(BackupSourceSideScanSummary left, BackupSourceSideScanSummary right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SourceSideScanSummary"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupSourceSideScanSummary"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceSideScanSummary(string value) => new SourceSideScanSummary(value);
+        public static implicit operator BackupSourceSideScanSummary(string value) => new BackupSourceSideScanSummary(value);
 
-        /// <summary> Converts a string to a <see cref="SourceSideScanSummary"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupSourceSideScanSummary"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceSideScanSummary?(string value) => value == null ? null : new SourceSideScanSummary(value);
+        public static implicit operator BackupSourceSideScanSummary?(string value) => value == null ? null : new BackupSourceSideScanSummary(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SourceSideScanSummary other && Equals(other);
+        public override bool Equals(object obj) => obj is BackupSourceSideScanSummary other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SourceSideScanSummary other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BackupSourceSideScanSummary other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

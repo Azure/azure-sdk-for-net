@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Threat Status Types. </summary>
-    public readonly partial struct ThreatState : IEquatable<ThreatState>
+    public readonly partial struct BackupThreatState : IEquatable<BackupThreatState>
     {
         private readonly string _value;
         /// <summary> Threat is active. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Threat has been resolved. </summary>
         private const string ResolvedValue = "Resolved";
 
-        /// <summary> Initializes a new instance of <see cref="ThreatState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupThreatState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ThreatState(string value)
+        public BackupThreatState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Threat is active. </summary>
-        public static ThreatState Active { get; } = new ThreatState(ActiveValue);
+        public static BackupThreatState Active { get; } = new BackupThreatState(ActiveValue);
 
         /// <summary> Threat remediation is in progress. </summary>
-        public static ThreatState InProgress { get; } = new ThreatState(InProgressValue);
+        public static BackupThreatState InProgress { get; } = new BackupThreatState(InProgressValue);
 
         /// <summary> Threat has been ignored. </summary>
-        public static ThreatState Ignored { get; } = new ThreatState(IgnoredValue);
+        public static BackupThreatState Ignored { get; } = new BackupThreatState(IgnoredValue);
 
         /// <summary> Threat has been resolved. </summary>
-        public static ThreatState Resolved { get; } = new ThreatState(ResolvedValue);
+        public static BackupThreatState Resolved { get; } = new BackupThreatState(ResolvedValue);
 
-        /// <summary> Determines if two <see cref="ThreatState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BackupThreatState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ThreatState left, ThreatState right) => left.Equals(right);
+        public static bool operator ==(BackupThreatState left, BackupThreatState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ThreatState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BackupThreatState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ThreatState left, ThreatState right) => !left.Equals(right);
+        public static bool operator !=(BackupThreatState left, BackupThreatState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ThreatState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupThreatState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatState(string value) => new ThreatState(value);
+        public static implicit operator BackupThreatState(string value) => new BackupThreatState(value);
 
-        /// <summary> Converts a string to a <see cref="ThreatState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupThreatState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatState?(string value) => value == null ? null : new ThreatState(value);
+        public static implicit operator BackupThreatState?(string value) => value == null ? null : new BackupThreatState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ThreatState other && Equals(other);
+        public override bool Equals(object obj) => obj is BackupThreatState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ThreatState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BackupThreatState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

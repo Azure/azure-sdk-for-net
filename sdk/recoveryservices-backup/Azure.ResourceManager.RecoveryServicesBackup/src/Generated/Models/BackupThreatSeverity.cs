@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Threat Severity Types. </summary>
-    public readonly partial struct ThreatSeverity : IEquatable<ThreatSeverity>
+    public readonly partial struct BackupThreatSeverity : IEquatable<BackupThreatSeverity>
     {
         private readonly string _value;
         /// <summary> Critical severity level. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Informational severity level. </summary>
         private const string InformationalValue = "Informational";
 
-        /// <summary> Initializes a new instance of <see cref="ThreatSeverity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupThreatSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ThreatSeverity(string value)
+        public BackupThreatSeverity(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Critical severity level. </summary>
-        public static ThreatSeverity Critical { get; } = new ThreatSeverity(CriticalValue);
+        public static BackupThreatSeverity Critical { get; } = new BackupThreatSeverity(CriticalValue);
 
         /// <summary> High severity level. </summary>
-        public static ThreatSeverity High { get; } = new ThreatSeverity(HighValue);
+        public static BackupThreatSeverity High { get; } = new BackupThreatSeverity(HighValue);
 
         /// <summary> Warning severity level. </summary>
-        public static ThreatSeverity Warning { get; } = new ThreatSeverity(WarningValue);
+        public static BackupThreatSeverity Warning { get; } = new BackupThreatSeverity(WarningValue);
 
         /// <summary> Informational severity level. </summary>
-        public static ThreatSeverity Informational { get; } = new ThreatSeverity(InformationalValue);
+        public static BackupThreatSeverity Informational { get; } = new BackupThreatSeverity(InformationalValue);
 
-        /// <summary> Determines if two <see cref="ThreatSeverity"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BackupThreatSeverity"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ThreatSeverity left, ThreatSeverity right) => left.Equals(right);
+        public static bool operator ==(BackupThreatSeverity left, BackupThreatSeverity right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ThreatSeverity"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BackupThreatSeverity"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ThreatSeverity left, ThreatSeverity right) => !left.Equals(right);
+        public static bool operator !=(BackupThreatSeverity left, BackupThreatSeverity right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ThreatSeverity"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupThreatSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatSeverity(string value) => new ThreatSeverity(value);
+        public static implicit operator BackupThreatSeverity(string value) => new BackupThreatSeverity(value);
 
-        /// <summary> Converts a string to a <see cref="ThreatSeverity"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupThreatSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ThreatSeverity?(string value) => value == null ? null : new ThreatSeverity(value);
+        public static implicit operator BackupThreatSeverity?(string value) => value == null ? null : new BackupThreatSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ThreatSeverity other && Equals(other);
+        public override bool Equals(object obj) => obj is BackupThreatSeverity other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ThreatSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BackupThreatSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

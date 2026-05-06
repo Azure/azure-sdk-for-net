@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Threat status of the container. </summary>
-    public readonly partial struct SourceSideScanStatus : IEquatable<SourceSideScanStatus>
+    public readonly partial struct BackupSourceSideScanStatus : IEquatable<BackupSourceSideScanStatus>
     {
         private readonly string _value;
         /// <summary> Source side scan is configured. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Source side scan is not applicable. </summary>
         private const string NotApplicableValue = "NotApplicable";
 
-        /// <summary> Initializes a new instance of <see cref="SourceSideScanStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSourceSideScanStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SourceSideScanStatus(string value)
+        public BackupSourceSideScanStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Source side scan is configured. </summary>
-        public static SourceSideScanStatus Configured { get; } = new SourceSideScanStatus(ConfiguredValue);
+        public static BackupSourceSideScanStatus Configured { get; } = new BackupSourceSideScanStatus(ConfiguredValue);
 
         /// <summary> Source side scan is not configured. </summary>
-        public static SourceSideScanStatus NotConfigured { get; } = new SourceSideScanStatus(NotConfiguredValue);
+        public static BackupSourceSideScanStatus NotConfigured { get; } = new BackupSourceSideScanStatus(NotConfiguredValue);
 
         /// <summary> Source side scan is not applicable. </summary>
-        public static SourceSideScanStatus NotApplicable { get; } = new SourceSideScanStatus(NotApplicableValue);
+        public static BackupSourceSideScanStatus NotApplicable { get; } = new BackupSourceSideScanStatus(NotApplicableValue);
 
-        /// <summary> Determines if two <see cref="SourceSideScanStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BackupSourceSideScanStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SourceSideScanStatus left, SourceSideScanStatus right) => left.Equals(right);
+        public static bool operator ==(BackupSourceSideScanStatus left, BackupSourceSideScanStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SourceSideScanStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BackupSourceSideScanStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SourceSideScanStatus left, SourceSideScanStatus right) => !left.Equals(right);
+        public static bool operator !=(BackupSourceSideScanStatus left, BackupSourceSideScanStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SourceSideScanStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupSourceSideScanStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceSideScanStatus(string value) => new SourceSideScanStatus(value);
+        public static implicit operator BackupSourceSideScanStatus(string value) => new BackupSourceSideScanStatus(value);
 
-        /// <summary> Converts a string to a <see cref="SourceSideScanStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupSourceSideScanStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SourceSideScanStatus?(string value) => value == null ? null : new SourceSideScanStatus(value);
+        public static implicit operator BackupSourceSideScanStatus?(string value) => value == null ? null : new BackupSourceSideScanStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SourceSideScanStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is BackupSourceSideScanStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SourceSideScanStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BackupSourceSideScanStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

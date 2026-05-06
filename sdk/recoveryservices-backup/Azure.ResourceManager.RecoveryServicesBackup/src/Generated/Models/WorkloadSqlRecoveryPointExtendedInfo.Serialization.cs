@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("includedDatabases"u8);
                 writer.WriteStartArray();
-                foreach (DatabaseInRP item in IncludedDatabases)
+                foreach (BackupDatabaseInRecoveryPoint item in IncludedDatabases)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             DateTimeOffset? dataDirectoryInfoCapturedOn = default;
             IList<SqlDataDirectory> dataDirectoryPaths = default;
-            IList<DatabaseInRP> includedDatabases = default;
+            IList<BackupDatabaseInRecoveryPoint> includedDatabases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<DatabaseInRP> array = new List<DatabaseInRP>();
+                    List<BackupDatabaseInRecoveryPoint> array = new List<BackupDatabaseInRecoveryPoint>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseInRP.DeserializeDatabaseInRP(item, options));
+                        array.Add(BackupDatabaseInRecoveryPoint.DeserializeBackupDatabaseInRecoveryPoint(item, options));
                     }
                     includedDatabases = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryInfoCapturedOn, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), includedDatabases ?? new ChangeTrackingList<DatabaseInRP>(), additionalBinaryDataProperties);
+            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryInfoCapturedOn, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), includedDatabases ?? new ChangeTrackingList<BackupDatabaseInRecoveryPoint>(), additionalBinaryDataProperties);
         }
     }
 }

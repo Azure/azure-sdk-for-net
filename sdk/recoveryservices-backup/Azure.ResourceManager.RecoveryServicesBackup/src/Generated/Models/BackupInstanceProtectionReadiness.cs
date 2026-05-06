@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The state of instance protection. </summary>
-    public readonly partial struct InstanceProtectionReadiness : IEquatable<InstanceProtectionReadiness>
+    public readonly partial struct BackupInstanceProtectionReadiness : IEquatable<BackupInstanceProtectionReadiness>
     {
         private readonly string _value;
         /// <summary> Instance protection readiness is unknown. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Instance protection encountered an error. </summary>
         private const string ProtectionErrorValue = "ProtectionError";
 
-        /// <summary> Initializes a new instance of <see cref="InstanceProtectionReadiness"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceProtectionReadiness"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InstanceProtectionReadiness(string value)
+        public BackupInstanceProtectionReadiness(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Instance protection readiness is unknown. </summary>
-        public static InstanceProtectionReadiness Unknown { get; } = new InstanceProtectionReadiness(UnknownValue);
+        public static BackupInstanceProtectionReadiness Unknown { get; } = new BackupInstanceProtectionReadiness(UnknownValue);
 
         /// <summary> Instance is ready for protection. </summary>
-        public static InstanceProtectionReadiness Ready { get; } = new InstanceProtectionReadiness(ReadyValue);
+        public static BackupInstanceProtectionReadiness Ready { get; } = new BackupInstanceProtectionReadiness(ReadyValue);
 
         /// <summary> Backup schedule is disabled for this instance. </summary>
-        public static InstanceProtectionReadiness ScheduleDisabled { get; } = new InstanceProtectionReadiness(ScheduleDisabledValue);
+        public static BackupInstanceProtectionReadiness ScheduleDisabled { get; } = new BackupInstanceProtectionReadiness(ScheduleDisabledValue);
 
         /// <summary> Instance is partially protected. </summary>
-        public static InstanceProtectionReadiness PartialProtection { get; } = new InstanceProtectionReadiness(PartialProtectionValue);
+        public static BackupInstanceProtectionReadiness PartialProtection { get; } = new BackupInstanceProtectionReadiness(PartialProtectionValue);
 
         /// <summary> Instance protection encountered an error. </summary>
-        public static InstanceProtectionReadiness ProtectionError { get; } = new InstanceProtectionReadiness(ProtectionErrorValue);
+        public static BackupInstanceProtectionReadiness ProtectionError { get; } = new BackupInstanceProtectionReadiness(ProtectionErrorValue);
 
-        /// <summary> Determines if two <see cref="InstanceProtectionReadiness"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BackupInstanceProtectionReadiness"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(InstanceProtectionReadiness left, InstanceProtectionReadiness right) => left.Equals(right);
+        public static bool operator ==(BackupInstanceProtectionReadiness left, BackupInstanceProtectionReadiness right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InstanceProtectionReadiness"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BackupInstanceProtectionReadiness"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(InstanceProtectionReadiness left, InstanceProtectionReadiness right) => !left.Equals(right);
+        public static bool operator !=(BackupInstanceProtectionReadiness left, BackupInstanceProtectionReadiness right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InstanceProtectionReadiness"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupInstanceProtectionReadiness"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstanceProtectionReadiness(string value) => new InstanceProtectionReadiness(value);
+        public static implicit operator BackupInstanceProtectionReadiness(string value) => new BackupInstanceProtectionReadiness(value);
 
-        /// <summary> Converts a string to a <see cref="InstanceProtectionReadiness"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupInstanceProtectionReadiness"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InstanceProtectionReadiness?(string value) => value == null ? null : new InstanceProtectionReadiness(value);
+        public static implicit operator BackupInstanceProtectionReadiness?(string value) => value == null ? null : new BackupInstanceProtectionReadiness(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InstanceProtectionReadiness other && Equals(other);
+        public override bool Equals(object obj) => obj is BackupInstanceProtectionReadiness other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(InstanceProtectionReadiness other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BackupInstanceProtectionReadiness other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
