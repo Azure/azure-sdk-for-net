@@ -414,6 +414,83 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             Assert.IsFalse(changeFeed.HasNext());
         }
 
+        /// <summary>
+        /// Verifies that when a continuation token is supplied, BuildChangeFeed deserializes it,
+        /// extracts the saved segment time and shard cursor, and forwards the
+        /// <see cref="SegmentCursor"/> to <c>_segmentFactory.BuildSegment</c>. This pins the
+        /// cursor-acceptance pipeline (the rejection paths are covered by ValidateCursor tests).
+        /// </summary>
+        [Test]
+        public async Task BuildChangeFeed_FromContinuationToken_ForwardsSegmentCursorToFactory()
+        {
+            // Arrange
+            const string segmentPath = "idx/segments/2024/01/15/0800/meta.json";
+            const string shardPath = "log/00/2024/01/15/0800/";
+            const string chunkPath = "log/00/2024/01/15/0800/00001.avro";
+            const long blockOffset = 256;
+            const long eventIndex = 7;
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<SegmentFactoryBase<TestEvent>> segmentFactory = new Mock<SegmentFactoryBase<TestEvent>>();
+
+            containerClient.Setup(r => r.Uri).Returns(new Uri("https://account.blob.core.windows.net/container"));
+
+            if (IsAsync)
+                containerClient.Setup(r => r.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(true, null));
+            else
+                containerClient.Setup(r => r.Exists(It.IsAny<CancellationToken>())).Returns(Response.FromValue(true, null));
+
+            SetupMetadataDownload(containerClient, @"{""lastConsumable"":""2024-01-15T10:00:00Z""}");
+            SetupBlobHierarchy(containerClient);
+
+            SegmentBase<TestEvent> resumedSegment = new SegmentBase<TestEvent>(
+                new List<ShardBase<TestEvent>>(),
+                0,
+                new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),
+                segmentPath);
+
+            // Capture the SegmentCursor that the factory passes through.
+            SegmentCursor capturedCursor = null;
+            segmentFactory.Setup(f => f.BuildSegment(
+                IsAsync,
+                segmentPath,
+                It.IsAny<SegmentCursor>()))
+                .Callback<bool, string, SegmentCursor>((_, __, cursor) => capturedCursor = cursor)
+                .ReturnsAsync(resumedSegment);
+
+            // Build a continuation token with a real shard cursor pointing mid-chunk.
+            ShardCursor shardCursor = new ShardCursor(chunkPath, blockOffset, eventIndex);
+            SegmentCursor segmentCursor = new SegmentCursor(
+                segmentPath: segmentPath,
+                shardCursors: new List<ShardCursor> { shardCursor },
+                currentShardPath: shardPath);
+            ChangeFeedCursor changeFeedCursor = new ChangeFeedCursor(
+                urlHost: "account.blob.core.windows.net",
+                endDateTime: null,
+                currentSegmentCursor: segmentCursor);
+            string continuation = System.Text.Json.JsonSerializer.Serialize(changeFeedCursor);
+
+            ChangeFeedFactoryBase<TestEvent> factory = new ChangeFeedFactoryBase<TestEvent>(
+                containerClient.Object,
+                segmentFactory.Object,
+                CreateTestConfig());
+
+            // Act
+            ChangeFeedBase<TestEvent> changeFeed = await factory.BuildChangeFeed(
+                null, null, continuation, IsAsync, CancellationToken.None);
+
+            // Assert — the SegmentCursor that was serialized into the continuation token is the
+            // exact one delivered to BuildSegment. This is the round-trip contract.
+            Assert.IsNotNull(changeFeed);
+            Assert.IsNotNull(capturedCursor);
+            Assert.AreEqual(segmentPath, capturedCursor.SegmentPath);
+            Assert.AreEqual(shardPath, capturedCursor.CurrentShardPath);
+            Assert.AreEqual(1, capturedCursor.ShardCursors.Count);
+            Assert.AreEqual(chunkPath, capturedCursor.ShardCursors[0].CurrentChunkPath);
+            Assert.AreEqual(blockOffset, capturedCursor.ShardCursors[0].BlockOffset);
+            Assert.AreEqual(eventIndex, capturedCursor.ShardCursors[0].EventIndex);
+        }
+
         #endregion
 
         #region Helpers

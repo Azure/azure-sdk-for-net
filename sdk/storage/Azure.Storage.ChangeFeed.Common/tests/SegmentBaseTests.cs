@@ -86,6 +86,107 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         }
 
         /// <summary>
+        /// Builds a single-shard <see cref="SegmentBase{TEvent}"/> backed by a queued list of
+        /// <see cref="TestEvent"/> instances. Used to drive event-time filter tests.
+        /// </summary>
+        private static SegmentBase<TestEvent> BuildSingleShardSegment(List<TestEvent> events)
+        {
+            int index = 0;
+            Mock<ShardBase<TestEvent>> shard = new Mock<ShardBase<TestEvent>>();
+            shard.Setup(s => s.HasNext()).Returns(() => index < events.Count);
+            shard.Setup(s => s.Next(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => events[index++]);
+            shard.Setup(s => s.ShardPath).Returns("log/00/");
+            shard.Setup(s => s.GetCursor()).Returns(new ShardCursor("chunk0", 0, 0));
+
+            return new SegmentBase<TestEvent>(
+                new List<ShardBase<TestEvent>> { shard.Object },
+                shardIndex: 0,
+                dateTime: new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero),
+                manifestPath: "idx/segments/2024/01/15/0900/meta.json");
+        }
+
+        /// <summary>
+        /// Verifies the per-event start-time filter at <c>SegmentBase.GetPage</c> drops events
+        /// with <c>EventTime &lt; startTime</c>.
+        /// </summary>
+        [Test]
+        public async Task GetPage_DropsEventsBelowStartTime()
+        {
+            DateTimeOffset t0900 = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero);
+            DateTimeOffset t0930 = new DateTimeOffset(2024, 1, 15, 9, 30, 0, TimeSpan.Zero);
+            DateTimeOffset t1000 = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
+
+            List<TestEvent> events = new List<TestEvent>
+            {
+                new TestEvent { Id = "evt-0900", EventTime = t0900 },
+                new TestEvent { Id = "evt-0930", EventTime = t0930 },
+                new TestEvent { Id = "evt-1000", EventTime = t1000 },
+            };
+
+            SegmentBase<TestEvent> segment = BuildSingleShardSegment(events);
+
+            List<TestEvent> result = await segment.GetPage(IsAsync, pageSize: 10, startTime: t0930, endTime: null);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual("evt-0930", result[0].Id);
+            Assert.AreEqual("evt-1000", result[1].Id);
+        }
+
+        /// <summary>
+        /// Verifies the per-event end-time filter at <c>SegmentBase.GetPage</c> drops events
+        /// with <c>EventTime &gt;= endTime</c> (exclusive end).
+        /// </summary>
+        [Test]
+        public async Task GetPage_DropsEventsAtOrAboveEndTime()
+        {
+            DateTimeOffset t0900 = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero);
+            DateTimeOffset t0930 = new DateTimeOffset(2024, 1, 15, 9, 30, 0, TimeSpan.Zero);
+            DateTimeOffset t1000 = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
+
+            List<TestEvent> events = new List<TestEvent>
+            {
+                new TestEvent { Id = "evt-0900", EventTime = t0900 },
+                new TestEvent { Id = "evt-0930", EventTime = t0930 },
+                new TestEvent { Id = "evt-1000", EventTime = t1000 },
+            };
+
+            SegmentBase<TestEvent> segment = BuildSingleShardSegment(events);
+
+            // endTime is exclusive: events at exactly t1000 are dropped.
+            List<TestEvent> result = await segment.GetPage(IsAsync, pageSize: 10, startTime: null, endTime: t1000);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual("evt-0900", result[0].Id);
+            Assert.AreEqual("evt-0930", result[1].Id);
+        }
+
+        /// <summary>
+        /// Verifies that with both filters null, every event is returned. Pins the no-filter
+        /// happy path so a regression that always filters cannot slip through unnoticed.
+        /// </summary>
+        [Test]
+        public async Task GetPage_NoTimeFilters_ReturnsAllEvents()
+        {
+            DateTimeOffset t0900 = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero);
+            DateTimeOffset t0930 = new DateTimeOffset(2024, 1, 15, 9, 30, 0, TimeSpan.Zero);
+            DateTimeOffset t1000 = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
+
+            List<TestEvent> events = new List<TestEvent>
+            {
+                new TestEvent { Id = "evt-0900", EventTime = t0900 },
+                new TestEvent { Id = "evt-0930", EventTime = t0930 },
+                new TestEvent { Id = "evt-1000", EventTime = t1000 },
+            };
+
+            SegmentBase<TestEvent> segment = BuildSingleShardSegment(events);
+
+            List<TestEvent> result = await segment.GetPage(IsAsync, pageSize: 10, startTime: null, endTime: null);
+
+            Assert.AreEqual(3, result.Count);
+        }
+
+        /// <summary>
         /// Verifies GetCursor builds a SegmentCursor with shard cursors for all shards.
         /// </summary>
         [Test]

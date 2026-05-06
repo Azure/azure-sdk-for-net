@@ -228,5 +228,75 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.DoesNotThrow(() => client.GetChanges("any-continuation-token"));
             Assert.DoesNotThrow(() => client.GetChangesAsync("any-continuation-token"));
         }
+
+        [Test]
+        public void GetChanges_StartGreaterThanEnd_Throws()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            DateTimeOffset start = new DateTimeOffset(2024, 6, 1, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset end = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => client.GetChanges(start, end));
+
+            Assert.AreEqual("start", ex.ParamName);
+            StringAssert.Contains(start.ToString("O"), ex.Message);
+            StringAssert.Contains(end.ToString("O"), ex.Message);
+        }
+
+        [Test]
+        public void GetChangesAsync_StartGreaterThanEnd_Throws()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            DateTimeOffset start = new DateTimeOffset(2024, 6, 1, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset end = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => client.GetChangesAsync(start, end));
+
+            Assert.AreEqual("start", ex.ParamName);
+            StringAssert.Contains(start.ToString("O"), ex.Message);
+            StringAssert.Contains(end.ToString("O"), ex.Message);
+        }
+
+        [Test]
+        public void GetChanges_StartEqualsEnd_DoesNotThrow()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            DateTimeOffset boundary = new DateTimeOffset(2024, 3, 15, 12, 0, 0, TimeSpan.Zero);
+
+            // A zero-duration interval is well-formed (will return empty); the public-API
+            // guard rejects only strict start > end.
+            Assert.DoesNotThrow(() => client.GetChanges(boundary, boundary));
+            Assert.DoesNotThrow(() => client.GetChangesAsync(boundary, boundary));
+        }
+
+        [Test]
+        public void GetChanges_StartOrEndNull_DoesNotThrow()
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            DateTimeOffset t = new DateTimeOffset(2024, 3, 15, 12, 0, 0, TimeSpan.Zero);
+
+            // Either-side-null cases bypass the guard entirely; this protects the
+            // HasValue short-circuit from being tightened by accident.
+            Assert.DoesNotThrow(() => client.GetChanges(null, null));
+            Assert.DoesNotThrow(() => client.GetChanges(t, null));
+            Assert.DoesNotThrow(() => client.GetChanges(null, t));
+            Assert.DoesNotThrow(() => client.GetChangesAsync(null, null));
+            Assert.DoesNotThrow(() => client.GetChangesAsync(t, null));
+            Assert.DoesNotThrow(() => client.GetChangesAsync(null, t));
+        }
     }
 }

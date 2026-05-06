@@ -12,11 +12,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
     /// <summary>
     /// Tests for the snapshot-based pageable classes, verifying the cvId filtering contract
     /// and end-snapshot finalization validation.
-    /// These tests validate the filtering logic (beginCvId &lt; ContainerVersionNumber &lt;= endCvId)
-    /// that <see cref="ShareChangeFeedSnapshotPageable"/> and <see cref="ShareChangeFeedSnapshotAsyncPageable"/>
-    /// implement. They test the contract in isolation by constructing events with known
-    /// <see cref="ShareChangeFeedEvent.ContainerVersionNumber"/> values rather than mocking
-    /// the full pageable dependency chain.
+    /// The cvId filter (begin exclusive, end inclusive) used by both
+    /// <see cref="ShareChangeFeedSnapshotPageable"/> and <see cref="ShareChangeFeedSnapshotAsyncPageable"/>
+    /// is exposed as the static helper <see cref="SnapshotEventFilter.IsInRange"/>; tests below
+    /// drive that helper directly so a regression in the operator semantics fails the suite.
     /// </summary>
     public class ShareChangeFeedSnapshotPageableTests : ShareChangeFeedTestBase
     {
@@ -26,19 +25,20 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Verifies that the cvId filtering logic correctly includes only events where
-        /// beginCvId &lt; ContainerVersionNumber &lt;= endCvId.
+        /// Drives the production <see cref="SnapshotEventFilter.IsInRange"/> helper across a
+        /// fixed event sequence and asserts only events whose container version number falls in
+        /// (beginCvId, endCvId] are kept.
         /// </summary>
         [Test]
-        public void CvIdFiltering_IncludesOnlyEventsInRange()
+        public void SnapshotEventFilter_IncludesOnlyEventsInRange()
         {
-            // Arrange - simulate events with various Cvnt values
-            long beginCvId = 50;
-            long endCvId = 100;
+            const long beginCvId = 50;
+            const long endCvId = 100;
 
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>
             {
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 30, reason: "SmbCreate", id: "evt-30"),
+                ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 49, reason: "SmbWrite", id: "evt-49"),
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 50, reason: "SmbWrite", id: "evt-50"),
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 51, reason: "SmbDelete", id: "evt-51"),
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 75, reason: "RestCreate", id: "evt-75"),
@@ -47,81 +47,56 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 150, reason: "RestDelete", id: "evt-150"),
             };
 
-            // Act - apply the same filtering logic used by the snapshot pageables:
-            // beginCvId < ContainerVersionNumber <= endCvId
-            List<ShareChangeFeedEvent> filtered = new List<ShareChangeFeedEvent>();
-            foreach (ShareChangeFeedEvent evt in events)
-            {
-                if (evt.ContainerVersionNumber > beginCvId && evt.ContainerVersionNumber <= endCvId)
-                {
-                    filtered.Add(evt);
-                }
-            }
+            List<ShareChangeFeedEvent> filtered = events
+                .Where(e => SnapshotEventFilter.IsInRange(e, beginCvId, endCvId))
+                .ToList();
 
-            // Assert - only events with Cvnt in (50, 100] should be included
             Assert.AreEqual(3, filtered.Count);
             Assert.AreEqual("evt-51", filtered[0].Id);
             Assert.AreEqual("evt-75", filtered[1].Id);
             Assert.AreEqual("evt-100", filtered[2].Id);
-
-            // Verify exclusions:
-            // Cvnt == 50 (== beginCvId) should be excluded (exclusive begin)
-            Assert.IsFalse(filtered.Any(e => e.Id == "evt-50"), "Event at beginCvId boundary should be excluded");
-            // Cvnt == 100 (== endCvId) should be included (inclusive end)
-            Assert.IsTrue(filtered.Any(e => e.Id == "evt-100"), "Event at endCvId boundary should be included");
-            // Cvnt == 101 (> endCvId) should be excluded
-            Assert.IsFalse(filtered.Any(e => e.Id == "evt-101"), "Event above endCvId should be excluded");
         }
 
         /// <summary>
-        /// Verifies that events exactly at the begin boundary (Cvnt == beginCvId) are excluded.
+        /// Pins the exclusive lower bound: events with cvId == beginCvId are dropped.
         /// </summary>
         [Test]
-        public void CvIdFiltering_ExcludesExactBeginBoundary()
+        public void SnapshotEventFilter_ExcludesExactBeginBoundary()
         {
-            long beginCvId = 100;
-            long endCvId = 200;
-
             ShareChangeFeedEvent evt = ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 100);
-
-            bool included = evt.ContainerVersionNumber > beginCvId && evt.ContainerVersionNumber <= endCvId;
-            Assert.IsFalse(included, "Events at exactly beginCvId should be excluded (exclusive lower bound)");
+            Assert.IsFalse(SnapshotEventFilter.IsInRange(evt, beginCvId: 100, endCvId: 200));
         }
 
         /// <summary>
-        /// Verifies that events exactly at the end boundary (Cvnt == endCvId) are included.
+        /// Pins the inclusive upper bound: events with cvId == endCvId are kept.
         /// </summary>
         [Test]
-        public void CvIdFiltering_IncludesExactEndBoundary()
+        public void SnapshotEventFilter_IncludesExactEndBoundary()
         {
-            long beginCvId = 100;
-            long endCvId = 200;
-
             ShareChangeFeedEvent evt = ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 200);
-
-            bool included = evt.ContainerVersionNumber > beginCvId && evt.ContainerVersionNumber <= endCvId;
-            Assert.IsTrue(included, "Events at exactly endCvId should be included (inclusive upper bound)");
+            Assert.IsTrue(SnapshotEventFilter.IsInRange(evt, beginCvId: 100, endCvId: 200));
         }
 
         /// <summary>
-        /// Verifies that when no events fall within the cvId range, an empty result is produced.
+        /// Pins behavior when events fall entirely outside the requested range.
         /// </summary>
         [Test]
-        public void CvIdFiltering_NoEventsInRange_ReturnsEmpty()
+        public void SnapshotEventFilter_NoEventsInRange_ReturnsEmpty()
         {
-            long beginCvId = 100;
-            long endCvId = 200;
+            const long beginCvId = 100;
+            const long endCvId = 200;
 
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>
             {
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 50),
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 99),
+                ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 100),
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 201),
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 300),
             };
 
             List<ShareChangeFeedEvent> filtered = events
-                .Where(e => e.ContainerVersionNumber > beginCvId && e.ContainerVersionNumber <= endCvId)
+                .Where(e => SnapshotEventFilter.IsInRange(e, beginCvId, endCvId))
                 .ToList();
 
             Assert.IsEmpty(filtered);

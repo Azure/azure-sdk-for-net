@@ -83,7 +83,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 List<ShareChangeFeedEvent> filtered = new List<ShareChangeFeedEvent>();
                 foreach (ShareChangeFeedEvent evt in rawPage.Values)
                 {
-                    if (evt.ContainerVersionNumber > beginCvId && evt.ContainerVersionNumber <= endCvId)
+                    if (SnapshotEventFilter.IsInRange(evt, beginCvId, endCvId))
                         filtered.Add(evt);
                 }
 

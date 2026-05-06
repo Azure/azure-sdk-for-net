@@ -186,12 +186,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public virtual Pageable<ShareChangeFeedEvent> GetChanges(
             DateTimeOffset? start,
             DateTimeOffset? end)
-            => new ShareChangeFeedPageable(
+        {
+            ThrowIfStartAfterEnd(start, end);
+            return new ShareChangeFeedPageable(
                 this,
                 _maxTransferSize,
                 _includeNonFinalizedEvents,
                 startTime: start,
                 endTime: end);
+        }
 
         /// <summary>
         /// Returns change feed events within the specified time range.
@@ -204,12 +207,25 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync(
             DateTimeOffset? start,
             DateTimeOffset? end)
-            => new ShareChangeFeedAsyncPageable(
+        {
+            ThrowIfStartAfterEnd(start, end);
+            return new ShareChangeFeedAsyncPageable(
                 this,
                 _maxTransferSize,
                 _includeNonFinalizedEvents,
                 startTime: start,
                 endTime: end);
+        }
+
+        private static void ThrowIfStartAfterEnd(DateTimeOffset? start, DateTimeOffset? end)
+        {
+            if (start.HasValue && end.HasValue && start.Value > end.Value)
+            {
+                throw new ArgumentException(
+                    $"{nameof(start)} ({start.Value:O}) must be earlier than or equal to {nameof(end)} ({end.Value:O}).",
+                    nameof(start));
+            }
+        }
 
         /// <summary>
         /// Resumes reading change feed events from a continuation token previously produced
