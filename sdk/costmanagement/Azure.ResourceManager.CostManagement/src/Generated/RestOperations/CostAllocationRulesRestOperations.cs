@@ -143,26 +143,5 @@ namespace Azure.ResourceManager.CostManagement
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
-
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string billingAccountId, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountId, true);
-            uri.AppendPath("/providers/Microsoft.CostManagement/costAllocationRules/checkNameAvailability", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
     }
 }

@@ -73,142 +73,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 data => new MaintenanceApplyUpdateResource(Client, data));
         }
 
-        /// <summary> Apply maintenance updates to resource. </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using DiagnosticScope scope = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.CreateOrUpdateApplyUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Apply maintenance updates to resource. </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdate(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using DiagnosticScope scope = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.CreateOrUpdateApplyUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Apply maintenance updates to resource with parent. </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using DiagnosticScope scope = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.CreateOrUpdateApplyUpdateByParent");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Apply maintenance updates to resource with parent. </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdateByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using DiagnosticScope scope = MaintenanceApplyUpdateClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.CreateOrUpdateApplyUpdateByParent");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Track maintenance updates to resource. </summary>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -810,6 +674,41 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new UpdatesGetUpdatesByParentCollectionResultOfT(UpdatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetUpdatesByParent");
+        }
+
+        // ===== Obsolete ApplyUpdate createOrUpdate bridges =====
+        // The underlying TypeSpec operations (ApplyUpdatesOperationGroup.createOrUpdate / createOrUpdateParent)
+        // are scoped out of the C# SDK in client.tsp because they collide with the canonical
+        // ApplyUpdateOperationGroup.createOrUpdateOrCancel. These stubs exist only to preserve API surface
+        // (avoid ApiCompat MembersMustExist breakings) and will be removed in a future major version.
+        // Callers should migrate to MaintenanceApplyUpdateCollection.CreateOrUpdate on the appropriate scope.
+
+        /// <summary> Apply maintenance updates to resource. </summary>
+        [System.Obsolete("This method is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdateAsync instead.", true)]
+        public virtual Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("CreateOrUpdateApplyUpdateAsync is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdateAsync instead.");
+        }
+
+        /// <summary> Apply maintenance updates to resource. </summary>
+        [System.Obsolete("This method is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdate instead.", true)]
+        public virtual Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdate(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("CreateOrUpdateApplyUpdate is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdate instead.");
+        }
+
+        /// <summary> Apply maintenance updates to resource with parent. </summary>
+        [System.Obsolete("This method is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdateAsync instead.", true)]
+        public virtual Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("CreateOrUpdateApplyUpdateByParentAsync is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdateAsync instead.");
+        }
+
+        /// <summary> Apply maintenance updates to resource with parent. </summary>
+        [System.Obsolete("This method is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdate instead.", true)]
+        public virtual Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdateByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("CreateOrUpdateApplyUpdateByParent is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdate instead.");
         }
     }
 }

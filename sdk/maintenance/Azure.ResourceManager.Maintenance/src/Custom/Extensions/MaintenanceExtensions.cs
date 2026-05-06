@@ -78,34 +78,6 @@ namespace Azure.ResourceManager.Maintenance
             return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetMaintenanceApplyUpdates(cancellationToken);
         }
 
-        /// <summary> Apply maintenance updates to resource. </summary>
-        public static async Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            return await GetMockableMaintenanceResourceGroupResource(resourceGroupResource).CreateOrUpdateApplyUpdateAsync(providerName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Apply maintenance updates to resource. </summary>
-        public static Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdate(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).CreateOrUpdateApplyUpdate(providerName, resourceType, resourceName, cancellationToken);
-        }
-
-        /// <summary> Apply maintenance updates to resource with parent. </summary>
-        public static async Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateByParentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            return await GetMockableMaintenanceResourceGroupResource(resourceGroupResource).CreateOrUpdateApplyUpdateByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Apply maintenance updates to resource with parent. </summary>
-        public static Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdateByParent(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).CreateOrUpdateApplyUpdateByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
-        }
-
         /// <summary> Track maintenance updates to resource. </summary>
         [ForwardsClientCalls]
         public static async Task<Response<MaintenanceApplyUpdateResource>> GetMaintenanceApplyUpdateAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
@@ -292,6 +264,38 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
             return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetUpdatesByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+        }
+
+        // ===== Obsolete ApplyUpdate createOrUpdate bridges =====
+        // See MockableMaintenanceResourceGroupResource for rationale. These wrappers exist only to preserve
+        // API surface and throw at runtime. Callers should migrate to MaintenanceApplyUpdateCollection.CreateOrUpdate.
+
+        /// <summary> Apply maintenance updates to resource. </summary>
+        [System.Obsolete("This method is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdateAsync instead.", true)]
+        public static Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            throw new System.NotSupportedException("CreateOrUpdateApplyUpdateAsync is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdateAsync instead.");
+        }
+
+        /// <summary> Apply maintenance updates to resource. </summary>
+        [System.Obsolete("This method is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdate instead.", true)]
+        public static Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdate(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            throw new System.NotSupportedException("CreateOrUpdateApplyUpdate is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdate instead.");
+        }
+
+        /// <summary> Apply maintenance updates to resource with parent. </summary>
+        [System.Obsolete("This method is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdateAsync instead.", true)]
+        public static Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateByParentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            throw new System.NotSupportedException("CreateOrUpdateApplyUpdateByParentAsync is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdateAsync instead.");
+        }
+
+        /// <summary> Apply maintenance updates to resource with parent. </summary>
+        [System.Obsolete("This method is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdate instead.", true)]
+        public static Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdateByParent(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            throw new System.NotSupportedException("CreateOrUpdateApplyUpdateByParent is no longer supported. Use MaintenanceApplyUpdateCollection.CreateOrUpdate instead.");
         }
     }
 }
