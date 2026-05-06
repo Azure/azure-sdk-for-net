@@ -3,6 +3,11 @@
 ## 2.1.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added `DataGenerationJobs` client for synthetic data generation, accessible via `AIProjectClient`.
+- Added data generation job types: `DataGenerationJob`, `DataGenerationJobInputs`, `DataGenerationJobResult`, `DataGenerationModelOptions`, `DataGenerationTokenUsage`.
+- Added data generation job options: `SimpleQnADataGenerationJobOptions`, `TaskDataGenerationJobOptions`, `ToolUseFineTuningDataGenerationJobOptions`, `TracesDataGenerationJobOptions`.
+- Added data generation source types: `AgentDataGenerationJobSource`, `DatasetDataGenerationJobSource`, `FileDataGenerationJobSource`, `PromptDataGenerationJobSource`, `TracesDataGenerationJobSource`.
+- Added data generation output types: `DatasetDataGenerationJobOutput`, `FileDataGenerationJobOutput`.
 
 ### Breaking Changes
 

@@ -117,7 +117,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A tool that can be used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.FabricIQPreviewTool"/>, and <see cref="Agents.MemorySearchPreviewTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, and <see cref="Agents.ToolboxSearchPreviewTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ProjectsAgentTool"/> instance for mocking. </returns>
@@ -127,11 +127,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="searchToolOptions"> The bing grounding search tool parameters. </param>
         /// <returns> A new <see cref="Agents.BingGroundingTool"/> instance for mocking. </returns>
-        public static BingGroundingTool BingGroundingTool(BingGroundingSearchToolOptions searchToolOptions = default)
+        public static BingGroundingTool BingGroundingTool(string name = default, string description = default, BingGroundingSearchToolOptions searchToolOptions = default)
         {
-            return new BingGroundingTool(ToolType.BingGrounding, additionalBinaryDataProperties: null, searchToolOptions);
+            return new BingGroundingTool(ToolType.BingGrounding, additionalBinaryDataProperties: null, name, description, searchToolOptions);
         }
 
         /// <summary> The bing grounding search tool parameters. </summary>
@@ -166,11 +168,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
         /// <returns> A new <see cref="Agents.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
-        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions = default)
+        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(string name = default, string description = default, FabricDataAgentToolOptions toolOptions = default)
         {
-            return new MicrosoftFabricPreviewTool(ToolType.FabricDataagentPreview, additionalBinaryDataProperties: null, toolOptions);
+            return new MicrosoftFabricPreviewTool(ToolType.FabricDataagentPreview, additionalBinaryDataProperties: null, name, description, toolOptions);
         }
 
         /// <summary> The fabric data agent tool parameters. </summary>
@@ -195,11 +199,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
         /// <returns> A new <see cref="Agents.SharepointPreviewTool"/> instance for mocking. </returns>
-        public static SharepointPreviewTool SharepointPreviewTool(SharePointGroundingToolOptions toolOptions = default)
+        public static SharepointPreviewTool SharepointPreviewTool(string name = default, string description = default, SharePointGroundingToolOptions toolOptions = default)
         {
-            return new SharepointPreviewTool(ToolType.SharepointGroundingPreview, additionalBinaryDataProperties: null, toolOptions);
+            return new SharepointPreviewTool(ToolType.SharepointGroundingPreview, additionalBinaryDataProperties: null, name, description, toolOptions);
         }
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
@@ -216,11 +222,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="options"> The azure ai search index resource. </param>
         /// <returns> A new <see cref="Agents.AzureAISearchTool"/> instance for mocking. </returns>
-        public static AzureAISearchTool AzureAISearchTool(AzureAISearchToolOptions options = default)
+        public static AzureAISearchTool AzureAISearchTool(string name = default, string description = default, AzureAISearchToolOptions options = default)
         {
-            return new AzureAISearchTool(ToolType.AzureAiSearch, additionalBinaryDataProperties: null, options);
+            return new AzureAISearchTool(ToolType.AzureAiSearch, additionalBinaryDataProperties: null, name, description, options);
         }
 
         /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
@@ -351,11 +359,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
         /// <returns> A new <see cref="Agents.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
-        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview = default)
+        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(string name = default, string description = default, BingCustomSearchToolOptions bingCustomSearchPreview = default)
         {
-            return new BingCustomSearchPreviewTool(ToolType.BingCustomSearchPreview, additionalBinaryDataProperties: null, bingCustomSearchPreview);
+            return new BingCustomSearchPreviewTool(ToolType.BingCustomSearchPreview, additionalBinaryDataProperties: null, name, description, bingCustomSearchPreview);
         }
 
         /// <summary> The bing custom search tool parameters. </summary>
@@ -392,11 +402,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
-        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolOptions toolParameters = default)
+        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(string name = default, string description = default, BrowserAutomationToolOptions toolParameters = default)
         {
-            return new BrowserAutomationPreviewTool(ToolType.BrowserAutomationPreview, additionalBinaryDataProperties: null, toolParameters);
+            return new BrowserAutomationPreviewTool(ToolType.BrowserAutomationPreview, additionalBinaryDataProperties: null, name, description, toolParameters);
         }
 
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
@@ -484,6 +496,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
@@ -494,9 +508,16 @@ namespace Azure.AI.Projects.Agents
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
         /// <returns> A new <see cref="Agents.A2APreviewTool"/> instance for mocking. </returns>
-        public static A2APreviewTool A2APreviewTool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default)
+        public static A2APreviewTool A2APreviewTool(string name = default, string description = default, Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default)
         {
-            return new A2APreviewTool(ToolType.A2aPreview, additionalBinaryDataProperties: null, baseUri, agentCardPath, projectConnectionId);
+            return new A2APreviewTool(
+                ToolType.A2aPreview,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                baseUri,
+                agentCardPath,
+                projectConnectionId);
         }
 
         /// <summary> A WorkIQ server-side tool. </summary>
@@ -537,6 +558,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>
         /// <param name="scope">
         /// The namespace used to group and isolate memories, such as a user ID.
@@ -546,11 +569,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelayInSecs"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <returns> A new <see cref="Agents.MemorySearchPreviewTool"/> instance for mocking. </returns>
-        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchToolOptions searchOptions = default, int? updateDelayInSecs = default)
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string name = default, string description = default, string memoryStoreName = default, string scope = default, MemorySearchToolOptions searchOptions = default, int? updateDelayInSecs = default)
         {
             return new MemorySearchPreviewTool(
                 ToolType.MemorySearchPreview,
                 additionalBinaryDataProperties: null,
+                name,
+                description,
                 memoryStoreName,
                 scope,
                 searchOptions,
@@ -563,6 +588,19 @@ namespace Azure.AI.Projects.Agents
         public static MemorySearchToolOptions MemorySearchToolOptions(int? maxMemories = default)
         {
             return new MemorySearchToolOptions(maxMemories, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A tool for searching over the agent's toolbox.
+        /// When present, deferred tools are hidden from `tools/list` and only
+        /// discoverable via `search_tools` queries at runtime.
+        /// </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <returns> A new <see cref="Agents.ToolboxSearchPreviewTool"/> instance for mocking. </returns>
+        public static ToolboxSearchPreviewTool ToolboxSearchPreviewTool(string name = default, string description = default)
+        {
+            return new ToolboxSearchPreviewTool(ToolType.ToolboxSearchPreview, additionalBinaryDataProperties: null, name, description);
         }
 
         /// <summary> A web search configuration for bing custom search. </summary>
@@ -765,17 +803,17 @@ namespace Azure.AI.Projects.Agents
             return new ManagedAgentIdentityBlueprintReference(AgentBlueprintReferenceType.ManagedAgentIdentityBlueprint, additionalBinaryDataProperties: null, blueprintId);
         }
 
-        /// <summary> The AgentEndpoint. </summary>
+        /// <summary> The AgentEndpointConfig. </summary>
         /// <param name="versionSelector"> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </param>
         /// <param name="protocols"> The protocols that the agent supports. </param>
         /// <param name="authorizationSchemes"> The authorization schemes supported by the agent endpoint. </param>
-        /// <returns> A new <see cref="Agents.AgentEndpoint"/> instance for mocking. </returns>
-        public static AgentEndpoint AgentEndpoint(VersionSelector versionSelector = default, IEnumerable<AgentEndpointProtocol> protocols = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default)
+        /// <returns> A new <see cref="Agents.AgentEndpointConfig"/> instance for mocking. </returns>
+        public static AgentEndpointConfig AgentEndpointConfig(VersionSelector versionSelector = default, IEnumerable<AgentEndpointProtocol> protocols = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default)
         {
             protocols ??= new ChangeTrackingList<AgentEndpointProtocol>();
             authorizationSchemes ??= new ChangeTrackingList<AgentEndpointAuthorizationScheme>();
 
-            return new AgentEndpoint(versionSelector, protocols.ToList(), authorizationSchemes.ToList(), additionalBinaryDataProperties: null);
+            return new AgentEndpointConfig(versionSelector, protocols.ToList(), authorizationSchemes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The VersionSelector. </summary>
@@ -1144,7 +1182,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <returns> A new <see cref="Agents.PatchAgentOptions"/> instance for mocking. </returns>
-        public static PatchAgentOptions PatchAgentOptions(AgentEndpoint agentEndpoint = default, AgentCard agentCard = default)
+        public static PatchAgentOptions PatchAgentOptions(AgentEndpointConfig agentEndpoint = default, AgentCard agentCard = default)
         {
             return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
         }
@@ -1179,6 +1217,60 @@ namespace Azure.AI.Projects.Agents
             return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, status: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuid: default);
         }
 
+        /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+        /// <param name="searchToolOptions"> The bing grounding search tool parameters. </param>
+        /// <returns> A new <see cref="Agents.BingGroundingTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BingGroundingTool BingGroundingTool(BingGroundingSearchToolOptions searchToolOptions)
+        {
+            return BingGroundingTool(name: default, description: default, searchToolOptions: searchToolOptions);
+        }
+
+        /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
+        /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
+        /// <returns> A new <see cref="Agents.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions)
+        {
+            return MicrosoftFabricPreviewTool(name: default, description: default, toolOptions: toolOptions);
+        }
+
+        /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
+        /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
+        /// <returns> A new <see cref="Agents.SharepointPreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharepointPreviewTool SharepointPreviewTool(SharePointGroundingToolOptions toolOptions)
+        {
+            return SharepointPreviewTool(name: default, description: default, toolOptions: toolOptions);
+        }
+
+        /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
+        /// <param name="options"> The azure ai search index resource. </param>
+        /// <returns> A new <see cref="Agents.AzureAISearchTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureAISearchTool AzureAISearchTool(AzureAISearchToolOptions options)
+        {
+            return AzureAISearchTool(name: default, description: default, options: options);
+        }
+
+        /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+        /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
+        /// <returns> A new <see cref="Agents.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview)
+        {
+            return BingCustomSearchPreviewTool(name: default, description: default, bingCustomSearchPreview: bingCustomSearchPreview);
+        }
+
+        /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
+        /// <returns> A new <see cref="Agents.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolOptions toolParameters)
+        {
+            return BrowserAutomationPreviewTool(name: default, description: default, toolParameters: toolParameters);
+        }
+
         /// <summary> A tool for capturing structured outputs. </summary>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <returns> A new <see cref="Agents.CaptureStructuredOutputsTool"/> instance for mocking. </returns>
@@ -1186,6 +1278,39 @@ namespace Azure.AI.Projects.Agents
         public static CaptureStructuredOutputsTool CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition)
         {
             return CaptureStructuredOutputsTool(name: default, description: default, outputDefinition: outputDefinition);
+        }
+
+        /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="baseUri"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        ///             If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        ///             The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <returns> A new <see cref="Agents.A2APreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static A2APreviewTool A2APreviewTool(Uri baseUri, string agentCardPath, string projectConnectionId)
+        {
+            return A2APreviewTool(name: default, description: default, baseUri: baseUri, agentCardPath: agentCardPath, projectConnectionId: projectConnectionId);
+        }
+
+        /// <summary> A tool for integrating memories into the agent. </summary>
+        /// <param name="memoryStoreName"> The name of the memory store to use. </param>
+        /// <param name="scope">
+        /// The namespace used to group and isolate memories, such as a user ID.
+        ///             Limits which memories can be retrieved or updated.
+        ///             Use special variable `{{$userId}}` to scope memories to the current signed-in user.
+        /// </param>
+        /// <param name="searchOptions"> Options for searching the memory store. </param>
+        /// <param name="updateDelayInSecs"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
+        /// <returns> A new <see cref="Agents.MemorySearchPreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName, string scope, MemorySearchToolOptions searchOptions, int? updateDelayInSecs)
+        {
+            return MemorySearchPreviewTool(name: default, description: default, memoryStoreName: memoryStoreName, scope: scope, searchOptions: searchOptions, updateDelayInSecs: updateDelayInSecs);
         }
 
         /// <summary> The hosted agent definition. </summary>
