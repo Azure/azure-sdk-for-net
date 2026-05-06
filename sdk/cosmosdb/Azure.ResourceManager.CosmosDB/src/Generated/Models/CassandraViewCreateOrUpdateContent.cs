@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CosmosDBSqlTriggerCreateOrUpdateContent. </summary>
-    public partial class CosmosDBSqlTriggerCreateOrUpdateContent : TrackedResourceData
+    /// <summary> The CassandraViewCreateOrUpdateContent. </summary>
+    public partial class CassandraViewCreateOrUpdateContent : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlTriggerCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraViewCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="resource"> The standard JSON format of a trigger. </param>
+        /// <param name="resource"> The standard JSON format of a Cassandra view. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public CosmosDBSqlTriggerCreateOrUpdateContent(AzureLocation location, CosmosDBSqlTriggerResourceInfo resource) : base(location)
+        public CassandraViewCreateOrUpdateContent(AzureLocation location, CassandraViewResourceInfo resource) : base(location)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
-            Properties = new SqlTriggerCreateUpdateProperties(resource);
+            Properties = new CassandraViewCreateUpdateProperties(resource);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlTriggerCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraViewCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -38,20 +38,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties to create and update Azure Cosmos DB trigger. </param>
-        internal CosmosDBSqlTriggerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SqlTriggerCreateUpdateProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="properties"> Properties to create and update Azure Cosmos DB Cassandra view. </param>
+        internal CassandraViewCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CassandraViewCreateUpdateProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
-        /// <summary> Properties to create and update Azure Cosmos DB trigger. </summary>
+        /// <summary> Properties to create and update Azure Cosmos DB Cassandra view. </summary>
         [WirePath("properties")]
-        internal SqlTriggerCreateUpdateProperties Properties { get; }
+        internal CassandraViewCreateUpdateProperties Properties { get; }
 
-        /// <summary> The standard JSON format of a trigger. </summary>
+        /// <summary> The standard JSON format of a Cassandra view. </summary>
         [WirePath("properties.resource")]
-        public CosmosDBSqlTriggerResourceInfo Resource
+        public CassandraViewResourceInfo Resource
         {
             get
             {

@@ -16,67 +16,67 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Parameters to create and update Cosmos DB Cassandra view. </summary>
-    public partial class CassandraViewCreateUpdateParameters : ARMResourceProperties, IJsonModel<CassandraViewCreateUpdateParameters>
+    /// <summary> The CassandraViewCreateOrUpdateContent. </summary>
+    public partial class CassandraViewCreateOrUpdateContent : TrackedResourceData, IJsonModel<CassandraViewCreateOrUpdateContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CassandraViewCreateUpdateParameters"/> for deserialization. </summary>
-        internal CassandraViewCreateUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="CassandraViewCreateOrUpdateContent"/> for deserialization. </summary>
+        internal CassandraViewCreateOrUpdateContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ARMResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCassandraViewCreateUpdateParameters(document.RootElement, options);
+                        return DeserializeCassandraViewCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraViewCreateUpdateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraViewCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraViewCreateUpdateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraViewCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CassandraViewCreateUpdateParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CassandraViewCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CassandraViewCreateUpdateParameters IPersistableModel<CassandraViewCreateUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => (CassandraViewCreateUpdateParameters)PersistableModelCreateCore(data, options);
+        CassandraViewCreateOrUpdateContent IPersistableModel<CassandraViewCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (CassandraViewCreateOrUpdateContent)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CassandraViewCreateUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CassandraViewCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="cassandraViewCreateUpdateParameters"> The <see cref="CassandraViewCreateUpdateParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CassandraViewCreateUpdateParameters cassandraViewCreateUpdateParameters)
+        /// <param name="cassandraViewCreateOrUpdateContent"> The <see cref="CassandraViewCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CassandraViewCreateOrUpdateContent cassandraViewCreateOrUpdateContent)
         {
-            if (cassandraViewCreateUpdateParameters == null)
+            if (cassandraViewCreateOrUpdateContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(cassandraViewCreateUpdateParameters, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(cassandraViewCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CassandraViewCreateUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CassandraViewCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraViewCreateUpdateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraViewCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -99,42 +99,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CassandraViewCreateUpdateParameters IJsonModel<CassandraViewCreateUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CassandraViewCreateUpdateParameters)JsonModelCreateCore(ref reader, options);
+        CassandraViewCreateOrUpdateContent IJsonModel<CassandraViewCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CassandraViewCreateOrUpdateContent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ARMResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraViewCreateUpdateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraViewCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCassandraViewCreateUpdateParameters(document.RootElement, options);
+            return DeserializeCassandraViewCreateOrUpdateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CassandraViewCreateUpdateParameters DeserializeCassandraViewCreateUpdateParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static CassandraViewCreateOrUpdateContent DeserializeCassandraViewCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            ManagedServiceIdentity identity = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             CassandraViewCreateUpdateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -144,12 +148,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCosmosDBContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -173,13 +185,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("identity"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerCosmosDBContext.Default);
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -192,14 +200,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CassandraViewCreateUpdateParameters(
+            return new CassandraViewCreateOrUpdateContent(
                 id,
                 name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity,
+                resourceType,
+                systemData,
                 additionalBinaryDataProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 properties);
         }
     }

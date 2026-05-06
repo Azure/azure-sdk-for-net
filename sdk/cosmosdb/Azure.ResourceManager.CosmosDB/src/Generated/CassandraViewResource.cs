@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters to provide for the current Cassandra View. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<CassandraViewResource>> UpdateAsync(WaitUntil waitUntil, CassandraViewCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CassandraViewResource>> UpdateAsync(WaitUntil waitUntil, CassandraViewCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CassandraViewCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CassandraViewCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CassandraViewResource> operation = new CosmosDBArmOperation<CassandraViewResource>(
                     new CassandraViewOperationSource(Client),
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters to provide for the current Cassandra View. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<CassandraViewResource> Update(WaitUntil waitUntil, CassandraViewCreateUpdateParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CassandraViewResource> Update(WaitUntil waitUntil, CassandraViewCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CassandraViewCreateUpdateParameters.ToRequestContent(content), context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CassandraViewCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CassandraViewResource> operation = new CosmosDBArmOperation<CassandraViewResource>(
                     new CassandraViewOperationSource(Client),

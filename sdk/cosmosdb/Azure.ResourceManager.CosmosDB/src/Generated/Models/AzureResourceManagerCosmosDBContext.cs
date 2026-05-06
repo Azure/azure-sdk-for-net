@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
     [ModelReaderWriterBuildable(typeof(CassandraTablePropertiesConfig))]
     [ModelReaderWriterBuildable(typeof(CassandraTableResource))]
     [ModelReaderWriterBuildable(typeof(CassandraTableResourceInfo))]
-    [ModelReaderWriterBuildable(typeof(CassandraViewCreateUpdateParameters))]
+    [ModelReaderWriterBuildable(typeof(CassandraViewCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(CassandraViewCreateUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(CassandraViewData))]
     [ModelReaderWriterBuildable(typeof(CassandraViewGetProperties))]
