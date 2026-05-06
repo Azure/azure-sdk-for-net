@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    internal partial class DeviceProvisioningServicesPrivateEndpointConnectionCollectionGetAllAsyncCollectionResultOfT : AsyncPageable<DeviceProvisioningServicesPrivateEndpointConnectionData>
+    internal partial class MicrosoftDevicesPrivateEndpointConnectionsListPrivateEndpointConnectionsAsyncCollectionResultOfT : AsyncPageable<DeviceProvisioningServicesPrivateEndpointConnectionData>
     {
         private readonly PrivateEndpointConnections _client;
         private readonly string _subscriptionId;
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionCollectionGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MicrosoftDevicesPrivateEndpointConnectionsListPrivateEndpointConnectionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateEndpointConnections client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceProvisioningServicesPrivateEndpointConnectionCollectionGetAllAsyncCollectionResultOfT(PrivateEndpointConnections client, string subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope)
+        public MicrosoftDevicesPrivateEndpointConnectionsListPrivateEndpointConnectionsAsyncCollectionResultOfT(PrivateEndpointConnections client, string subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeviceProvisioningServicesPrivateEndpointConnectionCollectionGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftDevicesPrivateEndpointConnectionsListPrivateEndpointConnectionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeviceProvisioningServicesPrivateEndpointConnectionCollectionGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MicrosoftDevicesPrivateEndpointConnectionsListPrivateEndpointConnectionsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DeviceProvisioningServicesPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
