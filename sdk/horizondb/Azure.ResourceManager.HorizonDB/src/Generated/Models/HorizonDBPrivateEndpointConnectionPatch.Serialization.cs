@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            OptionalPropertiesUpdateableProperties properties = default;
+            HorizonDBPrivateEndpointConnectionPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    properties = OptionalPropertiesUpdateableProperties.DeserializeOptionalPropertiesUpdateableProperties(prop.Value, options);
+                    properties = HorizonDBPrivateEndpointConnectionPatchProperties.DeserializeHorizonDBPrivateEndpointConnectionPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The template for adding optional properties. </summary>
-    public partial class OptionalPropertiesUpdateableProperties
+    public partial class HorizonDBPrivateEndpointConnectionPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OptionalPropertiesUpdateableProperties"/>. </summary>
-        public OptionalPropertiesUpdateableProperties()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateEndpointConnectionPatchProperties"/>. </summary>
+        public HorizonDBPrivateEndpointConnectionPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptionalPropertiesUpdateableProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateEndpointConnectionPatchProperties"/>. </summary>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptionalPropertiesUpdateableProperties(PrivateEndpoint privateEndpoint, HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBPrivateEndpointConnectionPatchProperties(PrivateEndpoint privateEndpoint, HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
