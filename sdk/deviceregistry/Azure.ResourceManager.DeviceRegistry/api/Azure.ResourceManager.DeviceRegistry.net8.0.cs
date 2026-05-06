@@ -1107,10 +1107,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     }
     public partial class CertificateConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.CertificateConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.CertificateConfiguration>
     {
-        public CertificateConfiguration(Azure.ResourceManager.DeviceRegistry.Models.CertificateAuthorityConfiguration certificateAuthorityConfiguration, int? leafCertificateValidityPeriodInDays) { }
+        public CertificateConfiguration(Azure.ResourceManager.DeviceRegistry.Models.CertificateAuthorityConfiguration certificateAuthorityConfiguration, int leafCertificateValidityPeriodInDays) { }
         public CertificateConfiguration(int leafCertificateValidityPeriodInDays) { }
         public Azure.ResourceManager.DeviceRegistry.Models.CertificateAuthorityConfiguration CertificateAuthorityConfiguration { get { throw null; } set { } }
-        public int? LeafCertificateValidityPeriodInDays { get { throw null; } set { } }
+        public int LeafCertificateValidityPeriodInDays { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DeviceRegistry.Models.CertificateConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DeviceRegistry.Models.CertificateConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

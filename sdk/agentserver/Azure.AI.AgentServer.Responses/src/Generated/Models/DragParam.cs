@@ -30,6 +30,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             Argument.AssertNotNull(path, nameof(path));
 
             Path = path.ToList();
+            Keys = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DragParam"/>. </summary>
@@ -44,9 +45,11 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   ]
         ///   ```
         /// </param>
-        internal DragParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CoordParam> path) : base(@type, additionalBinaryDataProperties)
+        /// <param name="keys"></param>
+        internal DragParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CoordParam> path, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             Path = path;
+            Keys = keys;
         }
 
         /// <summary>
@@ -59,5 +62,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   ```
         /// </summary>
         public IList<CoordParam> Path { get; }
+
+        /// <summary> Gets or sets the Keys. </summary>
+        public IList<string> Keys { get; set; }
     }
 }

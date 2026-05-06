@@ -37,15 +37,12 @@ public sealed class AgentHostBuilder
     {
         _builder = WebApplication.CreateSlimBuilder(args ?? Array.Empty<string>());
 
-        // Register version registry + middleware
+        // Pre-register a shared registry instance so protocols can register before Build().
         VersionRegistry = new ServerVersionRegistry();
         _builder.Services.AddSingleton(VersionRegistry);
-        _builder.Services.AddSingleton<ServerVersionMiddleware>();
-        _builder.Services.AddSingleton<RequestIdBaggagePropagator>();
-        _builder.Services.AddSingleton<InboundRequestLoggingMiddleware>();
 
-        // Register default options
-        _builder.Services.Configure<AgentHostOptions>(_ => { });
+        // Register all Core middleware services (TryAdd — won't duplicate the registry above).
+        _builder.Services.AddAgentServerCore();
     }
 
     /// <summary>
@@ -181,9 +178,7 @@ public sealed class AgentHostBuilder
         LogStartupConfiguration(app, shutdownTimeout);
 
         // Middleware pipeline
-        app.UseMiddleware<ServerVersionMiddleware>();
-        app.UseMiddleware<RequestIdBaggagePropagator>();
-        app.UseMiddleware<InboundRequestLoggingMiddleware>();
+        app.UseAgentServerCore();
 
         // Health endpoint
         app.MapHealthEndpoint();

@@ -4,6 +4,7 @@ import "./configurationStore.tsp";
 import "./keyValue.tsp";
 import "./backupPolicy.tsp";
 import "./item.tsp";
+import "./profileRevision.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
@@ -37,6 +38,11 @@ namespace ProvisioningTypeSpec {
   // because ItemProperties is also referenced by ItemCreateOrUpdateParameters,
   // so it survives as a standalone model — exposing the double-flatten bug.
   @@flattenProperty(Item.properties);
+
+  // Test that when the same input model backs multiple resources (Profile +
+  // ProfileRevision via LegacyOperations), flattening lands on the canonical
+  // resource (Profile, matching the input model's name). See profileRevision.tsp.
+  @@flattenProperty(Profile.properties);
 }
 
 // Dummy models to test alternateType replacement with SubResource

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Scale and concurrency settings for the function app. </summary>
+    /// <summary>
+    /// Scale and concurrency settings for the function app.
+    /// Serialized Name: FunctionsScaleAndConcurrency
+    /// </summary>
     public partial class FunctionAppScaleAndConcurrency
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppScaleAndConcurrency"/>. </summary>
-        /// <param name="alwaysReady"> 'Always Ready' configuration for the function app. </param>
-        /// <param name="functionAppMaximumInstanceCount"> The maximum number of instances for the function app. </param>
-        /// <param name="functionAppInstanceMemoryMB"> Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally. </param>
-        /// <param name="triggers"> Scale and concurrency settings for the function app triggers. </param>
+        /// <param name="alwaysReady">
+        /// 'Always Ready' configuration for the function app.
+        /// Serialized Name: FunctionsScaleAndConcurrency.alwaysReady
+        /// </param>
+        /// <param name="functionAppMaximumInstanceCount">
+        /// The maximum number of instances for the function app.
+        /// Serialized Name: FunctionsScaleAndConcurrency.maximumInstanceCount
+        /// </param>
+        /// <param name="functionAppInstanceMemoryMB">
+        /// Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally.
+        /// Serialized Name: FunctionsScaleAndConcurrency.instanceMemoryMB
+        /// </param>
+        /// <param name="triggers">
+        /// Scale and concurrency settings for the function app triggers.
+        /// Serialized Name: FunctionsScaleAndConcurrency.triggers
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionAppScaleAndConcurrency(IList<FunctionAppAlwaysReadyConfig> alwaysReady, int? functionAppMaximumInstanceCount, int? functionAppInstanceMemoryMB, FunctionsScaleAndConcurrencyTriggers triggers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,18 +81,33 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> 'Always Ready' configuration for the function app. </summary>
+        /// <summary>
+        /// 'Always Ready' configuration for the function app.
+        /// Serialized Name: FunctionsScaleAndConcurrency.alwaysReady
+        /// </summary>
         [WirePath("alwaysReady")]
         public IList<FunctionAppAlwaysReadyConfig> AlwaysReady { get; }
-        /// <summary> The maximum number of instances for the function app. </summary>
+        /// <summary>
+        /// The maximum number of instances for the function app.
+        /// Serialized Name: FunctionsScaleAndConcurrency.maximumInstanceCount
+        /// </summary>
         [WirePath("maximumInstanceCount")]
         public int? FunctionAppMaximumInstanceCount { get; set; }
-        /// <summary> Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally. </summary>
+        /// <summary>
+        /// Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally.
+        /// Serialized Name: FunctionsScaleAndConcurrency.instanceMemoryMB
+        /// </summary>
         [WirePath("instanceMemoryMB")]
         public int? FunctionAppInstanceMemoryMB { get; set; }
-        /// <summary> Scale and concurrency settings for the function app triggers. </summary>
+        /// <summary>
+        /// Scale and concurrency settings for the function app triggers.
+        /// Serialized Name: FunctionsScaleAndConcurrency.triggers
+        /// </summary>
         internal FunctionsScaleAndConcurrencyTriggers Triggers { get; set; }
-        /// <summary> The maximum number of concurrent HTTP trigger invocations per instance. </summary>
+        /// <summary>
+        /// The maximum number of concurrent HTTP trigger invocations per instance.
+        /// Serialized Name: FunctionsScaleAndConcurrencyTriggersHttp.perInstanceConcurrency
+        /// </summary>
         [WirePath("triggers.http.perInstanceConcurrency")]
         public int? ConcurrentHttpPerInstanceConcurrency
         {

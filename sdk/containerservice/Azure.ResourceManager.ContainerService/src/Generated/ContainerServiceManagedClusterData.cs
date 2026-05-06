@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsRbacEnabled = value.Value;
+                Properties.IsRbacEnabled = value;
             }
         }
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.SupportPlan = value.Value;
+                Properties.SupportPlan = value;
             }
         }
 
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsNamespaceResourcesEnabled = value.Value;
+                Properties.IsNamespaceResourcesEnabled = value;
             }
         }
 
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsLocalAccountsDisabled = value.Value;
+                Properties.IsLocalAccountsDisabled = value;
             }
         }
 
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.NodeResourceGroupRestrictionLevel = value.Value;
+                Properties.NodeResourceGroupRestrictionLevel = value;
             }
         }
 
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsCostAnalysisEnabled = value.Value;
+                Properties.IsCostAnalysisEnabled = value;
             }
         }
 
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsAIToolchainOperatorEnabled = value.Value;
+                Properties.IsAIToolchainOperatorEnabled = value;
             }
         }
 
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.UpstreamSchedulerConfigMode = value.Value;
+                Properties.UpstreamSchedulerConfigMode = value;
             }
         }
 
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsHostedSystemAddonsEnabled = value.Value;
+                Properties.IsHostedSystemAddonsEnabled = value;
             }
         }
 

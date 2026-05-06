@@ -131,12 +131,25 @@ public class ResponseEventStream
     /// <param name="usage">Optional token usage data to include in the response.</param>
     /// <returns>A <see cref="ResponseFailedEvent"/> with the finalized response.</returns>
     public virtual ResponseFailedEvent EmitFailed(
-        ResponseErrorCode code = ResponseErrorCode.ServerError,
+        ResponseErrorCode code,
         string message = "An internal server error occurred.",
         ResponseUsage? usage = null)
     {
         _response.SetFailed(code, message, usage);
         return new ResponseFailedEvent(NextSequenceNumber(), _response);
+    }
+
+    /// <summary>
+    /// Produces a <c>response.failed</c> event with a <see cref="ResponseErrorCode.ServerError"/> code.
+    /// </summary>
+    /// <param name="message">The error message. Defaults to "An internal server error occurred.".</param>
+    /// <param name="usage">Optional token usage data to include in the response.</param>
+    /// <returns>A <see cref="ResponseFailedEvent"/> with the finalized response.</returns>
+    public virtual ResponseFailedEvent EmitFailed(
+        string message = "An internal server error occurred.",
+        ResponseUsage? usage = null)
+    {
+        return EmitFailed(ResponseErrorCode.ServerError, message, usage);
     }
 
     /// <summary>
@@ -326,11 +339,11 @@ public class ResponseEventStream
     /// and an auto-generated item ID.
     /// </summary>
     /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the computer tool call output result.</returns>
-    public virtual OutputItemBuilder<OutputItemComputerToolCallOutputResource> AddOutputItemComputerCallOutput()
+    public virtual OutputItemBuilder<OutputItemComputerToolCallOutput> AddOutputItemComputerCallOutput()
     {
         var outputIndex = _outputIndex++;
         var itemId = IdGenerator.NewComputerCallOutputItemId(_context.ResponseId);
-        return new OutputItemBuilder<OutputItemComputerToolCallOutputResource>(this, outputIndex, itemId);
+        return new OutputItemBuilder<OutputItemComputerToolCallOutput>(this, outputIndex, itemId);
     }
 
     /// <summary>
@@ -585,9 +598,17 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemFunctionCallOutput(string callId, BinaryData output)
     {
         var itemId = IdGenerator.NewFunctionCallOutputItemId(_context.ResponseId);
-        var builder = AddOutputItem<FunctionToolCallOutputResource>(itemId);
-        var item = new FunctionToolCallOutputResource(callId, output);
-        item.Id = itemId;
+        var builder = AddOutputItem<OutputItemFunctionToolCallOutput>(itemId);
+        var item = new OutputItemFunctionToolCallOutput(
+            OutputItemType.FunctionCallOutput,
+            createdBy: null,
+            agentReference: null,
+            responseId: null,
+            additionalBinaryDataProperties: null,
+            id: itemId,
+            callId: callId,
+            output: output,
+            status: null);
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -695,10 +716,11 @@ public class ResponseEventStream
         string callId,
         ComputerAction action,
         IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks,
-        OutputItemComputerToolCallStatus status)
+        ItemComputerToolCallStatus status)
     {
         var builder = AddOutputItemComputerCall();
-        var item = new OutputItemComputerToolCall(builder.ItemId, callId, action, pendingSafetyChecks, status);
+        var item = new OutputItemComputerToolCall(builder.ItemId, callId, pendingSafetyChecks, status);
+        item.Action = action;
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -716,8 +738,17 @@ public class ResponseEventStream
         ComputerScreenshotImage output)
     {
         var builder = AddOutputItemComputerCallOutput();
-        var item = new OutputItemComputerToolCallOutputResource(callId, output);
-        item.Id = builder.ItemId;
+        var item = new OutputItemComputerToolCallOutput(
+            OutputItemType.ComputerCallOutput,
+            createdBy: null,
+            agentReference: null,
+            responseId: null,
+            additionalBinaryDataProperties: null,
+            id: builder.ItemId,
+            callId: callId,
+            acknowledgedSafetyChecks: null,
+            output: output,
+            status: null);
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -734,7 +765,7 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemLocalShellCall(
         string callId,
         LocalShellExecAction action,
-        OutputItemLocalShellToolCallStatus status)
+        ItemLocalShellToolCallStatus status)
     {
         var builder = AddOutputItemLocalShellCall();
         var item = new OutputItemLocalShellToolCall(builder.ItemId, callId, action, status);
@@ -850,7 +881,7 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemCustomToolCallOutput(string callId, BinaryData output)
     {
         var builder = AddOutputItemCustomToolCallOutput();
-        var item = new OutputItemCustomToolCallOutput(callId, output);
+        var item = new OutputItemCustomToolCallOutput(callId, output, FunctionCallOutputStatusEnum.Completed);
         item.Id = builder.ItemId;
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);

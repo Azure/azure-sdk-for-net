@@ -187,6 +187,14 @@ function Get-RpPrefix([string]$ns) {
     return ''
 }
 
+function Get-PascalCaseTokens([string]$name) {
+    if ([string]::IsNullOrWhiteSpace($name)) {
+        return @()
+    }
+
+    return @([regex]::Matches($name, '[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+') | ForEach-Object { $_.Value })
+}
+
 #endregion
 
 #region --- Rule Checks ---
@@ -199,6 +207,7 @@ $badSuffixes = @(
     @{ Suffix = 'Parameter';  Id = 'SUFFIX002'; Suggestion = "Rename to '*Content' or '*Patch'" }
     @{ Suffix = 'Request';    Id = 'SUFFIX003'; Suggestion = "Rename to '*Content'" }
     @{ Suffix = 'Response';   Id = 'SUFFIX005'; Suggestion = "Rename to '*Result'" }
+    @{ Suffix = 'Update';     Id = 'SUFFIX010'; Suggestion = "Rename to '*Patch' (PATCH body convention) or '*Content'" }
 )
 
 foreach ($typeName in $typeInfos.Keys) {
@@ -505,65 +514,90 @@ for ($i = 0; $i -lt $totalLines; $i++) {
 }
 
 # =====================================================
-# RULE: CONTEXT - Ambiguous/generic type names without service prefix
+# RULE: ACRONYM002 - Generic 3+ letter all-caps run inside a type name
+# Catches NNI, IPV, BFD, etc. that aren't in the curated list above.
+# Only flags when the run is followed by a PascalCase-style boundary
+# (next char is uppercase-then-lowercase or a digit). All-caps runs at the
+# very end of an identifier are intentionally NOT flagged here, because we
+# can't tell from the name alone whether the trailing run is a meaningful
+# acronym or a wholly capitalised single token.
 # =====================================================
-# These are known generic names that should be prefixed with service/resource context.
-$ambiguousPatterns = @(
-    'ProvisioningState'
-    'EncryptionStatus'
-    'EncryptionState'
-    'PublicNetworkAccess'
-    'PrivateEndpointConnection'
-    'PrivateEndpointConnectionData'
-    'PrivateLinkResource'
-    'PrivateLinkResourceData'
-    'PrivateLinkServiceConnectionState'
-    'ConnectionState'
-    'AccessLevel'
-    'CreatedByType'
-    'ManagedServiceIdentity'
-    'UserAssignedIdentity'
-    'EncryptionProperties'
-    'NetworkRuleSet'
-    'Sku'
-    'SkuName'
-    'SkuTier'
-    'Kind'
-    'Plan'
-    'Usage'
-    'UsageName'
-    'Capability'
-    'CheckNameAvailabilityResult'
-    'CheckNameAvailabilityRequest'
-    'NameAvailabilityReason'
-)
-
 foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'ACRONYM002') { continue }
     $info = $typeInfos[$typeName]
-    if ($info.Kind -eq 'interface') { continue }
-    if ($ExcludeRules -contains 'CONTEXT001') { continue }
-
-    # Skip types in .Models namespace that start with the RP prefix (already qualified)
-    $rpPrefix = Get-RpPrefix $info.Namespace
-
-    if ($typeName -in $ambiguousPatterns) {
-        # Check if the type name is exactly one of the ambiguous patterns
-        # (not prefixed with the RP name)
-        if ([string]::IsNullOrEmpty($rpPrefix)) {
-            $suggestion = "Type '$typeName' is a generic/ambiguous name. Consider adding a service or resource prefix for clarity."
-        }
-        else {
-            $suggestion = "Rename to '${rpPrefix}${typeName}' or similar qualified name."
-        }
+    foreach ($m in [regex]::Matches($typeName, '(?<![A-Z])[A-Z]{3,}(?=[A-Z][a-z]|\d)')) {
+        $val = $m.Value
+        # skip already-handled curated acronyms
+        if ($acronymPatterns | Where-Object { $_.AllCaps -eq $val }) { continue }
+        $pascal = $val.Substring(0,1) + $val.Substring(1).ToLowerInvariant()
+        $renamed = $typeName.Substring(0, $m.Index) + $pascal + $typeName.Substring($m.Index + $m.Length)
         $violations.Add([NamingViolation]::new(
-            'CONTEXT001', 'Warning', 'Contextual Naming',
+            'ACRONYM002', 'Warning', 'Acronym Casing',
             $typeName, '',
-            "Type '$typeName' is a generic/ambiguous name. It should include a service or resource prefix for clarity.",
-            $suggestion,
+            "Type '$typeName' contains the all-caps run '$val'. .NET conventions require 3+ letter acronyms to be PascalCase.",
+            "Rename to '$renamed'.",
             $info.Line
-        ))
+        )) | Out-Null
     }
 }
+
+# =====================================================
+# RULE: ARMCOMMON - Do not redefine ARM common types
+# =====================================================
+$armCommonTypes = @{
+    'OperationStatusResult'         = 'Use Azure.ResourceManager.Models.ArmOperationStatus / ArmOperation pattern instead of redefining.'
+    'ManagedServiceIdentity'        = 'Use Azure.ResourceManager.Models.ManagedServiceIdentity from Azure.ResourceManager.'
+    'ManagedServiceIdentityType'    = 'Use Azure.ResourceManager.Models.ManagedServiceIdentityType from Azure.ResourceManager.'
+    'ManagedServiceIdentityPatch'   = 'Reuse the patch model from Azure.ResourceManager rather than redefining.'
+    'TagsUpdate'                    = 'Use the Tags update pattern provided by Azure.ResourceManager (or rename to a service-prefixed *Patch model that only carries Tags).'
+    'TagsPatch'                     = 'Use the Tags update pattern provided by Azure.ResourceManager.'
+    'ErrorResponse'                 = 'Use Azure.ResponseError; do not redefine ErrorResponse on the public surface.'
+    'ErrorDetail'                   = 'Use Azure.ResponseError / ErrorDetail from Azure.ResourceManager.Models; do not redefine.'
+    'UserAssignedIdentity'          = 'Use Azure.ResourceManager.Models.UserAssignedIdentity.'
+    'SystemData'                    = 'SystemData is exposed via ResourceData.SystemData; do not redefine.'
+    'TrackedResource'               = 'Inherit TrackedResourceData instead of defining a new TrackedResource model.'
+}
+foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'ARMCOMMON001') { continue }
+    if ($armCommonTypes.ContainsKey($typeName)) {
+        $info = $typeInfos[$typeName]
+        $violations.Add([NamingViolation]::new(
+            'ARMCOMMON001', 'Error', 'ARM Common Type',
+            $typeName, '',
+            "Type '$typeName' duplicates an ARM common type. $($armCommonTypes[$typeName])",
+            "Remove this type and reuse the corresponding type from Azure.ResourceManager / Azure.Core.",
+            $info.Line
+        )) | Out-Null
+    }
+}
+
+# =====================================================
+# RULE: RESINFIX - 'Resource' before Data/Collection suffix
+# =====================================================
+foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'RESINFIX001') { continue }
+    $info = $typeInfos[$typeName]
+    if (($typeName -like '*ResourceData' -or $typeName -like '*ResourceCollection') -and
+        $typeName -notlike '*PrivateLinkResource*') {
+        $renamed = $typeName -replace 'Resource(Data|Collection)$','$1'
+        $violations.Add([NamingViolation]::new(
+            'RESINFIX001', 'Warning', 'Resource Infix',
+            $typeName, '',
+            "Type '$typeName' includes 'Resource' before '$($typeName -replace '.*Resource','')'. Mgmt convention drops the 'Resource' infix on Data/Collection types (PrivateLinkResource is the only exception).",
+            "Rename to '$renamed'.",
+            $info.Line
+        )) | Out-Null
+    }
+}
+
+# =====================================================
+# Contextual / generic naming is intentionally NOT enforced by this script.
+# =====================================================
+# Naming context is too case-by-case to encode reliably in regex/allowlists -
+# any rule we tried was either too noisy (flagging legitimate ARM patterns) or
+# too narrow (missing real offenders). Reviewers (human or AI) make this call
+# based on the type's role in the API and the surrounding namespace, guided by
+# the "Contextual Naming for Types" section in SKILL.md.
 
 # =====================================================
 # RULE: ENUM - Plural enum names should be singular

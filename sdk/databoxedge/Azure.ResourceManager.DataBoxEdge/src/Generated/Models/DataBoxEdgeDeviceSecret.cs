@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceSecret"/>. </summary>
-        public DataBoxEdgeDeviceSecret()
+        internal DataBoxEdgeDeviceSecret()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Encrypted (using device public key) secret value. </summary>
-        public AsymmetricEncryptedSecret EncryptedSecret { get; set; }
+        public AsymmetricEncryptedSecret EncryptedSecret { get; }
 
         /// <summary> Id of the Key-Vault where secret is stored (ex: secrets/AuthClientSecret/82ef4346187a4033a10d629cde07d740). </summary>
-        public string KeyVaultId { get; set; }
+        public string KeyVaultId { get; }
     }
 }

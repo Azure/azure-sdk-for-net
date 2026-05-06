@@ -12,11 +12,6 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The HeaderIsolationKeySource. </summary>
     public partial class HeaderIsolationKeySource : IsolationKeySource, IJsonModel<HeaderIsolationKeySource>
     {
-        /// <summary> Initializes a new instance of <see cref="HeaderIsolationKeySource"/> for deserialization. </summary>
-        internal HeaderIsolationKeySource()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override IsolationKeySource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -76,10 +71,6 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(HeaderIsolationKeySource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("user_isolation_key"u8);
-            writer.WriteStringValue(UserIsolationKey);
-            writer.WritePropertyName("chat_isolation_key"u8);
-            writer.WriteStringValue(ChatIsolationKey);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -109,8 +100,6 @@ namespace Azure.AI.Projects.Agents
             }
             IsolationKeySourceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string userIsolationKey = default;
-            string chatIsolationKey = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -118,22 +107,12 @@ namespace Azure.AI.Projects.Agents
                     kind = new IsolationKeySourceKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("user_isolation_key"u8))
-                {
-                    userIsolationKey = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("chat_isolation_key"u8))
-                {
-                    chatIsolationKey = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HeaderIsolationKeySource(kind, additionalBinaryDataProperties, userIsolationKey, chatIsolationKey);
+            return new HeaderIsolationKeySource(kind, additionalBinaryDataProperties);
         }
     }
 }

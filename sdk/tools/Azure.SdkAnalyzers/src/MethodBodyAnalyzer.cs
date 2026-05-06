@@ -154,7 +154,7 @@ namespace Azure.SdkAnalyzers
 
         private static TextSpan GetMemberTextSpan(IOperation operation)
         {
-            var invocation = (InvocationExpressionSyntax) operation.Syntax;
+            var invocation = (InvocationExpressionSyntax)operation.Syntax;
             var name = invocation.Expression is MemberAccessExpressionSyntax memberAccess ? memberAccess.Name : invocation.Expression;
             var start = name.Span.Start;
             var end = invocation.Span.End;
@@ -167,7 +167,7 @@ namespace Azure.SdkAnalyzers
             public Scope Scope { get; }
 
             public MethodAnalysisContext(IMethodSymbol method, IParameterSymbol asyncParameter)
-                :this(asyncParameter, GetScope(method, asyncParameter)) { }
+                : this(asyncParameter, GetScope(method, asyncParameter)) { }
 
             private MethodAnalysisContext(IParameterSymbol asyncParameter, Scope scope)
             {

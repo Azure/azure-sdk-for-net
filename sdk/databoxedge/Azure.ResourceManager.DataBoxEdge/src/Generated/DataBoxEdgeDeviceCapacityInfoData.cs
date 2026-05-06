@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new DeviceCapacityInfoProperties();
                 }
-                Properties.TimeStamp = value.Value;
+                Properties.TimeStamp = value;
             }
         }
 

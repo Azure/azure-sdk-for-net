@@ -23,6 +23,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string IndexedOneLakeValue = "indexedOneLake";
         /// <summary> Web retrieval activity. </summary>
         private const string WebValue = "web";
+        /// <summary> LLM web summarization activity. </summary>
+        private const string ModelWebSummarizationValue = "modelWebSummarization";
         /// <summary> Agentic reasoning activity. </summary>
         private const string AgenticReasoningValue = "agenticReasoning";
 
@@ -47,6 +49,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Web retrieval activity. </summary>
         public static KnowledgeBaseActivityRecordType Web { get; } = new KnowledgeBaseActivityRecordType(WebValue);
+
+        /// <summary> LLM web summarization activity. </summary>
+        public static KnowledgeBaseActivityRecordType ModelWebSummarization { get; } = new KnowledgeBaseActivityRecordType(ModelWebSummarizationValue);
 
         /// <summary> Agentic reasoning activity. </summary>
         public static KnowledgeBaseActivityRecordType AgenticReasoning { get; } = new KnowledgeBaseActivityRecordType(AgenticReasoningValue);

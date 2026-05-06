@@ -449,7 +449,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BazData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BazData patch = new BazData();
+                    BazData patch = new BazData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -497,7 +497,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BazData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BazData patch = new BazData();
+                    BazData patch = new BazData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -544,7 +544,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BazData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BazData patch = new BazData();
+                    BazData patch = new BazData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<BazResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -587,7 +587,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BazData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BazData patch = new BazData();
+                    BazData patch = new BazData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<BazResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -629,7 +629,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BazData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BazData patch = new BazData();
+                    BazData patch = new BazData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -675,7 +675,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BazData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BazData patch = new BazData();
+                    BazData patch = new BazData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

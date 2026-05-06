@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledOperationsType"/>. </summary>
-        /// <param name="dayOfWeek"> Day of week. </param>
+        /// <param name="scheduledDay"> Day of week. </param>
         /// <param name="autoStartOn"> auto start time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="autoStopOn"> auto stop time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledOperationsType(OracleDatabaseDayOfWeek dayOfWeek, DateTimeOffset? autoStartOn, DateTimeOffset? autoStopOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledOperationsType(OracleDatabaseDayOfWeek scheduledDay, DateTimeOffset? autoStartOn, DateTimeOffset? autoStopOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DayOfWeek = dayOfWeek;
+            ScheduledDay = scheduledDay;
             AutoStartOn = autoStartOn;
             AutoStopOn = autoStopOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Day of week. </summary>
-        internal OracleDatabaseDayOfWeek DayOfWeek { get; set; }
+        internal OracleDatabaseDayOfWeek ScheduledDay { get; set; }
 
         /// <summary> auto start time. value must be of ISO-8601 format HH:mm. </summary>
         public DateTimeOffset? AutoStartOn { get; set; }
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public DateTimeOffset? AutoStopOn { get; set; }
 
         /// <summary> Name of the day of the week. </summary>
-        public OracleDatabaseDayOfWeekName? DayOfWeekName
+        public OracleDatabaseDayOfWeekName ScheduledDayName
         {
             get
             {
-                return DayOfWeek is null ? default : DayOfWeek.Name;
+                return ScheduledDay is null ? default : ScheduledDay.Name;
             }
             set
             {
-                DayOfWeek = value.HasValue ? new OracleDatabaseDayOfWeek(value.Value) : default;
+                ScheduledDay = new OracleDatabaseDayOfWeek(value);
             }
         }
     }

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new FreeServicesProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new FreeServicesProperties();
                 }
-                Properties.StartOn = value.Value;
+                Properties.StartOn = value;
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new FreeServicesProperties();
                 }
-                Properties.EndOn = value.Value;
+                Properties.EndOn = value;
             }
         }
 

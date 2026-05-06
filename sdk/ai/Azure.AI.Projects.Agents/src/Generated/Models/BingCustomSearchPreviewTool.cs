@@ -24,11 +24,21 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        internal BingCustomSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BingCustomSearchToolOptions bingCustomSearchPreview) : base(@type, additionalBinaryDataProperties)
+        internal BingCustomSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, BingCustomSearchToolOptions bingCustomSearchPreview) : base(@type, additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
             BingCustomSearchPreview = bingCustomSearchPreview;
         }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary> The bing custom search tool parameters. </summary>
         public BingCustomSearchToolOptions BingCustomSearchPreview { get; set; }

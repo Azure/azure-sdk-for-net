@@ -28,7 +28,7 @@ namespace Azure.Compute.Batch
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateGetApplicationsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, RequestContext context)
+        internal HttpMessage CreateGetApplicationsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -41,9 +41,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -59,7 +59,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetApplicationsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, RequestContext context)
+        internal HttpMessage CreateNextGetApplicationsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -112,7 +112,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetPoolUsageMetricsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolUsageMetricsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -125,9 +125,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (starttime != null)
             {
@@ -155,7 +155,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoolUsageMetricsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetPoolUsageMetricsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -208,7 +208,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetPoolsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetPoolsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -221,9 +221,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -251,7 +251,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoolsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetPoolsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -634,7 +634,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetSupportedImagesRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateGetSupportedImagesRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -647,9 +647,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -669,7 +669,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetSupportedImagesRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetSupportedImagesRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -694,7 +694,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetPoolNodeCountsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolNodeCountsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -707,9 +707,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -729,7 +729,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoolNodeCountsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetPoolNodeCountsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1030,7 +1030,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1043,9 +1043,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -1073,7 +1073,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetJobsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1098,7 +1098,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobsFromSchedulesRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobsFromScheduleRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1113,9 +1113,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -1143,7 +1143,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsFromSchedulesRequest(Uri nextPage, string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetJobsFromScheduleRequest(Uri nextPage, string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1168,7 +1168,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobPreparationAndReleaseTaskStatusesRequest(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetJobPreparationAndReleaseTaskStatusesRequest(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1183,9 +1183,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -1209,7 +1209,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobPreparationAndReleaseTaskStatusesRequest(Uri nextPage, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetJobPreparationAndReleaseTaskStatusesRequest(Uri nextPage, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1563,7 +1563,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobSchedulesRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobSchedulesRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1576,9 +1576,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -1606,7 +1606,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobSchedulesRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetJobSchedulesRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1661,7 +1661,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetTasksRequest(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetTasksRequest(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1676,9 +1676,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -1706,7 +1706,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetTasksRequest(Uri nextPage, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetTasksRequest(Uri nextPage, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -2110,7 +2110,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFilesRequest(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateGetTaskFilesRequest(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2127,9 +2127,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -2153,7 +2153,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetTaskFilesRequest(Uri nextPage, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateNextGetTaskFilesRequest(Uri nextPage, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -2572,7 +2572,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodesRequest(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetNodesRequest(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2587,9 +2587,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -2613,7 +2613,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetNodesRequest(Uri nextPage, string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetNodesRequest(Uri nextPage, string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -2674,7 +2674,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodeExtensionsRequest(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetNodeExtensionsRequest(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2691,9 +2691,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -2713,7 +2713,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetNodeExtensionsRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetNodeExtensionsRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -2848,7 +2848,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFilesRequest(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateGetNodeFilesRequest(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2865,9 +2865,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            if (maxresults != null)
+            if (maxResults != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -2891,7 +2891,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetNodeFilesRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateNextGetNodeFilesRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

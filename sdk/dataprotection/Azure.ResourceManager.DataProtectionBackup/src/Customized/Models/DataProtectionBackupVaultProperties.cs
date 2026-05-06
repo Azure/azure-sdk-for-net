@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using Azure.Core;
 
 #nullable disable
 
@@ -11,6 +14,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Backup Vault. </summary>
     public partial class DataProtectionBackupVaultProperties
     {
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
+        /// <param name="storageSettings"> Storage Settings. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DataProtectionBackupVaultProperties(IEnumerable<DataProtectionBackupStorageSetting> storageSettings)
+        {
+            Argument.AssertNotNull(storageSettings, nameof(storageSettings));
+            StorageSettings = storageSettings.ToList();
+            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
+            ReplicatedRegions = new ChangeTrackingList<Azure.Core.AzureLocation>();
+        }
+
         /// <summary> Is vault protected by resource guard. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsVaultProtectedByResourceGuard { get; set; }

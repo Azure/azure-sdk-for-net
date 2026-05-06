@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Operation type. </summary>
+    /// <summary>
+    /// Operation type.
+    /// Serialized Name: BackupRestoreOperationType
+    /// </summary>
     public enum BackupRestoreOperationType
     {
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: BackupRestoreOperationType.Default
+        /// </summary>
         Default,
-        /// <summary> Clone. </summary>
+        /// <summary>
+        /// Clone
+        /// Serialized Name: BackupRestoreOperationType.Clone
+        /// </summary>
         Clone,
-        /// <summary> Relocation. </summary>
+        /// <summary>
+        /// Relocation
+        /// Serialized Name: BackupRestoreOperationType.Relocation
+        /// </summary>
         Relocation,
-        /// <summary> Snapshot. </summary>
+        /// <summary>
+        /// Snapshot
+        /// Serialized Name: BackupRestoreOperationType.Snapshot
+        /// </summary>
         Snapshot,
-        /// <summary> CloudFS. </summary>
+        /// <summary>
+        /// CloudFS
+        /// Serialized Name: BackupRestoreOperationType.CloudFS
+        /// </summary>
         CloudFS
     }
 }

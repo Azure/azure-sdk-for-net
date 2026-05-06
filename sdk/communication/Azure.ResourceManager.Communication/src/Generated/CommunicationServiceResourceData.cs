@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     Properties = new CommunicationServiceProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     Properties = new CommunicationServiceProperties();
                 }
-                Properties.IsLocalAuthDisabled = value.Value;
+                Properties.IsLocalAuthDisabled = value;
             }
         }
     }

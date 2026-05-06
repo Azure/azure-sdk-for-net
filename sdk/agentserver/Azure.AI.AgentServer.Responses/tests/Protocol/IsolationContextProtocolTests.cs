@@ -80,8 +80,8 @@ public class IsolationContextProtocolTests : ProtocolTestBase
                 Encoding.UTF8,
                 "application/json")
         };
-        request.Headers.Add(IsolationContext.UserIsolationKeyHeaderName, "");
-        request.Headers.Add(IsolationContext.ChatIsolationKeyHeaderName, "");
+        request.Headers.Add(PlatformHeaders.UserIsolationKey, "");
+        request.Headers.Add(PlatformHeaders.ChatIsolationKey, "");
         await Client.SendAsync(request);
 
         Assert.That(Handler.LastContext!.Isolation, Is.SameAs(IsolationContext.Empty));
@@ -102,12 +102,12 @@ public class IsolationContextProtocolTests : ProtocolTestBase
 
         if (userKey is not null)
         {
-            request.Headers.Add(IsolationContext.UserIsolationKeyHeaderName, userKey);
+            request.Headers.Add(PlatformHeaders.UserIsolationKey, userKey);
         }
 
         if (chatKey is not null)
         {
-            request.Headers.Add(IsolationContext.ChatIsolationKeyHeaderName, chatKey);
+            request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
         }
 
         return await Client.SendAsync(request);

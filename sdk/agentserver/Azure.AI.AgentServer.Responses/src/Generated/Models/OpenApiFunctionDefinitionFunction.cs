@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -20,12 +19,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinitionFunction"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public OpenApiFunctionDefinitionFunction(string name, IDictionary<string, BinaryData> parameters)
+        internal OpenApiFunctionDefinitionFunction(string name, IDictionary<string, BinaryData> parameters)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
             Name = name;
             Parameters = parameters;
         }
@@ -44,10 +39,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The name of the function to be called. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A description of what the function does, used by the model to choose when and how to call the function. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// The parameters the functions accepts, described as a JSON Schema object.

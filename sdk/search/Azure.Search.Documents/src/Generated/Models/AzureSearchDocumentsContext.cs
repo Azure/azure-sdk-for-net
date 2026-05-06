@@ -120,6 +120,7 @@ namespace Azure.Search.Documents
     [ModelReaderWriterBuildable(typeof(KnowledgeBaseMessageImageContent))]
     [ModelReaderWriterBuildable(typeof(KnowledgeBaseMessageTextContent))]
     [ModelReaderWriterBuildable(typeof(KnowledgeBaseModel))]
+    [ModelReaderWriterBuildable(typeof(KnowledgeBaseModelWebSummarizationActivityRecord))]
     [ModelReaderWriterBuildable(typeof(KnowledgeBaseReference))]
     [ModelReaderWriterBuildable(typeof(KnowledgeBaseRetrievalRequest))]
     [ModelReaderWriterBuildable(typeof(KnowledgeBaseRetrievalResponse))]

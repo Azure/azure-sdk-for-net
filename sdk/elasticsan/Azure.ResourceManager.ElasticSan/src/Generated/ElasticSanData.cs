@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     Properties = new ElasticSanProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 

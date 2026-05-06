@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ManagedOps.Models
             return new ManagedOpsServiceInformation(
                 changeTrackingAndInventory,
                 azureMonitorInsights,
-                azureUpdateManagerEnablementStatus is null ? default : new UpdateManagerInformation(azureUpdateManagerEnablementStatus.Value, null),
-                azurePolicyAndMachineEnablementStatus is null ? default : new GuestConfigurationInformation(azurePolicyAndMachineEnablementStatus.Value, null),
-                defenderForServersEnablementStatus is null ? default : new DefenderForServersInformation(defenderForServersEnablementStatus.Value, null),
-                defenderCspmEnablementStatus is null ? default : new DefenderCspmInformation(defenderCspmEnablementStatus.Value, null),
+                azureUpdateManagerEnablementStatus is null ? default : new UpdateManagerInformation(azureUpdateManagerEnablementStatus.GetValueOrDefault(), null),
+                azurePolicyAndMachineEnablementStatus is null ? default : new GuestConfigurationInformation(azurePolicyAndMachineEnablementStatus.GetValueOrDefault(), null),
+                defenderForServersEnablementStatus is null ? default : new DefenderForServersInformation(defenderForServersEnablementStatus.GetValueOrDefault(), null),
+                defenderCspmEnablementStatus is null ? default : new DefenderCspmInformation(defenderCspmEnablementStatus.GetValueOrDefault(), null),
                 additionalBinaryDataProperties: null);
         }
 

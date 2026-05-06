@@ -25,6 +25,7 @@ network:
     - defaults
     - dotnet
     - github
+    - "*.in.applicationinsights.azure.com"
 
 safe-outputs:
   report-failure-as-issue: false

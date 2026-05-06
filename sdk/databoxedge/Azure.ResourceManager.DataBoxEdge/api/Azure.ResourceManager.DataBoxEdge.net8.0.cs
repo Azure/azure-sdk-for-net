@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings DataBoxEdgeDeviceNetworkSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter> networkAdapters = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData DataBoxEdgeDeviceNetworkSettingsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter> networkAdapters = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch DataBoxEdgeDevicePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.Core.ResourceIdentifier subscriptionId = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret DataBoxEdgeDeviceSecret(Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret encryptedSecret, string keyVaultId) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret DataBoxEdgeDeviceSecret(Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret encryptedSecret = null, string keyVaultId = null) { throw null; }
         [System.ObsoleteAttribute("Use ArmDataBoxEdgeModelFactory.DataBoxEdgeDeviceUpdateSummaryData instead.", false)]
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary DataBoxEdgeDeviceUpdateSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string deviceVersionNumber = null, string friendlyDeviceVersionName = null, System.DateTimeOffset? deviceLastScannedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedScanJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastSuccessfulScanJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedDownloadJobOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier lastCompletedDownloadJobId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? lastDownloadJobStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus?), System.DateTimeOffset? lastSuccessfulInstallJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedInstallJobOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier lastCompletedInstallJobId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? lastInstallJobStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus?), int? totalNumberOfUpdatesAvailable = default(int?), int? totalNumberOfUpdatesPendingDownload = default(int?), int? totalNumberOfUpdatesPendingInstall = default(int?), Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? rebootBehavior = default(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation? ongoingUpdateOperation = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation?), Azure.Core.ResourceIdentifier inProgressDownloadJobId = null, Azure.Core.ResourceIdentifier inProgressInstallJobId = null, System.DateTimeOffset? inProgressDownloadJobStartedOn = default(System.DateTimeOffset?), System.DateTimeOffset? inProgressInstallJobStartedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> updateTitles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails> updates = null, double? totalUpdateSizeInBytes = default(double?), int? totalTimeInMinutes = default(int?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData DataBoxEdgeDeviceUpdateSummaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string deviceVersionNumber = null, string friendlyDeviceVersionName = null, System.DateTimeOffset? deviceLastScannedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedScanJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastSuccessfulScanJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedDownloadJobOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier lastCompletedDownloadJobId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? lastDownloadJobStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus?), System.DateTimeOffset? lastSuccessfulInstallJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedInstallJobOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier lastCompletedInstallJobId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? lastInstallJobStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus?), int? totalNumberOfUpdatesAvailable = default(int?), int? totalNumberOfUpdatesPendingDownload = default(int?), int? totalNumberOfUpdatesPendingInstall = default(int?), Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? rebootBehavior = default(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation? ongoingUpdateOperation = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation?), Azure.Core.ResourceIdentifier inProgressDownloadJobId = null, Azure.Core.ResourceIdentifier inProgressInstallJobId = null, System.DateTimeOffset? inProgressDownloadJobStartedOn = default(System.DateTimeOffset?), System.DateTimeOffset? inProgressInstallJobStartedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> updateTitles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails> updates = null, double? totalUpdateSizeInBytes = default(double?), int? totalTimeInMinutes = default(int?)) { throw null; }
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData DataBoxEdgeStorageContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus? containerStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat? dataFormat = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails refreshDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo DataBoxEdgeTrackingInfo(string serialNumber = null, string carrierName = null, string trackingId = null, System.Uri trackingUri = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData DataBoxEdgeTriggerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails DataBoxEdgeUpdateDetails(string updateTitle, double? updateSizeInBytes, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType? updateType, string targetVersion, string friendlyVersionNumber, int? estimatedInstallTimeInMins, Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? rebootBehavior, Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact? installationImpact, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus? status) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails DataBoxEdgeUpdateDetails(string updateTitle = null, double? updateSizeInBytes = default(double?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType? updateType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType?), string targetVersion = null, string friendlyVersionNumber = null, int? estimatedInstallTimeInMins = default(int?), Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? rebootBehavior = default(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior?), Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact? installationImpact = default(Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus? status = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData DataBoxEdgeUserData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret encryptedPassword, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> shareAccessRights, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType userType) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData DataBoxEdgeUserData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret encryptedPassword = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> shareAccessRights = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType? userType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent DeviceCapacityRequestContent(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> vmPlacementQuery = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult> vmPlacementResults = null) { throw null; }
@@ -1275,7 +1275,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeAlertErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails>
     {
-        public DataBoxEdgeAlertErrorDetails() { }
+        internal DataBoxEdgeAlertErrorDetails() { }
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public int? Occurrences { get { throw null; } }
@@ -1521,9 +1521,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeDeviceSecret : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret>
     {
-        public DataBoxEdgeDeviceSecret() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedSecret { get { throw null; } set { } }
-        public string KeyVaultId { get { throw null; } set { } }
+        internal DataBoxEdgeDeviceSecret() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedSecret { get { throw null; } }
+        public string KeyVaultId { get { throw null; } }
         protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1662,7 +1662,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeIPv4Config : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config>
     {
-        public DataBoxEdgeIPv4Config() { }
+        internal DataBoxEdgeIPv4Config() { }
         public string Gateway { get { throw null; } }
         public System.Net.IPAddress IPAddress { get { throw null; } }
         public string Subnet { get { throw null; } }
@@ -1678,7 +1678,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeIPv6Config : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config>
     {
-        public DataBoxEdgeIPv6Config() { }
+        internal DataBoxEdgeIPv6Config() { }
         public string Gateway { get { throw null; } }
         public string IPAddress { get { throw null; } }
         public int? PrefixLength { get { throw null; } }
@@ -1886,10 +1886,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeNetworkAdapter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter>
     {
-        public DataBoxEdgeNetworkAdapter() { }
+        internal DataBoxEdgeNetworkAdapter() { }
         public string AdapterId { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition AdapterPosition { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus? DhcpStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus? DhcpStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DnsServers { get { throw null; } }
         public int? Index { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config IPv4Configuration { get { throw null; } }
@@ -1900,7 +1900,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string MacAddress { get { throw null; } }
         public string NetworkAdapterName { get { throw null; } }
         public System.Guid? NodeId { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus? Status { get { throw null; } }
         protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1931,7 +1931,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeNetworkAdapterPosition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition>
     {
-        public DataBoxEdgeNetworkAdapterPosition() { }
+        internal DataBoxEdgeNetworkAdapterPosition() { }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup? NetworkGroup { get { throw null; } }
         public int? Port { get { throw null; } }
         protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2617,16 +2617,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeUpdateDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails>
     {
-        public DataBoxEdgeUpdateDetails() { }
-        public int? EstimatedInstallTimeInMins { get { throw null; } set { } }
-        public string FriendlyVersionNumber { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact? InstallationImpact { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? RebootBehavior { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus? Status { get { throw null; } set { } }
-        public string TargetVersion { get { throw null; } set { } }
-        public double? UpdateSizeInBytes { get { throw null; } set { } }
-        public string UpdateTitle { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType? UpdateType { get { throw null; } set { } }
+        internal DataBoxEdgeUpdateDetails() { }
+        public int? EstimatedInstallTimeInMins { get { throw null; } }
+        public string FriendlyVersionNumber { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact? InstallationImpact { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? RebootBehavior { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus? Status { get { throw null; } }
+        public string TargetVersion { get { throw null; } }
+        public double? UpdateSizeInBytes { get { throw null; } }
+        public string UpdateTitle { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType? UpdateType { get { throw null; } }
         protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
