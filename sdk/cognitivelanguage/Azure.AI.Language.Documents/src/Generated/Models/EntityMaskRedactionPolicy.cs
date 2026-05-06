@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Represents the policy of redacting PII with the entity type. </summary>
-    public partial class EntityMaskPolicy : BaseRedactionPolicy
+    public partial class EntityMaskRedactionPolicy : BaseRedactionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="EntityMaskPolicy"/>. </summary>
-        public EntityMaskPolicy() : base(RedactionPolicyKind.EntityMask)
+        /// <summary> Initializes a new instance of <see cref="EntityMaskRedactionPolicy"/>. </summary>
+        public EntityMaskRedactionPolicy() : base(RedactionPolicyKind.EntityMask)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityMaskPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityMaskRedactionPolicy"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityMaskPolicy(RedactionPolicyKind policyKind, IList<PiiCategories> entityTypes, string policyName, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(policyKind, entityTypes, policyName, isDefault, additionalBinaryDataProperties)
+        internal EntityMaskRedactionPolicy(RedactionPolicyKind policyKind, IList<PiiCategories> entityTypes, string policyName, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(policyKind, entityTypes, policyName, isDefault, additionalBinaryDataProperties)
         {
         }
     }

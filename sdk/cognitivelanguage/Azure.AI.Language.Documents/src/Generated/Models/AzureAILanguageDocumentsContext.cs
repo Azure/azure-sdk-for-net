@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Documents
     [ModelReaderWriterBuildable(typeof(DocumentStatistics))]
     [ModelReaderWriterBuildable(typeof(DocumentTasksState))]
     [ModelReaderWriterBuildable(typeof(DocumentWarning))]
-    [ModelReaderWriterBuildable(typeof(EntityMaskPolicy))]
+    [ModelReaderWriterBuildable(typeof(EntityMaskRedactionPolicy))]
     [ModelReaderWriterBuildable(typeof(EntitySynonym))]
     [ModelReaderWriterBuildable(typeof(EntitySynonyms))]
     [ModelReaderWriterBuildable(typeof(ExtractiveSummarizationActionContent))]

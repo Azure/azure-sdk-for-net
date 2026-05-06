@@ -193,11 +193,11 @@ namespace Azure.AI.Language.Documents
         /// <summary> Contains the warnings object with warnings encountered for the processed document. </summary>
         /// <param name="code"> Warning code. </param>
         /// <param name="message"> Warning message. </param>
-        /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
+        /// <param name="targetReference"> A JSON pointer reference indicating the target object. </param>
         /// <returns> A new <see cref="Documents.DocumentWarning"/> instance for mocking. </returns>
-        public static DocumentWarning DocumentWarning(WarningCode code = default, string message = default, string targetRef = default)
+        public static DocumentWarning DocumentWarning(WarningCode code = default, string message = default, string targetReference = default)
         {
-            return new DocumentWarning(code, message, targetRef, additionalBinaryDataProperties: null);
+            return new DocumentWarning(code, message, targetReference, additionalBinaryDataProperties: null);
         }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
@@ -405,7 +405,7 @@ namespace Azure.AI.Language.Documents
 
         /// <summary>
         /// The abstract base class for RedactionPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.SyntheticReplacementPolicyType"/>, <see cref="Documents.CharacterMaskPolicy"/>, <see cref="Documents.NoMaskPolicy"/>, <see cref="Documents.MarkerMaskPolicy"/>, and <see cref="Documents.EntityMaskPolicy"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Documents.SyntheticReplacementPolicyType"/>, <see cref="Documents.CharacterMaskPolicy"/>, <see cref="Documents.NoMaskPolicy"/>, <see cref="Documents.MarkerMaskPolicy"/>, and <see cref="Documents.EntityMaskRedactionPolicy"/>.
         /// </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
@@ -485,12 +485,12 @@ namespace Azure.AI.Language.Documents
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
         /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
-        /// <returns> A new <see cref="Documents.EntityMaskPolicy"/> instance for mocking. </returns>
-        public static EntityMaskPolicy EntityMaskPolicy(IEnumerable<PiiCategories> entityTypes = default, string policyName = default, bool? isDefault = default)
+        /// <returns> A new <see cref="Documents.EntityMaskRedactionPolicy"/> instance for mocking. </returns>
+        public static EntityMaskRedactionPolicy EntityMaskRedactionPolicy(IEnumerable<PiiCategories> entityTypes = default, string policyName = default, bool? isDefault = default)
         {
             entityTypes ??= new ChangeTrackingList<PiiCategories>();
 
-            return new EntityMaskPolicy(RedactionPolicyKind.EntityMask, entityTypes.ToList(), policyName, isDefault, additionalBinaryDataProperties: null);
+            return new EntityMaskRedactionPolicy(RedactionPolicyKind.EntityMask, entityTypes.ToList(), policyName, isDefault, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for confidence score threshold for PII entity recognition. </summary>

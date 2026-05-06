@@ -28,13 +28,13 @@ namespace Azure.AI.Language.Documents
         /// <summary> Initializes a new instance of <see cref="DocumentWarning"/>. </summary>
         /// <param name="code"> Warning code. </param>
         /// <param name="message"> Warning message. </param>
-        /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
+        /// <param name="targetReference"> A JSON pointer reference indicating the target object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentWarning(WarningCode code, string message, string targetRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentWarning(WarningCode code, string message, string targetReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
-            TargetRef = targetRef;
+            TargetReference = targetReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.AI.Language.Documents
         public string Message { get; }
 
         /// <summary> A JSON pointer reference indicating the target object. </summary>
-        public string TargetRef { get; }
+        public string TargetReference { get; }
     }
 }

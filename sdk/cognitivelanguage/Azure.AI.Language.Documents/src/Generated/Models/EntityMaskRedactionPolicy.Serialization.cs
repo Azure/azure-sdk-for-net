@@ -13,51 +13,51 @@ using System.Text.Json;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Represents the policy of redacting PII with the entity type. </summary>
-    public partial class EntityMaskPolicy : BaseRedactionPolicy, IJsonModel<EntityMaskPolicy>
+    public partial class EntityMaskRedactionPolicy : BaseRedactionPolicy, IJsonModel<EntityMaskRedactionPolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BaseRedactionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityMaskPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntityMaskRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEntityMaskPolicy(document.RootElement, options);
+                        return DeserializeEntityMaskRedactionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntityMaskPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityMaskRedactionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityMaskPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntityMaskRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EntityMaskPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityMaskRedactionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EntityMaskPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EntityMaskRedactionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntityMaskPolicy IPersistableModel<EntityMaskPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (EntityMaskPolicy)PersistableModelCreateCore(data, options);
+        EntityMaskRedactionPolicy IPersistableModel<EntityMaskRedactionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (EntityMaskRedactionPolicy)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EntityMaskPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EntityMaskRedactionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EntityMaskPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EntityMaskRedactionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,34 +68,34 @@ namespace Azure.AI.Language.Documents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityMaskPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntityMaskRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityMaskPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityMaskRedactionPolicy)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntityMaskPolicy IJsonModel<EntityMaskPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EntityMaskPolicy)JsonModelCreateCore(ref reader, options);
+        EntityMaskRedactionPolicy IJsonModel<EntityMaskRedactionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EntityMaskRedactionPolicy)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BaseRedactionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityMaskPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntityMaskRedactionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityMaskPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityMaskRedactionPolicy)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntityMaskPolicy(document.RootElement, options);
+            return DeserializeEntityMaskRedactionPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EntityMaskPolicy DeserializeEntityMaskPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static EntityMaskRedactionPolicy DeserializeEntityMaskRedactionPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.AI.Language.Documents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntityMaskPolicy(policyKind, entityTypes ?? new ChangeTrackingList<PiiCategories>(), policyName, isDefault, additionalBinaryDataProperties);
+            return new EntityMaskRedactionPolicy(policyKind, entityTypes ?? new ChangeTrackingList<PiiCategories>(), policyName, isDefault, additionalBinaryDataProperties);
         }
     }
 }

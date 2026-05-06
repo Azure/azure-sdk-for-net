@@ -82,10 +82,10 @@ namespace Azure.AI.Language.Documents
             writer.WriteStringValue(Code.ToString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(TargetRef))
+            if (Optional.IsDefined(TargetReference))
             {
                 writer.WritePropertyName("targetRef"u8);
-                writer.WriteStringValue(TargetRef);
+                writer.WriteStringValue(TargetReference);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.AI.Language.Documents
             }
             WarningCode code = default;
             string message = default;
-            string targetRef = default;
+            string targetReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Documents
                 }
                 if (prop.NameEquals("targetRef"u8))
                 {
-                    targetRef = prop.Value.GetString();
+                    targetReference = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +155,7 @@ namespace Azure.AI.Language.Documents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DocumentWarning(code, message, targetRef, additionalBinaryDataProperties);
+            return new DocumentWarning(code, message, targetReference, additionalBinaryDataProperties);
         }
     }
 }

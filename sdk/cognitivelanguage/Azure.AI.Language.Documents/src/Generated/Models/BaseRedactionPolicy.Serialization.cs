@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Documents
 {
     /// <summary>
     /// The abstract base class for RedactionPolicy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SyntheticReplacementPolicyType"/>, <see cref="CharacterMaskPolicy"/>, <see cref="NoMaskPolicy"/>, <see cref="MarkerMaskPolicy"/>, and <see cref="EntityMaskPolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SyntheticReplacementPolicyType"/>, <see cref="CharacterMaskPolicy"/>, <see cref="NoMaskPolicy"/>, <see cref="MarkerMaskPolicy"/>, and <see cref="EntityMaskRedactionPolicy"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBaseRedactionPolicy))]
     public abstract partial class BaseRedactionPolicy : IJsonModel<BaseRedactionPolicy>
@@ -158,7 +158,7 @@ namespace Azure.AI.Language.Documents
                     case "markerMask":
                         return MarkerMaskPolicy.DeserializeMarkerMaskPolicy(element, options);
                     case "entityMask":
-                        return EntityMaskPolicy.DeserializeEntityMaskPolicy(element, options);
+                        return EntityMaskRedactionPolicy.DeserializeEntityMaskRedactionPolicy(element, options);
                 }
             }
             return UnknownBaseRedactionPolicy.DeserializeUnknownBaseRedactionPolicy(element, options);
