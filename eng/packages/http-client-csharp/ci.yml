@@ -49,6 +49,51 @@ extends:
   parameters:
     InitializationSteps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+      # Playground bundle upload — added directly in this ci.yml because:
+      #  * eng/common/ is auto-synced and must not be edited from this repo, and
+      #  * the archetype's only step extension point is `InitializationSteps`.
+      # InitializationSteps runs in Build, Test, Initialize, and Generate jobs;
+      # the conditions below restrict the upload to fire only in the Test
+      # stage's Test job (the only place where `build_artifacts/packages/*.tgz`
+      # has been downloaded), and only on internal main-branch CI runs.
+      # The vendored uploader lives at ./playground-bundle/.
+      - pwsh: |
+          Push-Location "$env:BUILD_SOURCESDIRECTORY/eng/packages/http-client-csharp/playground-bundle"
+          try {
+            npm ci --no-audit --no-fund
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          } finally { Pop-Location }
+        displayName: '[Playground] Install bundle uploader deps'
+        condition: and(succeeded(), eq(variables['System.StageName'], 'Test'), eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+
+      - task: AzureCLI@2
+        displayName: '[Playground] Bundle and upload emitter to typespec-playground'
+        condition: and(succeeded(), eq(variables['System.StageName'], 'Test'), eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+        inputs:
+          azureSubscription: "TypeSpec Storage"
+          scriptType: pscore
+          scriptLocation: inlineScript
+          workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/playground-bundle
+          inlineScript: |
+            $packagesDir = Join-Path "$(Pipeline.Workspace)" "build_artifacts" "packages"
+            $tarball = Get-ChildItem -Path $packagesDir -Filter "*.tgz" -ErrorAction Stop | Select-Object -First 1
+            if (-not $tarball) {
+              throw "No emitter tarball found under $packagesDir"
+            }
+            Write-Host "Found emitter tarball: $($tarball.FullName)"
+
+            $extractDir = Join-Path "$(Agent.TempDirectory)" "emitter-bundle-source"
+            if (Test-Path $extractDir) { Remove-Item -Recurse -Force $extractDir }
+            New-Item -ItemType Directory -Path $extractDir | Out-Null
+
+            tar -xzf "$($tarball.FullName)" -C $extractDir
+            if ($LASTEXITCODE -ne 0) { throw "Failed to extract tarball" }
+
+            $packageDir = Join-Path $extractDir "package"
+            $version = (Get-Content (Join-Path $packageDir "package.json") -Raw | ConvertFrom-Json).version
+            Write-Host "Uploading playground bundle for $($tarball.Name) (version $version)"
+            node ./upload.mjs --package-path $packageDir --version $version
     EmitterPackageJsonOutputPath: eng/azure-typespec-http-client-csharp-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp
     SparseCheckoutPaths:
@@ -56,7 +101,6 @@ extends:
       - /sdk/core/Azure.Core.TestFramework/src
     BuildPrereleaseVersion: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
-    UploadPlaygroundBundle: true
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       ${{ if eq(variables['Build.Reason'], 'Manual') }}:
         ShouldPublish: ${{ parameters.ShouldPublish }}
