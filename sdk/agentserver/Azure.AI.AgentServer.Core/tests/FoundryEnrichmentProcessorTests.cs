@@ -31,6 +31,9 @@ public class FoundryEnrichmentProcessorTests
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", null);
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", null);
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_INSTANCE_CLIENT_ID", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_TENANT_ID", null);
         FoundryEnvironment.Reload();
     }
 
@@ -292,11 +295,105 @@ public class FoundryEnrichmentProcessorTests
         Assert.That(child.GetTagItem("microsoft.session.id"), Is.Null);
     }
 
-    private static void SetEnv(string? agentName = null, string? agentVersion = null, string? projectArmId = null)
+    private static void SetEnv(string? agentName = null, string? agentVersion = null, string? projectArmId = null, string? instanceClientId = null, string? blueprintClientId = null, string? tenantId = null)
     {
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", agentName);
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", agentVersion);
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", projectArmId);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_INSTANCE_CLIENT_ID", instanceClientId);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID", blueprintClientId);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_TENANT_ID", tenantId);
         FoundryEnvironment.Reload();
+    }
+
+    // ── A365 identity enrichment ──────────────────────────────────────
+
+    [Test]
+    public void UsesInstanceClientId_AsAgentId_WhenPresent()
+    {
+        SetEnv("my-agent", "2.0", instanceClientId: "instance-abc");
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("test")!;
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("gen_ai.agent.id"), Is.EqualTo("instance-abc"));
+    }
+
+    [Test]
+    public void FallsBackToNameVersion_WhenInstanceClientIdAbsent()
+    {
+        SetEnv("my-agent", "2.0");
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("test")!;
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("gen_ai.agent.id"), Is.EqualTo("my-agent:2.0"));
+    }
+
+    [Test]
+    public void SetsBlueprintId_WhenPresent()
+    {
+        SetEnv(blueprintClientId: "blueprint-xyz");
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("test")!;
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("gen_ai.agent.blueprint.id"), Is.EqualTo("blueprint-xyz"));
+    }
+
+    [Test]
+    public void DoesNotSetBlueprintId_WhenAbsent()
+    {
+        SetEnv("my-agent");
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("test")!;
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("gen_ai.agent.blueprint.id"), Is.Null);
+    }
+
+    [Test]
+    public void SetsTenantId_WhenPresent()
+    {
+        SetEnv(tenantId: "tenant-123");
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("test")!;
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("microsoft.tenant.id"), Is.EqualTo("tenant-123"));
+    }
+
+    [Test]
+    public void DoesNotSetTenantId_WhenAbsent()
+    {
+        SetEnv("my-agent");
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("test")!;
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("microsoft.tenant.id"), Is.Null);
+    }
+
+    [Test]
+    public void SetsAllA365Tags_WhenAllPresent()
+    {
+        SetEnv("my-agent", "1.0", "/sub/rg/proj", "instance-id", "blueprint-id", "tenant-id");
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("test")!;
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("gen_ai.agent.id"), Is.EqualTo("instance-id"));
+        Assert.That(activity.GetTagItem("gen_ai.agent.name"), Is.EqualTo("my-agent"));
+        Assert.That(activity.GetTagItem("gen_ai.agent.version"), Is.EqualTo("1.0"));
+        Assert.That(activity.GetTagItem("gen_ai.agent.blueprint.id"), Is.EqualTo("blueprint-id"));
+        Assert.That(activity.GetTagItem("microsoft.tenant.id"), Is.EqualTo("tenant-id"));
+        Assert.That(activity.GetTagItem("microsoft.foundry.project.id"), Is.EqualTo("/sub/rg/proj"));
     }
 }

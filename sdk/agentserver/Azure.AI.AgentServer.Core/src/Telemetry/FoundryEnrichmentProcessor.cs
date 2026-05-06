@@ -24,16 +24,30 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
     private readonly string? _agentVersion;
     private readonly string? _agentId;
     private readonly string? _projectId;
+    private readonly string? _blueprintId;
+    private readonly string? _tenantId;
 
     public FoundryEnrichmentProcessor()
     {
         _agentName = FoundryEnvironment.AgentName;
         _agentVersion = FoundryEnvironment.AgentVersion;
         _projectId = FoundryEnvironment.ProjectArmId;
+        _blueprintId = FoundryEnvironment.AgentBlueprintClientId;
+        _tenantId = FoundryEnvironment.AgentTenantId;
 
-        _agentId = _agentName is not null && _agentVersion is not null
-            ? $"{_agentName}:{_agentVersion}"
-            : _agentName;
+        // Agent ID resolution: prefer instance client ID (managed identity),
+        // fall back to name:version or just name.
+        var instanceClientId = FoundryEnvironment.AgentInstanceClientId;
+        if (!string.IsNullOrEmpty(instanceClientId))
+        {
+            _agentId = instanceClientId;
+        }
+        else
+        {
+            _agentId = _agentName is not null && _agentVersion is not null
+                ? $"{_agentName}:{_agentVersion}"
+                : _agentName;
+        }
     }
 
     /// <inheritdoc/>
@@ -83,6 +97,16 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
         if (_agentId is not null)
         {
             activity.SetTag("gen_ai.agent.id", _agentId);
+        }
+
+        if (_blueprintId is not null)
+        {
+            activity.SetTag("gen_ai.agent.blueprint.id", _blueprintId);
+        }
+
+        if (_tenantId is not null)
+        {
+            activity.SetTag("microsoft.tenant.id", _tenantId);
         }
     }
 }

@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Identity;
+using Microsoft.Agents.A365.Observability.Runtime.Tracing.Exporters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenTelemetry;
@@ -18,6 +21,9 @@ namespace Azure.AI.AgentServer.Core.Internal;
 /// </summary>
 internal static class OpenTelemetryExtensions
 {
+    // The A365 token acquisition scope.
+    private const string Agent365Scope = "api://9b975845-388f-4429-889e-eab1ef63949c/.default";
+
     /// <summary>
     /// Registers OpenTelemetry providers and conditional exporters via the
     /// Microsoft OpenTelemetry distro.
@@ -50,7 +56,10 @@ internal static class OpenTelemetryExtensions
         // exporters from environment variables. It registers ASP.NET Core, HttpClient,
         // SQL, Azure SDK, and AI instrumentation automatically.
         var otelBuilder = services.AddOpenTelemetry();
-        otelBuilder.UseMicrosoftOpenTelemetry(options => { });
+        otelBuilder.UseMicrosoftOpenTelemetry(options =>
+        {
+            ConfigureAgent365Export(options);
+        });
 
         otelBuilder
             .ConfigureResource(r =>
@@ -88,6 +97,45 @@ internal static class OpenTelemetryExtensions
         });
 
         return services;
+    }
+
+    /// <summary>
+    /// Configures Agent365 export when the environment indicates it should be enabled.
+    /// Requires <see cref="FoundryEnvironment.IsAgent365TracingEnabled"/> to be true,
+    /// and <see cref="FoundryEnvironment.AgentInstanceClientId"/> to be set for token acquisition.
+    /// </summary>
+    private static void ConfigureAgent365Export(MicrosoftOpenTelemetryOptions options)
+    {
+        if (!FoundryEnvironment.IsAgent365TracingEnabled)
+        {
+            return;
+        }
+
+        var clientId = FoundryEnvironment.AgentInstanceClientId;
+        if (string.IsNullOrEmpty(clientId))
+        {
+            return;
+        }
+
+        options.Exporters |= ExportTarget.Agent365;
+        options.Agent365.Exporter.UseS2SEndpoint = true;
+        options.Agent365.Exporter.TokenResolver = CreateTokenResolver();
+    }
+
+    /// <summary>
+    /// Creates a token resolver delegate that acquires tokens using
+    /// <see cref="DefaultAzureCredential"/> for the A365 exporter scope.
+    /// </summary>
+    private static AsyncAuthTokenResolver CreateTokenResolver()
+    {
+        var credential = new DefaultAzureCredential();
+        var context = new TokenRequestContext(new[] { Agent365Scope });
+
+        return async (agentId, tenantId) =>
+        {
+            var token = await credential.GetTokenAsync(context, CancellationToken.None);
+            return token.Token;
+        };
     }
 
     /// <summary>
