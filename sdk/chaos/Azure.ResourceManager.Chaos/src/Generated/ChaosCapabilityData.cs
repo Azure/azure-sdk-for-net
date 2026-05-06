@@ -84,14 +84,5 @@ namespace Azure.ResourceManager.Chaos
                 return Properties is null ? default : Properties.Urn;
             }
         }
-
-        /// <summary> Resource provisioning state. Not currently in use because resource is created synchronously. </summary>
-        public ChaosProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
     }
 }

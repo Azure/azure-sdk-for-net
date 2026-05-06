@@ -89,11 +89,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("stoppedAt"u8);
                 writer.WriteStringValue(StoppedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
@@ -154,7 +149,6 @@ namespace Azure.ResourceManager.Chaos.Models
             string status = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? stoppedOn = default;
-            ChaosProvisioningState? provisioningState = default;
             string failureReason = default;
             DateTimeOffset? lastActionOn = default;
             ExperimentExecutionDetailsPropertiesRunInformation runInformation = default;
@@ -182,15 +176,6 @@ namespace Azure.ResourceManager.Chaos.Models
                         continue;
                     }
                     stoppedOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("provisioningState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new ChaosProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("failureReason"u8))
@@ -225,7 +210,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 status,
                 startedOn,
                 stoppedOn,
-                provisioningState,
                 failureReason,
                 lastActionOn,
                 runInformation,

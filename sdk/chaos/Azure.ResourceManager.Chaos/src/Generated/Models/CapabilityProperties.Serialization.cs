@@ -99,11 +99,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("urn"u8);
                 writer.WriteStringValue(Urn);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -151,7 +146,6 @@ namespace Azure.ResourceManager.Chaos.Models
             string description = default;
             string parametersSchema = default;
             string urn = default;
-            ChaosProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,15 +174,6 @@ namespace Azure.ResourceManager.Chaos.Models
                     urn = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new ChaosProvisioningState(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -200,7 +185,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 description,
                 parametersSchema,
                 urn,
-                provisioningState,
                 additionalBinaryDataProperties);
         }
     }
