@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.NotNull(volumeResource2.Data.ExportRules);
             volumeResource2.Data.ExportRules.Should().NotBeEmpty();
             Assert.AreEqual(_defaultExportPolicyRule.RuleIndex, volumeResource2.Data.ExportRules[0].RuleIndex);
-            Assert.AreEqual(_defaultExportPolicyRule.UnixReadOnly, volumeResource2.Data.ExportRules[0].UnixReadOnly);
-            Assert.AreEqual(_defaultExportPolicyRule.Cifs, volumeResource2.Data.ExportRules[0].Cifs);
-            Assert.AreEqual(_defaultExportPolicyRule.Nfsv3, volumeResource2.Data.ExportRules[0].Nfsv3);
-            Assert.AreEqual(_defaultExportPolicyRule.Nfsv41, volumeResource2.Data.ExportRules[0].Nfsv41);
+            Assert.AreEqual(_defaultExportPolicyRule.IsUnixReadOnly, volumeResource2.Data.ExportRules[0].IsUnixReadOnly);
+            Assert.AreEqual(_defaultExportPolicyRule.AllowCifsProtocol, volumeResource2.Data.ExportRules[0].AllowCifsProtocol);
+            Assert.AreEqual(_defaultExportPolicyRule.AllowNfsV3Protocol, volumeResource2.Data.ExportRules[0].AllowNfsV3Protocol);
+            Assert.AreEqual(_defaultExportPolicyRule.AllowNfsV41Protocol, volumeResource2.Data.ExportRules[0].AllowNfsV41Protocol);
             Assert.AreEqual(_defaultExportPolicyRule.AllowedClients, volumeResource2.Data.ExportRules[0].AllowedClients);
             volumeResource2.Data.ProtocolTypes.Should().BeEquivalentTo(_defaultProtocolTypes, options => options.IncludingAllDeclaredProperties());
 
