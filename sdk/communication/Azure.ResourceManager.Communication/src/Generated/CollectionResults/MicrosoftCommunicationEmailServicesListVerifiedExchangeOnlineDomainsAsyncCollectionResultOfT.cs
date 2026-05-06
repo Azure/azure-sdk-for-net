@@ -17,19 +17,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Communication
 {
-    internal partial class MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesAsyncCollectionResultOfT : AsyncPageable<string>
+    internal partial class MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT : AsyncPageable<string>
     {
         private readonly EmailServices _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EmailServices client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesAsyncCollectionResultOfT(EmailServices client, Guid subscriptionId, RequestContext context, string diagnosticScope)
+        public MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT(EmailServices client, Guid subscriptionId, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Communication
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);

@@ -18,7 +18,7 @@ using Azure.ResourceManager.CertificateRegistration.Models;
 
 namespace Azure.ResourceManager.CertificateRegistration
 {
-    internal partial class AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryAsyncCollectionResultOfT : AsyncPageable<AppServiceCertificateEmail>
+    internal partial class MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateActionsAsyncCollectionResultOfT : AsyncPageable<CertificateOrderAction>
     {
         private readonly AppServiceCertificateOrders _client;
         private readonly string _subscriptionId;
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CertificateRegistration
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateActionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AppServiceCertificateOrders client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Name of the certificate order.. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryAsyncCollectionResultOfT(AppServiceCertificateOrders client, string subscriptionId, string resourceGroupName, string name, RequestContext context, string diagnosticScope)
+        public MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateActionsAsyncCollectionResultOfT(AppServiceCertificateOrders client, string subscriptionId, string resourceGroupName, string name, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.CertificateRegistration
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateActionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AppServiceCertificateEmail>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateActionsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<CertificateOrderAction>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<AppServiceCertificateEmail> result = ParseArrayFromResponse(response);
-            yield return Page<AppServiceCertificateEmail>.FromValues(result, null, response);
+            IReadOnlyList<CertificateOrderAction> result = ParseArrayFromResponse(response);
+            yield return Page<CertificateOrderAction>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateRetrieveCertificateEmailHistoryRequest(_subscriptionId, _resourceGroupName, _name, _context);
+            HttpMessage message = _client.CreateRetrieveCertificateActionsRequest(_subscriptionId, _resourceGroupName, _name, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<AppServiceCertificateEmail> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<CertificateOrderAction> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<AppServiceCertificateEmail> result = new List<AppServiceCertificateEmail>();
+            List<CertificateOrderAction> result = new List<CertificateOrderAction>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<AppServiceCertificateEmail>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCertificateRegistrationContext.Default));
+                result.Add(ModelReaderWriter.Read<CertificateOrderAction>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCertificateRegistrationContext.Default));
             }
             return result;
         }
