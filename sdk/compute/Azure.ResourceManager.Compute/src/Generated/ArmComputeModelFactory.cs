@@ -965,10 +965,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Defines the virtual machine scale set lifecycle hook event properties. </param>
-        /// <returns> A new <see cref="Compute.VMScaleSetLifecycleHookEventData"/> instance for mocking. </returns>
-        public static VMScaleSetLifecycleHookEventData VMScaleSetLifecycleHookEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VMScaleSetLifecycleHookEventProperties properties = default)
+        /// <returns> A new <see cref="Compute.VmScaleSetLifecycleHookEventData"/> instance for mocking. </returns>
+        public static VmScaleSetLifecycleHookEventData VmScaleSetLifecycleHookEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VmScaleSetLifecycleHookEventProperties properties = default)
         {
-            return new VMScaleSetLifecycleHookEventData(
+            return new VmScaleSetLifecycleHookEventData(
                 id,
                 name,
                 resourceType,
@@ -988,19 +988,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// Denotes the priority of the virtual machine scale set lifecycle hook event for the Auto OS Upgrade scheduled on the virtual machine scale set.
         /// </param>
         /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
-        /// <returns> A new <see cref="Models.VMScaleSetLifecycleHookEventProperties"/> instance for mocking. </returns>
-        public static VMScaleSetLifecycleHookEventProperties VMScaleSetLifecycleHookEventProperties(VMScaleSetLifecycleHookEventType? @type = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction? defaultAction = default, IEnumerable<VMScaleSetLifecycleHookEventTargetResource> targetResources = default, string additionalContextPriority = default, VMScaleSetLifecycleHookEventState? state = default)
+        /// <returns> A new <see cref="Models.VmScaleSetLifecycleHookEventProperties"/> instance for mocking. </returns>
+        public static VmScaleSetLifecycleHookEventProperties VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? @type = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction? defaultAction = default, IEnumerable<VmScaleSetLifecycleHookEventTargetResource> targetResources = default, string additionalContextPriority = default, VmScaleSetLifecycleHookEventState? state = default)
         {
-            targetResources ??= new ChangeTrackingList<VMScaleSetLifecycleHookEventTargetResource>();
+            targetResources ??= new ChangeTrackingList<VmScaleSetLifecycleHookEventTargetResource>();
 
-            return new VMScaleSetLifecycleHookEventProperties(
+            return new VmScaleSetLifecycleHookEventProperties(
                 @type,
                 waitUntil,
                 maxWaitUntil,
                 timeCreated,
                 defaultAction,
                 targetResources.ToList(),
-                additionalContextPriority is null ? default : new VMScaleSetLifecycleHookEventAdditionalContext(additionalContextPriority, null),
+                additionalContextPriority is null ? default : new VmScaleSetLifecycleHookEventAdditionalContext(additionalContextPriority, null),
                 state,
                 additionalBinaryDataProperties: null);
         }

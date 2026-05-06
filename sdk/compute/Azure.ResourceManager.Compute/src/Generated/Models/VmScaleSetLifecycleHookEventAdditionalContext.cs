@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.Compute.Models
     /// For example, for a lifecycle hook event with UpgradeAutoOSScheduling type,
     /// the additional context can contain the key "priority" that helps customer identify the priority of the Auto OS Upgrade operation triggered on the virtual machine scale set.
     /// </summary>
-    internal partial class VMScaleSetLifecycleHookEventAdditionalContext
+    internal partial class VmScaleSetLifecycleHookEventAdditionalContext
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMScaleSetLifecycleHookEventAdditionalContext"/>. </summary>
-        public VMScaleSetLifecycleHookEventAdditionalContext()
+        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventAdditionalContext"/>. </summary>
+        public VmScaleSetLifecycleHookEventAdditionalContext()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMScaleSetLifecycleHookEventAdditionalContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventAdditionalContext"/>. </summary>
         /// <param name="priority">
         /// Can only be present for a lifecycle hook event of type "UpgradeAutoOSScheduling".
         /// Denotes the priority of the virtual machine scale set lifecycle hook event for the Auto OS Upgrade scheduled on the virtual machine scale set.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMScaleSetLifecycleHookEventAdditionalContext(string priority, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmScaleSetLifecycleHookEventAdditionalContext(string priority, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Priority = priority;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

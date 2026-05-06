@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Define a single target ARM resource in a virtual machine scale set lifecycle hook event. Currently, this can be a virtual machine scale set resource or an individual virtual machine resource within a VMScaleSet. </summary>
-    public partial class VMScaleSetLifecycleHookEventTargetResource
+    public partial class VmScaleSetLifecycleHookEventTargetResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMScaleSetLifecycleHookEventTargetResource"/>. </summary>
-        public VMScaleSetLifecycleHookEventTargetResource()
+        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventTargetResource"/>. </summary>
+        public VmScaleSetLifecycleHookEventTargetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMScaleSetLifecycleHookEventTargetResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventTargetResource"/>. </summary>
         /// <param name="resource"> Specifies the target ARM resource. Currently, this can be a virtual machine scale set resource or an individual virtual machine resource within a VMScaleSet. </param>
         /// <param name="actionState"> State of the lifecycle hook for the target resource. The customer can patch this property to move the lifecycle hook to a terminal state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMScaleSetLifecycleHookEventTargetResource(ApiEntityReference resource, LifecycleHookActionState? actionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmScaleSetLifecycleHookEventTargetResource(ApiEntityReference resource, LifecycleHookActionState? actionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             ActionState = actionState;

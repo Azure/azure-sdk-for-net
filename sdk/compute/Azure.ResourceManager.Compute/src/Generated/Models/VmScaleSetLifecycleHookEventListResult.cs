@@ -13,23 +13,23 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List virtual machine scale set lifecycle hook events operation response. </summary>
-    internal partial class VMScaleSetLifecycleHookEventListResult
+    internal partial class VmScaleSetLifecycleHookEventListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMScaleSetLifecycleHookEventListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine scale set lifecycle hook events created for a virtual machine scale set resource. </param>
-        internal VMScaleSetLifecycleHookEventListResult(IEnumerable<VMScaleSetLifecycleHookEventData> value)
+        internal VmScaleSetLifecycleHookEventListResult(IEnumerable<VmScaleSetLifecycleHookEventData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMScaleSetLifecycleHookEventListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine scale set lifecycle hook events created for a virtual machine scale set resource. </param>
         /// <param name="nextLink"> The uri to fetch the next page of virtual machine scale set lifecycle hook events. Call ListNext() with this to fetch the next page of virtual machine scale set lifecycle hook events. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMScaleSetLifecycleHookEventListResult(IList<VMScaleSetLifecycleHookEventData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmScaleSetLifecycleHookEventListResult(IList<VmScaleSetLifecycleHookEventData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of virtual machine scale set lifecycle hook events created for a virtual machine scale set resource. </summary>
-        public IList<VMScaleSetLifecycleHookEventData> Value { get; }
+        public IList<VmScaleSetLifecycleHookEventData> Value { get; }
 
         /// <summary> The uri to fetch the next page of virtual machine scale set lifecycle hook events. Call ListNext() with this to fetch the next page of virtual machine scale set lifecycle hook events. </summary>
         public Uri NextLink { get; }

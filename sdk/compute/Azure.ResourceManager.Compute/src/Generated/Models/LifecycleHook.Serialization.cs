@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            VMScaleSetLifecycleHookEventType? @type = default;
+            VmScaleSetLifecycleHookEventType? @type = default;
             TimeSpan? waitDuration = default;
             LifecycleHookAction? defaultAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new VMScaleSetLifecycleHookEventType(prop.Value.GetString());
+                    @type = new VmScaleSetLifecycleHookEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("waitDuration"u8))

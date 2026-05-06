@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="waitDuration"> Specifies the time duration a virtual machine scale set lifecycle hook event sent to the customer waits for a response from the customer. It should be in ISO 8601 format. </param>
         /// <param name="defaultAction"> Specifies the action that will be applied to a target resource in the virtual machine scale set lifecycle hook event if the platform does not receive a response from the customer for the target resource before waitUntil. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LifecycleHook(VMScaleSetLifecycleHookEventType? @type, TimeSpan? waitDuration, LifecycleHookAction? defaultAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LifecycleHook(VmScaleSetLifecycleHookEventType? @type, TimeSpan? waitDuration, LifecycleHookAction? defaultAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             WaitDuration = waitDuration;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the type of the lifecycle hook. </summary>
-        public VMScaleSetLifecycleHookEventType? Type { get; set; }
+        public VmScaleSetLifecycleHookEventType? Type { get; set; }
 
         /// <summary> Specifies the time duration a virtual machine scale set lifecycle hook event sent to the customer waits for a response from the customer. It should be in ISO 8601 format. </summary>
         public TimeSpan? WaitDuration { get; set; }

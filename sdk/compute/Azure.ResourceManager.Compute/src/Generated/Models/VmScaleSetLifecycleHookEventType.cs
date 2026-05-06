@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the scenario for which the customer is interested in receiving virtual machine scale set lifecycle hook events. </summary>
-    public readonly partial struct VMScaleSetLifecycleHookEventType : IEquatable<VMScaleSetLifecycleHookEventType>
+    public readonly partial struct VmScaleSetLifecycleHookEventType : IEquatable<VmScaleSetLifecycleHookEventType>
     {
         private readonly string _value;
         /// <summary> Lifecycle hook event sent to the customer before an Auto OS Upgrade operation starts on the virtual machine scale set. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Lifecycle hook event sent to the customer before upgrade starts on a batch of virtual machines belonging to a virtual machine scale set during an Auto OS Upgrade operation. </summary>
         private const string UpgradeAutoOSRollingBatchStartingValue = "UpgradeAutoOSRollingBatchStarting";
 
-        /// <summary> Initializes a new instance of <see cref="VMScaleSetLifecycleHookEventType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VMScaleSetLifecycleHookEventType(string value)
+        public VmScaleSetLifecycleHookEventType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Lifecycle hook event sent to the customer before an Auto OS Upgrade operation starts on the virtual machine scale set. </summary>
-        public static VMScaleSetLifecycleHookEventType UpgradeAutoOSScheduling { get; } = new VMScaleSetLifecycleHookEventType(UpgradeAutoOSSchedulingValue);
+        public static VmScaleSetLifecycleHookEventType UpgradeAutoOSScheduling { get; } = new VmScaleSetLifecycleHookEventType(UpgradeAutoOSSchedulingValue);
 
         /// <summary> Lifecycle hook event sent to the customer before upgrade starts on a batch of virtual machines belonging to a virtual machine scale set during an Auto OS Upgrade operation. </summary>
-        public static VMScaleSetLifecycleHookEventType UpgradeAutoOSRollingBatchStarting { get; } = new VMScaleSetLifecycleHookEventType(UpgradeAutoOSRollingBatchStartingValue);
+        public static VmScaleSetLifecycleHookEventType UpgradeAutoOSRollingBatchStarting { get; } = new VmScaleSetLifecycleHookEventType(UpgradeAutoOSRollingBatchStartingValue);
 
-        /// <summary> Determines if two <see cref="VMScaleSetLifecycleHookEventType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VmScaleSetLifecycleHookEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VMScaleSetLifecycleHookEventType left, VMScaleSetLifecycleHookEventType right) => left.Equals(right);
+        public static bool operator ==(VmScaleSetLifecycleHookEventType left, VmScaleSetLifecycleHookEventType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VMScaleSetLifecycleHookEventType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VmScaleSetLifecycleHookEventType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VMScaleSetLifecycleHookEventType left, VMScaleSetLifecycleHookEventType right) => !left.Equals(right);
+        public static bool operator !=(VmScaleSetLifecycleHookEventType left, VmScaleSetLifecycleHookEventType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VMScaleSetLifecycleHookEventType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VmScaleSetLifecycleHookEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMScaleSetLifecycleHookEventType(string value) => new VMScaleSetLifecycleHookEventType(value);
+        public static implicit operator VmScaleSetLifecycleHookEventType(string value) => new VmScaleSetLifecycleHookEventType(value);
 
-        /// <summary> Converts a string to a <see cref="VMScaleSetLifecycleHookEventType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VmScaleSetLifecycleHookEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMScaleSetLifecycleHookEventType?(string value) => value == null ? null : new VMScaleSetLifecycleHookEventType(value);
+        public static implicit operator VmScaleSetLifecycleHookEventType?(string value) => value == null ? null : new VmScaleSetLifecycleHookEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VMScaleSetLifecycleHookEventType other && Equals(other);
+        public override bool Equals(object obj) => obj is VmScaleSetLifecycleHookEventType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VMScaleSetLifecycleHookEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VmScaleSetLifecycleHookEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

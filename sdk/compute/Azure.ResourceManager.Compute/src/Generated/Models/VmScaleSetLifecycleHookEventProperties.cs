@@ -12,18 +12,18 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Defines the virtual machine scale set lifecycle hook event properties. </summary>
-    public partial class VMScaleSetLifecycleHookEventProperties
+    public partial class VmScaleSetLifecycleHookEventProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMScaleSetLifecycleHookEventProperties"/>. </summary>
-        public VMScaleSetLifecycleHookEventProperties()
+        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventProperties"/>. </summary>
+        public VmScaleSetLifecycleHookEventProperties()
         {
-            TargetResources = new ChangeTrackingList<VMScaleSetLifecycleHookEventTargetResource>();
+            TargetResources = new ChangeTrackingList<VmScaleSetLifecycleHookEventTargetResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMScaleSetLifecycleHookEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventProperties"/>. </summary>
         /// <param name="type"> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </param>
         /// <param name="waitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till which the event would remain in the current lifecycle state waiting for an action from the customer. Beyond this timestamp, the platform will apply the defaultAction for the event. </param>
         /// <param name="maxWaitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till when the customer can delay the lifecycle hook event. The customer will not be allowed to delay the event to a timestamp beyond this. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// </param>
         /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMScaleSetLifecycleHookEventProperties(VMScaleSetLifecycleHookEventType? @type, string waitUntil, string maxWaitUntil, string timeCreated, LifecycleHookAction? defaultAction, IList<VMScaleSetLifecycleHookEventTargetResource> targetResources, VMScaleSetLifecycleHookEventAdditionalContext additionalContext, VMScaleSetLifecycleHookEventState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? @type, string waitUntil, string maxWaitUntil, string timeCreated, LifecycleHookAction? defaultAction, IList<VmScaleSetLifecycleHookEventTargetResource> targetResources, VmScaleSetLifecycleHookEventAdditionalContext additionalContext, VmScaleSetLifecycleHookEventState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             WaitUntil = waitUntil;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </summary>
-        public VMScaleSetLifecycleHookEventType? Type { get; set; }
+        public VmScaleSetLifecycleHookEventType? Type { get; set; }
 
         /// <summary> Specifies the exact UTC timestamp in ISO 8601 format till which the event would remain in the current lifecycle state waiting for an action from the customer. Beyond this timestamp, the platform will apply the defaultAction for the event. </summary>
         public string WaitUntil { get; set; }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
         public LifecycleHookAction? DefaultAction { get; }
 
         /// <summary> List of target resources which are getting processed in the virtual machine scale set lifecycle hook event. </summary>
-        public IList<VMScaleSetLifecycleHookEventTargetResource> TargetResources { get; } = new ChangeTrackingList<VMScaleSetLifecycleHookEventTargetResource>();
+        public IList<VmScaleSetLifecycleHookEventTargetResource> TargetResources { get; } = new ChangeTrackingList<VmScaleSetLifecycleHookEventTargetResource>();
 
         /// <summary>
         /// Additional key-value pairs set on the lifecycle hook event that gives customer some useful context/data.
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// For example, for a lifecycle hook event with UpgradeAutoOSScheduling type,
         /// the additional context can contain the key "priority" that helps customer identify the priority of the Auto OS Upgrade operation triggered on the virtual machine scale set.
         /// </summary>
-        internal VMScaleSetLifecycleHookEventAdditionalContext AdditionalContext { get; set; }
+        internal VmScaleSetLifecycleHookEventAdditionalContext AdditionalContext { get; set; }
 
         /// <summary> Specifies the state of the virtual machine scale set lifecycle hook event. </summary>
-        public VMScaleSetLifecycleHookEventState? State { get; }
+        public VmScaleSetLifecycleHookEventState? State { get; }
 
         /// <summary>
         /// Can only be present for a lifecycle hook event of type "UpgradeAutoOSScheduling".
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (AdditionalContext is null)
                 {
-                    AdditionalContext = new VMScaleSetLifecycleHookEventAdditionalContext();
+                    AdditionalContext = new VmScaleSetLifecycleHookEventAdditionalContext();
                 }
                 AdditionalContext.Priority = value;
             }

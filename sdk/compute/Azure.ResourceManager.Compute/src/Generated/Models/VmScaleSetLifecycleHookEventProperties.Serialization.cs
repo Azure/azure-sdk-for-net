@@ -14,51 +14,51 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Defines the virtual machine scale set lifecycle hook event properties. </summary>
-    public partial class VMScaleSetLifecycleHookEventProperties : IJsonModel<VMScaleSetLifecycleHookEventProperties>
+    public partial class VmScaleSetLifecycleHookEventProperties : IJsonModel<VmScaleSetLifecycleHookEventProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMScaleSetLifecycleHookEventProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VmScaleSetLifecycleHookEventProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMScaleSetLifecycleHookEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmScaleSetLifecycleHookEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVMScaleSetLifecycleHookEventProperties(document.RootElement, options);
+                        return DeserializeVmScaleSetLifecycleHookEventProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMScaleSetLifecycleHookEventProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmScaleSetLifecycleHookEventProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMScaleSetLifecycleHookEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmScaleSetLifecycleHookEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VMScaleSetLifecycleHookEventProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmScaleSetLifecycleHookEventProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VMScaleSetLifecycleHookEventProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VmScaleSetLifecycleHookEventProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMScaleSetLifecycleHookEventProperties IPersistableModel<VMScaleSetLifecycleHookEventProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VmScaleSetLifecycleHookEventProperties IPersistableModel<VmScaleSetLifecycleHookEventProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VMScaleSetLifecycleHookEventProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VmScaleSetLifecycleHookEventProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VMScaleSetLifecycleHookEventProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VmScaleSetLifecycleHookEventProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMScaleSetLifecycleHookEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmScaleSetLifecycleHookEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMScaleSetLifecycleHookEventProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VmScaleSetLifecycleHookEventProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Type))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("targetResources"u8);
                 writer.WriteStartArray();
-                foreach (VMScaleSetLifecycleHookEventTargetResource item in TargetResources)
+                foreach (VmScaleSetLifecycleHookEventTargetResource item in TargetResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -138,37 +138,37 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMScaleSetLifecycleHookEventProperties IJsonModel<VMScaleSetLifecycleHookEventProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VmScaleSetLifecycleHookEventProperties IJsonModel<VmScaleSetLifecycleHookEventProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMScaleSetLifecycleHookEventProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VmScaleSetLifecycleHookEventProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMScaleSetLifecycleHookEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmScaleSetLifecycleHookEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMScaleSetLifecycleHookEventProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VmScaleSetLifecycleHookEventProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMScaleSetLifecycleHookEventProperties(document.RootElement, options);
+            return DeserializeVmScaleSetLifecycleHookEventProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VMScaleSetLifecycleHookEventProperties DeserializeVMScaleSetLifecycleHookEventProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static VmScaleSetLifecycleHookEventProperties DeserializeVmScaleSetLifecycleHookEventProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            VMScaleSetLifecycleHookEventType? @type = default;
+            VmScaleSetLifecycleHookEventType? @type = default;
             string waitUntil = default;
             string maxWaitUntil = default;
             string timeCreated = default;
             LifecycleHookAction? defaultAction = default;
-            IList<VMScaleSetLifecycleHookEventTargetResource> targetResources = default;
-            VMScaleSetLifecycleHookEventAdditionalContext additionalContext = default;
-            VMScaleSetLifecycleHookEventState? state = default;
+            IList<VmScaleSetLifecycleHookEventTargetResource> targetResources = default;
+            VmScaleSetLifecycleHookEventAdditionalContext additionalContext = default;
+            VmScaleSetLifecycleHookEventState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new VMScaleSetLifecycleHookEventType(prop.Value.GetString());
+                    @type = new VmScaleSetLifecycleHookEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("waitUntil"u8))
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VMScaleSetLifecycleHookEventTargetResource> array = new List<VMScaleSetLifecycleHookEventTargetResource>();
+                    List<VmScaleSetLifecycleHookEventTargetResource> array = new List<VmScaleSetLifecycleHookEventTargetResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VMScaleSetLifecycleHookEventTargetResource.DeserializeVMScaleSetLifecycleHookEventTargetResource(item, options));
+                        array.Add(VmScaleSetLifecycleHookEventTargetResource.DeserializeVmScaleSetLifecycleHookEventTargetResource(item, options));
                     }
                     targetResources = array;
                     continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    additionalContext = VMScaleSetLifecycleHookEventAdditionalContext.DeserializeVMScaleSetLifecycleHookEventAdditionalContext(prop.Value, options);
+                    additionalContext = VmScaleSetLifecycleHookEventAdditionalContext.DeserializeVmScaleSetLifecycleHookEventAdditionalContext(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    state = new VMScaleSetLifecycleHookEventState(prop.Value.GetString());
+                    state = new VmScaleSetLifecycleHookEventState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -242,13 +242,13 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VMScaleSetLifecycleHookEventProperties(
+            return new VmScaleSetLifecycleHookEventProperties(
                 @type,
                 waitUntil,
                 maxWaitUntil,
                 timeCreated,
                 defaultAction,
-                targetResources ?? new ChangeTrackingList<VMScaleSetLifecycleHookEventTargetResource>(),
+                targetResources ?? new ChangeTrackingList<VmScaleSetLifecycleHookEventTargetResource>(),
                 additionalContext,
                 state,
                 additionalBinaryDataProperties);
