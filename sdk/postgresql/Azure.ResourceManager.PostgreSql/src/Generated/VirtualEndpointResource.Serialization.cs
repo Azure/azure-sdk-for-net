@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    /// <summary></summary>
     public partial class VirtualEndpointResource : IJsonModel<VirtualEndpointResourceData>
     {
-        private static VirtualEndpointResourceData s_dataDeserializationInstance;
-        private static VirtualEndpointResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualEndpointResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualEndpointResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualEndpointResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualEndpointResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualEndpointResourceData>)Data).Write(writer, options);
 
-        VirtualEndpointResourceData IJsonModel<VirtualEndpointResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualEndpointResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualEndpointResourceData IJsonModel<VirtualEndpointResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VirtualEndpointResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualEndpointResourceData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VirtualEndpointResourceData IPersistableModel<VirtualEndpointResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualEndpointResourceData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<VirtualEndpointResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualEndpointResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualEndpointResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
