@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -73,7 +73,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_CreateTheEndpoint_HostedAgent_Async
-        AgentEndpoint config = new()
+        AgentEndpointConfig config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = { AgentEndpointProtocol.Responses }
@@ -142,7 +142,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
-        AgentEndpoint config = new()
+        AgentEndpointConfig config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = { AgentEndpointProtocol.Responses }

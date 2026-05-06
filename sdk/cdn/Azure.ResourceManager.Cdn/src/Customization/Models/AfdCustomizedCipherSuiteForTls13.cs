@@ -7,24 +7,23 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    // Reason: Backward compatibility — the old SDK (v1.5.1) shipped enum members
-    // with underscored names (e.g. Tls_Aes_128_Gcm_Sha256). The new TypeSpec
-    // generator produces ALL_CAPS names (e.g. TLSAES128GCMSHA256), which
-    // duplicate the underscored names that shipped in v1.5.1. The generator-
-    // produced duplicates are suppressed below via [CodeGenSuppress], and the
-    // underscored members are re-added to preserve the v1.5.1 public API.
+    // Customization: Use CodeGenMember to rename generated enum members to maintain
+    // the underscored naming from the previous SDK (v1.5.1: e.g. Tls_Aes_128_Gcm_Sha256).
+    // The TypeSpec generator produces ALL_CAPS names (e.g. TLSAES128GCMSHA256) from spec
+    // member names. CodeGenMember maps the generated names to the old underscored names
+    // to preserve public API naming compatibility.
     //
     // Cannot rename type from Afd to FrontDoor — this is an inline union type
     // referenced by original name in generated serialization code and in
     // FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet properties.
-    [CodeGenSuppress("TLSAES128GCMSHA256")]
-    [CodeGenSuppress("TLSAES256GCMSHA384")]
     public readonly partial struct AfdCustomizedCipherSuiteForTls13
     {
-        /// <summary> Gets the Tls_Aes_128_Gcm_Sha256. </summary>
+        /// <summary> TLS_AES_128_GCM_SHA256. </summary>
+        [CodeGenMember("TLSAES128GCMSHA256")]
         public static AfdCustomizedCipherSuiteForTls13 Tls_Aes_128_Gcm_Sha256 { get; } = new AfdCustomizedCipherSuiteForTls13(TLSAES128GCMSHA256Value);
 
-        /// <summary> Gets the Tls_Aes_256_Gcm_Sha384. </summary>
+        /// <summary> TLS_AES_256_GCM_SHA384. </summary>
+        [CodeGenMember("TLSAES256GCMSHA384")]
         public static AfdCustomizedCipherSuiteForTls13 Tls_Aes_256_Gcm_Sha384 { get; } = new AfdCustomizedCipherSuiteForTls13(TLSAES256GCMSHA384Value);
     }
 }

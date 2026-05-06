@@ -9,6 +9,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerWorkloadsSapVirtualInstanceContext : ModelReaderWriterContext
     {
     }

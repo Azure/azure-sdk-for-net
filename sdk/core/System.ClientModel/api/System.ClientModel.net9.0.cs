@@ -71,9 +71,16 @@ namespace System.ClientModel
     {
         public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddCredentialResolver<T>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) where T : System.ClientModel.Primitives.CredentialResolver, new() { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddCredentialResolver<T>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder) where T : System.ClientModel.Primitives.CredentialResolver, new() { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
+        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
+        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
     }
     public partial class ContinuationToken
     {
@@ -249,6 +256,12 @@ namespace System.ClientModel.Primitives
         TokenCredential = 2,
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public abstract partial class CredentialResolver
+    {
+        protected CredentialResolver() { }
+        public abstract bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider);
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public sealed partial class CredentialSettings
     {
         public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
@@ -282,6 +295,7 @@ namespace System.ClientModel.Primitives
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial interface IClientBuilder
     {
+        System.ClientModel.Primitives.IClientBuilder ConfigureCredential(System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides);
         System.ClientModel.Primitives.IClientBuilder PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings> configure);
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>

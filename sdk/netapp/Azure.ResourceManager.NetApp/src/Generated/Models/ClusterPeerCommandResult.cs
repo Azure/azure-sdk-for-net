@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterPeerCommandResult"/>. </summary>
-        /// <param name="peerAcceptCommand"> A command that needs to be run on the external ONTAP to accept cluster peering.  Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </param>
+        /// <param name="properties"> Represents the properties of the cluster peer command response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterPeerCommandResult(string peerAcceptCommand, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterPeerCommandResult(ClusterPeerCommandResponseProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PeerAcceptCommand = peerAcceptCommand;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A command that needs to be run on the external ONTAP to accept cluster peering.  Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </summary>
-        public string PeerAcceptCommand { get; }
+        /// <summary> Represents the properties of the cluster peer command response. </summary>
+        public ClusterPeerCommandResponseProperties Properties { get; }
     }
 }

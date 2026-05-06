@@ -803,6 +803,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new CycleTestStoreResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="EventGridTopicResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridTopicResource"/> object. </returns>
+        public virtual EventGridTopicResource GetEventGridTopicResource(ResourceIdentifier id)
+        {
+            EventGridTopicResource.ValidateResourceId(id);
+            return new EventGridTopicResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridDomainResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridDomainResource"/> object. </returns>
+        public virtual EventGridDomainResource GetEventGridDomainResource(ResourceIdentifier id)
+        {
+            EventGridDomainResource.ValidateResourceId(id);
+            return new EventGridDomainResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual EventGridTopicEventGridPrivateEndpointConnectionResource GetEventGridTopicEventGridPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            EventGridTopicEventGridPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new EventGridTopicEventGridPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridDomainEventGridPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridDomainEventGridPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual EventGridDomainEventGridPrivateEndpointConnectionResource GetEventGridDomainEventGridPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            EventGridDomainEventGridPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new EventGridDomainEventGridPrivateEndpointConnectionResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">

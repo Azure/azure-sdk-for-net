@@ -797,6 +797,136 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(clusterResult.ClusterInsight, Is.Not.Null);
     }
 
+    [RecordedTest]
+    public async Task TestEvaluationCompareInsight()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
+        string modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+
+        // Create evaluation with sentiment analysis criteria
+        object dataSourceConfig = new
+        {
+            type = "custom",
+            item_schema = new
+            {
+                type = "object",
+                properties = new { query = new { type = "string" } },
+                required = new[] { "query" }
+            },
+        };
+        object[] testingCriteria = [
+            new {
+                type = "label_model",
+                name = "sentiment_analysis",
+                model = modelDeploymentName,
+                input = new object[]
+                {
+                    new { role = "developer", content = "Classify the sentiment of the following statement as one of 'positive', 'neutral', or 'negative'" },
+                    new { role = "user", content = "Statement: {{item.query}}" }
+                },
+                passing_labels = new[] { "positive", "neutral" },
+                labels = new[] { "positive", "neutral", "negative" }
+            }
+        ];
+        BinaryData evaluationData = BinaryData.FromObjectAsJson(
+            new
+            {
+                name = EVALUATION_NAME,
+                data_source_config = dataSourceConfig,
+                testing_criteria = testingCriteria
+            }
+        );
+        using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
+        ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
+        string evaluationId = ParseClientResult<string>(evaluation, ["id"])["id"];
+
+        // Create two eval runs (baseline and treatment)
+        object dataSource1 = new
+        {
+            type = "jsonl",
+            source = new
+            {
+                type = "file_content",
+                content = new[]
+                {
+                    new { item = new { query = "I love programming!" } },
+                    new { item = new { query = "I hate bugs." } },
+                }
+            }
+        };
+        BinaryData runData1 = BinaryData.FromObjectAsJson(
+            new { name = "Evaluation Run 1", data_source = dataSource1 }
+        );
+        using BinaryContent runDataContent1 = BinaryContent.Create(runData1);
+        ClientResult run1 = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent1);
+        string run1Id = ParseClientResult<string>(run1, ["id"])["id"];
+
+        object dataSource2 = new
+        {
+            type = "jsonl",
+            source = new
+            {
+                type = "file_content",
+                content = new[]
+                {
+                    new { item = new { query = "The weather is nice today." } },
+                    new { item = new { query = "This is the worst movie ever." } },
+                }
+            }
+        };
+        BinaryData runData2 = BinaryData.FromObjectAsJson(
+            new { name = "Evaluation Run 2", data_source = dataSource2 }
+        );
+        using BinaryContent runDataContent2 = BinaryContent.Create(runData2);
+        ClientResult run2 = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent2);
+        string run2Id = ParseClientResult<string>(run2, ["id"])["id"];
+
+        // Wait for both runs to complete
+        Dictionary<string, string> runStatuses = new()
+        {
+            { run1Id, ParseClientResult<string>(run1, ["status"])["status"] },
+            { run2Id, ParseClientResult<string>(run2, ["status"])["status"] }
+        };
+        while (runStatuses.Values.Any(s => s != "completed" && s != "failed"))
+        {
+            await Delay();
+            foreach (string runId in runStatuses.Keys.ToList())
+            {
+                if (runStatuses[runId] != "completed" && runStatuses[runId] != "failed")
+                {
+                    ClientResult run = await evaluationClient.GetEvaluationRunAsync(evaluationId: evaluationId, evaluationRunId: runId, options: new());
+                    runStatuses[runId] = ParseClientResult<string>(run, ["status"])["status"];
+                }
+            }
+        }
+        Assert.That(runStatuses.Values, Has.All.EqualTo("completed"));
+
+        // Generate comparison insight
+        ProjectsInsight compareInsight = await projectClient.Insights.GenerateAsync(
+            insight: new ProjectsInsight(
+                displayName: "Comparison of Evaluation Runs",
+                request: new EvaluationComparisonInsightRequest(
+                    evalId: evaluationId,
+                    baselineRunId: run1Id,
+                    treatmentRunIds: [run2Id])));
+        Assert.That(compareInsight.Id, Is.Not.Null.And.Not.Empty);
+
+        // Wait for insight generation to complete
+        while (compareInsight.State != OperationStatus.Succeeded && compareInsight.State != OperationStatus.Failed)
+        {
+            await Delay();
+            compareInsight = await projectClient.Insights.GetAsync(id: compareInsight.Id);
+        }
+        Assert.That(compareInsight.State, Is.EqualTo(OperationStatus.Succeeded));
+        Assert.That(compareInsight.DisplayName, Is.EqualTo("Comparison of Evaluation Runs"));
+        Assert.That(compareInsight.Result, Is.InstanceOf<EvaluationComparisonInsightResult>());
+
+        var compareResult = (EvaluationComparisonInsightResult)compareInsight.Result;
+        Assert.That(compareResult.Comparisons, Is.Not.Null.And.Not.Empty);
+        Assert.That(compareResult.Method, Is.Not.Null.And.Not.Empty);
+    }
+
     #region Helpers
     private static string GetErrorMessageOrEmpty(ClientResult result)
     {
