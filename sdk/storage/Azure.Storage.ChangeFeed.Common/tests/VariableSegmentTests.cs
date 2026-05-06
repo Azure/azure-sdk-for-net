@@ -180,6 +180,98 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         }
 
         /// <summary>
+        /// Verifies that <see cref="ChangeFeedExtensionsBase.GetSegmentsInYearInternal"/> walks
+        /// across multiple <see cref="Page{BlobHierarchyItem}"/> responses and includes every
+        /// segment from every page. A regression that stopped iterating after the first page
+        /// would silently drop segments from any year busy enough to span pagination boundaries.
+        /// </summary>
+        [Test]
+        public async Task GetSegmentsInYear_MultiPageListing_DoesNotDropSegments()
+        {
+            // Page 1: two segments. Page 2: two more segments.
+            Page<BlobHierarchyItem> page1 = new BlobHierarchyItemPage(new List<BlobHierarchyItem>
+            {
+                BlobsModelFactory.BlobHierarchyItem(null,
+                    BlobsModelFactory.BlobItem("idx/segments/2024/01/15/0800/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(null,
+                    BlobsModelFactory.BlobItem("idx/segments/2024/01/15/0815/meta.json", false, null)),
+            });
+            Page<BlobHierarchyItem> page2 = new BlobHierarchyItemPage(new List<BlobHierarchyItem>
+            {
+                BlobsModelFactory.BlobHierarchyItem(null,
+                    BlobsModelFactory.BlobItem("idx/segments/2024/01/15/0830/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(null,
+                    BlobsModelFactory.BlobItem("idx/segments/2024/01/15/0900/meta.json", false, null)),
+            });
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            if (IsAsync)
+            {
+                containerClient.Setup(c => c.GetBlobsByHierarchyAsync(
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .Returns(new MultiPageAsyncPageable(new[] { page1, page2 }));
+            }
+            else
+            {
+                containerClient.Setup(c => c.GetBlobsByHierarchy(
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .Returns(new MultiPageSyncPageable(new[] { page1, page2 }));
+            }
+
+            Queue<string> segments = await ChangeFeedExtensionsBase.GetSegmentsInYearInternal(
+                containerClient.Object,
+                "idx/segments/2024/",
+                startTime: null,
+                endTime: null,
+                IsAsync,
+                CancellationToken.None);
+
+            Assert.AreEqual(4, segments.Count);
+            Assert.AreEqual("idx/segments/2024/01/15/0800/meta.json", segments.Dequeue());
+            Assert.AreEqual("idx/segments/2024/01/15/0815/meta.json", segments.Dequeue());
+            Assert.AreEqual("idx/segments/2024/01/15/0830/meta.json", segments.Dequeue());
+            Assert.AreEqual("idx/segments/2024/01/15/0900/meta.json", segments.Dequeue());
+        }
+
+        /// <summary>
+        /// Async pageable that yields multiple pages in sequence, simulating a service response
+        /// large enough to require pagination.
+        /// </summary>
+        private class MultiPageAsyncPageable : AsyncPageable<BlobHierarchyItem>
+        {
+            private readonly Page<BlobHierarchyItem>[] _pages;
+            public MultiPageAsyncPageable(Page<BlobHierarchyItem>[] pages) { _pages = pages; }
+            public override async IAsyncEnumerable<Page<BlobHierarchyItem>> AsPages(
+                string continuationToken = null, int? pageSizeHint = null)
+            {
+                foreach (Page<BlobHierarchyItem> page in _pages)
+                {
+                    yield return page;
+                }
+                await Task.CompletedTask;
+            }
+        }
+
+        /// <summary>
+        /// Sync pageable that yields multiple pages in sequence.
+        /// </summary>
+        private class MultiPageSyncPageable : Pageable<BlobHierarchyItem>
+        {
+            private readonly Page<BlobHierarchyItem>[] _pages;
+            public MultiPageSyncPageable(Page<BlobHierarchyItem>[] pages) { _pages = pages; }
+            public override IEnumerable<Page<BlobHierarchyItem>> AsPages(
+                string continuationToken = null, int? pageSizeHint = null)
+            {
+                foreach (Page<BlobHierarchyItem> page in _pages)
+                {
+                    yield return page;
+                }
+            }
+        }
+
+        /// <summary>
         /// Mock async pageable for blob hierarchy items.
         /// </summary>
         private class MockPageable : AsyncPageable<BlobHierarchyItem>

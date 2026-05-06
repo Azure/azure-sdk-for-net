@@ -24,16 +24,28 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (string.IsNullOrEmpty(endSnapshot))
                 throw new ArgumentNullException(nameof(endSnapshot));
 
-            if (!DateTimeOffset.TryParse(beginSnapshot, CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            if (!IsValidUtcSnapshot(beginSnapshot))
                 throw new ArgumentException(
-                    $"'{beginSnapshot}' is not a valid ISO 8601 snapshot timestamp.",
+                    $"'{beginSnapshot}' is not a valid UTC ISO 8601 snapshot timestamp (must end with 'Z').",
                     nameof(beginSnapshot));
 
-            if (!DateTimeOffset.TryParse(endSnapshot, CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            if (!IsValidUtcSnapshot(endSnapshot))
                 throw new ArgumentException(
-                    $"'{endSnapshot}' is not a valid ISO 8601 snapshot timestamp.",
+                    $"'{endSnapshot}' is not a valid UTC ISO 8601 snapshot timestamp (must end with 'Z').",
                     nameof(endSnapshot));
         }
+
+        // Snapshot timestamps are surfaced by the service in UTC ISO 8601 with an uppercase 'Z'
+        // suffix and are used verbatim to derive the meta blob path. Accepting any other offset
+        // would let two strings that name the same UTC instant resolve to different paths
+        // (and thus the wrong blob), so we require the canonical form here.
+        private static bool IsValidUtcSnapshot(string s)
+            => s.EndsWith("Z", StringComparison.Ordinal)
+            && DateTimeOffset.TryParse(
+                s,
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                out _);
 
         /// <summary>
         /// Validates the parsed snapshot metadata after it has been read from the change feed container.

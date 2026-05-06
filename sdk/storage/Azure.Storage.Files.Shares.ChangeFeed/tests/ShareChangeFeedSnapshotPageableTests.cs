@@ -282,6 +282,30 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 () => new ShareChangeFeedSnapshotAsyncPageable(null, null, beginSnapshot: "2024-01-15T08:00:00.000Z", endSnapshot: "garbage"));
         }
 
+        // Snapshot strings must be in canonical UTC ISO 8601 form ('Z' suffix). The service emits
+        // them this way, and the snapshot string is used verbatim to derive the meta blob path —
+        // accepting other offsets would let two strings naming the same UTC instant resolve to
+        // different paths. The cases below pin the strict-Z contract.
+
+        [TestCase("2024-01-15T08:00:00+05:00")]   // valid offset, but not UTC
+        [TestCase("2024-01-15T08:00:00+00:00")]   // semantically UTC, but no Z suffix
+        [TestCase("2024-01-15T08:00:00")]         // no offset and no Z (would parse as local time)
+        [TestCase("2024-01-15T08:00:00.000z")]    // lowercase z is non-canonical
+        public void Validation_NonUtcSnapshot_Throws(string snapshot)
+        {
+            const string validUtc = "2024-01-15T12:00:00.000Z";
+
+            ArgumentException beginEx = Assert.Throws<ArgumentException>(
+                () => new ShareChangeFeedSnapshotPageable(null, null, beginSnapshot: snapshot, endSnapshot: validUtc));
+            Assert.AreEqual("beginSnapshot", beginEx.ParamName);
+            StringAssert.Contains("UTC", beginEx.Message);
+            StringAssert.Contains("Z", beginEx.Message);
+
+            ArgumentException endEx = Assert.Throws<ArgumentException>(
+                () => new ShareChangeFeedSnapshotAsyncPageable(null, null, beginSnapshot: validUtc, endSnapshot: snapshot));
+            Assert.AreEqual("endSnapshot", endEx.ParamName);
+        }
+
         // Post-meta-read validation tests. These call SnapshotInputValidator.ValidateMetadata
         // directly because the snapshot pageables defer reading meta blobs until enumeration —
         // testing them through the pageable would require setting up the full mocked container

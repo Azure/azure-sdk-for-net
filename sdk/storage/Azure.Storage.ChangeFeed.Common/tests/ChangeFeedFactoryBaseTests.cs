@@ -77,6 +77,41 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         }
 
         /// <summary>
+        /// Verifies that cursor validation accepts hosts that differ only in case. URL hosts
+        /// are case-insensitive per RFC 3986, so a cursor produced from
+        /// <c>account1.blob.core.windows.net</c> must not be rejected when the container's URI
+        /// surfaces the host as <c>Account1.BLOB.core.windows.net</c>.
+        /// </summary>
+        [Test]
+        public void ValidateCursor_HostCaseInsensitive_DoesNotThrow()
+        {
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            containerClient.Setup(r => r.Uri).Returns(new Uri("https://account1.blob.core.windows.net/container"));
+
+            // Make the existence check fail right after ValidateCursor returns. The resulting
+            // ArgumentException carries a different message, which lets us prove we got past
+            // the cursor check rather than relying on absence of throw.
+            if (IsAsync)
+                containerClient.Setup(r => r.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(false, null));
+            else
+                containerClient.Setup(r => r.Exists(It.IsAny<CancellationToken>())).Returns(Response.FromValue(false, null));
+
+            ChangeFeedCursor cursor = new ChangeFeedCursor("Account1.BLOB.core.windows.net", null,
+                new SegmentCursor("idx/segments/2024/01/15/0800/meta.json", new List<ShardCursor>(), null));
+            string continuation = System.Text.Json.JsonSerializer.Serialize(cursor);
+
+            ChangeFeedFactoryBase<TestEvent> factory = new ChangeFeedFactoryBase<TestEvent>(
+                containerClient.Object,
+                new Mock<SegmentFactoryBase<TestEvent>>().Object,
+                CreateTestConfig());
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
+                async () => await factory.BuildChangeFeed(null, null, continuation, IsAsync, CancellationToken.None));
+            StringAssert.DoesNotContain("URL Host", ex.Message);
+            StringAssert.Contains("Change Feed hasn't been enabled", ex.Message);
+        }
+
+        /// <summary>
         /// Verifies that cursor validation rejects an unsupported cursor version.
         /// </summary>
         [Test]
@@ -155,6 +190,59 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 result.Value);
 
             containerClient.Verify(c => c.GetBlobClient("meta/segments.json"));
+        }
+
+        /// <summary>
+        /// Verifies that GetLastConsumableInternal surfaces a JsonException when the metadata
+        /// blob exists but contains malformed JSON. The Files layer already pins this contract
+        /// (<c>ShareChangeFeedClientMockedTests.GetLastConsumable_MalformedJson_Throws</c>); this
+        /// test pins it at the Common layer so a regression is caught regardless of which client
+        /// surfaces the call.
+        /// </summary>
+        [Test]
+        public void GetLastConsumableInternal_MalformedJson_Throws()
+        {
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+
+            containerClient.Setup(c => c.GetBlobClient("meta/segments.json")).Returns(blobClient.Object);
+
+            BlobDownloadStreamingResult streamingResult = BlobsModelFactory.BlobDownloadStreamingResult(
+                content: new MemoryStream(Encoding.UTF8.GetBytes("{not valid json")));
+
+            if (IsAsync)
+            {
+                blobClient.Setup(b => b.DownloadStreamingAsync(
+                    It.IsAny<BlobDownloadOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(streamingResult, null));
+            }
+            else
+            {
+                blobClient.Setup(b => b.DownloadStreaming(
+                    It.IsAny<BlobDownloadOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .Returns(Response.FromValue(streamingResult, null));
+            }
+
+            if (IsAsync)
+            {
+                Assert.CatchAsync<System.Text.Json.JsonException>(async () =>
+                    await ChangeFeedFactoryBase<TestEvent>.GetLastConsumableInternal(
+                        containerClient.Object,
+                        "meta/segments.json",
+                        IsAsync,
+                        CancellationToken.None));
+            }
+            else
+            {
+                Assert.Catch<System.Text.Json.JsonException>(() =>
+                    ChangeFeedFactoryBase<TestEvent>.GetLastConsumableInternal(
+                        containerClient.Object,
+                        "meta/segments.json",
+                        IsAsync,
+                        CancellationToken.None).GetAwaiter().GetResult());
+            }
         }
 
         /// <summary>
