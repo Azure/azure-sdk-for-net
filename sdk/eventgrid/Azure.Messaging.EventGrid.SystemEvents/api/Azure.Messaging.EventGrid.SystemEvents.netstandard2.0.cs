@@ -2,7 +2,7 @@ namespace Azure.Messaging.EventGrid
 {
     public static partial class EventGridExtensions
     {
-        public static bool TryGetSystemEventData(this Azure.Messaging.CloudEvent cloudEvent, out object eventData) { throw null; }
+        public static bool TryGetSystemEventData(this Azure.Messaging.CloudEvent cloudEvent, out object? eventData) { throw null; }
     }
     public static partial class EventGridModelFactory
     {
