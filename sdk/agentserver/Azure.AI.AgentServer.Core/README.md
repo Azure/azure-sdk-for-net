@@ -62,7 +62,7 @@ Reads Azure AI Foundry platform variables (`FOUNDRY_*`, `PORT`, `SSE_KEEPALIVE_I
 
 ### Telemetry
 
-OpenTelemetry is configured automatically via `Azure.Monitor.OpenTelemetry.AspNetCore`. The Responses and Invocations protocols use dedicated activity source names (`Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations`) for distributed tracing. OTLP export is enabled when the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable is set.
+OpenTelemetry is configured automatically via the `Microsoft.OpenTelemetry` distro. The Responses and Invocations protocols use dedicated activity source names (`Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations`) for distributed tracing. Azure Monitor export is enabled when `APPLICATIONINSIGHTS_CONNECTION_STRING` is set, and OTLP export is enabled when `OTEL_EXPORTER_OTLP_ENDPOINT` is set.
 
 ### Health endpoint
 

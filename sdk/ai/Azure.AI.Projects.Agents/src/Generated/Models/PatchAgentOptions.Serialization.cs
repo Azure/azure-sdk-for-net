@@ -122,7 +122,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            AgentEndpoint agentEndpoint = default;
+            AgentEndpointConfig agentEndpoint = default;
             AgentCard agentCard = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    agentEndpoint = AgentEndpoint.DeserializeAgentEndpoint(prop.Value, options);
+                    agentEndpoint = AgentEndpointConfig.DeserializeAgentEndpointConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agent_card"u8))

@@ -1475,7 +1475,7 @@ public class AgentsTests : AgentsTestBase
             agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
-        AgentEndpoint config = new()
+        AgentEndpointConfig config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = { AgentEndpointProtocol.Responses }
