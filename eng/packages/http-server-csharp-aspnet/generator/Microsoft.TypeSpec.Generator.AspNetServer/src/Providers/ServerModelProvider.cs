@@ -88,12 +88,16 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
                         [Snippets.Snippet.Literal(prop.SerializedName ?? prop.Name)])
                 };
 
+                // Server-side POCOs are always settable from server code. The
+                // TypeSpec @visibility(read) marker means "client cannot send
+                // this on the wire", not "immutable in C#" — the controller
+                // implementation still needs to populate it before returning.
                 var providerProp = new PropertyProvider(
                     description: $"{description}",
                     modifiers: MethodSignatureModifiers.Public,
                     type: csharpType,
                     name: propName,
-                    body: new AutoPropertyBody(HasSetter: !prop.IsReadOnly),
+                    body: new AutoPropertyBody(HasSetter: true),
                     enclosingType: this,
                     attributes: attributes);
 

@@ -92,12 +92,31 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
 
         private static CSharpType BuildReturnType(InputServiceMethod method, TypeFactory typeFactory)
         {
-            var responseType = method.Response?.Type;
-            if (responseType is null)
+            // Prefer the operation's wire response body type so that paging
+            // methods return the actual list result envelope (e.g.
+            // DatabaseListResult { value, nextLink }) rather than a flattened
+            // IList<T>. TCGC strips the envelope on method.Response.Type for
+            // pageable operations.
+            InputType? bodyType = null;
+            foreach (var response in method.Operation.Responses)
+            {
+                if (response.IsErrorResponse)
+                {
+                    continue;
+                }
+                if (response.BodyType is not null)
+                {
+                    bodyType = response.BodyType;
+                    break;
+                }
+            }
+            bodyType ??= method.Response?.Type;
+
+            if (bodyType is null)
             {
                 return new CSharpType(typeof(Task<>), typeof(IActionResult));
             }
-            var inner = typeFactory.CreateCSharpType(responseType) ?? new CSharpType(typeof(object));
+            var inner = typeFactory.CreateCSharpType(bodyType) ?? new CSharpType(typeof(object));
             var actionResult = new CSharpType(typeof(ActionResult<>), inner);
             return new CSharpType(typeof(Task<>), actionResult);
         }

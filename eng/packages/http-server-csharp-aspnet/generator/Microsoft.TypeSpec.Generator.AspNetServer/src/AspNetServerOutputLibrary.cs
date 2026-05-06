@@ -10,8 +10,9 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
 {
     /// <summary>
     /// Output library for the ASP.NET Core server-side code generator. Emits one
-    /// POCO per TypeSpec model and one abstract controller base per TypeSpec
-    /// interface (recursively, including child clients).
+    /// POCO per TypeSpec model, one enum/extensible-enum per TypeSpec enum, and
+    /// one abstract controller base per TypeSpec interface (recursively,
+    /// including child clients).
     /// </summary>
     public class AspNetServerOutputLibrary : OutputLibrary
     {
@@ -19,7 +20,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
         protected override TypeProvider[] BuildTypeProviders()
         {
             var inputLibrary = CodeModelGenerator.Instance.InputLibrary;
-            var typeFactory = CodeModelGenerator.Instance.TypeFactory;
+            var typeFactory = (AspNetServerTypeFactory)CodeModelGenerator.Instance.TypeFactory;
 
             var providers = new List<TypeProvider>();
             foreach (var model in inputLibrary.InputNamespace.Models)
@@ -34,6 +35,13 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
                     providers.Add(provider);
                 }
             }
+            foreach (var inputEnum in inputLibrary.InputNamespace.Enums)
+            {
+                // Realize the enum so it gets cached in the type factory; it
+                // will also be created on demand via property/parameter type
+                // resolution. Either path lands in the same cache.
+                typeFactory.CreateCSharpType(inputEnum);
+            }
             foreach (var client in EnumerateClients(inputLibrary.InputNamespace.RootClients))
             {
                 if (client.Methods.Count == 0)
@@ -41,6 +49,16 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
                     continue;
                 }
                 providers.Add(new ControllerProvider(client));
+            }
+            providers.AddRange(typeFactory.GetCachedEnums());
+            if (typeFactory.GetCachedEnums().Count > 0)
+            {
+                // ArgumentDefinition is internal to the generator framework but
+                // is required by the extensible-enum template (Argument.AssertNotNull).
+                // Instantiate it reflectively so the helper class is emitted.
+                var argDefType = typeof(TypeProvider).Assembly.GetType(
+                    "Microsoft.TypeSpec.Generator.Providers.ArgumentDefinition", throwOnError: true)!;
+                providers.Add((TypeProvider)System.Activator.CreateInstance(argDefType)!);
             }
             return providers.ToArray();
         }

@@ -4,6 +4,7 @@
 
 using System;
 using System.Text.Json.Serialization;
+using Microsoft.Sql;
 
 namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
 {
@@ -20,15 +21,15 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
 
         /// <summary> The status of the database. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("status")]
-        public string Status { get; }
+        public string Status { get; set; }
 
         /// <summary> The creation date of the database. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("creationDate")]
-        public DateTimeOffset? CreationDate { get; }
+        public DateTimeOffset? CreationDate { get; set; }
 
         /// <summary> The provisioning state. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("provisioningState")]
-        public string ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; set; }
 
         /// <summary> The resource ID of the elastic pool containing this database. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("elasticPoolId")]

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.AspNetServer.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -20,6 +21,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
     public sealed class AspNetServerTypeFactory : TypeFactory
     {
         private readonly Dictionary<InputModelType, ServerModelProvider> _modelCache = new();
+        private readonly Dictionary<InputEnumType, EnumProvider> _enumCache = new();
 
         /// <summary>Initializes a new instance of <see cref="AspNetServerTypeFactory"/>.</summary>
         public AspNetServerTypeFactory()
@@ -39,6 +41,26 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
             return provider;
         }
 
+        /// <summary>
+        /// Returns all enum providers created so far. The output library uses
+        /// this to register enum types alongside models in the generated output.
+        /// </summary>
+        internal IReadOnlyCollection<EnumProvider> GetCachedEnums() => _enumCache.Values;
+
+        private EnumProvider? GetOrCreateEnum(InputEnumType inputEnum)
+        {
+            if (_enumCache.TryGetValue(inputEnum, out var existing))
+            {
+                return existing;
+            }
+            var provider = base.CreateEnum(inputEnum, declaringType: null!);
+            if (provider is not null)
+            {
+                _enumCache[inputEnum] = provider;
+            }
+            return provider;
+        }
+
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
@@ -53,10 +75,10 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
                     CreateCSharpType(dict.KeyType) ?? typeof(string),
                     CreateCSharpType(dict.ValueType) ?? typeof(object)),
                 InputLiteralType literal => CreateCSharpType(literal.ValueType),
-                InputEnumType => typeof(string), // MVP: emit enum-typed properties as string
+                InputEnumType inputEnum => GetOrCreateEnum(inputEnum)?.Type,
                 InputModelType model => CreateModel(model)?.Type,
                 InputNullableType nullable => (CreateCSharpType(nullable.Type) ?? typeof(object)).WithNullable(true),
-                _ => typeof(object),
+                _ => typeof(JsonElement),
             };
         }
 
@@ -77,7 +99,8 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
                 InputPrimitiveTypeKind.SafeInt => typeof(long),
                 InputPrimitiveTypeKind.PlainDate => typeof(DateTimeOffset),
                 InputPrimitiveTypeKind.PlainTime => typeof(TimeSpan),
-                _ => typeof(string),
+                // Unknown / Stream / etc. — preserve raw payload instead of corrupting it as a string.
+                _ => typeof(JsonElement),
             };
         }
     }

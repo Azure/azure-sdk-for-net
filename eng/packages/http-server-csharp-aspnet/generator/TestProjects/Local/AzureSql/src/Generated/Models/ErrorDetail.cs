@@ -12,22 +12,22 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     {
         /// <summary> The error code. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("code")]
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> The error message. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("message")]
-        public string Message { get; }
+        public string Message { get; set; }
 
         /// <summary> The error target. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("target")]
-        public string Target { get; }
+        public string Target { get; set; }
 
         /// <summary> The error details. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("details")]
-        public IList<ErrorDetail> Details { get; }
+        public IList<ErrorDetail> Details { get; set; }
 
         /// <summary> The error additional info. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("additionalInfo")]
-        public IList<ErrorAdditionalInfo> AdditionalInfo { get; }
+        public IList<ErrorAdditionalInfo> AdditionalInfo { get; set; }
     }
 }

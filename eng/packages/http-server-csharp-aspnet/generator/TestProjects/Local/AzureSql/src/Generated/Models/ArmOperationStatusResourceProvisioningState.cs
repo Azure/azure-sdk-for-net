@@ -4,6 +4,7 @@
 
 using System;
 using System.Text.Json.Serialization;
+using Azure.ResourceManager;
 
 namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
 {
@@ -15,7 +16,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     {
         /// <summary> The operation status. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("status")]
-        public string Status { get; set; }
+        public ResourceProvisioningState Status { get; set; }
 
         /// <summary> The unique identifier for the operationStatus resource. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("id")]
@@ -23,22 +24,22 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
 
         /// <summary> The name of the operationStatus resource. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Operation start time. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("startTime")]
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartTime { get; set; }
 
         /// <summary> Operation complete time. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("endTime")]
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndTime { get; set; }
 
         /// <summary> The progress made toward completing the operation. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("percentComplete")]
-        public double? PercentComplete { get; }
+        public double? PercentComplete { get; set; }
 
         /// <summary> Errors that occurred if the operation ended with Canceled or Failed status. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("error")]
-        public ErrorDetail Error { get; }
+        public ErrorDetail Error { get; set; }
     }
 }

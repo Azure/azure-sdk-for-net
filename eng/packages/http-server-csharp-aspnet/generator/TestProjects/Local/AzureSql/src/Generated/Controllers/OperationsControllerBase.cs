@@ -2,7 +2,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +15,6 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
     {
         /// <summary> List the operations for the provider. </summary>
         [Microsoft.AspNetCore.Mvc.HttpGetAttribute("providers/Microsoft.Sql/operations")]
-        public abstract Task<Microsoft.AspNetCore.Mvc.ActionResult<IList<Operation>>> ListAsync(CancellationToken cancellationToken = default);
+        public abstract Task<Microsoft.AspNetCore.Mvc.ActionResult<OperationListResult>> ListAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -2,7 +2,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +45,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
 
         /// <summary> Lists databases under a server. Added in 2025-12-01. </summary>
         [Microsoft.AspNetCore.Mvc.HttpGetAttribute("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases")]
-        public abstract Task<Microsoft.AspNetCore.Mvc.ActionResult<IList<Database>>> ListByResourceGroupAsync([Microsoft.AspNetCore.Mvc.FromRouteAttribute(Name = "subscriptionId")]
+        public abstract Task<Microsoft.AspNetCore.Mvc.ActionResult<DatabaseListResult>> ListByResourceGroupAsync([Microsoft.AspNetCore.Mvc.FromRouteAttribute(Name = "subscriptionId")]
         string subscriptionId, [Microsoft.AspNetCore.Mvc.FromRouteAttribute(Name = "resourceGroupName")]
         string resourceGroupName, CancellationToken cancellationToken = default);
     }

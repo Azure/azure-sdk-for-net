@@ -4,6 +4,7 @@
 
 using System;
 using System.Text.Json.Serialization;
+using Azure.ResourceManager.CommonTypes;
 
 namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
 {
@@ -16,7 +17,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
 
         /// <summary> The type of identity that created the resource. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("createdByType")]
-        public string CreatedByType { get; set; }
+        public CreatedByType? CreatedByType { get; set; }
 
         /// <summary> The timestamp of resource creation (UTC). </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("createdAt")]
@@ -28,7 +29,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
 
         /// <summary> The type of identity that last modified the resource. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("lastModifiedByType")]
-        public string LastModifiedByType { get; set; }
+        public CreatedByType? LastModifiedByType { get; set; }
 
         /// <summary> The timestamp of resource last modification (UTC). </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("lastModifiedAt")]

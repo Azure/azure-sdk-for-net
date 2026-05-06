@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.Text.Json.Serialization;
+using Azure.ResourceManager.CommonTypes;
 
 namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
 {
@@ -11,11 +12,11 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     {
         /// <summary> The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action". </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane operations. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("isDataAction")]
-        public bool? IsDataAction { get; }
+        public bool? IsDataAction { get; set; }
 
         /// <summary> Localized display information for this particular operation. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("display")]
@@ -23,10 +24,10 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
 
         /// <summary> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("origin")]
-        public string Origin { get; }
+        public Origin? Origin { get; set; }
 
         /// <summary> Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("actionType")]
-        public string ActionType { get; }
+        public ActionType? ActionType { get; set; }
     }
 }

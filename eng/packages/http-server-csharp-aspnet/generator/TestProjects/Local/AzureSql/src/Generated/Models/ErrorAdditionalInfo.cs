@@ -2,6 +2,7 @@
 
 #nullable disable
 
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
@@ -11,10 +12,10 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     {
         /// <summary> The additional info type. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("type")]
-        public string Type { get; }
+        public string Type { get; set; }
 
         /// <summary> The additional info. </summary>
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("info")]
-        public string Info { get; }
+        public System.Text.Json.JsonElement? Info { get; set; }
     }
 }
