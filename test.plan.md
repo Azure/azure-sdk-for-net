@@ -12,9 +12,9 @@ Run isolated scenarios on the existing draft PR branch. Each scenario must be th
 
 1. Push a baseline branch state that contains the ENG implementation changes and reverts the earlier Azure.Template probe changes.
 2. For each scenario:
-   1. apply only the scenario-specific file changes;
-   2. commit only those scenario changes;
-   3. push the branch;
+    1. apply only the scenario-specific file changes;
+    2. commit only those scenario changes;
+    3. push the branch;
    4. wait for the `net - pullrequest` check to complete;
    5. inspect the check result and logs for the expected CODEOWNERS behavior;
    6. if the result matches expectation, record the scenario and build link in `pr.description.md`;
@@ -56,10 +56,12 @@ Run isolated scenarios on the existing draft PR branch. Each scenario must be th
 
 | ID | Scenario | Change | Expected evidence |
 | --- | --- | --- | --- |
+| S0 | PR validation disabled | Leave `verify-codeowners.yml` at its default opt-out behavior and do not pass `EnablePrValidation` from `build.yml`, while directly changing a package file under `sdk/core/Azure.Core/` | `Analyze PRBatch` completes without any `Verify Codeowners` task in the timeline, proving PR validation stays off unless the caller opts in |
 | S1 | Ignored existing package | Directly change a file under `sdk/core/Azure.Core/` | `PackageInfo` still includes the package, and CODEOWNERS logs skip it because the artifact is excluded via `skipCodeownersVerification` |
 | S2 | Non-ignored existing package | Directly change a file under `sdk/template/Azure.Template/` | CODEOWNERS validation runs for `sdk/template/Azure.Template` and fails because no CODEOWNERS entry matches that directory |
 | S3 | Indirect package inclusion without direct package change | Change `sdk/template/ci.yml` but do not change files under `sdk/template/Azure.Template/` | `Azure.Template` appears in `PackageInfo`, but CODEOWNERS logs the PR-context skip because the PR does not directly change files under the package directory |
 | S4 | Brand-new package directory | Add a new package directory under `sdk/template/Azure.Template2/` with the minimum files required to be discovered by package-property generation | `Azure.Template2` appears in `PackageInfo`, and CODEOWNERS logs the brand-new-directory skip |
+| M1 | Manual Azure.Core pipeline check | Queue `sdk/core/ci.yml` manually with `Skip.Release=true` so release/sign stages are skipped | Manual run shows `Azure.Core` still gets excluded from CODEOWNERS verification via `ArtifactDetails.skipCodeownersVerification` without exercising release/signing |
 
 ## Validation notes
 
