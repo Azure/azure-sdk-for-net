@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountLocation"/>. </summary>
-        public CosmosDBAccountLocation()
+        internal CosmosDBAccountLocation()
         {
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The name of the region. </summary>
         [WirePath("locationName")]
-        public AzureLocation? LocationName { get; set; }
+        public AzureLocation? LocationName { get; }
 
         /// <summary> The connection endpoint for the specific region. Example: https://&lt;accountName&gt;-&lt;locationName&gt;.documents.azure.com:443/. </summary>
         [WirePath("documentEndpoint")]
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The failover priority of the region. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </summary>
         [WirePath("failoverPriority")]
-        public int? FailoverPriority { get; set; }
+        public int? FailoverPriority { get; }
 
         /// <summary> Flag to indicate whether or not this region is an AvailabilityZone region. </summary>
         [WirePath("isZoneRedundant")]
-        public bool? IsZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; }
     }
 }

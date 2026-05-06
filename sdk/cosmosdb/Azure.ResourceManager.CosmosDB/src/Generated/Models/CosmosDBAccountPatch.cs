@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
@@ -75,21 +76,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
         [WirePath("properties.locations")]
-        public IList<CosmosDBAccountLocation> Locations
+        public AzureLocation? Locations
         {
             get
+            {
+                return Properties is null ? default : Properties.Locations;
+            }
+            set
             {
                 if (Properties is null)
                 {
                     Properties = new DatabaseAccountUpdateProperties();
                 }
-                return Properties.Locations;
+                Properties.Locations = value;
             }
         }
 
         /// <summary> List of IpRules. </summary>
         [WirePath("properties.ipRules")]
-        public IList<CosmosDBIPAddressOrRange> IpRules
+        public IList<CosmosDBIPAddressOrRange> IPRules
         {
             get
             {
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     Properties = new DatabaseAccountUpdateProperties();
                 }
-                return Properties.IpRules;
+                return Properties.IPRules;
             }
         }
 
@@ -239,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The URI of the key vault. </summary>
         [WirePath("properties.keyVaultKeyUri")]
-        public string KeyVaultKeyUri
+        public Uri KeyVaultKeyUri
         {
             get
             {
@@ -379,7 +384,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
         [WirePath("properties.networkAclBypassResourceIds")]
-        public IList<string> NetworkAclBypassResourceIds
+        public IList<ResourceIdentifier> NetworkAclBypassResourceIds
         {
             get
             {

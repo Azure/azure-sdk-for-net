@@ -44,19 +44,5 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
-
-        /// <summary> Properties to update Azure Cosmos DB resource throughput. </summary>
-        [WirePath("properties")]
-        internal ThroughputSettingsUpdateProperties Properties { get; }
-
-        /// <summary> The standard JSON format of a resource throughput. </summary>
-        [WirePath("properties.resource")]
-        public ThroughputSettingsResourceInfo Resource
-        {
-            get
-            {
-                return Properties.Resource;
-            }
-        }
     }
 }
