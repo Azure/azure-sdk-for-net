@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.EdgeOrder;
 using Azure.ResourceManager.Models;
@@ -167,7 +168,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (prop.NameEquals("userAssignedIdentities"u8))
                 {
-                    DeserializeUserAssignedIdentities(prop, ref userAssignedIdentities);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop0.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerEdgeOrderContext.Default));
+                    }
+                    userAssignedIdentities = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
