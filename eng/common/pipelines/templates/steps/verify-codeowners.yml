@@ -2,6 +2,12 @@ parameters:
   - name: ArtifactPath
     type: string
     default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: Artifacts
+    # Compatibility: Removing the Artifacts param breaks eng/common. Keeping it 
+    # here for now to avoid breaking changes. This can be removed once the .NET 
+    # invocation of this template is updated to omit Artifacts
+    type: object
+    default: []
   - name: EnablePrValidation
     type: boolean
     default: false
