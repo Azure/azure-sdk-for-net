@@ -10,7 +10,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class Database : TrackedResource
     {
         /// <summary> The resource-specific properties for this resource. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("properties")]
+        [JsonPropertyName("properties")]
         public DatabaseProperties Properties { get; set; }
     }
 }

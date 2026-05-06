@@ -10,11 +10,11 @@ using Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models;
 namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
 {
     /// <summary> ARM operations endpoint. </summary>
-    [Microsoft.AspNetCore.Mvc.ApiControllerAttribute]
-    public abstract partial class OperationsControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
+    [ApiController]
+    public abstract partial class OperationsControllerBase : ControllerBase
     {
         /// <summary> List the operations for the provider. </summary>
-        [Microsoft.AspNetCore.Mvc.HttpGetAttribute("providers/Microsoft.Sql/operations")]
-        public abstract Task<Microsoft.AspNetCore.Mvc.ActionResult<OperationListResult>> ListAsync(CancellationToken cancellationToken = default);
+        [HttpGet("providers/Microsoft.Sql/operations")]
+        public abstract Task<ActionResult<OperationListResult>> ListAsync(CancellationToken cancellationToken = default);
     }
 }

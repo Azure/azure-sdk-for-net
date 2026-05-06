@@ -11,11 +11,11 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class DatabaseUpdate
     {
         /// <summary> Resource tags. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("tags")]
+        [JsonPropertyName("tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("properties")]
+        [JsonPropertyName("properties")]
         public DatabaseUpdateProperties Properties { get; set; }
     }
 }

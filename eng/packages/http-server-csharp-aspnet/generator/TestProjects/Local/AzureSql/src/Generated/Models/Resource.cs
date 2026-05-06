@@ -10,19 +10,19 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class Resource
     {
         /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
 
         /// <summary> The name of the resource. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
         /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("systemData")]
+        [JsonPropertyName("systemData")]
         public SystemData SystemData { get; set; }
     }
 }

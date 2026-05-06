@@ -10,19 +10,19 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class OperationDisplay
     {
         /// <summary> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("provider")]
+        [JsonPropertyName("provider")]
         public string Provider { get; set; }
 
         /// <summary> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("resource")]
+        [JsonPropertyName("resource")]
         public string Resource { get; set; }
 
         /// <summary> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("operation")]
+        [JsonPropertyName("operation")]
         public string Operation { get; set; }
 
         /// <summary> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
     }
 }

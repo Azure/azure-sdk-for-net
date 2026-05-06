@@ -10,7 +10,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class ErrorResponse
     {
         /// <summary> The error object. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("error")]
+        [JsonPropertyName("error")]
         public ErrorDetail Error { get; set; }
     }
 }

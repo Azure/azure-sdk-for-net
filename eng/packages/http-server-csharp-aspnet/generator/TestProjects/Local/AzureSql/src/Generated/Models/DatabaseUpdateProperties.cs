@@ -10,15 +10,15 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class DatabaseUpdateProperties
     {
         /// <summary> The collation of the database. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("collation")]
+        [JsonPropertyName("collation")]
         public string Collation { get; set; }
 
         /// <summary> The max size of the database in bytes. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("maxSizeBytes")]
+        [JsonPropertyName("maxSizeBytes")]
         public long? MaxSizeBytes { get; set; }
 
         /// <summary> The resource ID of the elastic pool containing this database. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("elasticPoolId")]
+        [JsonPropertyName("elasticPoolId")]
         public string ElasticPoolId { get; set; }
     }
 }

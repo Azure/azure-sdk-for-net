@@ -12,11 +12,11 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class OperationListResult
     {
         /// <summary> The Operation items on this page. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("value")]
+        [JsonPropertyName("value")]
         public IList<Operation> Value { get; set; }
 
         /// <summary> The link to the next page of items. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("nextLink")]
-        public System.Uri NextLink { get; set; }
+        [JsonPropertyName("nextLink")]
+        public Uri NextLink { get; set; }
     }
 }

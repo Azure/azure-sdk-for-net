@@ -15,31 +15,31 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class ArmOperationStatusResourceProvisioningState
     {
         /// <summary> The operation status. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("status")]
+        [JsonPropertyName("status")]
         public ResourceProvisioningState Status { get; set; }
 
         /// <summary> The unique identifier for the operationStatus resource. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
 
         /// <summary> The name of the operationStatus resource. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary> Operation start time. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("startTime")]
+        [JsonPropertyName("startTime")]
         public DateTimeOffset? StartTime { get; set; }
 
         /// <summary> Operation complete time. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("endTime")]
+        [JsonPropertyName("endTime")]
         public DateTimeOffset? EndTime { get; set; }
 
         /// <summary> The progress made toward completing the operation. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("percentComplete")]
+        [JsonPropertyName("percentComplete")]
         public double? PercentComplete { get; set; }
 
         /// <summary> Errors that occurred if the operation ended with Canceled or Failed status. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("error")]
+        [JsonPropertyName("error")]
         public ErrorDetail Error { get; set; }
     }
 }

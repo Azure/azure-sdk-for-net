@@ -12,27 +12,27 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class DatabaseProperties
     {
         /// <summary> The collation of the database. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("collation")]
+        [JsonPropertyName("collation")]
         public string Collation { get; set; }
 
         /// <summary> The max size of the database in bytes. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("maxSizeBytes")]
+        [JsonPropertyName("maxSizeBytes")]
         public long? MaxSizeBytes { get; set; }
 
         /// <summary> The status of the database. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
         /// <summary> The creation date of the database. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("creationDate")]
+        [JsonPropertyName("creationDate")]
         public DateTimeOffset? CreationDate { get; set; }
 
         /// <summary> The provisioning state. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("provisioningState")]
+        [JsonPropertyName("provisioningState")]
         public ProvisioningState? ProvisioningState { get; set; }
 
         /// <summary> The resource ID of the elastic pool containing this database. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("elasticPoolId")]
+        [JsonPropertyName("elasticPoolId")]
         public string ElasticPoolId { get; set; }
     }
 }

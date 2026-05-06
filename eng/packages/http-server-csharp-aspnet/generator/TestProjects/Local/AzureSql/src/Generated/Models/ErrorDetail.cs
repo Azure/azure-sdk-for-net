@@ -11,23 +11,23 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class ErrorDetail
     {
         /// <summary> The error code. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("code")]
+        [JsonPropertyName("code")]
         public string Code { get; set; }
 
         /// <summary> The error message. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("message")]
+        [JsonPropertyName("message")]
         public string Message { get; set; }
 
         /// <summary> The error target. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("target")]
+        [JsonPropertyName("target")]
         public string Target { get; set; }
 
         /// <summary> The error details. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("details")]
+        [JsonPropertyName("details")]
         public IList<ErrorDetail> Details { get; set; }
 
         /// <summary> The error additional info. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("additionalInfo")]
+        [JsonPropertyName("additionalInfo")]
         public IList<ErrorAdditionalInfo> AdditionalInfo { get; set; }
     }
 }

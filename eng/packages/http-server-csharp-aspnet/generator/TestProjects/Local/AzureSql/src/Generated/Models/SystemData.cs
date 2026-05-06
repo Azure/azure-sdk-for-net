@@ -12,27 +12,27 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class SystemData
     {
         /// <summary> The identity that created the resource. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("createdBy")]
+        [JsonPropertyName("createdBy")]
         public string CreatedBy { get; set; }
 
         /// <summary> The type of identity that created the resource. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("createdByType")]
+        [JsonPropertyName("createdByType")]
         public CreatedByType? CreatedByType { get; set; }
 
         /// <summary> The timestamp of resource creation (UTC). </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("createdAt")]
+        [JsonPropertyName("createdAt")]
         public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary> The identity that last modified the resource. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("lastModifiedBy")]
+        [JsonPropertyName("lastModifiedBy")]
         public string LastModifiedBy { get; set; }
 
         /// <summary> The type of identity that last modified the resource. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("lastModifiedByType")]
+        [JsonPropertyName("lastModifiedByType")]
         public CreatedByType? LastModifiedByType { get; set; }
 
         /// <summary> The timestamp of resource last modification (UTC). </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("lastModifiedAt")]
+        [JsonPropertyName("lastModifiedAt")]
         public DateTimeOffset? LastModifiedAt { get; set; }
     }
 }

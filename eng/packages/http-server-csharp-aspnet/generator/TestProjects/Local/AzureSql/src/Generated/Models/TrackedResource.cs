@@ -11,11 +11,11 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class TrackedResource : Resource
     {
         /// <summary> Resource tags. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("tags")]
+        [JsonPropertyName("tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("location")]
+        [JsonPropertyName("location")]
         public string Location { get; set; }
     }
 }

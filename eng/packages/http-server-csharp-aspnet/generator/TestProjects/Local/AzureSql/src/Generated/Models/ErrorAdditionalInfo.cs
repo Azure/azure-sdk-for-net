@@ -11,11 +11,11 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
     public partial class ErrorAdditionalInfo
     {
         /// <summary> The additional info type. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
         /// <summary> The additional info. </summary>
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("info")]
-        public System.Text.Json.JsonElement? Info { get; set; }
+        [JsonPropertyName("info")]
+        public JsonElement? Info { get; set; }
     }
 }
