@@ -1,6 +1,6 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.11.0 (2026-05-05)
 
 ### Features Added
 
@@ -14,10 +14,6 @@
 ### Breaking Changes
 
 - `IClientBuilder` no longer inherits from `IHostApplicationBuilder`. The internal `ClientBuilder` implementation now uses composition instead of inheritance. `PostConfigure` return type changed from `IHostApplicationBuilder` to `IClientBuilder`. `AddClient` and `AddKeyedClient` continue to return `IClientBuilder`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.10.0 (2026-03-16)
 
