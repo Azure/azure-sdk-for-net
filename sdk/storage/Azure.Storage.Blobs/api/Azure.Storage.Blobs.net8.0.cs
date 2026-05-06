@@ -334,21 +334,6 @@ namespace Azure.Storage.Blobs.Models
         RehydratePendingToCold = 2,
         RehydratePendingToSmart = 3,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AuthenticationType : System.IEquatable<Azure.Storage.Blobs.Models.AuthenticationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AuthenticationType(string value) { throw null; }
-        public static Azure.Storage.Blobs.Models.AuthenticationType Hmac { get { throw null; } }
-        public bool Equals(Azure.Storage.Blobs.Models.AuthenticationType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Storage.Blobs.Models.AuthenticationType left, Azure.Storage.Blobs.Models.AuthenticationType right) { throw null; }
-        public static implicit operator Azure.Storage.Blobs.Models.AuthenticationType (string value) { throw null; }
-        public static bool operator !=(Azure.Storage.Blobs.Models.AuthenticationType left, Azure.Storage.Blobs.Models.AuthenticationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class BlobAccessPolicy
     {
         public BlobAccessPolicy() { }
@@ -1106,7 +1091,6 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlockInfo BlockInfo(byte[] contentHash, byte[] contentCrc64, string encryptionKeySha256) { throw null; }
         public static Azure.Storage.Blobs.Models.BlockInfo BlockInfo(byte[] contentHash, byte[] contentCrc64, string encryptionKeySha256, string encryptionScope) { throw null; }
         public static Azure.Storage.Blobs.Models.BlockList BlockList(System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> committedBlocks = null, System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> uncommittedBlocks = null) { throw null; }
-        public static Azure.Storage.Blobs.Models.CreateSessionResponse CreateSessionResponse(string id = null, System.DateTimeOffset? expiration = default(System.DateTimeOffset?), Azure.Storage.Blobs.Models.AuthenticationType? authenticationType = default(Azure.Storage.Blobs.Models.AuthenticationType?), Azure.Storage.Blobs.Models.SessionCredentials credentials = null) { throw null; }
         public static Azure.Storage.Blobs.Models.GetBlobTagResult GetBlobTagResult(System.Collections.Generic.IDictionary<string, string> tags) { throw null; }
         public static Azure.Storage.Blobs.Models.ObjectReplicationPolicy ObjectReplicationPolicy(string policyId, System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationRule> rules) { throw null; }
         public static Azure.Storage.Blobs.Models.ObjectReplicationRule ObjectReplicationRule(string ruleId, Azure.Storage.Blobs.Models.ObjectReplicationStatus replicationStatus) { throw null; }
@@ -1114,7 +1098,6 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.PageInfo PageInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, byte[] contentCrc64, long blobSequenceNumber, string encryptionKeySha256) { throw null; }
         public static Azure.Storage.Blobs.Models.PageInfo PageInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, byte[] contentCrc64, long blobSequenceNumber, string encryptionKeySha256, string encryptionScope) { throw null; }
         public static Azure.Storage.Blobs.Models.PageRangesInfo PageRangesInfo(System.DateTimeOffset lastModified, Azure.ETag eTag, long blobContentLength, System.Collections.Generic.IEnumerable<Azure.HttpRange> pageRanges, System.Collections.Generic.IEnumerable<Azure.HttpRange> clearRanges) { throw null; }
-        public static Azure.Storage.Blobs.Models.SessionCredentials SessionCredentials(string sessionToken = null, string sessionKey = null) { throw null; }
         public static Azure.Storage.Blobs.Models.TaggedBlobItem TaggedBlobItem(string blobName = null, string blobContainerName = null) { throw null; }
         public static Azure.Storage.Blobs.Models.TaggedBlobItem TaggedBlobItem(string blobName = null, string blobContainerName = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, System.DateTimeOffset signedStartsOn, System.DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value) { throw null; }
@@ -1271,19 +1254,6 @@ namespace Azure.Storage.Blobs.Models
         Success = 1,
         Aborted = 2,
         Failed = 3,
-    }
-    public partial class CreateSessionConfiguration
-    {
-        public CreateSessionConfiguration(Azure.Storage.Blobs.Models.AuthenticationType authenticationType) { }
-        public Azure.Storage.Blobs.Models.AuthenticationType AuthenticationType { get { throw null; } }
-    }
-    public partial class CreateSessionResponse
-    {
-        internal CreateSessionResponse() { }
-        public Azure.Storage.Blobs.Models.AuthenticationType? AuthenticationType { get { throw null; } }
-        public Azure.Storage.Blobs.Models.SessionCredentials Credentials { get { throw null; } }
-        public System.DateTimeOffset? Expiration { get { throw null; } }
-        public string Id { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CustomerProvidedKey : System.IEquatable<Azure.Storage.Blobs.Models.CustomerProvidedKey>
@@ -1533,12 +1503,6 @@ namespace Azure.Storage.Blobs.Models
         Max = 0,
         Update = 1,
         Increment = 2,
-    }
-    public partial class SessionCredentials
-    {
-        internal SessionCredentials() { }
-        public string SessionKey { get { throw null; } }
-        public string SessionToken { get { throw null; } }
     }
     public enum SessionMode
     {
