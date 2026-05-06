@@ -13,6 +13,8 @@ features in `System.ClientModel`.
 - [Simple Dependency Injection Example](#simple-dependency-injection-example)
 - [Keyed Services Example](#keyed-services-example)
 - [Overriding Credentials Example](#overriding-credentials-example)
+- [Custom Credential Resolver Example](#custom-credential-resolver-example)
+- [Dependency Injection with a Credential Resolver](#dependency-injection-with-a-credential-resolver)
 - [Configuration Reference Syntax](#configuration-reference-syntax)
 
 ## Simple Configuration Example
@@ -162,6 +164,96 @@ Override credentials from configuration programmatically using the `PostConfigur
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.AddClient<MyClient, MyClientSettings>("MyClient")
     .PostConfigure(settings => settings.CredentialProvider = new MyTokenProvider());
+
+IServiceProvider provider = builder.Services.BuildServiceProvider();
+
+MyClient client = provider.GetRequiredService<MyClient>();
+```
+
+## Custom Credential Resolver Example
+
+`CredentialResolver` is the extensibility point for plugging new credential
+sources into the configuration pipeline. A resolver inspects a credential
+section (typically dispatching on `CredentialSource`) and returns an
+`AuthenticationTokenProvider` it knows how to construct, or returns `false`
+to defer to the next resolver in the chain.
+
+**MyCredentialResolver.cs:**
+```csharp
+public class MyCredentialResolver : CredentialResolver
+{
+    public override bool TryResolve(
+        IConfigurationSection credentialSection,
+        out AuthenticationTokenProvider? provider)
+    {
+        if (string.Equals(credentialSection["CredentialSource"], "MyCredential", StringComparison.OrdinalIgnoreCase))
+        {
+            provider = new MyTokenProvider();
+            return true;
+        }
+
+        provider = null;
+        return false;
+    }
+}
+```
+
+**appsettings.json:**
+```json
+{
+  "MyClient": {
+    "Endpoint": "https://api.example.com",
+    "Credential": {
+      "CredentialSource": "MyCredential"
+    }
+  }
+}
+```
+
+Use `IConfiguration.GetCredential` to walk a chain of resolvers against the
+named section. The first resolver whose `TryResolve` returns `true` wins.
+
+```C# Snippet:CustomCredentialResolverExample
+ConfigurationManager configuration = new();
+configuration.AddJsonFile("appsettings.json");
+
+// Resolve the credential by walking a chain of CredentialResolver
+// instances against the named section. The first resolver whose
+// TryResolve returns true wins.
+AuthenticationTokenProvider? credential = configuration.GetCredential(
+    "MyClient:Credential",
+    new MyCredentialResolver());
+```
+
+## Dependency Injection with a Credential Resolver
+
+When using DI, register the resolver once with `AddCredentialResolver<T>`.
+`AddClient` and `AddKeyedClient` then auto-resolve credentials from the
+registered resolver chain — no `PostConfigure` callback required.
+
+`AddCredentialResolver<T>` is idempotent by implementation type: calling it
+twice with the same `T` registers a single instance.
+
+**appsettings.json:**
+```json
+{
+  "MyClient": {
+    "Endpoint": "https://api.example.com",
+    "Credential": {
+      "CredentialSource": "MyCredential"
+    }
+  }
+}
+```
+
+```C# Snippet:DependencyInjectionWithCredentialResolverExample
+HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+
+// Register the resolver once. AddClient/AddKeyedClient will then
+// auto-resolve credentials from the registered resolver chain — no
+// PostConfigure(settings => settings.CredentialProvider = ...) needed.
+builder.AddCredentialResolver<MyCredentialResolver>();
+builder.AddClient<MyClient, MyClientSettings>("MyClient");
 
 IServiceProvider provider = builder.Services.BuildServiceProvider();
 

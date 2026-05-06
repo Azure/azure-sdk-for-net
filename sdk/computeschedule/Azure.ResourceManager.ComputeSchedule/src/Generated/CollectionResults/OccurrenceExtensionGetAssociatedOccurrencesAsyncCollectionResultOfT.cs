@@ -15,7 +15,7 @@ using Azure.ResourceManager.ComputeSchedule.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
-    internal partial class OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT : AsyncPageable<OccurrenceExtensionResourceData>
+    internal partial class OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT : AsyncPageable<OccurrenceExtensionData>
     {
         private readonly OccurrenceExtension _client;
         private readonly string _resourceUri;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<OccurrenceExtensionResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<OccurrenceExtensionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                     yield break;
                 }
                 OccurrenceExtensionResourceListResult result = OccurrenceExtensionResourceListResult.FromResponse(response);
-                yield return Page<OccurrenceExtensionResourceData>.FromValues((IReadOnlyList<OccurrenceExtensionResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<OccurrenceExtensionData>.FromValues((IReadOnlyList<OccurrenceExtensionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

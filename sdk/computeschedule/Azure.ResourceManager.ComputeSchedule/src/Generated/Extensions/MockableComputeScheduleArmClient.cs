@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
 
         private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2026-04-15-preview");
 
         private ClientDiagnostics OccurrenceExtensionClientDiagnostics => _occurrenceExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OccurrenceExtension OccurrenceExtensionRestClient => _occurrenceExtensionRestClient ??= new OccurrenceExtension(OccurrenceExtensionClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private OccurrenceExtension OccurrenceExtensionRestClient => _occurrenceExtensionRestClient ??= new OccurrenceExtension(OccurrenceExtensionClientDiagnostics, Pipeline, Endpoint, "2026-04-15-preview");
 
         /// <summary> Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,15 +139,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceExtensionResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OccurrenceExtensionResourceData> GetAssociatedOccurrencesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceExtensionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OccurrenceExtensionData> GetAssociatedOccurrencesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -171,15 +171,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceExtensionResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OccurrenceExtensionResourceData> GetAssociatedOccurrences(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceExtensionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OccurrenceExtensionData> GetAssociatedOccurrences(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
