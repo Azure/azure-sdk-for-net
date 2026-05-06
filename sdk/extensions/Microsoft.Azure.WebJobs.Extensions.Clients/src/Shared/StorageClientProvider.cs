@@ -150,7 +150,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
                 // endpoint even when `accountName` is also configured (which the Azure Functions
                 // host injects automatically when managed-identity storage is used).
                 string uriStr;
-                if ((uriStr = configuration.GetValue<string>(serviceUriConfig)) != null)
+                if ((uriStr = configuration.GetValue<string>(serviceUriConfig)) is { Length: > 0 })
                 {
                     serviceUri = new Uri(uriStr);
                     return true;

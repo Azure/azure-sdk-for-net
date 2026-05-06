@@ -76,6 +76,47 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.IsNull(uri);
         }
 
+        // Regression test: an empty `{subdomain}ServiceUri` should be ignored so the
+        // `accountName` fallback can still produce a valid service URI. This matters in
+        // sovereign clouds where tooling may inject empty placeholders.
+        [Test]
+        public void TryGetServiceUri_EmptyBlobServiceUri_FallsBackToAccountName()
+        {
+            var provider = CreateProvider(new Dictionary<string, string>
+            {
+                ["accountName"] = "myacct",
+                ["blobServiceUri"] = string.Empty,
+            });
+
+            Assert.IsTrue(provider.TryGetServiceUri(out Uri uri));
+            Assert.AreEqual("https://myacct.blob.core.windows.net/", uri.AbsoluteUri);
+        }
+
+        [Test]
+        public void TryGetServiceUri_NullBlobServiceUri_FallsBackToAccountName()
+        {
+            var provider = CreateProvider(new Dictionary<string, string>
+            {
+                ["accountName"] = "myacct",
+                ["blobServiceUri"] = null,
+            });
+
+            Assert.IsTrue(provider.TryGetServiceUri(out Uri uri));
+            Assert.AreEqual("https://myacct.blob.core.windows.net/", uri.AbsoluteUri);
+        }
+
+        [Test]
+        public void TryGetServiceUri_EmptyBlobServiceUriWithoutAccountName_ReturnsFalse()
+        {
+            var provider = CreateProvider(new Dictionary<string, string>
+            {
+                ["blobServiceUri"] = string.Empty,
+            });
+
+            Assert.IsFalse(provider.TryGetServiceUri(out Uri uri));
+            Assert.IsNull(uri);
+        }
+
         private static TestStorageClientProvider CreateProvider(IDictionary<string, string> settings)
         {
             IConfiguration configuration = new ConfigurationBuilder()
