@@ -5,7 +5,10 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
 using Azure.Generator.Management.Snippets;
+using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
@@ -77,6 +80,32 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
             [];
+
+        /// <inheritdoc/>
+        protected override Type? CreateFrameworkType(string fullyQualifiedTypeName)
+        {
+            return fullyQualifiedTypeName switch
+            {
+                "Azure.Core.ResourceType" => typeof(ResourceType),
+                "Azure.ResourceManager.ArmClient" => typeof(ArmClient),
+                "Azure.ResourceManager.ArmClientOptions" => typeof(ArmClientOptions),
+                "Azure.ResourceManager.ArmCollection" => typeof(ArmCollection),
+                "Azure.ResourceManager.ArmResource" => typeof(ArmResource),
+                "Azure.ResourceManager.Models.ArmPlan" => typeof(ArmPlan),
+                "Azure.ResourceManager.Models.ExtendedLocation" => typeof(ExtendedLocation),
+                "Azure.ResourceManager.Models.ExtendedLocationType" => typeof(ExtendedLocationType),
+                "Azure.ResourceManager.Models.ManagedServiceIdentity" => typeof(ManagedServiceIdentity),
+                "Azure.ResourceManager.Models.ManagedServiceIdentityType" => typeof(ManagedServiceIdentityType),
+                "Azure.ResourceManager.Models.OperationStatusResult" => typeof(OperationStatusResult),
+                "Azure.ResourceManager.Models.SubResource" => typeof(SubResource),
+                "Azure.ResourceManager.Models.SystemData" => typeof(SystemData),
+                "Azure.ResourceManager.Models.UserAssignedIdentity" => typeof(UserAssignedIdentity),
+                "Azure.ResourceManager.Models.WritableSubResource" => typeof(WritableSubResource),
+                "Azure.ResourceManager.Resources.Models.ResourceData" => typeof(ResourceData),
+                "Azure.ResourceManager.Resources.Models.TrackedResourceData" => typeof(TrackedResourceData),
+                _ => base.CreateFrameworkType(fullyQualifiedTypeName)
+            };
+        }
 
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)

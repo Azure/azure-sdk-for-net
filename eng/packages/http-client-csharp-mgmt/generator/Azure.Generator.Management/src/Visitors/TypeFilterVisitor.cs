@@ -12,7 +12,7 @@ internal class TypeFilterVisitor : ScmLibraryVisitor
     protected override TypeProvider? VisitType(TypeProvider type)
     {
         // This visitor is used to filter types, so we return null to remove the type from the output.
-        if (type is not null && type.Name.EndsWith("ClientBuilderExtensions"))
+        if (type is not null && (type.Name.EndsWith("ClientBuilderExtensions") || type.Name.EndsWith("ClientHostExtensions")))
         {
             return null;
         }
