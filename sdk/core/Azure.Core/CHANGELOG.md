@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `RequestContent.Create(BinaryContent)` overload that adapts a `System.ClientModel.BinaryContent` instance into a `Azure.Core.RequestContent` instance.
+
 ### Breaking Changes
 
 ### Bugs Fixed
