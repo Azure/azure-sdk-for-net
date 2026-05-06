@@ -8,6 +8,7 @@ using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -67,6 +68,20 @@ namespace Azure.Generator.Mgmt.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
             var result = plugin.Object.TypeFactory.CreateEnum(enumType, null);
             Assert.That(result, Is.Null);
+        }
+
+        [TestCase("Azure.Core.ipV4Address")]
+        [TestCase("Azure.Core.ipV6Address")]
+        public void AzureCoreIpAddressPrimitiveTypeIsReplacedWithIPAddress(string crossLanguageDefinitionId)
+        {
+            var primitiveType = InputFactory.Primitive.String("ipAddress", crossLanguageDefinitionId);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin();
+            var result = plugin.Object.TypeFactory.CreateCSharpType(primitiveType);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.IsFrameworkType, Is.True);
+            Assert.That(result.FrameworkType, Is.EqualTo(typeof(IPAddress)));
         }
 
         [TestCase]
