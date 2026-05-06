@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 throw new FormatException($"The model {nameof(CosmosDBAccountBackupPolicy)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(BackupPolicyType.ToString());
             if (Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);

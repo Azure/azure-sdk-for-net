@@ -12,7 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </summary>
-    public readonly partial struct CosmosDBFleetspaceServiceTier : IEquatable<CosmosDBFleetspaceServiceTier>
+    internal readonly partial struct CosmosDBFleetspaceServiceTier : IEquatable<CosmosDBFleetspaceServiceTier>
     {
         private readonly string _value;
         private const string GeneralPurposeValue = "GeneralPurpose";

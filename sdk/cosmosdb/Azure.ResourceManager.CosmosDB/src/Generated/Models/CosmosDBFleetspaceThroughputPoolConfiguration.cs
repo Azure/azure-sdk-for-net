@@ -12,7 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Configuration for throughput pool in the fleetspace. </summary>
-    public partial class CosmosDBFleetspaceThroughputPoolConfiguration
+    internal partial class CosmosDBFleetspaceThroughputPoolConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

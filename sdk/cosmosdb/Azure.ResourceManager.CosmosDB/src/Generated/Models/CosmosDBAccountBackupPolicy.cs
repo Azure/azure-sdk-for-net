@@ -21,26 +21,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountBackupPolicy"/>. </summary>
-        /// <param name="type"> Describes the mode of backups. </param>
-        private protected CosmosDBAccountBackupPolicy(BackupPolicyType @type)
+        /// <param name="backupPolicyType"> Describes the mode of backups. </param>
+        private protected CosmosDBAccountBackupPolicy(BackupPolicyType backupPolicyType)
         {
-            Type = @type;
+            BackupPolicyType = backupPolicyType;
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountBackupPolicy"/>. </summary>
-        /// <param name="type"> Describes the mode of backups. </param>
+        /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBAccountBackupPolicy(BackupPolicyType @type, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBAccountBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            BackupPolicyType = backupPolicyType;
             MigrationState = migrationState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the mode of backups. </summary>
         [WirePath("type")]
-        internal BackupPolicyType Type { get; set; }
+        internal BackupPolicyType BackupPolicyType { get; set; }
 
         /// <summary> The object representing the state of the migration between the backup policies. </summary>
         [WirePath("migrationState")]

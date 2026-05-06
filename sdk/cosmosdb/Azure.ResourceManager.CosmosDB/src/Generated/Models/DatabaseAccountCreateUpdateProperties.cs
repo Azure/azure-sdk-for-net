@@ -12,7 +12,6 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Properties to create and update Azure Cosmos DB database accounts. </summary>
     internal partial class DatabaseAccountCreateUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,9 +19,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="DatabaseAccountCreateUpdateProperties"/>. </summary>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
-        public DatabaseAccountCreateUpdateProperties(AzureLocation locations)
+        /// <param name="databaseAccountOfferType"> The offer type for the Cosmos DB database account. </param>
+        public DatabaseAccountCreateUpdateProperties(AzureLocation locations, CosmosDBAccountOfferType databaseAccountOfferType)
         {
             Locations = locations;
+            DatabaseAccountOfferType = databaseAccountOfferType;
             IpRules = new ChangeTrackingList<CosmosDBIPAddressOrRange>();
             Capabilities = new ChangeTrackingList<CosmosDBAccountCapability>();
             VirtualNetworkRules = new ChangeTrackingList<CosmosDBVirtualNetworkRule>();
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
         /// <param name="enableAllVersionsAndDeletesChangeFeed"> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseAccountCreateUpdateProperties(ConsistencyPolicy consistencyPolicy, AzureLocation locations, string databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, CapacityMode? capacityMode, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, string customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, bool? enablePerRegionPerPartitionAutoscale, bool? enableAllVersionsAndDeletesChangeFeed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseAccountCreateUpdateProperties(ConsistencyPolicy consistencyPolicy, AzureLocation locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, CapacityMode? capacityMode, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, string customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, bool? enablePerRegionPerPartitionAutoscale, bool? enableAllVersionsAndDeletesChangeFeed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConsistencyPolicy = consistencyPolicy;
             Locations = locations;
@@ -123,13 +124,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("locations")]
         public AzureLocation Locations { get; }
 
-        /// <summary> The offer type for the Cosmos DB database account. </summary>
-        [WirePath("databaseAccountOfferType")]
-        internal string DatabaseAccountOfferType { get; } = "Standard";
-
         /// <summary> List of IpRules. </summary>
         [WirePath("ipRules")]
-        public IList<CosmosDBIPAddressOrRange> IpRules { get; } = new ChangeTrackingList<CosmosDBIPAddressOrRange>();
+        public IList<CosmosDBIPAddressOrRange> IpRules { get; }
 
         /// <summary> Flag to indicate whether to enable/disable Virtual Network ACL rules. </summary>
         [WirePath("isVirtualNetworkFilterEnabled")]
@@ -141,11 +138,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> List of Cosmos DB capabilities for the account. </summary>
         [WirePath("capabilities")]
-        public IList<CosmosDBAccountCapability> Capabilities { get; } = new ChangeTrackingList<CosmosDBAccountCapability>();
+        public IList<CosmosDBAccountCapability> Capabilities { get; }
 
         /// <summary> List of Virtual Network ACL rules configured for the Cosmos DB account. </summary>
         [WirePath("virtualNetworkRules")]
-        public IList<CosmosDBVirtualNetworkRule> VirtualNetworkRules { get; } = new ChangeTrackingList<CosmosDBVirtualNetworkRule>();
+        public IList<CosmosDBVirtualNetworkRule> VirtualNetworkRules { get; }
 
         /// <summary> Enables the account to write in multiple locations. </summary>
         [WirePath("enableMultipleWriteLocations")]
@@ -201,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
         [WirePath("cors")]
-        public IList<CosmosDBAccountCorsPolicy> Cors { get; } = new ChangeTrackingList<CosmosDBAccountCorsPolicy>();
+        public IList<CosmosDBAccountCorsPolicy> Cors { get; }
 
         /// <summary> Indicates what services are allowed to bypass firewall checks. </summary>
         [WirePath("networkAclBypass")]
@@ -209,7 +206,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
         [WirePath("networkAclBypassResourceIds")]
-        public IList<string> NetworkAclBypassResourceIds { get; } = new ChangeTrackingList<string>();
+        public IList<string> NetworkAclBypassResourceIds { get; }
 
         /// <summary> The Object representing the different Diagnostic log settings for the Cosmos DB Account. </summary>
         [WirePath("diagnosticLogSettings")]

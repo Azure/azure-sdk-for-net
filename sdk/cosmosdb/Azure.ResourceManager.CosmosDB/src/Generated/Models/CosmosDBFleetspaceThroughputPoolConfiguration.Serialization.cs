@@ -14,7 +14,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Configuration for throughput pool in the fleetspace. </summary>
-    public partial class CosmosDBFleetspaceThroughputPoolConfiguration : IJsonModel<CosmosDBFleetspaceThroughputPoolConfiguration>
+    internal partial class CosmosDBFleetspaceThroughputPoolConfiguration : IJsonModel<CosmosDBFleetspaceThroughputPoolConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

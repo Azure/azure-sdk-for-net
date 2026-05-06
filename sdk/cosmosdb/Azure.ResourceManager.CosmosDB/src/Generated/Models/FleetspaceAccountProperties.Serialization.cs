@@ -13,7 +13,6 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> An Azure Cosmos DB Global Database Account which is part of a Fleetspace Account. </summary>
     internal partial class FleetspaceAccountProperties : IJsonModel<FleetspaceAccountProperties>
     {
         /// <param name="data"> The data to parse. </param>

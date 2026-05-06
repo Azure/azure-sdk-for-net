@@ -14,7 +14,6 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Properties to create and update Azure Cosmos DB database accounts. </summary>
     internal partial class DatabaseAccountCreateUpdateProperties : IJsonModel<DatabaseAccountCreateUpdateProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DatabaseAccountCreateUpdateProperties"/> for deserialization. </summary>
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("locations"u8);
             writer.WriteStringValue(Locations);
             writer.WritePropertyName("databaseAccountOfferType"u8);
-            writer.WriteStringValue(DatabaseAccountOfferType);
+            writer.WriteStringValue(DatabaseAccountOfferType.ToString());
             if (Optional.IsCollectionDefined(IpRules))
             {
                 writer.WritePropertyName("ipRules"u8);
@@ -343,7 +342,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             ConsistencyPolicy consistencyPolicy = default;
             AzureLocation locations = default;
-            string databaseAccountOfferType = default;
+            CosmosDBAccountOfferType databaseAccountOfferType = default;
             IList<CosmosDBIPAddressOrRange> ipRules = default;
             bool? isVirtualNetworkFilterEnabled = default;
             bool? enableAutomaticFailover = default;
@@ -399,7 +398,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("databaseAccountOfferType"u8))
                 {
-                    databaseAccountOfferType = prop.Value.GetString();
+                    databaseAccountOfferType = new CosmosDBAccountOfferType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipRules"u8))

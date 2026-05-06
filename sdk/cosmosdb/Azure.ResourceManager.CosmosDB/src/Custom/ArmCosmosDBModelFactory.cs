@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 load: load,
                 tokens: tokens,
                 size: size,
-                hostId: hostId?.ToString(),
+                hostId: hostId,
                 rack: rack,
                 timestamp: timestamp,
                 diskUsedKB: diskUsedKB,

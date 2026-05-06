@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
         /// <param name="isLatestModel"> If node has been updated to latest model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IReadOnlyList<string> tokens, int? size, string hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage, bool? isLatestModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage, bool? isLatestModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Address = address;
             State = state;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The network ID of the node. </summary>
         [WirePath("hostID")]
-        public string HostId { get; }
+        public Guid? HostId { get; }
 
         /// <summary> The rack this node is part of. </summary>
         [WirePath("rack")]

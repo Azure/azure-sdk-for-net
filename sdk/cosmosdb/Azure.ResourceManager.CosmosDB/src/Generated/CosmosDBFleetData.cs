@@ -39,19 +39,5 @@ namespace Azure.ResourceManager.CosmosDB
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
-
-        /// <summary> Properties to update Azure Cosmos DB fleet resource. </summary>
-        [WirePath("properties")]
-        internal FleetResourceProperties Properties { get; set; }
-
-        /// <summary> A provisioning state of the Fleet. </summary>
-        [WirePath("properties.provisioningState")]
-        public CosmosDBStatus? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
     }
 }

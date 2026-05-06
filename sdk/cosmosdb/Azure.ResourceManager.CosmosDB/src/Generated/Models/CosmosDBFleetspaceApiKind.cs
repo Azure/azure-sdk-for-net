@@ -12,7 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </summary>
-    public readonly partial struct CosmosDBFleetspaceApiKind : IEquatable<CosmosDBFleetspaceApiKind>
+    internal readonly partial struct CosmosDBFleetspaceApiKind : IEquatable<CosmosDBFleetspaceApiKind>
     {
         private readonly string _value;
         private const string NoSQLValue = "NoSQL";

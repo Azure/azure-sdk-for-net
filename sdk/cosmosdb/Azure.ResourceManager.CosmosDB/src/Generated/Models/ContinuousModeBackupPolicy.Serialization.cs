@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            BackupPolicyType @type = default;
+            BackupPolicyType backupPolicyType = default;
             BackupPolicyMigrationState migrationState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ContinuousModeProperties continuousModeProperties = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new BackupPolicyType(prop.Value.GetString());
+                    backupPolicyType = new BackupPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("migrationState"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContinuousModeBackupPolicy(@type, migrationState, additionalBinaryDataProperties, continuousModeProperties);
+            return new ContinuousModeBackupPolicy(backupPolicyType, migrationState, additionalBinaryDataProperties, continuousModeProperties);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> Properties to update Azure Cosmos DB database accounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBAccountPatch(IDictionary<string, string> tags, string location, ManagedServiceIdentity identity, DatabaseAccountUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBAccountPatch(IDictionary<string, string> tags, AzureLocation? location, ManagedServiceIdentity identity, DatabaseAccountUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Location = location;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The location of the resource group to which the resource belongs. </summary>
         [WirePath("location")]
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
@@ -76,19 +76,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
         [WirePath("properties.locations")]
-        public AzureLocation? Locations
+        public IList<AzureLocation> Locations
         {
             get
-            {
-                return Properties is null ? default : Properties.Locations;
-            }
-            set
             {
                 if (Properties is null)
                 {
                     Properties = new DatabaseAccountUpdateProperties();
                 }
-                Properties.Locations = value;
+                return Properties.Locations;
             }
         }
 

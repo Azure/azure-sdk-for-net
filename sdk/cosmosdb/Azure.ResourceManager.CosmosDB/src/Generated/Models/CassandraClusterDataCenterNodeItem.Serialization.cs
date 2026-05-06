@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostID"u8);
-                writer.WriteStringValue(HostId);
+                writer.WriteStringValue(HostId.Value);
             }
             if (Optional.IsDefined(Rack))
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string load = default;
             IReadOnlyList<string> tokens = default;
             int? size = default;
-            string hostId = default;
+            Guid? hostId = default;
             string rack = default;
             string timestamp = default;
             long? diskUsedKB = default;
@@ -298,7 +298,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("hostID"u8))
                 {
-                    hostId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hostId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rack"u8))

@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PeriodicModeBackupPolicy"/>. </summary>
-        /// <param name="type"> Describes the mode of backups. </param>
+        /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="periodicModeProperties"> Configuration values for periodic mode backup. </param>
-        internal PeriodicModeBackupPolicy(BackupPolicyType @type, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeriodicModeProperties periodicModeProperties) : base(@type, migrationState, additionalBinaryDataProperties)
+        internal PeriodicModeBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeriodicModeProperties periodicModeProperties) : base(backupPolicyType, migrationState, additionalBinaryDataProperties)
         {
             PeriodicModeProperties = periodicModeProperties;
         }

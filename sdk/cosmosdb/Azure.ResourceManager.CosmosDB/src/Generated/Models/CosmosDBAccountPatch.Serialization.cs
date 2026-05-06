@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation? location = default;
             ManagedServiceIdentity identity = default;
             DatabaseAccountUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -190,7 +190,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

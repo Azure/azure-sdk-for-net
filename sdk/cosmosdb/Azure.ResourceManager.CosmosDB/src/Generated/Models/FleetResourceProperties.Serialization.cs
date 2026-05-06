@@ -13,7 +13,6 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Properties to update Azure Cosmos DB fleet resource. </summary>
     internal partial class FleetResourceProperties : IJsonModel<FleetResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>

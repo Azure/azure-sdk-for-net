@@ -80,10 +80,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("consistencyPolicy"u8);
                 writer.WriteObjectValue(ConsistencyPolicy, options);
             }
-            if (Optional.IsDefined(Locations))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
-                writer.WriteStringValue(Locations.Value);
+                writer.WriteStartArray();
+                foreach (AzureLocation item in Locations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(IPRules))
             {
@@ -328,7 +333,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             ConsistencyPolicy consistencyPolicy = default;
-            AzureLocation? locations = default;
+            IList<AzureLocation> locations = default;
             IList<CosmosDBIPAddressOrRange> ipRules = default;
             bool? isVirtualNetworkFilterEnabled = default;
             bool? enableAutomaticFailover = default;
@@ -381,7 +386,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    locations = new AzureLocation(prop.Value.GetString());
+                    List<AzureLocation> array = new List<AzureLocation>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new AzureLocation(item.GetString()));
+                    }
+                    locations = array;
                     continue;
                 }
                 if (prop.NameEquals("ipRules"u8))
@@ -721,7 +731,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             return new DatabaseAccountUpdateProperties(
                 consistencyPolicy,
-                locations,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
                 ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(),
                 isVirtualNetworkFilterEnabled,
                 enableAutomaticFailover,
