@@ -132,15 +132,15 @@ public partial class DataGenerationJobs
     }
 
     /// <summary> Creates a data generation job. </summary>
-    /// <param name="body"> The job to create. </param>
+    /// <param name="job"> The job to create. </param>
     /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<DataGenerationJob> CreateGenerationJob(DataGenerationJob body, string operationId = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<DataGenerationJob> CreateGenerationJob(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         return CreateGenerationJob(
-            job: body,
+            job: job,
             foundryFeatures: default,
             operationId: operationId,
             cancellationToken: cancellationToken
@@ -148,15 +148,15 @@ public partial class DataGenerationJobs
     }
 
     /// <summary> Creates a data generation job. </summary>
-    /// <param name="body"> The job to create. </param>
+    /// <param name="job"> The job to create. </param>
     /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public async virtual Task<ClientResult<DataGenerationJob>> CreateGenerationJobAsync(DataGenerationJob body, string operationId = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<DataGenerationJob>> CreateGenerationJobAsync(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         return await CreateGenerationJobAsync(
-            job: body,
+            job: job,
             foundryFeatures: default,
             operationId: operationId,
             cancellationToken: cancellationToken

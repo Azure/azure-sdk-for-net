@@ -223,7 +223,7 @@ namespace Azure.AI.Projects
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
         public EvaluatorGenerationJobs EvaluatorGenerationJobs => GetEvaluatorGenerationJobsClient();
-        public DataGenerationJobs DataGenerationJob => GetDataGenerationJobsClient();
+        public DataGenerationJobs DataGenerationJobs => GetDataGenerationJobsClient();
 
         private static PipelineMessageClassifier s_pipelineMessageClassifier;
         internal static PipelineMessageClassifier PipelineMessageClassifier
