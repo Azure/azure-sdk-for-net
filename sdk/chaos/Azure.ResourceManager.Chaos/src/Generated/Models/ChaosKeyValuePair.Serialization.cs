@@ -13,7 +13,7 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> A map to describe the settings of an action. </summary>
+    /// <summary> A map used to describe parameters for actions or configurations. </summary>
     public partial class ChaosKeyValuePair : IJsonModel<ChaosKeyValuePair>
     {
         /// <summary> Initializes a new instance of <see cref="ChaosKeyValuePair"/> for deserialization. </summary>
