@@ -14,49 +14,46 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.HDInsight.Models;
+using Azure.ResourceManager.ProviderHub.Models;
 
-namespace Azure.ResourceManager.HDInsight
+namespace Azure.ResourceManager.ProviderHub
 {
-    internal partial class HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT : AsyncPageable<HDInsightClusterHostInfo>
+    internal partial class MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT : AsyncPageable<OperationsDefinition>
     {
-        private readonly VirtualMachines _client;
-        private readonly string _subscriptionId;
-        private readonly string _resourceGroupName;
-        private readonly string _clusterName;
+        private readonly Operations _client;
+        private readonly Guid _subscriptionId;
+        private readonly string _providerNamespace;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The VirtualMachines client used to send requests. </param>
+        /// <summary> Initializes a new instance of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Operations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT(VirtualMachines client, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context, string diagnosticScope)
+        public MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT(Operations client, Guid subscriptionId, string providerNamespace, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
-            _clusterName = clusterName;
+            _providerNamespace = providerNamespace;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<HDInsightClusterHostInfo>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<OperationsDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<HDInsightClusterHostInfo> result = ParseArrayFromResponse(response);
-            yield return Page<HDInsightClusterHostInfo>.FromValues(result, null, response);
+            IReadOnlyList<OperationsDefinition> result = ParseArrayFromResponse(response);
+            yield return Page<OperationsDefinition>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -64,7 +61,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetVirtualMachineHostsRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
+            HttpMessage message = _client.CreateGetByProviderRegistrationRequest(_subscriptionId, _providerNamespace, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -81,14 +78,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<HDInsightClusterHostInfo> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<OperationsDefinition> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<HDInsightClusterHostInfo> result = new List<HDInsightClusterHostInfo>();
+            List<OperationsDefinition> result = new List<OperationsDefinition>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<HDInsightClusterHostInfo>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHDInsightContext.Default));
+                result.Add(ModelReaderWriter.Read<OperationsDefinition>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerProviderHubContext.Default));
             }
             return result;
         }

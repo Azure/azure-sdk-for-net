@@ -14,48 +14,52 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.OracleDatabase.Models;
 
-namespace Azure.ResourceManager.ContainerInstance
+namespace Azure.ResourceManager.OracleDatabase
 {
-    internal partial class ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT : AsyncPageable<string>
+    internal partial class OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT : AsyncPageable<PrivateIPAddressResult>
     {
-        private readonly ContainerGroups _client;
+        private readonly CloudVmClusters _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _containerGroupName;
+        private readonly string _cloudvmclustername;
+        private readonly RequestContent _content;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ContainerGroups client used to send requests. </param>
+        /// <summary> Initializes a new instance of OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The CloudVmClusters client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="containerGroupName"> The name of the container group. </param>
+        /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(ContainerGroups client, Guid subscriptionId, string resourceGroupName, string containerGroupName, RequestContext context, string diagnosticScope)
+        public OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT(CloudVmClusters client, Guid subscriptionId, string resourceGroupName, string cloudvmclustername, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _containerGroupName = containerGroupName;
+            _cloudvmclustername = cloudvmclustername;
+            _content = content;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<PrivateIPAddressResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<string> result = ParseArrayFromResponse(response);
-            yield return Page<string>.FromValues(result, null, response);
+            IReadOnlyList<PrivateIPAddressResult> result = ParseArrayFromResponse(response);
+            yield return Page<PrivateIPAddressResult>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetOutboundNetworkDependenciesEndpointsRequest(_subscriptionId, _resourceGroupName, _containerGroupName, _context);
+            HttpMessage message = _client.CreateGetPrivateIPAddressesRequest(_subscriptionId, _resourceGroupName, _cloudvmclustername, _content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -80,14 +84,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<string> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<PrivateIPAddressResult> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<string> result = new List<string>();
+            List<PrivateIPAddressResult> result = new List<PrivateIPAddressResult>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<string>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerInstanceContext.Default));
+                result.Add(ModelReaderWriter.Read<PrivateIPAddressResult>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOracleDatabaseContext.Default));
             }
             return result;
         }

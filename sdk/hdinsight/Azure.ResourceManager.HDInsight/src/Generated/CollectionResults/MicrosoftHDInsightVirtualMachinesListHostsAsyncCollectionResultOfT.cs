@@ -10,65 +10,66 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.CertificateRegistration.Models;
+using Azure.ResourceManager.HDInsight.Models;
 
-namespace Azure.ResourceManager.CertificateRegistration
+namespace Azure.ResourceManager.HDInsight
 {
-    internal partial class AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT : Pageable<AppServiceCertificateEmail>
+    internal partial class MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT : AsyncPageable<HDInsightClusterHostInfo>
     {
-        private readonly AppServiceCertificateOrders _client;
+        private readonly VirtualMachines _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _name;
+        private readonly string _clusterName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AppServiceCertificateOrders client used to send requests. </param>
+        /// <summary> Initializes a new instance of MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The VirtualMachines client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Name of the certificate order.. </param>
+        /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT(AppServiceCertificateOrders client, string subscriptionId, string resourceGroupName, string name, RequestContext context, string diagnosticScope)
+        public MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT(VirtualMachines client, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _name = name;
+            _clusterName = clusterName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AppServiceCertificateEmail>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<HDInsightClusterHostInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
+            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<AppServiceCertificateEmail> result = ParseArrayFromResponse(response);
-            yield return Page<AppServiceCertificateEmail>.FromValues(result, null, response);
+            IReadOnlyList<HDInsightClusterHostInfo> result = ParseArrayFromResponse(response);
+            yield return Page<HDInsightClusterHostInfo>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateRetrieveCertificateEmailHistoryRequest(_subscriptionId, _resourceGroupName, _name, _context);
+            HttpMessage message = _client.CreateGetVirtualMachineHostsRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -80,14 +81,14 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<AppServiceCertificateEmail> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<HDInsightClusterHostInfo> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<AppServiceCertificateEmail> result = new List<AppServiceCertificateEmail>();
+            List<HDInsightClusterHostInfo> result = new List<HDInsightClusterHostInfo>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<AppServiceCertificateEmail>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCertificateRegistrationContext.Default));
+                result.Add(ModelReaderWriter.Read<HDInsightClusterHostInfo>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHDInsightContext.Default));
             }
             return result;
         }

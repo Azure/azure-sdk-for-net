@@ -13,49 +13,48 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.CertificateRegistration.Models;
 
-namespace Azure.ResourceManager.CertificateRegistration
+namespace Azure.ResourceManager.ContainerInstance
 {
-    internal partial class AppServiceCertificateOrderResourceRetrieveCertificateActionsCollectionResultOfT : Pageable<CertificateOrderAction>
+    internal partial class MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT : Pageable<string>
     {
-        private readonly AppServiceCertificateOrders _client;
-        private readonly string _subscriptionId;
+        private readonly ContainerGroups _client;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _name;
+        private readonly string _containerGroupName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderResourceRetrieveCertificateActionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AppServiceCertificateOrders client used to send requests. </param>
+        /// <summary> Initializes a new instance of MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ContainerGroups client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Name of the certificate order.. </param>
+        /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AppServiceCertificateOrderResourceRetrieveCertificateActionsCollectionResultOfT(AppServiceCertificateOrders client, string subscriptionId, string resourceGroupName, string name, RequestContext context, string diagnosticScope)
+        public MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(ContainerGroups client, Guid subscriptionId, string resourceGroupName, string containerGroupName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _name = name;
+            _containerGroupName = containerGroupName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of AppServiceCertificateOrderResourceRetrieveCertificateActionsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AppServiceCertificateOrderResourceRetrieveCertificateActionsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CertificateOrderAction>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<CertificateOrderAction> result = ParseArrayFromResponse(response);
-            yield return Page<CertificateOrderAction>.FromValues(result, null, response);
+            IReadOnlyList<string> result = ParseArrayFromResponse(response);
+            yield return Page<string>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateRetrieveCertificateActionsRequest(_subscriptionId, _resourceGroupName, _name, _context);
+            HttpMessage message = _client.CreateGetOutboundNetworkDependenciesEndpointsRequest(_subscriptionId, _resourceGroupName, _containerGroupName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -80,14 +79,14 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<CertificateOrderAction> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<string> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<CertificateOrderAction> result = new List<CertificateOrderAction>();
+            List<string> result = new List<string>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<CertificateOrderAction>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCertificateRegistrationContext.Default));
+                result.Add(ModelReaderWriter.Read<string>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerInstanceContext.Default));
             }
             return result;
         }

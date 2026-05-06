@@ -13,46 +13,42 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ProviderHub.Models;
 
-namespace Azure.ResourceManager.ProviderHub
+namespace Azure.ResourceManager.BillingBenefits
 {
-    internal partial class OperationsPutContentResourceGetCollectionResultOfT : Pageable<OperationsDefinition>
+    internal partial class MicrosoftBillingBenefitsSellerResourceOperationGroupListCollectionResultOfT : Pageable<MaccData>
     {
-        private readonly Operations _client;
-        private readonly Guid _subscriptionId;
-        private readonly string _providerNamespace;
+        private readonly SellerResource _client;
+        private readonly RequestContent _content;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of OperationsPutContentResourceGetCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Operations client used to send requests. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <summary> Initializes a new instance of MicrosoftBillingBenefitsSellerResourceOperationGroupListCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The SellerResource client used to send requests. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OperationsPutContentResourceGetCollectionResultOfT(Operations client, Guid subscriptionId, string providerNamespace, RequestContext context, string diagnosticScope)
+        public MicrosoftBillingBenefitsSellerResourceOperationGroupListCollectionResultOfT(SellerResource client, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
-            _subscriptionId = subscriptionId;
-            _providerNamespace = providerNamespace;
+            _content = content;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of OperationsPutContentResourceGetCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftBillingBenefitsSellerResourceOperationGroupListCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of OperationsPutContentResourceGetCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<OperationsDefinition>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MicrosoftBillingBenefitsSellerResourceOperationGroupListCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<MaccData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<OperationsDefinition> result = ParseArrayFromResponse(response);
-            yield return Page<OperationsDefinition>.FromValues(result, null, response);
+            IReadOnlyList<MaccData> result = ParseArrayFromResponse(response);
+            yield return Page<MaccData>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -60,7 +56,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetByProviderRegistrationRequest(_subscriptionId, _providerNamespace, _context);
+            HttpMessage message = _client.CreateGetAllRequest(_content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -77,14 +73,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<OperationsDefinition> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<MaccData> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<OperationsDefinition> result = new List<OperationsDefinition>();
+            List<MaccData> result = new List<MaccData>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<OperationsDefinition>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerProviderHubContext.Default));
+                result.Add(ModelReaderWriter.Read<MaccData>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBillingBenefitsContext.Default));
             }
             return result;
         }

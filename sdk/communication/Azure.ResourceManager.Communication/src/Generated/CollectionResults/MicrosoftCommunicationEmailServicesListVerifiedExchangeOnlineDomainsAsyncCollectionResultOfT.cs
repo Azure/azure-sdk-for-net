@@ -14,46 +14,42 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ProviderHub.Models;
 
-namespace Azure.ResourceManager.ProviderHub
+namespace Azure.ResourceManager.Communication
 {
-    internal partial class ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT : AsyncPageable<OperationsDefinition>
+    internal partial class MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT : AsyncPageable<string>
     {
-        private readonly ProviderRegistrations _client;
+        private readonly EmailServices _client;
         private readonly Guid _subscriptionId;
-        private readonly string _providerNamespace;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProviderRegistrations client used to send requests. </param>
+        /// <summary> Initializes a new instance of MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The EmailServices client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT(ProviderRegistrations client, Guid subscriptionId, string providerNamespace, RequestContext context, string diagnosticScope)
+        public MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT(EmailServices client, Guid subscriptionId, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _providerNamespace = providerNamespace;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<OperationsDefinition>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<OperationsDefinition> result = ParseArrayFromResponse(response);
-            yield return Page<OperationsDefinition>.FromValues(result, null, response);
+            IReadOnlyList<string> result = ParseArrayFromResponse(response);
+            yield return Page<string>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -61,7 +57,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGenerateOperationsRequest(_subscriptionId, _providerNamespace, _context);
+            HttpMessage message = _client.CreateGetVerifiedExchangeOnlineDomainsEmailServicesRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -78,14 +74,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<OperationsDefinition> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<string> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<OperationsDefinition> result = new List<OperationsDefinition>();
+            List<string> result = new List<string>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<OperationsDefinition>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerProviderHubContext.Default));
+                result.Add(ModelReaderWriter.Read<string>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCommunicationContext.Default));
             }
             return result;
         }
