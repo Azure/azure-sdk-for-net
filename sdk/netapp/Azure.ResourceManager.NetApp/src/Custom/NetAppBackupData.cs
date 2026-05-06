@@ -13,6 +13,16 @@ using AzureLocation = Azure.Core.AzureLocation;
 
 namespace Azure.ResourceManager.NetApp
 {
+    // Backward-compat: v1.15 GA used asymmetric backup naming. The data type was
+    // `NetAppBackupData`, while the resource, collection, and patch types were
+    // `NetAppBackupVaultBackupResource`, `NetAppBackupVaultBackupCollection`, and
+    // `NetAppBackupVaultBackupPatch`.
+    //
+    // The TypeSpec model must keep `@@clientName(Backup, "NetAppBackupVaultBackup",
+    // "csharp")` so the resource/collection/patch names stay GA-compatible. Changing
+    // that decorator to `NetAppBackup` would fix this data type but would break the
+    // other three shipped names. [CodeGenType] is therefore used here to rename only
+    // the generated data class from NetAppBackupVaultBackupData to NetAppBackupData.
     /// <summary>
     /// A class representing the NetAppBackup data model.
     /// Backup of a Volume
