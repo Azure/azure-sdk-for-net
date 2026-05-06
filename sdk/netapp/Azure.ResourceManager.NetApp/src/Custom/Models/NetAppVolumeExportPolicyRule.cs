@@ -17,11 +17,9 @@ namespace Azure.ResourceManager.NetApp.Models
     // any released NetApp SDK surface, so they are NOT required for ApiCompat.
     //
     // This whole file should be deleted as part of a follow-up regen pass. It is left
-    // in place for now only because removing it forces a full regen, and the spec
-    // currently has a duplicate `@clientName("NetAppVolumeExportPolicyRule", "csharp")`
-    // collision (see Volume.tsp:832 vs client.tsp:192) that blocks regen until the
-    // spec PR is updated. New code (tests, samples, customizations) MUST use the
-    // generated `Is*` / `Allow*Protocol` names rather than the shims below.
+    // in place for this PR only to keep the diff focused on review feedback. New code
+    // (tests, samples, customizations) MUST use the generated `Is*` / `Allow*Protocol`
+    // names rather than the shims below.
     public partial class NetAppVolumeExportPolicyRule
     {
         // Formerly UnixReadOnly; renamed to IsUnixReadOnly.

@@ -9,13 +9,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Mocking
 {
-    // Per PR review (deferred — both items need spec update + regen, currently blocked
-    // by the pre-existing duplicate-name collision in the spec — see
-    // Custom/Models/NetAppVolumeExportPolicyRule.cs header):
+    // Per PR review (deferred to a follow-up regen pass):
     //
-    // 1. GetNetAppVolumeResource: once Volume is properly renamed in spec via
-    //    @@clientName(Volume, "NetAppVolume", "csharp") the generator should emit this
-    //    extension-getter automatically. Custom shim can then be deleted.
+    // 1. GetNetAppVolumeResource: the spec now renames Volume via
+    //    @@clientName(Volume, "NetAppVolume", "csharp"), so the generator should emit
+    //    this extension-getter automatically. The custom shim below can be deleted on
+    //    the next regen pass once the shape is verified.
     //
     // 2. GetNetAppSubscriptionQuotaItemResource: the mgmt emitter does not auto-generate
     //    ArmClient resource-getters for resources routed via @@clientLocation. Reviewer

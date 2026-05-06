@@ -23,9 +23,9 @@
 //    Azure.Core.armResourceIdentifier so the generator emits IReadOnlyList<ResourceIdentifier>
 //    natively. The wrapper here would then become redundant and can be deleted.
 //
-// All three cleanups are blocked by the same pre-existing duplicate-name collision that
-// prevents NetApp regen on this branch (see Custom/Models/NetAppVolumeExportPolicyRule.cs
-// header and Volume.tsp:832 / client.tsp:192).
+// All three cleanups are deferred to a follow-up regen pass to keep this PR focused on
+// review feedback; the spec changes are straightforward but each requires regeneration
+// and surface re-validation.
 
 #nullable disable
 
