@@ -4,11 +4,8 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API version to `2026-01-01-preview`.
+- Migrated from AutoRest to TypeSpec-based generation while preserving compatibility with the previously shipped public API surface.
 
 ## 1.4.2 (2026-04-28)
 

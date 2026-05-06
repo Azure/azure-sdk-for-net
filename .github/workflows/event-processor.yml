@@ -35,7 +35,7 @@ jobs:
         uses: azure/login@v3
         if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
         with:
-            client-id: a6dd2dfe-7352-41a7-9020-05301c3bca1a
+            client-id: e4cb9fd5-0875-4ca1-bc43-56196f5dfb8f
             tenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
             allow-no-subscriptions: true
 

@@ -15,10 +15,14 @@ namespace Azure.Generator.Management
     {
         private const string ArmProviderSchemaDecoratorName = "Azure.ClientGenerator.Core.@armProviderSchema";
         private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
+        private const string ClientOptionDecoratorName = "Azure.ClientGenerator.Core.@clientOption";
+        private const string DisableSafeFlattenKey = "disable-safe-flatten";
+        private const string CSharpScope = "csharp";
 
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
+        private HashSet<InputModelType>? _safeFlattenDisabledModels;
         private ArmProviderSchema? _providerSchema;
         private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
 
@@ -81,6 +85,97 @@ namespace Azure.Generator.Management
                 }
             }
             return result;
+        }
+
+        /// <summary>
+        /// Set of input models for which safe-flatten should be disabled. Populated from
+        /// <c>@@clientOption(Model, "disable-safe-flatten", true, "csharp")</c> decorators.
+        /// </summary>
+        internal HashSet<InputModelType> SafeFlattenDisabledModels => _safeFlattenDisabledModels ??= BuildSafeFlattenDisabledModels();
+
+        private HashSet<InputModelType> BuildSafeFlattenDisabledModels()
+        {
+            var result = new HashSet<InputModelType>();
+            foreach (var model in InputNamespace.Models)
+            {
+                if (HasDisableSafeFlattenDecorator(model.Decorators))
+                {
+                    result.Add(model);
+                }
+            }
+            return result;
+        }
+
+        private static bool HasDisableSafeFlattenDecorator(IReadOnlyList<InputDecoratorInfo> decorators)
+        {
+            foreach (var decorator in decorators)
+            {
+                if (decorator.Name != ClientOptionDecoratorName || decorator.Arguments == null)
+                {
+                    continue;
+                }
+
+                // @@clientOption(target, name, value, scope?) — TCGC propagates the named arguments as BinaryData JSON values.
+                // Note: the second positional parameter is called "name" in the TCGC decorator definition,
+                // even though our docs and conceptual model refer to these as "keys".
+                if (!decorator.Arguments.TryGetValue("name", out var nameData) || nameData == null)
+                {
+                    continue;
+                }
+
+                string? optionName;
+                try
+                {
+                    optionName = nameData.ToObjectFromJson<string>();
+                }
+                catch
+                {
+                    continue;
+                }
+                if (optionName != DisableSafeFlattenKey)
+                {
+                    continue;
+                }
+
+                // Honor language scope. @@clientOption is language-scoped (the existing
+                // emitter readers use TCGC's getClientOptions which filters by scope), but
+                // because we read the raw decorator off the input model here we must filter
+                // explicitly. A missing scope is treated as "all languages" (TCGC default)
+                // and is still honored for the C# generator.
+                if (decorator.Arguments.TryGetValue("scope", out var scopeData) && scopeData != null)
+                {
+                    string? scope;
+                    try
+                    {
+                        scope = scopeData.ToObjectFromJson<string>();
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                    if (scope != null && scope != CSharpScope)
+                    {
+                        continue;
+                    }
+                }
+
+                // Only accept a JSON boolean true. Any other value (string "true", 1, false, etc.) is ignored.
+                if (decorator.Arguments.TryGetValue("value", out var valueData) && valueData != null)
+                {
+                    try
+                    {
+                        if (valueData.ToObjectFromJson<bool>())
+                        {
+                            return true;
+                        }
+                    }
+                    catch
+                    {
+                        // not a boolean — ignore
+                    }
+                }
+            }
+            return false;
         }
 
         /// <inheritdoc/>
