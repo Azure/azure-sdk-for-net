@@ -29,10 +29,18 @@ Tiers 1+2 self-heal on regen — no intervention needed. Tier 3 is intentionally
 
 ## Version Matrix Rules
 
-`SearchTestBase.cs` is the **single source of truth**. Constants `CurrentGAVersion` / `CurrentPreviewVersion` control what all tests run against.
+`SearchTestBase.cs` (`tests/Utilities/SearchTestBase.cs`) is the **single source of truth**. The `LatestVersion` constant controls what all tests run against.
+
+```csharp
+// tests/Utilities/SearchTestBase.cs
+protected const SearchClientOptions.ServiceVersion LatestVersion = V2026_05_01_Preview;
+```
+
+> **CRITICAL**: When adding a new `ServiceVersion` enum member in `SearchClientOptions.cs`, you **must also update** `LatestVersion` in `SearchTestBase.cs` to match. Without this, all tests still target the old API version — no compile error, no test failure, just silent stale coverage.
 
 | Rule | Rationale |
 |---|---|
+| `SearchTestBase.LatestVersion` must match `SearchClientOptions.LatestVersion` | Otherwise tests run against the wrong API version |
 | Never add `[ClientTestFixture]` on derived classes | Inherited from `SearchTestBase` — overrides fragment the matrix |
 | Use `[ServiceVersion(Min = ...)]` only when a test would **fail** against an older version | Not for documentation — costs nothing to run against all versions in playback |
 | `#if AZURE_SEARCH_PREVIEW` is compile-time; `[ServiceVersion]` is runtime | Different mechanisms for different problems — don't mix them |
@@ -97,7 +105,9 @@ This is a curated quality gate, not a completeness checklist.
 
 | Trap | Detail |
 |---|---|
+| `SearchTestBase.LatestVersion` not updated after new ServiceVersion | Tests silently target the old API version. No compile error, no test failure — just stale coverage. **Always update when adding a new ServiceVersion.** |
 | `SearchMockTests` uses `SearchClientOptions.LatestVersion` | Must stay in sync — if LatestVersion changes, mock response shapes may need updating |
 | `SearchResources` disposes live resources | Always use `await using` — leaked resources hit quota limits |
 | Recordings replay regardless of version string | Version matrix in playback is "free" — no reason to minimize it |
+| Custom deserializer data loss undetectable by unit tests | `FacetResult.cs` and `SearchResults.cs` have hand-written deserialization. If new constructor params are filled with `null` instead of parsed, tests still pass (nulls are valid) but runtime responses lose data. See [architecture.md](./architecture.md#custom-deserialization-sites). |
 | `ModelDiscoveryTests` exclusion set | `SearchDocument` is excluded (dynamic bag type, not standard IJsonModel) |

@@ -195,7 +195,8 @@ namespace Azure.Search.Documents.Tests
 
         private static string GetRequestContent(RequestContent content)
         {
-            if (content == null) return string.Empty;
+            if (content == null)
+                return string.Empty;
             using var stream = new MemoryStream();
             content.WriteTo(stream, CancellationToken.None);
             return Encoding.UTF8.GetString(stream.ToArray());

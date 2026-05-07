@@ -98,7 +98,8 @@ namespace Azure.Search.Documents.Tests.TypeCompleteness
             // (they have a single string field and implicit/explicit conversion operators).
             bool IsExtensibleEnum(Type t)
             {
-                if (!t.IsValueType) return false;
+                if (!t.IsValueType)
+                    return false;
                 var fields = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                 return fields.Length <= 2 && fields.Any(f => f.FieldType == typeof(string));
             }
