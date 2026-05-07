@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string fabricVersion = default;
             IReadOnlyList<string> routerIds = default;
             StorageAccountConfiguration storageAccountConfiguration = default;
-            IReadOnlyList<FabricLockProperties> fabricLocks = default;
+            IReadOnlyList<NetworkFabricLock> fabricLocks = default;
             ResourceIdentifier networkFabricControllerId = default;
             int? rackCount = default;
             int serverCountPerRack = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             IReadOnlyList<string> l3IsolationDomains = default;
             int? hardwareAlertThreshold = default;
             IList<ResourceIdentifier> controlPlaneAcls = default;
-            IList<FeatureFlagProperties> featureFlags = default;
+            IList<NetworkFabricFeatureFlag> featureFlags = default;
             IList<ResourceIdentifier> trustedIPPrefixes = default;
             UniqueRouteDistinguisherProperties uniqueRdConfiguration = default;
             int? storageArrayCount = default;
@@ -404,10 +404,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<FabricLockProperties> array = new List<FabricLockProperties>();
+                            List<NetworkFabricLock> array = new List<NetworkFabricLock>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FabricLockProperties.DeserializeFabricLockProperties(item, options));
+                                array.Add(NetworkFabricLock.DeserializeNetworkFabricLock(item, options));
                             }
                             fabricLocks = array;
                             continue;
@@ -534,10 +534,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<FeatureFlagProperties> array = new List<FeatureFlagProperties>();
+                            List<NetworkFabricFeatureFlag> array = new List<NetworkFabricFeatureFlag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FeatureFlagProperties.DeserializeFeatureFlagProperties(item, options));
+                                array.Add(NetworkFabricFeatureFlag.DeserializeNetworkFabricFeatureFlag(item, options));
                             }
                             featureFlags = array;
                             continue;
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 fabricVersion,
                 routerIds ?? new ChangeTrackingList<string>(),
                 storageAccountConfiguration,
-                fabricLocks ?? new ChangeTrackingList<FabricLockProperties>(),
+                fabricLocks ?? new ChangeTrackingList<NetworkFabricLock>(),
                 networkFabricControllerId,
                 rackCount,
                 serverCountPerRack,
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 l3IsolationDomains ?? new ChangeTrackingList<string>(),
                 hardwareAlertThreshold,
                 controlPlaneAcls ?? new ChangeTrackingList<ResourceIdentifier>(),
-                featureFlags ?? new ChangeTrackingList<FeatureFlagProperties>(),
+                featureFlags ?? new ChangeTrackingList<NetworkFabricFeatureFlag>(),
                 trustedIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>(),
                 uniqueRdConfiguration,
                 storageArrayCount,

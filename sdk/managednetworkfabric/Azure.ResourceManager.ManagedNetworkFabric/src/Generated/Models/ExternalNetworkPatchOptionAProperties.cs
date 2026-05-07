@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="v6OverV4BgpSession"> V6OverV4 BGP Session state. </param>
         /// <param name="nativeIPv4PrefixLimit"> Native IPv4 prefix limit configuration. </param>
         /// <param name="nativeIPv6PrefixLimit"> Native IPv6 prefix limit configuration. </param>
-        internal ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, ExternalNetworkBmpPatchProperties bmpConfiguration, V4OverV6BgpSessionState? v4OverV6BgpSession, V6OverV4BgpSessionState? v6OverV4BgpSession, NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
+        internal ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, ExternalNetworkBmpPatchProperties bmpConfiguration, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession, NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
         {
             Mtu = mtu;
             VlanId = vlanId;
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> V4OverV6 BGP Session state. </summary>
-        public V4OverV6BgpSessionState? V4OverV6BgpSession { get; set; }
+        public NetworkFabricV4OverV6BgpSessionState? V4OverV6BgpSession { get; set; }
         /// <summary> V6OverV4 BGP Session state. </summary>
-        public V6OverV4BgpSessionState? V6OverV4BgpSession { get; set; }
+        public NetworkFabricV6OverV4BgpSessionState? V6OverV4BgpSession { get; set; }
         /// <summary> Native IPv4 prefix limit configuration. </summary>
         internal NativeIPv4PrefixLimitPatchProperties NativeIPv4PrefixLimit { get; set; }
         /// <summary> Prefix limits. </summary>

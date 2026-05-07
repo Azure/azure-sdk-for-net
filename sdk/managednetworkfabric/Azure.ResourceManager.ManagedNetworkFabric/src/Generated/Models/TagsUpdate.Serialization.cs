@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class TagsUpdate : IUtf8JsonSerializable, IJsonModel<TagsUpdate>
+    internal partial class TagsUpdate : IUtf8JsonSerializable, IJsonModel<TagsUpdate>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TagsUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

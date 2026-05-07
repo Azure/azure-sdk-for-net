@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="commitPolicy"> Commit configuration Policy. Supported policy is StageCEConfiguration, which indicates to prepare the configuration for the CE device type. </param>
         /// <param name="devices"> List of ARM resource IDs of devices to be included in the commit operation. Either CE1 or CE2 is allowed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommitConfigurationContent(CommitStage? commitStage, CommitConfigurationPolicy? commitPolicy, IList<string> devices, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommitConfigurationContent(NetworkFabricCommitStage? commitStage, NetworkFabricCommitConfigurationPolicy? commitPolicy, IList<string> devices, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CommitStage = commitStage;
             CommitPolicy = commitPolicy;
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Commit stage Action to be performed. </summary>
-        public CommitStage? CommitStage { get; set; }
+        public NetworkFabricCommitStage? CommitStage { get; set; }
         /// <summary> Commit configuration Policy. Supported policy is StageCEConfiguration, which indicates to prepare the configuration for the CE device type. </summary>
-        public CommitConfigurationPolicy? CommitPolicy { get; set; }
+        public NetworkFabricCommitConfigurationPolicy? CommitPolicy { get; set; }
         /// <summary> List of ARM resource IDs of devices to be included in the commit operation. Either CE1 or CE2 is allowed. </summary>
         public IList<string> Devices { get; }
     }

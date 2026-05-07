@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
         /// <param name="extendedVlan"> Extended VLAN status. </param>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </param>
-        internal NetworkFabricL2IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, int? mtu, ExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricL2IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, int? mtu, NetworkFabricExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
             Annotation = annotation;
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityPatch Identity { get; set; }
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>
         public int? Mtu { get; set; }
         /// <summary> Extended VLAN status. </summary>
-        public ExtendedVlan? ExtendedVlan { get; set; }
+        public NetworkFabricExtendedVlan? ExtendedVlan { get; set; }
         /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </summary>
         public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
     }

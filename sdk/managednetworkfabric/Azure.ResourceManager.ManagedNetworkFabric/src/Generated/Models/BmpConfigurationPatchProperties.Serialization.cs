@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            StationConfigurationState? stationConfigurationState = default;
+            NetworkFabricStationConfigurationState? stationConfigurationState = default;
             ResourceIdentifier scopeResourceId = default;
             string stationName = default;
             string stationIP = default;
             int? stationPort = default;
-            StationConnectionMode? stationConnectionMode = default;
+            NetworkFabricStationConnectionMode? stationConnectionMode = default;
             StationConnectionPatchProperties stationConnectionProperties = default;
             ResourceIdentifier stationNetwork = default;
             IList<ResourceIdentifier> monitoredNetworks = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    stationConfigurationState = new StationConfigurationState(property.Value.GetString());
+                    stationConfigurationState = new NetworkFabricStationConfigurationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scopeResourceId"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    stationConnectionMode = new StationConnectionMode(property.Value.GetString());
+                    stationConnectionMode = new NetworkFabricStationConnectionMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stationConnectionProperties"u8))

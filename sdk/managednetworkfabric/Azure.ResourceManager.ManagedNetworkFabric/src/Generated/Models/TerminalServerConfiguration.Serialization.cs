@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string secondaryIPv4Prefix = default;
             string secondaryIPv6Prefix = default;
             ResourceIdentifier networkDeviceId = default;
-            IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
+            IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus = default;
             string username = default;
             string password = default;
             string serialNumber = default;
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<SecretRotationStatus> array = new List<SecretRotationStatus>();
+                    List<NetworkFabricSecretRotationStatus> array = new List<NetworkFabricSecretRotationStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
+                        array.Add(NetworkFabricSecretRotationStatus.DeserializeNetworkFabricSecretRotationStatus(item, options));
                     }
                     secretRotationStatus = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 secondaryIPv4Prefix,
                 secondaryIPv6Prefix,
                 networkDeviceId,
-                secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>());
+                secretRotationStatus ?? new ChangeTrackingList<NetworkFabricSecretRotationStatus>());
         }
 
         BinaryData IPersistableModel<TerminalServerConfiguration>.Write(ModelReaderWriterOptions options)

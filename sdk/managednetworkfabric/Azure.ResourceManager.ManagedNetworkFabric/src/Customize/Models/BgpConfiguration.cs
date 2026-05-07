@@ -16,8 +16,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public BgpConfiguration() : this(default(long?))
+        [Obsolete("This overload is obsolete because PeerAsn is required. Use BgpConfiguration(long?) instead.")]
+        public BgpConfiguration()
         {
+            throw new NotSupportedException("PeerAsn is required. Use the constructor overload that supplies PeerAsn.");
         }
 
         /// <summary> Peer ASN. Example: 65047. </summary>

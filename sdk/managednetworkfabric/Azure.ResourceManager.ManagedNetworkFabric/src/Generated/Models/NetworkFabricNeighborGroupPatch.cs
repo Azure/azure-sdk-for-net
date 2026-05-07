@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
-        internal NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, NeighborGroupDestination destination) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, NeighborGroupDestination destination) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
             Annotation = annotation;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityPatch Identity { get; set; }
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Base tracked resource type for PATCH updates. </summary>
-    public partial class TagsUpdate
+    internal partial class TagsUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

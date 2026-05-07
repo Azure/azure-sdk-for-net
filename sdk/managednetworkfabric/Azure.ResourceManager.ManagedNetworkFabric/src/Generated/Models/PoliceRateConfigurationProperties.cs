@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="bitRate"> Rate limit in bits per second. </param>
         /// <param name="burstSize"> Burst size in packets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PoliceRateConfigurationProperties(BitRate bitRate, BurstSize burstSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PoliceRateConfigurationProperties(NetworkFabricBitRate bitRate, NetworkFabricBurstSize burstSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BitRate = bitRate;
             BurstSize = burstSize;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Rate limit in bits per second. </summary>
-        public BitRate BitRate { get; set; }
+        public NetworkFabricBitRate BitRate { get; set; }
         /// <summary> Burst size in packets. </summary>
-        public BurstSize BurstSize { get; set; }
+        public NetworkFabricBurstSize BurstSize { get; set; }
     }
 }

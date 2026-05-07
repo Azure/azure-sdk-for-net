@@ -59,12 +59,34 @@ acronym-mapping:
 
 rename-mapping:
   AccessControlList: NetworkFabricAccessControlList
+  AclType: NetworkFabricAclType
   AccessControlListsListResult: AccessControlListsResult
+  ArmConfigurationDiffOperationResult: ArmConfigurationDiffResult
+  BitRate: NetworkFabricBitRate
+  BitRateUnit: NetworkFabricBitRateUnit
+  BurstSize: NetworkFabricBurstSize
+  BurstSizeUnit: NetworkFabricBurstSizeUnit
+  CertificateArchiveReference: NetworkFabricCertificateArchiveReference
+  CertificateRotationStatus: NetworkFabricCertificateRotationStatus
+  CommitBatchState: NetworkFabricCommitBatchState
+  CommitConfigurationPolicy: NetworkFabricCommitConfigurationPolicy
+  CommitStage: NetworkFabricCommitStage
+  ControlPlanAclIPMatchCondition: ControlPlaneAclIPMatchCondition
+  DeviceRole: NetworkFabricDeviceRole
+  DeviceRoCommand: NetworkFabricDeviceReadOnlyCommand
+  DeviceRwCommand: NetworkFabricDeviceReadWriteCommand
+  ExtendedVlan: NetworkFabricExtendedVlan
   ExternalNetwork: NetworkFabricExternalNetwork
   ExternalNetwork.properties.networkToNetworkInterconnectId: -|arm-id
+  FabricLockProperties: NetworkFabricLock
+  FeatureFlagProperties: NetworkFabricFeatureFlag
+  GetTopologyResult: NetworkFabricTopologyResult
+  HeaderAddressProperties: NetworkFabricHeaderAddress
+  IdentitySelector: NetworkFabricIdentitySelector
+  IdentitySelectorPatch: NetworkFabricIdentitySelectorPatch
   InternalNetwork: NetworkFabricInternalNetwork
   InternetGateway: NetworkFabricInternetGateway
-  InternetGateway.properties.ipv4Address: IpV4Address
+  InternetGateway.properties.ipv4Address: Ipv4Address
   InternetGatewayRule: NetworkFabricInternetGatewayRule
   InternetGatewayRule.properties.internetGatewayIds: -|arm-id
   IpCommunity: NetworkFabricIpCommunity
@@ -72,10 +94,25 @@ rename-mapping:
   IpPrefix: NetworkFabricIpPrefix
   L2IsolationDomain: NetworkFabricL2IsolationDomain
   L3IsolationDomain: NetworkFabricL3IsolationDomain
+  LockConfigurationState: NetworkFabricLockConfigurationState
+  ManagedServiceIdentityPatch: NetworkFabricManagedServiceIdentityPatch
+  ManagedServiceIdentitySelectorType: NetworkFabricManagedIdentitySelectorType
+  ManagedServiceIdentityType: NetworkFabricManagedServiceIdentityType
+  MicroBfdState: NetworkFabricMicroBfdState
   NeighborGroup: NetworkFabricNeighborGroup
+  NNIDerivedUniqueRouteDistinguisherConfigurationState: NniDerivedUniqueRouteDistinguisherConfigurationState
   NetworkDevice.properties.managementIpv4Address: -|ip-address
   NetworkInterface.properties.ipv4Address: -|ip-address
+  OperationStatusResult: NetworkFabricOperationStatusResult
+  QosConfigurationState: NetworkFabricQosConfigurationState
+  RouteType: NetworkFabricRouteType
   RoutePolicy: NetworkFabricRoutePolicy
+  RuleCondition: NetworkFabricRuleCondition
+  SecretArchiveReference: NetworkFabricSecretArchiveReference
+  SecretRotationStatus: NetworkFabricSecretRotationStatus
+  StationConfigurationState: NetworkFabricStationConfigurationState
+  StationConnectionMode: NetworkFabricStationConnectionMode
+  SynchronizationStatus: NetworkFabricSynchronizationStatus
   NetworkInterface: NetworkDeviceInterface
   Action: InternetGatewayRuleAction
   AddressFamilyTypeL: NetworkFabricAddressFamilyType
@@ -134,6 +171,8 @@ rename-mapping:
   ValidateAction: NetworkFabricValidateAction
   ValidateConfigurationProperties: ValidateConfigurationContent
   ValidateConfigurationResponse: ValidateConfigurationResult
+  V4OverV6BgpSessionState: NetworkFabricV4OverV6BgpSessionState
+  V6OverV4BgpSessionState: NetworkFabricV6OverV4BgpSessionState
   ArmConfigurationDiffOperationResponse: ArmConfigurationDiffOperationResult
   CommitBatchStatusOperationResponse: CommitBatchStatusOperationResult
   CommitConfigurationResponse: CommitConfigurationResult
@@ -179,6 +218,11 @@ directive:
     where: $.definitions
     transform:
       $.ExpressRouteConnectionInformation.required =  [ 'expressRouteCircuitId' ];
+  # Keep TagsUpdate internal; management SDKs should not expose the raw tag-patch model publicly.
+  - from: managednetworkfabric.json
+    where: $.definitions.TagsUpdate
+    transform: >
+      $["x-accessibility"] = "internal";
   # Removing the operations that are not allowed for the end users.
   - remove-operation: InternetGateways_Delete
   - remove-operation: InternetGateways_Create
@@ -522,37 +566,36 @@ directive:
         delete $.properties.password;
         delete $.properties.serialNumber;
       }
-  # Rename action operations whose return types changed from generic (StateUpdateCommonPostActionResult/DeviceUpdateCommonPostActionResult)
-  # to specific result types. Old method signatures are preserved via customization code for backward compatibility.
+  # Restore previously shipped operation names and keep return-type compatibility in customization overloads.
   - from: swagger-document
     where: $.paths.*.*
     transform: >
       const renames = {
-        "NetworkInterfaces_UpdateAdministrativeState": "NetworkInterfaces_SetAdministrativeState",
-        "NetworkDevices_UpdateAdministrativeState": "NetworkDevices_SetAdministrativeState",
-        "NetworkDevices_Reboot": "NetworkDevices_Restart",
-        "NetworkDevices_RefreshConfiguration": "NetworkDevices_ReloadConfiguration",
-        "AccessControlLists_UpdateAdministrativeState": "AccessControlLists_SetAdministrativeState",
-        "ExternalNetworks_UpdateAdministrativeState": "ExternalNetworks_SetAdministrativeState",
-        "ExternalNetworks_UpdateStaticRouteBfdAdministrativeState": "ExternalNetworks_SetStaticRouteBfdAdministrativeState",
-        "InternalNetworks_UpdateAdministrativeState": "InternalNetworks_SetAdministrativeState",
-        "InternalNetworks_UpdateBgpAdministrativeState": "InternalNetworks_SetBgpAdministrativeState",
-        "InternalNetworks_UpdateStaticRouteBfdAdministrativeState": "InternalNetworks_SetStaticRouteBfdAdministrativeState",
-        "L2IsolationDomains_UpdateAdministrativeState": "L2IsolationDomains_SetAdministrativeState",
-        "L3IsolationDomains_UpdateAdministrativeState": "L3IsolationDomains_SetAdministrativeState",
-        "NetworkFabrics_CommitConfiguration": "NetworkFabrics_ApplyConfiguration",
-        "NetworkFabrics_Deprovision": "NetworkFabrics_Deactivate",
-        "NetworkFabrics_Provision": "NetworkFabrics_Activate",
-        "NetworkFabrics_RefreshConfiguration": "NetworkFabrics_ReloadConfiguration",
-        "NetworkFabrics_UpdateInfraManagementBfdConfiguration": "NetworkFabrics_SetInfraManagementBfdConfiguration",
-        "NetworkFabrics_UpdateWorkloadManagementBfdConfiguration": "NetworkFabrics_SetWorkloadManagementBfdConfiguration",
-        "RoutePolicies_UpdateAdministrativeState": "RoutePolicies_SetAdministrativeState",
-        "NetworkTaps_Resync": "NetworkTaps_Synchronize",
-        "NetworkTaps_UpdateAdministrativeState": "NetworkTaps_SetAdministrativeState",
-        "NetworkTapRules_Resync": "NetworkTapRules_Synchronize",
-        "NetworkToNetworkInterconnects_UpdateAdministrativeState": "NetworkToNetworkInterconnects_SetAdministrativeState",
-        "NetworkToNetworkInterconnects_UpdateNpbStaticRouteBfdAdministrativeState": "NetworkToNetworkInterconnects_SetNpbStaticRouteBfdAdministrativeState",
-        "NetworkFabrics_GetTopology": "NetworkFabrics_RetrieveTopology"
+        "NetworkInterfaces_SetAdministrativeState": "NetworkInterfaces_UpdateAdministrativeState",
+        "NetworkDevices_SetAdministrativeState": "NetworkDevices_UpdateAdministrativeState",
+        "NetworkDevices_Restart": "NetworkDevices_Reboot",
+        "NetworkDevices_ReloadConfiguration": "NetworkDevices_RefreshConfiguration",
+        "AccessControlLists_SetAdministrativeState": "AccessControlLists_UpdateAdministrativeState",
+        "ExternalNetworks_SetAdministrativeState": "ExternalNetworks_UpdateAdministrativeState",
+        "ExternalNetworks_SetStaticRouteBfdAdministrativeState": "ExternalNetworks_UpdateStaticRouteBfdAdministrativeState",
+        "InternalNetworks_SetAdministrativeState": "InternalNetworks_UpdateAdministrativeState",
+        "InternalNetworks_SetBgpAdministrativeState": "InternalNetworks_UpdateBgpAdministrativeState",
+        "InternalNetworks_SetStaticRouteBfdAdministrativeState": "InternalNetworks_UpdateStaticRouteBfdAdministrativeState",
+        "L2IsolationDomains_SetAdministrativeState": "L2IsolationDomains_UpdateAdministrativeState",
+        "L3IsolationDomains_SetAdministrativeState": "L3IsolationDomains_UpdateAdministrativeState",
+        "NetworkFabrics_ApplyConfiguration": "NetworkFabrics_CommitConfiguration",
+        "NetworkFabrics_Deactivate": "NetworkFabrics_Deprovision",
+        "NetworkFabrics_Activate": "NetworkFabrics_Provision",
+        "NetworkFabrics_ReloadConfiguration": "NetworkFabrics_RefreshConfiguration",
+        "NetworkFabrics_SetInfraManagementBfdConfiguration": "NetworkFabrics_UpdateInfraManagementBfdConfiguration",
+        "NetworkFabrics_SetWorkloadManagementBfdConfiguration": "NetworkFabrics_UpdateWorkloadManagementBfdConfiguration",
+        "RoutePolicies_SetAdministrativeState": "RoutePolicies_UpdateAdministrativeState",
+        "NetworkTaps_Synchronize": "NetworkTaps_Resync",
+        "NetworkTaps_SetAdministrativeState": "NetworkTaps_UpdateAdministrativeState",
+        "NetworkTapRules_Synchronize": "NetworkTapRules_Resync",
+        "NetworkToNetworkInterconnects_SetAdministrativeState": "NetworkToNetworkInterconnects_UpdateAdministrativeState",
+        "NetworkToNetworkInterconnects_SetNpbStaticRouteBfdAdministrativeState": "NetworkToNetworkInterconnects_UpdateNpbStaticRouteBfdAdministrativeState",
+        "NetworkFabrics_RetrieveTopology": "NetworkFabrics_GetTopology"
       };
       if ($.operationId && renames[$.operationId]) {
         $.operationId = renames[$.operationId];

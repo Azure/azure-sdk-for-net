@@ -26,7 +26,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, IPAddress ipv4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
         {
-            return NetworkFabricInternetGatewayData(id, name, resourceType, systemData, tags, location, annotation, internetGatewayRuleId, ipv4Address, port, typePropertiesType, networkFabricControllerId, provisioningState);
+            return new NetworkFabricInternetGatewayData(location, typePropertiesType, networkFabricControllerId)
+            {
+                Id = id,
+                Name = name,
+                ResourceType = resourceType,
+                SystemData = systemData,
+                Tags = tags,
+                Annotation = annotation,
+                InternetGatewayRuleId = internetGatewayRuleId,
+                Port = port,
+                ProvisioningState = provisioningState,
+            };
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkPatchOptionAProperties"/>. </summary>
@@ -42,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 vlanId: vlanId,
                 fabricAsn: fabricAsn,
                 peerAsn: peerAsn,
-                bfdConfiguration: default,
+                bfdConfiguration: bfdConfiguration,
                 ingressAclId: ingressAclId,
                 egressAclId: egressAclId,
                 bmpConfigurationState: default,
@@ -69,7 +80,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 ipv4NeighborAddress: ipv4NeighborAddress,
                 ipv6NeighborAddress: ipv6NeighborAddress);
 
-            return new InternalNetworkBgpConfiguration();
+            return new InternalNetworkBgpConfiguration
+            {
+                Annotation = result.Annotation,
+                BfdConfiguration = result.BfdConfiguration,
+                DefaultRouteOriginate = result.DefaultRouteOriginate,
+                AllowAS = result.AllowAS,
+                AllowASOverride = result.AllowASOverride,
+                FabricAsn = result.FabricAsn,
+                PeerAsn = result.PeerAsn,
+                IPv4ListenRangePrefixes = result.IPv4ListenRangePrefixes,
+                IPv6ListenRangePrefixes = result.IPv6ListenRangePrefixes,
+                IPv4NeighborAddress = result.IPv4NeighborAddress,
+                IPv6NeighborAddress = result.IPv6NeighborAddress,
+            };
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
@@ -85,7 +109,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 vlanId: vlanId,
                 fabricAsn: fabricAsn);
 
-            return new NetworkToNetworkInterconnectOptionBLayer3Configuration();
+            return new NetworkToNetworkInterconnectOptionBLayer3Configuration
+            {
+                PrimaryIPv4Prefix = result.PrimaryIPv4Prefix,
+                PrimaryIPv6Prefix = result.PrimaryIPv6Prefix,
+                SecondaryIPv4Prefix = result.SecondaryIPv4Prefix,
+                SecondaryIPv6Prefix = result.SecondaryIPv6Prefix,
+                PeerAsn = result.PeerAsn,
+                VlanId = result.VlanId,
+                FabricAsn = result.FabricAsn,
+            };
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>
@@ -97,12 +130,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name: name,
                 resourceType: resourceType,
                 systemData: systemData,
-                layer2Configuration: default,
-                optionBLayer3Configuration: default,
-                npbStaticRouteConfiguration: default,
+                layer2Configuration: layer2Configuration,
+                optionBLayer3Configuration: optionBLayer3Configuration,
+                npbStaticRouteConfiguration: npbStaticRouteConfiguration,
                 staticRouteConfiguration: default,
-                importRoutePolicy: default,
-                exportRoutePolicy: default,
+                importRoutePolicy: importRoutePolicy,
+                exportRoutePolicy: exportRoutePolicy,
                 egressAclId: egressAclId,
                 ingressAclId: ingressAclId,
                 microBfdState: default);
@@ -116,8 +149,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 networkToNetworkInterconnectId: networkToNetworkInterconnectId,
                 administrativeState: administrativeState,
                 peeringOption: peeringOption,
-                optionBProperties: (OptionBProperties)default,
-                optionAProperties: (VpnConfigurationOptionAProperties)default);
+                optionBProperties: optionBProperties,
+                optionAProperties: optionAProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerData"/>. </summary>

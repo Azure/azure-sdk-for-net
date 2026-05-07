@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            QosConfigurationState? qosConfigurationState = default;
+            NetworkFabricQosConfigurationState? qosConfigurationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    qosConfigurationState = new QosConfigurationState(property.Value.GetString());
+                    qosConfigurationState = new NetworkFabricQosConfigurationState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
