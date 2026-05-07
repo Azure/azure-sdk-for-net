@@ -129,9 +129,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             }
         }
 
-        private static Dictionary<Type, object>? GetProxies(ModelReaderWriterOptions passedInOptions)
+        private static Dictionary<Type, List<object>>? GetProxies(ModelReaderWriterOptions passedInOptions)
         {
-            return passedInOptions.GetType().GetField("_proxies", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(passedInOptions) as Dictionary<Type, object>;
+            return passedInOptions.GetType().GetField("_proxies", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(passedInOptions) as Dictionary<Type, List<object>>;
         }
 
         private class JsonModelProxy : IJsonModel<JsonModel>

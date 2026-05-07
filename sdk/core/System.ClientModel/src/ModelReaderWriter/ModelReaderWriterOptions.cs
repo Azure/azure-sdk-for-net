@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
@@ -10,7 +11,7 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ModelReaderWriterOptions
 {
-    private Dictionary<Type, object>? _proxies;
+    private Dictionary<Type, List<object>>? _proxies;
 
     private static ModelReaderWriterOptions? s_jsonOptions;
     /// <summary>
@@ -51,13 +52,21 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Registers an <see cref="IPersistableModel{T}"/> proxy to be used when reading or writing a model.
+    /// Multiple proxies can be registered for the same type to form a chain of responsibility.
+    /// The most recently registered proxy is consulted first.
     /// </summary>
     /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> proxy that will be used to read or write the model. </param>
     public void AddProxy<T>(IPersistableModel<T> proxy)
     {
         _proxies ??= [];
 
-        _proxies.Add(typeof(T), proxy);
+        if (!_proxies.TryGetValue(typeof(T), out List<object>? chain))
+        {
+            chain = [];
+            _proxies[typeof(T)] = chain;
+        }
+
+        chain.Add(proxy);
     }
 
     /// <summary>
@@ -67,79 +76,113 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Gets the <see cref="IPersistableModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
+    /// Returns the last registered proxy (highest priority) that matches.
     /// </summary>
     /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> proxy if one exists. </param>
     /// <returns> True if a proxy for <typeparamref name="T"/> was found; otherwise, false. </returns>
     public bool TryGetProxy<T>([NotNullWhen(true)] out IPersistableModel<T>? proxy)
     {
-        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out object? result))
+        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<object>? chain) || chain.Count == 0)
         {
             proxy = default;
             return false;
         }
 
-        proxy = (IPersistableModel<T>)result;
+        // Last registered = highest priority
+        proxy = (IPersistableModel<T>)chain[chain.Count - 1];
         return true;
     }
 
     /// <summary>
     /// Gets the <see cref="IJsonModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
+    /// Returns the last registered proxy (highest priority) that implements <see cref="IJsonModel{T}"/>.
     /// </summary>
     /// <param name="proxy"> The <see cref="IJsonModel{T}"/> proxy if one exists. </param>
     /// <returns> True if a proxy for <typeparamref name="T"/> was found; otherwise, false. </returns>
     public bool TryGetProxy<T>([NotNullWhen(true)] out IJsonModel<T>? proxy)
     {
-        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out object? result) || result is not IJsonModel<T> jsonResult)
+        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<object>? chain))
         {
             proxy = default;
             return false;
         }
 
-        proxy = jsonResult;
-        return true;
+        // Walk chain last-to-first, return the first IJsonModel<T> match
+        for (int i = chain.Count - 1; i >= 0; i--)
+        {
+            if (chain[i] is IJsonModel<T> jsonResult)
+            {
+                proxy = jsonResult;
+                return true;
+            }
+        }
+
+        proxy = default;
+        return false;
     }
 
     internal bool TryGetProxy(Type modelType, [NotNullWhen(true)] out IJsonModel<object>? proxy)
     {
-        if (_proxies is null || !_proxies.TryGetValue(modelType, out object? result) || result is not IJsonModel<object> jsonResult)
+        if (_proxies is null || !_proxies.TryGetValue(modelType, out List<object>? chain))
         {
             proxy = default;
             return false;
         }
 
-        proxy = jsonResult;
-        return true;
+        for (int i = chain.Count - 1; i >= 0; i--)
+        {
+            if (chain[i] is IJsonModel<object> jsonResult)
+            {
+                proxy = jsonResult;
+                return true;
+            }
+        }
+
+        proxy = default;
+        return false;
     }
 
     /// <summary>
-    /// Gets the <see cref="IPersistableModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
+    /// Resolves the proxy chain for the specified model type, returning the highest-priority
+    /// <see cref="IPersistableModel{T}"/> proxy. If no proxy is registered, returns the model itself.
     /// </summary>
     /// <param name="model"> The <see cref="IPersistableModel{T}"/> model to proxy. </param>
     /// <returns> The <see cref="IPersistableModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
     public IPersistableModel<T> ResolveProxy<T>(IPersistableModel<T> model)
     {
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out object? result))
+        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? chain) || chain.Count == 0)
         {
             return model;
         }
 
+        // Last registered = highest priority
         ProxiedModel = model;
-        return (IPersistableModel<T>)result;
+        return (IPersistableModel<T>)chain[chain.Count - 1];
     }
 
     /// <summary>
-    /// Gets the <see cref="IJsonModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
+    /// Resolves the proxy chain for the specified model type, returning the highest-priority
+    /// <see cref="IJsonModel{T}"/> proxy. If no proxy is registered, returns the model itself.
     /// </summary>
     /// <param name="model"> The <see cref="IJsonModel{T}"/> model to proxy. </param>
     /// <returns> The <see cref="IJsonModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
     public IJsonModel<T> ResolveProxy<T>(IJsonModel<T> model)
     {
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out object? result) || result is not IJsonModel<T> jsonResult)
+        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? chain))
         {
             return model;
         }
 
-        ProxiedModel = model;
-        return jsonResult;
+        // Walk chain last-to-first, return the first IJsonModel<T> match
+        for (int i = chain.Count - 1; i >= 0; i--)
+        {
+            if (chain[i] is IJsonModel<T> jsonResult)
+            {
+                ProxiedModel = model;
+                return jsonResult;
+            }
+        }
+
+        return model;
     }
 }
