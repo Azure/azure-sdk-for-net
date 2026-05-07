@@ -198,7 +198,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await using IDisposingContainer<ShareClient> sourceContainer = await GetDisposingContainerAsync();
             await using IDisposingContainer<ShareClient> destinationContainer = await GetDisposingContainerAsync();
 
-            StorageResourceProvider provider = GetStorageResourceProvider();
+            StorageResourceProvider provider = GetContainerSasStorageResourceProvider(
+                sourceContainer.Container, destinationContainer.Container);
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -363,6 +364,222 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         $"Content mismatch for {subdirName}/{fileName}");
                 }
             }
+        }
+
+        [Test]
+        [LiveOnly]
+        public async Task PauseResume_LargeDirectoryTree_Copy()
+        {
+            // Workflow:
+            // 1. Create and populate source share with files/directories
+            // 2. Start transfer from source to destination
+            // 3. Pause the transfer mid-flight
+            // 4. Validate checkpoint files are readable after pause
+            // 5. Resume the paused transfer
+            // 6. Validate destination matches source after resume completes
+
+            // ── Arrange ──────────────────────────────────────────────────
+            int directoryCount = 5;
+            int filesPerDirectory = 10;
+            int totalFileCount = directoryCount * filesPerDirectory;
+            long fileSize = DataMovementTestConstants.KB * 50; // 50KB files to slow transfer
+
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using IDisposingContainer<ShareClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destinationContainer = await GetDisposingContainerAsync();
+
+            StorageResourceProvider provider = GetContainerSasStorageResourceProvider(
+                sourceContainer.Container, destinationContainer.Container);
+
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
+                MaximumConcurrency = 4,
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
+            };
+
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // ── Build source directory tree ──────────────────────────────
+            Console.WriteLine("[TestConsole] Creating and populating source share...");
+            ShareDirectoryClient rootDir = sourceContainer.Container.GetRootDirectoryClient();
+            List<string> expectedRelativePaths = new();
+
+            for (int d = 0; d < directoryCount; d++)
+            {
+                string subdirName = $"subdir-{d}";
+                ShareDirectoryClient subDir = rootDir.GetSubdirectoryClient(subdirName);
+                await subDir.CreateIfNotExistsAsync();
+
+                for (int f = 0; f < filesPerDirectory; f++)
+                {
+                    string fileName = $"file-{f}.bin";
+                    ShareFileClient file = subDir.GetFileClient(fileName);
+                    await file.CreateAsync(fileSize);
+
+                    using Stream data = await CreateLimitedMemoryStream(fileSize);
+                    data.Position = 0;
+                    await file.UploadAsync(data);
+
+                    expectedRelativePaths.Add($"{subdirName}/{fileName}");
+                }
+            }
+            Console.WriteLine($"[TestConsole] Source share populated with {totalFileCount} files");
+
+            // ── Create source / destination storage resources ────────────
+            // Use the SAS provider to create resources so the copy-source URL
+            // carries an authentication token for Put Range from URL calls.
+            ShareFilesStorageResourceProvider shareProvider = (ShareFilesStorageResourceProvider)provider;
+            ShareFileStorageResourceOptions options = new()
+            {
+                SkipProtocolValidation = true,
+            };
+            StorageResource sourceResource = await shareProvider.FromDirectoryAsync(rootDir.Uri, options);
+            StorageResource destinationResource = await shareProvider.FromDirectoryAsync(
+                destinationContainer.Container.GetRootDirectoryClient().Uri, options);
+
+            // ── Start transfer ───────────────────────────────────────────
+            TransferOptions transferOptions = new TransferOptions()
+            {
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
+                InitialTransferSize = DataMovementTestConstants.KB,
+                MaximumTransferChunkSize = DataMovementTestConstants.KB,
+            };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+
+            Console.WriteLine("[TestConsole] Starting transfer...");
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                transferOptions);
+
+            string transferId = transfer.Id;
+            Console.WriteLine($"[TestConsole] Transfer started with ID: {transferId}");
+
+            // Give transfer time to make progress
+            await Task.Delay(4000);
+
+            // ── Pause transfer ───────────────────────────────────────────
+            Console.WriteLine("[TestConsole] Pausing transfer...");
+
+            if (!transfer.HasCompleted)
+            {
+                using CancellationTokenSource pauseCts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+                await transferManager.PauseTransferAsync(transferId, pauseCts.Token);
+
+                Assert.AreEqual(TransferState.Paused, transfer.Status.State,
+                    $"Expected Paused but got {transfer.Status.State}");
+                Console.WriteLine("[TestConsole] Transfer paused");
+            }
+            else
+            {
+                Console.WriteLine("[TestConsole] Transfer completed before pause, skipping pause/resume validation");
+            }
+
+            // ── Validate checkpoint files are readable ───────────────────
+            string[] checkpointFiles = Directory.GetFiles(checkpointerDirectory.DirectoryPath, "*", SearchOption.AllDirectories);
+            Console.WriteLine($"[TestConsole] Found {checkpointFiles.Length} checkpoint files");
+            foreach (string cpFile in checkpointFiles)
+            {
+                // Validate files can be read (not locked)
+                using FileStream fs = File.Open(cpFile, FileMode.Open, FileAccess.Read, FileShare.Read);
+                Assert.That(fs.Length, Is.GreaterThan(0), $"Checkpoint file should not be empty: {cpFile}");
+            }
+
+            // ── Resume transfer ──────────────────────────────────────────
+            if (!transfer.HasCompleted)
+            {
+                Console.WriteLine("[TestConsole] Resuming transfer...");
+                TransferOptions resumeOptions = new TransferOptions()
+                {
+                    CreationMode = StorageResourceCreationMode.OverwriteIfExists,
+                };
+                TestEventsRaised resumeEventsRaised = new TestEventsRaised(resumeOptions);
+
+                TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(
+                    transferId: transferId,
+                    transferOptions: resumeOptions);
+
+                Console.WriteLine($"[TestConsole] Transfer resumed with ID: {resumedTransfer.Id}");
+
+                using CancellationTokenSource completionCts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+                await resumedTransfer.WaitForCompletionAsync(completionCts.Token);
+
+                Console.WriteLine($"[TestConsole] Transfer State: {resumedTransfer.Status.State}");
+                Console.WriteLine($"[TestConsole] HasCompletedSuccessfully: {resumedTransfer.Status.HasCompletedSuccessfully}");
+
+                Assert.IsTrue(resumedTransfer.HasCompleted, "Resumed transfer should complete");
+                Assert.IsTrue(resumedTransfer.Status.HasCompletedSuccessfully,
+                    "Resumed transfer should complete successfully without failures");
+
+                transfer = resumedTransfer;
+            }
+            else
+            {
+                // If transfer completed before pause, just wait for it
+                using CancellationTokenSource completionCts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+                await transfer.WaitForCompletionAsync(completionCts.Token);
+            }
+
+            // ── Validate destination matches source ──────────────────────
+            Console.WriteLine("[TestConsole] Validating destination...");
+            ShareDirectoryClient destRoot = destinationContainer.Container.GetRootDirectoryClient();
+            List<string> actualRelativePaths = new();
+
+            for (int d = 0; d < directoryCount; d++)
+            {
+                string subdirName = $"subdir-{d}";
+                ShareDirectoryClient destSubDir = destRoot.GetSubdirectoryClient(subdirName);
+
+                await foreach (ShareFileItem item in destSubDir.GetFilesAndDirectoriesAsync())
+                {
+                    if (!item.IsDirectory)
+                    {
+                        actualRelativePaths.Add($"{subdirName}/{item.Name}");
+                    }
+                }
+            }
+
+            Assert.AreEqual(totalFileCount, actualRelativePaths.Count,
+                $"Expected {totalFileCount} files in destination but found {actualRelativePaths.Count}.\n" +
+                $"Missing: {string.Join(", ", expectedRelativePaths.Except(actualRelativePaths))}\n" +
+                $"Extra:   {string.Join(", ", actualRelativePaths.Except(expectedRelativePaths))}");
+            Assert.That(actualRelativePaths, Is.EquivalentTo(expectedRelativePaths));
+
+            // ── Verify content of each file matches ──────────────────────
+            for (int d = 0; d < directoryCount; d++)
+            {
+                string subdirName = $"subdir-{d}";
+                ShareDirectoryClient srcSubDir = rootDir.GetSubdirectoryClient(subdirName);
+                ShareDirectoryClient destSubDir = destRoot.GetSubdirectoryClient(subdirName);
+
+                for (int f = 0; f < filesPerDirectory; f++)
+                {
+                    string fileName = $"file-{f}.bin";
+                    ShareFileClient srcFile = srcSubDir.GetFileClient(fileName);
+                    ShareFileClient destFile = destSubDir.GetFileClient(fileName);
+
+                    Assert.IsTrue(await destFile.ExistsAsync(),
+                        $"Destination file missing: {subdirName}/{fileName}");
+
+                    ShareFileDownloadInfo srcDownload = await srcFile.DownloadAsync();
+                    ShareFileDownloadInfo destDownload = await destFile.DownloadAsync();
+
+                    using MemoryStream srcStream = new MemoryStream();
+                    using MemoryStream destStream = new MemoryStream();
+                    await srcDownload.Content.CopyToAsync(srcStream);
+                    await destDownload.Content.CopyToAsync(destStream);
+
+                    Assert.AreEqual(srcStream.Length, destStream.Length,
+                        $"Content length mismatch for {subdirName}/{fileName}");
+                    Assert.IsTrue(
+                        srcStream.ToArray().SequenceEqual(destStream.ToArray()),
+                        $"Content mismatch for {subdirName}/{fileName}");
+                }
+            }
+
+            Console.WriteLine("[TestConsole] Validation complete - destination matches source exactly");
         }
 
         #region Snapshot Tests
