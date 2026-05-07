@@ -143,7 +143,10 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var baseSystemPropertyNames = EnumerateBaseModelProperties(baseSystemType);
         var properties = RemoveDuplicatePropertiesAndStripVirtual(model, baseSystemType, baseSystemPropertyNames);
         model.Update(properties: properties);
-        UpdatePublicConstructor(model, baseSystemType);
+        if (TryGetRequiredBaseConstructorParameters(baseSystemType, out var baseParameters))
+        {
+            UpdatePublicConstructor(model, baseParameters);
+        }
 
         if (deferSerialization)
         {
@@ -194,9 +197,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         // and deeper descendants such as PATCH models reparented under a sibling
         // resource via @@hierarchyBuilding.
         var systemBaseAncestor = FindInheritableSystemBaseAncestor(model);
-        if (systemBaseAncestor is not null)
+        if (systemBaseAncestor is not null && TryGetRequiredBaseConstructorParameters(systemBaseAncestor, out var baseParameters))
         {
-            UpdatePublicConstructor(model, systemBaseAncestor);
+            UpdatePublicConstructor(model, baseParameters);
         }
 
         // Defer serialization return type fixes to VisitType to avoid triggering lazy
@@ -441,16 +444,10 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         model.FullConstructor.Update(bodyStatements: updatedBody);
     }
 
-    private static void UpdatePublicConstructor(ModelProvider model, InheritableSystemObjectModelProvider baseSystemType)
+    private static void UpdatePublicConstructor(ModelProvider model, IReadOnlyList<ParameterProvider> baseParameters)
     {
         var publicConstructor = model.Constructors.SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
         if (publicConstructor is null)
-        {
-            return;
-        }
-
-        var baseParameters = GetRequiredBaseConstructorParameters(baseSystemType);
-        if (baseParameters.Count == 0)
         {
             return;
         }
@@ -508,11 +505,14 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         publicConstructor.Update(signature: updatedSignature);
     }
 
-    private static IReadOnlyList<ParameterProvider> GetRequiredBaseConstructorParameters(InheritableSystemObjectModelProvider baseSystemType)
+    private static bool TryGetRequiredBaseConstructorParameters(
+        InheritableSystemObjectModelProvider baseSystemType,
+        [NotNullWhen(true)] out IReadOnlyList<ParameterProvider>? parameters)
     {
-        return baseSystemType.Constructors
+        parameters = baseSystemType.Constructors
             .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-            ?.Signature.Parameters ?? [];
+            ?.Signature.Parameters;
+        return parameters is { Count: > 0 };
     }
 
     private const string RawDataParameterName = "additionalBinaryDataProperties";
