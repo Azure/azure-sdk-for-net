@@ -8,6 +8,7 @@ description: 'Domain knowledge for Azure.Search.Documents SDK. Covers tool invoc
 Procedural workflows and tool invocations for the Azure.Search.Documents SDK. For detailed reference:
 - [references/architecture.md](./references/architecture.md) — source layout, public clients, service version management, backward compat rules, retained types list
 - [references/customization.md](./references/customization.md) — CodeGen attributes, TypeSpec-vs-C# decision table, SearchModelFactory patterns, post-regen update guide
+- [references/testing.md](./references/testing.md) — coverage tiers, version matrix rules, preview isolation, post-regen workflow, traps
 
 ---
 
@@ -111,6 +112,8 @@ dotnet test sdk/search/Azure.Search.Documents/tests/ --filter "TestCategory!=Liv
 
 Recordings are in a separate repo pointed to by `assets.json`.
 
+For coverage tiers, version matrix rules, and post-regen workflow, see [references/testing.md](./references/testing.md).
+
 ---
 
 ### 7. `azsdk_package_update_changelog_content` — Changelog
@@ -137,8 +140,9 @@ May return `noop` — manually draft entries in comparison to the previous relea
 
 ### 8. Version and Metadata
 
-```powershell
-eng/common/scripts/Prepare-Release.ps1 Azure.Search.Documents search <ReleaseDate>
+```
+azsdk_package_update_version
+  packagePath: sdk/search/Azure.Search.Documents
 ```
 
 ```
@@ -162,10 +166,11 @@ azsdk_package_update_metadata
 6. Run `Export-API.ps1 search`. Run `dotnet pack src/` to verify ApiCompat.
 7. Run `dotnet format` on src and tests projects.
 8. Run `Update-Snippets.ps1 search`.
-9. Run `azsdk_package_run_tests` and `azsdk_package_run_check`.
-10. Update `CHANGELOG.md` per [Tool 7](#7-azsdk_package_update_changelog_content--changelog).
-11. Run `Prepare-Release.ps1` and `azsdk_package_update_metadata`.
-12. Final gate: re-run Export-API if `src/` changed after step 6; re-run snippets if `*.md` changed after step 8; confirm `git status` is clean.
+9. Add tests for new types or properties, using [references/testing.md](./references/testing.md) as a reference.
+10. Run `azsdk_package_run_tests` and `azsdk_package_run_check`.
+11. Update `CHANGELOG.md` per [Tool 7](#7-azsdk_package_update_changelog_content--changelog).
+12. Run `Prepare-Release.ps1` and `azsdk_package_update_metadata`.
+13. Final gate: re-run Export-API if `src/` changed after step 6; re-run snippets if `*.md` changed after step 8; confirm `git status` is clean.
 
 ---
 
@@ -218,3 +223,5 @@ After completing any task, check if these changed and update the relevant refere
 | Restored a deleted type | [architecture.md](./references/architecture.md#known-retained-types) |
 | `CodeGenType`/`CodeGenMember`/`CodeGenSuppress` usage | [customization.md](./references/customization.md) |
 | `SearchModelFactory` custom partial | [customization.md](./references/customization.md#searchmodelfactory-customizations) |
+| Test version matrix, preview constants | [testing.md](./references/testing.md#version-matrix-rules) |
+| New polymorphic base type added | [testing.md](./references/testing.md#coverage-tiers) (`PolymorphicBaseTypes` list) |

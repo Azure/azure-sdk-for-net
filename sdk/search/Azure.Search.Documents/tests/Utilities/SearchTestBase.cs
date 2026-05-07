@@ -16,6 +16,7 @@ using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using Microsoft.Spatial;
 using NUnit.Framework;
+using static Azure.Search.Documents.SearchClientOptions.ServiceVersion;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -23,9 +24,36 @@ namespace Azure.Search.Documents.Tests
     /// Base class for Search unit tests that adds shared infrastructure on top
     /// of the Azure.Core testing framework.
     /// </summary>
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01)]
+    /// <remarks>
+    /// <para>
+    /// This is the SINGLE SOURCE OF TRUTH for the API version test matrix.
+    /// All test classes inherit from here — do NOT add [ClientTestFixture] on derived classes
+    /// unless there is a documented, exceptional reason.
+    /// </para>
+    /// <para>
+    /// To update the tested API versions, change <see cref="CurrentGAVersion"/> (and
+    /// <c>CurrentPreviewVersion</c> in preview builds) below. All tests follow automatically.
+    /// </para>
+    /// </remarks>
+#if AZURE_SEARCH_PREVIEW
+    [ClientTestFixture(CurrentGAVersion, CurrentPreviewVersion)]
+#else
+    [ClientTestFixture(CurrentGAVersion)]
+#endif
     public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
+        /// <summary>
+        /// The current GA API version under test. Change this single constant
+        /// when a new GA version ships — all tests update automatically.
+        /// </summary>
+        protected const SearchClientOptions.ServiceVersion CurrentGAVersion = V2026_04_01;
+
+#if AZURE_SEARCH_PREVIEW
+        /// <summary>
+        /// The current preview API version under test. Only available in preview builds.
+        /// </summary>
+        protected const SearchClientOptions.ServiceVersion CurrentPreviewVersion = V2026_05_01_Preview;
+#endif
         /// <summary>
         /// Shared HTTP client instance with a longer timeout.  It's
         /// gratuitously long for the sake of live tests in a hammered
