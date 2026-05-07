@@ -36,5 +36,27 @@ namespace Azure.ResourceManager.CosmosDB
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
+
+        /// <summary> An Azure Cosmos DB Global Database Account which is part of a Fleetspace Account. </summary>
+        [WirePath("properties")]
+        internal FleetspaceAccountProperties Properties { get; set; }
+
+        /// <summary> Configuration for fleetspace Account in the fleetspace. </summary>
+        [WirePath("properties.globalDatabaseAccountProperties")]
+        public CosmosDBFleetspaceAccountConfiguration GlobalDatabaseAccountProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GlobalDatabaseAccountProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetspaceAccountProperties();
+                }
+                Properties.GlobalDatabaseAccountProperties = value;
+            }
+        }
     }
 }

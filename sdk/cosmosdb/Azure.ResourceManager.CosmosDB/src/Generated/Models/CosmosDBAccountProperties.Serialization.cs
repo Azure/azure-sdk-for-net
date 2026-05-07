@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("databaseAccountOfferType"u8);
                 writer.WriteStringValue(DatabaseAccountOfferType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (CosmosDBIPAddressOrRange item in IpRules)
+                foreach (CosmosDBIPAddressOrRange item in IPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(KeyVaultKeyUri))
             {
                 writer.WritePropertyName("keyVaultKeyUri"u8);
-                writer.WriteStringValue(KeyVaultKeyUri);
+                writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DefaultIdentity))
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceId))
             {
                 writer.WritePropertyName("instanceId"u8);
-                writer.WriteStringValue(InstanceId);
+                writer.WriteStringValue(InstanceId.Value);
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -440,14 +440,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool? enableCassandraConnector = default;
             ConnectorOffer? connectorOffer = default;
             bool? disableKeyBasedMetadataWriteAccess = default;
-            string keyVaultKeyUri = default;
+            Uri keyVaultKeyUri = default;
             string defaultIdentity = default;
             CosmosDBPublicNetworkAccess? publicNetworkAccess = default;
             bool? isFreeTierEnabled = default;
             ApiProperties apiProperties = default;
             bool? isAnalyticalStorageEnabled = default;
             AnalyticalStorageConfiguration analyticalStorageConfiguration = default;
-            string instanceId = default;
+            Guid? instanceId = default;
             CosmosDBAccountCreateMode? createMode = default;
             CosmosDBAccountRestoreParameters restoreParameters = default;
             CosmosDBAccountBackupPolicy backupPolicy = default;
@@ -671,7 +671,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("keyVaultKeyUri"u8))
                 {
-                    keyVaultKeyUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultKeyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("defaultIdentity"u8))
@@ -726,7 +730,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("instanceId"u8))
                 {
-                    instanceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instanceId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("createMode"u8))

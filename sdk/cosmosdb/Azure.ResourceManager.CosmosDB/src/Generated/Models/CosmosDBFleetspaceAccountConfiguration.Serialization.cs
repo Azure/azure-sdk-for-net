@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Configuration for fleetspace Account in the fleetspace. </summary>
-    internal partial class CosmosDBFleetspaceAccountConfiguration : IJsonModel<CosmosDBFleetspaceAccountConfiguration>
+    public partial class CosmosDBFleetspaceAccountConfiguration : IJsonModel<CosmosDBFleetspaceAccountConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

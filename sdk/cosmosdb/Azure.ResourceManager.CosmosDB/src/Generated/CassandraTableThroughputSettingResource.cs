@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a TableResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TableResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBTableResource"/> using the GetTableResource method.
+    /// A class representing a CassandraTableThroughputSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CassandraTableThroughputSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CassandraTableResource"/> using the GetCassandraTableThroughputSetting method.
     /// </summary>
-    public partial class TableResource : ArmResource
+    public partial class CassandraTableThroughputSettingResource : ArmResource
     {
-        private readonly ClientDiagnostics _tableResourcesClientDiagnostics;
-        private readonly TableResources _tableResourcesRestClient;
+        private readonly ClientDiagnostics _cassandraResourcesClientDiagnostics;
+        private readonly CassandraResources _cassandraResourcesRestClient;
         private readonly ThroughputSettingData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings";
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables/throughputSettings";
 
-        /// <summary> Initializes a new instance of TableResource for mocking. </summary>
-        protected TableResource()
+        /// <summary> Initializes a new instance of CassandraTableThroughputSettingResource for mocking. </summary>
+        protected CassandraTableThroughputSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraTableThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TableResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)
+        internal CassandraTableThroughputSettingResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraTableThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TableResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CassandraTableThroughputSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string tableResourceApiVersion);
-            _tableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _tableResourcesRestClient = new TableResources(_tableResourcesClientDiagnostics, Pipeline, Endpoint, tableResourceApiVersion ?? "2025-11-01-preview");
+            TryGetApiVersion(ResourceType, out string cassandraTableThroughputSettingApiVersion);
+            _cassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Endpoint, cassandraTableThroughputSettingApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -77,10 +77,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="accountName"> The accountName. </param>
+        /// <param name="keyspaceName"> The keyspaceName. </param>
         /// <param name="tableName"> The tableName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string tableName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -95,15 +96,15 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update RUs per second of an Azure Cosmos DB Table
+        /// Update RUs per second of an Azure Cosmos DB Cassandra table
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TableResources_UpdateTableThroughput. </description>
+        /// <description> CassandraResourcesThroughputSettingsGetResultsOperationGroup_UpdateCassandraTableThroughput. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -111,19 +112,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TableResource"/>. </description>
+        /// <description> <see cref="CassandraTableThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The parameters to provide for the RUs per second of the current Table. </param>
+        /// <param name="data"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CassandraTableThroughputSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.CreateOrUpdate");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -131,11 +132,11 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateUpdateTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
-                    new TableResourceOperationSource(Client),
-                    _tableResourcesClientDiagnostics,
+                CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
+                    new CassandraTableThroughputSettingOperationSource(Client),
+                    _cassandraResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -154,15 +155,15 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update RUs per second of an Azure Cosmos DB Table
+        /// Update RUs per second of an Azure Cosmos DB Cassandra table
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TableResources_UpdateTableThroughput. </description>
+        /// <description> CassandraResourcesThroughputSettingsGetResultsOperationGroup_UpdateCassandraTableThroughput. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -170,19 +171,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TableResource"/>. </description>
+        /// <description> <see cref="CassandraTableThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The parameters to provide for the RUs per second of the current Table. </param>
+        /// <param name="data"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TableResource> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CassandraTableThroughputSettingResource> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.CreateOrUpdate");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -190,11 +191,11 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateUpdateTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
-                    new TableResourceOperationSource(Client),
-                    _tableResourcesClientDiagnostics,
+                CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
+                    new CassandraTableThroughputSettingOperationSource(Client),
+                    _cassandraResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -213,15 +214,15 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Gets the RUs per second of the Table under an existing Azure Cosmos DB database account with the provided name.
+        /// Gets the RUs per second of the Cassandra table under an existing Azure Cosmos DB database account with the provided name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TableResources_GetTableThroughput. </description>
+        /// <description> CassandraResourcesThroughputSettingsGetResultsOperationGroup_GetCassandraTableThroughput. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -229,14 +230,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TableResource"/>. </description>
+        /// <description> <see cref="CassandraTableThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TableResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraTableThroughputSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.Get");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.Get");
             scope.Start();
             try
             {
@@ -244,14 +245,14 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraTableThroughputSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -261,15 +262,15 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Gets the RUs per second of the Table under an existing Azure Cosmos DB database account with the provided name.
+        /// Gets the RUs per second of the Cassandra table under an existing Azure Cosmos DB database account with the provided name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TableResources_GetTableThroughput. </description>
+        /// <description> CassandraResourcesThroughputSettingsGetResultsOperationGroup_GetCassandraTableThroughput. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -277,14 +278,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TableResource"/>. </description>
+        /// <description> <see cref="CassandraTableThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TableResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CassandraTableThroughputSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.Get");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.Get");
             scope.Start();
             try
             {
@@ -292,14 +293,14 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraTableThroughputSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -309,15 +310,15 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Migrate an Azure Cosmos DB Table from manual throughput to autoscale
+        /// Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default/migrateToAutoscale. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default/migrateToAutoscale. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TableResources_MigrateTableToAutoscale. </description>
+        /// <description> CassandraResourcesThroughputSettingsGetResultsOperationGroup_MigrateCassandraTableToAutoscale. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -325,15 +326,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TableResource"/>. </description>
+        /// <description> <see cref="CassandraTableThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TableResource>> MigrateTableToAutoscaleAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CassandraTableThroughputSettingResource>> MigrateCassandraTableToAutoscaleAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.MigrateTableToAutoscale");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.MigrateCassandraTableToAutoscale");
             scope.Start();
             try
             {
@@ -341,11 +342,11 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateMigrateTableToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
-                    new TableResourceOperationSource(Client),
-                    _tableResourcesClientDiagnostics,
+                CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
+                    new CassandraTableThroughputSettingOperationSource(Client),
+                    _cassandraResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -364,15 +365,15 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Migrate an Azure Cosmos DB Table from manual throughput to autoscale
+        /// Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default/migrateToAutoscale. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default/migrateToAutoscale. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TableResources_MigrateTableToAutoscale. </description>
+        /// <description> CassandraResourcesThroughputSettingsGetResultsOperationGroup_MigrateCassandraTableToAutoscale. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -380,15 +381,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TableResource"/>. </description>
+        /// <description> <see cref="CassandraTableThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TableResource> MigrateTableToAutoscale(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CassandraTableThroughputSettingResource> MigrateCassandraTableToAutoscale(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.MigrateTableToAutoscale");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.MigrateCassandraTableToAutoscale");
             scope.Start();
             try
             {
@@ -396,11 +397,11 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateMigrateTableToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
-                    new TableResourceOperationSource(Client),
-                    _tableResourcesClientDiagnostics,
+                CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
+                    new CassandraTableThroughputSettingOperationSource(Client),
+                    _cassandraResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -419,15 +420,15 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Migrate an Azure Cosmos DB Table from autoscale to manual throughput
+        /// Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default/migrateToManualThroughput. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default/migrateToManualThroughput. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TableResources_MigrateTableToManualThroughput. </description>
+        /// <description> CassandraResourcesThroughputSettingsGetResultsOperationGroup_MigrateCassandraTableToManualThroughput. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -435,15 +436,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TableResource"/>. </description>
+        /// <description> <see cref="CassandraTableThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TableResource>> MigrateTableToManualThroughputAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CassandraTableThroughputSettingResource>> MigrateCassandraTableToManualThroughputAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.MigrateTableToManualThroughput");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.MigrateCassandraTableToManualThroughput");
             scope.Start();
             try
             {
@@ -451,11 +452,11 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateMigrateTableToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
-                    new TableResourceOperationSource(Client),
-                    _tableResourcesClientDiagnostics,
+                CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
+                    new CassandraTableThroughputSettingOperationSource(Client),
+                    _cassandraResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -474,15 +475,15 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Migrate an Azure Cosmos DB Table from autoscale to manual throughput
+        /// Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default/migrateToManualThroughput. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default/migrateToManualThroughput. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TableResources_MigrateTableToManualThroughput. </description>
+        /// <description> CassandraResourcesThroughputSettingsGetResultsOperationGroup_MigrateCassandraTableToManualThroughput. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -490,15 +491,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TableResource"/>. </description>
+        /// <description> <see cref="CassandraTableThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TableResource> MigrateTableToManualThroughput(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CassandraTableThroughputSettingResource> MigrateCassandraTableToManualThroughput(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.MigrateTableToManualThroughput");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.MigrateCassandraTableToManualThroughput");
             scope.Start();
             try
             {
@@ -506,11 +507,11 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateMigrateTableToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<TableResource> operation = new CosmosDBArmOperation<TableResource>(
-                    new TableResourceOperationSource(Client),
-                    _tableResourcesClientDiagnostics,
+                CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
+                    new CassandraTableThroughputSettingOperationSource(Client),
+                    _cassandraResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -533,12 +534,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<TableResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraTableThroughputSettingResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.AddTag");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.AddTag");
             scope.Start();
             try
             {
@@ -551,16 +552,16 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
-                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new CassandraTableThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<TableResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CassandraTableThroughputSettingResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -576,12 +577,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<TableResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<CassandraTableThroughputSettingResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.AddTag");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.AddTag");
             scope.Start();
             try
             {
@@ -594,16 +595,16 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
-                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new CassandraTableThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<TableResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CassandraTableThroughputSettingResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -618,11 +619,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<TableResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraTableThroughputSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.SetTags");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.SetTags");
             scope.Start();
             try
             {
@@ -636,16 +637,16 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
-                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new CassandraTableThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<TableResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CassandraTableThroughputSettingResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -660,11 +661,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<TableResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<CassandraTableThroughputSettingResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.SetTags");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.SetTags");
             scope.Start();
             try
             {
@@ -678,16 +679,16 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
-                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new CassandraTableThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<TableResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CassandraTableThroughputSettingResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -702,11 +703,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<TableResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraTableThroughputSettingResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.RemoveTag");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.RemoveTag");
             scope.Start();
             try
             {
@@ -719,16 +720,16 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
-                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new CassandraTableThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<TableResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CassandraTableThroughputSettingResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -743,11 +744,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<TableResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<CassandraTableThroughputSettingResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("TableResource.RemoveTag");
+            using DiagnosticScope scope = _cassandraResourcesClientDiagnostics.CreateScope("CassandraTableThroughputSettingResource.RemoveTag");
             scope.Start();
             try
             {
@@ -760,16 +761,16 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _tableResourcesRestClient.CreateGetTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
-                    return Response.FromValue(new TableResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new CassandraTableThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<TableResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CassandraTableThroughputSettingResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

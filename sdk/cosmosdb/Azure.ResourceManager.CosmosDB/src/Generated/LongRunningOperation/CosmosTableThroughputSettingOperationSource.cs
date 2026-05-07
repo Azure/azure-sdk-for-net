@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    internal partial class MongoDBResourceOperationSource : IOperationSource<MongoDBResource>
+    internal partial class CosmosTableThroughputSettingOperationSource : IOperationSource<CosmosTableThroughputSettingResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal MongoDBResourceOperationSource(ArmClient client)
+        internal CosmosTableThroughputSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        MongoDBResource IOperationSource<MongoDBResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosTableThroughputSettingResource IOperationSource<CosmosTableThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             ThroughputSettingData data = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MongoDBResource(_client, data);
+            return new CosmosTableThroughputSettingResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<MongoDBResource> IOperationSource<MongoDBResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosTableThroughputSettingResource> IOperationSource<CosmosTableThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             ThroughputSettingData data = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MongoDBResource(_client, data);
+            return new CosmosTableThroughputSettingResource(_client, data);
         }
     }
 }

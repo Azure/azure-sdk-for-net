@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.ConsistencyPolicy;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.ConsistencyPolicy = value;
             }
         }
@@ -77,7 +78,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.DatabaseAccountOfferType;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.DatabaseAccountOfferType = value;
             }
         }
@@ -89,7 +91,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.IsVirtualNetworkFilterEnabled;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.IsVirtualNetworkFilterEnabled = value;
             }
         }
@@ -101,7 +104,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.EnableAutomaticFailover;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.EnableAutomaticFailover = value;
             }
         }
@@ -113,7 +117,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.EnableMultipleWriteLocations;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.EnableMultipleWriteLocations = value;
             }
         }
@@ -125,7 +130,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.EnableCassandraConnector;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.EnableCassandraConnector = value;
             }
         }
@@ -137,7 +143,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.ConnectorOffer;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.ConnectorOffer = value;
             }
         }
@@ -149,7 +156,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.DisableKeyBasedMetadataWriteAccess;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.DisableKeyBasedMetadataWriteAccess = value;
             }
         }
@@ -161,7 +169,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.KeyVaultKeyUri;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.KeyVaultKeyUri = value;
             }
         }
@@ -173,7 +182,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.DefaultIdentity;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.DefaultIdentity = value;
             }
         }
@@ -185,7 +195,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.PublicNetworkAccess;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.PublicNetworkAccess = value;
             }
         }
@@ -197,7 +208,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.IsFreeTierEnabled;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.IsFreeTierEnabled = value;
             }
         }
@@ -209,7 +221,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.IsAnalyticalStorageEnabled;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.IsAnalyticalStorageEnabled = value;
             }
         }
@@ -221,7 +234,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.CreateMode;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.CreateMode = value;
             }
         }
@@ -233,7 +247,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.BackupPolicy;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.BackupPolicy = value;
             }
         }
@@ -245,7 +260,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.NetworkAclBypass;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.NetworkAclBypass = value;
             }
         }
@@ -257,7 +273,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.DisableLocalAuth;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.DisableLocalAuth = value;
             }
         }
@@ -269,7 +286,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.RestoreParameters;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.RestoreParameters = value;
             }
         }
@@ -281,7 +299,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.EnablePartitionMerge;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.EnablePartitionMerge = value;
             }
         }
@@ -293,7 +312,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.EnableBurstCapacity;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.EnableBurstCapacity = value;
             }
         }
@@ -305,7 +325,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.MinimalTlsVersion;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.MinimalTlsVersion = value;
             }
         }
@@ -317,7 +338,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.CustomerManagedKeyStatus;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.CustomerManagedKeyStatus = value;
             }
         }
@@ -329,7 +351,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.EnablePriorityBasedExecution;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.EnablePriorityBasedExecution = value;
             }
         }
@@ -341,7 +364,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.DefaultPriorityLevel;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.DefaultPriorityLevel = value;
             }
         }
@@ -353,7 +377,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.EnablePerRegionPerPartitionAutoscale;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.EnablePerRegionPerPartitionAutoscale = value;
             }
         }
@@ -365,7 +390,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.ApiServerVersion;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.ApiServerVersion = value;
             }
         }
@@ -377,7 +403,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.AnalyticalStorageSchemaType;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.AnalyticalStorageSchemaType = value;
             }
         }
@@ -389,7 +416,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Properties is null ? default : Properties.CapacityTotalThroughputLimit;
             set
             {
-                if (Properties == null) { return; }
+                if (Properties == null)
+                { return; }
                 Properties.CapacityTotalThroughputLimit = value;
             }
         }

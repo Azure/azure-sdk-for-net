@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> List of IpRules. </summary>
         [WirePath("properties.ipRules")]
-        public IList<CosmosDBIPAddressOrRange> IpRules
+        public IList<CosmosDBIPAddressOrRange> IPRules
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     Properties = new CosmosDBAccountProperties();
                 }
-                return Properties.IpRules;
+                return Properties.IPRules;
             }
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The URI of the key vault. </summary>
         [WirePath("properties.keyVaultKeyUri")]
-        public string KeyVaultKeyUri
+        public Uri KeyVaultKeyUri
         {
             get
             {
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> A unique identifier assigned to the database account. </summary>
         [WirePath("properties.instanceId")]
-        public string InstanceId
+        public Guid? InstanceId
         {
             get
             {

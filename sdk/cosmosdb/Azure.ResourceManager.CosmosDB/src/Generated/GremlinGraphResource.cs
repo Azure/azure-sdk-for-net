@@ -777,11 +777,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="GremlinResource"/> along with the instance operations that can be performed on it in the <see cref="GremlinGraphResource"/>. </summary>
-        /// <returns> Returns a <see cref="GremlinResource"/> object. </returns>
-        public virtual GremlinResource GetGremlinResource()
+        /// <summary> Gets an object representing a <see cref="GremlinGraphThroughputSettingResource"/> along with the instance operations that can be performed on it in the <see cref="GremlinGraphResource"/>. </summary>
+        /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource"/> object. </returns>
+        public virtual GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSetting()
         {
-            return new GremlinResource(Client, Id.AppendChildResource("throughputSettings", "default"));
+            return new GremlinGraphThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
     }
 }

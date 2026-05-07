@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    internal partial class SqlResourceOperationSource : IOperationSource<SqlResource>
+    internal partial class CassandraViewThroughputSettingOperationSource : IOperationSource<CassandraViewThroughputSettingResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal SqlResourceOperationSource(ArmClient client)
+        internal CassandraViewThroughputSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SqlResource IOperationSource<SqlResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CassandraViewThroughputSettingResource IOperationSource<CassandraViewThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             ThroughputSettingData data = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SqlResource(_client, data);
+            return new CassandraViewThroughputSettingResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SqlResource> IOperationSource<SqlResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CassandraViewThroughputSettingResource> IOperationSource<CassandraViewThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             ThroughputSettingData data = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SqlResource(_client, data);
+            return new CassandraViewThroughputSettingResource(_client, data);
         }
     }
 }

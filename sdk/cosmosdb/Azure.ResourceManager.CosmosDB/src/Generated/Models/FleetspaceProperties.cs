@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> List of data regions assigned to the fleetspace. Eg [westus2]. </summary>
         [WirePath("dataRegions")]
-        public IList<AzureLocation> DataRegions { get; }
+        public IList<AzureLocation> DataRegions { get; } = new ChangeTrackingList<AzureLocation>();
 
         /// <summary> Configuration for throughput pool in the fleetspace. </summary>
         [WirePath("throughputPoolConfiguration")]

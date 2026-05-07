@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    internal partial class GremlinResourceOperationSource : IOperationSource<GremlinResource>
+    internal partial class CassandraTableThroughputSettingOperationSource : IOperationSource<CassandraTableThroughputSettingResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal GremlinResourceOperationSource(ArmClient client)
+        internal CassandraTableThroughputSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        GremlinResource IOperationSource<GremlinResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CassandraTableThroughputSettingResource IOperationSource<CassandraTableThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             ThroughputSettingData data = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GremlinResource(_client, data);
+            return new CassandraTableThroughputSettingResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<GremlinResource> IOperationSource<GremlinResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CassandraTableThroughputSettingResource> IOperationSource<CassandraTableThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             ThroughputSettingData data = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GremlinResource(_client, data);
+            return new CassandraTableThroughputSettingResource(_client, data);
         }
     }
 }

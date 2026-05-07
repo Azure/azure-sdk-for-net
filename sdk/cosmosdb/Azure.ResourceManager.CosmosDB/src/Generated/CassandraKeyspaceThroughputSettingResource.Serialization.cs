@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    public partial class TableResource : IJsonModel<ThroughputSettingData>
+    public partial class CassandraKeyspaceThroughputSettingResource : IJsonModel<ThroughputSettingData>
     {
         private static IJsonModel<ThroughputSettingData> s_dataDeserializationInstance;
 
