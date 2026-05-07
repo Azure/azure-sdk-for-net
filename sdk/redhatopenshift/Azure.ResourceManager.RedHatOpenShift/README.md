@@ -6,10 +6,10 @@ Azure Red Hat OpenShift provides fully managed OpenShift clusters on Azure.
 
 ### Install the package
 
-Install the Microsoft Azure ComputeSchedule management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Red Hat OpenShift management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.RedHatOpenShift  --prerelease
+dotnet add package Azure.ResourceManager.RedHatOpenShift --prerelease
 ```
 
 ### Prerequisites
