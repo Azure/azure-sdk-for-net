@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateGetAccountMetricsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string filter, RequestContext context)
+        internal HttpMessage CreateGetMetricsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetAccountMetricsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetMetricsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateGetAccountUsagesRequest(Guid subscriptionId, string resourceGroupName, string accountName, string filter, RequestContext context)
+        internal HttpMessage CreateGetUsagesRequest(Guid subscriptionId, string resourceGroupName, string accountName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetAccountUsagesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetUsagesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

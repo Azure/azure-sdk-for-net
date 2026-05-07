@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseMetric> GetCollectionMetricsAsync(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBBaseMetric> GetMetricsCollectionsAsync(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetCollectionMetricsAsyncCollectionResultOfT(
+            return new CollectionGetMetricsCollectionsAsyncCollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionMetrics");
+                "CosmosDBAccountResource.GetMetricsCollections");
         }
 
         /// <summary>
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseMetric> GetCollectionMetrics(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBBaseMetric> GetMetricsCollections(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetCollectionMetricsCollectionResultOfT(
+            return new CollectionGetMetricsCollectionsCollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionMetrics");
+                "CosmosDBAccountResource.GetMetricsCollections");
         }
 
         /// <summary>
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseUsage> GetCollectionUsagesAsync(string databaseRid, string collectionRid, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBBaseUsage> GetUsagesCollectionsAsync(string databaseRid, string collectionRid, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetCollectionUsagesAsyncCollectionResultOfT(
+            return new CollectionGetUsagesCollectionsAsyncCollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionUsages");
+                "CosmosDBAccountResource.GetUsagesCollections");
         }
 
         /// <summary>
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseUsage> GetCollectionUsages(string databaseRid, string collectionRid, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBBaseUsage> GetUsagesCollections(string databaseRid, string collectionRid, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetCollectionUsagesCollectionResultOfT(
+            return new CollectionGetUsagesCollectionsCollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionUsages");
+                "CosmosDBAccountResource.GetUsagesCollections");
         }
 
         /// <summary>
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PartitionMetric> GetCollectionPartitionMetricsAsync(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PartitionMetric> GetMetricsCollectionPartitionsAsync(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionGetCollectionPartitionMetricsAsyncCollectionResultOfT(
+            return new CollectionPartitionGetMetricsCollectionPartitionsAsyncCollectionResultOfT(
                 _collectionPartitionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionPartitionMetrics");
+                "CosmosDBAccountResource.GetMetricsCollectionPartitions");
         }
 
         /// <summary>
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PartitionMetric> GetCollectionPartitionMetrics(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<PartitionMetric> GetMetricsCollectionPartitions(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionGetCollectionPartitionMetricsCollectionResultOfT(
+            return new CollectionPartitionGetMetricsCollectionPartitionsCollectionResultOfT(
                 _collectionPartitionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionPartitionMetrics");
+                "CosmosDBAccountResource.GetMetricsCollectionPartitions");
         }
 
         /// <summary>
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PartitionUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PartitionUsage> GetCollectionPartitionUsagesAsync(string databaseRid, string collectionRid, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PartitionUsage> GetUsagesCollectionPartitionsAsync(string databaseRid, string collectionRid, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionGetCollectionPartitionUsagesAsyncCollectionResultOfT(
+            return new CollectionPartitionGetUsagesCollectionPartitionsAsyncCollectionResultOfT(
                 _collectionPartitionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionPartitionUsages");
+                "CosmosDBAccountResource.GetUsagesCollectionPartitions");
         }
 
         /// <summary>
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PartitionUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PartitionUsage> GetCollectionPartitionUsages(string databaseRid, string collectionRid, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PartitionUsage> GetUsagesCollectionPartitions(string databaseRid, string collectionRid, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionGetCollectionPartitionUsagesCollectionResultOfT(
+            return new CollectionPartitionGetUsagesCollectionPartitionsCollectionResultOfT(
                 _collectionPartitionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionPartitionUsages");
+                "CosmosDBAccountResource.GetUsagesCollectionPartitions");
         }
 
         /// <summary>
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PartitionMetric> GetCollectionPartitionRegionMetricsAsync(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PartitionMetric> GetMetricsCollectionPartitionRegionsAsync(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionRegionGetCollectionPartitionRegionMetricsAsyncCollectionResultOfT(
+            return new CollectionPartitionRegionGetMetricsCollectionPartitionRegionsAsyncCollectionResultOfT(
                 _collectionPartitionRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionPartitionRegionMetrics");
+                "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions");
         }
 
         /// <summary>
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PartitionMetric> GetCollectionPartitionRegionMetrics(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<PartitionMetric> GetMetricsCollectionPartitionRegions(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionRegionGetCollectionPartitionRegionMetricsCollectionResultOfT(
+            return new CollectionPartitionRegionGetMetricsCollectionPartitionRegionsCollectionResultOfT(
                 _collectionPartitionRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionPartitionRegionMetrics");
+                "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions");
         }
 
         /// <summary>
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseMetric> GetCollectionRegionMetricsAsync(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBBaseMetric> GetMetricsCollectionRegionsAsync(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionRegionGetCollectionRegionMetricsAsyncCollectionResultOfT(
+            return new CollectionRegionGetMetricsCollectionRegionsAsyncCollectionResultOfT(
                 _collectionRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionRegionMetrics");
+                "CosmosDBAccountResource.GetMetricsCollectionRegions");
         }
 
         /// <summary>
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseMetric> GetCollectionRegionMetrics(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBBaseMetric> GetMetricsCollectionRegions(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
@@ -1142,7 +1142,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionRegionGetCollectionRegionMetricsCollectionResultOfT(
+            return new CollectionRegionGetMetricsCollectionRegionsCollectionResultOfT(
                 _collectionRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1152,7 +1152,7 @@ namespace Azure.ResourceManager.CosmosDB
                 collectionRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetCollectionRegionMetrics");
+                "CosmosDBAccountResource.GetMetricsCollectionRegions");
         }
 
         /// <summary>
@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseMetric> GetDatabaseAccountRegionMetricsAsync(string region, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBBaseMetric> GetMetricsDatabaseAccountRegionsAsync(string region, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
@@ -1191,7 +1191,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountRegionGetDatabaseAccountRegionMetricsAsyncCollectionResultOfT(
+            return new DatabaseAccountRegionGetMetricsDatabaseAccountRegionsAsyncCollectionResultOfT(
                 _databaseAccountRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.CosmosDB
                 region,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetDatabaseAccountRegionMetrics");
+                "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions");
         }
 
         /// <summary>
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseMetric> GetDatabaseAccountRegionMetrics(string region, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBBaseMetric> GetMetricsDatabaseAccountRegions(string region, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountRegionGetDatabaseAccountRegionMetricsCollectionResultOfT(
+            return new DatabaseAccountRegionGetMetricsDatabaseAccountRegionsCollectionResultOfT(
                 _databaseAccountRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.CosmosDB
                 region,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetDatabaseAccountRegionMetrics");
+                "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions");
         }
 
         /// <summary>
@@ -1364,7 +1364,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseMetric> GetDatabaseMetricsAsync(string databaseRid, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBBaseMetric> GetMetricsDatabasesAsync(string databaseRid, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetDatabaseMetricsAsyncCollectionResultOfT(
+            return new DatabaseGetMetricsDatabasesAsyncCollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1381,7 +1381,7 @@ namespace Azure.ResourceManager.CosmosDB
                 databaseRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetDatabaseMetrics");
+                "CosmosDBAccountResource.GetMetricsDatabases");
         }
 
         /// <summary>
@@ -1411,7 +1411,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseMetric> GetDatabaseMetrics(string databaseRid, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBBaseMetric> GetMetricsDatabases(string databaseRid, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetDatabaseMetricsCollectionResultOfT(
+            return new DatabaseGetMetricsDatabasesCollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.CosmosDB
                 databaseRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetDatabaseMetrics");
+                "CosmosDBAccountResource.GetMetricsDatabases");
         }
 
         /// <summary>
@@ -1458,7 +1458,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseUsage> GetDatabaseUsagesAsync(string databaseRid, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBBaseUsage> GetUsagesDatabasesAsync(string databaseRid, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetDatabaseUsagesAsyncCollectionResultOfT(
+            return new DatabaseGetUsagesDatabasesAsyncCollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1474,7 +1474,7 @@ namespace Azure.ResourceManager.CosmosDB
                 databaseRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetDatabaseUsages");
+                "CosmosDBAccountResource.GetUsagesDatabases");
         }
 
         /// <summary>
@@ -1504,7 +1504,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseUsage> GetDatabaseUsages(string databaseRid, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBBaseUsage> GetUsagesDatabases(string databaseRid, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
@@ -1512,7 +1512,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetDatabaseUsagesCollectionResultOfT(
+            return new DatabaseGetUsagesDatabasesCollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1520,7 +1520,7 @@ namespace Azure.ResourceManager.CosmosDB
                 databaseRid,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetDatabaseUsages");
+                "CosmosDBAccountResource.GetUsagesDatabases");
         }
 
         /// <summary>
@@ -1923,7 +1923,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseMetric> GetAccountMetricsAsync(string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBBaseMetric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -1931,14 +1931,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountsGetAccountMetricsAsyncCollectionResultOfT(
+            return new DatabaseAccountsGetMetricsAsyncCollectionResultOfT(
                 _databaseAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetAccountMetrics");
+                "CosmosDBAccountResource.GetMetrics");
         }
 
         /// <summary>
@@ -1967,7 +1967,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseMetric> GetAccountMetrics(string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBBaseMetric> GetMetrics(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -1975,14 +1975,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountsGetAccountMetricsCollectionResultOfT(
+            return new DatabaseAccountsGetMetricsCollectionResultOfT(
                 _databaseAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetAccountMetrics");
+                "CosmosDBAccountResource.GetMetrics");
         }
 
         /// <summary>
@@ -2105,20 +2105,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBBaseUsage> GetAccountUsagesAsync(string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBBaseUsage> GetUsagesAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountsGetAccountUsagesAsyncCollectionResultOfT(
+            return new DatabaseAccountsGetUsagesAsyncCollectionResultOfT(
                 _databaseAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetAccountUsages");
+                "CosmosDBAccountResource.GetUsages");
         }
 
         /// <summary>
@@ -2145,20 +2145,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBBaseUsage> GetAccountUsages(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBBaseUsage> GetUsages(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountsGetAccountUsagesCollectionResultOfT(
+            return new DatabaseAccountsGetUsagesCollectionResultOfT(
                 _databaseAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetAccountUsages");
+                "CosmosDBAccountResource.GetUsages");
         }
 
         /// <summary>
@@ -2402,7 +2402,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PartitionMetric> GetPartitionKeyRangeIdMetricsAsync(string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PartitionMetric> GetMetricsPartitionKeyRangeIdsAsync(string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -2413,7 +2413,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PartitionKeyRangeIdGetPartitionKeyRangeIdMetricsAsyncCollectionResultOfT(
+            return new PartitionKeyRangeIdGetMetricsPartitionKeyRangeIdsAsyncCollectionResultOfT(
                 _partitionKeyRangeIdRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2423,7 +2423,7 @@ namespace Azure.ResourceManager.CosmosDB
                 partitionKeyRangeId,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetPartitionKeyRangeIdMetrics");
+                "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds");
         }
 
         /// <summary>
@@ -2455,7 +2455,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PartitionMetric> GetPartitionKeyRangeIdMetrics(string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<PartitionMetric> GetMetricsPartitionKeyRangeIds(string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
@@ -2466,7 +2466,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PartitionKeyRangeIdGetPartitionKeyRangeIdMetricsCollectionResultOfT(
+            return new PartitionKeyRangeIdGetMetricsPartitionKeyRangeIdsCollectionResultOfT(
                 _partitionKeyRangeIdRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2476,7 +2476,7 @@ namespace Azure.ResourceManager.CosmosDB
                 partitionKeyRangeId,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetPartitionKeyRangeIdMetrics");
+                "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds");
         }
 
         /// <summary>
@@ -2509,7 +2509,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PartitionMetric> GetPartitionKeyRangeIdRegionMetricsAsync(string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PartitionMetric> GetMetricsPartitionKeyRangeIdRegionsAsync(string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
@@ -2521,7 +2521,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PartitionKeyRangeIdRegionGetPartitionKeyRangeIdRegionMetricsAsyncCollectionResultOfT(
+            return new PartitionKeyRangeIdRegionGetMetricsPartitionKeyRangeIdRegionsAsyncCollectionResultOfT(
                 _partitionKeyRangeIdRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2532,7 +2532,7 @@ namespace Azure.ResourceManager.CosmosDB
                 partitionKeyRangeId,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetPartitionKeyRangeIdRegionMetrics");
+                "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions");
         }
 
         /// <summary>
@@ -2565,7 +2565,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PartitionMetric> GetPartitionKeyRangeIdRegionMetrics(string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<PartitionMetric> GetMetricsPartitionKeyRangeIdRegions(string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
@@ -2577,7 +2577,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PartitionKeyRangeIdRegionGetPartitionKeyRangeIdRegionMetricsCollectionResultOfT(
+            return new PartitionKeyRangeIdRegionGetMetricsPartitionKeyRangeIdRegionsCollectionResultOfT(
                 _partitionKeyRangeIdRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2588,7 +2588,7 @@ namespace Azure.ResourceManager.CosmosDB
                 partitionKeyRangeId,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetPartitionKeyRangeIdRegionMetrics");
+                "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions");
         }
 
         /// <summary>
@@ -2617,7 +2617,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBPercentileMetric> GetPercentileMetricsAsync(string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBPercentileMetric> GetMetricsPercentilesAsync(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -2625,14 +2625,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileGetPercentileMetricsAsyncCollectionResultOfT(
+            return new PercentileGetMetricsPercentilesAsyncCollectionResultOfT(
                 _percentileRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetPercentileMetrics");
+                "CosmosDBAccountResource.GetMetricsPercentiles");
         }
 
         /// <summary>
@@ -2661,7 +2661,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBPercentileMetric> GetPercentileMetrics(string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBPercentileMetric> GetMetricsPercentiles(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -2669,14 +2669,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileGetPercentileMetricsCollectionResultOfT(
+            return new PercentileGetMetricsPercentilesCollectionResultOfT(
                 _percentileRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetPercentileMetrics");
+                "CosmosDBAccountResource.GetMetricsPercentiles");
         }
 
         /// <summary>
@@ -2707,7 +2707,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/>, <paramref name="targetRegion"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceRegion"/>, <paramref name="targetRegion"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBPercentileMetric> GetPercentileSourceTargetMetricsAsync(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBPercentileMetric> GetMetricsPercentileSourceTargetsAsync(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceRegion, nameof(sourceRegion));
             Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
@@ -2717,7 +2717,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileSourceTargetGetPercentileSourceTargetMetricsAsyncCollectionResultOfT(
+            return new PercentileSourceTargetGetMetricsPercentileSourceTargetsAsyncCollectionResultOfT(
                 _percentileSourceTargetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2726,7 +2726,7 @@ namespace Azure.ResourceManager.CosmosDB
                 targetRegion,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetPercentileSourceTargetMetrics");
+                "CosmosDBAccountResource.GetMetricsPercentileSourceTargets");
         }
 
         /// <summary>
@@ -2757,7 +2757,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/>, <paramref name="targetRegion"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceRegion"/>, <paramref name="targetRegion"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBPercentileMetric> GetPercentileSourceTargetMetrics(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBPercentileMetric> GetMetricsPercentileSourceTargets(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceRegion, nameof(sourceRegion));
             Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
@@ -2767,7 +2767,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileSourceTargetGetPercentileSourceTargetMetricsCollectionResultOfT(
+            return new PercentileSourceTargetGetMetricsPercentileSourceTargetsCollectionResultOfT(
                 _percentileSourceTargetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2776,7 +2776,7 @@ namespace Azure.ResourceManager.CosmosDB
                 targetRegion,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetPercentileSourceTargetMetrics");
+                "CosmosDBAccountResource.GetMetricsPercentileSourceTargets");
         }
 
         /// <summary>
@@ -2806,7 +2806,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="targetRegion"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetRegion"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBPercentileMetric> GetPercentileTargetMetricsAsync(string targetRegion, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CosmosDBPercentileMetric> GetMetricsPercentileTargetsAsync(string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
@@ -2815,7 +2815,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileTargetGetPercentileTargetMetricsAsyncCollectionResultOfT(
+            return new PercentileTargetGetMetricsPercentileTargetsAsyncCollectionResultOfT(
                 _percentileTargetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2823,7 +2823,7 @@ namespace Azure.ResourceManager.CosmosDB
                 targetRegion,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetPercentileTargetMetrics");
+                "CosmosDBAccountResource.GetMetricsPercentileTargets");
         }
 
         /// <summary>
@@ -2853,7 +2853,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="targetRegion"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetRegion"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBPercentileMetric> GetPercentileTargetMetrics(string targetRegion, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<CosmosDBPercentileMetric> GetMetricsPercentileTargets(string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
@@ -2862,7 +2862,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileTargetGetPercentileTargetMetricsCollectionResultOfT(
+            return new PercentileTargetGetMetricsPercentileTargetsCollectionResultOfT(
                 _percentileTargetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2870,7 +2870,7 @@ namespace Azure.ResourceManager.CosmosDB
                 targetRegion,
                 filter,
                 context,
-                "CosmosDBAccountResource.GetPercentileTargetMetrics");
+                "CosmosDBAccountResource.GetMetricsPercentileTargets");
         }
 
         /// <summary>

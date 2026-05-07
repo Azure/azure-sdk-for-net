@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetDatabaseMetricsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter, RequestContext context)
+        internal HttpMessage CreateGetMetricsDatabasesRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetDatabaseMetricsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetMetricsDatabasesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateGetDatabaseUsagesRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter, RequestContext context)
+        internal HttpMessage CreateGetUsagesDatabasesRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetDatabaseUsagesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetUsagesDatabasesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

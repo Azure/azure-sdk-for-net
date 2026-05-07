@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ContinuousBackupRestoreLocation"/>. </summary>
         /// <param name="location"> The name of the continuous backup restore location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContinuousBackupRestoreLocation(string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContinuousBackupRestoreLocation(AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +34,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The name of the continuous backup restore location. </summary>
         [WirePath("location")]
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
     }
 }

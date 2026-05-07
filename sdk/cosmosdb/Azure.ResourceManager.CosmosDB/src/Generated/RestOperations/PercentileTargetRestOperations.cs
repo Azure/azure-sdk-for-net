@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetPercentileTargetMetricsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string targetRegion, string filter, RequestContext context)
+        internal HttpMessage CreateGetMetricsPercentileTargetsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string targetRegion, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetPercentileTargetMetricsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string targetRegion, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetMetricsPercentileTargetsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string targetRegion, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

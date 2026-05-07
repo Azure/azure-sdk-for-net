@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetPartitionKeyRangeIdRegionMetricsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, RequestContext context)
+        internal HttpMessage CreateGetMetricsPartitionKeyRangeIdRegionsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetPartitionKeyRangeIdRegionMetricsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetMetricsPartitionKeyRangeIdRegionsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

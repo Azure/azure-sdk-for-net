@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetCollectionMetricsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, RequestContext context)
+        internal HttpMessage CreateGetMetricsCollectionsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetCollectionMetricsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetMetricsCollectionsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionUsagesRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, RequestContext context)
+        internal HttpMessage CreateGetUsagesCollectionsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetCollectionUsagesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetUsagesCollectionsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
