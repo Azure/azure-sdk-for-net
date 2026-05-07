@@ -338,15 +338,15 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     }
     public partial class SliSignalSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SliSignalSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliSignalSource>
     {
-        public SliSignalSource(string signalSourceId, Azure.Core.ResourceIdentifier sourceAmwAccountManagedIdentity, Azure.Core.ResourceIdentifier sourceAmwAccountResourceId, string metricNamespace, string metricName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Slis.Models.SliCondition> filters, Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation spatialAggregation, Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation temporalAggregation) { }
+        public SliSignalSource(string signalSourceId, Azure.Core.ResourceIdentifier sourceAmwAccountManagedIdentity, Azure.Core.ResourceIdentifier sourceAmwAccountResourceId, string metricNamespace, string metricName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Slis.Models.SliCondition> filters, Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation spatialAggregation, Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation temporalAggregation) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Slis.Models.SliCondition> Filters { get { throw null; } }
         public string MetricName { get { throw null; } set { } }
         public string MetricNamespace { get { throw null; } set { } }
         public string SignalSourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceAmwAccountManagedIdentity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceAmwAccountResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation SpatialAggregation { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation TemporalAggregation { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation SpatialAggregation { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation TemporalAggregation { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Slis.Models.SliSignalSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SliSignalSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SliSignalSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -354,70 +354,70 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliSignalSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliSignalSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SpatialAggregation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation>
+    public partial class SliSpatialAggregation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation>
     {
-        public SpatialAggregation(Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType type, System.Collections.Generic.IEnumerable<string> dimensions) { }
+        public SliSpatialAggregation(Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType type, System.Collections.Generic.IEnumerable<string> dimensions) { }
         public System.Collections.Generic.IList<string> Dimensions { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType Type { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType Type { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SpatialAggregationType : System.IEquatable<Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType>
+    public readonly partial struct SliSpatialAggregationType : System.IEquatable<Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SpatialAggregationType(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType Average { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType Count { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType Max { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType Min { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType Sum { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType other) { throw null; }
+        public SliSpatialAggregationType(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType Average { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType Count { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType Max { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType Min { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType Sum { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType left, Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType left, Azure.ResourceManager.Monitor.Slis.Models.SpatialAggregationType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType left, Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType left, Azure.ResourceManager.Monitor.Slis.Models.SliSpatialAggregationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TemporalAggregation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation>
+    public partial class SliTemporalAggregation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation>
     {
-        public TemporalAggregation(Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType type) { }
-        public Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType Type { get { throw null; } set { } }
+        public SliTemporalAggregation(Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType type) { }
+        public Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType Type { get { throw null; } set { } }
         public int? WindowSizeMinutes { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TemporalAggregationType : System.IEquatable<Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType>
+    public readonly partial struct SliTemporalAggregationType : System.IEquatable<Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TemporalAggregationType(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType Average { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType Delta { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType IDelta { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType Increase { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType IRate { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType Max { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType Min { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType Rate { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType Sum { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType other) { throw null; }
+        public SliTemporalAggregationType(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType Average { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType Delta { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType IDelta { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType Increase { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType IRate { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType Max { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType Min { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType Rate { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType Sum { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType left, Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType left, Azure.ResourceManager.Monitor.Slis.Models.TemporalAggregationType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType left, Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType left, Azure.ResourceManager.Monitor.Slis.Models.SliTemporalAggregationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class WindowUptimeCriteria : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Slis.Models.WindowUptimeCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Slis.Models.WindowUptimeCriteria>

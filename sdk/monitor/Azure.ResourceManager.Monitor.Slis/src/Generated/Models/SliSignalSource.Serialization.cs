@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             string metricNamespace = default;
             string metricName = default;
             IList<SliCondition> filters = default;
-            SpatialAggregation spatialAggregation = default;
-            TemporalAggregation temporalAggregation = default;
+            SliSpatialAggregation spatialAggregation = default;
+            SliTemporalAggregation temporalAggregation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
                 if (property.NameEquals("spatialAggregation"u8))
                 {
-                    spatialAggregation = SpatialAggregation.DeserializeSpatialAggregation(property.Value, options);
+                    spatialAggregation = SliSpatialAggregation.DeserializeSliSpatialAggregation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("temporalAggregation"u8))
                 {
-                    temporalAggregation = TemporalAggregation.DeserializeTemporalAggregation(property.Value, options);
+                    temporalAggregation = SliTemporalAggregation.DeserializeSliTemporalAggregation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    public partial class TemporalAggregation : IUtf8JsonSerializable, IJsonModel<TemporalAggregation>
+    public partial class SliTemporalAggregation : IUtf8JsonSerializable, IJsonModel<SliTemporalAggregation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemporalAggregation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SliTemporalAggregation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TemporalAggregation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SliTemporalAggregation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TemporalAggregation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliTemporalAggregation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemporalAggregation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SliTemporalAggregation)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("type"u8);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             }
         }
 
-        TemporalAggregation IJsonModel<TemporalAggregation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SliTemporalAggregation IJsonModel<SliTemporalAggregation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TemporalAggregation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliTemporalAggregation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemporalAggregation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SliTemporalAggregation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTemporalAggregation(document.RootElement, options);
+            return DeserializeSliTemporalAggregation(document.RootElement, options);
         }
 
-        internal static TemporalAggregation DeserializeTemporalAggregation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SliTemporalAggregation DeserializeSliTemporalAggregation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             {
                 return null;
             }
-            TemporalAggregationType type = default;
+            SliTemporalAggregationType type = default;
             int? windowSizeMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new TemporalAggregationType(property.Value.GetString());
+                    type = new SliTemporalAggregationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("windowSizeMinutes"u8))
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TemporalAggregation(type, windowSizeMinutes, serializedAdditionalRawData);
+            return new SliTemporalAggregation(type, windowSizeMinutes, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TemporalAggregation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SliTemporalAggregation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TemporalAggregation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliTemporalAggregation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorSlisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TemporalAggregation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliTemporalAggregation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TemporalAggregation IPersistableModel<TemporalAggregation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SliTemporalAggregation IPersistableModel<SliTemporalAggregation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TemporalAggregation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliTemporalAggregation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTemporalAggregation(document.RootElement, options);
+                        return DeserializeSliTemporalAggregation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TemporalAggregation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliTemporalAggregation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TemporalAggregation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SliTemporalAggregation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

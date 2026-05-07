@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    public partial class SpatialAggregation : IUtf8JsonSerializable, IJsonModel<SpatialAggregation>
+    public partial class SliSpatialAggregation : IUtf8JsonSerializable, IJsonModel<SliSpatialAggregation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpatialAggregation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SliSpatialAggregation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SpatialAggregation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SliSpatialAggregation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SpatialAggregation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliSpatialAggregation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpatialAggregation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SliSpatialAggregation)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("type"u8);
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             }
         }
 
-        SpatialAggregation IJsonModel<SpatialAggregation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SliSpatialAggregation IJsonModel<SliSpatialAggregation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SpatialAggregation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliSpatialAggregation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpatialAggregation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SliSpatialAggregation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSpatialAggregation(document.RootElement, options);
+            return DeserializeSliSpatialAggregation(document.RootElement, options);
         }
 
-        internal static SpatialAggregation DeserializeSpatialAggregation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SliSpatialAggregation DeserializeSliSpatialAggregation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             {
                 return null;
             }
-            SpatialAggregationType type = default;
+            SliSpatialAggregationType type = default;
             IList<string> dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new SpatialAggregationType(property.Value.GetString());
+                    type = new SliSpatialAggregationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dimensions"u8))
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SpatialAggregation(type, dimensions, serializedAdditionalRawData);
+            return new SliSpatialAggregation(type, dimensions, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SpatialAggregation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SliSpatialAggregation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SpatialAggregation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliSpatialAggregation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorSlisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SpatialAggregation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliSpatialAggregation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SpatialAggregation IPersistableModel<SpatialAggregation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SliSpatialAggregation IPersistableModel<SliSpatialAggregation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SpatialAggregation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliSpatialAggregation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSpatialAggregation(document.RootElement, options);
+                        return DeserializeSliSpatialAggregation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpatialAggregation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliSpatialAggregation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SpatialAggregation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SliSpatialAggregation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    /// <summary> Represents the spatial aggregation model. </summary>
-    public partial class SpatialAggregation
+    /// <summary> Represents temporal aggregation settings. </summary>
+    public partial class SliTemporalAggregation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,37 +45,32 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SpatialAggregation"/>. </summary>
-        /// <param name="type"> Type of spatial aggregation. </param>
-        /// <param name="dimensions"> Dimensions considered for spatial aggregation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dimensions"/> is null. </exception>
-        public SpatialAggregation(SpatialAggregationType type, IEnumerable<string> dimensions)
+        /// <summary> Initializes a new instance of <see cref="SliTemporalAggregation"/>. </summary>
+        /// <param name="type"> Type of temporal aggregation. </param>
+        public SliTemporalAggregation(SliTemporalAggregationType type)
         {
-            Argument.AssertNotNull(dimensions, nameof(dimensions));
-
             Type = type;
-            Dimensions = dimensions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SpatialAggregation"/>. </summary>
-        /// <param name="type"> Type of spatial aggregation. </param>
-        /// <param name="dimensions"> Dimensions considered for spatial aggregation. </param>
+        /// <summary> Initializes a new instance of <see cref="SliTemporalAggregation"/>. </summary>
+        /// <param name="type"> Type of temporal aggregation. </param>
+        /// <param name="windowSizeMinutes"> Time window size for aggregation, in minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SpatialAggregation(SpatialAggregationType type, IList<string> dimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliTemporalAggregation(SliTemporalAggregationType type, int? windowSizeMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
-            Dimensions = dimensions;
+            WindowSizeMinutes = windowSizeMinutes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SpatialAggregation"/> for deserialization. </summary>
-        internal SpatialAggregation()
+        /// <summary> Initializes a new instance of <see cref="SliTemporalAggregation"/> for deserialization. </summary>
+        internal SliTemporalAggregation()
         {
         }
 
-        /// <summary> Type of spatial aggregation. </summary>
-        public SpatialAggregationType Type { get; set; }
-        /// <summary> Dimensions considered for spatial aggregation. </summary>
-        public IList<string> Dimensions { get; }
+        /// <summary> Type of temporal aggregation. </summary>
+        public SliTemporalAggregationType Type { get; set; }
+        /// <summary> Time window size for aggregation, in minutes. </summary>
+        public int? WindowSizeMinutes { get; set; }
     }
 }

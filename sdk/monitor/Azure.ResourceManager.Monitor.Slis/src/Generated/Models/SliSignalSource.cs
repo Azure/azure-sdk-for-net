@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="spatialAggregation"> Defines how measurements are aggregated across multiple time series. </param>
         /// <param name="temporalAggregation"> Defines how measurements are aggregated over a specific time window within the same time series. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="signalSourceId"/>, <paramref name="sourceAmwAccountManagedIdentity"/>, <paramref name="sourceAmwAccountResourceId"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/>, <paramref name="filters"/>, <paramref name="spatialAggregation"/> or <paramref name="temporalAggregation"/> is null. </exception>
-        public SliSignalSource(string signalSourceId, ResourceIdentifier sourceAmwAccountManagedIdentity, ResourceIdentifier sourceAmwAccountResourceId, string metricNamespace, string metricName, IEnumerable<SliCondition> filters, SpatialAggregation spatialAggregation, TemporalAggregation temporalAggregation)
+        public SliSignalSource(string signalSourceId, ResourceIdentifier sourceAmwAccountManagedIdentity, ResourceIdentifier sourceAmwAccountResourceId, string metricNamespace, string metricName, IEnumerable<SliCondition> filters, SliSpatialAggregation spatialAggregation, SliTemporalAggregation temporalAggregation)
         {
             Argument.AssertNotNull(signalSourceId, nameof(signalSourceId));
             Argument.AssertNotNull(sourceAmwAccountManagedIdentity, nameof(sourceAmwAccountManagedIdentity));
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="spatialAggregation"> Defines how measurements are aggregated across multiple time series. </param>
         /// <param name="temporalAggregation"> Defines how measurements are aggregated over a specific time window within the same time series. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SliSignalSource(string signalSourceId, ResourceIdentifier sourceAmwAccountManagedIdentity, ResourceIdentifier sourceAmwAccountResourceId, string metricNamespace, string metricName, IList<SliCondition> filters, SpatialAggregation spatialAggregation, TemporalAggregation temporalAggregation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliSignalSource(string signalSourceId, ResourceIdentifier sourceAmwAccountManagedIdentity, ResourceIdentifier sourceAmwAccountResourceId, string metricNamespace, string metricName, IList<SliCondition> filters, SliSpatialAggregation spatialAggregation, SliTemporalAggregation temporalAggregation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SignalSourceId = signalSourceId;
             SourceAmwAccountManagedIdentity = sourceAmwAccountManagedIdentity;
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <summary> Filters applied to modify signal values. </summary>
         public IList<SliCondition> Filters { get; }
         /// <summary> Defines how measurements are aggregated across multiple time series. </summary>
-        public SpatialAggregation SpatialAggregation { get; set; }
+        public SliSpatialAggregation SpatialAggregation { get; set; }
         /// <summary> Defines how measurements are aggregated over a specific time window within the same time series. </summary>
-        public TemporalAggregation TemporalAggregation { get; set; }
+        public SliTemporalAggregation TemporalAggregation { get; set; }
     }
 }

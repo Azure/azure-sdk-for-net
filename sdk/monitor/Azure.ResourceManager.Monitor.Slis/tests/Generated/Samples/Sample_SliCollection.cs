@@ -66,8 +66,8 @@ new SliCondition(SliConditionOperator.Equal, "GetContosoUsers")
 DimensionName = "ApiName",
 }
 },
-    new SpatialAggregation(SpatialAggregationType.Average, new string[]{"Region", "ResponseCode"}),
-    new TemporalAggregation(TemporalAggregationType.Average)
+    new SliSpatialAggregation(SliSpatialAggregationType.Average, new string[]{"Region", "ResponseCode"}),
+    new SliTemporalAggregation(SliTemporalAggregationType.Average)
 {
 WindowSizeMinutes = 5,
 }),
@@ -84,8 +84,8 @@ new SliCondition(SliConditionOperator.Equal, "GetContosoUsers")
 DimensionName = "ApiName",
 }
 },
-    new SpatialAggregation(SpatialAggregationType.Average, new string[]{"Region", "ResponseCode"}),
-    new TemporalAggregation(TemporalAggregationType.Average)
+    new SliSpatialAggregation(SliSpatialAggregationType.Average, new string[]{"Region", "ResponseCode"}),
+    new SliTemporalAggregation(SliTemporalAggregationType.Average)
 {
 WindowSizeMinutes = 5,
 })
