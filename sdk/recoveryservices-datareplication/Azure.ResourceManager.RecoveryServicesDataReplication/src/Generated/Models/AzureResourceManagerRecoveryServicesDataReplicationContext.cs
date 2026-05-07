@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
@@ -105,7 +104,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(HyperVToAzStackHciRecoveryPointCustomProperties))]
     [ModelReaderWriterBuildable(typeof(HyperVToAzStackHciReplicationExtensionCustomProperties))]
     [ModelReaderWriterBuildable(typeof(JobModelListResult))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PlannedFailover))]
     [ModelReaderWriterBuildable(typeof(PlannedFailoverCustomProperties))]
     [ModelReaderWriterBuildable(typeof(PlannedFailoverProperties))]
@@ -124,7 +122,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(ReplicationExtensionModelListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageContainerProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TestFailoverCleanupJobCustomProperties))]
     [ModelReaderWriterBuildable(typeof(TestFailoverJobCustomProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownDataReplicationEventCustomProperties))]
@@ -137,7 +134,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(UnknownDataReplicationProtectedItemCustomPropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(UnknownDataReplicationRecoveryPointCustomProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownPlannedFailoverCustomProperties))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VaultModelListResult))]
     [ModelReaderWriterBuildable(typeof(VMwareFabricAgentCustomProperties))]
     [ModelReaderWriterBuildable(typeof(VMwareMigrateFabricCustomProperties))]

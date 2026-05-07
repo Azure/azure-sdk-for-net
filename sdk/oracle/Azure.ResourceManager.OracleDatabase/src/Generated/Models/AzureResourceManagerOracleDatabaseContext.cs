@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -184,7 +183,6 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(SaasSubscriptionDetails))]
     [ModelReaderWriterBuildable(typeof(ScheduledOperationsType))]
     [ModelReaderWriterBuildable(typeof(ScheduledOperationsTypeUpdate))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(SystemVersionListResult))]
     [ModelReaderWriterBuildable(typeof(UnknownAutonomousDatabaseBaseProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownOracleDBSystemBaseProperties))]

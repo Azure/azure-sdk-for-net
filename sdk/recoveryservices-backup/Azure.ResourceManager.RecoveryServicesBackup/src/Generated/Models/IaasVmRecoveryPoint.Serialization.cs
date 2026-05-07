@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.RecoveryServicesBackup;
 using Azure.ResourceManager.Resources.Models;
@@ -439,7 +438,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                    extendedLocation = Resources.Models.ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

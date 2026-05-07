@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PureStorageBlock.Models;
 
 namespace Azure.ResourceManager.PureStorageBlock
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.PureStorageBlock
     [ModelReaderWriterBuildable(typeof(AvsVmUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(AvsVmVolumeListResult))]
     [ModelReaderWriterBuildable(typeof(AvsVmVolumeUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PerformancePolicyLimits))]
     [ModelReaderWriterBuildable(typeof(PropertyValueRangeLimits))]
     [ModelReaderWriterBuildable(typeof(ProtectionPolicyLimits))]
@@ -81,8 +79,6 @@ namespace Azure.ResourceManager.PureStorageBlock
     [ModelReaderWriterBuildable(typeof(StoragePoolLimits))]
     [ModelReaderWriterBuildable(typeof(StoragePoolListResult))]
     [ModelReaderWriterBuildable(typeof(StoragePoolUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VolumeLimits))]
     public partial class AzureResourceManagerPureStorageBlockContext : ModelReaderWriterContext
     {

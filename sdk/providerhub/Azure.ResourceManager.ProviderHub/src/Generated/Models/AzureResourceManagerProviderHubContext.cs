@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
@@ -163,7 +162,6 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(SubscriptionLifecycleNotificationSpecifications))]
     [ModelReaderWriterBuildable(typeof(SubscriptionStateOverrideAction))]
     [ModelReaderWriterBuildable(typeof(SwaggerSpecification))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TemplateDeploymentOptions))]
     [ModelReaderWriterBuildable(typeof(TemplateDeploymentPolicy))]
     [ModelReaderWriterBuildable(typeof(ThirdPartyExtension))]

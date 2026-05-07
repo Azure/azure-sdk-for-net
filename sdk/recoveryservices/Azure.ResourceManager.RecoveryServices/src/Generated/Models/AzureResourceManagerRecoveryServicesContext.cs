@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
@@ -29,7 +28,6 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(DnsZone))]
     [ModelReaderWriterBuildable(typeof(DnsZoneResult))]
     [ModelReaderWriterBuildable(typeof(ImmutabilitySettings))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
     [ModelReaderWriterBuildable(typeof(RawCertificateData))]
@@ -67,9 +65,7 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreSettings))]
     [ModelReaderWriterBuildable(typeof(SourceScanConfiguration))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownResourceCertificateDetails))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VaultCertificateResult))]
     [ModelReaderWriterBuildable(typeof(VaultExtendedInfo))]
     [ModelReaderWriterBuildable(typeof(VaultList))]

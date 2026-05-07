@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    resourceCapabilitiesBaseType = new ResourceType(prop.Value.GetString());
+                    resourceCapabilitiesBaseType = ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

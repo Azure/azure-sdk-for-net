@@ -7,9 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
@@ -93,7 +91,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(DpmErrorInfo))]
     [ModelReaderWriterBuildable(typeof(DpmProtectedItem))]
     [ModelReaderWriterBuildable(typeof(DpmProtectedItemExtendedInfo))]
-    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FeatureSupportContent))]
     [ModelReaderWriterBuildable(typeof(FetchTieringCostInfoContent))]
     [ModelReaderWriterBuildable(typeof(FetchTieringCostInfoForRehydrationContent))]
@@ -219,7 +216,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(StorageErrorInfo))]
     [ModelReaderWriterBuildable(typeof(StorageProtectableContainer))]
     [ModelReaderWriterBuildable(typeof(SubProtectionPolicy))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetAfsRestoreInfo))]
     [ModelReaderWriterBuildable(typeof(TargetRestoreInfo))]
     [ModelReaderWriterBuildable(typeof(TieringCostInfo))]
@@ -269,7 +265,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(UnknownWorkloadSqlRestoreContent))]
     [ModelReaderWriterBuildable(typeof(UnlockDeleteContent))]
     [ModelReaderWriterBuildable(typeof(UnlockDeleteResult))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedManagedIdentityDetails))]
     [ModelReaderWriterBuildable(typeof(VaultBackupJob))]
     [ModelReaderWriterBuildable(typeof(VaultBackupJobErrorInfo))]

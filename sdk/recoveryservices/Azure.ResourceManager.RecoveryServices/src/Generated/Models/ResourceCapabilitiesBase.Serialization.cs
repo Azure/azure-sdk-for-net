@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 throw new FormatException($"The model {nameof(ResourceCapabilitiesBase)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceCapabilitiesBaseType);
+            writer.WriteObjectValue(ResourceCapabilitiesBaseType, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    resourceCapabilitiesBaseType = new ResourceType(prop.Value.GetString());
+                    resourceCapabilitiesBaseType = ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

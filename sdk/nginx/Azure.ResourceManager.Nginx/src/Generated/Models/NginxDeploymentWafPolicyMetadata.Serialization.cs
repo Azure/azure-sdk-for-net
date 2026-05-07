@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Nginx;
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNginxContext.Default);
+                    systemData = ResourceManager.Models.SystemData.DeserializeSystemData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

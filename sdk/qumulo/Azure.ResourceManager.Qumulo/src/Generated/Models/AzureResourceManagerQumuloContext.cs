@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Qumulo.Models;
 
 namespace Azure.ResourceManager.Qumulo
@@ -19,15 +18,12 @@ namespace Azure.ResourceManager.Qumulo
     [ModelReaderWriterBuildable(typeof(FileSystemResourceListResult))]
     [ModelReaderWriterBuildable(typeof(FileSystemResourceProperties))]
     [ModelReaderWriterBuildable(typeof(FileSystemResourceUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(QumuloFileSystemResource))]
     [ModelReaderWriterBuildable(typeof(QumuloFileSystemResourceData))]
     [ModelReaderWriterBuildable(typeof(QumuloFileSystemResourcePatch))]
     [ModelReaderWriterBuildable(typeof(QumuloUserDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerQumuloContext : ModelReaderWriterContext
     {
     }

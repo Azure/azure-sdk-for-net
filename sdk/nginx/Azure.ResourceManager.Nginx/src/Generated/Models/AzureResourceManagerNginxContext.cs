@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Nginx.Models;
 
 namespace Azure.ResourceManager.Nginx
@@ -17,7 +16,6 @@ namespace Azure.ResourceManager.Nginx
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AutoUpgradeProfile))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NginxAnalysisConfig))]
     [ModelReaderWriterBuildable(typeof(NginxAnalysisContent))]
     [ModelReaderWriterBuildable(typeof(NginxAnalysisDiagnostic))]
@@ -79,8 +77,6 @@ namespace Azure.ResourceManager.Nginx
     [ModelReaderWriterBuildable(typeof(NginxScaleProfileCapacity))]
     [ModelReaderWriterBuildable(typeof(NginxStorageAccount))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallComponentVersions))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPackage))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallSettings))]

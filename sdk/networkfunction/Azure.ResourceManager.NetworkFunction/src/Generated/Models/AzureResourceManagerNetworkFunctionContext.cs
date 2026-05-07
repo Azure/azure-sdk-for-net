@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.NetworkFunction
     [ModelReaderWriterBuildable(typeof(ResourceReference))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagsObject))]
     public partial class AzureResourceManagerNetworkFunctionContext : ModelReaderWriterContext
     {

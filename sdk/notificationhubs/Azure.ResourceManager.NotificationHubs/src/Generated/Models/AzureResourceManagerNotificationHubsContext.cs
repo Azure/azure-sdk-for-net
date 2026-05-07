@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
@@ -70,7 +69,6 @@ namespace Azure.ResourceManager.NotificationHubs
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedAccessAuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(SharedAccessAuthorizationRuleProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WnsCredentialProperties))]
     [ModelReaderWriterBuildable(typeof(XiaomiCredential))]
     [ModelReaderWriterBuildable(typeof(XiaomiCredentialProperties))]

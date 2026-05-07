@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

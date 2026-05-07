@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -116,7 +115,6 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(MachineSkuProperties))]
     [ModelReaderWriterBuildable(typeof(MachineSkuSlot))]
     [ModelReaderWriterBuildable(typeof(ManagedResourceGroupConfiguration))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentitySelector))]
     [ModelReaderWriterBuildable(typeof(NetworkAttachment))]
     [ModelReaderWriterBuildable(typeof(NetworkCloudAadConfiguration))]
@@ -225,11 +223,9 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(StorageApplianceSkuProperties))]
     [ModelReaderWriterBuildable(typeof(StorageApplianceSkuSlot))]
     [ModelReaderWriterBuildable(typeof(StringKeyValuePair))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrunkedNetworkAttachmentConfiguration))]
     [ModelReaderWriterBuildable(typeof(TrunkedNetworkList))]
     [ModelReaderWriterBuildable(typeof(TrunkedNetworkProperties))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ValidationThreshold))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineAssignRelayContent))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineList))]

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteObjectValue<ResourceType?>(ResourceType.Value, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

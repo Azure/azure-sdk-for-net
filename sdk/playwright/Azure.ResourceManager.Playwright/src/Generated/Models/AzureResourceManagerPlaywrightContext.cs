@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Playwright
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPlaywrightContext : ModelReaderWriterContext
     {

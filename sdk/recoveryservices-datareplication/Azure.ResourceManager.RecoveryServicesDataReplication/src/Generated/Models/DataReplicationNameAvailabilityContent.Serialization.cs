@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value);
+                writer.WriteObjectValue<ResourceType?>(Type.Value, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
+                    @type = ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

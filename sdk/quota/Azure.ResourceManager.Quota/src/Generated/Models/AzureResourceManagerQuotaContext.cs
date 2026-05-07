@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
@@ -90,7 +89,6 @@ namespace Azure.ResourceManager.Quota
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaDetails))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaDetailsName))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownLimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(UsagesLimits))]
     public partial class AzureResourceManagerQuotaContext : ModelReaderWriterContext

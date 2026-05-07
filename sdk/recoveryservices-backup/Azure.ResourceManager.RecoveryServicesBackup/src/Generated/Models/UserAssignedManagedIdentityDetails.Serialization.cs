@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesBackup;
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    userAssignedIdentityProperties = ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                    userAssignedIdentityProperties = UserAssignedIdentity.DeserializeUserAssignedIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

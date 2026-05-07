@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(AffectedResourceType))
             {
                 writer.WritePropertyName("affectedResourceType"u8);
-                writer.WriteStringValue(AffectedResourceType.Value);
+                writer.WriteObjectValue<ResourceType?>(AffectedResourceType.Value, options);
             }
             if (Optional.IsCollectionDefined(AffectedResourceCorrelationIds))
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    affectedResourceType = new ResourceType(prop.Value.GetString());
+                    affectedResourceType = ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("affectedResourceCorrelationIds"u8))

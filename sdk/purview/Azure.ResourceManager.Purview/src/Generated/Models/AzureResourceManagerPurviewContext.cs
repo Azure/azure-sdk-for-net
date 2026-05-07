@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.Purview
     [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(KafkaConfigurationList))]
     [ModelReaderWriterBuildable(typeof(KafkaConfigurationProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionList))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
@@ -58,9 +56,7 @@ namespace Azure.ResourceManager.Purview
     [ModelReaderWriterBuildable(typeof(PurviewUsage))]
     [ModelReaderWriterBuildable(typeof(PurviewUsageName))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UsageList))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPurviewContext : ModelReaderWriterContext
     {
     }

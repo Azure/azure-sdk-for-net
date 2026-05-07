@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
@@ -77,7 +76,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(LocalRulestackRuleData))]
     [ModelReaderWriterBuildable(typeof(LocalRulestackRuleResource))]
     [ModelReaderWriterBuildable(typeof(LocalRulestackUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MetricsObject))]
     [ModelReaderWriterBuildable(typeof(MetricsObjectFirewallData))]
     [ModelReaderWriterBuildable(typeof(MetricsObjectFirewallResource))]
@@ -120,8 +118,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(StrataCloudManagerConfig))]
     [ModelReaderWriterBuildable(typeof(StrataCloudManagerInfo))]
     [ModelReaderWriterBuildable(typeof(SupportInfoModel))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPaloAltoNetworksNgfwContext : ModelReaderWriterContext
     {
     }
