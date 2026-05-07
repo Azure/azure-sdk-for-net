@@ -99,12 +99,12 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
             activity.SetTag("gen_ai.agent.id", _agentId);
         }
 
-        if (_blueprintId is not null)
+        if (!string.IsNullOrEmpty(_blueprintId))
         {
             activity.SetTag("gen_ai.agent.blueprint.id", _blueprintId);
         }
 
-        if (_tenantId is not null)
+        if (!string.IsNullOrEmpty(_tenantId))
         {
             activity.SetTag("microsoft.tenant.id", _tenantId);
         }

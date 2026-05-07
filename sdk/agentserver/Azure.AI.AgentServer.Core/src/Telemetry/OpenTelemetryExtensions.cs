@@ -143,14 +143,26 @@ internal static class OpenTelemetryExtensions
     /// <summary>
     /// Creates a token resolver delegate that acquires tokens using
     /// <see cref="DefaultAzureCredential"/> for the A365 exporter scope.
+    /// The credential is configured with the agent instance's managed identity client ID
+    /// so that token acquisition uses the correct identity.
     /// </summary>
     private static AsyncAuthTokenResolver CreateTokenResolver()
     {
-        var credential = new DefaultAzureCredential();
-        var context = new TokenRequestContext(new[] { Agent365Scope });
+        var credentialOptions = new DefaultAzureCredentialOptions();
+        var clientId = FoundryEnvironment.AgentInstanceClientId;
+        if (!string.IsNullOrEmpty(clientId))
+        {
+            credentialOptions.ManagedIdentityClientId = clientId;
+        }
+
+        var credential = new DefaultAzureCredential(credentialOptions);
 
         return async (agentId, tenantId) =>
         {
+            var tenantForRequest = tenantId ?? FoundryEnvironment.AgentTenantId;
+            var context = new TokenRequestContext(
+                new[] { Agent365Scope },
+                tenantId: tenantForRequest);
             var token = await credential.GetTokenAsync(context, CancellationToken.None);
             return token.Token;
         };

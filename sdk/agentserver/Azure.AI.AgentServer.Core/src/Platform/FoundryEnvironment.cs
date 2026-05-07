@@ -94,7 +94,7 @@ public static class FoundryEnvironment
     /// <summary>
     /// Indicates whether Agent365 tracing export is enabled.
     /// Returns <c>true</c> when both <see cref="IsHosted"/> is <c>true</c> and the
-    /// <c>FOUNDRY_AGENT365_TRACING_ENABLED</c> environment variable is set to a non-empty value.
+    /// <c>FOUNDRY_AGENT365_TRACING_ENABLED</c> environment variable is set to <c>"true"</c> (case-insensitive).
     /// </summary>
     public static bool IsAgent365TracingEnabled { get; private set; }
 
