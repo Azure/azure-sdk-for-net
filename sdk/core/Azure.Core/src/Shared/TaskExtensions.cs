@@ -286,34 +286,22 @@ namespace Azure.Core.Pipeline
 
         private class WithCancellationContinuationWrapper
         {
-            private static readonly WaitCallback s_invokeContinuation = static state => ((Action)state)();
-
             private Action _originalContinuation;
-            private CancellationTokenRegistration _registration;
+            private readonly CancellationTokenRegistration _registration;
 
             public WithCancellationContinuationWrapper(Action originalContinuation, CancellationToken cancellationToken)
             {
+                Action continuation = ContinuationImplementation;
                 _originalContinuation = originalContinuation;
                 // Schedule the cancellation continuation on the thread pool to avoid StackOverflowException
                 // when CancellationTokenSource.Cancel() synchronously invokes callbacks.
-                _registration = cancellationToken.Register(static s => OnCancellation(s), this);
-                Continuation = TaskCompletionCallback;
+                _registration = cancellationToken.Register(() => Task.Run(continuation));
+                Continuation = continuation;
             }
 
             public Action Continuation { get; }
 
-            private static void OnCancellation(object state)
-            {
-                var wrapper = (WithCancellationContinuationWrapper)state;
-                Action originalContinuation = Interlocked.Exchange(ref wrapper._originalContinuation, null);
-                if (originalContinuation != null)
-                {
-                    wrapper._registration.Dispose();
-                    ThreadPool.UnsafeQueueUserWorkItem(s_invokeContinuation, originalContinuation);
-                }
-            }
-
-            private void TaskCompletionCallback()
+            private void ContinuationImplementation()
             {
                 Action originalContinuation = Interlocked.Exchange(ref _originalContinuation, null);
                 if (originalContinuation != null)

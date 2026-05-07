@@ -236,18 +236,27 @@ namespace Azure.Core.Tests
                 cancelThreadId = Environment.CurrentManagedThreadId;
                 cts.Cancel();
                 cancelCompletedEvent.Set();
-            });
+            })
+            {
+                IsBackground = true
+            };
 
-            // Cancel on a dedicated thread; continuation should not run synchronously on that stack.
-            cancelThread.Start();
-            Assert.IsTrue(cancelCompletedEvent.Wait(TimeSpan.FromSeconds(5)), "Cancellation did not complete within timeout");
-            cancelThread.Join();
+            try
+            {
+                // Cancel on a dedicated thread; continuation should not run synchronously on that stack.
+                cancelThread.Start();
+                Assert.IsTrue(cancelCompletedEvent.Wait(TimeSpan.FromSeconds(5)), "Cancellation did not complete within timeout");
 
-            Assert.IsTrue(continuationRanEvent.Wait(TimeSpan.FromSeconds(5)), "Continuation was not called within timeout");
+                Assert.IsTrue(continuationRanEvent.Wait(TimeSpan.FromSeconds(5)), "Continuation was not called within timeout");
 
-            // The continuation must have run on a different thread than the Cancel() caller's thread.
-            Assert.AreNotEqual(cancelThreadId, continuationThreadId,
-                "Continuation ran synchronously on the Cancel() caller's thread; this can cause StackOverflowException on constrained stacks");
+                // The continuation must have run on a different thread than the Cancel() caller's thread.
+                Assert.AreNotEqual(cancelThreadId, continuationThreadId,
+                    "Continuation ran synchronously on the Cancel() caller's thread; this can cause StackOverflowException on constrained stacks");
+            }
+            finally
+            {
+                cancelThread.Join(TimeSpan.FromSeconds(5));
+            }
         }
 
         [Test]
@@ -296,15 +305,24 @@ namespace Azure.Core.Tests
                 cancelThreadId = Environment.CurrentManagedThreadId;
                 cts.Cancel();
                 cancelCompletedEvent.Set();
-            });
+            })
+            {
+                IsBackground = true
+            };
 
-            cancelThread.Start();
-            Assert.IsTrue(cancelCompletedEvent.Wait(TimeSpan.FromSeconds(5)), "Cancellation did not complete within timeout");
-            cancelThread.Join();
+            try
+            {
+                cancelThread.Start();
+                Assert.IsTrue(cancelCompletedEvent.Wait(TimeSpan.FromSeconds(5)), "Cancellation did not complete within timeout");
 
-            Assert.IsTrue(continuationRanEvent.Wait(TimeSpan.FromSeconds(5)), "Continuation was not called within timeout");
-            Assert.AreNotEqual(cancelThreadId, continuationThreadId,
-                "Continuation ran synchronously on the Cancel() caller's thread");
+                Assert.IsTrue(continuationRanEvent.Wait(TimeSpan.FromSeconds(5)), "Continuation was not called within timeout");
+                Assert.AreNotEqual(cancelThreadId, continuationThreadId,
+                    "Continuation ran synchronously on the Cancel() caller's thread");
+            }
+            finally
+            {
+                cancelThread.Join(TimeSpan.FromSeconds(5));
+            }
         }
     }
 }
