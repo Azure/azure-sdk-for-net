@@ -989,9 +989,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// </param>
         /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
         /// <returns> A new <see cref="Models.VmScaleSetLifecycleHookEventProperties"/> instance for mocking. </returns>
-        public static VmScaleSetLifecycleHookEventProperties VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? @type = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction? defaultAction = default, IEnumerable<VmScaleSetLifecycleHookEventTargetResource> targetResources = default, string additionalContextPriority = default, VmScaleSetLifecycleHookEventState? state = default)
+        public static VmScaleSetLifecycleHookEventProperties VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? @type = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction? defaultAction = default, IEnumerable<VmScaleSetLifecycleHookEventTarget> targetResources = default, string additionalContextPriority = default, VmScaleSetLifecycleHookEventState? state = default)
         {
-            targetResources ??= new ChangeTrackingList<VmScaleSetLifecycleHookEventTargetResource>();
+            targetResources ??= new ChangeTrackingList<VmScaleSetLifecycleHookEventTarget>();
 
             return new VmScaleSetLifecycleHookEventProperties(
                 @type,

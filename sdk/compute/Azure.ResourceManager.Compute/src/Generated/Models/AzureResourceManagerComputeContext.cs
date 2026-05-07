@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventPatch))]
     [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventProperties))]
     [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventResource))]
-    [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventTargetResource))]
+    [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventTarget))]
     [ModelReaderWriterBuildable(typeof(VMScaleSetScaleOutInputProperties))]
     [ModelReaderWriterBuildable(typeof(WindowsConfiguration))]
     [ModelReaderWriterBuildable(typeof(WindowsParameters))]

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventProperties"/>. </summary>
         public VmScaleSetLifecycleHookEventProperties()
         {
-            TargetResources = new ChangeTrackingList<VmScaleSetLifecycleHookEventTargetResource>();
+            TargetResources = new ChangeTrackingList<VmScaleSetLifecycleHookEventTarget>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventProperties"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// </param>
         /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? @type, string waitUntil, string maxWaitUntil, string timeCreated, LifecycleHookAction? defaultAction, IList<VmScaleSetLifecycleHookEventTargetResource> targetResources, VmScaleSetLifecycleHookEventAdditionalContext additionalContext, VmScaleSetLifecycleHookEventState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? @type, string waitUntil, string maxWaitUntil, string timeCreated, LifecycleHookAction? defaultAction, IList<VmScaleSetLifecycleHookEventTarget> targetResources, VmScaleSetLifecycleHookEventAdditionalContext additionalContext, VmScaleSetLifecycleHookEventState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             WaitUntil = waitUntil;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
         public LifecycleHookAction? DefaultAction { get; }
 
         /// <summary> List of target resources which are getting processed in the virtual machine scale set lifecycle hook event. </summary>
-        public IList<VmScaleSetLifecycleHookEventTargetResource> TargetResources { get; } = new ChangeTrackingList<VmScaleSetLifecycleHookEventTargetResource>();
+        public IList<VmScaleSetLifecycleHookEventTarget> TargetResources { get; } = new ChangeTrackingList<VmScaleSetLifecycleHookEventTarget>();
 
         /// <summary>
         /// Additional key-value pairs set on the lifecycle hook event that gives customer some useful context/data.

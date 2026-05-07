@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("targetResources"u8);
                 writer.WriteStartArray();
-                foreach (VmScaleSetLifecycleHookEventTargetResource item in TargetResources)
+                foreach (VmScaleSetLifecycleHookEventTarget item in TargetResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute.Models
             string maxWaitUntil = default;
             string timeCreated = default;
             LifecycleHookAction? defaultAction = default;
-            IList<VmScaleSetLifecycleHookEventTargetResource> targetResources = default;
+            IList<VmScaleSetLifecycleHookEventTarget> targetResources = default;
             VmScaleSetLifecycleHookEventAdditionalContext additionalContext = default;
             VmScaleSetLifecycleHookEventState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VmScaleSetLifecycleHookEventTargetResource> array = new List<VmScaleSetLifecycleHookEventTargetResource>();
+                    List<VmScaleSetLifecycleHookEventTarget> array = new List<VmScaleSetLifecycleHookEventTarget>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmScaleSetLifecycleHookEventTargetResource.DeserializeVmScaleSetLifecycleHookEventTargetResource(item, options));
+                        array.Add(VmScaleSetLifecycleHookEventTarget.DeserializeVmScaleSetLifecycleHookEventTarget(item, options));
                     }
                     targetResources = array;
                     continue;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute.Models
                 maxWaitUntil,
                 timeCreated,
                 defaultAction,
-                targetResources ?? new ChangeTrackingList<VmScaleSetLifecycleHookEventTargetResource>(),
+                targetResources ?? new ChangeTrackingList<VmScaleSetLifecycleHookEventTarget>(),
                 additionalContext,
                 state,
                 additionalBinaryDataProperties);

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> List of target resources which are getting processed in the virtual machine scale set lifecycle hook event. </summary>
-        public IList<VmScaleSetLifecycleHookEventTargetResource> TargetResources
+        public IList<VmScaleSetLifecycleHookEventTarget> TargetResources
         {
             get
             {
