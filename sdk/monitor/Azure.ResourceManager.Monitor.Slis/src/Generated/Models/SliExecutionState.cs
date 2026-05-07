@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    /// <summary> Defines a metric in the destination AMW account. </summary>
-    public partial class Metric
+    /// <summary> Represents the current execution state of an SLI. </summary>
+    public partial class SliExecutionState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,38 +45,35 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Metric"/>. </summary>
-        /// <param name="metricNamespace"> The namespace of the metric. </param>
-        /// <param name="metricName"> The name of the metric. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricNamespace"/> or <paramref name="metricName"/> is null. </exception>
-        internal Metric(string metricNamespace, string metricName)
+        /// <summary> Initializes a new instance of <see cref="SliExecutionState"/>. </summary>
+        /// <param name="state"> The execution state value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="state"/> is null. </exception>
+        internal SliExecutionState(string state)
         {
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(state, nameof(state));
 
-            MetricNamespace = metricNamespace;
-            MetricName = metricName;
+            State = state;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Metric"/>. </summary>
-        /// <param name="metricNamespace"> The namespace of the metric. </param>
-        /// <param name="metricName"> The name of the metric. </param>
+        /// <summary> Initializes a new instance of <see cref="SliExecutionState"/>. </summary>
+        /// <param name="state"> The execution state value. </param>
+        /// <param name="message"> A descriptive message related to the execution state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Metric(string metricNamespace, string metricName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliExecutionState(string state, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MetricNamespace = metricNamespace;
-            MetricName = metricName;
+            State = state;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Metric"/> for deserialization. </summary>
-        internal Metric()
+        /// <summary> Initializes a new instance of <see cref="SliExecutionState"/> for deserialization. </summary>
+        internal SliExecutionState()
         {
         }
 
-        /// <summary> The namespace of the metric. </summary>
-        public string MetricNamespace { get; }
-        /// <summary> The name of the metric. </summary>
-        public string MetricName { get; }
+        /// <summary> The execution state value. </summary>
+        public string State { get; }
+        /// <summary> A descriptive message related to the execution state. </summary>
+        public string Message { get; }
     }
 }

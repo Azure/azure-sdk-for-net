@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    public partial class Baseline : IUtf8JsonSerializable, IJsonModel<Baseline>
+    public partial class SliBaseline : IUtf8JsonSerializable, IJsonModel<SliBaseline>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Baseline>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SliBaseline>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Baseline>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SliBaseline>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Baseline>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliBaseline>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Baseline)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SliBaseline)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             }
         }
 
-        Baseline IJsonModel<Baseline>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SliBaseline IJsonModel<SliBaseline>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Baseline>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliBaseline>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Baseline)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SliBaseline)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBaseline(document.RootElement, options);
+            return DeserializeSliBaseline(document.RootElement, options);
         }
 
-        internal static Baseline DeserializeBaseline(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SliBaseline DeserializeSliBaseline(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             }
             float value = default;
             int evaluationPeriodDays = default;
-            EvaluationCalculationType evaluationCalculationType = default;
+            SliEvaluationCalculationType evaluationCalculationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
                 if (property.NameEquals("evaluationCalculationType"u8))
                 {
-                    evaluationCalculationType = new EvaluationCalculationType(property.Value.GetString());
+                    evaluationCalculationType = new SliEvaluationCalculationType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,38 +105,38 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Baseline(value, evaluationPeriodDays, evaluationCalculationType, serializedAdditionalRawData);
+            return new SliBaseline(value, evaluationPeriodDays, evaluationCalculationType, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Baseline>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SliBaseline>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Baseline>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliBaseline>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorSlisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Baseline)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliBaseline)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Baseline IPersistableModel<Baseline>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SliBaseline IPersistableModel<SliBaseline>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Baseline>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliBaseline>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBaseline(document.RootElement, options);
+                        return DeserializeSliBaseline(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Baseline)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliBaseline)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Baseline>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SliBaseline>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

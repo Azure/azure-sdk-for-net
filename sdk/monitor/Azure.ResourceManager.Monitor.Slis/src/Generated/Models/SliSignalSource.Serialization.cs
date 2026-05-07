@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    public partial class SignalSource : IUtf8JsonSerializable, IJsonModel<SignalSource>
+    public partial class SliSignalSource : IUtf8JsonSerializable, IJsonModel<SliSignalSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SliSignalSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SignalSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SliSignalSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SignalSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliSignalSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SliSignalSource)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("signalSourceId"u8);
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             }
         }
 
-        SignalSource IJsonModel<SignalSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SliSignalSource IJsonModel<SliSignalSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SignalSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliSignalSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SliSignalSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSignalSource(document.RootElement, options);
+            return DeserializeSliSignalSource(document.RootElement, options);
         }
 
-        internal static SignalSource DeserializeSignalSource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SliSignalSource DeserializeSliSignalSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             ResourceIdentifier sourceAmwAccountResourceId = default;
             string metricNamespace = default;
             string metricName = default;
-            IList<Condition> filters = default;
+            IList<SliCondition> filters = default;
             SpatialAggregation spatialAggregation = default;
             TemporalAggregation temporalAggregation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
                 if (property.NameEquals("filters"u8))
                 {
-                    List<Condition> array = new List<Condition>();
+                    List<SliCondition> array = new List<SliCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Condition.DeserializeCondition(item, options));
+                        array.Add(SliCondition.DeserializeSliCondition(item, options));
                     }
                     filters = array;
                     continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SignalSource(
+            return new SliSignalSource(
                 signalSourceId,
                 sourceAmwAccountManagedIdentity,
                 sourceAmwAccountResourceId,
@@ -167,35 +167,35 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SignalSource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SliSignalSource>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SignalSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliSignalSource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorSlisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SignalSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliSignalSource)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SignalSource IPersistableModel<SignalSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SliSignalSource IPersistableModel<SliSignalSource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SignalSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliSignalSource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSignalSource(document.RootElement, options);
+                        return DeserializeSliSignalSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliSignalSource)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SignalSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SliSignalSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

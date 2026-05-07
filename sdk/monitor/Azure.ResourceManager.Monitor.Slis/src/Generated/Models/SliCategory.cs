@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
     /// <summary> Defines the category of an SLI. </summary>
-    public readonly partial struct Category : IEquatable<Category>
+    public readonly partial struct SliCategory : IEquatable<SliCategory>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="Category"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliCategory"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Category(string value)
+        public SliCategory(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         private const string LatencyValue = "Latency";
 
         /// <summary> Indicates availability-related metrics. </summary>
-        public static Category Availability { get; } = new Category(AvailabilityValue);
+        public static SliCategory Availability { get; } = new SliCategory(AvailabilityValue);
         /// <summary> Indicates latency-related metrics. </summary>
-        public static Category Latency { get; } = new Category(LatencyValue);
-        /// <summary> Determines if two <see cref="Category"/> values are the same. </summary>
-        public static bool operator ==(Category left, Category right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="Category"/> values are not the same. </summary>
-        public static bool operator !=(Category left, Category right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="Category"/>. </summary>
-        public static implicit operator Category(string value) => new Category(value);
+        public static SliCategory Latency { get; } = new SliCategory(LatencyValue);
+        /// <summary> Determines if two <see cref="SliCategory"/> values are the same. </summary>
+        public static bool operator ==(SliCategory left, SliCategory right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SliCategory"/> values are not the same. </summary>
+        public static bool operator !=(SliCategory left, SliCategory right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SliCategory"/>. </summary>
+        public static implicit operator SliCategory(string value) => new SliCategory(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Category other && Equals(other);
+        public override bool Equals(object obj) => obj is SliCategory other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(Category other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SliCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

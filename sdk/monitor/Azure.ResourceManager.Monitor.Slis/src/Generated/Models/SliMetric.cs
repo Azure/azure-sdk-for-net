@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    /// <summary> Defines the properties of a baseline. </summary>
-    public partial class BaselineProperties
+    /// <summary> Defines a metric in the destination AMW account. </summary>
+    public partial class SliMetric
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,38 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BaselineProperties"/>. </summary>
-        /// <param name="baseline"> Defines the baseline target, which is compared against the SLI value to determine compliance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseline"/> is null. </exception>
-        public BaselineProperties(Baseline baseline)
+        /// <summary> Initializes a new instance of <see cref="SliMetric"/>. </summary>
+        /// <param name="metricNamespace"> The namespace of the metric. </param>
+        /// <param name="metricName"> The name of the metric. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metricNamespace"/> or <paramref name="metricName"/> is null. </exception>
+        internal SliMetric(string metricNamespace, string metricName)
         {
-            Argument.AssertNotNull(baseline, nameof(baseline));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(metricName, nameof(metricName));
 
-            Baseline = baseline;
+            MetricNamespace = metricNamespace;
+            MetricName = metricName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BaselineProperties"/>. </summary>
-        /// <param name="baseline"> Defines the baseline target, which is compared against the SLI value to determine compliance. </param>
+        /// <summary> Initializes a new instance of <see cref="SliMetric"/>. </summary>
+        /// <param name="metricNamespace"> The namespace of the metric. </param>
+        /// <param name="metricName"> The name of the metric. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BaselineProperties(Baseline baseline, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliMetric(string metricNamespace, string metricName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Baseline = baseline;
+            MetricNamespace = metricNamespace;
+            MetricName = metricName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BaselineProperties"/> for deserialization. </summary>
-        internal BaselineProperties()
+        /// <summary> Initializes a new instance of <see cref="SliMetric"/> for deserialization. </summary>
+        internal SliMetric()
         {
         }
 
-        /// <summary> Defines the baseline target, which is compared against the SLI value to determine compliance. </summary>
-        public Baseline Baseline { get; set; }
+        /// <summary> The namespace of the metric. </summary>
+        public string MetricNamespace { get; }
+        /// <summary> The name of the metric. </summary>
+        public string MetricName { get; }
     }
 }

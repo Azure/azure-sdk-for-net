@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
     /// <summary> Represents an Azure Monitor Workspace (AMW) account used for emitting metrics. </summary>
-    public partial class AmwAccount
+    public partial class SliAmwAccount
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AmwAccount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliAmwAccount"/>. </summary>
         /// <param name="resourceId"> The ARM resource ID of the account where metrics are emitted. </param>
         /// <param name="identity"> The ARM resource ID of the managed identity with access to the source account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="identity"/> is null. </exception>
-        public AmwAccount(ResourceIdentifier resourceId, ResourceIdentifier identity)
+        public SliAmwAccount(ResourceIdentifier resourceId, ResourceIdentifier identity)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(identity, nameof(identity));
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AmwAccount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliAmwAccount"/>. </summary>
         /// <param name="resourceId"> The ARM resource ID of the account where metrics are emitted. </param>
         /// <param name="identity"> The ARM resource ID of the managed identity with access to the source account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AmwAccount(ResourceIdentifier resourceId, ResourceIdentifier identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliAmwAccount(ResourceIdentifier resourceId, ResourceIdentifier identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AmwAccount"/> for deserialization. </summary>
-        internal AmwAccount()
+        /// <summary> Initializes a new instance of <see cref="SliAmwAccount"/> for deserialization. </summary>
+        internal SliAmwAccount()
         {
         }
 

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 writer.WritePropertyName("streamingRuleId"u8);
                 writer.WriteStringValue(StreamingRuleId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StreamingRuleLastUpdatedTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(StreamingRuleLastUpdatedOn))
             {
                 writer.WritePropertyName("streamingRuleLastUpdatedTimestamp"u8);
-                writer.WriteStringValue(StreamingRuleLastUpdatedTimestamp.Value, "O");
+                writer.WriteStringValue(StreamingRuleLastUpdatedOn.Value, "O");
             }
             writer.WritePropertyName("enableAlert"u8);
             writer.WriteBooleanValue(EnableAlert);
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            SliProvisioningState? provisioningState = default;
             string description = default;
-            Category category = default;
-            EvaluationType evaluationType = default;
-            ExecutionState executionState = default;
-            IList<AmwAccount> destinationAmwAccounts = default;
-            IReadOnlyList<Metric> destinationMetrics = default;
-            BaselineProperties baselineProperties = default;
+            SliCategory category = default;
+            SliEvaluationType evaluationType = default;
+            SliExecutionState executionState = default;
+            IList<SliAmwAccount> destinationAmwAccounts = default;
+            IReadOnlyList<SliMetric> destinationMetrics = default;
+            SliBaselineProperties baselineProperties = default;
             string streamingRuleId = default;
             DateTimeOffset? streamingRuleLastUpdatedTimestamp = default;
             bool enableAlert = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new SliProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
                 if (property.NameEquals("category"u8))
                 {
-                    category = new Category(property.Value.GetString());
+                    category = new SliCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("evaluationType"u8))
                 {
-                    evaluationType = new EvaluationType(property.Value.GetString());
+                    evaluationType = new SliEvaluationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("executionState"u8))
@@ -166,15 +166,15 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     {
                         continue;
                     }
-                    executionState = ExecutionState.DeserializeExecutionState(property.Value, options);
+                    executionState = SliExecutionState.DeserializeSliExecutionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destinationAmwAccounts"u8))
                 {
-                    List<AmwAccount> array = new List<AmwAccount>();
+                    List<SliAmwAccount> array = new List<SliAmwAccount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmwAccount.DeserializeAmwAccount(item, options));
+                        array.Add(SliAmwAccount.DeserializeSliAmwAccount(item, options));
                     }
                     destinationAmwAccounts = array;
                     continue;
@@ -185,17 +185,17 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     {
                         continue;
                     }
-                    List<Metric> array = new List<Metric>();
+                    List<SliMetric> array = new List<SliMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Metric.DeserializeMetric(item, options));
+                        array.Add(SliMetric.DeserializeSliMetric(item, options));
                     }
                     destinationMetrics = array;
                     continue;
                 }
                 if (property.NameEquals("baselineProperties"u8))
                 {
-                    baselineProperties = BaselineProperties.DeserializeBaselineProperties(property.Value, options);
+                    baselineProperties = SliBaselineProperties.DeserializeSliBaselineProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("streamingRuleId"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 evaluationType,
                 executionState,
                 destinationAmwAccounts,
-                destinationMetrics ?? new ChangeTrackingList<Metric>(),
+                destinationMetrics ?? new ChangeTrackingList<SliMetric>(),
                 baselineProperties,
                 streamingRuleId,
                 streamingRuleLastUpdatedTimestamp,

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="enableAlert"> A flag to determine whether alert is enabled. </param>
         /// <param name="sliProperties"> Defines the SLI properties associated with the SLI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/>, <paramref name="destinationAmwAccounts"/>, <paramref name="baselineProperties"/> or <paramref name="sliProperties"/> is null. </exception>
-        public SliResourceProperties(string description, Category category, EvaluationType evaluationType, IEnumerable<AmwAccount> destinationAmwAccounts, BaselineProperties baselineProperties, bool enableAlert, SliProperties sliProperties)
+        public SliResourceProperties(string description, SliCategory category, SliEvaluationType evaluationType, IEnumerable<SliAmwAccount> destinationAmwAccounts, SliBaselineProperties baselineProperties, bool enableAlert, SliProperties sliProperties)
         {
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(destinationAmwAccounts, nameof(destinationAmwAccounts));
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             Category = category;
             EvaluationType = evaluationType;
             DestinationAmwAccounts = destinationAmwAccounts.ToList();
-            DestinationMetrics = new ChangeTrackingList<Metric>();
+            DestinationMetrics = new ChangeTrackingList<SliMetric>();
             BaselineProperties = baselineProperties;
             EnableAlert = enableAlert;
             SliProperties = sliProperties;
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="destinationMetrics"> The destination Azure Monitor Workspace (AMW) accounts where the SLI emits metrics. </param>
         /// <param name="baselineProperties"> Defines the SLO baseline associated with the SLI. </param>
         /// <param name="streamingRuleId"> The streaming rule Id associated with the Sli resource. </param>
-        /// <param name="streamingRuleLastUpdatedTimestamp"> The streaming rule last updated timestamp associated with the Sli resource. </param>
+        /// <param name="streamingRuleLastUpdatedOn"> The streaming rule last updated timestamp associated with the Sli resource. </param>
         /// <param name="enableAlert"> A flag to determine whether alert is enabled. </param>
         /// <param name="sliProperties"> Defines the SLI properties associated with the SLI. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SliResourceProperties(ProvisioningState? provisioningState, string description, Category category, EvaluationType evaluationType, ExecutionState executionState, IList<AmwAccount> destinationAmwAccounts, IReadOnlyList<Metric> destinationMetrics, BaselineProperties baselineProperties, string streamingRuleId, DateTimeOffset? streamingRuleLastUpdatedTimestamp, bool enableAlert, SliProperties sliProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliResourceProperties(SliProvisioningState? provisioningState, string description, SliCategory category, SliEvaluationType evaluationType, SliExecutionState executionState, IList<SliAmwAccount> destinationAmwAccounts, IReadOnlyList<SliMetric> destinationMetrics, SliBaselineProperties baselineProperties, string streamingRuleId, DateTimeOffset? streamingRuleLastUpdatedOn, bool enableAlert, SliProperties sliProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Description = description;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             DestinationMetrics = destinationMetrics;
             BaselineProperties = baselineProperties;
             StreamingRuleId = streamingRuleId;
-            StreamingRuleLastUpdatedTimestamp = streamingRuleLastUpdatedTimestamp;
+            StreamingRuleLastUpdatedOn = streamingRuleLastUpdatedOn;
             EnableAlert = enableAlert;
             SliProperties = sliProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -109,32 +109,32 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         }
 
         /// <summary> Indicates the provisioning status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SliProvisioningState? ProvisioningState { get; }
         /// <summary> A user-provided description of the SLI, with a maximum length of 1000 characters. </summary>
         public string Description { get; set; }
         /// <summary> Specifies the category of the SLI, used to classify signals such as Availability and Latency. </summary>
-        public Category Category { get; set; }
+        public SliCategory Category { get; set; }
         /// <summary> Determines how the SLI is evaluated—either based on request counts or time windows. </summary>
-        public EvaluationType EvaluationType { get; set; }
+        public SliEvaluationType EvaluationType { get; set; }
         /// <summary> Indicates the current execution status of the SLI resource in ARM responses. </summary>
-        public ExecutionState ExecutionState { get; }
+        public SliExecutionState ExecutionState { get; }
         /// <summary> Destination AMW accounts. </summary>
-        public IList<AmwAccount> DestinationAmwAccounts { get; }
+        public IList<SliAmwAccount> DestinationAmwAccounts { get; }
         /// <summary> The destination Azure Monitor Workspace (AMW) accounts where the SLI emits metrics. </summary>
-        public IReadOnlyList<Metric> DestinationMetrics { get; }
+        public IReadOnlyList<SliMetric> DestinationMetrics { get; }
         /// <summary> Defines the SLO baseline associated with the SLI. </summary>
-        internal BaselineProperties BaselineProperties { get; set; }
+        internal SliBaselineProperties BaselineProperties { get; set; }
         /// <summary> Defines the baseline target, which is compared against the SLI value to determine compliance. </summary>
-        public Baseline Baseline
+        public SliBaseline Baseline
         {
             get => BaselineProperties is null ? default : BaselineProperties.Baseline;
-            set => BaselineProperties = new BaselineProperties(value);
+            set => BaselineProperties = new SliBaselineProperties(value);
         }
 
         /// <summary> The streaming rule Id associated with the Sli resource. </summary>
         public string StreamingRuleId { get; }
         /// <summary> The streaming rule last updated timestamp associated with the Sli resource. </summary>
-        public DateTimeOffset? StreamingRuleLastUpdatedTimestamp { get; }
+        public DateTimeOffset? StreamingRuleLastUpdatedOn { get; }
         /// <summary> A flag to determine whether alert is enabled. </summary>
         public bool EnableAlert { get; set; }
         /// <summary> Defines the SLI properties associated with the SLI. </summary>

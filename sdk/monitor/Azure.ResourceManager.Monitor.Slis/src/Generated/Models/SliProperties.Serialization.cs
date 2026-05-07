@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             {
                 return null;
             }
-            Signal goodSignals = default;
-            Signal totalSignals = default;
-            Signal signals = default;
+            SliSignal goodSignals = default;
+            SliSignal totalSignals = default;
+            SliSignal signals = default;
             WindowUptimeCriteria windowUptimeCriteria = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     {
                         continue;
                     }
-                    goodSignals = Signal.DeserializeSignal(property.Value, options);
+                    goodSignals = SliSignal.DeserializeSliSignal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("totalSignals"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     {
                         continue;
                     }
-                    totalSignals = Signal.DeserializeSignal(property.Value, options);
+                    totalSignals = SliSignal.DeserializeSliSignal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("signals"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     {
                         continue;
                     }
-                    signals = Signal.DeserializeSignal(property.Value, options);
+                    signals = SliSignal.DeserializeSliSignal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowUptimeCriteria"u8))

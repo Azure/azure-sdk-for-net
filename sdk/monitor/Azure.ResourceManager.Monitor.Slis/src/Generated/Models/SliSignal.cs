@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    /// <summary> Represents the current execution state of an SLI. </summary>
-    public partial class ExecutionState
+    /// <summary> Represents a signal model used in SLI calculations. </summary>
+    public partial class SliSignal
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +46,38 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExecutionState"/>. </summary>
-        /// <param name="state"> The execution state value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="state"/> is null. </exception>
-        internal ExecutionState(string state)
+        /// <summary> Initializes a new instance of <see cref="SliSignal"/>. </summary>
+        /// <param name="signalSources"> Sources of metrics used for SLIs. </param>
+        /// <param name="signalFormula"> Mathematical formula used to combine multiple metrics. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="signalSources"/> or <paramref name="signalFormula"/> is null. </exception>
+        public SliSignal(IEnumerable<SliSignalSource> signalSources, string signalFormula)
         {
-            Argument.AssertNotNull(state, nameof(state));
+            Argument.AssertNotNull(signalSources, nameof(signalSources));
+            Argument.AssertNotNull(signalFormula, nameof(signalFormula));
 
-            State = state;
+            SignalSources = signalSources.ToList();
+            SignalFormula = signalFormula;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExecutionState"/>. </summary>
-        /// <param name="state"> The execution state value. </param>
-        /// <param name="message"> A descriptive message related to the execution state. </param>
+        /// <summary> Initializes a new instance of <see cref="SliSignal"/>. </summary>
+        /// <param name="signalSources"> Sources of metrics used for SLIs. </param>
+        /// <param name="signalFormula"> Mathematical formula used to combine multiple metrics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionState(string state, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliSignal(IList<SliSignalSource> signalSources, string signalFormula, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            State = state;
-            Message = message;
+            SignalSources = signalSources;
+            SignalFormula = signalFormula;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExecutionState"/> for deserialization. </summary>
-        internal ExecutionState()
+        /// <summary> Initializes a new instance of <see cref="SliSignal"/> for deserialization. </summary>
+        internal SliSignal()
         {
         }
 
-        /// <summary> The execution state value. </summary>
-        public string State { get; }
-        /// <summary> A descriptive message related to the execution state. </summary>
-        public string Message { get; }
+        /// <summary> Sources of metrics used for SLIs. </summary>
+        public IList<SliSignalSource> SignalSources { get; }
+        /// <summary> Mathematical formula used to combine multiple metrics. </summary>
+        public string SignalFormula { get; set; }
     }
 }

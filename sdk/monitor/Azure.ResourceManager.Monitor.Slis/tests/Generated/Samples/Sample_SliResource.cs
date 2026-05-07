@@ -94,27 +94,27 @@ namespace Azure.ResourceManager.Monitor.Slis.Samples
             {
                 Properties = new SliResourceProperties(
                 "Measures the performance characteristics of the GetContosoUsers() API. ",
-                Category.Latency,
-                EvaluationType.WindowBased,
-                new AmwAccount[]
+                SliCategory.Latency,
+                SliEvaluationType.WindowBased,
+                new SliAmwAccount[]
             {
-new AmwAccount(new ResourceIdentifier("/subscriptions/<subId>/resourcegroups/<rgId>/providers/microsoft.monitor/accounts/<dest>"), new ResourceIdentifier("/subscriptions/<subId>/resourcegroups/<rgId>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<idName>"))
+new SliAmwAccount(new ResourceIdentifier("/subscriptions/<subId>/resourcegroups/<rgId>/providers/microsoft.monitor/accounts/<dest>"), new ResourceIdentifier("/subscriptions/<subId>/resourcegroups/<rgId>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<idName>"))
             },
-                new BaselineProperties(new Baseline(99F, 30, EvaluationCalculationType.CalendarDays)),
+                new SliBaselineProperties(new SliBaseline(99F, 30, SliEvaluationCalculationType.CalendarDays)),
                 true,
                 new SliProperties
                 {
-                    Signals = new Signal(new SignalSource[]
+                    Signals = new SliSignal(new SliSignalSource[]
             {
-new SignalSource(
+new SliSignalSource(
     "A",
     new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myIdentity"),
     new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/microsoft.monitor/accounts/myAccount"),
     "ContosoMetricsWest",
     "Stamp1Latency",
-    new Condition[]
+    new SliCondition[]
 {
-new Condition(ConditionOperator.Equal, "GetContosoUsers")
+new SliCondition(SliConditionOperator.Equal, "GetContosoUsers")
 {
 DimensionName = "ApiName",
 }
@@ -124,15 +124,15 @@ DimensionName = "ApiName",
 {
 WindowSizeMinutes = 5,
 }),
-new SignalSource(
+new SliSignalSource(
     "B",
     new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myIdentity"),
     new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/microsoft.monitor/accounts/myAccount"),
     "ContosoMetricsEast",
     "Stamp2Latency",
-    new Condition[]
+    new SliCondition[]
 {
-new Condition(ConditionOperator.Equal, "GetContosoUsers")
+new SliCondition(SliConditionOperator.Equal, "GetContosoUsers")
 {
 DimensionName = "ApiName",
 }

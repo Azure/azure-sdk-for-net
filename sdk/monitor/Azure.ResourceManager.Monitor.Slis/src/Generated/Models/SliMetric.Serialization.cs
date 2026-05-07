@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    public partial class Metric : IUtf8JsonSerializable, IJsonModel<Metric>
+    public partial class SliMetric : IUtf8JsonSerializable, IJsonModel<SliMetric>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Metric>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SliMetric>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Metric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SliMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Metric>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Metric)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SliMetric)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("metricNamespace"u8);
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             }
         }
 
-        Metric IJsonModel<Metric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SliMetric IJsonModel<SliMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Metric>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Metric)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SliMetric)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetric(document.RootElement, options);
+            return DeserializeSliMetric(document.RootElement, options);
         }
 
-        internal static Metric DeserializeMetric(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SliMetric DeserializeSliMetric(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Metric(metricNamespace, metricName, serializedAdditionalRawData);
+            return new SliMetric(metricNamespace, metricName, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Metric>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SliMetric>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Metric>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliMetric>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorSlisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Metric)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliMetric)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Metric IPersistableModel<Metric>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SliMetric IPersistableModel<SliMetric>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Metric>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliMetric>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMetric(document.RootElement, options);
+                        return DeserializeSliMetric(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Metric)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliMetric)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Metric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SliMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

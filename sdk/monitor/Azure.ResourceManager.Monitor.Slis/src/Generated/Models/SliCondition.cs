@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
     /// <summary> Represents a filtering condition. </summary>
-    public partial class Condition
+    public partial class SliCondition
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Condition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliCondition"/>. </summary>
         /// <param name="operator"> Operator used in the filtering condition. </param>
         /// <param name="value"> Value used in filtering. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Condition(ConditionOperator @operator, string value)
+        public SliCondition(SliConditionOperator @operator, string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Condition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliCondition"/>. </summary>
         /// <param name="dimensionName"> Dimension name used in filtering. </param>
         /// <param name="scalarFunction"> Scalar function applied for filtering. </param>
         /// <param name="samplingType"> Defines the sampling type. </param>
         /// <param name="operator"> Operator used in the filtering condition. </param>
         /// <param name="value"> Value used in filtering. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Condition(string dimensionName, ScalarFunction? scalarFunction, SamplingType? samplingType, ConditionOperator @operator, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliCondition(string dimensionName, SliScalarFunction? scalarFunction, SliSamplingType? samplingType, SliConditionOperator @operator, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DimensionName = dimensionName;
             ScalarFunction = scalarFunction;
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Condition"/> for deserialization. </summary>
-        internal Condition()
+        /// <summary> Initializes a new instance of <see cref="SliCondition"/> for deserialization. </summary>
+        internal SliCondition()
         {
         }
 
         /// <summary> Dimension name used in filtering. </summary>
         public string DimensionName { get; set; }
         /// <summary> Scalar function applied for filtering. </summary>
-        public ScalarFunction? ScalarFunction { get; set; }
+        public SliScalarFunction? ScalarFunction { get; set; }
         /// <summary> Defines the sampling type. </summary>
-        public SamplingType? SamplingType { get; set; }
+        public SliSamplingType? SamplingType { get; set; }
         /// <summary> Operator used in the filtering condition. </summary>
-        public ConditionOperator Operator { get; set; }
+        public SliConditionOperator Operator { get; set; }
         /// <summary> Value used in filtering. </summary>
         public string Value { get; set; }
     }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    public partial class AmwAccount : IUtf8JsonSerializable, IJsonModel<AmwAccount>
+    public partial class SliBaselineProperties : IUtf8JsonSerializable, IJsonModel<SliBaselineProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmwAccount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SliBaselineProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AmwAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SliBaselineProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,14 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AmwAccount>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliBaselineProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmwAccount)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SliBaselineProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
-            writer.WritePropertyName("identity"u8);
-            writer.WriteStringValue(Identity);
+            writer.WritePropertyName("baseline"u8);
+            writer.WriteObjectValue(Baseline, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,19 +53,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             }
         }
 
-        AmwAccount IJsonModel<AmwAccount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SliBaselineProperties IJsonModel<SliBaselineProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AmwAccount>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliBaselineProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmwAccount)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SliBaselineProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAmwAccount(document.RootElement, options);
+            return DeserializeSliBaselineProperties(document.RootElement, options);
         }
 
-        internal static AmwAccount DeserializeAmwAccount(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SliBaselineProperties DeserializeSliBaselineProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,20 +73,14 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             {
                 return null;
             }
-            ResourceIdentifier resourceId = default;
-            ResourceIdentifier identity = default;
+            SliBaseline baseline = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"u8))
+                if (property.NameEquals("baseline"u8))
                 {
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    identity = new ResourceIdentifier(property.Value.GetString());
+                    baseline = SliBaseline.DeserializeSliBaseline(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,38 +89,38 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AmwAccount(resourceId, identity, serializedAdditionalRawData);
+            return new SliBaselineProperties(baseline, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AmwAccount>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SliBaselineProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AmwAccount>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliBaselineProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorSlisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AmwAccount)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliBaselineProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AmwAccount IPersistableModel<AmwAccount>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SliBaselineProperties IPersistableModel<SliBaselineProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AmwAccount>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliBaselineProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAmwAccount(document.RootElement, options);
+                        return DeserializeSliBaselineProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmwAccount)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliBaselineProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AmwAccount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SliBaselineProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

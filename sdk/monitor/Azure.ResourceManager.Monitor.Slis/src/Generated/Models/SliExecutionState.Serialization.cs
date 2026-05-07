@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    public partial class ExecutionState : IUtf8JsonSerializable, IJsonModel<ExecutionState>
+    public partial class SliExecutionState : IUtf8JsonSerializable, IJsonModel<SliExecutionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutionState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SliExecutionState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ExecutionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SliExecutionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliExecutionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SliExecutionState)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("state"u8);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             }
         }
 
-        ExecutionState IJsonModel<ExecutionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SliExecutionState IJsonModel<SliExecutionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliExecutionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SliExecutionState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExecutionState(document.RootElement, options);
+            return DeserializeSliExecutionState(document.RootElement, options);
         }
 
-        internal static ExecutionState DeserializeExecutionState(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SliExecutionState DeserializeSliExecutionState(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExecutionState(state, message, serializedAdditionalRawData);
+            return new SliExecutionState(state, message, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ExecutionState>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SliExecutionState>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliExecutionState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorSlisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliExecutionState)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ExecutionState IPersistableModel<ExecutionState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SliExecutionState IPersistableModel<SliExecutionState>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliExecutionState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExecutionState(document.RootElement, options);
+                        return DeserializeSliExecutionState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliExecutionState)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExecutionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SliExecutionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

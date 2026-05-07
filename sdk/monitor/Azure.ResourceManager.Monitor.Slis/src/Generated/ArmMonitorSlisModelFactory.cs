@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="destinationMetrics"> The destination Azure Monitor Workspace (AMW) accounts where the SLI emits metrics. </param>
         /// <param name="baseline"> Defines the SLO baseline associated with the SLI. </param>
         /// <param name="streamingRuleId"> The streaming rule Id associated with the Sli resource. </param>
-        /// <param name="streamingRuleLastUpdatedTimestamp"> The streaming rule last updated timestamp associated with the Sli resource. </param>
+        /// <param name="streamingRuleLastUpdatedOn"> The streaming rule last updated timestamp associated with the Sli resource. </param>
         /// <param name="enableAlert"> A flag to determine whether alert is enabled. </param>
         /// <param name="sliProperties"> Defines the SLI properties associated with the SLI. </param>
         /// <returns> A new <see cref="Models.SliResourceProperties"/> instance for mocking. </returns>
-        public static SliResourceProperties SliResourceProperties(ProvisioningState? provisioningState = null, string description = null, Category category = default, EvaluationType evaluationType = default, ExecutionState executionState = null, IEnumerable<AmwAccount> destinationAmwAccounts = null, IEnumerable<Metric> destinationMetrics = null, Baseline baseline = null, string streamingRuleId = null, DateTimeOffset? streamingRuleLastUpdatedTimestamp = null, bool enableAlert = default, SliProperties sliProperties = null)
+        public static SliResourceProperties SliResourceProperties(SliProvisioningState? provisioningState = null, string description = null, SliCategory category = default, SliEvaluationType evaluationType = default, SliExecutionState executionState = null, IEnumerable<SliAmwAccount> destinationAmwAccounts = null, IEnumerable<SliMetric> destinationMetrics = null, SliBaseline baseline = null, string streamingRuleId = null, DateTimeOffset? streamingRuleLastUpdatedOn = null, bool enableAlert = default, SliProperties sliProperties = null)
         {
-            destinationAmwAccounts ??= new List<AmwAccount>();
-            destinationMetrics ??= new List<Metric>();
+            destinationAmwAccounts ??= new List<SliAmwAccount>();
+            destinationMetrics ??= new List<SliMetric>();
 
             return new SliResourceProperties(
                 provisioningState,
@@ -63,30 +63,30 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 executionState,
                 destinationAmwAccounts?.ToList(),
                 destinationMetrics?.ToList(),
-                baseline != null ? new BaselineProperties(baseline, serializedAdditionalRawData: null) : null,
+                baseline != null ? new SliBaselineProperties(baseline, serializedAdditionalRawData: null) : null,
                 streamingRuleId,
-                streamingRuleLastUpdatedTimestamp,
+                streamingRuleLastUpdatedOn,
                 enableAlert,
                 sliProperties,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExecutionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SliExecutionState"/>. </summary>
         /// <param name="state"> The execution state value. </param>
         /// <param name="message"> A descriptive message related to the execution state. </param>
-        /// <returns> A new <see cref="Models.ExecutionState"/> instance for mocking. </returns>
-        public static ExecutionState ExecutionState(string state = null, string message = null)
+        /// <returns> A new <see cref="Models.SliExecutionState"/> instance for mocking. </returns>
+        public static SliExecutionState SliExecutionState(string state = null, string message = null)
         {
-            return new ExecutionState(state, message, serializedAdditionalRawData: null);
+            return new SliExecutionState(state, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Metric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SliMetric"/>. </summary>
         /// <param name="metricNamespace"> The namespace of the metric. </param>
         /// <param name="metricName"> The name of the metric. </param>
-        /// <returns> A new <see cref="Models.Metric"/> instance for mocking. </returns>
-        public static Metric Metric(string metricNamespace = null, string metricName = null)
+        /// <returns> A new <see cref="Models.SliMetric"/> instance for mocking. </returns>
+        public static SliMetric SliMetric(string metricNamespace = null, string metricName = null)
         {
-            return new Metric(metricNamespace, metricName, serializedAdditionalRawData: null);
+            return new SliMetric(metricNamespace, metricName, serializedAdditionalRawData: null);
         }
     }
 }

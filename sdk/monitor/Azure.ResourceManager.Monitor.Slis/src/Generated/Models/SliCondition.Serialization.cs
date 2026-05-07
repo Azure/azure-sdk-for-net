@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    public partial class Condition : IUtf8JsonSerializable, IJsonModel<Condition>
+    public partial class SliCondition : IUtf8JsonSerializable, IJsonModel<SliCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Condition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SliCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Condition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SliCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Condition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SliCondition)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(DimensionName))
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             }
         }
 
-        Condition IJsonModel<Condition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SliCondition IJsonModel<SliCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Condition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SliCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCondition(document.RootElement, options);
+            return DeserializeSliCondition(document.RootElement, options);
         }
 
-        internal static Condition DeserializeCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SliCondition DeserializeSliCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 return null;
             }
             string dimensionName = default;
-            ScalarFunction? scalarFunction = default;
-            SamplingType? samplingType = default;
-            ConditionOperator @operator = default;
+            SliScalarFunction? scalarFunction = default;
+            SliSamplingType? samplingType = default;
+            SliConditionOperator @operator = default;
             string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     {
                         continue;
                     }
-                    scalarFunction = new ScalarFunction(property.Value.GetString());
+                    scalarFunction = new SliScalarFunction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("samplingType"u8))
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     {
                         continue;
                     }
-                    samplingType = new SamplingType(property.Value.GetString());
+                    samplingType = new SliSamplingType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operator"u8))
                 {
-                    @operator = new ConditionOperator(property.Value.GetString());
+                    @operator = new SliConditionOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Condition(
+            return new SliCondition(
                 dimensionName,
                 scalarFunction,
                 samplingType,
@@ -147,35 +147,35 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Condition>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SliCondition>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliCondition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorSlisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Condition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Condition IPersistableModel<Condition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SliCondition IPersistableModel<SliCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliCondition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCondition(document.RootElement, options);
+                        return DeserializeSliCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Condition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliCondition)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Condition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SliCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

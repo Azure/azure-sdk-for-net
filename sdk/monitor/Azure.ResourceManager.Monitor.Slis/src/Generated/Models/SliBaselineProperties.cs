@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    /// <summary> Represents a signal model used in SLI calculations. </summary>
-    public partial class Signal
+    /// <summary> Defines the properties of a baseline. </summary>
+    public partial class SliBaselineProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,38 +45,31 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Signal"/>. </summary>
-        /// <param name="signalSources"> Sources of metrics used for SLIs. </param>
-        /// <param name="signalFormula"> Mathematical formula used to combine multiple metrics. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signalSources"/> or <paramref name="signalFormula"/> is null. </exception>
-        public Signal(IEnumerable<SignalSource> signalSources, string signalFormula)
+        /// <summary> Initializes a new instance of <see cref="SliBaselineProperties"/>. </summary>
+        /// <param name="baseline"> Defines the baseline target, which is compared against the SLI value to determine compliance. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="baseline"/> is null. </exception>
+        public SliBaselineProperties(SliBaseline baseline)
         {
-            Argument.AssertNotNull(signalSources, nameof(signalSources));
-            Argument.AssertNotNull(signalFormula, nameof(signalFormula));
+            Argument.AssertNotNull(baseline, nameof(baseline));
 
-            SignalSources = signalSources.ToList();
-            SignalFormula = signalFormula;
+            Baseline = baseline;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Signal"/>. </summary>
-        /// <param name="signalSources"> Sources of metrics used for SLIs. </param>
-        /// <param name="signalFormula"> Mathematical formula used to combine multiple metrics. </param>
+        /// <summary> Initializes a new instance of <see cref="SliBaselineProperties"/>. </summary>
+        /// <param name="baseline"> Defines the baseline target, which is compared against the SLI value to determine compliance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Signal(IList<SignalSource> signalSources, string signalFormula, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliBaselineProperties(SliBaseline baseline, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SignalSources = signalSources;
-            SignalFormula = signalFormula;
+            Baseline = baseline;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Signal"/> for deserialization. </summary>
-        internal Signal()
+        /// <summary> Initializes a new instance of <see cref="SliBaselineProperties"/> for deserialization. </summary>
+        internal SliBaselineProperties()
         {
         }
 
-        /// <summary> Sources of metrics used for SLIs. </summary>
-        public IList<SignalSource> SignalSources { get; }
-        /// <summary> Mathematical formula used to combine multiple metrics. </summary>
-        public string SignalFormula { get; set; }
+        /// <summary> Defines the baseline target, which is compared against the SLI value to determine compliance. </summary>
+        public SliBaseline Baseline { get; set; }
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="signals"> Signals used for window-based SLI calculations. </param>
         /// <param name="windowUptimeCriteria"> Defines the uptime criteria for window-based SLIs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SliProperties(Signal goodSignals, Signal totalSignals, Signal signals, WindowUptimeCriteria windowUptimeCriteria, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliProperties(SliSignal goodSignals, SliSignal totalSignals, SliSignal signals, WindowUptimeCriteria windowUptimeCriteria, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GoodSignals = goodSignals;
             TotalSignals = totalSignals;
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         }
 
         /// <summary> Represents good signals used in request-based SLI calculations. </summary>
-        public Signal GoodSignals { get; set; }
+        public SliSignal GoodSignals { get; set; }
         /// <summary> Represents total signals used in request-based SLI calculations. </summary>
-        public Signal TotalSignals { get; set; }
+        public SliSignal TotalSignals { get; set; }
         /// <summary> Signals used for window-based SLI calculations. </summary>
-        public Signal Signals { get; set; }
+        public SliSignal Signals { get; set; }
         /// <summary> Defines the uptime criteria for window-based SLIs. </summary>
         public WindowUptimeCriteria WindowUptimeCriteria { get; set; }
     }

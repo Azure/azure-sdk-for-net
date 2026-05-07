@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
     /// <summary> Defines the target parameters for a Slo baseline. </summary>
-    public partial class Baseline
+    public partial class SliBaseline
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,23 +45,23 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Baseline"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliBaseline"/>. </summary>
         /// <param name="value"> The user-defined or Azure-defined target value used for comparison against the SLI value. </param>
         /// <param name="evaluationPeriodDays"> The time frame (in days) used for SLI evaluation. </param>
         /// <param name="evaluationCalculationType"> Specifies how evaluation is calculated, either based on calendar days or a rolling window. </param>
-        public Baseline(float value, int evaluationPeriodDays, EvaluationCalculationType evaluationCalculationType)
+        public SliBaseline(float value, int evaluationPeriodDays, SliEvaluationCalculationType evaluationCalculationType)
         {
             Value = value;
             EvaluationPeriodDays = evaluationPeriodDays;
             EvaluationCalculationType = evaluationCalculationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Baseline"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliBaseline"/>. </summary>
         /// <param name="value"> The user-defined or Azure-defined target value used for comparison against the SLI value. </param>
         /// <param name="evaluationPeriodDays"> The time frame (in days) used for SLI evaluation. </param>
         /// <param name="evaluationCalculationType"> Specifies how evaluation is calculated, either based on calendar days or a rolling window. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Baseline(float value, int evaluationPeriodDays, EvaluationCalculationType evaluationCalculationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliBaseline(float value, int evaluationPeriodDays, SliEvaluationCalculationType evaluationCalculationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             EvaluationPeriodDays = evaluationPeriodDays;
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Baseline"/> for deserialization. </summary>
-        internal Baseline()
+        /// <summary> Initializes a new instance of <see cref="SliBaseline"/> for deserialization. </summary>
+        internal SliBaseline()
         {
         }
 
@@ -79,6 +79,6 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <summary> The time frame (in days) used for SLI evaluation. </summary>
         public int EvaluationPeriodDays { get; set; }
         /// <summary> Specifies how evaluation is calculated, either based on calendar days or a rolling window. </summary>
-        public EvaluationCalculationType EvaluationCalculationType { get; set; }
+        public SliEvaluationCalculationType EvaluationCalculationType { get; set; }
     }
 }
