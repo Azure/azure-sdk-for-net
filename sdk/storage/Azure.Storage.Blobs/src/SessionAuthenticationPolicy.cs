@@ -56,7 +56,6 @@ namespace Azure.Storage.Blobs
 
         private const string SessionsUnavailable = "SessionOperationsTemporarilyUnavailable";
         private const string FeatureNotEnabled = "FeatureNotEnabled";
-        private const string SessionSchemeNotSupported = "Authentication scheme Session is not supported.";
 
         public SessionAuthenticationPolicy(
             HttpPipelinePolicy bearerTokenPolicy,
@@ -239,17 +238,6 @@ namespace Azure.Storage.Blobs
                 return AuthState.UseSessionToken;
             }
 
-            // --- 403 "Authentication scheme Session is not supported." ---
-            if (statusCode == (int)HttpStatusCode.Forbidden
-                && string.Equals(message.Response.ReasonPhrase, SessionSchemeNotSupported, StringComparison.OrdinalIgnoreCase))
-            {
-                // Dispose the content stream to free up a connection.
-                message.Response.ContentStream?.Dispose();
-
-                // Signal to fall back to bearer token.
-                return AuthState.UseBearerToken;
-            }
-
             // --- 503 SessionOperationsTemporarilyUnavailable ---
             if (statusCode == (int)HttpStatusCode.ServiceUnavailable
                 && message.Response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out string errorCode)
@@ -309,7 +297,7 @@ namespace Azure.Storage.Blobs
             }
 
             CreateSessionResponse session = response.Value;
-            DateTimeOffset expiresOn = session.Expiration ?? DateTimeOffset.UtcNow.AddMinutes(5);
+            DateTimeOffset expiresOn = session.Expiration.Value;
             DateTimeOffset refreshOn = expiresOn - SessionRefreshBuffer;
 
             return new SessionTokenInfo(

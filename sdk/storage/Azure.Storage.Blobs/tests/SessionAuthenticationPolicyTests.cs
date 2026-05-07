@@ -988,50 +988,6 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public async Task Response403_SessionSchemeNotSupported_FallsBackToBearer()
-        {
-            var mockBearer = CreateMockBearerPolicy();
-            var policy = CreateSessionPolicy(
-                mockBearer,
-                EnabledOptions,
-                CreateSessionMockResponse());
-
-            var response403 = new MockResponse(403, "Authentication scheme Session is not supported.");
-            response403.AddHeader("Content-Type", "application/xml");
-            response403.SetContent(
-                "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-                "<Error><Code>AuthenticationFailed</Code>" +
-                "<Message>Authentication scheme Session is not supported.</Message></Error>");
-
-            var (message, _) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                response403);
-
-            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
-        }
-
-        [Test]
-        public async Task Response403_DifferentReasonPhrase_NoFallback()
-        {
-            var mockBearer = CreateMockBearerPolicy();
-            var policy = CreateSessionPolicy(
-                mockBearer,
-                EnabledOptions,
-                CreateSessionMockResponse());
-
-            var (message, _) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                new MockResponse(403, "Forbidden"));
-
-            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
-            Assert.AreEqual(403, message.Response.Status);
-        }
-
-        [Test]
         public async Task Response503_SessionsUnavailable_FallsBackToBearer()
         {
             var mockBearer = CreateMockBearerPolicy();
