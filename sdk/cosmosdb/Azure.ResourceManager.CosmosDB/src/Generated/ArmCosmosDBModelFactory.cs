@@ -267,28 +267,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new DatabaseAccountKeysMetadata(primaryMasterKeyGeneratedOn is null ? default : new AccountKeyMetadata(primaryMasterKeyGeneratedOn, null), secondaryMasterKeyGeneratedOn is null ? default : new AccountKeyMetadata(secondaryMasterKeyGeneratedOn, null), primaryReadonlyMasterKeyGeneratedOn is null ? default : new AccountKeyMetadata(primaryReadonlyMasterKeyGeneratedOn, null), secondaryReadonlyMasterKeyGeneratedOn is null ? default : new AccountKeyMetadata(secondaryReadonlyMasterKeyGeneratedOn, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The core properties of ARM resources. </summary>
-        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
-        /// <param name="name"> The name of the ARM resource. </param>
-        /// <param name="type"> The type of Azure resource. </param>
-        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <returns> A new <see cref="Models.ARMResourceProperties"/> instance for mocking. </returns>
-        public static ARMResourceProperties ARMResourceProperties(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ARMResourceProperties(
-                id,
-                name,
-                @type,
-                location,
-                tags,
-                identity,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
         /// <param name="location"> The location of the resource group to which the resource belongs. </param>
         /// <param name="identity"> Identity for the resource. </param>
@@ -777,6 +755,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 identity,
                 additionalBinaryDataProperties: null,
                 new GraphResourceCreateUpdateProperties(new GraphResource(resourceId, null), options, null));
+        }
+
+        /// <summary> The core properties of ARM resources. </summary>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="Models.ARMResourceProperties"/> instance for mocking. </returns>
+        public static ARMResourceProperties ARMResourceProperties(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ARMResourceProperties(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

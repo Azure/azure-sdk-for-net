@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private protected ManagedServiceIdentity _identity;
 
         /// <summary> Initializes a new instance of <see cref="ARMResourceProperties"/>. </summary>
         public ARMResourceProperties()

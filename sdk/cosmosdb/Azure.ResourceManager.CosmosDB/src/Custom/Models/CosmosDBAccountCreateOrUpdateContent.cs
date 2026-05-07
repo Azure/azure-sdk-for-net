@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     [CodeGenSuppress("AnalyticalStorageSchemaType")]
     [CodeGenSuppress("CapacityTotalThroughputLimit")]
     [CodeGenSuppress("Properties")]
-    [CodeGenSuppress("CosmosDBAccountCreateOrUpdateContent", typeof(DatabaseAccountCreateUpdateProperties))]
+    [CodeGenSuppress("CosmosDBAccountCreateOrUpdateContent", typeof(AzureLocation), typeof(DatabaseAccountCreateUpdateProperties))]
     public partial class CosmosDBAccountCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCreateOrUpdateContent"/>. </summary>
