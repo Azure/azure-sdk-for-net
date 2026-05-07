@@ -3,5 +3,8 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Naming", "AZC0031:Improper model name suffix", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.ResourceManager.CloudHealth.Models.IconDefinition")]
-[assembly: SuppressMessage("Usage", "AZC0030:Improper model constructor", Justification = "<Pending>")]
+[assembly: SuppressMessage("Naming", "AZC0030:Improper model name suffix", Justification = "Model name ends with 'Request', which is the service-defined name for history request payloads", Scope = "type", Target = "~T:Azure.ResourceManager.CloudHealth.Models.EntityHistoryRequest")]
+[assembly: SuppressMessage("Naming", "AZC0030:Improper model name suffix", Justification = "Model name ends with 'Response', which is the service-defined name for history response payloads", Scope = "type", Target = "~T:Azure.ResourceManager.CloudHealth.Models.EntityHistoryResponse")]
+[assembly: SuppressMessage("Naming", "AZC0030:Improper model name suffix", Justification = "Model name ends with 'Request', which is the service-defined name for report request payloads", Scope = "type", Target = "~T:Azure.ResourceManager.CloudHealth.Models.HealthReportRequest")]
+[assembly: SuppressMessage("Naming", "AZC0030:Improper model name suffix", Justification = "Model name ends with 'Request', which is the service-defined name for signal history request payloads", Scope = "type", Target = "~T:Azure.ResourceManager.CloudHealth.Models.SignalHistoryRequest")]
+[assembly: SuppressMessage("Naming", "AZC0030:Improper model name suffix", Justification = "Model name ends with 'Response', which is the service-defined name for signal history response payloads", Scope = "type", Target = "~T:Azure.ResourceManager.CloudHealth.Models.SignalHistoryResponse")]
