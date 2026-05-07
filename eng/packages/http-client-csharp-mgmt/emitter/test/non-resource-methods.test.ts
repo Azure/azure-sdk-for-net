@@ -1208,4 +1208,213 @@ interface ChildResources {
       "DeletedVault resource should have no List methods"
     );
   });
+
+  it("should NOT match collection-level action to resource by type segment when operation ends with action name", () => {
+    const resources: ArmResourceSchema[] = [
+      {
+        resourceModelId: "Microsoft.CostManagement.CostAllocationRuleDefinition",
+        metadata: {
+          resourceName: "CostAllocationRuleDefinition",
+          resourceType: "Microsoft.CostManagement/costAllocationRules",
+          resourceIdPattern: new RequestPath(
+            "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}"
+          ),
+          scope: {
+            kind: ResourceScopeKind.Extension,
+            scopeIdPattern: new RequestPath(
+              "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+            )
+          },
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: [],
+          methods: [
+            {
+              methodId:
+                "Microsoft.CostManagement.CostAllocationRuleDefinition.get",
+              kind: ResourceOperationKind.Read,
+              operationPath: new RequestPath(
+                "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}"
+              ),
+              scope: {
+                kind: ResourceScopeKind.Extension,
+                scopeIdPattern: new RequestPath(
+                  "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+                )
+              }
+            }
+          ]
+        }
+      }
+    ];
+
+    const nonResourceMethods: NonResourceMethod[] = [
+      {
+        methodId:
+          "Microsoft.CostManagement.CostAllocationRulesOperationGroup.checkNameAvailability",
+        operationPath: new RequestPath(
+          "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/checkNameAvailability"
+        ),
+        scope: {
+          kind: ResourceScopeKind.Extension,
+          scopeIdPattern: RequestPath.empty
+        }
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "checkNameAvailability should remain as a non-resource method"
+    );
+    strictEqual(
+      nonResourceMethods[0].methodId,
+      "Microsoft.CostManagement.CostAllocationRulesOperationGroup.checkNameAvailability",
+      "The remaining non-resource method should be checkNameAvailability"
+    );
+
+    const recoveredMethods = resources[0].metadata.methods.filter(
+      (m) =>
+        m.methodId ===
+        "Microsoft.CostManagement.CostAllocationRulesOperationGroup.checkNameAvailability"
+    );
+    strictEqual(
+      recoveredMethods.length,
+      0,
+      "CostAllocationRuleDefinition should not gain the collection-level action"
+    );
+  });
+
+  it("should assign nested collection-level action to parent resource when action replaces child name segment", () => {
+    const resources: ArmResourceSchema[] = [
+      {
+        resourceModelId: "Microsoft.CostManagement.CostAllocationRuleDefinition",
+        metadata: {
+          resourceName: "CostAllocationRuleDefinition",
+          resourceType: "Microsoft.CostManagement/costAllocationRules",
+          resourceIdPattern: new RequestPath(
+            "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}"
+          ),
+          scope: {
+            kind: ResourceScopeKind.Extension,
+            scopeIdPattern: new RequestPath(
+              "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+            )
+          },
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: [],
+          methods: [
+            {
+              methodId:
+                "Microsoft.CostManagement.CostAllocationRuleDefinition.get",
+              kind: ResourceOperationKind.Read,
+              operationPath: new RequestPath(
+                "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}"
+              ),
+              scope: {
+                kind: ResourceScopeKind.Extension,
+                scopeIdPattern: new RequestPath(
+                  "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+                )
+              }
+            }
+          ]
+        }
+      },
+      {
+        resourceModelId: "Microsoft.CostManagement.CostAllocationRuleAlert",
+        metadata: {
+          resourceName: "CostAllocationRuleAlert",
+          resourceType: "Microsoft.CostManagement/costAllocationRules/alerts",
+          resourceIdPattern: new RequestPath(
+            "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}/alerts/{alertName}"
+          ),
+          scope: {
+            kind: ResourceScopeKind.Extension,
+            scopeIdPattern: new RequestPath(
+              "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+            )
+          },
+          singletonResourceName: undefined,
+          parentResourceId: new RequestPath(
+            "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}"
+          ),
+          parentResourceModelId:
+            "Microsoft.CostManagement.CostAllocationRuleDefinition",
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: [],
+          methods: [
+            {
+              methodId: "Microsoft.CostManagement.CostAllocationRuleAlert.get",
+              kind: ResourceOperationKind.Read,
+              operationPath: new RequestPath(
+                "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}/alerts/{alertName}"
+              ),
+              scope: {
+                kind: ResourceScopeKind.Extension,
+                scopeIdPattern: new RequestPath(
+                  "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}"
+                )
+              }
+            }
+          ]
+        }
+      }
+    ];
+
+    const nonResourceMethods: NonResourceMethod[] = [
+      {
+        methodId:
+          "Microsoft.CostManagement.CostAllocationRuleAlertsOperationGroup.checkNameAvailability",
+        operationPath: new RequestPath(
+          "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}/alerts/checkNameAvailability"
+        ),
+        scope: {
+          kind: ResourceScopeKind.Extension,
+          scopeIdPattern: RequestPath.empty
+        }
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    strictEqual(
+      nonResourceMethods.length,
+      0,
+      "checkNameAvailability should be assigned to the parent cost allocation rule resource"
+    );
+
+    const parentActionMethods = resources[0].metadata.methods.filter(
+      (m) =>
+        m.kind === ResourceOperationKind.Action &&
+        m.methodId ===
+          "Microsoft.CostManagement.CostAllocationRuleAlertsOperationGroup.checkNameAvailability"
+    );
+    strictEqual(
+      parentActionMethods.length,
+      1,
+      "CostAllocationRuleDefinition should gain the checkNameAvailability action"
+    );
+
+    const childActionMethods = resources[1].metadata.methods.filter(
+      (m) =>
+        m.methodId ===
+        "Microsoft.CostManagement.CostAllocationRuleAlertsOperationGroup.checkNameAvailability"
+    );
+    strictEqual(
+      childActionMethods.length,
+      0,
+      "CostAllocationRuleAlert should not treat checkNameAvailability as an alert name"
+    );
+  });
 });

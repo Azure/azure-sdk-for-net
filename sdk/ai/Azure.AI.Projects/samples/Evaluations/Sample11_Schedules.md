@@ -69,8 +69,8 @@ private static BinaryData GetDataEvaluationConfig(string modelDeploymentName)
 
 2. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create method named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use it to get evaluation name and ID.
 
-```C# Snippet:Sample_GetStringValues_ScheduledEvaluations
-private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+```C# Snippet:Sample_ParseClientResult_EvaluationSampleBase
+protected static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -85,7 +85,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
             }
         }
     }
-    List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
+    List<string> notFoundItems = [.. expectedProperties.Where((key) => !results.ContainsKey(key))];
     if (notFoundItems.Count > 0)
     {
         StringBuilder sbNotFound = new();

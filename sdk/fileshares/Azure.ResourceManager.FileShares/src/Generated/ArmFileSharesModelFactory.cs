@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="provisionedThroughputNextAllowedDowngradeOn"> A date/time value that specifies when the provisioned throughput for the file share is permitted to be reduced. </param>
         /// <param name="includedBurstIOPerSec"> Burst IOPS are extra buffer IOPS enabling you to consume more than your provisioned IOPS for a short period of time, depending on the burst credits available for your share. </param>
         /// <param name="maxBurstIOPerSecCredits"> Max burst IOPS credits shows the maximum number of burst credits the share can have at the current IOPS provisioning level. </param>
-        /// <param name="nfsProtocolRootSquash"> Root squash defines how root users on clients are mapped to the NFS share. </param>
+        /// <param name="nfsProtocolProperties"> Protocol settings specific NFS. </param>
         /// <param name="publicAccessAllowedSubnets"> The allowed set of subnets when access is restricted. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to azure managed file share. </param>
         /// <param name="privateEndpointConnections"> The list of associated private endpoint connections. </param>
         /// <returns> A new <see cref="Models.FileShareProperties"/> instance for mocking. </returns>
-        public static FileShareProperties FileShareProperties(string mountName = default, string hostName = default, FileShareMediaTier? mediaTier = default, FileShareRedundancyLevel? redundancy = default, FileShareProtocol? protocol = default, int? provisionedStorageInGiB = default, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default, int? provisionedIOPerSec = default, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default, int? provisionedThroughputMiBPerSec = default, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default, int? includedBurstIOPerSec = default, long? maxBurstIOPerSecCredits = default, ShareRootSquash? nfsProtocolRootSquash = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileShareProvisioningState? provisioningState = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default)
+        public static FileShareProperties FileShareProperties(string mountName = default, string hostName = default, FileShareMediaTier? mediaTier = default, FileShareRedundancyLevel? redundancy = default, FileShareProtocol? protocol = default, int? provisionedStorageInGiB = default, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default, int? provisionedIOPerSec = default, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default, int? provisionedThroughputMiBPerSec = default, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default, int? includedBurstIOPerSec = default, long? maxBurstIOPerSecCredits = default, NfsProtocolProperties nfsProtocolProperties = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileShareProvisioningState? provisioningState = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<FileSharePrivateEndpointConnectionData>();
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 provisionedThroughputNextAllowedDowngradeOn,
                 includedBurstIOPerSec,
                 maxBurstIOPerSecCredits,
-                nfsProtocolRootSquash is null ? default : new NfsProtocolProperties(nfsProtocolRootSquash, null),
+                nfsProtocolProperties,
                 publicAccessAllowedSubnets is null ? default : new PublicAccessProperties((publicAccessAllowedSubnets ?? new ChangeTrackingList<string>()).ToList(), null),
                 provisioningState,
                 publicNetworkAccess,
