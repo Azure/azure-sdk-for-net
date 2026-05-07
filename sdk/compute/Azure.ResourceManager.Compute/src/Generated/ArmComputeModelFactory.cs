@@ -2993,19 +2993,19 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Information of community gallery if current gallery is shared to community. </summary>
-        /// <param name="publisherUri"> The link to the publisher website. Visible to all users. </param>
+        /// <param name="publisherUriString"> The link to the publisher website. Visible to all users. </param>
         /// <param name="publisherContact"> Community gallery publisher support email. The email address of the publisher. Visible to all users. </param>
         /// <param name="eula"> End-user license agreement for community gallery image. </param>
         /// <param name="publicNamePrefix"> The prefix of the gallery name that will be displayed publicly. Visible to all users. </param>
         /// <param name="communityGalleryEnabled"> Contains info about whether community gallery sharing is enabled. </param>
         /// <param name="publicNames"> Community gallery public name list. </param>
         /// <returns> A new <see cref="Models.CommunityGalleryInfo"/> instance for mocking. </returns>
-        public static CommunityGalleryInfo CommunityGalleryInfo(Uri publisherUri = default, string publisherContact = default, string eula = default, string publicNamePrefix = default, bool? communityGalleryEnabled = default, IEnumerable<string> publicNames = default)
+        public static CommunityGalleryInfo CommunityGalleryInfo(string publisherUriString = default, string publisherContact = default, string eula = default, string publicNamePrefix = default, bool? communityGalleryEnabled = default, IEnumerable<string> publicNames = default)
         {
             publicNames ??= new ChangeTrackingList<string>();
 
             return new CommunityGalleryInfo(
-                publisherUri,
+                publisherUriString,
                 publisherContact,
                 eula,
                 publicNamePrefix,
@@ -4675,6 +4675,27 @@ namespace Azure.ResourceManager.Compute.Models
                 zones.ToList());
         }
 
+        /// <param name="publisherUri"></param>
+        /// <param name="publisherContact"></param>
+        /// <param name="eula"></param>
+        /// <param name="publicNamePrefix"></param>
+        /// <param name="communityGalleryEnabled"></param>
+        /// <param name="publicNames"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryInfo CommunityGalleryInfo(Uri publisherUri, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IEnumerable<string> publicNames)
+        {
+            publicNames ??= new ChangeTrackingList<string>();
+
+            return new CommunityGalleryInfo(
+                default,
+                publisherContact,
+                eula,
+                publicNamePrefix,
+                communityGalleryEnabled,
+                publicNames.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetVmData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -5929,29 +5950,6 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 default,
                 identity);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CommunityGalleryInfo"/>. </summary>
-        /// <param name="publisherUriString"> The link to the publisher website. Visible to all users. </param>
-        /// <param name="publisherContact"> Community gallery publisher support email. The email address of the publisher. Visible to all users. </param>
-        /// <param name="eula"> End-user license agreement for community gallery image. </param>
-        /// <param name="publicNamePrefix"> The prefix of the gallery name that will be displayed publicly. Visible to all users. </param>
-        /// <param name="communityGalleryEnabled"> Contains info about whether community gallery sharing is enabled. </param>
-        /// <param name="publicNames"> Community gallery public name list. </param>
-        /// <returns> A new <see cref="Models.CommunityGalleryInfo"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CommunityGalleryInfo CommunityGalleryInfo(string publisherUriString, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IEnumerable<string> publicNames)
-        {
-            publicNames ??= new ChangeTrackingList<string>();
-
-            return new CommunityGalleryInfo(
-                default,
-                publisherContact,
-                eula,
-                publicNamePrefix,
-                communityGalleryEnabled,
-                publicNames.ToList(),
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryImageData"/>. </summary>

@@ -10,12 +10,33 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class CommunityGalleryInfo
     {
-        /// <summary> The link to the publisher website. Visible to all users. </summary>
+        /// <summary>
+        /// The link to the publisher website. Visible to all users.
+        /// This property is obsolete; use <see cref="PublisherUriString"/> instead, which preserves the original string value as returned by the service.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string PublisherUriString
+        [Obsolete("This property is obsolete and will be removed in a future release. Use " + nameof(PublisherUriString) + " instead.", false)]
+        public Uri PublisherUri
         {
-            get => PublisherUri?.AbsoluteUri;
-            set => PublisherUri = value == null ? null : new Uri(value);
+            get
+            {
+                if (Uri.TryCreate(PublisherUriString, UriKind.Absolute, out Uri result))
+                {
+                    return result;
+                }
+                return null;
+            }
+            set
+            {
+                if (value == null || !value.IsAbsoluteUri)
+                {
+                    PublisherUriString = null;
+                }
+                else
+                {
+                    PublisherUriString = value.OriginalString;
+                }
+            }
         }
     }
 }

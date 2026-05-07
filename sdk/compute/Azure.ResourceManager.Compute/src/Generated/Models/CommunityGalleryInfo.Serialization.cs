@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PublisherUri))
+            if (Optional.IsDefined(PublisherUriString))
             {
                 writer.WritePropertyName("publisherUri"u8);
-                writer.WriteStringValue(PublisherUri.AbsoluteUri);
+                writer.WriteStringValue(PublisherUriString);
             }
             if (Optional.IsDefined(PublisherContact))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Uri publisherUri = default;
+            string publisherUriString = default;
             string publisherContact = default;
             string eula = default;
             string publicNamePrefix = default;
@@ -167,11 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("publisherUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    publisherUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    publisherUriString = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("publisherContact"u8))
@@ -225,7 +221,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new CommunityGalleryInfo(
-                publisherUri,
+                publisherUriString,
                 publisherContact,
                 eula,
                 publicNamePrefix,
