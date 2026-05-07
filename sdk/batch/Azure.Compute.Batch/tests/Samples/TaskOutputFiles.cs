@@ -5,7 +5,6 @@
 // Uses Azure.Storage.Blobs (BlobContainerClient) and Azure.Compute.Batch (OutputFile).
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Compute.Batch;
 using Azure.Core;

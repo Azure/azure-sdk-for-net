@@ -6,6 +6,7 @@
 // the docs assume exist in the surrounding context.
 
 using System;
+using Azure.Core;
 using Azure.Compute.Batch;
 using Azure.Identity;
 using Azure.ResourceManager;

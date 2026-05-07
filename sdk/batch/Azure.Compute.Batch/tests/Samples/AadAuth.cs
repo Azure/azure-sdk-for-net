@@ -7,7 +7,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Compute.Batch;
 using Azure.Core;
 using Azure.Identity;
@@ -32,7 +31,7 @@ internal static class AadAuth
         #region Snippet:aad_auth_get_token_authcode
         var app = ConfidentialClientApplicationBuilder.Create(ClientId)
                     .WithAuthority(AuthorityUri)
-                    .WithRedirectUri(RedirectUri)
+                    .WithRedirectUri(redirectUri)
                     .WithClientSecret(ClientKey)
                     .Build();
 

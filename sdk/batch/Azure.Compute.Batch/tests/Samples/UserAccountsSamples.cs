@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Compute.Batch;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Batch.Models;
 
@@ -140,7 +139,7 @@ internal static class UserAccountsSamples
                     {
                         Uid = 12345,
                         Gid = 98765,
-                        SshPrivateKey = new Guid().ToString()
+                        SshPrivateKey = Guid.NewGuid().ToString()
                     }
                 },
                 new BatchUserAccount("nonAdminUser", "A1bC2d")
@@ -150,7 +149,7 @@ internal static class UserAccountsSamples
                     {
                         Uid = 45678,
                         Gid = 98765,
-                        SshPrivateKey = new Guid().ToString()
+                        SshPrivateKey = Guid.NewGuid().ToString()
                     }
                 },
             }

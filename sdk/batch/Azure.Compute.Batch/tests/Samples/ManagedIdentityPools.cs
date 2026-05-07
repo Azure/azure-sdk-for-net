@@ -58,6 +58,7 @@ internal static class ManagedIdentityPools
             WaitUntil.Completed, poolName, batchAccountPoolData);
         BatchAccountPoolResource pool = armOperation.Value;
         #endregion
+        _ = pool;
     }
 
     // Block 2: Create a pool with a user-assigned managed identity (migrated to ARM).
@@ -102,5 +103,6 @@ internal static class ManagedIdentityPools
         ArmOperation<BatchAccountPoolResource> op = await batchAccount.GetBatchAccountPools()
             .CreateOrUpdateAsync(WaitUntil.Completed, "myPool", poolData);
         #endregion
+        _ = op;
     }
 }

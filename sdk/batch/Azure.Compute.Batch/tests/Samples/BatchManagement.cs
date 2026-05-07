@@ -5,7 +5,6 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
@@ -54,8 +53,6 @@ internal static class BatchManagement
 
         ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
         ResourceGroupResource resourceGroupResource = _armClient.GetResourceGroupResource(resourceGroupResourceId);
-
-        var data = new BatchAccountCreateOrUpdateContent(AzureLocation.EastUS);
 
         // Get an existing batch account
         BatchAccountResource batchAccount = resourceGroupResource.GetBatchAccount("Your BatchAccount name");

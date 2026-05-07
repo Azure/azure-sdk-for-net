@@ -4,7 +4,6 @@
 // Snippet extracted from articles/batch/batch-container-isolation-task.md.
 
 using System.Threading.Tasks;
-using Azure;
 using Azure.Compute.Batch;
 
 namespace BatchDocSamples;

@@ -81,6 +81,7 @@ internal static class Mpi
         ArmOperation<BatchAccountPoolResource> pool = await poolCollection.CreateOrUpdateAsync(
             WaitUntil.Completed, "MultiInstanceSamplePool", poolData);
         #endregion
+        _ = pool;
     }
 
     // Block 3: Create a multi-instance task.
@@ -136,6 +137,7 @@ internal static class Mpi
         #region Snippet:mpi_iterate_subtasks
         // Obtain the multi-instance task from the Batch service
         BatchTask myMultiInstanceTask = await batchClient.GetTaskAsync("mybatchjob", "mymultiinstancetask");
+        _ = myMultiInstanceTask;
 
         // Now iterate over the subtasks for the task and print their stdout and stderr
         // output if the subtask has completed

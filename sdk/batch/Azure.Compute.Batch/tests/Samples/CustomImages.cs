@@ -22,7 +22,6 @@ internal static class CustomImages
 
     public static async Task CreateCustomImagePoolAsync()
     {
-        ArmClient armClient = Stubs.ArmClient;
         BatchAccountResource batchAccount = Stubs.GetBatchAccount();
 
         #region Snippet:custom_images_pool_create
@@ -50,6 +49,7 @@ internal static class CustomImages
         ArmOperation<BatchAccountPoolResource> pool = await batchAccount.GetBatchAccountPools()
             .CreateOrUpdateAsync(WaitUntil.Completed, PoolId, poolData);
         #endregion
+        _ = pool;
     }
 }
 

@@ -63,6 +63,7 @@ internal static class ApplicationPackages
         ArmOperation<BatchAccountPoolResource> pool = await poolCollection.CreateOrUpdateAsync(
             WaitUntil.Completed, "myPool", poolData);
         #endregion
+        _ = pool;
     }
 
     // Block 2: Task with application package reference.
@@ -90,6 +91,7 @@ internal static class ApplicationPackages
             @"cmd /c %AZ_BATCH_APP_PACKAGE_BLENDER%\blender.exe -args -here";
         BatchTaskCreateOptions blenderTask = new BatchTaskCreateOptions(taskId, commandLine);
         #endregion
+        _ = blenderTask;
     }
 
     // Block 4: Update pool's application package.
