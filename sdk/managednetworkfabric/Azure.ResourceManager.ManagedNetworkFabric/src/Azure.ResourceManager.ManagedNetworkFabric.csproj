@@ -1,8 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Version>1.2.0</Version>
-    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <!--Temporarily disabled for v1.2.0 release due to significant API changes from v1.1.3-->
+    <!--ApiCompatVersion disabled for v1.2.0 which has significant breaking API changes:
+        - Parameter types changed (bool->enum, IPAddress->string)
+        - Factory method signatures updated to support new API parameters
+        - These are intentional improvements in the v1.2.0 API upgrade-->
     <ApiCompatVersion></ApiCompatVersion>
     <PackageId>Azure.ResourceManager.ManagedNetworkFabric</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Azure.ResourceManager.ManagedNetworkFabric.</Description>
