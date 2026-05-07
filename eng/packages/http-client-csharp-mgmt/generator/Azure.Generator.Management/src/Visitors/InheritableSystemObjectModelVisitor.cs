@@ -143,6 +143,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var baseSystemPropertyNames = EnumerateBaseModelProperties(baseSystemType);
         var properties = RemoveDuplicatePropertiesAndStripVirtual(model, baseSystemType, baseSystemPropertyNames);
         model.Update(properties: properties);
+        UpdatePublicConstructor(model, baseSystemType);
 
         if (deferSerialization)
         {
@@ -186,12 +187,38 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         // the same field the serialization code will find.
         FixRawDataFieldReference(model);
 
+        // If the regular base chain transitively reaches a system base type whose
+        // public ctor requires parameters (e.g. TrackedResourceData(AzureLocation)),
+        // ensure this model also exposes a matching public ctor that chains to it.
+        // The direct-system-base case is handled by Update(); this covers grand-child
+        // and deeper descendants such as PATCH models reparented under a sibling
+        // resource via @@hierarchyBuilding.
+        var systemBaseAncestor = FindInheritableSystemBaseAncestor(model);
+        if (systemBaseAncestor is not null)
+        {
+            UpdatePublicConstructor(model, systemBaseAncestor);
+        }
+
         // Defer serialization return type fixes to VisitType to avoid triggering lazy
         // serialization method building during PreVisitModel (which can cause infinite
         // recursion for discriminated models).
         _pendingSerializationReturnTypeFix.Add(model);
 
         _regularUpdated.Add(model);
+    }
+
+    private static InheritableSystemObjectModelProvider? FindInheritableSystemBaseAncestor(ModelProvider model)
+    {
+        var current = model.BaseModelProvider;
+        while (current is not null)
+        {
+            if (current is InheritableSystemObjectModelProvider { IsSystemBase: true } systemBase)
+            {
+                return systemBase;
+            }
+            current = current.BaseModelProvider;
+        }
+        return null;
     }
 
     private static void FixRawDataFieldReference(ModelProvider model)
@@ -412,6 +439,80 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var statement = rawDataField.Assign(model.FullConstructor.Signature.Parameters.Single(f => f.Name.Equals(RawDataParameterName))).Terminate();
         MethodBodyStatement[] updatedBody = [statement, .. body!];
         model.FullConstructor.Update(bodyStatements: updatedBody);
+    }
+
+    private static void UpdatePublicConstructor(ModelProvider model, InheritableSystemObjectModelProvider baseSystemType)
+    {
+        var publicConstructor = model.Constructors.SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+        if (publicConstructor is null)
+        {
+            return;
+        }
+
+        var baseParameters = GetRequiredBaseConstructorParameters(baseSystemType);
+        if (baseParameters.Count == 0)
+        {
+            return;
+        }
+
+        var baseParameterNames = new HashSet<string>(baseParameters.Select(p => p.Name), StringComparer.OrdinalIgnoreCase);
+        var updatedParameters = new List<ParameterProvider>();
+        var updated = false;
+
+        foreach (var baseParameter in baseParameters)
+        {
+            var existingParameter = publicConstructor.Signature.Parameters
+                .SingleOrDefault(parameter => parameter.Name.Equals(baseParameter.Name, StringComparison.OrdinalIgnoreCase));
+            if (existingParameter is null || existingParameter.Type != baseParameter.Type)
+            {
+                updated = true;
+                updatedParameters.Add(baseParameter);
+            }
+            else
+            {
+                updatedParameters.Add(existingParameter);
+            }
+        }
+
+        foreach (var parameter in publicConstructor.Signature.Parameters)
+        {
+            if (baseParameterNames.Contains(parameter.Name))
+            {
+                continue;
+            }
+            updatedParameters.Add(parameter);
+        }
+
+        var existingInitializer = publicConstructor.Signature.Initializer;
+        var initializerArgs = baseParameters
+            .Select(baseParameter => (ValueExpression)updatedParameters.Single(p => p.Name.Equals(baseParameter.Name, StringComparison.OrdinalIgnoreCase)))
+            .ToArray();
+
+        updated |= existingInitializer is null
+            || !existingInitializer.IsBase
+            || existingInitializer.Arguments.Count != initializerArgs.Length;
+
+        if (!updated)
+        {
+            return;
+        }
+
+        var updatedSignature = new ConstructorSignature(
+            publicConstructor.Signature.Type,
+            publicConstructor.Signature.Description,
+            publicConstructor.Signature.Modifiers,
+            updatedParameters,
+            publicConstructor.Signature.Attributes,
+            new ConstructorInitializer(true, initializerArgs));
+
+        publicConstructor.Update(signature: updatedSignature);
+    }
+
+    private static IReadOnlyList<ParameterProvider> GetRequiredBaseConstructorParameters(InheritableSystemObjectModelProvider baseSystemType)
+    {
+        return baseSystemType.Constructors
+            .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+            ?.Signature.Parameters ?? [];
     }
 
     private const string RawDataParameterName = "additionalBinaryDataProperties";
