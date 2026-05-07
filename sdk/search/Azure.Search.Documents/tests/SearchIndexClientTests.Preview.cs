@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 #if AZURE_SEARCH_PREVIEW
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {

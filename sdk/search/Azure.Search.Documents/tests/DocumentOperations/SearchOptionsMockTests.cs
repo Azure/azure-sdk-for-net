@@ -24,6 +24,8 @@ namespace Azure.Search.Documents.Tests
     /// Follows the existing <see cref="SearchMockTests"/> pattern — no recordings,
     /// no live resources. Extends <see cref="ClientTestBase"/> for sync/async variants.
     /// </summary>
+    [TestFixture(true)]
+    [TestFixture(false)]
     public class SearchOptionsMockTests : ClientTestBase
     {
         private static readonly string s_endpoint = "https://fake-search.search.windows.net/";
