@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetUpdateStageStatus ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, IEnumerable<ContainerServiceFleetUpdateGroupStatus> groups, ContainerServiceFleetWaitStatus afterStageWaitStatus)
         {
-            return ContainerServiceFleetUpdateStageStatus(status, name, maxConcurrency: default, groups, beforeGates: default, afterGates: default, afterStageWaitStatus);
+            return ContainerServiceFleetUpdateStageStatus(status: status, name: name, maxConcurrency: default, groups: groups, beforeGates: default, afterGates: default, afterStageWaitStatus: afterStageWaitStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateGroupStatus"/>. </summary>
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetUpdateGroupStatus ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, IEnumerable<MemberUpdateStatus> members)
         {
-            return ContainerServiceFleetUpdateGroupStatus(status, name, maxConcurrency: default, members, beforeGates: default, afterGates: default);
+            return ContainerServiceFleetUpdateGroupStatus(status: status, name: name, maxConcurrency: default, members: members, beforeGates: default, afterGates: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.FleetUpdateStrategyData"/>. </summary>

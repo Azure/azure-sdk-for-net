@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSkuName? skuName, FrontDoorWebApplicationFirewallPolicySettings policySettings, IEnumerable<WebApplicationCustomRule> rules, IEnumerable<ManagedRuleSet> managedRuleSets, IEnumerable<SubResource> frontendEndpointLinks, IEnumerable<SubResource> routingRuleLinks, IEnumerable<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState)
         {
-            return FrontDoorWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, policySettings, frontendEndpointLinks, routingRuleLinks, securityPolicyLinks, provisioningState, resourceState, rules, managedRuleSets, exceptions: default, etag, skuName);
+            return FrontDoorWebApplicationFirewallPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, policySettings: policySettings, frontendEndpointLinks: frontendEndpointLinks, routingRuleLinks: routingRuleLinks, securityPolicyLinks: securityPolicyLinks, provisioningState: provisioningState, resourceState: resourceState, rules: rules, managedRuleSets: managedRuleSets, exceptions: default, etag: etag, skuName: skuName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleDefinition"/>. </summary>
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, string description)
         {
-            return ManagedRuleDefinition(ruleId, defaultState, defaultAction, defaultSensitivity: default, description);
+            return ManagedRuleDefinition(ruleId: ruleId, defaultState: defaultState, defaultAction: defaultAction, defaultSensitivity: default, description: description);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/>. </summary>
