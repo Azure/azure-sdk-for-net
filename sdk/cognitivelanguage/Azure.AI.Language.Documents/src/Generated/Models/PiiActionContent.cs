@@ -17,15 +17,6 @@ namespace Azure.AI.Language.Documents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PiiActionContent"/>. </summary>
-        public PiiActionContent()
-        {
-            PiiCategories = new ChangeTrackingList<PiiCategoriesExtended>();
-            ExcludePiiCategories = new ChangeTrackingList<PiiCategories>();
-            EntitySynonyms = new ChangeTrackingList<EntitySynonyms>();
-            RedactionPolicies = new ChangeTrackingList<BaseRedactionPolicy>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PiiActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="domain"> Domain for PII task. </param>
@@ -65,9 +56,6 @@ namespace Azure.AI.Language.Documents
 
         /// <summary> Enumeration of PII categories to be returned in the response. </summary>
         public IList<PiiCategoriesExtended> PiiCategories { get; }
-
-        /// <summary> StringIndexType to be used for analysis. </summary>
-        public StringIndexType? StringIndexType { get; set; }
 
         /// <summary> Enumeration of PII categories to be excluded in the response. </summary>
         public IList<PiiCategories> ExcludePiiCategories { get; }
