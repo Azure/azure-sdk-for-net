@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Batch.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
@@ -112,14 +111,13 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(DetectorResponseProperties))]
     [ModelReaderWriterBuildable(typeof(DiffDiskSettings))]
     [ModelReaderWriterBuildable(typeof(DiskEncryptionSetParameters))]
-    [ModelReaderWriterBuildable(typeof(Models.KeyVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(ListApplicationPackagesResult))]
     [ModelReaderWriterBuildable(typeof(ListApplicationsResult))]
     [ModelReaderWriterBuildable(typeof(ListPoolsResult))]
     [ModelReaderWriterBuildable(typeof(ListPrivateEndpointConnectionsResult))]
     [ModelReaderWriterBuildable(typeof(ListPrivateLinkResourcesResult))]
     [ModelReaderWriterBuildable(typeof(ManagedDisk))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(Models.NetworkSecurityPerimeter))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationData))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationListResult))]
@@ -136,9 +134,7 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(RollingUpgradePolicy))]
     [ModelReaderWriterBuildable(typeof(ServiceArtifactReference))]
     [ModelReaderWriterBuildable(typeof(SupportedSkusResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpgradePolicy))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VmDiskSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(WindowsConfiguration))]
     public partial class AzureResourceManagerBatchContext : ModelReaderWriterContext

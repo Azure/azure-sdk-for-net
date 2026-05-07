@@ -264,7 +264,6 @@ namespace Azure.ResourceManager.Hci
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
     [ModelReaderWriterBuildable(typeof(StorageS2dConfig))]
     [ModelReaderWriterBuildable(typeof(StorageSanConfig))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetDeviceConfiguration))]
     [ModelReaderWriterBuildable(typeof(UnknownClusterJobProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownEdgeDeviceJob))]

@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.ComputeLimit.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
@@ -33,7 +32,6 @@ namespace Azure.ResourceManager.ComputeLimit
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedLimitListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(VmFamilyListResult))]
     public partial class AzureResourceManagerComputeLimitContext : ModelReaderWriterContext
     {

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteObjectValue<ResourceType?>(ResourceType.Value, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceOrigin))
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceOrigin"u8))

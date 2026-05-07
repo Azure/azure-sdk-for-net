@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.CognitiveServices.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -167,7 +166,6 @@ namespace Azure.ResourceManager.CognitiveServices
     [ModelReaderWriterBuildable(typeof(FoundryAutoUpgrade))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentityAuthTypeConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedNetworkListResult))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ModelCapacityCalculatorWorkload))]
     [ModelReaderWriterBuildable(typeof(ModelCapacityCalculatorWorkloadRequestParam))]
     [ModelReaderWriterBuildable(typeof(ModelCapacityListResult))]
@@ -252,13 +250,11 @@ namespace Azure.ResourceManager.CognitiveServices
     [ModelReaderWriterBuildable(typeof(ServiceTagOutboundRuleDestination))]
     [ModelReaderWriterBuildable(typeof(SkuAvailabilityListResult))]
     [ModelReaderWriterBuildable(typeof(SubscriptionRaiPolicyResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownApplicationAuthorizationPolicy))]
     [ModelReaderWriterBuildable(typeof(UnknownCognitiveServicesAgentDeploymentProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownCognitiveServicesOutboundRuleBasicProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownConnectionPropertiesV2))]
     [ModelReaderWriterBuildable(typeof(UsageListResult))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UsernamePasswordAuthTypeConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(UserOwnedAmlWorkspace))]
     public partial class AzureResourceManagerCognitiveServicesContext : ModelReaderWriterContext

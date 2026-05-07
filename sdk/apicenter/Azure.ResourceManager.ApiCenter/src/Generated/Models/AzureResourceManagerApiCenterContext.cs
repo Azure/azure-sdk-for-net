@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.ApiCenter.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiCenter
 {
@@ -67,16 +66,13 @@ namespace Azure.ResourceManager.ApiCenter
     [ModelReaderWriterBuildable(typeof(DeploymentListResult))]
     [ModelReaderWriterBuildable(typeof(EnvironmentListResult))]
     [ModelReaderWriterBuildable(typeof(EnvironmentOnboardingInformation))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MetadataSchemaExportContent))]
     [ModelReaderWriterBuildable(typeof(MetadataSchemaExportResult))]
     [ModelReaderWriterBuildable(typeof(MetadataSchemaListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceListResult))]
     [ModelReaderWriterBuildable(typeof(ServiceUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TermsOfService))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
     public partial class AzureResourceManagerApiCenterContext : ModelReaderWriterContext
     {

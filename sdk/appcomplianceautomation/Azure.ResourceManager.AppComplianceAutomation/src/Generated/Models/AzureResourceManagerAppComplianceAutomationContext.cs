@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
@@ -81,7 +80,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     [ModelReaderWriterBuildable(typeof(SnapshotResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SyncCertRecordContent))]
     [ModelReaderWriterBuildable(typeof(SyncCertRecordResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TriggerEvaluationContent))]
     [ModelReaderWriterBuildable(typeof(TriggerEvaluationProperty))]
     [ModelReaderWriterBuildable(typeof(TriggerEvaluationResult))]

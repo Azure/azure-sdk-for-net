@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.AppConfiguration.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.AppConfiguration
     [ModelReaderWriterBuildable(typeof(DeletedConfigurationStoreListResult))]
     [ModelReaderWriterBuildable(typeof(DeletedConfigurationStoreProperties))]
     [ModelReaderWriterBuildable(typeof(KeyValueProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ReplicaListResult))]
@@ -62,9 +60,7 @@ namespace Azure.ResourceManager.AppConfiguration
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SnapshotKeyValueFilter))]
     [ModelReaderWriterBuildable(typeof(SnapshotProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TelemetryProperties))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerAppConfigurationContext : ModelReaderWriterContext
     {
     }

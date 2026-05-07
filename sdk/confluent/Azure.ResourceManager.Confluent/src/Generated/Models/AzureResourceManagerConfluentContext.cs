@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Confluent.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
@@ -101,7 +100,6 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterStatusEntity))]
     [ModelReaderWriterBuildable(typeof(SCMetadataEntity))]
     [ModelReaderWriterBuildable(typeof(StreamGovernanceConfig))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TopicMetadataEntity))]
     [ModelReaderWriterBuildable(typeof(TopicProperties))]
     [ModelReaderWriterBuildable(typeof(TopicRecordData))]

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WritePropertyName("subdomainName"u8);
             writer.WriteStringValue(SubdomainName);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceType);
+            writer.WriteObjectValue(ResourceType, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))

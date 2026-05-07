@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Communication.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.Communication
     [ModelReaderWriterBuildable(typeof(EmailSuppressionListResource))]
     [ModelReaderWriterBuildable(typeof(LinkedNotificationHub))]
     [ModelReaderWriterBuildable(typeof(LinkNotificationHubContent))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegenerateCommunicationServiceKeyContent))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SenderUsernameProperties))]
@@ -62,9 +60,7 @@ namespace Azure.ResourceManager.Communication
     [ModelReaderWriterBuildable(typeof(SuppressionListAddressResourceCollection))]
     [ModelReaderWriterBuildable(typeof(SuppressionListProperties))]
     [ModelReaderWriterBuildable(typeof(SuppressionListResourceCollection))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpdateDomainProperties))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VerificationDnsRecord))]
     public partial class AzureResourceManagerCommunicationContext : ModelReaderWriterContext
     {

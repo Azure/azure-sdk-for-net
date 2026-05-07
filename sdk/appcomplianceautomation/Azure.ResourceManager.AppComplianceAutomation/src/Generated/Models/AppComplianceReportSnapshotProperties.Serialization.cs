@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.AppComplianceAutomation;
 using Azure.ResourceManager.Models;
@@ -200,7 +199,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    reportSystemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppComplianceAutomationContext.Default);
+                    reportSystemData = SystemData.DeserializeSystemData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("complianceResults"u8))

@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerBatchContext.Default);
+                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

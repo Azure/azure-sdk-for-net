@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.BotService.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService
 {
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.BotService
     [ModelReaderWriterBuildable(typeof(SlackChannelProperties))]
     [ModelReaderWriterBuildable(typeof(SmsChannel))]
     [ModelReaderWriterBuildable(typeof(SmsChannelProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TelegramChannel))]
     [ModelReaderWriterBuildable(typeof(TelegramChannelProperties))]
     [ModelReaderWriterBuildable(typeof(TelephonyChannel))]

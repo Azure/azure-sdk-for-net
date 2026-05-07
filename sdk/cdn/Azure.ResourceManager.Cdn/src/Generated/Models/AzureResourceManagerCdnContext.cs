@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Cdn.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
@@ -244,7 +243,6 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(ManagedRuleSetFrontDoor))]
     [ModelReaderWriterBuildable(typeof(ManagedRuleSetList))]
     [ModelReaderWriterBuildable(typeof(ManagedRuleSetListFrontDoor))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MatchConditionFrontDoor))]
     [ModelReaderWriterBuildable(typeof(MetricsResponse))]
     [ModelReaderWriterBuildable(typeof(MetricsResponseSeriesItem))]
@@ -324,7 +322,6 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(SsoUri))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedOptimizationTypesListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownCdnDeploymentVersionChange))]
     [ModelReaderWriterBuildable(typeof(UnknownCertificateSourceParameters))]
     [ModelReaderWriterBuildable(typeof(UnknownCustomDomainHttpsParameters))]
@@ -348,7 +345,6 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(UriSigningKeyProperties))]
     [ModelReaderWriterBuildable(typeof(UriSigningParamIdentifier))]
     [ModelReaderWriterBuildable(typeof(UsagesListResult))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserManagedHttpsContent))]
     [ModelReaderWriterBuildable(typeof(ValidateCustomDomainContent))]
     [ModelReaderWriterBuildable(typeof(ValidateCustomDomainResult))]

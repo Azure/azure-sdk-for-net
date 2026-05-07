@@ -124,7 +124,6 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(SubmitHibernateContent))]
     [ModelReaderWriterBuildable(typeof(SubmitStartContent))]
     [ModelReaderWriterBuildable(typeof(Models.SubResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TerminateNotificationProfile))]
     [ModelReaderWriterBuildable(typeof(UefiSettings))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

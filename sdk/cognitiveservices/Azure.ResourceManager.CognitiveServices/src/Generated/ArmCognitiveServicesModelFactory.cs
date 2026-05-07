@@ -2334,7 +2334,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections, bool? allowProjectManagement, string defaultProject, IEnumerable<string> associatedProjects)
         {
-            return CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities, isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage, amlWorkspace, privateEndpointConnections, publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList, disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations, abusePenalty, raiMonitorConfig, aiFoundryNetworkInjections, foundryAutoUpgrade: default, allowProjectManagement, defaultProject, associatedProjects);
+            return CognitiveServicesAccountProperties(provisioningState: provisioningState, endpoint: endpoint, capabilities: capabilities, isMigrated: isMigrated, migrationToken: migrationToken, skuChangeInfo: skuChangeInfo, customSubDomainName: customSubDomainName, networkAcls: networkAcls, encryption: encryption, userOwnedStorage: userOwnedStorage, amlWorkspace: amlWorkspace, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, apiProperties: apiProperties, createdOn: createdOn, callRateLimit: callRateLimit, enableDynamicThrottling: enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit: quotaLimit, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdnList: allowedFqdnList, disableLocalAuth: disableLocalAuth, endpoints: endpoints, restore: restore, deletedOn: deletedOn, scheduledPurgeDate: scheduledPurgeDate, locations: locations, commitmentPlanAssociations: commitmentPlanAssociations, abusePenalty: abusePenalty, raiMonitorConfig: raiMonitorConfig, aiFoundryNetworkInjections: aiFoundryNetworkInjections, foundryAutoUpgrade: default, allowProjectManagement: allowProjectManagement, defaultProject: defaultProject, associatedProjects: associatedProjects);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesPrivateEndpointConnectionData"/>. </summary>
@@ -2386,7 +2386,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status)
         {
-            return ServiceAccountUsage(unit, name, quotaPeriod, limit, currentValue, nextResetTime, status, scopeType: default, scopeId: default);
+            return ServiceAccountUsage(unit: unit, name: name, quotaPeriod: quotaPeriod, limit: limit, currentValue: currentValue, nextResetTime: nextResetTime, status: status, scopeType: default, scopeId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountModel"/>. </summary>
@@ -2410,7 +2410,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string publisher, string format, string name, string version, string source, ResourceIdentifier sourceAccount, ServiceAccountCallRateLimit callRateLimit, CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, IEnumerable<CognitiveServicesModelSku> skus, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ModelLifecycleStatus? lifecycleStatus, SystemData systemData)
         {
-            return CognitiveServicesAccountModel(publisher, format, name, version, source, sourceAccount, callRateLimit, baseModel, isDefaultVersion, skus, maxCapacity, capabilities, finetuneCapabilities, deprecation, replacementConfig: default, modelCatalogAssetId: default, lifecycleStatus, systemData);
+            return CognitiveServicesAccountModel(publisher: publisher, format: format, name: name, version: version, source: source, sourceAccount: sourceAccount, callRateLimit: callRateLimit, baseModel: baseModel, isDefaultVersion: isDefaultVersion, skus: skus, maxCapacity: maxCapacity, capabilities: capabilities, finetuneCapabilities: finetuneCapabilities, deprecation: deprecation, replacementConfig: default, modelCatalogAssetId: default, lifecycleStatus: lifecycleStatus, systemData: systemData);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesAccountDeploymentData"/>. </summary>
@@ -2457,7 +2457,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName)
         {
-            return CognitiveServicesAccountDeploymentProperties(provisioningState, model, scaleSettings, capabilities, raiPolicyName, callRateLimit, rateLimits, versionUpgradeOption, isDynamicThrottlingEnabled, currentCapacity, capacitySettings, parentDeploymentName, spilloverDeploymentName, serviceTier: default, deploymentState: default, routing: default);
+            return CognitiveServicesAccountDeploymentProperties(provisioningState: provisioningState, model: model, scaleSettings: scaleSettings, capabilities: capabilities, raiPolicyName: raiPolicyName, callRateLimit: callRateLimit, rateLimits: rateLimits, versionUpgradeOption: versionUpgradeOption, isDynamicThrottlingEnabled: isDynamicThrottlingEnabled, currentCapacity: currentCapacity, capacitySettings: capacitySettings, parentDeploymentName: parentDeploymentName, spilloverDeploymentName: spilloverDeploymentName, serviceTier: default, deploymentState: default, routing: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CommitmentPlanData"/>. </summary>
@@ -2548,7 +2548,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IEnumerable<RaiPolicyContentFilter> contentFilters, IEnumerable<CustomBlocklistConfig> customBlocklists)
         {
-            return RaiPolicyProperties(policyType, mode, basePolicyName, contentFilters, customBlocklists, safetyProviders: default);
+            return RaiPolicyProperties(policyType: policyType, mode: mode, basePolicyName: basePolicyName, contentFilters: contentFilters, customBlocklists: customBlocklists, safetyProviders: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.RaiBlocklistData"/>. </summary>
@@ -2689,7 +2689,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesCapabilityHostProperties CognitiveServicesCapabilityHostProperties(string description, IDictionary<string, string> tags, IEnumerable<string> aiServicesConnections, CapabilityHostKind? capabilityHostKind, string customerSubnet, CapabilityHostProvisioningState? provisioningState, IEnumerable<string> storageConnections, IEnumerable<string> threadStorageConnections, IEnumerable<string> vectorStoreConnections)
         {
-            return CognitiveServicesCapabilityHostProperties(description, tags, aiServicesConnections, capabilityHostKind, customerSubnet, provisioningState, storageConnections, threadStorageConnections, vectorStoreConnections, enablePublicHostingEnvironment: default);
+            return CognitiveServicesCapabilityHostProperties(description: description, tags: tags, aiServicesConnections: aiServicesConnections, capabilityHostKind: capabilityHostKind, customerSubnet: customerSubnet, provisioningState: provisioningState, storageConnections: storageConnections, threadStorageConnections: threadStorageConnections, vectorStoreConnections: vectorStoreConnections, enablePublicHostingEnvironment: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountProperties"/>. </summary>
@@ -2726,7 +2726,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig)
         {
-            return CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities, isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage, amlWorkspace, privateEndpointConnections, publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList, disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations, abusePenalty, raiMonitorConfig, aiFoundryNetworkInjections: default, foundryAutoUpgrade: default, allowProjectManagement: default, defaultProject: default, associatedProjects: default);
+            return CognitiveServicesAccountProperties(provisioningState: provisioningState, endpoint: endpoint, capabilities: capabilities, isMigrated: isMigrated, migrationToken: migrationToken, skuChangeInfo: skuChangeInfo, customSubDomainName: customSubDomainName, networkAcls: networkAcls, encryption: encryption, userOwnedStorage: userOwnedStorage, amlWorkspace: amlWorkspace, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, apiProperties: apiProperties, createdOn: createdOn, callRateLimit: callRateLimit, enableDynamicThrottling: enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit: quotaLimit, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdnList: allowedFqdnList, disableLocalAuth: disableLocalAuth, endpoints: endpoints, restore: restore, deletedOn: deletedOn, scheduledPurgeDate: scheduledPurgeDate, locations: locations, commitmentPlanAssociations: commitmentPlanAssociations, abusePenalty: abusePenalty, raiMonitorConfig: raiMonitorConfig, aiFoundryNetworkInjections: default, foundryAutoUpgrade: default, allowProjectManagement: default, defaultProject: default, associatedProjects: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentProperties"/>. </summary>
@@ -2746,7 +2746,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName)
         {
-            return CognitiveServicesAccountDeploymentProperties(provisioningState, model, scaleSettings, capabilities, raiPolicyName, callRateLimit, rateLimits, versionUpgradeOption, isDynamicThrottlingEnabled, currentCapacity, capacitySettings, parentDeploymentName, spilloverDeploymentName: default, serviceTier: default, deploymentState: default, routing: default);
+            return CognitiveServicesAccountDeploymentProperties(provisioningState: provisioningState, model: model, scaleSettings: scaleSettings, capabilities: capabilities, raiPolicyName: raiPolicyName, callRateLimit: callRateLimit, rateLimits: rateLimits, versionUpgradeOption: versionUpgradeOption, isDynamicThrottlingEnabled: isDynamicThrottlingEnabled, currentCapacity: currentCapacity, capacitySettings: capacitySettings, parentDeploymentName: parentDeploymentName, spilloverDeploymentName: default, serviceTier: default, deploymentState: default, routing: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountProperties"/>. </summary>
@@ -2781,7 +2781,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty)
         {
-            return CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities, isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage, amlWorkspace: default, privateEndpointConnections, publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList, disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations, abusePenalty, raiMonitorConfig: default, aiFoundryNetworkInjections: default, foundryAutoUpgrade: default, allowProjectManagement: default, defaultProject: default, associatedProjects: default);
+            return CognitiveServicesAccountProperties(provisioningState: provisioningState, endpoint: endpoint, capabilities: capabilities, isMigrated: isMigrated, migrationToken: migrationToken, skuChangeInfo: skuChangeInfo, customSubDomainName: customSubDomainName, networkAcls: networkAcls, encryption: encryption, userOwnedStorage: userOwnedStorage, amlWorkspace: default, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, apiProperties: apiProperties, createdOn: createdOn, callRateLimit: callRateLimit, enableDynamicThrottling: enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit: quotaLimit, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdnList: allowedFqdnList, disableLocalAuth: disableLocalAuth, endpoints: endpoints, restore: restore, deletedOn: deletedOn, scheduledPurgeDate: scheduledPurgeDate, locations: locations, commitmentPlanAssociations: commitmentPlanAssociations, abusePenalty: abusePenalty, raiMonitorConfig: default, aiFoundryNetworkInjections: default, foundryAutoUpgrade: default, allowProjectManagement: default, defaultProject: default, associatedProjects: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountModel"/>. </summary>
@@ -2803,7 +2803,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit, CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, IEnumerable<CognitiveServicesModelSku> skus, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ModelLifecycleStatus? lifecycleStatus, SystemData systemData)
         {
-            return CognitiveServicesAccountModel(publisher: default, format, name, version, source, sourceAccount: default, callRateLimit, baseModel, isDefaultVersion, skus, maxCapacity, capabilities, finetuneCapabilities, deprecation, replacementConfig: default, modelCatalogAssetId: default, lifecycleStatus, systemData);
+            return CognitiveServicesAccountModel(publisher: default, format: format, name: name, version: version, source: source, sourceAccount: default, callRateLimit: callRateLimit, baseModel: baseModel, isDefaultVersion: isDefaultVersion, skus: skus, maxCapacity: maxCapacity, capabilities: capabilities, finetuneCapabilities: finetuneCapabilities, deprecation: deprecation, replacementConfig: default, modelCatalogAssetId: default, lifecycleStatus: lifecycleStatus, systemData: systemData);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentModel"/>. </summary>
@@ -2816,7 +2816,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit)
         {
-            return CognitiveServicesAccountDeploymentModel(publisher: default, format, name, version, source, sourceAccount: default, callRateLimit);
+            return CognitiveServicesAccountDeploymentModel(publisher: default, format: format, name: name, version: version, source: source, sourceAccount: default, callRateLimit: callRateLimit);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesModelSku"/>. </summary>
@@ -2829,7 +2829,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesModelSku CognitiveServicesModelSku(string name, string usageName, DateTimeOffset? deprecationOn, CognitiveServicesCapacityConfig capacity, IEnumerable<ServiceAccountCallRateLimit> rateLimits)
         {
-            return CognitiveServicesModelSku(name, usageName, deprecationOn, capacity, rateLimits, cost: default);
+            return CognitiveServicesModelSku(name: name, usageName: usageName, deprecationOn: deprecationOn, capacity: capacity, rateLimits: rateLimits, cost: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesModel"/>. </summary>
@@ -2840,7 +2840,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesModel CognitiveServicesModel(CognitiveServicesAccountModel model, string kind, string skuName)
         {
-            return CognitiveServicesModel(model, kind, skuName, description: default);
+            return CognitiveServicesModel(model: model, kind: kind, skuName: skuName, description: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentProperties"/>. </summary>
@@ -2856,7 +2856,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption)
         {
-            return CognitiveServicesAccountDeploymentProperties(provisioningState, model, scaleSettings, capabilities, raiPolicyName, callRateLimit, rateLimits, versionUpgradeOption, isDynamicThrottlingEnabled: default, currentCapacity: default, capacitySettings: default, parentDeploymentName: default, spilloverDeploymentName: default, serviceTier: default, deploymentState: default, routing: default);
+            return CognitiveServicesAccountDeploymentProperties(provisioningState: provisioningState, model: model, scaleSettings: scaleSettings, capabilities: capabilities, raiPolicyName: raiPolicyName, callRateLimit: callRateLimit, rateLimits: rateLimits, versionUpgradeOption: versionUpgradeOption, isDynamicThrottlingEnabled: default, currentCapacity: default, capacitySettings: default, parentDeploymentName: default, spilloverDeploymentName: default, serviceTier: default, deploymentState: default, routing: default);
         }
     }
 }

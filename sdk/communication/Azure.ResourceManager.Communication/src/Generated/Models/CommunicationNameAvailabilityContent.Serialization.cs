@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Communication.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteObjectValue<ResourceType?>(ResourceType.Value, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
