@@ -14,7 +14,7 @@ using Azure.ResourceManager.RedHatOpenShift.Models;
 
 namespace Azure.ResourceManager.RedHatOpenShift
 {
-    internal partial class PlatformWorkloadIdentityRoleSetsGetAllCollectionResultOfT : Pageable<PlatformWorkloadIdentityRoleSetData>
+    internal partial class PlatformWorkloadIdentityRoleSetsGetAllCollectionResultOfT : Pageable<OpenShiftPlatformWorkloadIdentityRoleSetData>
     {
         private readonly PlatformWorkloadIdentityRoleSets _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PlatformWorkloadIdentityRoleSetsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PlatformWorkloadIdentityRoleSetData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<OpenShiftPlatformWorkloadIdentityRoleSetData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                     yield break;
                 }
                 PlatformWorkloadIdentityRoleSetList result = PlatformWorkloadIdentityRoleSetList.FromResponse(response);
-                yield return Page<PlatformWorkloadIdentityRoleSetData>.FromValues((IReadOnlyList<PlatformWorkloadIdentityRoleSetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<OpenShiftPlatformWorkloadIdentityRoleSetData>.FromValues((IReadOnlyList<OpenShiftPlatformWorkloadIdentityRoleSetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

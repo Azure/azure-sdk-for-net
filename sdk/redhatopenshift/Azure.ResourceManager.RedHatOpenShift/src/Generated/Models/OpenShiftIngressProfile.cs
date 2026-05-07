@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="visibility"> Ingress visibility. </param>
         /// <param name="ip"> The IP of the ingress. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftIngressProfile(string name, OpenShiftVisibility? visibility, string ip, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenShiftIngressProfile(string name, OpenShiftVisibility? visibility, IPAddress ip, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Visibility = visibility;
@@ -41,6 +42,6 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public OpenShiftVisibility? Visibility { get; set; }
 
         /// <summary> The IP of the ingress. </summary>
-        public string Ip { get; }
+        public IPAddress Ip { get; }
     }
 }

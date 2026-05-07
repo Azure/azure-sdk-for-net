@@ -18,58 +18,58 @@ using Azure.ResourceManager.RedHatOpenShift.Models;
 namespace Azure.ResourceManager.RedHatOpenShift
 {
     /// <summary> PlatformWorkloadIdentityRoleSet represents a mapping from the names of OCP operators to the built-in roles that should be assigned to those operator's corresponding managed identities for a particular OCP version. </summary>
-    public partial class PlatformWorkloadIdentityRoleSetData : ResourceData, IJsonModel<PlatformWorkloadIdentityRoleSetData>
+    public partial class OpenShiftPlatformWorkloadIdentityRoleSetData : ResourceData, IJsonModel<OpenShiftPlatformWorkloadIdentityRoleSetData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftPlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePlatformWorkloadIdentityRoleSetData(document.RootElement, options);
+                        return DeserializeOpenShiftPlatformWorkloadIdentityRoleSetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlatformWorkloadIdentityRoleSetData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenShiftPlatformWorkloadIdentityRoleSetData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftPlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PlatformWorkloadIdentityRoleSetData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenShiftPlatformWorkloadIdentityRoleSetData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PlatformWorkloadIdentityRoleSetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OpenShiftPlatformWorkloadIdentityRoleSetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PlatformWorkloadIdentityRoleSetData IPersistableModel<PlatformWorkloadIdentityRoleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PlatformWorkloadIdentityRoleSetData)PersistableModelCreateCore(data, options);
+        OpenShiftPlatformWorkloadIdentityRoleSetData IPersistableModel<OpenShiftPlatformWorkloadIdentityRoleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenShiftPlatformWorkloadIdentityRoleSetData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OpenShiftPlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlatformWorkloadIdentityRoleSetData"/> from. </param>
-        internal static PlatformWorkloadIdentityRoleSetData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OpenShiftPlatformWorkloadIdentityRoleSetData"/> from. </param>
+        internal static OpenShiftPlatformWorkloadIdentityRoleSetData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePlatformWorkloadIdentityRoleSetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeOpenShiftPlatformWorkloadIdentityRoleSetData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PlatformWorkloadIdentityRoleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OpenShiftPlatformWorkloadIdentityRoleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftPlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlatformWorkloadIdentityRoleSetData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenShiftPlatformWorkloadIdentityRoleSetData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.RedHatOpenShift
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PlatformWorkloadIdentityRoleSetData IJsonModel<PlatformWorkloadIdentityRoleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PlatformWorkloadIdentityRoleSetData)JsonModelCreateCore(ref reader, options);
+        OpenShiftPlatformWorkloadIdentityRoleSetData IJsonModel<OpenShiftPlatformWorkloadIdentityRoleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OpenShiftPlatformWorkloadIdentityRoleSetData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenShiftPlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlatformWorkloadIdentityRoleSetData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenShiftPlatformWorkloadIdentityRoleSetData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePlatformWorkloadIdentityRoleSetData(document.RootElement, options);
+            return DeserializeOpenShiftPlatformWorkloadIdentityRoleSetData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PlatformWorkloadIdentityRoleSetData DeserializePlatformWorkloadIdentityRoleSetData(JsonElement element, ModelReaderWriterOptions options)
+        internal static OpenShiftPlatformWorkloadIdentityRoleSetData DeserializeOpenShiftPlatformWorkloadIdentityRoleSetData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PlatformWorkloadIdentityRoleSetData(
+            return new OpenShiftPlatformWorkloadIdentityRoleSetData(
                 id,
                 name,
                 resourceType,

@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
             return new OpenShiftClusterResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PlatformWorkloadIdentityRoleSetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PlatformWorkloadIdentityRoleSetResource"/> object. </returns>
-        public virtual PlatformWorkloadIdentityRoleSetResource GetPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> object. </returns>
+        public virtual OpenShiftPlatformWorkloadIdentityRoleSetResource GetOpenShiftPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier id)
         {
-            PlatformWorkloadIdentityRoleSetResource.ValidateResourceId(id);
-            return new PlatformWorkloadIdentityRoleSetResource(Client, id);
+            OpenShiftPlatformWorkloadIdentityRoleSetResource.ValidateResourceId(id);
+            return new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, id);
         }
     }
 }

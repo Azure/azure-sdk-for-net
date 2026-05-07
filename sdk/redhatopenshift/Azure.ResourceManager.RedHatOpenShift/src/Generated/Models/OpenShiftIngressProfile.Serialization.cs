@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.RedHatOpenShift;
 
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             if (options.Format != "W" && Optional.IsDefined(Ip))
             {
                 writer.WritePropertyName("ip"u8);
-                writer.WriteStringValue(Ip);
+                writer.WriteStringValue(Ip.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             }
             string name = default;
             OpenShiftVisibility? visibility = default;
-            string ip = default;
+            IPAddress ip = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +154,11 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 }
                 if (prop.NameEquals("ip"u8))
                 {
-                    ip = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ip = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

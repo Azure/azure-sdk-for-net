@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="fipsValidatedModules"> If FIPS validated crypto modules are used. </param>
         /// <param name="oidcIssuer"> The URL of the managed OIDC issuer in a workload identity cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftClusterProfile(string pullSecret, string domain, string version, ResourceIdentifier resourceGroupId, OpenShiftFipsValidatedModules? fipsValidatedModules, string oidcIssuer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenShiftClusterProfile(string pullSecret, string domain, string version, ResourceIdentifier resourceGroupId, OpenShiftFipsValidatedModule? fipsValidatedModules, string oidcIssuer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PullSecret = pullSecret;
             Domain = domain;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public ResourceIdentifier ResourceGroupId { get; set; }
 
         /// <summary> If FIPS validated crypto modules are used. </summary>
-        public OpenShiftFipsValidatedModules? FipsValidatedModules { get; set; }
+        public OpenShiftFipsValidatedModule? FipsValidatedModules { get; set; }
 
         /// <summary> The URL of the managed OIDC issuer in a workload identity cluster. </summary>
         public string OidcIssuer { get; }

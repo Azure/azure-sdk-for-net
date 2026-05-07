@@ -18,44 +18,44 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RedHatOpenShift
 {
     /// <summary>
-    /// A class representing a PlatformWorkloadIdentityRoleSet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlatformWorkloadIdentityRoleSetResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetPlatformWorkloadIdentityRoleSets method.
+    /// A class representing a OpenShiftPlatformWorkloadIdentityRoleSet along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetOpenShiftPlatformWorkloadIdentityRoleSets method.
     /// </summary>
-    public partial class PlatformWorkloadIdentityRoleSetResource : ArmResource
+    public partial class OpenShiftPlatformWorkloadIdentityRoleSetResource : ArmResource
     {
         private readonly ClientDiagnostics _platformWorkloadIdentityRoleSetClientDiagnostics;
         private readonly PlatformWorkloadIdentityRoleSet _platformWorkloadIdentityRoleSetRestClient;
         private readonly ClientDiagnostics _platformWorkloadIdentityRoleSetsClientDiagnostics;
         private readonly PlatformWorkloadIdentityRoleSets _platformWorkloadIdentityRoleSetsRestClient;
-        private readonly PlatformWorkloadIdentityRoleSetData _data;
+        private readonly OpenShiftPlatformWorkloadIdentityRoleSetData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RedHatOpenShift/locations/platformWorkloadIdentityRoleSets";
 
-        /// <summary> Initializes a new instance of PlatformWorkloadIdentityRoleSetResource for mocking. </summary>
-        protected PlatformWorkloadIdentityRoleSetResource()
+        /// <summary> Initializes a new instance of OpenShiftPlatformWorkloadIdentityRoleSetResource for mocking. </summary>
+        protected OpenShiftPlatformWorkloadIdentityRoleSetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlatformWorkloadIdentityRoleSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PlatformWorkloadIdentityRoleSetResource(ArmClient client, PlatformWorkloadIdentityRoleSetData data) : this(client, data.Id)
+        internal OpenShiftPlatformWorkloadIdentityRoleSetResource(ArmClient client, OpenShiftPlatformWorkloadIdentityRoleSetData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlatformWorkloadIdentityRoleSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PlatformWorkloadIdentityRoleSetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal OpenShiftPlatformWorkloadIdentityRoleSetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string platformWorkloadIdentityRoleSetApiVersion);
+            TryGetApiVersion(ResourceType, out string openShiftPlatformWorkloadIdentityRoleSetApiVersion);
             _platformWorkloadIdentityRoleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", ResourceType.Namespace, Diagnostics);
-            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Endpoint, platformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
+            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
             _platformWorkloadIdentityRoleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", ResourceType.Namespace, Diagnostics);
-            _platformWorkloadIdentityRoleSetsRestClient = new PlatformWorkloadIdentityRoleSets(_platformWorkloadIdentityRoleSetsClientDiagnostics, Pipeline, Endpoint, platformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
+            _platformWorkloadIdentityRoleSetsRestClient = new PlatformWorkloadIdentityRoleSets(_platformWorkloadIdentityRoleSetsClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
             ValidateResourceId(id);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual PlatformWorkloadIdentityRoleSetData Data
+        public virtual OpenShiftPlatformWorkloadIdentityRoleSetData Data
         {
             get
             {
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PlatformWorkloadIdentityRoleSetResource"/>. </description>
+        /// <description> <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PlatformWorkloadIdentityRoleSetResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("PlatformWorkloadIdentityRoleSetResource.Get");
+            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("OpenShiftPlatformWorkloadIdentityRoleSetResource.Get");
             scope.Start();
             try
             {
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 };
                 HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PlatformWorkloadIdentityRoleSetData> response = Response.FromValue(PlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
+                Response<OpenShiftPlatformWorkloadIdentityRoleSetData> response = Response.FromValue(OpenShiftPlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PlatformWorkloadIdentityRoleSetResource"/>. </description>
+        /// <description> <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PlatformWorkloadIdentityRoleSetResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<OpenShiftPlatformWorkloadIdentityRoleSetResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("PlatformWorkloadIdentityRoleSetResource.Get");
+            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("OpenShiftPlatformWorkloadIdentityRoleSetResource.Get");
             scope.Start();
             try
             {
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 };
                 HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PlatformWorkloadIdentityRoleSetData> response = Response.FromValue(PlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
+                Response<OpenShiftPlatformWorkloadIdentityRoleSetData> response = Response.FromValue(OpenShiftPlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

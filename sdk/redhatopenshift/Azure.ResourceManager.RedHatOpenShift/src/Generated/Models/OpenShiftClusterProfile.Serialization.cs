@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             string domain = default;
             string version = default;
             ResourceIdentifier resourceGroupId = default;
-            OpenShiftFipsValidatedModules? fipsValidatedModules = default;
+            OpenShiftFipsValidatedModule? fipsValidatedModules = default;
             string oidcIssuer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                     {
                         continue;
                     }
-                    fipsValidatedModules = new OpenShiftFipsValidatedModules(prop.Value.GetString());
+                    fipsValidatedModules = new OpenShiftFipsValidatedModule(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("oidcIssuer"u8))

@@ -74,21 +74,21 @@ namespace Azure.ResourceManager.RedHatOpenShift
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PlatformWorkloadIdentityRoleSetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftArmClient.GetPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftArmClient.GetOpenShiftPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PlatformWorkloadIdentityRoleSetResource"/> object. </returns>
-        public static PlatformWorkloadIdentityRoleSetResource GetPlatformWorkloadIdentityRoleSetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> object. </returns>
+        public static OpenShiftPlatformWorkloadIdentityRoleSetResource GetOpenShiftPlatformWorkloadIdentityRoleSetResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRedHatOpenShiftArmClient(client).GetPlatformWorkloadIdentityRoleSetResource(id);
+            return GetMockableRedHatOpenShiftArmClient(client).GetOpenShiftPlatformWorkloadIdentityRoleSetResource(id);
         }
 
         /// <summary>
@@ -205,28 +205,28 @@ namespace Azure.ResourceManager.RedHatOpenShift
         }
 
         /// <summary>
-        /// Gets a collection of PlatformWorkloadIdentityRoleSets in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of OpenShiftPlatformWorkloadIdentityRoleSets in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetPlatformWorkloadIdentityRoleSets(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftPlatformWorkloadIdentityRoleSets(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of PlatformWorkloadIdentityRoleSets and their operations over a PlatformWorkloadIdentityRoleSetResource. </returns>
-        public static PlatformWorkloadIdentityRoleSetCollection GetPlatformWorkloadIdentityRoleSets(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of OpenShiftPlatformWorkloadIdentityRoleSets and their operations over a OpenShiftPlatformWorkloadIdentityRoleSetResource. </returns>
+        public static OpenShiftPlatformWorkloadIdentityRoleSetCollection GetOpenShiftPlatformWorkloadIdentityRoleSets(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetPlatformWorkloadIdentityRoleSets(location);
+            return GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetOpenShiftPlatformWorkloadIdentityRoleSets(location);
         }
 
         /// <summary>
         /// This operation returns Platform Workload Identity Role Set as a string
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetPlatformWorkloadIdentityRoleSetAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftPlatformWorkloadIdentityRoleSetAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -235,18 +235,18 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PlatformWorkloadIdentityRoleSetResource>> GetPlatformWorkloadIdentityRoleSetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public static async Task<Response<OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetOpenShiftPlatformWorkloadIdentityRoleSetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetPlatformWorkloadIdentityRoleSetAsync(location, openShiftMinorVersion, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetOpenShiftPlatformWorkloadIdentityRoleSetAsync(location, openShiftMinorVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// This operation returns Platform Workload Identity Role Set as a string
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetPlatformWorkloadIdentityRoleSet(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftPlatformWorkloadIdentityRoleSet(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PlatformWorkloadIdentityRoleSetResource> GetPlatformWorkloadIdentityRoleSet(this SubscriptionResource subscriptionResource, AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public static Response<OpenShiftPlatformWorkloadIdentityRoleSetResource> GetOpenShiftPlatformWorkloadIdentityRoleSet(this SubscriptionResource subscriptionResource, AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetPlatformWorkloadIdentityRoleSet(location, openShiftMinorVersion, cancellationToken);
+            return GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetOpenShiftPlatformWorkloadIdentityRoleSet(location, openShiftMinorVersion, cancellationToken);
         }
 
         /// <summary>

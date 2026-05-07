@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
             return GetOpenShiftVersions(location).Get(openShiftVersion, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PlatformWorkloadIdentityRoleSets in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of OpenShiftPlatformWorkloadIdentityRoleSets in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of PlatformWorkloadIdentityRoleSets and their operations over a PlatformWorkloadIdentityRoleSetResource. </returns>
-        public virtual PlatformWorkloadIdentityRoleSetCollection GetPlatformWorkloadIdentityRoleSets(AzureLocation location)
+        /// <returns> An object representing collection of OpenShiftPlatformWorkloadIdentityRoleSets and their operations over a OpenShiftPlatformWorkloadIdentityRoleSetResource. </returns>
+        public virtual OpenShiftPlatformWorkloadIdentityRoleSetCollection GetOpenShiftPlatformWorkloadIdentityRoleSets(AzureLocation location)
         {
-            return GetCachedClient(client => new PlatformWorkloadIdentityRoleSetCollection(client, Id, location));
+            return GetCachedClient(client => new OpenShiftPlatformWorkloadIdentityRoleSetCollection(client, Id, location));
         }
 
         /// <summary>
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftMinorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PlatformWorkloadIdentityRoleSetResource>> GetPlatformWorkloadIdentityRoleSetAsync(AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetOpenShiftPlatformWorkloadIdentityRoleSetAsync(AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftMinorVersion, nameof(openShiftMinorVersion));
 
-            return await GetPlatformWorkloadIdentityRoleSets(location).GetAsync(openShiftMinorVersion, cancellationToken).ConfigureAwait(false);
+            return await GetOpenShiftPlatformWorkloadIdentityRoleSets(location).GetAsync(openShiftMinorVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftMinorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PlatformWorkloadIdentityRoleSetResource> GetPlatformWorkloadIdentityRoleSet(AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public virtual Response<OpenShiftPlatformWorkloadIdentityRoleSetResource> GetOpenShiftPlatformWorkloadIdentityRoleSet(AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftMinorVersion, nameof(openShiftMinorVersion));
 
-            return GetPlatformWorkloadIdentityRoleSets(location).Get(openShiftMinorVersion, cancellationToken);
+            return GetOpenShiftPlatformWorkloadIdentityRoleSets(location).Get(openShiftMinorVersion, cancellationToken);
         }
 
         /// <summary>

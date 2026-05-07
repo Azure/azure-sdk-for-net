@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (PlatformWorkloadIdentityRoleSetData item in Value)
+            foreach (OpenShiftPlatformWorkloadIdentityRoleSetData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             {
                 return null;
             }
-            IList<PlatformWorkloadIdentityRoleSetData> value = default;
+            IList<OpenShiftPlatformWorkloadIdentityRoleSetData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PlatformWorkloadIdentityRoleSetData> array = new List<PlatformWorkloadIdentityRoleSetData>();
+                    List<OpenShiftPlatformWorkloadIdentityRoleSetData> array = new List<OpenShiftPlatformWorkloadIdentityRoleSetData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PlatformWorkloadIdentityRoleSetData.DeserializePlatformWorkloadIdentityRoleSetData(item, options));
+                        array.Add(OpenShiftPlatformWorkloadIdentityRoleSetData.DeserializeOpenShiftPlatformWorkloadIdentityRoleSetData(item, options));
                     }
                     value = array;
                     continue;

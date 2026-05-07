@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         }
 
         /// <summary> The URL to access the cluster console. </summary>
-        public string ConsoleUri
+        public Uri ConsoleUri
         {
             get
             {

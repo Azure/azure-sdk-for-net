@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <summary> Initializes a new instance of <see cref="OpenShiftConsoleProfile"/>. </summary>
         /// <param name="uri"> The URL to access the cluster console. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftConsoleProfile(string uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenShiftConsoleProfile(Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL to access the cluster console. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
     }
 }

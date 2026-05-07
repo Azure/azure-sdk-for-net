@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         public OpenShiftClusterData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile ApiServerProfile { get { throw null; } set { } }
         public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProfile ClusterProfile { get { throw null; } set { } }
-        public string ConsoleUri { get { throw null; } }
+        public System.Uri ConsoleUri { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile> IngressProfiles { get { throw null; } }
         public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftMasterProfile MasterProfile { get { throw null; } set { } }
@@ -77,6 +77,51 @@ namespace Azure.ResourceManager.RedHatOpenShift
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class OpenShiftPlatformWorkloadIdentityRoleSetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource>, System.Collections.IEnumerable
+    {
+        protected OpenShiftPlatformWorkloadIdentityRoleSetCollection() { }
+        public virtual Azure.Response<bool> Exists(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource> Get(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetAsync(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource> GetIfExists(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetIfExistsAsync(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class OpenShiftPlatformWorkloadIdentityRoleSetData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>
+    {
+        internal OpenShiftPlatformWorkloadIdentityRoleSetData() { }
+        public string OpenShiftVersion { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityRole> PlatformWorkloadIdentityRoles { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OpenShiftPlatformWorkloadIdentityRoleSetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected OpenShiftPlatformWorkloadIdentityRoleSetResource() { }
+        public virtual Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string openShiftMinorVersion) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class OpenShiftVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource>, System.Collections.IEnumerable
     {
         protected OpenShiftVersionCollection() { }
@@ -121,51 +166,6 @@ namespace Azure.ResourceManager.RedHatOpenShift
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PlatformWorkloadIdentityRoleSetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>, System.Collections.IEnumerable
-    {
-        protected PlatformWorkloadIdentityRoleSetCollection() { }
-        public virtual Azure.Response<bool> Exists(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> Get(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>> GetAsync(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> GetIfExists(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>> GetIfExistsAsync(string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class PlatformWorkloadIdentityRoleSetData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>
-    {
-        internal PlatformWorkloadIdentityRoleSetData() { }
-        public string OpenShiftVersion { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityRole> PlatformWorkloadIdentityRoles { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PlatformWorkloadIdentityRoleSetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected PlatformWorkloadIdentityRoleSetResource() { }
-        public virtual Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string openShiftMinorVersion) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public static partial class RedHatOpenShiftExtensions
     {
         public static Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource> GetOpenShiftCluster(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.RedHatOpenShift
         public static Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterCollection GetOpenShiftClusters(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource> GetOpenShiftClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource> GetOpenShiftClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource> GetOpenShiftPlatformWorkloadIdentityRoleSet(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetOpenShiftPlatformWorkloadIdentityRoleSetAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource GetOpenShiftPlatformWorkloadIdentityRoleSetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetCollection GetOpenShiftPlatformWorkloadIdentityRoleSets(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource> GetOpenShiftVersion(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string openShiftVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource>> GetOpenShiftVersionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string openShiftVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource GetOpenShiftVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionCollection GetOpenShiftVersions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> GetPlatformWorkloadIdentityRoleSet(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>> GetPlatformWorkloadIdentityRoleSetAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource GetPlatformWorkloadIdentityRoleSetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetCollection GetPlatformWorkloadIdentityRoleSets(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
     }
 }
 namespace Azure.ResourceManager.RedHatOpenShift.Mocking
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
     {
         protected MockableRedHatOpenShiftArmClient() { }
         public virtual Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource GetOpenShiftClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource GetOpenShiftPlatformWorkloadIdentityRoleSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource GetOpenShiftVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource GetPlatformWorkloadIdentityRoleSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableRedHatOpenShiftResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         protected MockableRedHatOpenShiftSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource> GetOpenShiftClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource> GetOpenShiftClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource> GetOpenShiftPlatformWorkloadIdentityRoleSet(Azure.Core.AzureLocation location, string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetOpenShiftPlatformWorkloadIdentityRoleSetAsync(Azure.Core.AzureLocation location, string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetCollection GetOpenShiftPlatformWorkloadIdentityRoleSets(Azure.Core.AzureLocation location) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource> GetOpenShiftVersion(Azure.Core.AzureLocation location, string openShiftVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource>> GetOpenShiftVersionAsync(Azure.Core.AzureLocation location, string openShiftVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionCollection GetOpenShiftVersions(Azure.Core.AzureLocation location) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> GetPlatformWorkloadIdentityRoleSet(Azure.Core.AzureLocation location, string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>> GetPlatformWorkloadIdentityRoleSetAsync(Azure.Core.AzureLocation location, string openShiftMinorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetCollection GetPlatformWorkloadIdentityRoleSets(Azure.Core.AzureLocation location) { throw null; }
     }
 }
 namespace Azure.ResourceManager.RedHatOpenShift.Models
@@ -218,19 +218,19 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     public static partial class ArmRedHatOpenShiftModelFactory
     {
         public static Azure.ResourceManager.RedHatOpenShift.Models.EffectiveOutboundIP EffectiveOutboundIP(Azure.Core.ResourceIdentifier id = null) { throw null; }
-        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile OpenShiftApiServerProfile(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility? visibility = default(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility?), string uri = null, string ip = null) { throw null; }
+        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile OpenShiftApiServerProfile(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility? visibility = default(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility?), System.Uri uri = null, System.Net.IPAddress ip = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig OpenShiftClusterAdminKubeconfig(string kubeconfig = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials OpenShiftClusterCredentials(string kubeadminUsername = null, string kubeadminPassword = null) { throw null; }
-        public static Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData OpenShiftClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProvisioningState? provisioningState = default(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProvisioningState?), Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProfile clusterProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftServicePrincipalProfile servicePrincipalProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftNetworkProfile networkProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftMasterProfile masterProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftWorkerProfile> workerProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftWorkerProfile> workerProfilesStatus = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile apiServerProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile> ingressProfiles = null, string consoleUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch OpenShiftClusterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProvisioningState? provisioningState = default(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProvisioningState?), Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProfile clusterProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftServicePrincipalProfile servicePrincipalProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftNetworkProfile networkProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftMasterProfile masterProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftWorkerProfile> workerProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftWorkerProfile> workerProfilesStatus = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile apiServerProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile> ingressProfiles = null, string consoleUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProfile OpenShiftClusterProfile(string pullSecret = null, string domain = null, string version = null, Azure.Core.ResourceIdentifier resourceGroupId = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules? fipsValidatedModules = default(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules?), string oidcIssuer = null) { throw null; }
-        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile OpenShiftIngressProfile(string name = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility? visibility = default(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility?), string ip = null) { throw null; }
+        public static Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData OpenShiftClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProvisioningState? provisioningState = default(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProvisioningState?), Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProfile clusterProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftServicePrincipalProfile servicePrincipalProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftNetworkProfile networkProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftMasterProfile masterProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftWorkerProfile> workerProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftWorkerProfile> workerProfilesStatus = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile apiServerProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile> ingressProfiles = null, System.Uri consoleUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch OpenShiftClusterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProvisioningState? provisioningState = default(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProvisioningState?), Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProfile clusterProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftServicePrincipalProfile servicePrincipalProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftNetworkProfile networkProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftMasterProfile masterProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftWorkerProfile> workerProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftWorkerProfile> workerProfilesStatus = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile apiServerProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile> ingressProfiles = null, System.Uri consoleUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProfile OpenShiftClusterProfile(string pullSecret = null, string domain = null, string version = null, Azure.Core.ResourceIdentifier resourceGroupId = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule? fipsValidatedModules = default(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule?), string oidcIssuer = null) { throw null; }
+        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile OpenShiftIngressProfile(string name = null, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility? visibility = default(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility?), System.Net.IPAddress ip = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftLoadBalancerProfile OpenShiftLoadBalancerProfile(int? managedOutboundIpsCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.EffectiveOutboundIP> effectiveOutboundIps = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentity OpenShiftPlatformWorkloadIdentity(Azure.Core.ResourceIdentifier resourceId = null, string clientId = null, string objectId = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityProfile OpenShiftPlatformWorkloadIdentityProfile(string upgradeableTo = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentity> platformWorkloadIdentities = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityRole OpenShiftPlatformWorkloadIdentityRole(string operatorName = null, string roleDefinitionName = null, Azure.Core.ResourceIdentifier roleDefinitionId = null) { throw null; }
+        public static Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData OpenShiftPlatformWorkloadIdentityRoleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string openShiftVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityRole> platformWorkloadIdentityRoles = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData OpenShiftVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string version = null) { throw null; }
-        public static Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData PlatformWorkloadIdentityRoleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string openShiftVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityRole> platformWorkloadIdentityRoles = null) { throw null; }
     }
     public partial class EffectiveOutboundIP : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.EffectiveOutboundIP>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.EffectiveOutboundIP>
     {
@@ -249,8 +249,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     public partial class OpenShiftApiServerProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile>
     {
         public OpenShiftApiServerProfile() { }
-        public string Ip { get { throw null; } }
-        public string Uri { get { throw null; } }
+        public System.Net.IPAddress Ip { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
         public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility? Visibility { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public OpenShiftClusterPatch() { }
         public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile ApiServerProfile { get { throw null; } set { } }
         public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProfile ClusterProfile { get { throw null; } set { } }
-        public string ConsoleUri { get { throw null; } }
+        public System.Uri ConsoleUri { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile> IngressProfiles { get { throw null; } }
         public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftMasterProfile MasterProfile { get { throw null; } set { } }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     {
         public OpenShiftClusterProfile() { }
         public string Domain { get { throw null; } set { } }
-        public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules? FipsValidatedModules { get { throw null; } set { } }
+        public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule? FipsValidatedModules { get { throw null; } set { } }
         public string OidcIssuer { get { throw null; } }
         public string PullSecret { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } set { } }
@@ -376,26 +376,26 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OpenShiftFipsValidatedModules : System.IEquatable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules>
+    public readonly partial struct OpenShiftFipsValidatedModule : System.IEquatable<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public OpenShiftFipsValidatedModules(string value) { throw null; }
-        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules Disabled { get { throw null; } }
-        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules other) { throw null; }
+        public OpenShiftFipsValidatedModule(string value) { throw null; }
+        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule Disabled { get { throw null; } }
+        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules left, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules left, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModules right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule left, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule left, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftFipsValidatedModule right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class OpenShiftIngressProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile>
     {
         public OpenShiftIngressProfile() { }
-        public string Ip { get { throw null; } }
+        public System.Net.IPAddress Ip { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility? Visibility { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

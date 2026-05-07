@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.RedHatOpenShift;
 
@@ -82,12 +83,12 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(Ip))
             {
                 writer.WritePropertyName("ip"u8);
-                writer.WriteStringValue(Ip);
+                writer.WriteStringValue(Ip.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +133,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 return null;
             }
             OpenShiftVisibility? visibility = default;
-            string uri = default;
-            string ip = default;
+            Uri uri = default;
+            IPAddress ip = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,12 +149,20 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("ip"u8))
                 {
-                    ip = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ip = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

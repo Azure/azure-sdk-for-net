@@ -20,11 +20,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RedHatOpenShift
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PlatformWorkloadIdentityRoleSetResource"/> and their operations.
-    /// Each <see cref="PlatformWorkloadIdentityRoleSetResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="PlatformWorkloadIdentityRoleSetCollection"/> instance call the GetPlatformWorkloadIdentityRoleSets method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> and their operations.
+    /// Each <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetCollection"/> instance call the GetOpenShiftPlatformWorkloadIdentityRoleSets method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class PlatformWorkloadIdentityRoleSetCollection : ArmCollection, IEnumerable<PlatformWorkloadIdentityRoleSetResource>, IAsyncEnumerable<PlatformWorkloadIdentityRoleSetResource>
+    public partial class OpenShiftPlatformWorkloadIdentityRoleSetCollection : ArmCollection, IEnumerable<OpenShiftPlatformWorkloadIdentityRoleSetResource>, IAsyncEnumerable<OpenShiftPlatformWorkloadIdentityRoleSetResource>
     {
         private readonly ClientDiagnostics _platformWorkloadIdentityRoleSetClientDiagnostics;
         private readonly PlatformWorkloadIdentityRoleSet _platformWorkloadIdentityRoleSetRestClient;
@@ -33,23 +33,23 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of PlatformWorkloadIdentityRoleSetCollection for mocking. </summary>
-        protected PlatformWorkloadIdentityRoleSetCollection()
+        /// <summary> Initializes a new instance of OpenShiftPlatformWorkloadIdentityRoleSetCollection for mocking. </summary>
+        protected OpenShiftPlatformWorkloadIdentityRoleSetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlatformWorkloadIdentityRoleSetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
-        internal PlatformWorkloadIdentityRoleSetCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        internal OpenShiftPlatformWorkloadIdentityRoleSetCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
-            TryGetApiVersion(PlatformWorkloadIdentityRoleSetResource.ResourceType, out string platformWorkloadIdentityRoleSetApiVersion);
+            TryGetApiVersion(OpenShiftPlatformWorkloadIdentityRoleSetResource.ResourceType, out string openShiftPlatformWorkloadIdentityRoleSetApiVersion);
             _location = location;
-            _platformWorkloadIdentityRoleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", PlatformWorkloadIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
-            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Endpoint, platformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
-            _platformWorkloadIdentityRoleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", PlatformWorkloadIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
-            _platformWorkloadIdentityRoleSetsRestClient = new PlatformWorkloadIdentityRoleSets(_platformWorkloadIdentityRoleSetsClientDiagnostics, Pipeline, Endpoint, platformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
+            _platformWorkloadIdentityRoleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftPlatformWorkloadIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
+            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
+            _platformWorkloadIdentityRoleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftPlatformWorkloadIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
+            _platformWorkloadIdentityRoleSetsRestClient = new PlatformWorkloadIdentityRoleSets(_platformWorkloadIdentityRoleSetsClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
             ValidateResourceId(id);
         }
 
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftMinorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PlatformWorkloadIdentityRoleSetResource>> GetAsync(string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetAsync(string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftMinorVersion, nameof(openShiftMinorVersion));
 
-            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("PlatformWorkloadIdentityRoleSetCollection.Get");
+            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("OpenShiftPlatformWorkloadIdentityRoleSetCollection.Get");
             scope.Start();
             try
             {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 };
                 HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftMinorVersion, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PlatformWorkloadIdentityRoleSetData> response = Response.FromValue(PlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
+                Response<OpenShiftPlatformWorkloadIdentityRoleSetData> response = Response.FromValue(OpenShiftPlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftMinorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PlatformWorkloadIdentityRoleSetResource> Get(string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public virtual Response<OpenShiftPlatformWorkloadIdentityRoleSetResource> Get(string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftMinorVersion, nameof(openShiftMinorVersion));
 
-            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("PlatformWorkloadIdentityRoleSetCollection.Get");
+            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("OpenShiftPlatformWorkloadIdentityRoleSetCollection.Get");
             scope.Start();
             try
             {
@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 };
                 HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftMinorVersion, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PlatformWorkloadIdentityRoleSetData> response = Response.FromValue(PlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
+                Response<OpenShiftPlatformWorkloadIdentityRoleSetData> response = Response.FromValue(OpenShiftPlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PlatformWorkloadIdentityRoleSetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PlatformWorkloadIdentityRoleSetResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OpenShiftPlatformWorkloadIdentityRoleSetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlatformWorkloadIdentityRoleSetData, PlatformWorkloadIdentityRoleSetResource>(new PlatformWorkloadIdentityRoleSetsGetAllAsyncCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "PlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new PlatformWorkloadIdentityRoleSetResource(Client, data));
+            return new AsyncPageableWrapper<OpenShiftPlatformWorkloadIdentityRoleSetData, OpenShiftPlatformWorkloadIdentityRoleSetResource>(new PlatformWorkloadIdentityRoleSetsGetAllAsyncCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, data));
         }
 
         /// <summary>
@@ -207,14 +207,14 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PlatformWorkloadIdentityRoleSetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PlatformWorkloadIdentityRoleSetResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OpenShiftPlatformWorkloadIdentityRoleSetResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlatformWorkloadIdentityRoleSetData, PlatformWorkloadIdentityRoleSetResource>(new PlatformWorkloadIdentityRoleSetsGetAllCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "PlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new PlatformWorkloadIdentityRoleSetResource(Client, data));
+            return new PageableWrapper<OpenShiftPlatformWorkloadIdentityRoleSetData, OpenShiftPlatformWorkloadIdentityRoleSetResource>(new PlatformWorkloadIdentityRoleSetsGetAllCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, data));
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         {
             Argument.AssertNotNullOrEmpty(openShiftMinorVersion, nameof(openShiftMinorVersion));
 
-            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("PlatformWorkloadIdentityRoleSetCollection.Exists");
+            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("OpenShiftPlatformWorkloadIdentityRoleSetCollection.Exists");
             scope.Start();
             try
             {
@@ -253,14 +253,14 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftMinorVersion, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<PlatformWorkloadIdentityRoleSetData> response = default;
+                Response<OpenShiftPlatformWorkloadIdentityRoleSetData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
+                        response = Response.FromValue(OpenShiftPlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PlatformWorkloadIdentityRoleSetData)null, result);
+                        response = Response.FromValue((OpenShiftPlatformWorkloadIdentityRoleSetData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         {
             Argument.AssertNotNullOrEmpty(openShiftMinorVersion, nameof(openShiftMinorVersion));
 
-            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("PlatformWorkloadIdentityRoleSetCollection.Exists");
+            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("OpenShiftPlatformWorkloadIdentityRoleSetCollection.Exists");
             scope.Start();
             try
             {
@@ -310,14 +310,14 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftMinorVersion, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<PlatformWorkloadIdentityRoleSetData> response = default;
+                Response<OpenShiftPlatformWorkloadIdentityRoleSetData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
+                        response = Response.FromValue(OpenShiftPlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PlatformWorkloadIdentityRoleSetData)null, result);
+                        response = Response.FromValue((OpenShiftPlatformWorkloadIdentityRoleSetData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -352,11 +352,11 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftMinorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PlatformWorkloadIdentityRoleSetResource>> GetIfExistsAsync(string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetIfExistsAsync(string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftMinorVersion, nameof(openShiftMinorVersion));
 
-            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("PlatformWorkloadIdentityRoleSetCollection.GetIfExists");
+            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -367,23 +367,23 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftMinorVersion, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<PlatformWorkloadIdentityRoleSetData> response = default;
+                Response<OpenShiftPlatformWorkloadIdentityRoleSetData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
+                        response = Response.FromValue(OpenShiftPlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PlatformWorkloadIdentityRoleSetData)null, result);
+                        response = Response.FromValue((OpenShiftPlatformWorkloadIdentityRoleSetData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PlatformWorkloadIdentityRoleSetResource>(response.GetRawResponse());
+                    return new NoValueResponse<OpenShiftPlatformWorkloadIdentityRoleSetResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -413,11 +413,11 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftMinorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PlatformWorkloadIdentityRoleSetResource> GetIfExists(string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<OpenShiftPlatformWorkloadIdentityRoleSetResource> GetIfExists(string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openShiftMinorVersion, nameof(openShiftMinorVersion));
 
-            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("PlatformWorkloadIdentityRoleSetCollection.GetIfExists");
+            using DiagnosticScope scope = _platformWorkloadIdentityRoleSetClientDiagnostics.CreateScope("OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -428,23 +428,23 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftMinorVersion, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<PlatformWorkloadIdentityRoleSetData> response = default;
+                Response<OpenShiftPlatformWorkloadIdentityRoleSetData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
+                        response = Response.FromValue(OpenShiftPlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PlatformWorkloadIdentityRoleSetData)null, result);
+                        response = Response.FromValue((OpenShiftPlatformWorkloadIdentityRoleSetData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PlatformWorkloadIdentityRoleSetResource>(response.GetRawResponse());
+                    return new NoValueResponse<OpenShiftPlatformWorkloadIdentityRoleSetResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             }
         }
 
-        IEnumerator<PlatformWorkloadIdentityRoleSetResource> IEnumerable<PlatformWorkloadIdentityRoleSetResource>.GetEnumerator()
+        IEnumerator<OpenShiftPlatformWorkloadIdentityRoleSetResource> IEnumerable<OpenShiftPlatformWorkloadIdentityRoleSetResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<PlatformWorkloadIdentityRoleSetResource> IAsyncEnumerable<PlatformWorkloadIdentityRoleSetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<OpenShiftPlatformWorkloadIdentityRoleSetResource> IAsyncEnumerable<OpenShiftPlatformWorkloadIdentityRoleSetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

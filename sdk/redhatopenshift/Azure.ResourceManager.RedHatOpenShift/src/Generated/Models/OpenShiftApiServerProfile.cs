@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="uri"> The URL to access the cluster API server. </param>
         /// <param name="ip"> The IP of the cluster API server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftApiServerProfile(OpenShiftVisibility? visibility, string uri, string ip, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenShiftApiServerProfile(OpenShiftVisibility? visibility, Uri uri, IPAddress ip, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Visibility = visibility;
             Uri = uri;
@@ -38,9 +39,9 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public OpenShiftVisibility? Visibility { get; set; }
 
         /// <summary> The URL to access the cluster API server. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
 
         /// <summary> The IP of the cluster API server. </summary>
-        public string Ip { get; }
+        public IPAddress Ip { get; }
     }
 }

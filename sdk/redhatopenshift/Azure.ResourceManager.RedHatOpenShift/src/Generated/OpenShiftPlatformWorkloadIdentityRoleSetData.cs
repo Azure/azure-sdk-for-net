@@ -14,24 +14,24 @@ using Azure.ResourceManager.RedHatOpenShift.Models;
 namespace Azure.ResourceManager.RedHatOpenShift
 {
     /// <summary> PlatformWorkloadIdentityRoleSet represents a mapping from the names of OCP operators to the built-in roles that should be assigned to those operator's corresponding managed identities for a particular OCP version. </summary>
-    public partial class PlatformWorkloadIdentityRoleSetData : ResourceData
+    public partial class OpenShiftPlatformWorkloadIdentityRoleSetData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PlatformWorkloadIdentityRoleSetData"/>. </summary>
-        internal PlatformWorkloadIdentityRoleSetData()
+        /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetData"/>. </summary>
+        internal OpenShiftPlatformWorkloadIdentityRoleSetData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlatformWorkloadIdentityRoleSetData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties for the PlatformWorkloadIdentityRoleSet resource. </param>
-        internal PlatformWorkloadIdentityRoleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PlatformWorkloadIdentityRoleSetProperties properties) : base(id, name, resourceType, systemData)
+        internal OpenShiftPlatformWorkloadIdentityRoleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PlatformWorkloadIdentityRoleSetProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

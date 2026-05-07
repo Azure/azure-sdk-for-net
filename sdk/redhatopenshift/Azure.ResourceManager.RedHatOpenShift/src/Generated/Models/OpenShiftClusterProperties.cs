@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public IList<OpenShiftIngressProfile> IngressProfiles { get; } = new ChangeTrackingList<OpenShiftIngressProfile>();
 
         /// <summary> The URL to access the cluster console. </summary>
-        public string ConsoleUri
+        public Uri ConsoleUri
         {
             get
             {
