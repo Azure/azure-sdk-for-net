@@ -25,7 +25,6 @@ namespace Azure.Generator.Management.Primitives
     {
         public const string ArmResourceId = "Azure.ResourceManager.CommonTypes.Resource";
         public const string ResourceUpdateModelId = "Azure.ResourceManager.Foundations.ResourceUpdateModel";
-        public const string TrackedResourceId = "Azure.ResourceManager.CommonTypes.TrackedResource";
 
         public delegate MethodBodyStatement SerializationExpression(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
         public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format);
@@ -35,7 +34,7 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.ProxyResource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.ExtensionResource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.Resource"] = typeof(ResourceData),
-            [TrackedResourceId] = typeof(TrackedResourceData),
+            ["Azure.ResourceManager.CommonTypes.TrackedResource"] = typeof(TrackedResourceData),
         };
 
         private static readonly IReadOnlyDictionary<string, CSharpType> _idToSystemTypeMap = new Dictionary<string, CSharpType>()
