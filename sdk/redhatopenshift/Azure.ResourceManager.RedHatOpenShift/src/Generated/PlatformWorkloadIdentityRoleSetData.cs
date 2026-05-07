@@ -13,68 +13,49 @@ using Azure.ResourceManager.RedHatOpenShift.Models;
 
 namespace Azure.ResourceManager.RedHatOpenShift
 {
-    /// <summary>
-    /// A class representing the PlatformWorkloadIdentityRoleSet data model.
-    /// PlatformWorkloadIdentityRoleSet represents a mapping from the names of OCP operators to the built-in roles that should be assigned to those operator's corresponding managed identities for a particular OCP version.
-    /// </summary>
+    /// <summary> PlatformWorkloadIdentityRoleSet represents a mapping from the names of OCP operators to the built-in roles that should be assigned to those operator's corresponding managed identities for a particular OCP version. </summary>
     public partial class PlatformWorkloadIdentityRoleSetData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PlatformWorkloadIdentityRoleSetData"/>. </summary>
-        public PlatformWorkloadIdentityRoleSetData()
+        internal PlatformWorkloadIdentityRoleSetData()
         {
-            PlatformWorkloadIdentityRoles = new ChangeTrackingList<OpenShiftPlatformWorkloadIdentityRole>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PlatformWorkloadIdentityRoleSetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="openShiftVersion"> OpenShiftVersion represents the version associated with this set of roles. </param>
-        /// <param name="platformWorkloadIdentityRoles"> PlatformWorkloadIdentityRoles represents the set of roles associated with this version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlatformWorkloadIdentityRoleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string openShiftVersion, IList<OpenShiftPlatformWorkloadIdentityRole> platformWorkloadIdentityRoles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties for the PlatformWorkloadIdentityRoleSet resource. </param>
+        internal PlatformWorkloadIdentityRoleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PlatformWorkloadIdentityRoleSetProperties properties) : base(id, name, resourceType, systemData)
         {
-            OpenShiftVersion = openShiftVersion;
-            PlatformWorkloadIdentityRoles = platformWorkloadIdentityRoles;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The properties for the PlatformWorkloadIdentityRoleSet resource. </summary>
+        internal PlatformWorkloadIdentityRoleSetProperties Properties { get; }
 
         /// <summary> OpenShiftVersion represents the version associated with this set of roles. </summary>
-        public string OpenShiftVersion { get; set; }
+        public string OpenShiftVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OpenShiftVersion;
+            }
+        }
+
         /// <summary> PlatformWorkloadIdentityRoles represents the set of roles associated with this version. </summary>
-        public IList<OpenShiftPlatformWorkloadIdentityRole> PlatformWorkloadIdentityRoles { get; }
+        public IList<OpenShiftPlatformWorkloadIdentityRole> PlatformWorkloadIdentityRoles
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlatformWorkloadIdentityRoles;
+            }
+        }
     }
 }

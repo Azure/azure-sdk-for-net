@@ -8,69 +8,63 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.RedHatOpenShift;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableRedHatOpenShiftSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _openShiftClusterClientDiagnostics;
-        private OpenShiftClustersRestOperations _openShiftClusterRestClient;
+        private ClientDiagnostics _openShiftClustersClientDiagnostics;
+        private OpenShiftClusters _openShiftClustersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRedHatOpenShiftSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableRedHatOpenShiftSubscriptionResource for mocking. </summary>
         protected MockableRedHatOpenShiftSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRedHatOpenShiftSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableRedHatOpenShiftSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRedHatOpenShiftSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics OpenShiftClusterClientDiagnostics => _openShiftClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftClusterResource.ResourceType.Namespace, Diagnostics);
-        private OpenShiftClustersRestOperations OpenShiftClusterRestClient => _openShiftClusterRestClient ??= new OpenShiftClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OpenShiftClusterResource.ResourceType));
+        private ClientDiagnostics OpenShiftClustersClientDiagnostics => _openShiftClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private OpenShiftClusters OpenShiftClustersRestClient => _openShiftClustersRestClient ??= new OpenShiftClusters(OpenShiftClustersClientDiagnostics, Pipeline, Endpoint, "2025-07-25");
 
-        /// <summary> Gets a collection of OpenShiftVersionResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of OpenShiftVersionResources and their operations over a OpenShiftVersionResource. </returns>
+        /// <summary> Gets a collection of OpenShiftVersions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of OpenShiftVersions and their operations over a OpenShiftVersionResource. </returns>
         public virtual OpenShiftVersionCollection GetOpenShiftVersions(AzureLocation location)
         {
-            return new OpenShiftVersionCollection(Client, Id, location);
+            return GetCachedClient(client => new OpenShiftVersionCollection(client, Id, location));
         }
 
         /// <summary>
         /// This operation returns installable OpenShift version as a string.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="openShiftVersion"> The desired version value of the OpenShiftVersion resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftVersion"/> is null. </exception>
@@ -78,6 +72,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OpenShiftVersionResource>> GetOpenShiftVersionAsync(AzureLocation location, string openShiftVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(openShiftVersion, nameof(openShiftVersion));
+
             return await GetOpenShiftVersions(location).GetAsync(openShiftVersion, cancellationToken).ConfigureAwait(false);
         }
 
@@ -85,24 +81,20 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// This operation returns installable OpenShift version as a string.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/openShiftVersions/{openShiftVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="openShiftVersion"> The desired version value of the OpenShiftVersion resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftVersion"/> is null. </exception>
@@ -110,129 +102,121 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         [ForwardsClientCalls]
         public virtual Response<OpenShiftVersionResource> GetOpenShiftVersion(AzureLocation location, string openShiftVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(openShiftVersion, nameof(openShiftVersion));
+
             return GetOpenShiftVersions(location).Get(openShiftVersion, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OpenShiftPlatformWorkloadIdentityRoleSetResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of OpenShiftPlatformWorkloadIdentityRoleSetResources and their operations over a OpenShiftPlatformWorkloadIdentityRoleSetResource. </returns>
-        public virtual OpenShiftPlatformWorkloadIdentityRoleSetCollection GetOpenShiftPlatformWorkloadIdentityRoleSets(AzureLocation location)
+        /// <summary> Gets a collection of PlatformWorkloadIdentityRoleSets in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of PlatformWorkloadIdentityRoleSets and their operations over a PlatformWorkloadIdentityRoleSetResource. </returns>
+        public virtual PlatformWorkloadIdentityRoleSetCollection GetPlatformWorkloadIdentityRoleSets(AzureLocation location)
         {
-            return new OpenShiftPlatformWorkloadIdentityRoleSetCollection(Client, Id, location);
+            return GetCachedClient(client => new PlatformWorkloadIdentityRoleSetCollection(client, Id, location));
         }
 
         /// <summary>
         /// This operation returns Platform Workload Identity Role Set as a string
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/platformWorkloadIdentityRoleSets/{openShiftMinorVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/platformWorkloadIdentityRoleSets/{openShiftMinorVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlatformWorkloadIdentityRoleSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlatformWorkloadIdentityRoleSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="openShiftMinorVersion"> The desired version value of the PlatformWorkloadIdentityRoleSet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftMinorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetOpenShiftPlatformWorkloadIdentityRoleSetAsync(AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlatformWorkloadIdentityRoleSetResource>> GetPlatformWorkloadIdentityRoleSetAsync(AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
-            return await GetOpenShiftPlatformWorkloadIdentityRoleSets(location).GetAsync(openShiftMinorVersion, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(openShiftMinorVersion, nameof(openShiftMinorVersion));
+
+            return await GetPlatformWorkloadIdentityRoleSets(location).GetAsync(openShiftMinorVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// This operation returns Platform Workload Identity Role Set as a string
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/platformWorkloadIdentityRoleSets/{openShiftMinorVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/platformWorkloadIdentityRoleSets/{openShiftMinorVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlatformWorkloadIdentityRoleSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlatformWorkloadIdentityRoleSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="openShiftMinorVersion"> The desired version value of the PlatformWorkloadIdentityRoleSet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openShiftMinorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OpenShiftPlatformWorkloadIdentityRoleSetResource> GetOpenShiftPlatformWorkloadIdentityRoleSet(AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public virtual Response<PlatformWorkloadIdentityRoleSetResource> GetPlatformWorkloadIdentityRoleSet(AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
-            return GetOpenShiftPlatformWorkloadIdentityRoleSets(location).Get(openShiftMinorVersion, cancellationToken);
+            Argument.AssertNotNullOrEmpty(openShiftMinorVersion, nameof(openShiftMinorVersion));
+
+            return GetPlatformWorkloadIdentityRoleSets(location).Get(openShiftMinorVersion, cancellationToken);
         }
 
         /// <summary>
         /// The operation returns properties of each OpenShift cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/openShiftClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/openShiftClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OpenShiftClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OpenShiftClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OpenShiftClusterResource> GetOpenShiftClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OpenShiftClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OpenShiftClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OpenShiftClusterResource(Client, OpenShiftClusterData.DeserializeOpenShiftClusterData(e)), OpenShiftClusterClientDiagnostics, Pipeline, "MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClustersGetAllAsyncCollectionResultOfT(OpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftClusters"), data => new OpenShiftClusterResource(Client, data));
         }
 
         /// <summary>
         /// The operation returns properties of each OpenShift cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/openShiftClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/openShiftClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OpenShiftClusters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> OpenShiftClusters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-25</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OpenShiftClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-25. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,9 +224,11 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// <returns> A collection of <see cref="OpenShiftClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OpenShiftClusterResource> GetOpenShiftClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OpenShiftClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OpenShiftClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OpenShiftClusterResource(Client, OpenShiftClusterData.DeserializeOpenShiftClusterData(e)), OpenShiftClusterClientDiagnostics, Pipeline, "MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClustersGetAllCollectionResultOfT(OpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftClusters"), data => new OpenShiftClusterResource(Client, data));
         }
     }
 }

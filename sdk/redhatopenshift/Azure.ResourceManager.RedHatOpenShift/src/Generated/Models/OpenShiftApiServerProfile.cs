@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     /// <summary> APIServerProfile represents an API server profile. </summary>
     public partial class OpenShiftApiServerProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftApiServerProfile"/>. </summary>
         public OpenShiftApiServerProfile()
@@ -52,21 +23,23 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftApiServerProfile"/>. </summary>
         /// <param name="visibility"> API server visibility. </param>
-        /// <param name="url"> The URL to access the cluster API server. </param>
+        /// <param name="uri"> The URL to access the cluster API server. </param>
         /// <param name="ip"> The IP of the cluster API server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftApiServerProfile(OpenShiftVisibility? visibility, string url, string ip, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenShiftApiServerProfile(OpenShiftVisibility? visibility, string uri, string ip, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Visibility = visibility;
-            Url = url;
+            Uri = uri;
             Ip = ip;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> API server visibility. </summary>
         public OpenShiftVisibility? Visibility { get; set; }
+
         /// <summary> The URL to access the cluster API server. </summary>
-        public string Url { get; }
+        public string Uri { get; }
+
         /// <summary> The IP of the cluster API server. </summary>
         public string Ip { get; }
     }
