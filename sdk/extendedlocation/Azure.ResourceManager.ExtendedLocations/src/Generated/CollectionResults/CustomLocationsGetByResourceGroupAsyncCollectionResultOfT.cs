@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ExtendedLocations
     internal partial class CustomLocationsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<CustomLocationData>
     {
         private readonly CustomLocations _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CustomLocationsGetByResourceGroupAsyncCollectionResultOfT(CustomLocations client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CustomLocationsGetByResourceGroupAsyncCollectionResultOfT(CustomLocations client, string subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceSyncRuleData> response = Response.FromValue(ResourceSyncRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceSyncRuleData> response = Response.FromValue(ResourceSyncRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ResourceSyncRulePatch.ToRequestContent(patch), context);
+                HttpMessage message = _resourceSyncRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ResourceSyncRulePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ExtendedLocationsArmOperation<ResourceSyncRuleResource> operation = new ExtendedLocationsArmOperation<ResourceSyncRuleResource>(
                     new ResourceSyncRuleOperationSource(Client),
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ResourceSyncRulePatch.ToRequestContent(patch), context);
+                HttpMessage message = _resourceSyncRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ResourceSyncRulePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ExtendedLocationsArmOperation<ResourceSyncRuleResource> operation = new ExtendedLocationsArmOperation<ResourceSyncRuleResource>(
                     new ResourceSyncRuleOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _resourceSyncRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _resourceSyncRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceSyncRuleData> response = Response.FromValue(ResourceSyncRuleData.FromResponse(result), result);
                     return Response.FromValue(new ResourceSyncRuleResource(Client, response.Value), response.GetRawResponse());
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceSyncRuleData> response = Response.FromValue(ResourceSyncRuleData.FromResponse(result), result);
                     return Response.FromValue(new ResourceSyncRuleResource(Client, response.Value), response.GetRawResponse());
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceSyncRuleData> response = Response.FromValue(ResourceSyncRuleData.FromResponse(result), result);
                     return Response.FromValue(new ResourceSyncRuleResource(Client, response.Value), response.GetRawResponse());
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceSyncRuleData> response = Response.FromValue(ResourceSyncRuleData.FromResponse(result), result);
                     return Response.FromValue(new ResourceSyncRuleResource(Client, response.Value), response.GetRawResponse());
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceSyncRuleData> response = Response.FromValue(ResourceSyncRuleData.FromResponse(result), result);
                     return Response.FromValue(new ResourceSyncRuleResource(Client, response.Value), response.GetRawResponse());
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceSyncRuleData> response = Response.FromValue(ResourceSyncRuleData.FromResponse(result), result);
                     return Response.FromValue(new ResourceSyncRuleResource(Client, response.Value), response.GetRawResponse());

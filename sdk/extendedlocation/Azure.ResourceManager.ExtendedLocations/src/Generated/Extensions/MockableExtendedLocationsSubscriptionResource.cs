@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetBySubscriptionAsyncCollectionResultOfT(CustomLocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
+            return new AsyncPageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetBySubscriptionAsyncCollectionResultOfT(CustomLocationsRestClient, Id.SubscriptionId, context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetBySubscriptionCollectionResultOfT(CustomLocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
+            return new PageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetBySubscriptionCollectionResultOfT(CustomLocationsRestClient, Id.SubscriptionId, context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
         }
     }
 }

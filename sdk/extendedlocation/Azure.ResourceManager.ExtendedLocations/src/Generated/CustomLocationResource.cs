@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _customLocationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CustomLocationData> response = Response.FromValue(CustomLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _customLocationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CustomLocationData> response = Response.FromValue(CustomLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customLocationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomLocationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _customLocationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CustomLocationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CustomLocationData> response = Response.FromValue(CustomLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customLocationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomLocationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _customLocationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CustomLocationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CustomLocationData> response = Response.FromValue(CustomLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customLocationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _customLocationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ExtendedLocationsArmOperation operation = new ExtendedLocationsArmOperation(_customLocationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customLocationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _customLocationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ExtendedLocationsArmOperation operation = new ExtendedLocationsArmOperation(_customLocationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customLocationsRestClient.CreateFindTargetResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomLocationFindTargetResourceGroupProperties.ToRequestContent(customLocationFindTargetResourceGroupProperties), context);
+                HttpMessage message = _customLocationsRestClient.CreateFindTargetResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CustomLocationFindTargetResourceGroupProperties.ToRequestContent(customLocationFindTargetResourceGroupProperties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CustomLocationFindTargetResourceGroupResult> response = Response.FromValue(CustomLocationFindTargetResourceGroupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customLocationsRestClient.CreateFindTargetResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomLocationFindTargetResourceGroupProperties.ToRequestContent(customLocationFindTargetResourceGroupProperties), context);
+                HttpMessage message = _customLocationsRestClient.CreateFindTargetResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CustomLocationFindTargetResourceGroupProperties.ToRequestContent(customLocationFindTargetResourceGroupProperties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CustomLocationFindTargetResourceGroupResult> response = Response.FromValue(CustomLocationFindTargetResourceGroupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             };
             return new CustomLocationsGetEnabledResourceTypesAsyncCollectionResultOfT(
                 _customLocationsRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             };
             return new CustomLocationsGetEnabledResourceTypesCollectionResultOfT(
                 _customLocationsRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CustomLocationData> response = Response.FromValue(CustomLocationData.FromResponse(result), result);
                     return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CustomLocationData> response = Response.FromValue(CustomLocationData.FromResponse(result), result);
                     return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CustomLocationData> response = Response.FromValue(CustomLocationData.FromResponse(result), result);
                     return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CustomLocationData> response = Response.FromValue(CustomLocationData.FromResponse(result), result);
                     return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CustomLocationData> response = Response.FromValue(CustomLocationData.FromResponse(result), result);
                     return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _customLocationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CustomLocationData> response = Response.FromValue(CustomLocationData.FromResponse(result), result);
                     return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());

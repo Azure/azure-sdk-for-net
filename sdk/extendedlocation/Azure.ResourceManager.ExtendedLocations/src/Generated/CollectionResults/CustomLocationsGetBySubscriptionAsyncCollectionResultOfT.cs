@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ExtendedLocations
     internal partial class CustomLocationsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<CustomLocationData>
     {
         private readonly CustomLocations _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CustomLocationsGetBySubscriptionAsyncCollectionResultOfT(CustomLocations client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CustomLocationsGetBySubscriptionAsyncCollectionResultOfT(CustomLocations client, string subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
