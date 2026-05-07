@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Search.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchEncryptionWithCmk SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement, SearchEncryptionComplianceStatus? encryptionComplianceStatus)
         {
-            return SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, serviceLevelEncryptionKey: default);
+            return SearchEncryptionWithCmk(enforcement: enforcement, encryptionComplianceStatus: encryptionComplianceStatus, serviceLevelEncryptionKey: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SearchServicePatch"/>. </summary>
