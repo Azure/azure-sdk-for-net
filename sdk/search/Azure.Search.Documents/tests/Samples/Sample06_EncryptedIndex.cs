@@ -17,6 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01)]
     public class EncryptedIndex : SearchTestBase
     {
         public EncryptedIndex(bool async, SearchClientOptions.ServiceVersion serviceVersion)
