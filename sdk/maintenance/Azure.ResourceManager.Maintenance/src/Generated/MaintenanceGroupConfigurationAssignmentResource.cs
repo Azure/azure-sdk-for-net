@@ -294,6 +294,108 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
+        /// Get Configuration records within a subscription and resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationAssignmentForResourceGroupOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MaintenanceGroupConfigurationAssignmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetAllAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(
+                _configurationAssignmentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                resourceGroupName,
+                providerName,
+                resourceType,
+                resourceName,
+                context,
+                "MaintenanceGroupConfigurationAssignmentResource.GetAll");
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription and resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationAssignmentForResourceGroupOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MaintenanceGroupConfigurationAssignmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetAll(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ConfigurationAssignmentsGetAllCollectionResultOfT(
+                _configurationAssignmentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                resourceGroupName,
+                providerName,
+                resourceType,
+                resourceName,
+                context,
+                "MaintenanceGroupConfigurationAssignmentResource.GetAll");
+        }
+
+        /// <summary>
         /// Update a MaintenanceGroupConfigurationAssignment.
         /// <list type="bullet">
         /// <item>
