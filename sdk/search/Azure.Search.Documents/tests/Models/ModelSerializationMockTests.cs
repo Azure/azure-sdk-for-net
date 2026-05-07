@@ -165,10 +165,6 @@ namespace Azure.Search.Documents.Tests.Models
         {
             if (expected.ValueKind != actual.ValueKind)
             {
-                // Allow null vs. missing — some properties may be omitted when null
-                if (expected.ValueKind == JsonValueKind.Null || actual.ValueKind == JsonValueKind.Null)
-                    return;
-
                 Assert.Fail($"[{context}] Expected {expected.ValueKind} but got {actual.ValueKind}.");
             }
 

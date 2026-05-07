@@ -6,12 +6,10 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
-using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -26,7 +24,7 @@ namespace Azure.Search.Documents.Tests
         public static Assembly SdkAssembly { get; } = typeof(SearchClient).Assembly;
 
         /// <summary>
-        /// ModelReaderWriter wire-format options ("J" format).
+        /// ModelReaderWriter wire-format options ("W" format).
         /// </summary>
         public static ModelReaderWriterOptions WireOptions { get; } = new ModelReaderWriterOptions("W");
 
