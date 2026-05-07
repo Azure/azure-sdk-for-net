@@ -6,7 +6,7 @@ environment: azsdk-mcp-mock
 
 tags:
   area: azsdk-common-prepare-release-plan
-  priority: p0
+  type: ci-gate
 
 config:
   runs: 1
