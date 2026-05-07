@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -40,6 +41,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
             // Arrange
             BlobChangeFeedClient client = GetChangeFeedClient();
+
+            //BlobContainerClient containerClient = GetServiceClient_SharedKey().GetBlobContainerClient("test-container");
+            //await containerClient.CreateAsync();
+            //for (int i = 0; i < 2000; i++)
+            //{
+            //    await containerClient.UploadBlobAsync($"blob-{i}", BinaryData.FromString("data"));
+            //}
 
             // Act
             List<BlobChangeFeedEvent> events = new List<BlobChangeFeedEvent>();
@@ -259,16 +267,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         public async Task GetChanges_IncludeNonFinalizedEvents_ReturnsEventsPastLastConsumable()
         {
             // Arrange - provision a fresh container under a change-feed-enabled account and seed it with events.
-            await using DisposingContainer test = await GetTestContainerAsync();
-            BlobContainerClient container = test.Container;
+            //await using DisposingContainer test = await GetTestContainerAsync();
+            //BlobContainerClient container = test.Container;
 
-            for (int i = 0; i < 10; i++)
-            {
-                await container.UploadBlobAsync($"blob-{i}", BinaryData.FromString("data"));
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    await container.UploadBlobAsync($"blob-{i}", BinaryData.FromString("data"));
+            //}
 
-            // Give the service a moment to surface the new events into the non-finalized segment index.
-            await Task.Delay(TimeSpan.FromSeconds(30));
+            //// Give the service a moment to surface the new events into the non-finalized segment index.
+            //await Task.Delay(TimeSpan.FromSeconds(30));
 
             BlobChangeFeedClient tailing = new BlobChangeFeedClient(
                 new Uri(TestConfigDefault.BlobServiceEndpoint),
