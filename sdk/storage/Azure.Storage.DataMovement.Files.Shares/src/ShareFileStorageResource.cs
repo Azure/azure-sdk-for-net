@@ -133,24 +133,33 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
-            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
-            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
 
+            if (!ShouldFinalizeSmbProperties(sourceProperties))
+            {
+                return;
+            }
+
+            ShareFileSetHttpHeadersOptions setOptions = new()
+            {
+                HttpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties),
+                SmbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey),
+            };
+
+            await ShareFileClient.SetHttpHeadersAsync(setOptions, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        private bool ShouldFinalizeSmbProperties(StorageResourceItemProperties sourceProperties)
+        {
             // Always set final SMB properties for non-empty files. SMB properties were
             // intentionally deferred from CreateAsync so that Azure File Sync does not
             // pick up the file until the upload is complete (matching v2 behavior).
             // For empty files, SMB properties are already set during CreateAsync, so
             // this call is only needed if the user explicitly configured FileChangedOn.
-            if ((sourceProperties == null || sourceProperties.ResourceLength > 0)
-                    || (_options?._isFileChangedOnSet == true || _options?.FileChangedOn != null))
-            {
-                await ShareFileClient.SetHttpHeadersAsync(new()
-                {
-                    HttpHeaders = httpHeaders,
-                    SmbProperties = smbProperties,
-                },
-                cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
+            bool isNonEmptyFile = sourceProperties == null || sourceProperties.ResourceLength > 0;
+            bool fileChangedOnConfigured = _options?._isFileChangedOnSet == true || _options?.FileChangedOn != null;
+
+            return isNonEmptyFile || fileChangedOnConfigured;
         }
 
         protected override async Task CopyBlockFromUriAsync(
