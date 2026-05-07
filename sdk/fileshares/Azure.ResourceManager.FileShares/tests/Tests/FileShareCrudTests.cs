@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.FileShares.Tests
             {
                 Properties = new FileSharePatchProperties
                 {
-                    ProvisionedStorageGiB = 2048,
+                    ProvisionedStorageInGiB = 2048,
                 },
                 Tags = { { "environment", "updated" }, { "stage", "testing" } },
             };

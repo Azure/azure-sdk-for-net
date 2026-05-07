@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FileShares.Tests
             {
                 Properties = new FileSharePatchProperties
                 {
-                    ProvisionedStorageGiB = 2048,
+                    ProvisionedStorageInGiB = 2048,
                     ProvisionedIOPerSec = 8048,
                     ProvisionedThroughputMiBPerSec = 456,
                 },
