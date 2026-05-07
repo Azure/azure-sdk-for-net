@@ -5,12 +5,12 @@ using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -46,7 +46,7 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         OpenApiFunctionDefinition toolDefinition = new(
             name: "tripadvisor",
             specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-            authentication:  new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
+            authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
                 projectConnectionId: tripadvisorConnection.Id
             ))
         );
@@ -56,7 +56,7 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = {openapiTool}
+            Tools = { openapiTool }
         };
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",

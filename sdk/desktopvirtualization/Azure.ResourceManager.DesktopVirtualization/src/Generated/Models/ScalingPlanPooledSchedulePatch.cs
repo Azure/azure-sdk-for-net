@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.ScalingMethod = value.Value;
+                Properties.ScalingMethod = value;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.RampUpLoadBalancingAlgorithm = value.Value;
+                Properties.RampUpLoadBalancingAlgorithm = value;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.RampUpMinimumHostsPct = value.Value;
+                Properties.RampUpMinimumHostsPct = value;
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.RampUpCapacityThresholdPct = value.Value;
+                Properties.RampUpCapacityThresholdPct = value;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.PeakLoadBalancingAlgorithm = value.Value;
+                Properties.PeakLoadBalancingAlgorithm = value;
             }
         }
 
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.RampDownLoadBalancingAlgorithm = value.Value;
+                Properties.RampDownLoadBalancingAlgorithm = value;
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.RampDownMinimumHostsPct = value.Value;
+                Properties.RampDownMinimumHostsPct = value;
             }
         }
 
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.RampDownCapacityThresholdPct = value.Value;
+                Properties.RampDownCapacityThresholdPct = value;
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.RampDownForceLogoffUsers = value.Value;
+                Properties.RampDownForceLogoffUsers = value;
             }
         }
 
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.RampDownStopHostsWhen = value.Value;
+                Properties.RampDownStopHostsWhen = value;
             }
         }
 
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.RampDownWaitTimeMinutes = value.Value;
+                Properties.RampDownWaitTimeMinutes = value;
             }
         }
 
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ScalingPlanPooledSchedulePatchProperties();
                 }
-                Properties.OffPeakLoadBalancingAlgorithm = value.Value;
+                Properties.OffPeakLoadBalancingAlgorithm = value;
             }
         }
     }

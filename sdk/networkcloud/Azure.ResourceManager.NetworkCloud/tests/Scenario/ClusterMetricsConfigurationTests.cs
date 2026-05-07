@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, metricsConfigurationName, createData);
+            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, metricsConfigurationName, createData, matchConditions: null);
             Assert.AreEqual(metricsConfigurationName, createResult.Value.Data.Name);
 
             // Get
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> updateResult = await clusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> updateResult = await clusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
 
             // List by cluster
             var listByCluster = new List<NetworkCloudClusterMetricsConfigurationResource>();

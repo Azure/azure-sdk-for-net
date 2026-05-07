@@ -793,20 +793,20 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="name"> Dimension name. </param>
-        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context)
+        public virtual Pageable<BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
@@ -814,11 +814,12 @@ namespace Azure.Developer.LoadTesting
                 this,
                 testRunId,
                 name,
-                metricname,
+                metricName,
                 metricNamespace,
                 timespan,
                 interval,
-                context);
+                context,
+                "LoadTestRunClient.GetMetricDimensionValues");
         }
 
         /// <summary>
@@ -834,20 +835,20 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="name"> Dimension name. </param>
-        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
@@ -855,11 +856,12 @@ namespace Azure.Developer.LoadTesting
                 this,
                 testRunId,
                 name,
-                metricname,
+                metricName,
                 metricNamespace,
                 timespan,
                 interval,
-                context);
+                context,
+                "LoadTestRunClient.GetMetricDimensionValues");
         }
 
         /// <summary> List the dimension values for the given metric dimension name. </summary>
@@ -868,19 +870,19 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="name"> Dimension name. </param>
-        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<string> GetMetricDimensionValues(string testRunId, string name, string metricname, string metricNamespace, string timespan, TimeGrain? interval = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<string> GetMetricDimensionValues(string testRunId, string name, string metricName, string metricNamespace, string timespan, TimeGrain? interval = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
@@ -888,11 +890,12 @@ namespace Azure.Developer.LoadTesting
                 this,
                 testRunId,
                 name,
-                metricname,
+                metricName,
                 metricNamespace,
                 timespan,
                 interval?.ToString(),
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetMetricDimensionValues");
         }
 
         /// <summary> List the dimension values for the given metric dimension name. </summary>
@@ -901,19 +904,19 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="name"> Dimension name. </param>
-        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<string> GetMetricDimensionValuesAsync(string testRunId, string name, string metricname, string metricNamespace, string timespan, TimeGrain? interval = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> GetMetricDimensionValuesAsync(string testRunId, string name, string metricName, string metricNamespace, string timespan, TimeGrain? interval = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
@@ -921,11 +924,12 @@ namespace Azure.Developer.LoadTesting
                 this,
                 testRunId,
                 name,
-                metricname,
+                metricName,
                 metricNamespace,
                 timespan,
                 interval?.ToString(),
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetMetricDimensionValues");
         }
 
         /// <summary>
@@ -1156,34 +1160,35 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test run, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="aggregation"> The aggregation. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetMetrics(string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation = default, string interval = default, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation = default, string interval = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricsCollectionResult(
                 this,
                 testRunId,
-                metricname,
+                metricName,
                 metricNamespace,
                 timespan,
                 content,
                 aggregation,
                 interval,
-                context);
+                context,
+                "LoadTestRunClient.GetMetrics");
         }
 
         /// <summary>
@@ -1198,34 +1203,35 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test run, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="aggregation"> The aggregation. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation = default, string interval = default, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation = default, string interval = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricsAsyncCollectionResult(
                 this,
                 testRunId,
-                metricname,
+                metricName,
                 metricNamespace,
                 timespan,
                 content,
                 aggregation,
                 interval,
-                context);
+                context,
+                "LoadTestRunClient.GetMetrics");
         }
 
         /// <summary> List the metric values for a load test run. </summary>
@@ -1233,33 +1239,34 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test run, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="body"> Metric dimension filter . </param>
         /// <param name="aggregation"> The aggregation. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TimeSeriesElement> GetMetrics(string testRunId, string metricname, string metricNamespace, string timespan, MetricsFilters body = default, string aggregation = default, TimeGrain? interval = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<TimeSeriesElement> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, MetricsFilters body = default, string aggregation = default, TimeGrain? interval = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricsCollectionResultOfT(
                 this,
                 testRunId,
-                metricname,
+                metricName,
                 metricNamespace,
                 timespan,
                 body,
                 aggregation,
                 interval?.ToString(),
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetMetrics");
         }
 
         /// <summary> List the metric values for a load test run. </summary>
@@ -1267,33 +1274,34 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test run, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="body"> Metric dimension filter . </param>
         /// <param name="aggregation"> The aggregation. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TimeSeriesElement> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string timespan, MetricsFilters body = default, string aggregation = default, TimeGrain? interval = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TimeSeriesElement> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, MetricsFilters body = default, string aggregation = default, TimeGrain? interval = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricsAsyncCollectionResultOfT(
                 this,
                 testRunId,
-                metricname,
+                metricName,
                 metricNamespace,
                 timespan,
                 body,
                 aggregation,
                 interval?.ToString(),
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetMetrics");
         }
 
         /// <summary>
@@ -1336,7 +1344,8 @@ namespace Azure.Developer.LoadTesting
                 maxPageSize,
                 createdByTypes,
                 testIds,
-                context);
+                context,
+                "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary>
@@ -1379,7 +1388,8 @@ namespace Azure.Developer.LoadTesting
                 maxPageSize,
                 createdByTypes,
                 testIds,
-                context);
+                context,
+                "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -1414,7 +1424,8 @@ namespace Azure.Developer.LoadTesting
                 maxPageSize,
                 createdByTypes,
                 testIds,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -1449,7 +1460,8 @@ namespace Azure.Developer.LoadTesting
                 maxPageSize,
                 createdByTypes,
                 testIds,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary>

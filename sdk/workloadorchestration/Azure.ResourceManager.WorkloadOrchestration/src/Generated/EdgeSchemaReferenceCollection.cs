@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateCreateOrUpdateRequest(Id, schemaReferenceName, EdgeSchemaReferenceData.ToRequestContent(data), context);
+                HttpMessage message = _schemaReferencesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), schemaReferenceName, EdgeSchemaReferenceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource>(
                     new EdgeSchemaReferenceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateCreateOrUpdateRequest(Id, schemaReferenceName, EdgeSchemaReferenceData.ToRequestContent(data), context);
+                HttpMessage message = _schemaReferencesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), schemaReferenceName, EdgeSchemaReferenceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource>(
                     new EdgeSchemaReferenceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id, schemaReferenceName, context);
+                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id.ToString(), schemaReferenceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSchemaReferenceData> response = Response.FromValue(EdgeSchemaReferenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id, schemaReferenceName, context);
+                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id.ToString(), schemaReferenceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSchemaReferenceData> response = Response.FromValue(EdgeSchemaReferenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSchemaReferenceData, EdgeSchemaReferenceResource>(new SchemaReferencesGetByResourceGroupAsyncCollectionResultOfT(_schemaReferencesRestClient, Id, context), data => new EdgeSchemaReferenceResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSchemaReferenceData, EdgeSchemaReferenceResource>(new SchemaReferencesGetByResourceGroupAsyncCollectionResultOfT(_schemaReferencesRestClient, Id.ToString(), context, "EdgeSchemaReferenceCollection.GetAll"), data => new EdgeSchemaReferenceResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSchemaReferenceData, EdgeSchemaReferenceResource>(new SchemaReferencesGetByResourceGroupCollectionResultOfT(_schemaReferencesRestClient, Id, context), data => new EdgeSchemaReferenceResource(Client, data));
+            return new PageableWrapper<EdgeSchemaReferenceData, EdgeSchemaReferenceResource>(new SchemaReferencesGetByResourceGroupCollectionResultOfT(_schemaReferencesRestClient, Id.ToString(), context, "EdgeSchemaReferenceCollection.GetAll"), data => new EdgeSchemaReferenceResource(Client, data));
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id, schemaReferenceName, context);
+                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id.ToString(), schemaReferenceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSchemaReferenceData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id, schemaReferenceName, context);
+                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id.ToString(), schemaReferenceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSchemaReferenceData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id, schemaReferenceName, context);
+                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id.ToString(), schemaReferenceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSchemaReferenceData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id, schemaReferenceName, context);
+                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id.ToString(), schemaReferenceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSchemaReferenceData> response = default;

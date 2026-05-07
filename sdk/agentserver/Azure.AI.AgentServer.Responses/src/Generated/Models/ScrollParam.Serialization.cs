@@ -87,6 +87,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteNumberValue(ScrollX);
             writer.WritePropertyName("scroll_y"u8);
             writer.WriteNumberValue(ScrollY);
+            if (Optional.IsCollectionDefined(Keys))
+            {
+                writer.WritePropertyName("keys"u8);
+                writer.WriteStartArray();
+                foreach (string item in Keys)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -120,6 +135,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             long y = default;
             long scrollX = default;
             long scrollY = default;
+            IList<string> keys = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -147,6 +163,27 @@ namespace Azure.AI.AgentServer.Responses.Models
                     scrollY = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("keys"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    keys = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -158,7 +195,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 x,
                 y,
                 scrollX,
-                scrollY);
+                scrollY,
+                keys ?? new ChangeTrackingList<string>());
         }
     }
 }

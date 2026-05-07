@@ -70,7 +70,7 @@ public class OutputItemFileSearchCallBuilderTests
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemFileSearchToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemFileSearchToolCallStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(ItemFileSearchToolCallStatus.InProgress));
         Assert.That(item.Queries, Is.Empty);
     }
 
@@ -139,7 +139,7 @@ public class OutputItemFileSearchCallBuilderTests
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemFileSearchToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemFileSearchToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(ItemFileSearchToolCallStatus.Completed));
     }
 
     // ── Sequence numbers ──────────────────────────────────────

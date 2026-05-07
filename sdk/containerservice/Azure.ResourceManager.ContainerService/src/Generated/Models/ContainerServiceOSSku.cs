@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Use AzureLinux3 as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information. For limitations, visit https://aka.ms/aks/node-images. For OS migration guidance, see https://aka.ms/aks/upgrade-os-version. </summary>
         private const string AzureLinux3Value = "AzureLinux3";
         /// <summary> Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead. </summary>
+        private const string MarinerValue = "Mariner";
+        /// <summary> Use Flatcar Container Linux as the OS for node images. Flatcar is a container-optimized, security-focused Linux OS, with an immutable filesystem and part of the Cloud Native Computing Foundation (CNCF). For more information about Flatcar Container Linux for AKS, see aka.ms/aks/flatcar-container-linux-for-aks. </summary>
+        private const string FlatcarValue = "Flatcar";
+        /// <summary> Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead. </summary>
         private const string CblMarinerValue = "CBLMariner";
         /// <summary> Use Windows2019 as the OS for node images. Unsupported for system node pools. Windows2019 only supports Windows2019 containers; it cannot run Windows2022 containers and vice versa. </summary>
         private const string Windows2019Value = "Windows2019";
@@ -29,6 +33,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string Windows2022Value = "Windows2022";
         /// <summary> Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions. </summary>
         private const string Ubuntu2204Value = "Ubuntu2204";
+        /// <summary> Use Windows2025 as the OS for node images. Unsupported for system node pools. Windows2025 supports Windows2022 and Windows 2025 containers; it cannot run Windows2019 containers and vice versa. </summary>
+        private const string Windows2025Value = "Windows2025";
+        /// <summary> Use Windows Annual Channel version as the OS for node images. Unsupported for system node pools. Details about supported container images and kubernetes versions under different AKS Annual Channel versions could be seen in https://aka.ms/aks/windows-annual-channel-details. </summary>
+        private const string WindowsAnnualValue = "WindowsAnnual";
         /// <summary> Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see see https://aka.ms/aks/supported-ubuntu-versions. </summary>
         private const string Ubuntu2404Value = "Ubuntu2404";
 
@@ -52,6 +60,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceOSSku AzureLinux3 { get; } = new ContainerServiceOSSku(AzureLinux3Value);
 
         /// <summary> Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead. </summary>
+        public static ContainerServiceOSSku Mariner { get; } = new ContainerServiceOSSku(MarinerValue);
+
+        /// <summary> Use Flatcar Container Linux as the OS for node images. Flatcar is a container-optimized, security-focused Linux OS, with an immutable filesystem and part of the Cloud Native Computing Foundation (CNCF). For more information about Flatcar Container Linux for AKS, see aka.ms/aks/flatcar-container-linux-for-aks. </summary>
+        public static ContainerServiceOSSku Flatcar { get; } = new ContainerServiceOSSku(FlatcarValue);
+
+        /// <summary> Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead. </summary>
         public static ContainerServiceOSSku CblMariner { get; } = new ContainerServiceOSSku(CblMarinerValue);
 
         /// <summary> Use Windows2019 as the OS for node images. Unsupported for system node pools. Windows2019 only supports Windows2019 containers; it cannot run Windows2022 containers and vice versa. </summary>
@@ -62,6 +76,12 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions. </summary>
         public static ContainerServiceOSSku Ubuntu2204 { get; } = new ContainerServiceOSSku(Ubuntu2204Value);
+
+        /// <summary> Use Windows2025 as the OS for node images. Unsupported for system node pools. Windows2025 supports Windows2022 and Windows 2025 containers; it cannot run Windows2019 containers and vice versa. </summary>
+        public static ContainerServiceOSSku Windows2025 { get; } = new ContainerServiceOSSku(Windows2025Value);
+
+        /// <summary> Use Windows Annual Channel version as the OS for node images. Unsupported for system node pools. Details about supported container images and kubernetes versions under different AKS Annual Channel versions could be seen in https://aka.ms/aks/windows-annual-channel-details. </summary>
+        public static ContainerServiceOSSku WindowsAnnual { get; } = new ContainerServiceOSSku(WindowsAnnualValue);
 
         /// <summary> Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see see https://aka.ms/aks/supported-ubuntu-versions. </summary>
         public static ContainerServiceOSSku Ubuntu2404 { get; } = new ContainerServiceOSSku(Ubuntu2404Value);

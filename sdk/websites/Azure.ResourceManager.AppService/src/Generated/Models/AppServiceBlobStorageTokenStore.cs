@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
+    /// <summary>
+    /// The configuration settings of the storage of the tokens if blob storage is used.
+    /// Serialized Name: BlobStorageTokenStore
+    /// </summary>
     internal partial class AppServiceBlobStorageTokenStore
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceBlobStorageTokenStore"/>. </summary>
-        /// <param name="sasUrlSettingName"> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </param>
+        /// <param name="sasUrlSettingName">
+        /// The name of the app setting containing the SAS URL of the blob storage containing the tokens.
+        /// Serialized Name: BlobStorageTokenStore.sasUrlSettingName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceBlobStorageTokenStore(string sasUrlSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </summary>
+        /// <summary>
+        /// The name of the app setting containing the SAS URL of the blob storage containing the tokens.
+        /// Serialized Name: BlobStorageTokenStore.sasUrlSettingName
+        /// </summary>
         [WirePath("sasUrlSettingName")]
         public string SasUrlSettingName { get; set; }
     }

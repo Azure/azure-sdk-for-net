@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -220,7 +220,13 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new TopLevelDomainsGetAgreementsAsyncCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, Id.Name, TopLevelDomainAgreementContent.ToRequestContent(content), context);
+            return new TopLevelDomainsGetAgreementsAsyncCollectionResultOfT(
+                _topLevelDomainsRestClient,
+                Id.SubscriptionId,
+                Id.Name,
+                TopLevelDomainAgreementContent.ToRequestContent(content),
+                context,
+                "TopLevelDomainResource.GetAgreements");
         }
 
         /// <summary>
@@ -256,7 +262,13 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new TopLevelDomainsGetAgreementsCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, Id.Name, TopLevelDomainAgreementContent.ToRequestContent(content), context);
+            return new TopLevelDomainsGetAgreementsCollectionResultOfT(
+                _topLevelDomainsRestClient,
+                Id.SubscriptionId,
+                Id.Name,
+                TopLevelDomainAgreementContent.ToRequestContent(content),
+                context,
+                "TopLevelDomainResource.GetAgreements");
         }
     }
 }

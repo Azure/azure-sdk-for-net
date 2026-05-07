@@ -17,7 +17,7 @@ namespace Azure.Developer.DevCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevBoxStorageProfile"/>. </summary>
-        public DevBoxStorageProfile()
+        internal DevBoxStorageProfile()
         {
         }
 
@@ -31,6 +31,6 @@ namespace Azure.Developer.DevCenter.Models
         }
 
         /// <summary> Settings for the operating system disk. </summary>
-        public OSDisk OSDisk { get; set; }
+        public OSDisk OSDisk { get; }
     }
 }

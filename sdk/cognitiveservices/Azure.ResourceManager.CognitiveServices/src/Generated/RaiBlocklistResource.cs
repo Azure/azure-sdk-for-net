@@ -7,49 +7,36 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.CognitiveServices.Models;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
-    /// A Class representing a RaiBlocklist along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RaiBlocklistResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRaiBlocklistResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetRaiBlocklist method.
+    /// A class representing a RaiBlocklist along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RaiBlocklistResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetRaiBlocklists method.
     /// </summary>
     public partial class RaiBlocklistResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RaiBlocklistResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="raiBlocklistName"> The raiBlocklistName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _raiBlocklistClientDiagnostics;
-        private readonly RaiBlocklistsRestOperations _raiBlocklistRestClient;
-        private readonly ClientDiagnostics _raiBlocklistItemClientDiagnostics;
-        private readonly RaiBlocklistItemsRestOperations _raiBlocklistItemRestClient;
+        private readonly ClientDiagnostics _raiBlocklistsClientDiagnostics;
+        private readonly RaiBlocklists _raiBlocklistsRestClient;
         private readonly RaiBlocklistData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/raiBlocklists";
 
-        /// <summary> Initializes a new instance of the <see cref="RaiBlocklistResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RaiBlocklistResource for mocking. </summary>
         protected RaiBlocklistResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RaiBlocklistResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiBlocklistResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RaiBlocklistResource(ArmClient client, RaiBlocklistData data) : this(client, data.Id)
@@ -58,143 +45,93 @@ namespace Azure.ResourceManager.CognitiveServices
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RaiBlocklistResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiBlocklistResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RaiBlocklistResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _raiBlocklistClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string raiBlocklistApiVersion);
-            _raiBlocklistRestClient = new RaiBlocklistsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, raiBlocklistApiVersion);
-            _raiBlocklistItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiBlocklistItemResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RaiBlocklistItemResource.ResourceType, out string raiBlocklistItemApiVersion);
-            _raiBlocklistItemRestClient = new RaiBlocklistItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, raiBlocklistItemApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _raiBlocklistsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _raiBlocklistsRestClient = new RaiBlocklists(_raiBlocklistsClientDiagnostics, Pipeline, Endpoint, raiBlocklistApiVersion ?? "2026-01-15-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual RaiBlocklistData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="raiBlocklistName"> The raiBlocklistName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of RaiBlocklistItemResources in the RaiBlocklist. </summary>
-        /// <returns> An object representing collection of RaiBlocklistItemResources and their operations over a RaiBlocklistItemResource. </returns>
-        public virtual RaiBlocklistItemCollection GetRaiBlocklistItems()
-        {
-            return GetCachedClient(client => new RaiBlocklistItemCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified custom blocklist Item associated with the custom blocklist.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}/raiBlocklistItems/{raiBlocklistItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklistItems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="raiBlocklistItemName"> The name of the RaiBlocklist Item associated with the custom blocklist. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="raiBlocklistItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RaiBlocklistItemResource>> GetRaiBlocklistItemAsync(string raiBlocklistItemName, CancellationToken cancellationToken = default)
-        {
-            return await GetRaiBlocklistItems().GetAsync(raiBlocklistItemName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified custom blocklist Item associated with the custom blocklist.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}/raiBlocklistItems/{raiBlocklistItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklistItems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="raiBlocklistItemName"> The name of the RaiBlocklist Item associated with the custom blocklist. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="raiBlocklistItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RaiBlocklistItemResource> GetRaiBlocklistItem(string raiBlocklistItemName, CancellationToken cancellationToken = default)
-        {
-            return GetRaiBlocklistItems().Get(raiBlocklistItemName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified custom blocklist associated with the Azure OpenAI account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiBlocklists_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RaiBlocklistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RaiBlocklistResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.Get");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.Get");
             scope.Start();
             try
             {
-                var response = await _raiBlocklistRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiBlocklistsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -208,33 +145,41 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Gets the specified custom blocklist associated with the Azure OpenAI account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiBlocklists_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RaiBlocklistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RaiBlocklistResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.Get");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.Get");
             scope.Start();
             try
             {
-                var response = _raiBlocklistRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiBlocklistsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,20 +193,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Deletes the specified custom blocklist associated with the Azure OpenAI account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiBlocklists_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RaiBlocklistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,14 +214,21 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.Delete");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.Delete");
             scope.Start();
             try
             {
-                var response = await _raiBlocklistRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation(_raiBlocklistClientDiagnostics, Pipeline, _raiBlocklistRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiBlocklistsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_raiBlocklistsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -290,20 +242,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Deletes the specified custom blocklist associated with the Azure OpenAI account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiBlocklists_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RaiBlocklistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,14 +263,21 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.Delete");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.Delete");
             scope.Start();
             try
             {
-                var response = _raiBlocklistRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CognitiveServicesArmOperation(_raiBlocklistClientDiagnostics, Pipeline, _raiBlocklistRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiBlocklistsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_raiBlocklistsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -329,23 +288,23 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Update the state of specified blocklist associated with the Azure OpenAI account.
+        /// Update a RaiBlocklist.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiBlocklists_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RaiBlocklistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,16 +316,24 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.Update");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.Update");
             scope.Start();
             try
             {
-                var response = await _raiBlocklistRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _raiBlocklistRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CognitiveServicesArmOperation<RaiBlocklistResource>(Response.FromValue(new RaiBlocklistResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiBlocklistsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RaiBlocklistData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CognitiveServicesArmOperation<RaiBlocklistResource> operation = new CognitiveServicesArmOperation<RaiBlocklistResource>(Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -377,23 +344,23 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Update the state of specified blocklist associated with the Azure OpenAI account.
+        /// Update a RaiBlocklist.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiBlocklists_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RaiBlocklistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -405,16 +372,24 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.Update");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.Update");
             scope.Start();
             try
             {
-                var response = _raiBlocklistRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _raiBlocklistRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CognitiveServicesArmOperation<RaiBlocklistResource>(Response.FromValue(new RaiBlocklistResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiBlocklistsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RaiBlocklistData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CognitiveServicesArmOperation<RaiBlocklistResource> operation = new CognitiveServicesArmOperation<RaiBlocklistResource>(Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -424,195 +399,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Batch operation to add blocklist items.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}/addRaiBlocklistItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklistItems_BatchAdd</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Properties describing the custom blocklist items. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<RaiBlocklistResource>> BatchAddRaiBlocklistItemAsync(IEnumerable<RaiBlocklistItemBulkContent> content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _raiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistResource.BatchAddRaiBlocklistItem");
-            scope.Start();
-            try
-            {
-                var response = await _raiBlocklistItemRestClient.BatchAddAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Batch operation to add blocklist items.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}/addRaiBlocklistItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklistItems_BatchAdd</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Properties describing the custom blocklist items. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<RaiBlocklistResource> BatchAddRaiBlocklistItem(IEnumerable<RaiBlocklistItemBulkContent> content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _raiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistResource.BatchAddRaiBlocklistItem");
-            scope.Start();
-            try
-            {
-                var response = _raiBlocklistItemRestClient.BatchAdd(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                return Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Batch operation to delete blocklist items.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}/deleteRaiBlocklistItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklistItems_BatchDelete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="raiBlocklistItemsNames"> List of RAI Blocklist Items Names. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemsNames"/> is null. </exception>
-        public virtual async Task<Response> BatchDeleteRaiBlocklistItemAsync(BinaryData raiBlocklistItemsNames, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(raiBlocklistItemsNames, nameof(raiBlocklistItemsNames));
-
-            using var scope = _raiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistResource.BatchDeleteRaiBlocklistItem");
-            scope.Start();
-            try
-            {
-                var response = await _raiBlocklistItemRestClient.BatchDeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiBlocklistItemsNames, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Batch operation to delete blocklist items.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}/deleteRaiBlocklistItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklistItems_BatchDelete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="raiBlocklistItemsNames"> List of RAI Blocklist Items Names. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemsNames"/> is null. </exception>
-        public virtual Response BatchDeleteRaiBlocklistItem(BinaryData raiBlocklistItemsNames, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(raiBlocklistItemsNames, nameof(raiBlocklistItemsNames));
-
-            using var scope = _raiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistResource.BatchDeleteRaiBlocklistItem");
-            scope.Start();
-            try
-            {
-                var response = _raiBlocklistItemRestClient.BatchDelete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiBlocklistItemsNames, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -622,23 +409,29 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.AddTag");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _raiBlocklistRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new RaiBlocklistResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _raiBlocklistsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
+                    return Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    RaiBlocklistData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<RaiBlocklistResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -649,27 +442,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -679,23 +452,29 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.AddTag");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _raiBlocklistRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new RaiBlocklistResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _raiBlocklistsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
+                    return Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    RaiBlocklistData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<RaiBlocklistResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -706,52 +485,38 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<RaiBlocklistResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.SetTags");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _raiBlocklistRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new RaiBlocklistResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _raiBlocklistsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
+                    return Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    RaiBlocklistData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<RaiBlocklistResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -762,52 +527,38 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<RaiBlocklistResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.SetTags");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _raiBlocklistRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new RaiBlocklistResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _raiBlocklistsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
+                    return Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    RaiBlocklistData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<RaiBlocklistResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -818,27 +569,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -846,23 +577,29 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.RemoveTag");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _raiBlocklistRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new RaiBlocklistResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _raiBlocklistsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
+                    return Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    RaiBlocklistData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<RaiBlocklistResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -873,27 +610,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -901,23 +618,29 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _raiBlocklistClientDiagnostics.CreateScope("RaiBlocklistResource.RemoveTag");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _raiBlocklistRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new RaiBlocklistResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _raiBlocklistsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
+                    return Response.FromValue(new RaiBlocklistResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    RaiBlocklistData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<RaiBlocklistResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -926,6 +649,39 @@ namespace Azure.ResourceManager.CognitiveServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of RaiBlocklistItems in the <see cref="RaiBlocklistResource"/>. </summary>
+        /// <returns> An object representing collection of RaiBlocklistItems and their operations over a RaiBlocklistItemResource. </returns>
+        public virtual RaiBlocklistItemCollection GetRaiBlocklistItems()
+        {
+            return GetCachedClient(client => new RaiBlocklistItemCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified custom blocklist Item associated with the custom blocklist. </summary>
+        /// <param name="raiBlocklistItemName"> The name of the RaiBlocklist Item associated with the custom blocklist. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="raiBlocklistItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RaiBlocklistItemResource>> GetRaiBlocklistItemAsync(string raiBlocklistItemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(raiBlocklistItemName, nameof(raiBlocklistItemName));
+
+            return await GetRaiBlocklistItems().GetAsync(raiBlocklistItemName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified custom blocklist Item associated with the custom blocklist. </summary>
+        /// <param name="raiBlocklistItemName"> The name of the RaiBlocklist Item associated with the custom blocklist. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="raiBlocklistItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RaiBlocklistItemResource> GetRaiBlocklistItem(string raiBlocklistItemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(raiBlocklistItemName, nameof(raiBlocklistItemName));
+
+            return GetRaiBlocklistItems().Get(raiBlocklistItemName, cancellationToken);
         }
     }
 }

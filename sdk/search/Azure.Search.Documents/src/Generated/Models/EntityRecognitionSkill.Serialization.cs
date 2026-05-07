@@ -80,25 +80,20 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(EntityRecognitionSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(EntityCategories))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
-                foreach (string item in EntityCategories)
+                foreach (EntityCategory item in Categories)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LanguageCode))
+            if (Optional.IsDefined(DefaultLanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode"u8);
-                writer.WriteStringValue(LanguageCode);
+                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
             if (Optional.IsDefined(MinimumPrecision))
             {
@@ -144,8 +139,8 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<string> entityCategories = default;
-            string languageCode = default;
+            IList<EntityCategory> categories = default;
+            EntityRecognitionSkillLanguage? defaultLanguageCode = default;
             double? minimumPrecision = default;
             string modelVersion = default;
             foreach (var prop in element.EnumerateObject())
@@ -196,29 +191,22 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<EntityCategory> array = new List<EntityCategory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new EntityCategory(item.GetString()));
                     }
-                    entityCategories = array;
+                    categories = array;
                     continue;
                 }
                 if (prop.NameEquals("defaultLanguageCode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        languageCode = null;
+                        defaultLanguageCode = null;
                         continue;
                     }
-                    languageCode = prop.Value.GetString();
+                    defaultLanguageCode = new EntityRecognitionSkillLanguage(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("minimumPrecision"u8))
@@ -253,8 +241,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 inputs,
                 outputs,
                 additionalBinaryDataProperties,
-                entityCategories ?? new ChangeTrackingList<string>(),
-                languageCode,
+                categories ?? new ChangeTrackingList<EntityCategory>(),
+                defaultLanguageCode,
                 minimumPrecision,
                 modelVersion);
         }

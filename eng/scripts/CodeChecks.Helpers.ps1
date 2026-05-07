@@ -1,6 +1,58 @@
 # Helper functions for CodeChecks.ps1
 # Separated so they can be unit-tested without executing the main script.
 
+# Checks whether only CI pipeline config files (ci*.yml) were changed in the given
+# service directory relative to the merge base. Returns $true if all changed files
+# in sdk/<ServiceDirectory>/ match ci*.yml, meaning codegen/snippets/API export can be skipped.
+function Test-OnlyCiConfigChanged {
+    param(
+        [string]$ServiceDirectory,
+        [string]$RepoRoot
+    )
+
+    try {
+        # Determine the merge base to compare against
+        $targetBranch = $env:SYSTEM_PULLREQUEST_TARGETBRANCH
+        $targetBranchName = $null
+        if ($targetBranch) {
+            $targetBranchName = $targetBranch -replace '^refs/heads/', ''
+        }
+
+        # Try to find the merge base, falling back through common branch names
+        $mergeBase = $null
+        $candidates = @()
+        if ($targetBranchName) {
+            $candidates += "origin/$targetBranchName"
+            $candidates += $targetBranchName
+        }
+        $candidates += "origin/main", "main", "origin/master", "master"
+
+        foreach ($candidate in $candidates) {
+            $mergeBase = git -C $RepoRoot merge-base HEAD $candidate 2>$null
+            if ($mergeBase) { break }
+        }
+        if (-not $mergeBase) { return $false }
+
+        $svcPath = "sdk/$ServiceDirectory/"
+        $changedFiles = git -C $RepoRoot diff --name-only $mergeBase -- $svcPath 2>$null
+        if (-not $changedFiles) { return $false }
+
+        foreach ($file in $changedFiles) {
+            $fileName = Split-Path -Leaf $file
+            if ($fileName -notmatch '^ci.*\.yml$') {
+                return $false
+            }
+        }
+
+        return $true
+    }
+    catch {
+        # On any error, fall back to running codegen (safe default)
+        Write-Host "Warning: Could not determine changed files for $ServiceDirectory — running full checks. Error: $_"
+        return $false
+    }
+}
+
 # Parses a single git status --porcelain line and returns the path(s) it contains.
 # For renames ("old -> new"), returns both paths. Returns an empty array for blank/malformed lines.
 function Get-PorcelainPaths([string]$line) {

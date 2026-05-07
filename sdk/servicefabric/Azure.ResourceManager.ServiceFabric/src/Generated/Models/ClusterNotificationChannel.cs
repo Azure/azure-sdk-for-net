@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public readonly partial struct ClusterNotificationChannel : IEquatable<ClusterNotificationChannel>
     {
         private readonly string _value;
+        /// <summary> For email user receivers. In this case, the parameter receivers should be a list of email addresses that will receive the notifications. </summary>
+        private const string EmailUserValue = "EmailUser";
+        /// <summary> For subscription receivers. In this case, the parameter receivers should be a list of roles of the subscription for the cluster (eg. Owner, AccountAdmin, etc) that will receive the notifications. </summary>
+        private const string EmailSubscriptionValue = "EmailSubscription";
 
         /// <summary> Initializes a new instance of <see cref="ClusterNotificationChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterNotificationChannel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EmailUserValue = "EmailUser";
-        private const string EmailSubscriptionValue = "EmailSubscription";
+            _value = value;
+        }
 
         /// <summary> For email user receivers. In this case, the parameter receivers should be a list of email addresses that will receive the notifications. </summary>
         public static ClusterNotificationChannel EmailUser { get; } = new ClusterNotificationChannel(EmailUserValue);
+
         /// <summary> For subscription receivers. In this case, the parameter receivers should be a list of roles of the subscription for the cluster (eg. Owner, AccountAdmin, etc) that will receive the notifications. </summary>
         public static ClusterNotificationChannel EmailSubscription { get; } = new ClusterNotificationChannel(EmailSubscriptionValue);
+
         /// <summary> Determines if two <see cref="ClusterNotificationChannel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterNotificationChannel left, ClusterNotificationChannel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClusterNotificationChannel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterNotificationChannel left, ClusterNotificationChannel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterNotificationChannel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClusterNotificationChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClusterNotificationChannel(string value) => new ClusterNotificationChannel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClusterNotificationChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClusterNotificationChannel?(string value) => value == null ? null : new ClusterNotificationChannel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterNotificationChannel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClusterNotificationChannel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

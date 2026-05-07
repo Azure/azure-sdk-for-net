@@ -92,9 +92,9 @@ public class Trycep : IAsyncDisposable
     public Trycep Compare(string expectedBicep)
     {
         BicepModules = GetPlan().Compile();
-        Assert.AreEqual(1, BicepModules.Count, $"Expected exactly one bicep module, not <{string.Join(", ", BicepModules.Keys)}>");
+        Assert.That(BicepModules.Count, Is.EqualTo(1), $"Expected exactly one bicep module, not <{string.Join(", ", BicepModules.Keys)}>");
 
-        Assert.IsNotNull(Bicep, "The produced Bicep module was null!");
+        Assert.That(Bicep, Is.Not.Null, "The produced Bicep module was null!");
         if (!CompareBicepContent(expectedBicep, Bicep!, "main.bicep"))
         {
             Assert.Fail("Bicep content comparison failed. See output above for details.");
@@ -106,9 +106,9 @@ public class Trycep : IAsyncDisposable
     public Trycep Compare(IDictionary<string, string> expectedBicepModules)
     {
         BicepModules = GetPlan().Compile();
-        Assert.AreEqual(
-            expectedBicepModules.Count,
+        Assert.That(
             BicepModules.Count,
+            Is.EqualTo(expectedBicepModules.Count),
             $"Expected {expectedBicepModules.Count} modules but found {BicepModules.Count}.  " +
                 $"Expected: <{string.Join(", ", expectedBicepModules.Keys)}>  " +
                 $"Actual: <{string.Join(", ", BicepModules.Keys)}>");
@@ -118,7 +118,7 @@ public class Trycep : IAsyncDisposable
         {
             string expected = expectedBicepModules[name];
             string? actual = BicepModules.TryGetValue(name, out string? b) ? b : null;
-            Assert.IsNotNull(actual, $"Did not find expected module {name} in the actual modules!");
+            Assert.That(actual, Is.Not.Null, $"Did not find expected module {name} in the actual modules!");
 
             if (!CompareBicepContent(expected, actual!, name))
             {
@@ -233,7 +233,7 @@ public class Trycep : IAsyncDisposable
             Console.WriteLine("Actual:");
             Console.WriteLine(arm);
         }
-        Assert.AreEqual(expectedArm, arm);
+        Assert.That(arm, Is.EqualTo(expectedArm));
         return this;
     }
 
@@ -257,7 +257,7 @@ public class Trycep : IAsyncDisposable
             {
                 remaining = [.. remaining.Where(m => !ignore.Contains(m.Code ?? ""))];
             }
-            Assert.Zero(remaining.Count,
+            Assert.That(remaining.Count, Is.Zero,
                 $"Found {remaining.Count} unexpected warnings:{Environment.NewLine}" +
                 $"{string.Join(Environment.NewLine, remaining.Select(s => s.ToString()))}");
         }

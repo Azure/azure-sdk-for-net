@@ -14,6 +14,7 @@ namespace Azure.AI.Projects
             InternalImageDetailLevel.Low => "low",
             InternalImageDetailLevel.High => "high",
             InternalImageDetailLevel.Auto => "auto",
+            InternalImageDetailLevel.Original => "original",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InternalImageDetailLevel value.")
         };
 
@@ -31,6 +32,10 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
                 return InternalImageDetailLevel.Auto;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "original"))
+            {
+                return InternalImageDetailLevel.Original;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InternalImageDetailLevel value.");
         }

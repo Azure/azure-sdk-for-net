@@ -1,5 +1,21 @@
 # Release History
 
+## 1.9.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.8.0 (2026-04-29)
+
+### Other Changes
+
+- Pulled in OpenTelemetry dependency updates.
+
 ## 1.7.0 (2026-03-27)
 
 ### Features Added

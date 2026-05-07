@@ -556,7 +556,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 FetchSecondaryRPsRequestContent.ToRequestContent(content),
                 filter,
                 skipToken,
-                context), data => new DataProtectionBackupRecoveryPointResource(Client, data));
+                context,
+                "MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPoints"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -599,7 +600,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 FetchSecondaryRPsRequestContent.ToRequestContent(content),
                 filter,
                 skipToken,
-                context), data => new DataProtectionBackupRecoveryPointResource(Client, data));
+                context,
+                "MockableDataProtectionBackupResourceGroupResource.GetSecondaryRecoveryPoints"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -738,7 +740,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 location,
                 CrossRegionRestoreJobsContent.ToRequestContent(content),
                 filter,
-                context), data => new DataProtectionBackupJobResource(Client, data));
+                context,
+                "MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJobs"), data => new DataProtectionBackupJobResource(Client, data));
         }
 
         /// <summary>
@@ -779,7 +782,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 location,
                 CrossRegionRestoreJobsContent.ToRequestContent(content),
                 filter,
-                context), data => new DataProtectionBackupJobResource(Client, data));
+                context,
+                "MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJobs"), data => new DataProtectionBackupJobResource(Client, data));
         }
     }
 }

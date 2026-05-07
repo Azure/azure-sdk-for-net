@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Create Volume
             NetworkCloudVolumeData createData = new NetworkCloudVolumeData(TestEnvironment.Location, new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"), 10);
-            ArmOperation<NetworkCloudVolumeResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, createData);
+            ArmOperation<NetworkCloudVolumeResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, createData, matchConditions: null);
             Assert.AreEqual(createResult.Value.Data.Name, volumeName);
 
             // Get Volume
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            Response<NetworkCloudVolumeResource> updateResult = await volume.UpdateAsync(updateData);
+            Response<NetworkCloudVolumeResource> updateResult = await volume.UpdateAsync(updateData, matchConditions: null);
             Assert.AreEqual(updateData.Tags, updateResult.Value.Data.Tags);
 
             // List Volumes by Resource Group

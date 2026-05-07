@@ -7,16 +7,31 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Gets or sets the workflow health state. </summary>
+    /// <summary>
+    /// Gets or sets the workflow health state.
+    /// Serialized Name: WorkflowHealthState
+    /// </summary>
     public enum WorkflowHealthState
     {
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: WorkflowHealthState.Unknown
+        /// </summary>
         Unknown,
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: WorkflowHealthState.NotSpecified
+        /// </summary>
         NotSpecified,
-        /// <summary> Healthy. </summary>
+        /// <summary>
+        /// Healthy
+        /// Serialized Name: WorkflowHealthState.Healthy
+        /// </summary>
         Healthy,
-        /// <summary> Unhealthy. </summary>
+        /// <summary>
+        /// Unhealthy
+        /// Serialized Name: WorkflowHealthState.Unhealthy
+        /// </summary>
         Unhealthy
     }
 }

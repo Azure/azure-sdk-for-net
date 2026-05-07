@@ -9,8 +9,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 /// <summary>
 /// Tests that builder EmitDone() calls TrackCompletedOutputItem, accumulating
 /// items in the stream-owned Models.ResponseObject. Verifies that EmitCompleted() after
-/// builder emission produces a terminal event with the full Output list and
-/// correctly computed OutputText.
+/// builder emission produces a terminal event with the full Output list.
 /// </summary>
 public class BuilderAccumulationTests
 {
@@ -29,8 +28,8 @@ public class BuilderAccumulationTests
         msg.EmitAdded();
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Hello");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("Hello");
+        text.EmitDone();
 
         msg.EmitDone();
 
@@ -63,8 +62,8 @@ public class BuilderAccumulationTests
         msg.EmitAdded();
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Hi");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("Hi");
+        text.EmitDone();
         msg.EmitDone();
 
         var fc = stream.AddOutputItemFunctionCall("fn", "c1");
@@ -86,8 +85,8 @@ public class BuilderAccumulationTests
         msg.EmitAdded();
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Result");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("Result");
+        text.EmitDone();
         msg.EmitDone();
 
         var completed = stream.EmitCompleted();
@@ -97,7 +96,7 @@ public class BuilderAccumulationTests
     }
 
     [Test]
-    public void EmitCompleted_ComputesOutputTextFromAccumulatedMessages()
+    public void EmitCompleted_DoesNotSetOutputText()
     {
         var (stream, response) = CreateStream();
 
@@ -105,25 +104,26 @@ public class BuilderAccumulationTests
         msg1.EmitAdded();
         var t1 = msg1.AddTextContent();
         t1.EmitAdded();
-        t1.EmitDone("Hello ");
-        msg1.EmitContentDone(t1);
+        t1.EmitTextDone("Hello ");
+        t1.EmitDone();
         msg1.EmitDone();
 
         var msg2 = stream.AddOutputItemMessage();
         msg2.EmitAdded();
         var t2 = msg2.AddTextContent();
         t2.EmitAdded();
-        t2.EmitDone("World");
-        msg2.EmitContentDone(t2);
+        t2.EmitTextDone("World");
+        t2.EmitDone();
         msg2.EmitDone();
 
         var completed = stream.EmitCompleted();
 
-        Assert.That(completed.Response.OutputText, Is.EqualTo("Hello World"));
+        // output_text is a client SDK convenience property; the server never sets it.
+        Assert.That(completed.Response.OutputText, Is.Null);
     }
 
     [Test]
-    public void EmitCompleted_OutputTextIgnoresNonMessageItems()
+    public void EmitCompleted_OutputTextNotSetEvenWithNonMessageItems()
     {
         var (stream, response) = CreateStream();
 
@@ -136,13 +136,13 @@ public class BuilderAccumulationTests
         msg.EmitAdded();
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Only this");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("Only this");
+        text.EmitDone();
         msg.EmitDone();
 
         var completed = stream.EmitCompleted();
 
-        // OutputText comes only from messages, not function calls
-        Assert.That(completed.Response.OutputText, Is.EqualTo("Only this"));
+        // output_text is a client SDK convenience property; the server never sets it.
+        Assert.That(completed.Response.OutputText, Is.Null);
     }
 }

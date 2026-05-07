@@ -7,31 +7,28 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Messages
 {
     /// <summary> The message template's location value information. </summary>
-    [CodeGenModel("MessageTemplateLocation")]
+    [CodeGenSuppress("MessageTemplateLocation", typeof(string), typeof(double), typeof(double))]
     public partial class MessageTemplateLocation
     {
         /// <summary> The latitude of the location. </summary>
         [CodeGenMember("Latitude")]
         internal double LatitudeInternal
         {
-            get
-            {
-                return Position.Latitude;
-            }
+            get => Position.Latitude;
+            set => Position = new GeoPosition(Position.Longitude, value);
         }
 
         /// <summary> The longitude of the location. </summary>
         [CodeGenMember("Longitude")]
         internal double LongitudeInternal
         {
-            get
-            {
-                return Position.Longitude;
-            }
+            get => Position.Longitude;
+            set => Position = new GeoPosition(value, Position.Latitude);
         }
 
         /// <summary> The geo position of the location. </summary>
@@ -40,37 +37,9 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
         /// <param name="name"> Name of the Template value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public MessageTemplateLocation(string name) : base(name)
+        public MessageTemplateLocation(string name) : base(name, MessageTemplateValueKind.Location)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Kind = MessageTemplateValueKind.Location;
-        }
-
-        // This is a direct copy of the auto-rest generated constructor but we want to make the internal Latitude and Longitude read only
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
-        /// <param name="latitudeInternal"> The latitude of the location. </param>
-        /// <param name="longitudeInternal"> The longitude of the location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal MessageTemplateLocation(string name, double latitudeInternal, double longitudeInternal) : base(name)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Kind = MessageTemplateValueKind.Location;
-        }
-
-        // This is a direct copy of the auto-rest generated constructor but we want to make the internal Latitude and Longitude read only
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
-        /// <param name="kind"> The type discriminator describing a template parameter type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="locationName"> The [Optional] name of the location. </param>
-        /// <param name="address"> The [Optional] address of the location. </param>
-        /// <param name="latitudeInternal"> The latitude of the location. </param>
-        /// <param name="longitudeInternal"> The longitude of the location. </param>
-        internal MessageTemplateLocation(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string locationName, string address, double latitudeInternal, double longitudeInternal) : base(name, kind, serializedAdditionalRawData)
-        {
-            LocationName = locationName;
-            Address = address;
         }
     }
 }

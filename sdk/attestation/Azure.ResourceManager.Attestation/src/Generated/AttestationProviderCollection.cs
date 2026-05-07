@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Attestation
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupAsyncCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AttestationProviderResource(Client, data));
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupAsyncCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AttestationProviderResource(Client, data));
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>

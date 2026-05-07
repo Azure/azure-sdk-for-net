@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.EdgeOrder
         private readonly string _expand;
         private readonly string _skipToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ProductsAndConfigurationsOperationGroupGetProductFamiliesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ProductsAndConfigurationsOperationGroup client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProductsAndConfigurationsOperationGroupGetProductFamiliesAsyncCollectionResultOfT(ProductsAndConfigurationsOperationGroup client, Guid subscriptionId, RequestContent content, string expand, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ProductsAndConfigurationsOperationGroupGetProductFamiliesAsyncCollectionResultOfT(ProductsAndConfigurationsOperationGroup client, Guid subscriptionId, RequestContent content, string expand, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.EdgeOrder
             _expand = expand;
             _skipToken = skipToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ProductsAndConfigurationsOperationGroupGetProductFamiliesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetProductFamiliesRequest(nextLink, _subscriptionId, _content, _expand, _skipToken, _context) : _client.CreateGetProductFamiliesRequest(_subscriptionId, _content, _expand, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableEdgeOrderSubscriptionResource.GetProductFamilies");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

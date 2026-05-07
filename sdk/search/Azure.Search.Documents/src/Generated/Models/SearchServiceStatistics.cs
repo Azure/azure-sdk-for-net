@@ -19,24 +19,20 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="SearchServiceStatistics"/>. </summary>
         /// <param name="counters"> Service level resource counters. </param>
         /// <param name="limits"> Service level general limits. </param>
-        /// <param name="indexersRuntime"> Service level indexer runtime consumption. </param>
-        internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits, ServiceIndexersRuntime indexersRuntime)
+        internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits)
         {
             Counters = counters;
             Limits = limits;
-            IndexersRuntime = indexersRuntime;
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceStatistics"/>. </summary>
         /// <param name="counters"> Service level resource counters. </param>
         /// <param name="limits"> Service level general limits. </param>
-        /// <param name="indexersRuntime"> Service level indexer runtime consumption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits, ServiceIndexersRuntime indexersRuntime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Counters = counters;
             Limits = limits;
-            IndexersRuntime = indexersRuntime;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,8 +41,5 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Service level general limits. </summary>
         public SearchServiceLimits Limits { get; }
-
-        /// <summary> Service level indexer runtime consumption. </summary>
-        public ServiceIndexersRuntime IndexersRuntime { get; }
     }
 }

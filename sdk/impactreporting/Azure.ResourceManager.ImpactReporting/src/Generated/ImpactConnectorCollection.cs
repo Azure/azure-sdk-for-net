@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionAsyncCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context), data => new ImpactConnectorResource(Client, data));
+            return new AsyncPageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionAsyncCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context, "ImpactConnectorCollection.GetAll"), data => new ImpactConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context), data => new ImpactConnectorResource(Client, data));
+            return new PageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context, "ImpactConnectorCollection.GetAll"), data => new ImpactConnectorResource(Client, data));
         }
 
         /// <summary>

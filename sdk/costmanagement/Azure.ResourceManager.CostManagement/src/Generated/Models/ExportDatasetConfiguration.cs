@@ -7,60 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The export dataset configuration. Allows columns to be selected for the export. If not provided then the export will include all available columns. </summary>
+    /// <summary> This is on path to deprecation and will not be supported going forward. </summary>
     internal partial class ExportDatasetConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExportDatasetConfiguration"/>. </summary>
         public ExportDatasetConfiguration()
         {
             Columns = new ChangeTrackingList<string>();
+            Filters = new ChangeTrackingList<FilterItems>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportDatasetConfiguration"/>. </summary>
         /// <param name="columns"> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDatasetConfiguration(IList<string> columns, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="dataVersion"> The data version for the selected for the export. If not provided then the export will default to latest data version. </param>
+        /// <param name="filters"> Filters associated with the data sets. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExportDatasetConfiguration(IList<string> columns, string dataVersion, IList<FilterItems> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Columns = columns;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            DataVersion = dataVersion;
+            Filters = filters;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </summary>
-        public IList<string> Columns { get; }
+        public IList<string> Columns { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> The data version for the selected for the export. If not provided then the export will default to latest data version. </summary>
+        public string DataVersion { get; set; }
+
+        /// <summary> Filters associated with the data sets. </summary>
+        public IList<FilterItems> Filters { get; } = new ChangeTrackingList<FilterItems>();
     }
 }

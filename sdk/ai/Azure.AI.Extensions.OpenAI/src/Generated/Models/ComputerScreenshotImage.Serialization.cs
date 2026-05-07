@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A computer screenshot image used with the computer use tool. </summary>
-    internal partial class ComputerScreenshotImage : IJsonModel<ComputerScreenshotImage>
+    public partial class ComputerScreenshotImage : IJsonModel<ComputerScreenshotImage>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

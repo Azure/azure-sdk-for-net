@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         private readonly string _accountId;
         private readonly string _organizationId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PlansGetNewRelicPlansCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Plans client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="accountId"> Account Id. </param>
         /// <param name="organizationId"> Organization Id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PlansGetNewRelicPlansCollectionResultOfT(Plans client, string subscriptionId, string accountId, string organizationId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PlansGetNewRelicPlansCollectionResultOfT(Plans client, string subscriptionId, string accountId, string organizationId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _accountId = accountId;
             _organizationId = organizationId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PlansGetNewRelicPlansCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetNewRelicPlansRequest(nextLink, _subscriptionId, _accountId, _organizationId, _context) : _client.CreateGetNewRelicPlansRequest(_subscriptionId, _accountId, _organizationId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableNewRelicObservabilitySubscriptionResource.GetNewRelicPlans");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DevCenter.Models
     public readonly partial struct DevCenterScheduledType : IEquatable<DevCenterScheduledType>
     {
         private readonly string _value;
+        /// <summary> Stop Dev Box task type. </summary>
+        private const string StopDevBoxValue = "StopDevBox";
 
         /// <summary> Initializes a new instance of <see cref="DevCenterScheduledType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevCenterScheduledType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string StopDevBoxValue = "StopDevBox";
-
-        /// <summary> StopDevBox. </summary>
+        /// <summary> Stop Dev Box task type. </summary>
         public static DevCenterScheduledType StopDevBox { get; } = new DevCenterScheduledType(StopDevBoxValue);
+
         /// <summary> Determines if two <see cref="DevCenterScheduledType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevCenterScheduledType left, DevCenterScheduledType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevCenterScheduledType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevCenterScheduledType left, DevCenterScheduledType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevCenterScheduledType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevCenterScheduledType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevCenterScheduledType(string value) => new DevCenterScheduledType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevCenterScheduledType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevCenterScheduledType?(string value) => value == null ? null : new DevCenterScheduledType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevCenterScheduledType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevCenterScheduledType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

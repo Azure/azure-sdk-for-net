@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             if (id.ResourceType != NotificationHubResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NotificationHubResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NotificationHubResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.NotificationHubs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new NotificationHubAuthorizationRuleResource(Client, data));
+                context,
+                "NotificationHubAuthorizationRuleCollection.GetAll"), data => new NotificationHubAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.NotificationHubs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new NotificationHubAuthorizationRuleResource(Client, data));
+                context,
+                "NotificationHubAuthorizationRuleCollection.GetAll"), data => new NotificationHubAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

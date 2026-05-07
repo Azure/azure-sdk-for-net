@@ -26,7 +26,7 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         this IEndpointRouteBuilder endpoints,
         string? prefix = null)
     {
-        // Fail-fast: verify ResponseHandler is registered (FR-016, FR-017)
+        // Fail-fast: verify ResponseHandler is registered (S-004)
         var handler = endpoints.ServiceProvider.GetService<ResponseHandler>();
         if (handler is null)
         {
@@ -39,15 +39,16 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         var groupPrefix = string.IsNullOrEmpty(prefix) ? string.Empty : prefix.TrimEnd('/');
         var group = endpoints.MapGroup(groupPrefix);
 
-        // Register Responses protocol identity with the user-agent registry (if available)
-        var registry = endpoints.ServiceProvider.GetService<ServerUserAgentRegistry>();
+        // Register Responses protocol identity with the version registry (if available)
+        var registry = endpoints.ServiceProvider.GetService<ServerVersionRegistry>();
         if (registry is not null)
         {
-            registry.Register(ServerUserAgentRegistry.BuildIdentityString(
+            registry.Register(ServerVersionRegistry.BuildIdentityString(
                 "azure-ai-agentserver-responses",
                 typeof(ResponsesServerEndpointRouteBuilderExtensions).Assembly));
         }
 
+        group.AddEndpointFilter<SessionIdResponseHeaderFilter>();
         group.AddEndpointFilter<ResponsesExceptionFilter>();
 
         group.MapPost("/responses", async (HttpContext httpContext, ResponseEndpointHandler handler) =>

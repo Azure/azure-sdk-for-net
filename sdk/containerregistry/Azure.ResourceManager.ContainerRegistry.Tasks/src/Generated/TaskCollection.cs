@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -292,7 +292,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TaskData, TaskResource>(new ContainerRegistryTaskRestClientGetAllAsyncCollectionResultOfT(_containerRegistryTaskRestClientRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, context), data => new TaskResource(Client, data));
+            return new AsyncPageableWrapper<TaskData, TaskResource>(new ContainerRegistryTaskRestClientGetAllAsyncCollectionResultOfT(
+                _containerRegistryTaskRestClientRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _registryName,
+                context,
+                "TaskCollection.GetAll"), data => new TaskResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +326,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TaskData, TaskResource>(new ContainerRegistryTaskRestClientGetAllCollectionResultOfT(_containerRegistryTaskRestClientRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, context), data => new TaskResource(Client, data));
+            return new PageableWrapper<TaskData, TaskResource>(new ContainerRegistryTaskRestClientGetAllCollectionResultOfT(
+                _containerRegistryTaskRestClientRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _registryName,
+                context,
+                "TaskCollection.GetAll"), data => new TaskResource(Client, data));
         }
 
         /// <summary>

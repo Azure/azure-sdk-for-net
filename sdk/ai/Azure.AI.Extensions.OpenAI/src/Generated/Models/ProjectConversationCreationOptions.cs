@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="internalMetadata"></param>
         /// <param name="items"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectConversationCreationOptions(InternalMetadataContainer internalMetadata, IList<global::OpenAI.Responses.ResponseItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectConversationCreationOptions(InternalMetadataContainer internalMetadata, IList<ResponseItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InternalMetadata = internalMetadata;
             Items = items;

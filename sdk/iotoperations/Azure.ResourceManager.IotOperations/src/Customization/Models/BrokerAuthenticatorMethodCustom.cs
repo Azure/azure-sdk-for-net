@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public string X509SecretRef
         {
             get => Auth is null ? default : Auth.X509SecretRef;
-            set => Auth = new BrokerAuthenticatorCustomAuth(value);
+            set => AuthX509SecretRef = value;
         }
     }
 }

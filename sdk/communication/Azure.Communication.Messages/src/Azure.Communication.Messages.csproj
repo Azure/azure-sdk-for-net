@@ -12,7 +12,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>$(NoWarn);AZC0007;AZC0030;AZC0034</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +21,7 @@
     <Compile Include="..\..\Shared\src\CommunicationBearerTokenCredential.cs" LinkBase="Shared\Communication" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <ItemGroup>

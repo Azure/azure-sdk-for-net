@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -289,7 +289,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageGetByResourceGroupAsyncCollectionResultOfT(_appAttachPackageRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filter, context), data => new AppAttachPackageResource(Client, data));
+            return new AsyncPageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageGetByResourceGroupAsyncCollectionResultOfT(
+                _appAttachPackageRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                context,
+                "AppAttachPackageCollection.GetAll"), data => new AppAttachPackageResource(Client, data));
         }
 
         /// <summary>
@@ -318,7 +324,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageGetByResourceGroupCollectionResultOfT(_appAttachPackageRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filter, context), data => new AppAttachPackageResource(Client, data));
+            return new PageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageGetByResourceGroupCollectionResultOfT(
+                _appAttachPackageRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                context,
+                "AppAttachPackageCollection.GetAll"), data => new AppAttachPackageResource(Client, data));
         }
 
         /// <summary>

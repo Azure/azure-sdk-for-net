@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> The result of the request or operation. </summary>
-    internal partial class TrafficManagerDeleteOperationResult
+    public partial class TrafficManagerDeleteOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

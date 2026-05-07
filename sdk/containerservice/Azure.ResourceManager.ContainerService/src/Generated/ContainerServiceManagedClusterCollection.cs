@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ContainerServiceManagedClusterResource.ResourceType, out string containerServiceManagedClusterApiVersion);
             _managedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceManagedClusterResource.ResourceType.Namespace, Diagnostics);
-            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Endpoint, containerServiceManagedClusterApiVersion ?? "2026-01-01");
+            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Endpoint, containerServiceManagedClusterApiVersion ?? "2026-01-02-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetAllAsyncCollectionResultOfT(_managedClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerServiceManagedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetAllAsyncCollectionResultOfT(_managedClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerServiceManagedClusterCollection.GetAll"), data => new ContainerServiceManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetAllCollectionResultOfT(_managedClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerServiceManagedClusterResource(Client, data));
+            return new PageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetAllCollectionResultOfT(_managedClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerServiceManagedClusterCollection.GetAll"), data => new ContainerServiceManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

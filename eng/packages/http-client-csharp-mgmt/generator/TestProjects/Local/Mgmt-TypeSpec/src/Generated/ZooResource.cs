@@ -93,7 +93,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -238,7 +238,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -297,7 +298,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -346,7 +348,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _zoosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation operation = new TestsArmOperation(_zoosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(
+                    _zoosClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -395,7 +403,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _zoosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation operation = new TestsArmOperation(_zoosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(
+                    _zoosClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

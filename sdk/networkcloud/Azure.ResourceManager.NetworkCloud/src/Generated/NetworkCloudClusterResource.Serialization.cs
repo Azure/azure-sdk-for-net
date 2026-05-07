@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    /// <summary></summary>
     public partial class NetworkCloudClusterResource : IJsonModel<NetworkCloudClusterData>
     {
-        private static NetworkCloudClusterData s_dataDeserializationInstance;
-        private static NetworkCloudClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkCloudClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkCloudClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkCloudClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudClusterData>)Data).Write(writer, options);
 
-        NetworkCloudClusterData IJsonModel<NetworkCloudClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudClusterData IJsonModel<NetworkCloudClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkCloudClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudClusterData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkCloudClusterData IPersistableModel<NetworkCloudClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudClusterData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkCloudClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

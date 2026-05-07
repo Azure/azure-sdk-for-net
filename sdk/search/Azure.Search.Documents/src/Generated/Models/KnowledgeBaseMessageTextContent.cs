@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -16,11 +15,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageTextContent"/>. </summary>
         /// <param name="text"> The text content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public KnowledgeBaseMessageTextContent(string text) : base(KnowledgeBaseMessageContentType.Text)
+        internal KnowledgeBaseMessageTextContent(string text) : base(KnowledgeBaseMessageContentType.Text)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 
@@ -34,6 +30,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> The text content. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

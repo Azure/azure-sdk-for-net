@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="rules"> The storage account object replication rules. </param>
         /// <param name="metrics"> Optional. The object replication policy metrics feature options. </param>
         /// <param name="priorityReplication"> Optional. The object replication policy priority replication feature options. </param>
-        /// <param name="tagsReplication"> Optional. The object replication policy tags replication feature options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectReplicationPolicyProperties(string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IList<ObjectReplicationPolicyRule> rules, ObjectReplicationPolicyPropertiesMetrics metrics, ObjectReplicationPolicyPropertiesPriorityReplication priorityReplication, ObjectReplicationPolicyPropertiesTagsReplication tagsReplication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectReplicationPolicyProperties(string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IList<ObjectReplicationPolicyRule> rules, ObjectReplicationPolicyPropertiesMetrics metrics, ObjectReplicationPolicyPropertiesPriorityReplication priorityReplication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyId = policyId;
             EnabledOn = enabledOn;
@@ -50,7 +49,6 @@ namespace Azure.ResourceManager.Storage.Models
             Rules = rules;
             Metrics = metrics;
             PriorityReplication = priorityReplication;
-            TagsReplication = tagsReplication;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -81,10 +79,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Optional. The object replication policy priority replication feature options. </summary>
         [WirePath("priorityReplication")]
         internal ObjectReplicationPolicyPropertiesPriorityReplication PriorityReplication { get; set; }
-
-        /// <summary> Optional. The object replication policy tags replication feature options. </summary>
-        [WirePath("tagsReplication")]
-        internal ObjectReplicationPolicyPropertiesTagsReplication TagsReplication { get; set; }
 
         /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
         [WirePath("metrics.enabled")]
@@ -119,24 +113,6 @@ namespace Azure.ResourceManager.Storage.Models
                     PriorityReplication = new ObjectReplicationPolicyPropertiesPriorityReplication();
                 }
                 PriorityReplication.IsPriorityReplicationEnabled = value;
-            }
-        }
-
-        /// <summary> Indicates whether object replication tags replication feature is enabled for the policy. </summary>
-        [WirePath("tagsReplication.enabled")]
-        public bool? TagsReplicationEnabled
-        {
-            get
-            {
-                return TagsReplication is null ? default : TagsReplication.Enabled;
-            }
-            set
-            {
-                if (TagsReplication is null)
-                {
-                    TagsReplication = new ObjectReplicationPolicyPropertiesTagsReplication();
-                }
-                TagsReplication.Enabled = value;
             }
         }
     }

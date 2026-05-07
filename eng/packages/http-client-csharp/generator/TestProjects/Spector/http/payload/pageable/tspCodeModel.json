@@ -1221,7 +1221,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "requestQueryResponseHeader.Response.anonymous.pets",
+          "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseHeader.Response.anonymous.pets",
           "serializationOptions": {
             "json": {
               "name": "pets"
@@ -1258,7 +1258,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "requestHeaderResponseHeader.Response.anonymous.pets",
+          "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseHeader.Response.anonymous.pets",
           "serializationOptions": {
             "json": {
               "name": "pets"

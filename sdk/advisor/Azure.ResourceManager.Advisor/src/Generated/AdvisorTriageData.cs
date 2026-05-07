@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ReviewId;
+                return Properties is null ? default : Properties.ReviewId;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.RecommendationId;
+                return Properties is null ? default : Properties.RecommendationId;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.SubscriptionId;
+                return Properties is null ? default : Properties.SubscriptionId;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ResourceGroup;
+                return Properties is null ? default : Properties.ResourceGroup;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.TriageResourceType;
+                return Properties is null ? default : Properties.TriageResourceType;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ResourceId;
+                return Properties is null ? default : Properties.ResourceId;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ResourceName;
+                return Properties is null ? default : Properties.ResourceName;
             }
         }
     }

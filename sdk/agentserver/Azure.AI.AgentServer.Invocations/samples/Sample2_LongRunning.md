@@ -48,6 +48,7 @@ public class DocumentAnalysisHandler : InvocationHandler
         string invocationId,
         HttpRequest request,
         HttpResponse response,
+        InvocationContext context,
         CancellationToken cancellationToken)
     {
         if (!s_jobs.TryGetValue(invocationId, out var job))
@@ -73,6 +74,7 @@ public class DocumentAnalysisHandler : InvocationHandler
         string invocationId,
         HttpRequest request,
         HttpResponse response,
+        InvocationContext context,
         CancellationToken cancellationToken)
     {
         if (s_jobs.TryGetValue(invocationId, out var job))

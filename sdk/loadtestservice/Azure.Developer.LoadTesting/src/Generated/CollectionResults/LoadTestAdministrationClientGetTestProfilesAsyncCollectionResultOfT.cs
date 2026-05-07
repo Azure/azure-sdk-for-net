@@ -23,6 +23,7 @@ namespace Azure.Developer.LoadTesting
         private readonly IEnumerable<string> _testProfileIds;
         private readonly IEnumerable<string> _testIds;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestAdministrationClient client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testProfileIds"> Comma separated list of IDs of the test profiles to filter. </param>
         /// <param name="testIds"> Comma separated list IDs of the tests which should be associated with the test profiles to fetch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT(LoadTestAdministrationClient client, int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT(LoadTestAdministrationClient client, int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxpagesize = maxpagesize;
@@ -41,6 +43,7 @@ namespace Azure.Developer.LoadTesting
             _testProfileIds = testProfileIds;
             _testIds = testIds;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -73,7 +76,7 @@ namespace Azure.Developer.LoadTesting
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetTestProfilesRequest(nextLink, _maxpagesize, _lastModifiedStartTime, _lastModifiedEndTime, _testProfileIds, _testIds, _context) : _client.CreateGetTestProfilesRequest(_maxpagesize, _lastModifiedStartTime, _lastModifiedEndTime, _testProfileIds, _testIds, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestProfiles");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

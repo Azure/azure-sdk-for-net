@@ -8,18 +8,72 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorTimeSeriesInfo : IUtf8JsonSerializable, IJsonModel<FrontDoorTimeSeriesInfo>
+    /// <summary> Defines the Timeseries. </summary>
+    public partial class FrontDoorTimeSeriesInfo : TrackedResourceData, IJsonModel<FrontDoorTimeSeriesInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorTimeSeriesInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/> for deserialization. </summary>
+        internal FrontDoorTimeSeriesInfo()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFrontDoorTimeSeriesInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FrontDoorTimeSeriesInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorTimeSeriesInfo IPersistableModel<FrontDoorTimeSeriesInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (FrontDoorTimeSeriesInfo)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontDoorTimeSeriesInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FrontDoorTimeSeriesInfo"/> from. </param>
+        internal static FrontDoorTimeSeriesInfo FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFrontDoorTimeSeriesInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FrontDoorTimeSeriesInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,511 +85,135 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("endpoint"u8);
-                writer.WriteStringValue(Endpoint.AbsoluteUri);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startDateTimeUTC"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endDateTimeUTC"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
-            }
-            if (Optional.IsDefined(AggregationInterval))
-            {
-                writer.WritePropertyName("aggregationInterval"u8);
-                writer.WriteStringValue(AggregationInterval.Value.ToString());
-            }
-            if (Optional.IsDefined(TimeSeriesType))
-            {
-                writer.WritePropertyName("timeseriesType"u8);
-                writer.WriteStringValue(TimeSeriesType.Value.ToString());
-            }
-            if (Optional.IsDefined(Country))
-            {
-                writer.WritePropertyName("country"u8);
-                writer.WriteStringValue(Country);
-            }
-            if (Optional.IsCollectionDefined(TimeSeriesData))
-            {
-                writer.WritePropertyName("timeseriesData"u8);
-                writer.WriteStartArray();
-                foreach (var item in TimeSeriesData)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        FrontDoorTimeSeriesInfo IJsonModel<FrontDoorTimeSeriesInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorTimeSeriesInfo IJsonModel<FrontDoorTimeSeriesInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FrontDoorTimeSeriesInfo)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFrontDoorTimeSeriesInfo(document.RootElement, options);
         }
 
-        internal static FrontDoorTimeSeriesInfo DeserializeFrontDoorTimeSeriesInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FrontDoorTimeSeriesInfo DeserializeFrontDoorTimeSeriesInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            Uri endpoint = default;
-            DateTimeOffset? startDateTimeUtc = default;
-            DateTimeOffset? endDateTimeUtc = default;
-            FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default;
-            FrontDoorTimeSeriesType? timeSeriesType = default;
-            string country = default;
-            IList<FrontDoorTimeSeriesDataPoint> timeSeriesData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            TimeseriesProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFrontDoorContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFrontDoorContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("endpoint"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            endpoint = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("startDateTimeUTC"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            startDateTimeUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("endDateTimeUTC"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            endDateTimeUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("aggregationInterval"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            aggregationInterval = new FrontDoorTimeSeriesInfoAggregationInterval(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("timeseriesType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeSeriesType = new FrontDoorTimeSeriesType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("country"u8))
-                        {
-                            country = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("timeseriesData"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<FrontDoorTimeSeriesDataPoint> array = new List<FrontDoorTimeSeriesDataPoint>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(FrontDoorTimeSeriesDataPoint.DeserializeFrontDoorTimeSeriesDataPoint(item, options));
-                            }
-                            timeSeriesData = array;
-                            continue;
-                        }
-                    }
+                    properties = TimeseriesProperties.DeserializeTimeseriesProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorTimeSeriesInfo(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                endpoint,
-                startDateTimeUtc,
-                endDateTimeUtc,
-                aggregationInterval,
-                timeSeriesType,
-                country,
-                timeSeriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>(),
-                serializedAdditionalRawData);
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  location: ");
-                builder.AppendLine($"'{Location.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    endpoint: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Endpoint))
-                {
-                    builder.Append("    endpoint: ");
-                    builder.AppendLine($"'{Endpoint.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    startDateTimeUTC: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartOn))
-                {
-                    builder.Append("    startDateTimeUTC: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    endDateTimeUTC: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EndOn))
-                {
-                    builder.Append("    endDateTimeUTC: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregationInterval), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    aggregationInterval: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AggregationInterval))
-                {
-                    builder.Append("    aggregationInterval: ");
-                    builder.AppendLine($"'{AggregationInterval.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeSeriesType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    timeseriesType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TimeSeriesType))
-                {
-                    builder.Append("    timeseriesType: ");
-                    builder.AppendLine($"'{TimeSeriesType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Country), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    country: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Country))
-                {
-                    builder.Append("    country: ");
-                    if (Country.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Country}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Country}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeSeriesData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    timeseriesData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TimeSeriesData))
-                {
-                    if (TimeSeriesData.Any())
-                    {
-                        builder.Append("    timeseriesData: ");
-                        builder.AppendLine("[");
-                        foreach (var item in TimeSeriesData)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    timeseriesData: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FrontDoorTimeSeriesInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FrontDoorTimeSeriesInfo IPersistableModel<FrontDoorTimeSeriesInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFrontDoorTimeSeriesInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FrontDoorTimeSeriesInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

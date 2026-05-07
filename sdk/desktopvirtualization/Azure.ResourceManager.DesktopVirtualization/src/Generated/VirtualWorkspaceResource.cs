@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -433,7 +433,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "VirtualWorkspaceResource.GetPrivateLinkResources");
         }
 
         /// <summary>
@@ -476,7 +477,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "VirtualWorkspaceResource.GetPrivateLinkResources");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

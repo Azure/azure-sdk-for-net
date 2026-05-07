@@ -82,6 +82,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public virtual System.Threading.Tasks.Task<Azure.Response> RenewLocksAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.EventGrid.Namespaces.RenewLocksResult>> RenewLocksAsync(System.Collections.Generic.IEnumerable<string> lockTokens, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class EventGridReceiverClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddEventGridReceiverClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddEventGridReceiverClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEventGridReceiverClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEventGridReceiverClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientSettings> configureSettings) { throw null; }
+    }
     public partial class EventGridReceiverClientOptions : Azure.Core.ClientOptions
     {
         public EventGridReceiverClientOptions(Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions.ServiceVersion.V2024_06_01) { }
@@ -97,6 +105,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public EventGridReceiverClientSettings() { }
         public System.Uri Endpoint { get { throw null; } set { } }
         public Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions Options { get { throw null; } set { } }
+        public string SubscriptionName { get { throw null; } set { } }
+        public string TopicName { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class EventGridSenderClient
@@ -118,6 +128,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public virtual Azure.Response SendEvents(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class EventGridSenderClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddEventGridSenderClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddEventGridSenderClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEventGridSenderClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEventGridSenderClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientSettings> configureSettings) { throw null; }
+    }
     public partial class EventGridSenderClientOptions : Azure.Core.ClientOptions
     {
         public EventGridSenderClientOptions(Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions.ServiceVersion.V2024_06_01) { }
@@ -133,6 +151,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public EventGridSenderClientSettings() { }
         public System.Uri Endpoint { get { throw null; } set { } }
         public Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions Options { get { throw null; } set { } }
+        public string TopicName { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class FailedLockToken : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>

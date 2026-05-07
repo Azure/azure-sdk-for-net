@@ -25,7 +25,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var response = await SendRequestAsync(mockTransport, message =>
             {
-                message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
             }, new CodeTransparencyRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
@@ -42,7 +42,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var response = await SendRequestAsync(mockTransport, message =>
             {
-                message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
             }, new CodeTransparencyRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
@@ -59,7 +59,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var response = await SendRequestAsync(mockTransport, message =>
             {
-                message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
                 message.Request.Headers.SetValue("Authorization", "Bearer test-token");
             }, new CodeTransparencyRedirectPolicy());
 
@@ -79,7 +79,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var response = await SendRequestAsync(mockTransport, message =>
             {
                 message.Request.Method = RequestMethod.Post;
-                message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
             }, new CodeTransparencyRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
@@ -112,7 +112,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var response = await SendRequestAsync(mockTransport, message =>
             {
-                message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
             }, new CodeTransparencyRedirectPolicy());
 
             Assert.AreEqual(307, response.Status);
@@ -129,7 +129,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var response = await SendRequestAsync(mockTransport, message =>
             {
-                message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
             }, new CodeTransparencyRedirectPolicy());
 
             Assert.AreEqual(307, response.Status);
@@ -145,7 +145,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var response = await SendRequestAsync(mockTransport, message =>
             {
-                message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
             }, new CodeTransparencyRedirectPolicy());
 
             // Should NOT follow the redirect (HTTPS → HTTP downgrade)
@@ -162,12 +162,12 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var response = await SendRequestAsync(mockTransport, message =>
             {
-                message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
             }, new CodeTransparencyRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("https://secondary-node.confidential-ledger.azure.com/app/transactions", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://myledger.confidential-ledger.azure.com/app/transactions", mockTransport.Requests[1].Uri.ToString());
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var response = await SendRequestAsync(mockTransport, message =>
             {
-                message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
             }, new CodeTransparencyRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
@@ -199,11 +199,175 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var response = await SendRequestAsync(mockTransport, message =>
             {
-                message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
             }, new CodeTransparencyRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
             Assert.IsTrue(redirectResponse.IsDisposed);
+        }
+
+        [Test]
+        public async Task CachesPrimaryNodeForSubsequentNonGetRequests()
+        {
+            var policy = new CodeTransparencyRedirectPolicy();
+            var mockTransport = new MockTransport(
+                new MockResponse(307).AddHeader("Location", "https://primary-node.confidential-ledger.azure.com/ledger"),
+                new MockResponse(200),
+                new MockResponse(200));
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.AreEqual("https://primary-node.confidential-ledger.azure.com/ledger", mockTransport.Requests[2].Uri.ToString());
+        }
+
+        [Test]
+        public async Task UsesCachedPrimaryOnlyForNonGetRequests()
+        {
+            var policy = new CodeTransparencyRedirectPolicy();
+            var mockTransport = new MockTransport(
+                new MockResponse(307).AddHeader("Location", "https://primary-node.confidential-ledger.azure.com/ledger"),
+                new MockResponse(200),
+                new MockResponse(200));
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Get;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.AreEqual("https://myledger.confidential-ledger.azure.com/ledger", mockTransport.Requests[2].Uri.ToString());
+        }
+
+        [Test]
+        public async Task RefreshesCachedPrimaryWhenRedirectTargetChanges()
+        {
+            var policy = new CodeTransparencyRedirectPolicy();
+            var mockTransport = new MockTransport(
+                new MockResponse(307).AddHeader("Location", "https://primary-a.confidential-ledger.azure.com/ledger"),
+                new MockResponse(200),
+                new MockResponse(307).AddHeader("Location", "https://primary-b.confidential-ledger.azure.com/ledger"),
+                new MockResponse(200),
+                new MockResponse(200));
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            Assert.AreEqual(5, mockTransport.Requests.Count);
+            bool sawPrimaryA = false;
+            foreach (MockRequest request in mockTransport.Requests)
+            {
+                if (request.Uri.ToString() == "https://primary-a.confidential-ledger.azure.com/ledger")
+                {
+                    sawPrimaryA = true;
+                    break;
+                }
+            }
+
+            Assert.IsTrue(sawPrimaryA, "Expected at least one request to the previously cached primary node.");
+            Assert.AreEqual("https://primary-b.confidential-ledger.azure.com/ledger", mockTransport.Requests[4].Uri.ToString());
+        }
+
+        [Test]
+        public async Task InvalidatesCacheOnServerErrorFromCachedPrimary()
+        {
+            var policy = new CodeTransparencyRedirectPolicy();
+            var mockTransport = new MockTransport(
+                // First write: 307 → primary, 200 (cache warmed)
+                new MockResponse(307).AddHeader("Location", "https://primary-node.confidential-ledger.azure.com/ledger"),
+                new MockResponse(200),
+                // Second write: goes directly to cached primary, gets 503 (invalidates cache)
+                new MockResponse(503),
+                // Third write: cache was cleared, goes back through load balancer, 307 → primary, 200
+                new MockResponse(307).AddHeader("Location", "https://primary-node.confidential-ledger.azure.com/ledger"),
+                new MockResponse(200));
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            // Write #1: LB → 307 → primary = 2 requests
+            // Write #2: cached primary → 503 = 1 request
+            // Write #3: cache invalidated, back through LB → 307 → primary = 2 requests
+            // Total = 5 proves the cache was cleared after the 503.
+            // (If cache were still active, write #3 would go directly to primary = 4 total.)
+            Assert.AreEqual(5, mockTransport.Requests.Count);
+            // Write #2 was sent directly to cached primary
+            Assert.AreEqual("https://primary-node.confidential-ledger.azure.com/ledger", mockTransport.Requests[2].Uri.ToString());
+        }
+
+        [Test]
+        public async Task DoesNotCacheRedirectTargetForGetRequests()
+        {
+            var policy = new CodeTransparencyRedirectPolicy();
+            var mockTransport = new MockTransport(
+                // GET is redirected (e.g., to a backup/historical node)
+                new MockResponse(307).AddHeader("Location", "https://backup-node.confidential-ledger.azure.com/ledger"),
+                new MockResponse(200),
+                // Subsequent POST should NOT go to backup-node
+                new MockResponse(200));
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Get;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/ledger"));
+            }, policy);
+
+            Assert.AreEqual(3, mockTransport.Requests.Count);
+            // POST should go to the common URL (cache not populated from GET redirect)
+            Assert.AreEqual("https://myledger.confidential-ledger.azure.com/ledger", mockTransport.Requests[2].Uri.ToString());
         }
     }
 }

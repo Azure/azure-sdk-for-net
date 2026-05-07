@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the Twitter provider. </summary>
+    /// <summary>
+    /// The configuration settings of the Twitter provider.
+    /// Serialized Name: Twitter
+    /// </summary>
     public partial class AppServiceTwitterProvider
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceTwitterProvider"/>. </summary>
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the Twitter provider. </param>
+        /// <param name="isEnabled">
+        /// &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Twitter.enabled
+        /// </param>
+        /// <param name="registration">
+        /// The configuration settings of the app registration for the Twitter provider.
+        /// Serialized Name: Twitter.registration
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceTwitterProvider(bool? isEnabled, TwitterRegistration registration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Twitter.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
+        /// <summary>
+        /// The configuration settings of the app registration for the Twitter provider.
+        /// Serialized Name: Twitter.registration
+        /// </summary>
         [WirePath("registration")]
         public TwitterRegistration Registration { get; set; }
     }

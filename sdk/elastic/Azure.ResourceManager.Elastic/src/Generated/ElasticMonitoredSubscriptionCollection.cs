@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Elastic
         {
             if (id.ResourceType != ElasticMonitorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticMonitorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticMonitorResource.ResourceType), nameof(id));
             }
         }
 
@@ -291,7 +291,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticMonitoredSubscriptionData, ElasticMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllAsyncCollectionResultOfT(_monitoredSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticMonitoredSubscriptionResource(Client, data));
+            return new AsyncPageableWrapper<ElasticMonitoredSubscriptionData, ElasticMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllAsyncCollectionResultOfT(
+                _monitoredSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitoredSubscriptionCollection.GetAll"), data => new ElasticMonitoredSubscriptionResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +325,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticMonitoredSubscriptionData, ElasticMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllCollectionResultOfT(_monitoredSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticMonitoredSubscriptionResource(Client, data));
+            return new PageableWrapper<ElasticMonitoredSubscriptionData, ElasticMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllCollectionResultOfT(
+                _monitoredSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitoredSubscriptionCollection.GetAll"), data => new ElasticMonitoredSubscriptionResource(Client, data));
         }
 
         /// <summary>

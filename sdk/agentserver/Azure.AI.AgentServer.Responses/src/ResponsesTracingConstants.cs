@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// semantic conventions</see> where applicable.
 /// </para>
 /// </summary>
-public static class ResponsesTracingConstants
+internal static class ResponsesTracingConstants
 {
     // ── Well-Known Values ────────────────────────────────────────────────
 
@@ -64,6 +64,9 @@ public static class ResponsesTracingConstants
 
         /// <summary><c>azure.ai.agentserver.responses.streaming</c></summary>
         public const string NamespacedStreaming = "azure.ai.agentserver.responses.streaming";
+
+        /// <summary><c>microsoft.foundry.project.id</c> — Foundry project ARM resource ID.</summary>
+        public const string FoundryProjectId = "microsoft.foundry.project.id";
 
         // --- Namespaced error tags ---
 

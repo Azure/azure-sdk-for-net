@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             if (id.ResourceType != AppServiceDomainResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceDomainResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceDomainResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifiersGetOwnershipIdentifiersAsyncCollectionResultOfT(_domainOwnershipIdentifiersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DomainOwnershipIdentifierResource(Client, data));
+            return new AsyncPageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifiersGetOwnershipIdentifiersAsyncCollectionResultOfT(
+                _domainOwnershipIdentifiersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DomainOwnershipIdentifierCollection.GetAll"), data => new DomainOwnershipIdentifierResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifiersGetOwnershipIdentifiersCollectionResultOfT(_domainOwnershipIdentifiersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DomainOwnershipIdentifierResource(Client, data));
+            return new PageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifiersGetOwnershipIdentifiersCollectionResultOfT(
+                _domainOwnershipIdentifiersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DomainOwnershipIdentifierCollection.GetAll"), data => new DomainOwnershipIdentifierResource(Client, data));
         }
 
         /// <summary>

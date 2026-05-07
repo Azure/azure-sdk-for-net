@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageSyncServiceData, StorageSyncServiceResource>(new StorageSyncServicesGetByResourceGroupAsyncCollectionResultOfT(_storageSyncServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageSyncServiceResource(Client, data));
+            return new AsyncPageableWrapper<StorageSyncServiceData, StorageSyncServiceResource>(new StorageSyncServicesGetByResourceGroupAsyncCollectionResultOfT(_storageSyncServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageSyncServiceCollection.GetAll"), data => new StorageSyncServiceResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageSyncServiceData, StorageSyncServiceResource>(new StorageSyncServicesGetByResourceGroupCollectionResultOfT(_storageSyncServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageSyncServiceResource(Client, data));
+            return new PageableWrapper<StorageSyncServiceData, StorageSyncServiceResource>(new StorageSyncServicesGetByResourceGroupCollectionResultOfT(_storageSyncServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageSyncServiceCollection.GetAll"), data => new StorageSyncServiceResource(Client, data));
         }
 
         /// <summary>

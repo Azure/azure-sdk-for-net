@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for references.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseWebReference"/>, and <see cref="KnowledgeBaseRemoteSharePointReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, and <see cref="KnowledgeBaseWebReference"/>.
     /// </summary>
     public abstract partial class KnowledgeBaseReference
     {

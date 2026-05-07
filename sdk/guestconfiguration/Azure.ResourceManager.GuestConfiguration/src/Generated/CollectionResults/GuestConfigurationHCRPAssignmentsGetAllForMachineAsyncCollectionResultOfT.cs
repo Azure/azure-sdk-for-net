@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private readonly string _resourceGroupName;
         private readonly string _machineName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GuestConfigurationHCRPAssignmentsGetAllForMachineAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GuestConfigurationHCRPAssignments client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="machineName"> The name of the ARC machine. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GuestConfigurationHCRPAssignmentsGetAllForMachineAsyncCollectionResultOfT(GuestConfigurationHCRPAssignments client, string subscriptionId, string resourceGroupName, string machineName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GuestConfigurationHCRPAssignmentsGetAllForMachineAsyncCollectionResultOfT(GuestConfigurationHCRPAssignments client, string subscriptionId, string resourceGroupName, string machineName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _machineName = machineName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GuestConfigurationHCRPAssignmentsGetAllForMachineAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllForMachineRequest(nextLink, _subscriptionId, _resourceGroupName, _machineName, _context) : _client.CreateGetAllForMachineRequest(_subscriptionId, _resourceGroupName, _machineName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnOriginOperationSource : IOperationSource<CdnOriginResource>
+    /// <summary></summary>
+    internal partial class CdnOriginOperationSource : IOperationSource<CdnOriginResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal CdnOriginOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         CdnOriginResource IOperationSource<CdnOriginResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CdnOriginData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            CdnOriginData data = CdnOriginData.DeserializeCdnOriginData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CdnOriginResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<CdnOriginResource> IOperationSource<CdnOriginResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CdnOriginData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
-            return await Task.FromResult(new CdnOriginResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            CdnOriginData data = CdnOriginData.DeserializeCdnOriginData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CdnOriginResource(_client, data);
         }
     }
 }

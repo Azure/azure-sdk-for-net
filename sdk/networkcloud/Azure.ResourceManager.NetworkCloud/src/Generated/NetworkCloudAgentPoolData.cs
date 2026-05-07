@@ -7,52 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudAgentPool data model.
-    /// AgentPool represents the agent pool of Kubernetes cluster.
-    /// </summary>
+    /// <summary> AgentPool represents the agent pool of Kubernetes cluster. </summary>
     public partial class NetworkCloudAgentPoolData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="mode"> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </param>
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
@@ -61,95 +30,226 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
 
-            AvailabilityZones = new ChangeTrackingList<string>();
-            Count = count;
-            Labels = new ChangeTrackingList<KubernetesLabel>();
-            Mode = mode;
-            Taints = new ChangeTrackingList<KubernetesLabel>();
-            VmSkuName = vmSkuName;
+            Properties = new AgentPoolProperties(count, mode, vmSkuName);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="administratorConfiguration"> The administrator credentials to be used for the nodes in this agent pool. </param>
-        /// <param name="agentOptions"> The configurations that will be applied to each agent in this agent pool. </param>
-        /// <param name="attachedNetworkConfiguration"> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </param>
-        /// <param name="availabilityZones"> The list of availability zones of the Network Cloud cluster used for the provisioning of nodes in this agent pool. If not specified, all availability zones will be used. </param>
-        /// <param name="count"> The number of virtual machines that use this configuration. </param>
-        /// <param name="detailedStatus"> The current status of the agent pool. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version running in this agent pool. </param>
-        /// <param name="labels"> The labels applied to the nodes in this agent pool. </param>
-        /// <param name="mode"> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </param>
-        /// <param name="provisioningState"> The provisioning state of the agent pool. </param>
-        /// <param name="taints"> The taints applied to the nodes in this agent pool. </param>
-        /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
-        /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IList<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"></param>
+        internal NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AgentPoolProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
-            AdministratorConfiguration = administratorConfiguration;
-            AgentOptions = agentOptions;
-            AttachedNetworkConfiguration = attachedNetworkConfiguration;
-            AvailabilityZones = availabilityZones;
-            Count = count;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            KubernetesVersion = kubernetesVersion;
-            Labels = labels;
-            Mode = mode;
-            ProvisioningState = provisioningState;
-            Taints = taints;
-            UpgradeSettings = upgradeSettings;
-            VmSkuName = vmSkuName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolData"/> for deserialization. </summary>
-        internal NetworkCloudAgentPoolData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal AgentPoolProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> The administrator credentials to be used for the nodes in this agent pool. </summary>
-        public AdministratorConfiguration AdministratorConfiguration { get; set; }
+        public AdministratorConfiguration AdministratorConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.AdministratorConfiguration = value;
+            }
+        }
+
         /// <summary> The configurations that will be applied to each agent in this agent pool. </summary>
-        public NetworkCloudAgentConfiguration AgentOptions { get; set; }
+        public NetworkCloudAgentConfiguration AgentOptions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AgentOptions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.AgentOptions = value;
+            }
+        }
+
         /// <summary> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </summary>
-        public AttachedNetworkConfiguration AttachedNetworkConfiguration { get; set; }
+        public AttachedNetworkConfiguration AttachedNetworkConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AttachedNetworkConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.AttachedNetworkConfiguration = value;
+            }
+        }
+
         /// <summary> The list of availability zones of the Network Cloud cluster used for the provisioning of nodes in this agent pool. If not specified, all availability zones will be used. </summary>
-        public IList<string> AvailabilityZones { get; }
+        public IList<string> AvailabilityZones
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                return Properties.AvailabilityZones;
+            }
+        }
+
         /// <summary> The number of virtual machines that use this configuration. </summary>
-        public long Count { get; set; }
-        /// <summary> The current status of the agent pool. </summary>
-        public AgentPoolDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the current detailed status. </summary>
-        public string DetailedStatusMessage { get; }
-        /// <summary> The Kubernetes version running in this agent pool. </summary>
-        public string KubernetesVersion { get; }
+        public long Count
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Count;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.Count = value;
+            }
+        }
+
         /// <summary> The labels applied to the nodes in this agent pool. </summary>
-        public IList<KubernetesLabel> Labels { get; }
+        public IList<KubernetesLabel> Labels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                return Properties.Labels;
+            }
+        }
+
         /// <summary> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </summary>
-        public NetworkCloudAgentPoolMode Mode { get; set; }
-        /// <summary> The provisioning state of the agent pool. </summary>
-        public AgentPoolProvisioningState? ProvisioningState { get; }
+        public NetworkCloudAgentPoolMode Mode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.Mode = value;
+            }
+        }
+
         /// <summary> The taints applied to the nodes in this agent pool. </summary>
-        public IList<KubernetesLabel> Taints { get; }
+        public IList<KubernetesLabel> Taints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                return Properties.Taints;
+            }
+        }
+
         /// <summary> The configuration of the agent pool. </summary>
-        public AgentPoolUpgradeSettings UpgradeSettings { get; set; }
+        public AgentPoolUpgradeSettings UpgradeSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradeSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.UpgradeSettings = value;
+            }
+        }
+
         /// <summary> The name of the VM SKU that determines the size of resources allocated for node VMs. </summary>
-        public string VmSkuName { get; set; }
+        public string VmSkuName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmSkuName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.VmSkuName = value;
+            }
+        }
+
+        /// <summary> The current status of the agent pool. </summary>
+        public AgentPoolDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the current detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> The Kubernetes version running in this agent pool. </summary>
+        public string KubernetesVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KubernetesVersion;
+            }
+        }
+
+        /// <summary> The provisioning state of the agent pool. </summary>
+        public AgentPoolProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

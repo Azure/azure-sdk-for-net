@@ -7,7 +7,7 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// E2E protocol tests for ResponseContext.RawBody (US7 / FR-019..022).
+/// E2E protocol tests for ResponseContext.RawBody (S-005).
 /// Verifies the handler can access the full raw JSON request body,
 /// including custom fields not in the typed model.
 /// </summary>
@@ -48,7 +48,7 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
     [Test]
     public async Task RawBody_ContainsStandardFields()
     {
-        // T028 / FR-019, FR-021: RawBody contains standard fields
+        // T028 / S-005: RawBody contains standard fields
         await PostResponsesAsync(new { model = "gpt-4o" });
 
         var root = ParseCapturedBody();
@@ -60,7 +60,7 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
     [Test]
     public async Task RawBody_ContainsCustomFields()
     {
-        // T029 / FR-021: RawBody contains custom fields not in typed model
+        // T029 / S-005: RawBody contains custom fields not in typed model
         // Use x_ prefix to avoid collision with known schema fields
         var json = JsonSerializer.Serialize(new
         {
@@ -83,7 +83,7 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
     [Test]
     public async Task RawBody_IsStableAcrossMultipleAccesses()
     {
-        // T030 / FR-022: RawBody returns same value on multiple accesses
+        // T030 / S-005: RawBody returns same value on multiple accesses
         BinaryData? firstAccess = null;
         BinaryData? secondAccess = null;
 

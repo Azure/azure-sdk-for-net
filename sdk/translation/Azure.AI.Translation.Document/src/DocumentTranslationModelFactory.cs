@@ -5,13 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
     /// Model factory that enables mocking for the Document Translation Library.
     /// </summary>
-    [CodeGenModel("AITranslationDocumentModelFactory")]
+    [CodeGenType("TranslationDocumentModelFactory")]
+    [CodeGenSuppress("TranslationStatusResult", typeof(string), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(DocumentTranslationStatus), typeof(TranslationStatusSummary), typeof(JsonElement))]
+    [CodeGenSuppress("DocumentStatusResult", typeof(Uri), typeof(Uri), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(DocumentTranslationStatus), typeof(string), typeof(float), typeof(string), typeof(long), typeof(int?), typeof(int?), typeof(JsonElement))]
+    [CodeGenSuppress("TranslationSource", typeof(Uri), typeof(DocumentFilter), typeof(string), typeof(TranslationStorageSource?))]
+    [CodeGenSuppress("DocumentTranslateContent")]
     public static partial class DocumentTranslationModelFactory
     {
         #region Statuses

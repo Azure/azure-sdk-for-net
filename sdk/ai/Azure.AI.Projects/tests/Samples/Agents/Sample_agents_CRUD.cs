@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;

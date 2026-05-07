@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeVolumesRestClient.AuthorizeExternalReplicationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<SvmPeerCommandResult>(new SvmPeerCommandResultOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateAuthorizeExternalReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation<SvmPeerCommandResult>(new SvmPeerCommandResultOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateAuthorizeExternalReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeVolumesRestClient.AuthorizeExternalReplication(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation<SvmPeerCommandResult>(new SvmPeerCommandResultOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateAuthorizeExternalReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation<SvmPeerCommandResult>(new SvmPeerCommandResultOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateAuthorizeExternalReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1221,7 +1221,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1263,7 +1263,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1431,7 +1431,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1473,7 +1473,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1565,7 +1565,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1682,7 +1682,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1713,7 +1713,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1734,7 +1734,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeVolumesRestClient.PeerExternalClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<ClusterPeerCommandResult>(new ClusterPeerCommandResultOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreatePeerExternalClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation<ClusterPeerCommandResult>(new ClusterPeerCommandResultOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreatePeerExternalClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1759,7 +1759,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1780,7 +1780,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeVolumesRestClient.PeerExternalCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new NetAppArmOperation<ClusterPeerCommandResult>(new ClusterPeerCommandResultOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreatePeerExternalClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation<ClusterPeerCommandResult>(new ClusterPeerCommandResultOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreatePeerExternalClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1805,7 +1805,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1847,7 +1847,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1889,7 +1889,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1935,7 +1935,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1981,7 +1981,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2023,7 +2023,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2065,7 +2065,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2111,7 +2111,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2157,7 +2157,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2199,7 +2199,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2241,7 +2241,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2284,7 +2284,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2327,7 +2327,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2365,7 +2365,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2403,7 +2403,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2445,7 +2445,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2487,7 +2487,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2529,7 +2529,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2571,7 +2571,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2617,7 +2617,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2663,7 +2663,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2705,7 +2705,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2747,7 +2747,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2789,7 +2789,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2831,7 +2831,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2873,7 +2873,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2915,7 +2915,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2977,7 +2977,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3039,7 +3039,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3096,7 +3096,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3153,7 +3153,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3213,7 +3213,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

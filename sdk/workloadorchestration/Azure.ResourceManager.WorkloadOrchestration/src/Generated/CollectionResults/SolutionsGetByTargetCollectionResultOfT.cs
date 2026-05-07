@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         private readonly string _resourceGroupName;
         private readonly string _targetName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SolutionsGetByTargetCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Solutions client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="targetName"> Name of the target. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SolutionsGetByTargetCollectionResultOfT(Solutions client, Guid subscriptionId, string resourceGroupName, string targetName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SolutionsGetByTargetCollectionResultOfT(Solutions client, Guid subscriptionId, string resourceGroupName, string targetName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _targetName = targetName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SolutionsGetByTargetCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByTargetRequest(nextLink, _subscriptionId, _resourceGroupName, _targetName, _context) : _client.CreateGetByTargetRequest(_subscriptionId, _resourceGroupName, _targetName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EdgeSolutionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

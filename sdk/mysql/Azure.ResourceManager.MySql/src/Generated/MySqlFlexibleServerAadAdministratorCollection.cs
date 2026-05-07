@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -282,7 +282,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new AzureADAdministratorsGetByServerAsyncCollectionResultOfT(_azureADAdministratorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerAadAdministratorResource(Client, data));
+            return new AsyncPageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new AzureADAdministratorsGetByServerAsyncCollectionResultOfT(
+                _azureADAdministratorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerAadAdministratorCollection.GetAll"), data => new MySqlFlexibleServerAadAdministratorResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new AzureADAdministratorsGetByServerCollectionResultOfT(_azureADAdministratorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerAadAdministratorResource(Client, data));
+            return new PageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new AzureADAdministratorsGetByServerCollectionResultOfT(
+                _azureADAdministratorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerAadAdministratorCollection.GetAll"), data => new MySqlFlexibleServerAadAdministratorResource(Client, data));
         }
 
         /// <summary>

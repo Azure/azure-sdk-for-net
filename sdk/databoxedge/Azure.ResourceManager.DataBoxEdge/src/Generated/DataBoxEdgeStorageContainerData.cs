@@ -13,82 +13,78 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary>
-    /// A class representing the DataBoxEdgeStorageContainer data model.
-    /// Represents a container on the  Data Box Edge/Gateway device.
-    /// </summary>
+    /// <summary> Represents a container on the  Data Box Edge/Gateway device. </summary>
     public partial class DataBoxEdgeStorageContainerData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerData"/>. </summary>
         /// <param name="dataFormat"> DataFormat for Container. </param>
         public DataBoxEdgeStorageContainerData(DataBoxEdgeStorageContainerDataFormat dataFormat)
         {
-            DataFormat = dataFormat;
+
+            Properties = new ContainerProperties(dataFormat);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="containerStatus"> Current status of the container. </param>
-        /// <param name="dataFormat"> DataFormat for Container. </param>
-        /// <param name="refreshDetails"> Details of the refresh job on this container. </param>
-        /// <param name="createdOn"> The UTC time when container got created. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeStorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeStorageContainerStatus? containerStatus, DataBoxEdgeStorageContainerDataFormat dataFormat, DataBoxEdgeRefreshDetails refreshDetails, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The container properties. </param>
+        internal DataBoxEdgeStorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerProperties properties) : base(id, name, resourceType, systemData)
         {
-            ContainerStatus = containerStatus;
-            DataFormat = dataFormat;
-            RefreshDetails = refreshDetails;
-            CreatedOn = createdOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerData"/> for deserialization. </summary>
-        internal DataBoxEdgeStorageContainerData()
-        {
-        }
+        /// <summary> The container properties. </summary>
+        internal ContainerProperties Properties { get; set; }
 
         /// <summary> Current status of the container. </summary>
-        public DataBoxEdgeStorageContainerStatus? ContainerStatus { get; }
+        public DataBoxEdgeStorageContainerStatus? ContainerStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerStatus;
+            }
+        }
+
         /// <summary> DataFormat for Container. </summary>
-        public DataBoxEdgeStorageContainerDataFormat DataFormat { get; set; }
+        public DataBoxEdgeStorageContainerDataFormat DataFormat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataFormat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                Properties.DataFormat = value;
+            }
+        }
+
         /// <summary> Details of the refresh job on this container. </summary>
-        public DataBoxEdgeRefreshDetails RefreshDetails { get; }
+        public DataBoxEdgeRefreshDetails RefreshDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RefreshDetails;
+            }
+        }
+
         /// <summary> The UTC time when container got created. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
     }
 }

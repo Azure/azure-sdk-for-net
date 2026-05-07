@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new PlacementPolicyResource(Client, data));
+                context,
+                "PlacementPolicyCollection.GetAll"), data => new PlacementPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new PlacementPolicyResource(Client, data));
+                context,
+                "PlacementPolicyCollection.GetAll"), data => new PlacementPolicyResource(Client, data));
         }
 
         /// <summary>

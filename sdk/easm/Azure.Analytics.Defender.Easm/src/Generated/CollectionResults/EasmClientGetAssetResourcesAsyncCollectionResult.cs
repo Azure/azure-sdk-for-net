@@ -27,6 +27,7 @@ namespace Azure.Analytics.Defender.Easm
         private readonly IEnumerable<string> _responseIncludes;
         private readonly bool? _recentOnly;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of EasmClientGetAssetResourcesAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EasmClient client used to send requests. </param>
@@ -39,7 +40,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="responseIncludes"> The properties to include in the response. </param>
         /// <param name="recentOnly"> If it's recent only. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EasmClientGetAssetResourcesAsyncCollectionResult(EasmClient client, string filter, string @orderby, int? skip, int? maxPageSize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public EasmClientGetAssetResourcesAsyncCollectionResult(EasmClient client, string filter, string @orderby, int? skip, int? maxPageSize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
@@ -51,6 +53,7 @@ namespace Azure.Analytics.Defender.Easm
             _responseIncludes = responseIncludes;
             _recentOnly = recentOnly;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of EasmClientGetAssetResourcesAsyncCollectionResult as an enumerable collection. </summary>
@@ -89,7 +92,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetAssetResourcesRequest(nextLink, pageSize, _context) : _client.CreateGetAssetResourcesRequest(_filter, _orderby, _skip, pageSize, _mark, _responseType, _responseIncludes, _recentOnly, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetAssetResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorTlsProtocolType : IEquatable<FrontDoorTlsProtocolType>
     {
         private readonly string _value;
+        /// <summary> ServerNameIndication. </summary>
+        private const string ServerNameIndicationValue = "ServerNameIndication";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorTlsProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorTlsProtocolType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ServerNameIndicationValue = "ServerNameIndication";
+            _value = value;
+        }
 
         /// <summary> ServerNameIndication. </summary>
         public static FrontDoorTlsProtocolType ServerNameIndication { get; } = new FrontDoorTlsProtocolType(ServerNameIndicationValue);
+
         /// <summary> Determines if two <see cref="FrontDoorTlsProtocolType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorTlsProtocolType left, FrontDoorTlsProtocolType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorTlsProtocolType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorTlsProtocolType left, FrontDoorTlsProtocolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorTlsProtocolType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorTlsProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorTlsProtocolType(string value) => new FrontDoorTlsProtocolType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorTlsProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorTlsProtocolType?(string value) => value == null ? null : new FrontDoorTlsProtocolType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorTlsProtocolType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorTlsProtocolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

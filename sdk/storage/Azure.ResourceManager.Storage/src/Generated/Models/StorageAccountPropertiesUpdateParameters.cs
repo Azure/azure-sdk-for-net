@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
         /// <param name="dualStackEndpointPreference"> Maintains information about the Internet protocol opted by the user. </param>
         /// <param name="allowBlobPublicAccess"> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </param>
-        /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </param>
+        /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. Minimum TLS version 1.3 version is not supported. </param>
         /// <param name="allowSharedKeyAccess"> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </param>
         /// <param name="allowCrossTenantReplication"> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </param>
         /// <param name="isDefaultToOAuthAuthentication"> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </param>
@@ -47,10 +47,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="allowedCopyScope"> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </param>
         /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
         /// <param name="geoPriorityReplicationStatus"> Status indicating whether Geo Priority Replication is enabled for the account. </param>
-        /// <param name="allowSharedKeyAccessForServices"> Indicate shared key access properties at service level. </param>
-        /// <param name="dataCollaborationPolicyProperties"> Data Collaboration policy for the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountPropertiesUpdateParameters(StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, StorageAccountNetworkRuleSet networkRuleSet, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountPropertiesUpdateParameters(StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, StorageAccountNetworkRuleSet networkRuleSet, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomDomain = customDomain;
             Encryption = encryption;
@@ -76,8 +74,6 @@ namespace Azure.ResourceManager.Storage.Models
             AllowedCopyScope = allowedCopyScope;
             DnsEndpointType = dnsEndpointType;
             GeoPriorityReplicationStatus = geoPriorityReplicationStatus;
-            AllowSharedKeyAccessForServices = allowSharedKeyAccessForServices;
-            DataCollaborationPolicyProperties = dataCollaborationPolicyProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -141,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("allowBlobPublicAccess")]
         public bool? AllowBlobPublicAccess { get; set; }
 
-        /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
+        /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. Minimum TLS version 1.3 version is not supported. </summary>
         [WirePath("minimumTlsVersion")]
         public StorageMinimumTlsVersion? MinimumTlsVersion { get; set; }
 
@@ -176,14 +172,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Status indicating whether Geo Priority Replication is enabled for the account. </summary>
         [WirePath("geoPriorityReplicationStatus")]
         internal GeoPriorityReplicationStatus GeoPriorityReplicationStatus { get; set; }
-
-        /// <summary> Indicate shared key access properties at service level. </summary>
-        [WirePath("allowSharedKeyAccessForServices")]
-        public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices { get; set; }
-
-        /// <summary> Data Collaboration policy for the storage account. </summary>
-        [WirePath("dataCollaborationPolicyProperties")]
-        public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties { get; set; }
 
         /// <summary> The key expiration period in days. </summary>
         [WirePath("keyPolicy.keyExpirationPeriodInDays")]

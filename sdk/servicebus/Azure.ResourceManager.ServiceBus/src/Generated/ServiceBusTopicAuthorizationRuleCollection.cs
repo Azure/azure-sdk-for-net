@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             if (id.ResourceType != ServiceBusTopicResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusTopicResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusTopicResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.ServiceBus
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceBusTopicAuthorizationRuleResource(Client, data));
+                context,
+                "ServiceBusTopicAuthorizationRuleCollection.GetAll"), data => new ServiceBusTopicAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.ServiceBus
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceBusTopicAuthorizationRuleResource(Client, data));
+                context,
+                "ServiceBusTopicAuthorizationRuleCollection.GetAll"), data => new ServiceBusTopicAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetByResourceGroupAsyncCollectionResultOfT(_dbSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OracleDBSystemResource(Client, data));
+            return new AsyncPageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetByResourceGroupAsyncCollectionResultOfT(_dbSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleDBSystemCollection.GetAll"), data => new OracleDBSystemResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetByResourceGroupCollectionResultOfT(_dbSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OracleDBSystemResource(Client, data));
+            return new PageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetByResourceGroupCollectionResultOfT(_dbSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleDBSystemCollection.GetAll"), data => new OracleDBSystemResource(Client, data));
         }
 
         /// <summary>

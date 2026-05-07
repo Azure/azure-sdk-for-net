@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetAllAsyncCollectionResultOfT(NginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new NginxDeploymentResource(Client, data));
+            return new AsyncPageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetAllAsyncCollectionResultOfT(NginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNginxSubscriptionResource.GetNginxDeployments"), data => new NginxDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetAllCollectionResultOfT(NginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new NginxDeploymentResource(Client, data));
+            return new PageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetAllCollectionResultOfT(NginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNginxSubscriptionResource.GetNginxDeployments"), data => new NginxDeploymentResource(Client, data));
         }
     }
 }

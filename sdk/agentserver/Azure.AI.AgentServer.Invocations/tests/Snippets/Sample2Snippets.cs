@@ -69,6 +69,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 string invocationId,
                 HttpRequest request,
                 HttpResponse response,
+                InvocationContext context,
                 CancellationToken cancellationToken)
             {
                 if (!s_jobs.TryGetValue(invocationId, out var job))
@@ -94,6 +95,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 string invocationId,
                 HttpRequest request,
                 HttpResponse response,
+                InvocationContext context,
                 CancellationToken cancellationToken)
             {
                 if (s_jobs.TryGetValue(invocationId, out var job))

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != CredentialResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CredentialResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CredentialResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyData, PolicyResource>(new PoliciesGetByResourceGroupAsyncCollectionResultOfT(_policiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new PolicyResource(Client, data));
+            return new AsyncPageableWrapper<PolicyData, PolicyResource>(new PoliciesGetByResourceGroupAsyncCollectionResultOfT(
+                _policiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "PolicyCollection.GetAll"), data => new PolicyResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyData, PolicyResource>(new PoliciesGetByResourceGroupCollectionResultOfT(_policiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new PolicyResource(Client, data));
+            return new PageableWrapper<PolicyData, PolicyResource>(new PoliciesGetByResourceGroupCollectionResultOfT(
+                _policiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "PolicyCollection.GetAll"), data => new PolicyResource(Client, data));
         }
 
         /// <summary>
