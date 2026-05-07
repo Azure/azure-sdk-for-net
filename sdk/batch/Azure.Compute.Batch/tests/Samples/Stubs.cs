@@ -6,15 +6,10 @@
 // the docs assume exist in the surrounding context.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
 using Azure.Compute.Batch;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Batch;
-using Azure.ResourceManager.Batch.Models;
 
 namespace BatchDocSamples;
 
