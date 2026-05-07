@@ -47,6 +47,7 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.Plan"] = typeof(ArmPlan),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
+            ["Azure.ResourceManager.Models.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
             ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
             ["Azure.ResourceManager.Models.WritableSubResource"] = typeof(WritableSubResource),
             ["Azure.ResourceManager.CommonTypes.ErrorDetail"] = typeof(ResponseError),
@@ -96,6 +97,29 @@ namespace Azure.Generator.Management.Primitives
         public static bool TryGetInheritableSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToInheritableSystemTypeMap.TryGetValue(id, out type);
 
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
+
+        public static bool TryGetSystemType(CSharpType type, [MaybeNullWhen(false)] out CSharpType systemType)
+        {
+            var nonNullableType = type.WithNullable(false);
+            foreach (var knownType in _idToSystemTypeMap.Values)
+            {
+                if (nonNullableType.AreNamesEqual(knownType))
+                {
+                    systemType = knownType.WithNullable(type.IsNullable);
+                    return true;
+                }
+            }
+
+            if (nonNullableType.Name == nameof(UserAssignedIdentity) &&
+                nonNullableType.Namespace.StartsWith("Azure.ResourceManager.", StringComparison.Ordinal))
+            {
+                systemType = new CSharpType(typeof(UserAssignedIdentity), type.IsNullable);
+                return true;
+            }
+
+            systemType = null;
+            return false;
+        }
 
         // The comparison could be CSharpType from Azure.ResourceManager, which is a framework type
         // and CSharpType from InheritableSystemObjectModelProvider, which is not a framework type, they should still be equal if namespace and name match

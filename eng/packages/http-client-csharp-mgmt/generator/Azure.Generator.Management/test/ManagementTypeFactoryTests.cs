@@ -5,9 +5,15 @@ using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -128,5 +134,82 @@ namespace Azure.Generator.Mgmt.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => []);
             Assert.That(plugin.Object.TypeFactory.UseManagedServiceIdentityV3, Is.False);
         }
+
+        [TestCase("Azure.ResourceManager.CommonTypes.UserAssignedIdentity")]
+        [TestCase("Azure.ResourceManager.Models.UserAssignedIdentity")]
+        public void UserAssignedIdentityKnownTypeMapsToFrameworkType(string crossLanguageDefinitionId)
+        {
+            var userAssignedIdentity = CreateUserAssignedIdentity(crossLanguageDefinitionId, "Azure.ResourceManager.Models");
+            var dictionary = new InputDictionaryType("dict", InputPrimitiveType.String, new InputNullableType(userAssignedIdentity));
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [userAssignedIdentity]);
+
+            var actual = plugin.Object.TypeFactory.CreateCSharpType(dictionary);
+
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual!.IsDictionary, Is.True);
+            Assert.That(actual.ElementType.IsFrameworkType, Is.True);
+            Assert.That(actual.ElementType.FrameworkType, Is.EqualTo(typeof(UserAssignedIdentity)));
+        }
+
+        [Test]
+        public void UserAssignedIdentityDeserializationUsesModelReaderWriter()
+        {
+            var plugin = ManagementMockHelpers.LoadMockPlugin();
+            var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsVariable().As<JsonElement>();
+            var data = new ParameterProvider("data", $"", typeof(BinaryData)).AsVariable().As<BinaryData>();
+            var options = new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options"));
+
+            var expression = plugin.Object.TypeFactory.DeserializeJsonValue(
+                typeof(UserAssignedIdentity),
+                element,
+                data,
+                options,
+                SerializationFormat.Default);
+
+            Assert.That(
+                expression.ToDisplayString(),
+                Is.EqualTo("global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.UserAssignedIdentity>(new global::System.BinaryData(global::System.Text.Encoding.UTF8.GetBytes(element.GetRawText())), global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default)"));
+        }
+
+        [Test]
+        public void ModelDictionaryOfNullableUserAssignedIdentityDeserializationUsesModelReaderWriter()
+        {
+            var userAssignedIdentity = CreateUserAssignedIdentity("Azure.ResourceManager.CommonTypes.UserAssignedIdentity", "Azure.ResourceManager.EdgeOrder");
+            var identityProperty = InputFactory.Property(
+                "userAssignedIdentities",
+                new InputDictionaryType("dict", InputPrimitiveType.String, new InputNullableType(userAssignedIdentity)),
+                serializedName: "userAssignedIdentities");
+            var model = InputFactory.Model("IdentityModel", properties: [identityProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [userAssignedIdentity, model]);
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model);
+            var serializationProvider = provider!.SerializationProviders.Single();
+            var deserializationMethod = serializationProvider.Methods.Single(m => m.Signature.Name.StartsWith("Deserialize"));
+            var body = deserializationMethod.BodyStatements!.ToDisplayString();
+
+            Assert.That(body, Does.Contain("ModelReaderWriter.Read<global::Azure.ResourceManager.Models.UserAssignedIdentity>"));
+            Assert.That(body, Does.Not.Contain("DeserializeUserAssignedIdentity"));
+        }
+
+        private static InputModelType CreateUserAssignedIdentity(string crossLanguageDefinitionId, string @namespace)
+            => new(
+                "UserAssignedIdentity",
+                @namespace,
+                crossLanguageDefinitionId,
+                "public",
+                null,
+                null,
+                "User assigned identity.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                [],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new(),
+                false);
     }
 }

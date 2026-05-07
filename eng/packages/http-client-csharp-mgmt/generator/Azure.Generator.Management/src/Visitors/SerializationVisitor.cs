@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
-using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
@@ -21,7 +21,6 @@ internal class SerializationVisitor : ScmLibraryVisitor
 {
     internal const string ToRequestContentMethodName = "ToRequestContent";
     internal const string FromResponseMethodName = "FromResponse";
-    private static readonly CSharpType _userAssignedIdentityType = typeof(UserAssignedIdentity);
 
     /// <inheritdoc/>
     protected override MethodProvider? VisitMethod(MethodProvider method)
@@ -45,8 +44,10 @@ internal class SerializationVisitor : ScmLibraryVisitor
 
     protected override ValueExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
     {
-        if (expression is { MethodName: "DeserializeUserAssignedIdentity", InstanceReference: TypeReferenceExpression typeReference } &&
-            typeReference.Type?.Name == nameof(UserAssignedIdentity) &&
+        if (expression is { InstanceReference: TypeReferenceExpression typeReference, MethodName: { } methodName } &&
+            methodName.StartsWith("Deserialize", StringComparison.Ordinal) &&
+            typeReference.Type is not null &&
+            KnownManagementTypes.TryGetSystemType(typeReference.Type, out var systemType) &&
             expression.Arguments.Count > 0)
         {
             var element = expression.Arguments[0];
@@ -63,7 +64,7 @@ internal class SerializationVisitor : ScmLibraryVisitor
                     ModelSerializationExtensionsSnippets.Wire,
                     ModelReaderWriterContextSnippets.Default
                 ],
-                [_userAssignedIdentityType],
+                [systemType.WithNullable(false)],
                 false);
         }
 
