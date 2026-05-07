@@ -11,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -172,6 +173,27 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void ServiceLocalUserAssignedIdentityDeserializationUsesModelReaderWriter()
+        {
+            var plugin = ManagementMockHelpers.LoadMockPlugin();
+            var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsVariable().As<JsonElement>();
+            var data = new ParameterProvider("data", $"", typeof(BinaryData)).AsVariable().As<BinaryData>();
+            var options = new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options"));
+            var serviceLocalUserAssignedIdentity = CreateNonFrameworkType("UserAssignedIdentity", "Azure.ResourceManager.EdgeOrder");
+
+            var expression = plugin.Object.TypeFactory.DeserializeJsonValue(
+                serviceLocalUserAssignedIdentity,
+                element,
+                data,
+                options,
+                SerializationFormat.Default);
+
+            Assert.That(
+                expression.ToDisplayString(),
+                Is.EqualTo("global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.UserAssignedIdentity>(new global::System.BinaryData(global::System.Text.Encoding.UTF8.GetBytes(element.GetRawText())), global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default)"));
+        }
+
+        [Test]
         public void ModelDictionaryOfNullableUserAssignedIdentityDeserializationUsesModelReaderWriter()
         {
             var userAssignedIdentity = CreateUserAssignedIdentity("Azure.ResourceManager.CommonTypes.UserAssignedIdentity", "Azure.ResourceManager.EdgeOrder");
@@ -211,5 +233,25 @@ namespace Azure.Generator.Mgmt.Tests
                 false,
                 new(),
                 false);
+
+        private static CSharpType CreateNonFrameworkType(string name, string @namespace)
+            => (CSharpType)Activator.CreateInstance(
+                typeof(CSharpType),
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
+                binder: null,
+                args:
+                [
+                    name,
+                    @namespace,
+                    false,
+                    false,
+                    null,
+                    Array.Empty<CSharpType>(),
+                    true,
+                    false,
+                    null,
+                    null
+                ],
+                culture: null)!;
     }
 }

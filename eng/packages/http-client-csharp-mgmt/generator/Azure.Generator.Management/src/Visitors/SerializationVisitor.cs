@@ -2,18 +2,17 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Management.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.ClientModel.Primitives;
-using System.Text;
 using System.Text.Json;
-using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -48,24 +47,16 @@ internal class SerializationVisitor : ScmLibraryVisitor
             methodName.StartsWith("Deserialize", StringComparison.Ordinal) &&
             typeReference.Type is not null &&
             KnownManagementTypes.TryGetSystemType(typeReference.Type, out var systemType) &&
-            expression.Arguments.Count > 0)
+            expression.Arguments.Count > 1)
         {
-            var element = expression.Arguments[0];
-            return Static(typeof(ModelReaderWriter)).Invoke(
-                nameof(ModelReaderWriter.Read),
-                [
-                    New.Instance(
-                        typeof(BinaryData),
-                        [
-                            new MemberExpression(typeof(Encoding), nameof(Encoding.UTF8)).Invoke(
-                                nameof(UTF8Encoding.GetBytes),
-                                [element.Invoke(nameof(JsonElement.GetRawText))])
-                        ]),
-                    ModelSerializationExtensionsSnippets.Wire,
-                    ModelReaderWriterContextSnippets.Default
-                ],
-                [systemType.WithNullable(false)],
-                false);
+            var element = new ScopedApi<JsonElement>(expression.Arguments[0]);
+            var options = new ScopedApi<ModelReaderWriterOptions>(expression.Arguments[1]);
+            return ManagementClientGenerator.Instance.TypeFactory.DeserializeJsonValue(
+                systemType,
+                element,
+                element.GetUtf8Bytes(),
+                options,
+                SerializationFormat.Default);
         }
 
         return base.VisitInvokeMethodExpression(expression, method);

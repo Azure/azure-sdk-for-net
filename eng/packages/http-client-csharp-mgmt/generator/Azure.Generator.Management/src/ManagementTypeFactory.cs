@@ -200,6 +200,11 @@ namespace Azure.Generator.Management
             SerializationFormat format)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
+            if (KnownManagementTypes.TryGetSystemType(valueType, out var systemType))
+            {
+                valueType = systemType.WithNullable(valueType.IsNullable);
+            }
+
             if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
             {
                 return deserializationExpression(valueType, element, format);
@@ -207,9 +212,10 @@ namespace Azure.Generator.Management
 
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
+                var readType = valueType.WithNullable(false);
                 // For ManagedServiceIdentity with v3 format, select pre-allocated v3 options
                 // based on the caller's format: WireV3Options for "W", JsonV3Options for "J".
-                ValueExpression wireOptions = valueType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
+                ValueExpression wireOptions = readType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
                     ? new TernaryConditionalExpression(
                         mrwOptionsParameter.Property("Format").Equal(Literal("W")),
                         ModelSerializationExtensionsSnippets.WireV3,
@@ -232,7 +238,7 @@ namespace Azure.Generator.Management
                 return Static(typeof(ModelReaderWriter)).Invoke(
                     nameof(ModelReaderWriter.Read),
                     [.. readBody, ModelReaderWriterContextSnippets.Default],
-                    typeArgs: [valueType]);
+                    typeArgs: [readType]);
             }
 
             return base.DeserializeJsonValue(valueType, element, data, mrwOptionsParameter, format);
