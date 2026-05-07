@@ -42,60 +42,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Tests retrieving all change feed events.
-        /// </summary>
-        [RecordedTest]
-        [Ignore("For debugging larger Change Feeds locally")]
-        public async Task Test()
-        {
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
-            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
-                = blobChangeFeedClient.GetChangesAsync();
-            IList<BlobChangeFeedEvent> list = await blobChangeFeedAsyncPagable.ToListAsync();
-            foreach (BlobChangeFeedEvent e in list)
-            {
-                Console.WriteLine(e);
-            }
-        }
-
-        /// <summary>
-        /// Tests retrieving historical change feed events within a specific time range.
-        /// </summary>
-        [RecordedTest]
-        [Ignore("For debugging larger Change Feeds locally")]
-        public async Task TestHistorical()
-        {
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
-            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
-                = blobChangeFeedClient.GetChangesAsync(start: DateTime.Now.AddHours(-2), end: DateTime.Now.AddHours(-1));
-            IList<BlobChangeFeedEvent> list = await blobChangeFeedAsyncPagable.ToListAsync();
-            foreach (BlobChangeFeedEvent e in list)
-            {
-                Console.WriteLine(e);
-            }
-        }
-
-        /// <summary>
-        /// Tests retrieving change feed events from the last hour.
-        /// </summary>
-        [RecordedTest]
-        [Ignore("For debugging larger Change Feeds locally")]
-        public async Task TestLastHour()
-        {
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
-            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
-                = blobChangeFeedClient.GetChangesAsync(start: DateTime.Now, end: DateTime.Now);
-            IList<BlobChangeFeedEvent> list = await blobChangeFeedAsyncPagable.ToListAsync();
-            foreach (BlobChangeFeedEvent e in list)
-            {
-                Console.WriteLine(e);
-            }
-        }
-
-        /// <summary>
         /// This test checks if tail of the change feed can be listened to.
         /// To setup recording have an account where changes are generated quite frequently (i.e. every 1 minute).
         /// This test runs long in recording mode as it waits multiple times for events.
@@ -171,63 +117,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart2));
             CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart3));
             CollectionAssert.IsEmpty(EventIdsPart2.Intersect(EventIdsPart3));
-        }
-
-        /// <summary>
-        /// Tests that all pages except the last one match the requested page size.
-        /// </summary>
-        [RecordedTest]
-        [Ignore("For debugging larger Change Feeds locally")]
-        public async Task PageSizeTest()
-        {
-            int pageSize = 100;
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
-            IAsyncEnumerator<Page<BlobChangeFeedEvent>> asyncEnumerator
-                = blobChangeFeedClient.GetChangesAsync().AsPages(pageSizeHint: pageSize).GetAsyncEnumerator();
-            List<int> pageSizes = new List<int>();
-            while (await asyncEnumerator.MoveNextAsync())
-            {
-                pageSizes.Add(asyncEnumerator.Current.Values.Count);
-            }
-
-            // All pages except the last should have a count == pageSize.
-            for (int i = 0; i < pageSizes.Count - 1; i++)
-            {
-                Assert.AreEqual(pageSize, pageSizes[i]);
-            }
-        }
-
-        /// <summary>
-        /// Tests cursor functionality by retrieving a page, extracting the continuation token, and resuming from that point.
-        /// </summary>
-        [RecordedTest]
-        [Ignore("For debugging larger Change Feeds locally")]
-        public async Task CursorTest()
-        {
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
-            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
-                = blobChangeFeedClient.GetChangesAsync();
-            IAsyncEnumerable<Page<BlobChangeFeedEvent>> asyncEnumerable = blobChangeFeedAsyncPagable.AsPages(pageSizeHint: 500);
-            Page<BlobChangeFeedEvent> page = await asyncEnumerable.FirstAsync();
-            foreach (BlobChangeFeedEvent changeFeedEvent in page.Values)
-            {
-                Console.WriteLine(changeFeedEvent);
-            }
-
-            Console.WriteLine("break");
-
-            string continuation = page.ContinuationToken;
-
-            AsyncPageable<BlobChangeFeedEvent> cursorBlobChangeFeedAsyncPagable
-                = blobChangeFeedClient.GetChangesAsync(continuation);
-
-            IList<BlobChangeFeedEvent> list = await cursorBlobChangeFeedAsyncPagable.ToListAsync();
-            foreach (BlobChangeFeedEvent e in list)
-            {
-                Console.WriteLine(e);
-            }
         }
 
         /// <summary>
