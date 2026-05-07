@@ -1316,9 +1316,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="iPv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <returns> A new <see cref="Models.HciEdgeDeviceStorageAdapterIPInfo"/> instance for mocking. </returns>
-        public static HciEdgeDeviceStorageAdapterIPInfo HciEdgeDeviceStorageAdapterIPInfo(string physicalNode = default, string iPv4Address = default, string subnetMask = default)
+        public static HciEdgeDeviceStorageAdapterIPInfo HciEdgeDeviceStorageAdapterIPInfo(string physicalNode = default, string ipv4Address = default, string subnetMask = default)
         {
-            return new HciEdgeDeviceStorageAdapterIPInfo(physicalNode, iPv4Address, subnetMask, additionalBinaryDataProperties: null);
+            return new HciEdgeDeviceStorageAdapterIPInfo(physicalNode, ipv4Address, subnetMask, additionalBinaryDataProperties: null);
         }
 
         /// <summary> OS configurations for HCI device. </summary>
@@ -2747,7 +2747,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RemoteSupportProperties RemoteSupportProperties(HciClusterAccessLevel? accessLevel, DateTimeOffset? expireOn, RemoteSupportType? remoteSupportType, IEnumerable<RemoteSupportNodeSettings> remoteSupportNodeSettings, IEnumerable<PerNodeRemoteSupportSession> remoteSupportSessionDetails)
         {
-            return RemoteSupportProperties(accessLevel, expireOn, remoteSupportType, remoteSupportNodeSettings, remoteSupportSessionDetails, remoteSupportProvisioningState: default);
+            return RemoteSupportProperties(accessLevel: accessLevel, expireOn: expireOn, remoteSupportType: remoteSupportType, remoteSupportNodeSettings: remoteSupportNodeSettings, remoteSupportSessionDetails: remoteSupportSessionDetails, remoteSupportProvisioningState: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PerNodeRemoteSupportSession"/>. </summary>
@@ -2760,7 +2760,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, string nodeName, long? duration, HciClusterAccessLevel? accessLevel)
         {
-            return PerNodeRemoteSupportSession(sessionStartOn, sessionEndOn, nodeName, duration, accessLevel, transcriptLocation: default);
+            return PerNodeRemoteSupportSession(sessionStartOn: sessionStartOn, sessionEndOn: sessionEndOn, nodeName: nodeName, duration: duration, accessLevel: accessLevel, transcriptLocation: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciClusterReportedProperties"/>. </summary>
@@ -2779,7 +2779,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IEnumerable<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IEnumerable<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation)
         {
-            return HciClusterReportedProperties(clusterName, clusterId, clusterVersion, nodes, lastUpdatedOn, msiExpirationTimeStamp: default, imdsAttestation, diagnosticLevel, supportedCapabilities, clusterType, manufacturer, oemActivation, hardwareClass: default);
+            return HciClusterReportedProperties(clusterName: clusterName, clusterId: clusterId, clusterVersion: clusterVersion, nodes: nodes, lastUpdatedOn: lastUpdatedOn, msiExpirationTimeStamp: default, imdsAttestation: imdsAttestation, diagnosticLevel: diagnosticLevel, supportedCapabilities: supportedCapabilities, clusterType: clusterType, manufacturer: manufacturer, oemActivation: oemActivation, hardwareClass: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciClusterPatch"/>. </summary>
@@ -2948,7 +2948,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState, IEnumerable<HciEdgeDeviceArcExtension> extensions, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo)
         {
-            return HciReportedProperties(deviceState, extensions, lastSyncedOn: default, confidentialVmProfile: default, networkProfile, osProfile, sbeDeploymentPackageInfo, storageProfile: default, hardwareProcessorType: default);
+            return HciReportedProperties(deviceState: deviceState, extensions: extensions, lastSyncedOn: default, confidentialVmProfile: default, networkProfile: networkProfile, osProfile: osProfile, sbeDeploymentPackageInfo: sbeDeploymentPackageInfo, storageProfile: default, hardwareProcessorType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciNetworkProfile"/>. </summary>
@@ -2959,7 +2959,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciNetworkProfile HciNetworkProfile(IEnumerable<HciNicDetail> nicDetails, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork)
         {
-            return HciNetworkProfile(nicDetails, switchDetails, hostNetwork, sdnProperties: default);
+            return HciNetworkProfile(nicDetails: nicDetails, switchDetails: switchDetails, hostNetwork: hostNetwork, sdnProperties: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciNicDetail"/>. </summary>
@@ -3011,7 +3011,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciEdgeDeviceReportedProperties HciEdgeDeviceReportedProperties(HciEdgeDeviceState? deviceState, IEnumerable<HciEdgeDeviceArcExtension> extensions)
         {
-            return HciEdgeDeviceReportedProperties(deviceState, extensions, lastSyncedOn: default, confidentialVmProfile: default);
+            return HciEdgeDeviceReportedProperties(deviceState: deviceState, extensions: extensions, lastSyncedOn: default, confidentialVmProfile: default);
         }
 
         /// <summary> Initializes a new instance of ArcSettingData. </summary>
@@ -3051,7 +3051,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PerNodeArcState PerNodeArcState(string name, string arcInstance, NodeArcState? state)
         {
-            return PerNodeArcState(name, arcInstance, arcNodeServicePrincipalObjectId: default, state);
+            return PerNodeArcState(name: name, arcInstance: arcInstance, arcNodeServicePrincipalObjectId: default, state: state);
         }
 
         /// <summary> Initializes a new instance of HciClusterData. </summary>
@@ -3116,7 +3116,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IEnumerable<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IEnumerable<string> supportedCapabilities)
         {
-            return HciClusterReportedProperties(clusterName, clusterId, clusterVersion, nodes, lastUpdatedOn, msiExpirationTimeStamp: default, imdsAttestation, diagnosticLevel, supportedCapabilities, clusterType: default, manufacturer: default, oemActivation: default, hardwareClass: default);
+            return HciClusterReportedProperties(clusterName: clusterName, clusterId: clusterId, clusterVersion: clusterVersion, nodes: nodes, lastUpdatedOn: lastUpdatedOn, msiExpirationTimeStamp: default, imdsAttestation: imdsAttestation, diagnosticLevel: diagnosticLevel, supportedCapabilities: supportedCapabilities, clusterType: default, manufacturer: default, oemActivation: default, hardwareClass: default);
         }
 
         /// <summary> Initializes a new instance of HciClusterNode. </summary>
@@ -3138,7 +3138,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciClusterNode HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB, DateTimeOffset? lastLicensingTimestamp)
         {
-            return HciClusterNode(name, id, windowsServerSubscription, nodeType, ehcResourceId, manufacturer, model, osName, osVersion, osDisplayVersion, serialNumber, coreCount, memoryInGiB, lastLicensingTimestamp, oemActivation: default);
+            return HciClusterNode(name: name, id: id, windowsServerSubscription: windowsServerSubscription, nodeType: nodeType, ehcResourceId: ehcResourceId, manufacturer: manufacturer, model: model, osName: osName, osVersion: osVersion, osDisplayVersion: osDisplayVersion, serialNumber: serialNumber, coreCount: coreCount, memoryInGiB: memoryInGiB, lastLicensingTimestamp: lastLicensingTimestamp, oemActivation: default);
         }
 
         /// <summary> Initializes a new instance of ArcExtensionData. </summary>
@@ -3161,7 +3161,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArcExtensionData ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IEnumerable<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade)
         {
-            return ArcExtensionData(id, name, resourceType, systemData, provisioningState, aggregateState, perNodeExtensionDetails, managedBy: default, forceUpdateTag, publisher, arcExtensionType, typeHandlerVersion, shouldAutoUpgradeMinorVersion, settings, protectedSettings, enableAutomaticUpgrade);
+            return ArcExtensionData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, aggregateState: aggregateState, perNodeExtensionDetails: perNodeExtensionDetails, managedBy: default, forceUpdateTag: forceUpdateTag, publisher: publisher, arcExtensionType: arcExtensionType, typeHandlerVersion: typeHandlerVersion, shouldAutoUpgradeMinorVersion: shouldAutoUpgradeMinorVersion, settings: settings, protectedSettings: protectedSettings, enableAutomaticUpgrade: enableAutomaticUpgrade);
         }
     }
 }

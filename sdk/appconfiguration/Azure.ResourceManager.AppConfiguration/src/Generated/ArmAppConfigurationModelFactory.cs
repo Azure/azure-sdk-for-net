@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </param>
         /// <param name="tags"> A dictionary of tags that can help identify what a key-value may be applicable for. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationKeyValueData"/> instance for mocking. </returns>
-        public static AppConfigurationKeyValueData AppConfigurationKeyValueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string key = default, string label = default, string value = default, string contentType = default, ETag? etag = default, DateTimeOffset? lastModifiedOn = default, bool? isLocked = default, IDictionary<string, string> tags = default)
+        public static AppConfigurationKeyValueData AppConfigurationKeyValueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string key = default, string label = default, string value = default, string contentType = default, ETag? eTag = default, DateTimeOffset? lastModifiedOn = default, bool? isLocked = default, IDictionary<string, string> tags = default)
         {
             return new AppConfigurationKeyValueData(
                 id,
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                key is null && label is null && value is null && contentType is null && etag is null && lastModifiedOn is null && isLocked is null && tags is null ? default : new KeyValueProperties(
+                key is null && label is null && value is null && contentType is null && eTag is null && lastModifiedOn is null && isLocked is null && tags is null ? default : new KeyValueProperties(
                     key,
                     label,
                     value,
                     contentType,
-                    etag,
+                    eTag,
                     lastModifiedOn,
                     isLocked,
                     tags,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string skuName, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, AppConfigurationCreateMode? createMode)
         {
-            return AppConfigurationStoreData(id, name, resourceType, systemData, tags, location, provisioningState, createdOn, endpoint, privateEndpointConnections, publicNetworkAccess, disableLocalAuth, softDeleteRetentionInDays, defaultKeyValueRevisionRetentionPeriodInSeconds: default, enablePurgeProtection, dataPlaneProxy, createMode, encryptionKeyVaultProperties, telemetryResourceId: default, managedOnBehalfOfMoboBrokerResources: default, azureFrontDoorResourceId: default, identity, skuName);
+            return AppConfigurationStoreData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, createdOn: createdOn, endpoint: endpoint, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, disableLocalAuth: disableLocalAuth, softDeleteRetentionInDays: softDeleteRetentionInDays, defaultKeyValueRevisionRetentionPeriodInSeconds: default, enablePurgeProtection: enablePurgeProtection, dataPlaneProxy: dataPlaneProxy, createMode: createMode, encryptionKeyVaultProperties: encryptionKeyVaultProperties, telemetryResourceId: default, managedOnBehalfOfMoboBrokerResources: default, azureFrontDoorResourceId: default, identity: identity, skuName: skuName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppConfigurationPrivateEndpointConnectionReference"/>. </summary>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string skuName, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationCreateMode? createMode)
         {
-            return AppConfigurationStoreData(id, name, resourceType, systemData, tags, location, provisioningState, createdOn, endpoint, privateEndpointConnections, publicNetworkAccess, disableLocalAuth, softDeleteRetentionInDays, defaultKeyValueRevisionRetentionPeriodInSeconds: default, enablePurgeProtection, dataPlaneProxy: default, createMode, encryptionKeyVaultProperties, telemetryResourceId: default, managedOnBehalfOfMoboBrokerResources: default, azureFrontDoorResourceId: default, identity, skuName);
+            return AppConfigurationStoreData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, createdOn: createdOn, endpoint: endpoint, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, disableLocalAuth: disableLocalAuth, softDeleteRetentionInDays: softDeleteRetentionInDays, defaultKeyValueRevisionRetentionPeriodInSeconds: default, enablePurgeProtection: enablePurgeProtection, dataPlaneProxy: default, createMode: createMode, encryptionKeyVaultProperties: encryptionKeyVaultProperties, telemetryResourceId: default, managedOnBehalfOfMoboBrokerResources: default, azureFrontDoorResourceId: default, identity: identity, skuName: skuName);
         }
     }
 }
