@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     [PersistableModelProxy(typeof(UnknownCosmosDBAccountBackupPolicy))]
     public abstract partial class CosmosDBAccountBackupPolicy : IJsonModel<CosmosDBAccountBackupPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountBackupPolicy"/> for deserialization. </summary>
-        internal CosmosDBAccountBackupPolicy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CosmosDBAccountBackupPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRestorableGremlinResourceDataRequest(Guid subscriptionId, string location, string instanceId, string restoreLocation, string restoreTimestampInUtc, RequestContext context)
+        internal HttpMessage CreateGetAllRestorableGremlinResourceDataRequest(Guid subscriptionId, AzureLocation location, string instanceId, string restoreLocation, string restoreTimestampInUtc, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/restorableDatabaseAccounts/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/restorableGremlinResources", false);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRestorableGremlinResourceDataRequest(Uri nextPage, Guid subscriptionId, string location, string instanceId, string restoreLocation, string restoreTimestampInUtc, RequestContext context)
+        internal HttpMessage CreateNextGetAllRestorableGremlinResourceDataRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string instanceId, string restoreLocation, string restoreTimestampInUtc, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

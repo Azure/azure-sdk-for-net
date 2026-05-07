@@ -5,10 +5,11 @@
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    // Reserved for future customizations on CosmosDBAccountBackupPolicy.
-    // The generator currently produces an `internal CosmosDBAccountBackupPolicy()` ctor
-    // matching the legacy SDK surface, so no overrides are needed here.
     public abstract partial class CosmosDBAccountBackupPolicy
     {
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountBackupPolicy"/>. </summary>
+        protected CosmosDBAccountBackupPolicy()
+        {
+        }
     }
 }

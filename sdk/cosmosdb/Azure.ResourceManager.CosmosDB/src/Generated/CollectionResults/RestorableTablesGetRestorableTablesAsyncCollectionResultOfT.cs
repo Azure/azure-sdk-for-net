@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         private readonly RestorableTables _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly string _instanceId;
         private readonly string _startTime;
         private readonly string _endTime;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="endTime"> Restorable Tables event feed end time. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RestorableTablesGetRestorableTablesAsyncCollectionResultOfT(RestorableTables client, Guid subscriptionId, string location, string instanceId, string startTime, string endTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RestorableTablesGetRestorableTablesAsyncCollectionResultOfT(RestorableTables client, Guid subscriptionId, AzureLocation location, string instanceId, string startTime, string endTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

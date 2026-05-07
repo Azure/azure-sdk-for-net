@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateCheckNameExistsRequest(string accountName, RequestContext context)
+        internal HttpMessage CreateCheckNameExistsDatabaseAccountRequest(string accountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         private readonly RestorableDatabaseAccounts _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RestorableDatabaseAccountsGetByLocationAsyncCollectionResultOfT(RestorableDatabaseAccounts client, Guid subscriptionId, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RestorableDatabaseAccountsGetByLocationAsyncCollectionResultOfT(RestorableDatabaseAccounts client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

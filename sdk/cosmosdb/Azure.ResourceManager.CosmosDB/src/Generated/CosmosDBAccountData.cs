@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The offer type for the Cosmos DB database account. Default value: Standard. </summary>
         [WirePath("properties.databaseAccountOfferType")]
-        public CosmosDBAccountPropertiesDatabaseAccountOfferType? DatabaseAccountOfferType
+        public CosmosDBAccountOfferType? DatabaseAccountOfferType
         {
             get
             {

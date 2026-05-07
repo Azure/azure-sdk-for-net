@@ -7,13 +7,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     // Restore { get; set; } for ProvisioningState (baseline AutoRest surface).
-    [CodeGenSuppress("Properties")]
     [CodeGenSuppress("ProvisioningState")]
     public partial class CosmosDBFleetspacePatch
     {
-        [WirePath("properties")]
-        internal FleetspaceProperties Properties { get; set; }
-
         /// <summary> A provisioning state of the Fleetspace. </summary>
         [WirePath("properties.provisioningState")]
         public CosmosDBStatus? ProvisioningState

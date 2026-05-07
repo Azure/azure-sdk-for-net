@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string provisioningState = default;
             string documentEndpoint = default;
-            CosmosDBAccountPropertiesDatabaseAccountOfferType? databaseAccountOfferType = default;
+            CosmosDBAccountOfferType? databaseAccountOfferType = default;
             IList<CosmosDBIPAddressOrRange> ipRules = default;
             bool? isVirtualNetworkFilterEnabled = default;
             bool? enableAutomaticFailover = default;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    databaseAccountOfferType = new CosmosDBAccountPropertiesDatabaseAccountOfferType(prop.Value.GetString());
+                    databaseAccountOfferType = new CosmosDBAccountOfferType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipRules"u8))

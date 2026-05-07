@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRestorableMongoDBDatabasesRequest(Guid subscriptionId, string location, string instanceId, RequestContext context)
+        internal HttpMessage CreateGetRestorableMongoDBDatabasesRequest(Guid subscriptionId, AzureLocation location, string instanceId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/restorableDatabaseAccounts/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/restorableMongodbDatabases", false);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateNextGetRestorableMongoDBDatabasesRequest(Uri nextPage, Guid subscriptionId, string location, string instanceId, RequestContext context)
+        internal HttpMessage CreateNextGetRestorableMongoDBDatabasesRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string instanceId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

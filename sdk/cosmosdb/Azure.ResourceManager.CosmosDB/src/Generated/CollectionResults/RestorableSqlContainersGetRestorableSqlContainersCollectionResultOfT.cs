@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         private readonly RestorableSqlContainers _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly string _instanceId;
         private readonly string _restorableSqlDatabaseRid;
         private readonly string _startTime;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="endTime"> Restorable Sql containers event feed end time. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RestorableSqlContainersGetRestorableSqlContainersCollectionResultOfT(RestorableSqlContainers client, Guid subscriptionId, string location, string instanceId, string restorableSqlDatabaseRid, string startTime, string endTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RestorableSqlContainersGetRestorableSqlContainersCollectionResultOfT(RestorableSqlContainers client, Guid subscriptionId, AzureLocation location, string instanceId, string restorableSqlDatabaseRid, string startTime, string endTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

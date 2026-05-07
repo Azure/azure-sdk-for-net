@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Initializes a new instance of <see cref="ThroughputSettingData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ThroughputSettingData(AzureLocation location) : base(location)
+        public ThroughputSettingData(AzureLocation location) : base(location)
         {
         }
 
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

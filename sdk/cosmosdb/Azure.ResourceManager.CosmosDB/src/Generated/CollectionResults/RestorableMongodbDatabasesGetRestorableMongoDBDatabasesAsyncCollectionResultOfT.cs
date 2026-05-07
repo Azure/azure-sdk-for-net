@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         private readonly RestorableMongodbDatabases _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly string _instanceId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RestorableMongodbDatabasesGetRestorableMongoDBDatabasesAsyncCollectionResultOfT(RestorableMongodbDatabases client, Guid subscriptionId, string location, string instanceId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RestorableMongodbDatabasesGetRestorableMongoDBDatabasesAsyncCollectionResultOfT(RestorableMongodbDatabases client, Guid subscriptionId, AzureLocation location, string instanceId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

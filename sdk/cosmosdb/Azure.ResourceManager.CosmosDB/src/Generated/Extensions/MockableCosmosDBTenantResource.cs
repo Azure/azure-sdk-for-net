@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> CheckNameExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CheckNameExistsDatabaseAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = DatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBTenantResource.CheckNameExists");
+            using DiagnosticScope scope = DatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBTenantResource.CheckNameExistsDatabaseAccount");
             scope.Start();
             try
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DatabaseAccountsRestClient.CreateCheckNameExistsRequest(accountName, context);
+                HttpMessage message = DatabaseAccountsRestClient.CreateCheckNameExistsDatabaseAccountRequest(accountName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response CheckNameExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response CheckNameExistsDatabaseAccount(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = DatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBTenantResource.CheckNameExists");
+            using DiagnosticScope scope = DatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBTenantResource.CheckNameExistsDatabaseAccount");
             scope.Start();
             try
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DatabaseAccountsRestClient.CreateCheckNameExistsRequest(accountName, context);
+                HttpMessage message = DatabaseAccountsRestClient.CreateCheckNameExistsDatabaseAccountRequest(accountName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

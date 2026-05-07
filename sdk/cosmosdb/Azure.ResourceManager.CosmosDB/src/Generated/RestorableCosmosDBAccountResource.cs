@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
         /// <param name="instanceId"> The instanceId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string instanceId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string instanceId)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}";
             return new ResourceIdentifier(resourceId);
