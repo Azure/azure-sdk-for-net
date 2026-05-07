@@ -7,6 +7,8 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
@@ -20,6 +22,10 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("CreateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentFromCode", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("CreateAgentFromCodeAsync", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgents", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
@@ -739,6 +745,190 @@ public partial class AgentAdministrationClient
             foundryFeatures: default,
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// CreateAgentVersionFromCode
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName">
+    /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+    /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+    /// </param>
+    /// <param name="filePath"> The path to the entry point file. </param>
+    /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+    /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="filePath"/> or is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string filePath, string contentType, string foundryFeatures = default, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
+
+        (BinaryData data, string codeZipSha256) = FileHelper.CreateAndReadZipFile(filePath);
+        using BinaryContent content = BinaryContent.Create(data);
+        ClientResult result = CreateAgentVersionFromCode(
+            agentName: agentName,
+            codeZipSha256: codeZipSha256,
+            content: content,
+            contentType: contentType,
+            foundryFeatures: default,
+            options: cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// CreateAgentVersionFromCode
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName">
+    /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+    /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+    /// </param>
+    /// <param name="filePath"> The path to the entry point file. </param>
+    /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+    /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="filePath"/> or is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string filePath, string contentType, string foundryFeatures = default, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
+
+        (BinaryData data, string codeZipSha256) = FileHelper.CreateAndReadZipFile(filePath);
+        using BinaryContent content = BinaryContent.Create(data);
+        ClientResult result = await CreateAgentVersionFromCodeAsync(
+            agentName: agentName,
+            codeZipSha256: codeZipSha256,
+            content: content,
+            contentType: contentType,
+            foundryFeatures: default,
+            options: cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// Download the code zip for the latest version of a code-based hosted agent. And unpacks ut to the user directory; returns the zip content as a binary data.
+    /// Returns the previously-uploaded zip (`application/zip`).
+    /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
+    /// <param name="path"> The path to save the agent code. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="path"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual BinaryData DownloadAgentCode(string agentName, string path, CancellationToken cancellationToken=default)
+    {
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        BinaryData result = DownloadAgentCode(
+            agentName: agentName,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken
+        );
+        FileHelper.SaveAndUnzipData(path, result);
+        return result;
+    }
+
+    /// <summary>
+    /// Download the code zip for the latest version of a code-based hosted agent and unpacks it to the user directory; returns the zip content as a binary data.
+    /// Returns the previously-uploaded zip (`application/zip`).
+    /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
+    /// <param name="path"> The path to save the agent code. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="path"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual async Task<BinaryData> DownloadAgentCodeAsync(string agentName, string path, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        BinaryData result = await DownloadAgentCodeAsync(
+            agentName: agentName,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken
+        ).ConfigureAwait(false);
+        FileHelper.SaveAndUnzipData(path, result);
+        return result;
+    }
+
+    /// <summary>
+    /// Download the code zip for a specific version of a code-based hosted agent and unpacks it to the user directory; returns the zip content as a binary data.
+    /// Returns the previously-uploaded zip (`application/zip`).
+    /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
+    /// <param name="path"> The path to save the agent code. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/>  is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual BinaryData DownloadAgentVersionCode(string agentName, string agentVersion, string path, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        BinaryData result = DownloadAgentVersionCode(
+            agentName: agentName,
+            agentVersion: agentVersion,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken);
+        FileHelper.SaveAndUnzipData(path, result);
+        return result;
+    }
+
+    /// <summary>
+    /// Download the code zip for a specific version of a code-based hosted agent and unpacks it to the user directory; returns the zip content as a binary data.
+    /// Returns the previously-uploaded zip (`application/zip`).
+    /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
+    /// <param name="path"> The path to save the agent code. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/>  is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<BinaryData> DownloadAgentVersionCodeAsync(string agentName, string agentVersion, string path, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        BinaryData result = await DownloadAgentVersionCodeAsync(
+            agentName: agentName,
+            agentVersion: agentVersion,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken).ConfigureAwait(false);
+        FileHelper.SaveAndUnzipData(path, result);
+        return result;
     }
 
     public virtual AgentToolboxes GetAgentToolboxes()

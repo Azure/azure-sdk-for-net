@@ -123,6 +123,204 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
+        /// [Protocol Method] CreateAgentVersionFromCode
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult CreateAgentVersionFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] CreateAgentVersionFromCode
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Download the code zip for a specific version of a code-based hosted agent.
+        /// Returns the previously-uploaded zip (`application/zip`).
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult DownloadAgentVersionCode(string agentName, string agentVersion, string foundryFeatures, RequestOptions options)
+        {
+            using PipelineMessage message = CreateDownloadAgentVersionCodeRequest(agentName, agentVersion, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Download the code zip for a specific version of a code-based hosted agent.
+        /// Returns the previously-uploaded zip (`application/zip`).
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> DownloadAgentVersionCodeAsync(string agentName, string agentVersion, string foundryFeatures, RequestOptions options)
+        {
+            using PipelineMessage message = CreateDownloadAgentVersionCodeRequest(agentName, agentVersion, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary>
+        /// Download the code zip for a specific version of a code-based hosted agent.
+        /// Returns the previously-uploaded zip (`application/zip`).
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<BinaryData> DownloadAgentVersionCode(string agentName, string agentVersion, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult result = DownloadAgentVersionCode(agentName, agentVersion, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Download the code zip for a specific version of a code-based hosted agent.
+        /// Returns the previously-uploaded zip (`application/zip`).
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<ClientResult<BinaryData>> DownloadAgentVersionCodeAsync(string agentName, string agentVersion, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult result = await DownloadAgentVersionCodeAsync(agentName, agentVersion, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Download the code zip for the latest version of a code-based hosted agent.
+        /// Returns the previously-uploaded zip (`application/zip`).
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult DownloadAgentCode(string agentName, string foundryFeatures, RequestOptions options)
+        {
+            using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Download the code zip for the latest version of a code-based hosted agent.
+        /// Returns the previously-uploaded zip (`application/zip`).
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> DownloadAgentCodeAsync(string agentName, string foundryFeatures, RequestOptions options)
+        {
+            using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary>
+        /// Download the code zip for the latest version of a code-based hosted agent.
+        /// Returns the previously-uploaded zip (`application/zip`).
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<BinaryData> DownloadAgentCode(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult result = DownloadAgentCode(agentName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Download the code zip for the latest version of a code-based hosted agent.
+        /// Returns the previously-uploaded zip (`application/zip`).
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<ClientResult<BinaryData>> DownloadAgentCodeAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult result = await DownloadAgentCodeAsync(agentName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+        }
+
+        /// <summary>
         /// [Protocol Method] Creates a new session for an agent endpoint.
         /// The endpoint resolves the backing agent version from `version_indicator` and
         /// enforces session ownership using the provided isolation key for session-mutating operations.

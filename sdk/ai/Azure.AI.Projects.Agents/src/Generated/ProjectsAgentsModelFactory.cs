@@ -632,13 +632,19 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Code-based deployment configuration for a hosted agent. </summary>
         /// <param name="runtime"> The runtime identifier for code execution (e.g., 'python_3_11', 'python_3_12', 'python_3_13'). </param>
         /// <param name="entryPoint"> The entry point command and arguments for the code execution. </param>
+        /// <param name="dependencyResolution">
+        /// How package dependencies are resolved at deployment time. Defaults to `bundled`,
+        /// where the caller bundles all dependencies into the uploaded zip and the service
+        /// performs no remote build. `remote_build` instructs the service to build
+        /// dependencies remotely from the manifest included in the uploaded zip.
+        /// </param>
         /// <param name="contentHash"> The SHA-256 hex digest of the uploaded code zip. Set by the service from the `x-ms-code-zip-sha256` request header; read-only in responses and never accepted in request payloads. </param>
         /// <returns> A new <see cref="Agents.CodeConfiguration"/> instance for mocking. </returns>
-        public static CodeConfiguration CodeConfiguration(string runtime = default, IEnumerable<string> entryPoint = default, string contentHash = default)
+        public static CodeConfiguration CodeConfiguration(string runtime = default, IEnumerable<string> entryPoint = default, CodeDependencyResolution dependencyResolution = default, string contentHash = default)
         {
             entryPoint ??= new ChangeTrackingList<string>();
 
-            return new CodeConfiguration(runtime, entryPoint.ToList(), contentHash, additionalBinaryDataProperties: null);
+            return new CodeConfiguration(runtime, entryPoint.ToList(), dependencyResolution, contentHash, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>

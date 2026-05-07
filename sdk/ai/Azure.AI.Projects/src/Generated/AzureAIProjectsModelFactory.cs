@@ -1655,7 +1655,7 @@ namespace Azure.AI.Projects
         /// <param name="completionTokens"> The number of completion tokens generated. </param>
         /// <param name="totalTokens"> Total number of tokens used. </param>
         /// <returns> A new <see cref="Projects.DataGenerationTokenUsage"/> instance for mocking. </returns>
-        public static DataGenerationTokenUsage DataGenerationTokenUsage(long? promptTokens = default, long? completionTokens = default, long? totalTokens = default)
+        public static DataGenerationTokenUsage DataGenerationTokenUsage(long promptTokens = default, long completionTokens = default, long totalTokens = default)
         {
             return new DataGenerationTokenUsage(promptTokens, completionTokens, totalTokens, additionalBinaryDataProperties: null);
         }
