@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
@@ -26,7 +25,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerProperties))]
     [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerResource))]
     [ModelReaderWriterBuildable(typeof(AvailabilityGroupReplica))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MultiSubnetIPConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SqlConnectivityUpdateSettings))]
@@ -56,10 +54,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     [ModelReaderWriterBuildable(typeof(SqlVmTroubleshooting))]
     [ModelReaderWriterBuildable(typeof(SqlVmTroubleshootingStatus))]
     [ModelReaderWriterBuildable(typeof(SqlWorkloadTypeUpdateSettings))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TroubleshootingAdditionalProperties))]
     [ModelReaderWriterBuildable(typeof(UnhealthyReplicaInfo))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WindowsServerFailoverClusterDomainCredentials))]
     [ModelReaderWriterBuildable(typeof(WindowsServerFailoverClusterDomainProfile))]
     public partial class AzureResourceManagerSqlVirtualMachineContext : ModelReaderWriterContext

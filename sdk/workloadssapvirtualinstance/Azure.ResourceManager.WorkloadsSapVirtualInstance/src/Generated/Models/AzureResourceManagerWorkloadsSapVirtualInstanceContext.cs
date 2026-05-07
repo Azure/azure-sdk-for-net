@@ -7,8 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
@@ -107,9 +105,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [ModelReaderWriterBuildable(typeof(SkipFileShareConfiguration))]
     [ModelReaderWriterBuildable(typeof(StartSapInstanceContent))]
     [ModelReaderWriterBuildable(typeof(StopSapInstanceContent))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedConfigurationsDiskDetails))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(ThreeTierConfiguration))]
     [ModelReaderWriterBuildable(typeof(ThreeTierCustomResourceNames))]
     [ModelReaderWriterBuildable(typeof(ThreeTierFullResourceNames))]

@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TrustedSigning.Models;
 
 namespace Azure.ResourceManager.TrustedSigning
@@ -25,7 +24,6 @@ namespace Azure.ResourceManager.TrustedSigning
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(Revocation))]
     [ModelReaderWriterBuildable(typeof(RevokeCertificateContent))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrustedSigningAccountData))]
     [ModelReaderWriterBuildable(typeof(TrustedSigningAccountNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(TrustedSigningAccountNameAvailabilityResult))]

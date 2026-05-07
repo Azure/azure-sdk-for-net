@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WeightsAndBiases.Models;
 
 namespace Azure.ResourceManager.WeightsAndBiases
@@ -17,10 +16,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(InstanceResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WeightsAndBiasesInstanceData))]
     [ModelReaderWriterBuildable(typeof(WeightsAndBiasesInstancePatch))]
     [ModelReaderWriterBuildable(typeof(WeightsAndBiasesInstanceProperties))]

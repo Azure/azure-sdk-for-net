@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
@@ -19,7 +18,6 @@ namespace Azure.ResourceManager.SignalR
     [ModelReaderWriterBuildable(typeof(CustomCertificateProperties))]
     [ModelReaderWriterBuildable(typeof(CustomDomainProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentitySettings))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ReplicaList))]
@@ -88,10 +86,8 @@ namespace Azure.ResourceManager.SignalR
     [ModelReaderWriterBuildable(typeof(SignalRUsage))]
     [ModelReaderWriterBuildable(typeof(SignalRUsageList))]
     [ModelReaderWriterBuildable(typeof(SignalRUsageName))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownSignalRClientConnectionCountRule))]
     [ModelReaderWriterBuildable(typeof(UnknownSignalRClientTrafficControlRule))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerSignalRContext : ModelReaderWriterContext
     {
     }

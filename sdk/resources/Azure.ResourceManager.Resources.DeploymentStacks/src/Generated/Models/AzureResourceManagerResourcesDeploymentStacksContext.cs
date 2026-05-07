@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.DeploymentStacks.Models;
 
 namespace Azure.ResourceManager.Resources.DeploymentStacks
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
     [ModelReaderWriterBuildable(typeof(KeyVaultParameterReference))]
     [ModelReaderWriterBuildable(typeof(KeyVaultReference))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerResourcesDeploymentStacksContext : ModelReaderWriterContext
     {
     }

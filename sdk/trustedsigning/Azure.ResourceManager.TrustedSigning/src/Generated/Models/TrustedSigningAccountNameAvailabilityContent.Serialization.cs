@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 throw new FormatException($"The model {nameof(TrustedSigningAccountNameAvailabilityContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceType);
+            writer.WriteObjectValue(ResourceType, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

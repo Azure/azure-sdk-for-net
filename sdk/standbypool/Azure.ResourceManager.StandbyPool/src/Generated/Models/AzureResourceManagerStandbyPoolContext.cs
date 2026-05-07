@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StandbyPool.Models;
 
 namespace Azure.ResourceManager.StandbyPool
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.StandbyPool
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachineProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachineResource))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachineResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerStandbyPoolContext : ModelReaderWriterContext
     {
     }

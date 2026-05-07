@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
@@ -18,7 +17,6 @@ namespace Azure.ResourceManager.Search
     /// </summary>
     [ModelReaderWriterBuildable(typeof(DataPlaneAadOrApiKeyAuthOption))]
     [ModelReaderWriterBuildable(typeof(ListQueryKeysResult))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationListResult))]
     [ModelReaderWriterBuildable(typeof(OfferingsListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionPropertiesPrivateEndpoint))]
@@ -74,9 +72,7 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResourceProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownSearchDataIdentity))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerSearchContext : ModelReaderWriterContext
     {
     }

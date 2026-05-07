@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.Sphere
     [ModelReaderWriterBuildable(typeof(SphereProductData))]
     [ModelReaderWriterBuildable(typeof(SphereProductPatch))]
     [ModelReaderWriterBuildable(typeof(SphereProductResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSphereContext : ModelReaderWriterContext
     {
     }

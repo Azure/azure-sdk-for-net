@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageDiscovery.Models;
 
 namespace Azure.ResourceManager.StorageDiscovery
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.StorageDiscovery
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspacePatchProperties))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspaceProperties))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspaceResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerStorageDiscoveryContext : ModelReaderWriterContext
     {
     }

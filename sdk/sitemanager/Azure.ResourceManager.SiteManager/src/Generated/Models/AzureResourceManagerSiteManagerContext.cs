@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SiteManager.Models;
 
 namespace Azure.ResourceManager.SiteManager
@@ -26,7 +25,6 @@ namespace Azure.ResourceManager.SiteManager
     [ModelReaderWriterBuildable(typeof(ServiceGroupEdgeSiteResource))]
     [ModelReaderWriterBuildable(typeof(SiteListResult))]
     [ModelReaderWriterBuildable(typeof(SubscriptionEdgeSiteResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSiteManagerContext : ModelReaderWriterContext
     {
     }

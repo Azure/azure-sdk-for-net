@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
@@ -47,7 +46,6 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(JobRunResource))]
     [ModelReaderWriterBuildable(typeof(JobRunResourceId))]
     [ModelReaderWriterBuildable(typeof(JobRunWarning))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NfsMountEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(NfsMountEndpointUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ProjectList))]
@@ -86,7 +84,6 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(StorageMoverScheduleInfo))]
     [ModelReaderWriterBuildable(typeof(StorageMoverSchedulerTime))]
     [ModelReaderWriterBuildable(typeof(StorageMoverUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetEndpoint))]
     [ModelReaderWriterBuildable(typeof(TargetEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownCredentials))]
@@ -94,7 +91,6 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(UnknownEndpointBaseUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(UploadLimitSchedule))]
     [ModelReaderWriterBuildable(typeof(UploadLimitWeeklyRecurrence))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerStorageMoverContext : ModelReaderWriterContext
     {
     }

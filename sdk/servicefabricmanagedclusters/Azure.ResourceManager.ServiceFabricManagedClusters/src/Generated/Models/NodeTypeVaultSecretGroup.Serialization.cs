@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters;
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 if (prop.NameEquals("sourceVault"u8))
                 {
-                    sourceVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                    sourceVault = WritableSubResource.DeserializeWritableSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vaultCertificates"u8))

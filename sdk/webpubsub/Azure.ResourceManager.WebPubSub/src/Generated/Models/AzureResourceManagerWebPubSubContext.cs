@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.WebPubSub
     [ModelReaderWriterBuildable(typeof(LiveTraceCategory))]
     [ModelReaderWriterBuildable(typeof(LiveTraceConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentitySettings))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointAcl))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionList))]
@@ -45,13 +43,11 @@ namespace Azure.ResourceManager.WebPubSub
     [ModelReaderWriterBuildable(typeof(SignalRServiceUsageList))]
     [ModelReaderWriterBuildable(typeof(SignalRServiceUsageName))]
     [ModelReaderWriterBuildable(typeof(SkuList))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownWebPubSubClientConnectionCountRule))]
     [ModelReaderWriterBuildable(typeof(UnknownWebPubSubClientTrafficControlRule))]
     [ModelReaderWriterBuildable(typeof(UnknownWebPubSubEventListenerEndpoint))]
     [ModelReaderWriterBuildable(typeof(UnknownWebPubSubEventListenerFilter))]
     [ModelReaderWriterBuildable(typeof(UpstreamAuthSettings))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WebPubSubApplicationFirewallSettings))]
     [ModelReaderWriterBuildable(typeof(WebPubSubClientConnectionCountRule))]
     [ModelReaderWriterBuildable(typeof(WebPubSubClientTrafficControlRule))]

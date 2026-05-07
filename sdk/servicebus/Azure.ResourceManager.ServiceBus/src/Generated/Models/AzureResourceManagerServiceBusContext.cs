@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
@@ -22,7 +21,6 @@ namespace Azure.ResourceManager.ServiceBus
     [ModelReaderWriterBuildable(typeof(FailoverProperties))]
     [ModelReaderWriterBuildable(typeof(FailoverPropertiesProperties))]
     [ModelReaderWriterBuildable(typeof(GeoDataReplicationProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessageCountDetails))]
     [ModelReaderWriterBuildable(typeof(MigrationConfigListResult))]
     [ModelReaderWriterBuildable(typeof(MigrationConfigPropertiesProperties))]
@@ -102,8 +100,6 @@ namespace Azure.ResourceManager.ServiceBus
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicResource))]
     [ModelReaderWriterBuildable(typeof(Subnet))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
     public partial class AzureResourceManagerServiceBusContext : ModelReaderWriterContext
     {

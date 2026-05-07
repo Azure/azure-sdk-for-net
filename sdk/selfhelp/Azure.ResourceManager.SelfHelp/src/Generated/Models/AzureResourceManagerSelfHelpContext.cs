@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp
@@ -66,7 +65,6 @@ namespace Azure.ResourceManager.SelfHelp
     [ModelReaderWriterBuildable(typeof(SolutionsTroubleshooters))]
     [ModelReaderWriterBuildable(typeof(SolutionTriggerCriterion))]
     [ModelReaderWriterBuildable(typeof(SolutionWarmUpContent))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TroubleshooterContinueContent))]
     [ModelReaderWriterBuildable(typeof(TroubleshooterInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(TroubleshooterResult))]

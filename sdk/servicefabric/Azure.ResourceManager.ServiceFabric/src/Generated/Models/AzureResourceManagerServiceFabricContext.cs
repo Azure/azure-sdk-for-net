@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(ClusterUpgradePolicy))]
     [ModelReaderWriterBuildable(typeof(Models.ClusterVersionDetails))]
     [ModelReaderWriterBuildable(typeof(DiagnosticsStorageAccountConfig))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NamedPartitionSchemeDescription))]
     [ModelReaderWriterBuildable(typeof(PartitionSchemeDescription))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
@@ -87,7 +85,6 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(StatefulServiceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(StatelessServiceProperties))]
     [ModelReaderWriterBuildable(typeof(StatelessServiceUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UniformInt64RangePartitionSchemeDescription))]
     [ModelReaderWriterBuildable(typeof(UnknownPartitionSchemeDescription))]
     [ModelReaderWriterBuildable(typeof(UnknownServicePlacementPolicyDescription))]
@@ -95,7 +92,6 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(UnknownServiceResourceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionPathResult))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionsDescription))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VMSize))]
     [ModelReaderWriterBuildable(typeof(VMSizesResult))]
     public partial class AzureResourceManagerServiceFabricContext : ModelReaderWriterContext

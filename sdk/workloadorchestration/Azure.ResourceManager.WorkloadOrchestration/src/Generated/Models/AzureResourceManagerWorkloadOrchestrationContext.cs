@@ -7,8 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
@@ -128,7 +126,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     [ModelReaderWriterBuildable(typeof(EdgeWorkflowVersionProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeWorkflowVersionResource))]
     [ModelReaderWriterBuildable(typeof(ExecutionListResult))]
-    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(InstallSolutionContent))]
     [ModelReaderWriterBuildable(typeof(InstanceHistoryListResult))]
     [ModelReaderWriterBuildable(typeof(InstanceListResult))]
@@ -147,7 +144,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     [ModelReaderWriterBuildable(typeof(SolutionTemplateVersionListResult))]
     [ModelReaderWriterBuildable(typeof(SolutionVersionListResult))]
     [ModelReaderWriterBuildable(typeof(SolutionVersionSnapshot))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetComponentStatus))]
     [ModelReaderWriterBuildable(typeof(TargetListResult))]
     [ModelReaderWriterBuildable(typeof(TaskErrorAction))]

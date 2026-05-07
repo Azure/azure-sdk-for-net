@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
@@ -68,7 +67,6 @@ namespace Azure.ResourceManager.Support
     [ModelReaderWriterBuildable(typeof(SupportTicketNoSubCommunicationResource))]
     [ModelReaderWriterBuildable(typeof(SupportTicketNoSubFileResource))]
     [ModelReaderWriterBuildable(typeof(SupportTicketsListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TechnicalTicketDetails))]
     [ModelReaderWriterBuildable(typeof(TenantFileWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(TenantSupportTicketResource))]

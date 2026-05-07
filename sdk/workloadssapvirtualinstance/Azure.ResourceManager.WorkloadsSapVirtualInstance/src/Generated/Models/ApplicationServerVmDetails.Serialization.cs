@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -93,11 +92,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WriteStartArray();
                 foreach (SubResource item in StorageDetails)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
@@ -177,14 +171,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default));
-                        }
+                        array.Add(SubResource.DeserializeSubResource(item, options));
                     }
                     storageDetails = array;
                     continue;

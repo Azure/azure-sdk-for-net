@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
@@ -35,7 +34,6 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(CloudTieringSpaceSavings))]
     [ModelReaderWriterBuildable(typeof(CloudTieringVolumeFreeSpacePolicyStatus))]
     [ModelReaderWriterBuildable(typeof(FilesNotTieringError))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PostBackupResponseProperties))]
     [ModelReaderWriterBuildable(typeof(PostRestoreContent))]
     [ModelReaderWriterBuildable(typeof(PreRestoreContent))]
@@ -94,10 +92,8 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(StorageSyncWorkflowResource))]
     [ModelReaderWriterBuildable(typeof(SyncGroupArray))]
     [ModelReaderWriterBuildable(typeof(SyncGroupProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TriggerChangeDetectionContent))]
     [ModelReaderWriterBuildable(typeof(TriggerRolloverContent))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkflowArray))]
     [ModelReaderWriterBuildable(typeof(WorkflowProperties))]
     public partial class AzureResourceManagerStorageSyncContext : ModelReaderWriterContext
