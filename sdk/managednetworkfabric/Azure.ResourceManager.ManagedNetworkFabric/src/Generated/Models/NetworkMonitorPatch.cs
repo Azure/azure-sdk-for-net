@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Monitor Patch resource definition. </summary>
-    public partial class NetworkMonitorPatch : TagsUpdate
+    public partial class NetworkMonitorPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkMonitorPatch"/>. </summary>
         public NetworkMonitorPatch()

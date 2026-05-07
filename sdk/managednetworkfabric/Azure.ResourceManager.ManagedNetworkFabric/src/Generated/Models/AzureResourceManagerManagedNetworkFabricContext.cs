@@ -317,7 +317,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(SupportedConnectorProperties))]
     [ModelReaderWriterBuildable(typeof(SupportedVersionProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(TagsUpdate))]
     [ModelReaderWriterBuildable(typeof(TerminalServerConfiguration))]
     [ModelReaderWriterBuildable(typeof(TerminalServerPatchableProperties))]
     [ModelReaderWriterBuildable(typeof(UniqueRouteDistinguisherPatchProperties))]

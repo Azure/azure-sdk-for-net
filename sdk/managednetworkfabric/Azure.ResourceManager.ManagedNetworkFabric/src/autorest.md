@@ -86,7 +86,6 @@ rename-mapping:
   IdentitySelectorPatch: NetworkFabricIdentitySelectorPatch
   InternalNetwork: NetworkFabricInternalNetwork
   InternetGateway: NetworkFabricInternetGateway
-  InternetGateway.properties.ipv4Address: Ipv4Address
   InternetGatewayRule: NetworkFabricInternetGatewayRule
   InternetGatewayRule.properties.internetGatewayIds: -|arm-id
   IpCommunity: NetworkFabricIpCommunity
@@ -236,7 +235,7 @@ directive:
         "InternetGatewayPatch", "IpCommunityPatch", "IpExtendedCommunityPatch", "IpPrefixPatch",
         "L2IsolationDomainPatch", "L3IsolationDomainPatch", "NeighborGroupPatch",
         "NetworkFabricPatch", "RoutePolicyPatch", "NetworkPacketBrokerPatch",
-        "NetworkTapPatch", "NetworkTapRulePatch"
+        "NetworkTapPatch", "NetworkTapRulePatch", "NetworkBootstrapDevicePatch", "NetworkMonitorPatch"
       ];
       for (var idx = 0; idx < patchTypes.length; idx++) {
         var name = patchTypes[idx];

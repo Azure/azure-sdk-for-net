@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W" && Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(IPv4Address.ToString());
+                writer.WriteStringValue(IPv4Address);
             }
             if (options.Format != "W" && Optional.IsDefined(Port))
             {
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             SystemData systemData = default;
             string annotation = default;
             ResourceIdentifier internetGatewayRuleId = default;
-            IPAddress ipv4Address = default;
+            string ipv4Address = default;
             int? port = default;
             InternetGatewayType type0 = default;
             InternetGatewayType? internetGatewayType = default;
@@ -190,11 +189,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("ipv4Address"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ipv4Address = IPAddress.Parse(property0.Value.GetString());
+                            ipv4Address = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("port"u8))
