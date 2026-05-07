@@ -1837,7 +1837,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules, bool? isMetricsEnabled)
         {
-            return ObjectReplicationPolicyData(id, name, resourceType, systemData, policyId, enabledOn, sourceAccount, destinationAccount, rules, isMetricsEnabled, isPriorityReplicationEnabled: default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: isMetricsEnabled, isPriorityReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSkuInformation"/>. </summary>
@@ -1852,7 +1852,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageSkuInformation StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IEnumerable<string> locations, IEnumerable<StorageSkuCapability> capabilities, IEnumerable<StorageSkuRestriction> restrictions)
         {
-            return StorageSkuInformation(name, tier, resourceType, kind, locations, locationInfo: default, capabilities, restrictions);
+            return StorageSkuInformation(name: name, tier: tier, resourceType: resourceType, kind: kind, locations: locations, locationInfo: default, capabilities: capabilities, restrictions: restrictions);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountData"/>. </summary>
@@ -1944,7 +1944,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountEndpoints StorageAccountEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints)
         {
-            return StorageAccountEndpoints(blobUri, queueUri, tableUri, fileUri, webUri, dfsUri, microsoftEndpoints, internetEndpoints, iPv6Endpoints: default);
+            return StorageAccountEndpoints(blobUri: blobUri, queueUri: queueUri, tableUri: tableUri, fileUri: fileUri, webUri: webUri, dfsUri: dfsUri, microsoftEndpoints: microsoftEndpoints, internetEndpoints: internetEndpoints, iPv6Endpoints: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
@@ -2002,7 +2002,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules)
         {
-            return ObjectReplicationPolicyData(id, name, resourceType, systemData, policyId, enabledOn, sourceAccount, destinationAccount, rules, isMetricsEnabled: default, isPriorityReplicationEnabled: default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: default, isPriorityReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoReplicationStatistics"/>. </summary>
@@ -2013,7 +2013,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GeoReplicationStatistics GeoReplicationStatistics(GeoReplicationStatus? status, DateTimeOffset? lastSyncOn, bool? canFailover)
         {
-            return GeoReplicationStatistics(status, lastSyncOn, canFailover, canPlannedFailover: default, postFailoverRedundancy: default, postPlannedFailoverRedundancy: default);
+            return GeoReplicationStatistics(status: status, lastSyncOn: lastSyncOn, canFailover: canFailover, canPlannedFailover: default, postFailoverRedundancy: default, postPlannedFailoverRedundancy: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountLocalUserData"/>. </summary>
@@ -2032,7 +2032,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountLocalUserData StorageAccountLocalUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<StoragePermissionScope> permissionScopes, string homeDirectory, IEnumerable<StorageSshPublicKey> sshAuthorizedKeys, string sid, bool? hasSharedKey, bool? hasSshKey, bool? hasSshPassword)
         {
-            return StorageAccountLocalUserData(id, name, resourceType, systemData, permissionScopes, homeDirectory, sshAuthorizedKeys, sid, hasSharedKey, hasSshKey, hasSshPassword, userId: default, groupId: default, isAclAuthorizationAllowed: default, extendedGroups: default, isNfsV3Enabled: default);
+            return StorageAccountLocalUserData(id: id, name: name, resourceType: resourceType, systemData: systemData, permissionScopes: permissionScopes, homeDirectory: homeDirectory, sshAuthorizedKeys: sshAuthorizedKeys, sid: sid, hasSharedKey: hasSharedKey, hasSshKey: hasSshKey, hasSshPassword: hasSshPassword, userId: default, groupId: default, isAclAuthorizationAllowed: default, extendedGroups: default, isNfsV3Enabled: default);
         }
     }
 }
