@@ -58,27 +58,28 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.Core.armResourceType"] = typeof(ResourceType),
         };
 
-        private static readonly Type[] _additionalFrameworkTypes =
-        [
-            typeof(ArmClient),
-            typeof(ArmClientOptions),
-            typeof(ArmCollection),
-            typeof(ArmResource),
-        ];
+        private static readonly IReadOnlyDictionary<string, Type> _azureResourceManagerFrameworkTypes = new Dictionary<string, Type>
+        {
+            [typeof(ArmClient).FullName!] = typeof(ArmClient),
+            [typeof(ArmClientOptions).FullName!] = typeof(ArmClientOptions),
+            [typeof(ArmCollection).FullName!] = typeof(ArmCollection),
+            [typeof(ArmResource).FullName!] = typeof(ArmResource),
+            ["Azure.ResourceManager.Resources.Models.ResourceData"] = typeof(ResourceData),
+            ["Azure.ResourceManager.Resources.Models.TrackedResourceData"] = typeof(TrackedResourceData),
+        };
 
         private static readonly IReadOnlyDictionary<string, Type> _fullyQualifiedNameToFrameworkTypeMap =
             CreateFrameworkTypeMap();
 
         private static IReadOnlyDictionary<string, Type> CreateFrameworkTypeMap()
         {
-            var result = _additionalFrameworkTypes
-                .Concat(_idToSystemTypeMap.Values.Select(type => type.FrameworkType))
+            var result = new Dictionary<string, Type>(_azureResourceManagerFrameworkTypes);
+            foreach (var frameworkType in _idToSystemTypeMap.Values.Select(type => type.FrameworkType)
                 .Concat(_idToPrimitiveTypeMap.Values.Select(type => type.FrameworkType))
-                .Distinct()
-                .ToDictionary(type => type.FullName!, type => type);
-
-            result["Azure.ResourceManager.Resources.Models.ResourceData"] = typeof(ResourceData);
-            result["Azure.ResourceManager.Resources.Models.TrackedResourceData"] = typeof(TrackedResourceData);
+                .Distinct())
+            {
+                result[frameworkType.FullName!] = frameworkType;
+            }
 
             return result;
         }
