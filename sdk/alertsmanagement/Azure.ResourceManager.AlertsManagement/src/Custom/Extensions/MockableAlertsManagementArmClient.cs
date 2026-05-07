@@ -8,11 +8,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
-    // Backward compatibility and API evolution: the old SDK (AutoRest-based, v1.1.1) exposed
-    // GetServiceAlertResource(ResourceIdentifier) on MockableAlertsManagementArmClient. The Obsolete
-    // folder marks GetServiceAlertResource with [Obsolete(true)] as a planned rename. This file
-    // suppresses the generated method and re-adds it as GetAlertResource, providing the new
-    // canonical method name for getting a ServiceAlertResource by ID.
+    // The TypeSpec spec defines two @armResourceOperations interfaces (Alerts and
+    // AlertGetAllTenantOperation) that both bind to the Alert resource model, so the MPG generator
+    // emits an identical GetServiceAlertResource(ResourceIdentifier) factory twice (CS0111 duplicate
+    // member). The CodeGenSuppress below removes both generator-emitted overloads and we add a single
+    // canonical GetServiceAlertResource manually to match the v1.1.1 API surface.
     [CodeGenSuppress("GetServiceAlertResource", typeof(ResourceIdentifier))]
     public partial class MockableAlertsManagementArmClient : ArmResource
     {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceAlertResource" /> object. </returns>
-        public virtual ServiceAlertResource GetAlertResource(ResourceIdentifier id)
+        public virtual ServiceAlertResource GetServiceAlertResource(ResourceIdentifier id)
         {
             ServiceAlertResource.ValidateResourceId(id);
             return new ServiceAlertResource(Client, id);

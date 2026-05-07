@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
             string subscriptionId = "9e261de7-c804-4b9d-9ebf-6f50fe350a9a";
             Guid alertId = Guid.Parse("66114d64-d9d9-478b-95c9-b789d6502100");
             ResourceIdentifier serviceAlertResourceId = ServiceAlertResource.CreateResourceIdentifier(subscriptionId, alertId);
-            ServiceAlertResource serviceAlert = client.GetAlertResource(serviceAlertResourceId);
+            ServiceAlertResource serviceAlert = client.GetServiceAlertResource(serviceAlertResourceId);
 
             // invoke the operation
             ServiceAlertState newState = ServiceAlertState.Acknowledged;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
             string subscriptionId = "9e261de7-c804-4b9d-9ebf-6f50fe350a9a";
             Guid alertId = Guid.Parse("66114d64-d9d9-478b-95c9-b789d6502100");
             ResourceIdentifier serviceAlertResourceId = ServiceAlertResource.CreateResourceIdentifier(subscriptionId, alertId);
-            ServiceAlertResource serviceAlert = client.GetAlertResource(serviceAlertResourceId);
+            ServiceAlertResource serviceAlert = client.GetServiceAlertResource(serviceAlertResourceId);
 
             // invoke the operation
             ServiceAlertModification result = await serviceAlert.GetHistoryAsync();

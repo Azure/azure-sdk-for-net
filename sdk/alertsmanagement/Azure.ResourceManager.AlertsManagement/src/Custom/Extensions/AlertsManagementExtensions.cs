@@ -10,21 +10,17 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    // Backward compatibility and API evolution:
-    // 1. The old SDK (AutoRest-based, v1.1.1) exposed GetServiceAlertResource(ArmClient, ResourceIdentifier).
-    //    The TypeSpec resource "Alert" is renamed to "ServiceAlert" via @@clientName, so the generator would
-    //    produce GetServiceAlertResource. However, the Obsolete folder marks GetServiceAlertResource with
-    //    [Obsolete(true)] to signal a planned rename. This file suppresses the generated method and re-adds
-    //    it as GetAlertResource, providing the new canonical method name.
-    // 2. The old SDK exposed GetServiceAlertSummary/GetServiceAlertSummaryAsync on SubscriptionResource.
-    //    The new TypeSpec generator places GetSummary on ArmClient (scope-based). This file re-introduces
-    //    the old SubscriptionResource extension methods delegating through MockableAlertsManagementSubscriptionResource.
-    //
-    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) exposed
-    // GetServiceAlerts(SubscriptionResource) and GetServiceAlertMetadata(TenantResource).
-    // The new TypeSpec generator places GetServiceAlerts on ArmClient (scope-based) and renames
-    // GetServiceAlertMetadata to MetaData on TenantResource. These extension methods re-introduce
-    // the old method signatures to keep binary/source compatibility.
+    // Backward compatibility:
+    // 1. The old SDK (AutoRest-based, v1.1.1) exposed GetServiceAlertSummary/GetServiceAlertSummaryAsync
+    //    (with both individual-parameter and Options overloads) and GetServiceAlerts on
+    //    SubscriptionResource. The new TypeSpec generator places GetSummary/GetServiceAlerts on ArmClient
+    //    (scope-based). These extension methods re-introduce the old SubscriptionResource extension method
+    //    signatures to keep binary/source compatibility, delegating through MockableAlertsManagementSubscriptionResource.
+    // 2. The TypeSpec spec defines two @armResourceOperations interfaces (Alerts and AlertGetAllTenantOperation)
+    //    that both bind to the Alert resource model, so the MPG generator emits an identical
+    //    GetServiceAlertResource(ArmClient, ResourceIdentifier) factory twice (CS0111 duplicate member).
+    //    The CodeGenSuppress below removes both generator-emitted overloads and we add a single
+    //    canonical GetServiceAlertResource manually to match the v1.1.1 API surface.
     [CodeGenSuppress("GetServiceAlertResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class AlertsManagementExtensions
     {
@@ -35,11 +31,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceAlertResource" /> object. </returns>
-        public static ServiceAlertResource GetAlertResource(this ArmClient client, ResourceIdentifier id)
+        public static ServiceAlertResource GetServiceAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAlertsManagementArmClient(client).GetAlertResource(id);
+            return client.GetCachedClient(client0 => new Mocking.MockableAlertsManagementArmClient(client0, ResourceIdentifier.Root)).GetServiceAlertResource(id);
         }
 
         private static Mocking.MockableAlertsManagementSubscriptionResource GetMockableAlertsManagementSubscriptionResource(SubscriptionResource subscriptionResource)

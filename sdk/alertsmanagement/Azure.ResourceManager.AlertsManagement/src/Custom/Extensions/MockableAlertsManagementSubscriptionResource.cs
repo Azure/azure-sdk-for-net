@@ -23,6 +23,9 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
     // delegates to the generated MockableAlertsManagementArmClient.GetServiceAlerts(Id).
     public partial class MockableAlertsManagementSubscriptionResource : ArmResource
     {
+        /// <summary> Initializes a new instance for mocking. </summary>
+        protected MockableAlertsManagementSubscriptionResource() { }
+
         internal MockableAlertsManagementSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
