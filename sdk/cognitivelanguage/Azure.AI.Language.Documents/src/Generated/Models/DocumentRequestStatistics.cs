@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
-    public partial class RequestStatistics
+    public partial class DocumentRequestStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RequestStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentRequestStatistics"/>. </summary>
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="transactionsCount"> Number of transactions for the request. </param>
-        internal RequestStatistics(int documentsCount, int validDocumentsCount, int erroneousDocumentsCount, long transactionsCount)
+        internal DocumentRequestStatistics(int documentsCount, int validDocumentsCount, int erroneousDocumentsCount, long transactionsCount)
         {
             DocumentsCount = documentsCount;
             ValidDocumentsCount = validDocumentsCount;
@@ -29,13 +29,13 @@ namespace Azure.AI.Language.Documents
             TransactionsCount = transactionsCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentRequestStatistics"/>. </summary>
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="transactionsCount"> Number of transactions for the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequestStatistics(int documentsCount, int validDocumentsCount, int erroneousDocumentsCount, long transactionsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentRequestStatistics(int documentsCount, int validDocumentsCount, int erroneousDocumentsCount, long transactionsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DocumentsCount = documentsCount;
             ValidDocumentsCount = validDocumentsCount;

@@ -73,10 +73,10 @@ namespace Azure.AI.Language.Documents
             {
                 throw new FormatException($"The model {nameof(AbstractiveSummarizationActionContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(ShouldLog))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
-                writer.WriteBooleanValue(LoggingOptOut.Value);
+                writer.WriteBooleanValue(ShouldLog.Value);
             }
             if (Optional.IsDefined(ModelVersion))
             {
@@ -145,11 +145,11 @@ namespace Azure.AI.Language.Documents
             {
                 return null;
             }
-            bool? loggingOptOut = default;
+            bool? shouldLog = default;
             string modelVersion = default;
             int? sentenceCount = default;
             StringIndexType? stringIndexType = default;
-            SummaryLengthBucket? summaryLength = default;
+            SummarySize? summaryLength = default;
             string instruction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.AI.Language.Documents
                     {
                         continue;
                     }
-                    loggingOptOut = prop.Value.GetBoolean();
+                    shouldLog = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("modelVersion"u8))
@@ -192,7 +192,7 @@ namespace Azure.AI.Language.Documents
                     {
                         continue;
                     }
-                    summaryLength = new SummaryLengthBucket(prop.Value.GetString());
+                    summaryLength = new SummarySize(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("instruction"u8))
@@ -206,7 +206,7 @@ namespace Azure.AI.Language.Documents
                 }
             }
             return new AbstractiveSummarizationActionContent(
-                loggingOptOut,
+                shouldLog,
                 modelVersion,
                 sentenceCount,
                 stringIndexType,

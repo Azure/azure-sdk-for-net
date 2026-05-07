@@ -142,7 +142,7 @@ namespace Azure.AI.Language.Documents
                 return null;
             }
             IList<AnalyzeDocumentsDocumentError> errors = default;
-            RequestStatistics statistics = default;
+            DocumentRequestStatistics statistics = default;
             string modelVersion = default;
             IList<DocumentAnalysisDocumentResult> documents = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.AI.Language.Documents
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(prop.Value, options);
+                    statistics = DocumentRequestStatistics.DeserializeDocumentRequestStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("modelVersion"u8))

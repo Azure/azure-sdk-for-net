@@ -180,7 +180,7 @@ namespace Azure.AI.Language.Documents
             IList<AnalyzeDocumentsError> errors = default;
             string nextLink = default;
             DocumentTasksState tasks = default;
-            RequestStatistics statistics = default;
+            DocumentRequestStatistics statistics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -248,7 +248,7 @@ namespace Azure.AI.Language.Documents
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(prop.Value, options);
+                    statistics = DocumentRequestStatistics.DeserializeDocumentRequestStatistics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

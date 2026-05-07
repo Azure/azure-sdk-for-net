@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="modelVersion"> This field indicates which model is used for analysis. </param>
         /// <param name="documents"> Response by document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeDocumentsResult(IList<AnalyzeDocumentsDocumentError> errors, RequestStatistics statistics, string modelVersion, IList<DocumentAnalysisDocumentResult> documents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeDocumentsResult(IList<AnalyzeDocumentsDocumentError> errors, DocumentRequestStatistics statistics, string modelVersion, IList<DocumentAnalysisDocumentResult> documents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             Statistics = statistics;
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Documents
         public IList<AnalyzeDocumentsDocumentError> Errors { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
-        public RequestStatistics Statistics { get; }
+        public DocumentRequestStatistics Statistics { get; }
 
         /// <summary> This field indicates which model is used for analysis. </summary>
         public string ModelVersion { get; }

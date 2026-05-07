@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Documents
 {
     /// <summary> Enum that defines the length of the output summaries. </summary>
-    public readonly partial struct SummaryLengthBucket : IEquatable<SummaryLengthBucket>
+    public readonly partial struct SummarySize : IEquatable<SummarySize>
     {
         private readonly string _value;
         /// <summary> Instructs model to generate shorter length summaries. </summary>
@@ -21,10 +21,10 @@ namespace Azure.AI.Language.Documents
         /// <summary> Instructs model to generate longer length summaries. </summary>
         private const string LongValue = "long";
 
-        /// <summary> Initializes a new instance of <see cref="SummaryLengthBucket"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SummarySize"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SummaryLengthBucket(string value)
+        public SummarySize(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -32,38 +32,38 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> Instructs model to generate shorter length summaries. </summary>
-        public static SummaryLengthBucket Short { get; } = new SummaryLengthBucket(ShortValue);
+        public static SummarySize Short { get; } = new SummarySize(ShortValue);
 
         /// <summary> Instructs model to generate medium length summaries. </summary>
-        public static SummaryLengthBucket Medium { get; } = new SummaryLengthBucket(MediumValue);
+        public static SummarySize Medium { get; } = new SummarySize(MediumValue);
 
         /// <summary> Instructs model to generate longer length summaries. </summary>
-        public static SummaryLengthBucket Long { get; } = new SummaryLengthBucket(LongValue);
+        public static SummarySize Long { get; } = new SummarySize(LongValue);
 
-        /// <summary> Determines if two <see cref="SummaryLengthBucket"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SummarySize"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SummaryLengthBucket left, SummaryLengthBucket right) => left.Equals(right);
+        public static bool operator ==(SummarySize left, SummarySize right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SummaryLengthBucket"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SummarySize"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SummaryLengthBucket left, SummaryLengthBucket right) => !left.Equals(right);
+        public static bool operator !=(SummarySize left, SummarySize right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SummaryLengthBucket"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SummarySize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SummaryLengthBucket(string value) => new SummaryLengthBucket(value);
+        public static implicit operator SummarySize(string value) => new SummarySize(value);
 
-        /// <summary> Converts a string to a <see cref="SummaryLengthBucket"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SummarySize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SummaryLengthBucket?(string value) => value == null ? null : new SummaryLengthBucket(value);
+        public static implicit operator SummarySize?(string value) => value == null ? null : new SummarySize(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SummaryLengthBucket other && Equals(other);
+        public override bool Equals(object obj) => obj is SummarySize other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SummaryLengthBucket other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SummarySize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

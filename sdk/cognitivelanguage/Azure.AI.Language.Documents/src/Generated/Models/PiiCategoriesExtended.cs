@@ -343,7 +343,7 @@ namespace Azure.AI.Language.Documents
         /// <summary> Email. </summary>
         private const string EmailValue = "Email";
         /// <summary> URL. </summary>
-        private const string URLValue = "URL";
+        private const string UrlValue = "URL";
         /// <summary> Age. </summary>
         private const string AgeValue = "Age";
         /// <summary> Phone Number. </summary>
@@ -864,7 +864,7 @@ namespace Azure.AI.Language.Documents
         public static PiiCategoriesExtended Email { get; } = new PiiCategoriesExtended(EmailValue);
 
         /// <summary> URL. </summary>
-        public static PiiCategoriesExtended URL { get; } = new PiiCategoriesExtended(URLValue);
+        public static PiiCategoriesExtended Url { get; } = new PiiCategoriesExtended(UrlValue);
 
         /// <summary> Age. </summary>
         public static PiiCategoriesExtended Age { get; } = new PiiCategoriesExtended(AgeValue);

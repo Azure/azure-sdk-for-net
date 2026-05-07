@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <returns> A new <see cref="Documents.AnalyzeDocumentsJobState"/> instance for mocking. </returns>
-        public static AnalyzeDocumentsJobState AnalyzeDocumentsJobState(string displayName = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, DocumentActionState status = default, IEnumerable<AnalyzeDocumentsError> errors = default, string nextLink = default, DocumentTasksState tasks = default, RequestStatistics statistics = default)
+        public static AnalyzeDocumentsJobState AnalyzeDocumentsJobState(string displayName = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, DocumentActionState status = default, IEnumerable<AnalyzeDocumentsError> errors = default, string nextLink = default, DocumentTasksState tasks = default, DocumentRequestStatistics statistics = default)
         {
             errors ??= new ChangeTrackingList<AnalyzeDocumentsError>();
 
@@ -141,7 +141,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="modelVersion"> This field indicates which model is used for analysis. </param>
         /// <param name="documents"> Response by document. </param>
         /// <returns> A new <see cref="Documents.AnalyzeDocumentsResult"/> instance for mocking. </returns>
-        public static AnalyzeDocumentsResult AnalyzeDocumentsResult(IEnumerable<AnalyzeDocumentsDocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<DocumentAnalysisDocumentResult> documents = default)
+        public static AnalyzeDocumentsResult AnalyzeDocumentsResult(IEnumerable<AnalyzeDocumentsDocumentError> errors = default, DocumentRequestStatistics statistics = default, string modelVersion = default, IEnumerable<DocumentAnalysisDocumentResult> documents = default)
         {
             errors ??= new ChangeTrackingList<AnalyzeDocumentsDocumentError>();
             documents ??= new ChangeTrackingList<DocumentAnalysisDocumentResult>();
@@ -163,10 +163,10 @@ namespace Azure.AI.Language.Documents
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="transactionsCount"> Number of transactions for the request. </param>
-        /// <returns> A new <see cref="Documents.RequestStatistics"/> instance for mocking. </returns>
-        public static RequestStatistics RequestStatistics(int documentsCount = default, int validDocumentsCount = default, int erroneousDocumentsCount = default, long transactionsCount = default)
+        /// <returns> A new <see cref="Documents.DocumentRequestStatistics"/> instance for mocking. </returns>
+        public static DocumentRequestStatistics DocumentRequestStatistics(int documentsCount = default, int validDocumentsCount = default, int erroneousDocumentsCount = default, long transactionsCount = default)
         {
-            return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalBinaryDataProperties: null);
+            return new DocumentRequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains the result object for the processed document. </summary>
@@ -553,17 +553,17 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> Supported parameters for the pre-built Abstractive Summarization task. </summary>
-        /// <param name="loggingOptOut"> logging opt out. </param>
+        /// <param name="shouldLog"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> Controls the approximate number of sentences in the output summaries. </param>
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
         /// <param name="instruction"> (Optional) If provided, the instruction will be used to generate the summary. </param>
         /// <returns> A new <see cref="Documents.AbstractiveSummarizationActionContent"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationActionContent AbstractiveSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, string instruction = default)
+        public static AbstractiveSummarizationActionContent AbstractiveSummarizationActionContent(bool? shouldLog = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummarySize? summaryLength = default, string instruction = default)
         {
             return new AbstractiveSummarizationActionContent(
-                loggingOptOut,
+                shouldLog,
                 modelVersion,
                 sentenceCount,
                 stringIndexType,

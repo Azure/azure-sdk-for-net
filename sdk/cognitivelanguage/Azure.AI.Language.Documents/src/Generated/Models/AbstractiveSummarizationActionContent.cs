@@ -17,16 +17,16 @@ namespace Azure.AI.Language.Documents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationActionContent"/>. </summary>
-        /// <param name="loggingOptOut"> logging opt out. </param>
+        /// <param name="shouldLog"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> Controls the approximate number of sentences in the output summaries. </param>
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
         /// <param name="instruction"> (Optional) If provided, the instruction will be used to generate the summary. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AbstractiveSummarizationActionContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, string instruction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AbstractiveSummarizationActionContent(bool? shouldLog, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummarySize? summaryLength, string instruction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LoggingOptOut = loggingOptOut;
+            ShouldLog = shouldLog;
             ModelVersion = modelVersion;
             SentenceCount = sentenceCount;
             StringIndexType = stringIndexType;
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
+        public bool? ShouldLog { get; set; }
 
         /// <summary> model version. </summary>
         public string ModelVersion { get; set; }
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Documents
         public int? SentenceCount { get; set; }
 
         /// <summary> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </summary>
-        public SummaryLengthBucket? SummaryLength { get; set; }
+        public SummarySize? SummaryLength { get; set; }
 
         /// <summary> (Optional) If provided, the instruction will be used to generate the summary. </summary>
         public string Instruction { get; set; }

@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeDocumentsJobState(string displayName, DateTimeOffset createdAt, DateTimeOffset? expiresOn, Guid jobId, DateTimeOffset lastUpdatedAt, DocumentActionState status, IList<AnalyzeDocumentsError> errors, string nextLink, DocumentTasksState tasks, RequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeDocumentsJobState(string displayName, DateTimeOffset createdAt, DateTimeOffset? expiresOn, Guid jobId, DateTimeOffset lastUpdatedAt, DocumentActionState status, IList<AnalyzeDocumentsError> errors, string nextLink, DocumentTasksState tasks, DocumentRequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             CreatedAt = createdAt;
@@ -85,6 +85,6 @@ namespace Azure.AI.Language.Documents
         public DocumentTasksState Tasks { get; }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
-        public RequestStatistics Statistics { get; }
+        public DocumentRequestStatistics Statistics { get; }
     }
 }

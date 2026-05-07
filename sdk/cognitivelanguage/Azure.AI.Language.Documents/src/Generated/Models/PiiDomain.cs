@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Documents
     {
         private readonly string _value;
         /// <summary> Indicates that entities in the Personal Health Information domain should be redacted. </summary>
-        private const string PhiValue = "phi";
+        private const string HealthValue = "phi";
         /// <summary> Indicates that no domain is specified. </summary>
         private const string NoneValue = "none";
 
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> Indicates that entities in the Personal Health Information domain should be redacted. </summary>
-        public static PiiDomain Phi { get; } = new PiiDomain(PhiValue);
+        public static PiiDomain Health { get; } = new PiiDomain(HealthValue);
 
         /// <summary> Indicates that no domain is specified. </summary>
         public static PiiDomain None { get; } = new PiiDomain(NoneValue);
