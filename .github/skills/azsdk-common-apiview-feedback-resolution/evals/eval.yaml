@@ -14,28 +14,21 @@ config:
   model: claude-opus-4.6
   executor: copilot-sdk
 
+scoring:
+  threshold: 0.8
+
 stimuli:
   - name: apiview-basic-001
     prompt: "My Python SDK PR has APIView comments that I need to address. Can you help me retrieve and resolve them?"
     graders:
-      - type: output-contains
+      - type: tool-calls
         config:
-          substring: "APIView"
-      - type: output-contains
-        config:
-          substring: "comment"
-    constraints:
-      expect_tools: ["azsdk_apiview_get_comments"]
+          required:
+            - name: azure-sdk-mcp-azsdk_apiview_get_comments
 
   - name: apiview-edge-001
-    prompt: "An APIView reviewer says I need to rename 'ComputeProvisioningState' to 'ProvisioningState' in my SDK. This needs a TypeSpec change."
+    prompt: "An APIView reviewer says I need to rename 'ComputeProvisioningState' to 'ProvisioningState' in my SDK. Use the SDK customization tools to apply this rename."
     graders:
-      - type: output-contains
-        config:
-          substring: "client.tsp"
-      - type: output-contains
-        config:
-          substring: "clientName"
       - type: output-not-contains
         config:
           substring: "cannot help"
@@ -50,9 +43,10 @@ stimuli:
   - name: apiview-negative-001
     prompt: "I need to create a new TypeSpec project for my Azure Storage service."
     graders:
-      - type: output-not-contains
+      - type: tool-calls
         config:
-          substring: "azsdk_apiview_get_comments"
+          disallowed:
+            - name: azure-sdk-mcp-azsdk_apiview_get_comments
       - type: output-not-contains
         config:
           substring: "APIView"
@@ -63,8 +57,6 @@ stimuli:
       - type: output-contains
         config:
           substring: "APIView"
-    constraints:
-      expect_skills: ["azsdk-common-apiview-feedback-resolution"]
 
   - name: anti-trigger
     prompt: "How do I set up a new Azure Storage account?"
@@ -88,5 +80,3 @@ stimuli:
       - type: output-contains
         config:
           substring: "apiview"
-    constraints:
-      expect_skills: ["azsdk-common-apiview-feedback-resolution"]

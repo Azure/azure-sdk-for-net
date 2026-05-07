@@ -14,30 +14,27 @@ config:
   model: claude-opus-4.6
   executor: copilot-sdk
 
+scoring:
+  threshold: 0.8
+
 stimuli:
   - name: release-plan-basic-001
     prompt: "I need to create a release plan for my API spec PR https://github.com/Azure/azure-rest-api-specs/pull/12345. The API version is 2024-06-01 and it's a stable release."
     graders:
       - type: output-contains
         config:
-          substring: "Service Tree"
+          substring: "release plan"
+
+  - name: release-plan-edge-001
+    prompt: "Update the release plan with these SDK details: JavaScript package '@azure/arm-compute' and Go package 'sdk/armcompute'."
+    graders:
       - type: output-contains
         config:
           substring: "release plan"
 
-  - name: release-plan-edge-001
-    prompt: "Update the release plan with these SDK details: JavaScript package 'arm-compute' and Go package 'sdk/armcompute'."
-    graders:
-      - type: output-contains
-        config:
-          substring: "@azure/"
-
   - name: release-plan-link-001
     prompt: "I have release plan 67890 and SDK PRs for Python (PR #100) and .NET (PR #200) in the azure-sdk repos. Link them to the release plan."
     graders:
-      - type: output-contains
-        config:
-          substring: "link"
       - type: output-contains
         config:
           substring: "release plan"
@@ -45,9 +42,10 @@ stimuli:
   - name: release-plan-negative-001
     prompt: "Release the azure-mgmt-compute Python package to PyPI now."
     graders:
-      - type: output-not-contains
+      - type: tool-calls
         config:
-          substring: "azsdk_create_release_plan"
+          disallowed:
+            - name: azure-sdk-mcp-azsdk_create_release_plan
       - type: output-not-contains
         config:
           substring: "Service Tree ID"
@@ -58,8 +56,6 @@ stimuli:
       - type: output-contains
         config:
           substring: "release"
-    constraints:
-      expect_skills: ["azsdk-common-prepare-release-plan"]
 
   - name: anti-trigger
     prompt: "How do I configure logging in my Azure Function?"

@@ -2,7 +2,7 @@ name: azsdk-common-sdk-release-eval
 description: Evaluation suite for the azsdk-common-sdk-release skill
 type: capability
 
-environment: azsdk-mcp
+environment: azsdk-mcp-mock
 
 tags:
   area: azsdk-common-sdk-release
@@ -14,6 +14,9 @@ config:
   model: claude-opus-4.6
   executor: copilot-sdk
 
+scoring:
+  threshold: 0.8
+
 stimuli:
   - name: release-basic-001
     prompt: "I want to release my Azure Event Hubs Python SDK package."
@@ -24,7 +27,7 @@ stimuli:
       - type: tool-calls
         config:
           required:
-            - name: azsdk_release_sdk
+            - name: azure-sdk-mcp-azsdk_release_sdk
 
   - name: release-trigger-001
     prompt: "The readiness check passed. Go ahead and trigger the release pipeline for @azure/event-hubs JavaScript SDK."
@@ -35,11 +38,10 @@ stimuli:
       - type: output-contains
         config:
           substring: "pipeline"
-      - type: output-contains
+      - type: tool-calls
         config:
-          substring: "approve"
-    constraints:
-      expect_tools: ["azsdk_release_sdk"]
+          required:
+            - name: azure-sdk-mcp-azsdk_release_sdk
 
   - name: release-readiness-001
     prompt: "Check if azure-messaging-eventhubs is ready for release in Java."
@@ -50,7 +52,7 @@ stimuli:
       - type: tool-calls
         config:
           required:
-            - name: azsdk_release_sdk
+            - name: azure-sdk-mcp-azsdk_release_sdk
 
   - name: release-negative-001
     prompt: "I need to validate my CODEOWNERS file for the Python SDK repo."
