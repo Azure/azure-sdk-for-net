@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.KeyVault.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(KeyVaultPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(KeyVaultPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(KeyVaultPrivateLinkServiceConnectionState))]
-    [ModelReaderWriterBuildable(typeof(Models.KeyVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(KeyVaultResource))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretData))]
@@ -74,7 +73,6 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(ManagedHsmServiceTagRule))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmSku))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmVirtualNetworkRule))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MHSMPrivateEndpointConnectionsListResult))]
     [ModelReaderWriterBuildable(typeof(MhsmPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
@@ -85,8 +83,6 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(SecretListResult))]
     [ModelReaderWriterBuildable(typeof(SecretPatchProperties))]
     [ModelReaderWriterBuildable(typeof(SecretProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VaultListResult))]
     public partial class AzureResourceManagerKeyVaultContext : ModelReaderWriterContext
     {

@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.LoadTesting.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
@@ -45,7 +44,6 @@ namespace Azure.ResourceManager.LoadTesting
     [ModelReaderWriterBuildable(typeof(LoadTestProperties))]
     [ModelReaderWriterBuildable(typeof(LoadTestResourceListResult))]
     [ModelReaderWriterBuildable(typeof(LoadTestResourceUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursData))]
     [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursLimitContent))]
     [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursProperties))]
@@ -55,8 +53,6 @@ namespace Azure.ResourceManager.LoadTesting
     [ModelReaderWriterBuildable(typeof(QuotaResourceListResult))]
     [ModelReaderWriterBuildable(typeof(QuotaResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerLoadTestingContext : ModelReaderWriterContext
     {
     }

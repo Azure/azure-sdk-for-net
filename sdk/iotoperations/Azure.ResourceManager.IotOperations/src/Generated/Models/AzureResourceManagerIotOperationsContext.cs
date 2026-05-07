@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.IotOperations.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotOperations
 {
@@ -196,7 +195,6 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(KubernetesReference))]
     [ModelReaderWriterBuildable(typeof(ListenerPortTlsCertMethod))]
     [ModelReaderWriterBuildable(typeof(LocalKubernetesReference))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrincipalConfig))]
     [ModelReaderWriterBuildable(typeof(RegistryEndpointAnonymousAuthentication))]
     [ModelReaderWriterBuildable(typeof(RegistryEndpointAnonymousSettings))]
@@ -217,7 +215,6 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(SecretProviderClassRef))]
     [ModelReaderWriterBuildable(typeof(StateStoreResourceRule))]
     [ModelReaderWriterBuildable(typeof(SubscriberQueueLimit))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownAkriConnectorsMqttAuthentication))]
     [ModelReaderWriterBuildable(typeof(UnknownAkriConnectorsRegistrySettings))]
     [ModelReaderWriterBuildable(typeof(UnknownAkriConnectorsTagDigestSettings))]
@@ -233,7 +230,6 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(UnknownDataflowOpenTelemetryAuthentication))]
     [ModelReaderWriterBuildable(typeof(UnknownRegistryEndpointAuthentication))]
     [ModelReaderWriterBuildable(typeof(UnknownRegistryEndpointTrustedSigningKey))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VolumeClaimResourceRequirements))]
     [ModelReaderWriterBuildable(typeof(VolumeClaimResourceRequirementsClaims))]
     [ModelReaderWriterBuildable(typeof(VolumeClaimSpec))]

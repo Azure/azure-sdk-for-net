@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.EventHubs.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs
@@ -91,7 +90,6 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsSku))]
     [ModelReaderWriterBuildable(typeof(EventHubsThrottlingPolicy))]
     [ModelReaderWriterBuildable(typeof(FailOverProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessageTimestampDescription))]
     [ModelReaderWriterBuildable(typeof(NetworkRuleSetProperties))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationList))]
@@ -106,9 +104,7 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(SchemaGroupProperties))]
     [ModelReaderWriterBuildable(typeof(Subnet))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownApplicationGroupPolicy))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
     public partial class AzureResourceManagerEventHubsContext : ModelReaderWriterContext
     {

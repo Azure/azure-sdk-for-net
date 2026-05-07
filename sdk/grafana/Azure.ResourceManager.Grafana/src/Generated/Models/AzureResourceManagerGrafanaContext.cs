@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Grafana.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.Grafana
     [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelPatch))]
     [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelResource))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceTrialQuota))]
     [ModelReaderWriterBuildable(typeof(MonitorWorkspaceIntegration))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
@@ -71,9 +69,7 @@ namespace Azure.ResourceManager.Grafana
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SaasSubscriptionDetails))]
     [ModelReaderWriterBuildable(typeof(SubscriptionTerm))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnifiedAlertingScreenshots))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerGrafanaContext : ModelReaderWriterContext
     {
     }

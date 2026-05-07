@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Marketplace.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
@@ -88,7 +87,6 @@ namespace Azure.ResourceManager.Marketplace
     [ModelReaderWriterBuildable(typeof(StopSellSubscriptions))]
     [ModelReaderWriterBuildable(typeof(SubscriptionsContextList))]
     [ModelReaderWriterBuildable(typeof(SubscriptionsResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransferOffersContent))]
     [ModelReaderWriterBuildable(typeof(TransferOffersDetails))]
     [ModelReaderWriterBuildable(typeof(TransferOffersResult))]

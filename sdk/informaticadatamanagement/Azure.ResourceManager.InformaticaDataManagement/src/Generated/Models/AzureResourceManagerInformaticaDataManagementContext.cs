@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.InformaticaDataManagement.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
@@ -61,7 +60,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeTag))]
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeUserContextProperties))]
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeUserContextPropertiesUpdate))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerInformaticaDataManagementContext : ModelReaderWriterContext
     {
     }

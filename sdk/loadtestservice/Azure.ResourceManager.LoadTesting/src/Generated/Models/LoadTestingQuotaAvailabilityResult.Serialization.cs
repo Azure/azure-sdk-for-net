@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))

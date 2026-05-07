@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerEventHubsContext.Default);
+                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

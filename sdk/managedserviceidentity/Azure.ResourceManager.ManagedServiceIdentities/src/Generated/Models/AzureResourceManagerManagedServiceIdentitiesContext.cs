@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.ManagedServiceIdentities.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityData))]
     [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityProperties))]
     [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentitiesListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityPatch))]

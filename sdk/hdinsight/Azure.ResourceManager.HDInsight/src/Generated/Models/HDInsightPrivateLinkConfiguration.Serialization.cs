@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteObjectValue<ResourceType?>(ResourceType.Value, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

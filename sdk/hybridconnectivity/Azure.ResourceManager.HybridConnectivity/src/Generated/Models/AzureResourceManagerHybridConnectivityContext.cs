@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.HybridConnectivity
     [ModelReaderWriterBuildable(typeof(SolutionConfigurationListResult))]
     [ModelReaderWriterBuildable(typeof(SolutionConfigurationPropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(SolutionTypeResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetResourceEndpointAccess))]
     public partial class AzureResourceManagerHybridConnectivityContext : ModelReaderWriterContext
     {

@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.HealthBot.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthBot
 {
@@ -25,10 +24,7 @@ namespace Azure.ResourceManager.HealthBot
     [ModelReaderWriterBuildable(typeof(HealthBotProperties))]
     [ModelReaderWriterBuildable(typeof(HealthBotResource))]
     [ModelReaderWriterBuildable(typeof(HealthBotSku))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerHealthBotContext : ModelReaderWriterContext
     {
     }

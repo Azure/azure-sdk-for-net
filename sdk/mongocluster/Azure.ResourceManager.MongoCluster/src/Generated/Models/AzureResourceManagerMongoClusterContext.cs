@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster
@@ -20,10 +19,9 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(BackupProperties))]
     [ModelReaderWriterBuildable(typeof(ComputeProperties))]
     [ModelReaderWriterBuildable(typeof(DataApiProperties))]
-    [ModelReaderWriterBuildable(typeof(Models.EncryptionProperties))]
+    [ModelReaderWriterBuildable(typeof(EncryptionProperties))]
     [ModelReaderWriterBuildable(typeof(FirewallRuleListResult))]
     [ModelReaderWriterBuildable(typeof(HighAvailabilityProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MongoClusterAdministratorProperties))]
     [ModelReaderWriterBuildable(typeof(MongoClusterCmkEncryptionProperties))]
     [ModelReaderWriterBuildable(typeof(MongoClusterConnectionString))]
@@ -65,9 +63,7 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(ReplicaListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ShardingProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownMongoClusterIdentityProvider))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserListResult))]
     public partial class AzureResourceManagerMongoClusterContext : ModelReaderWriterContext
     {

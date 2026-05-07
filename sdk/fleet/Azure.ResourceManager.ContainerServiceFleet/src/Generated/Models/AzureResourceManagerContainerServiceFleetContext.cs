@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
@@ -88,19 +87,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     [ModelReaderWriterBuildable(typeof(GatePatchProperties))]
     [ModelReaderWriterBuildable(typeof(GateProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedNamespaceProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MemberUpdateStatus))]
     [ModelReaderWriterBuildable(typeof(NodeImageSelection))]
     [ModelReaderWriterBuildable(typeof(NodeImageSelectionStatus))]
     [ModelReaderWriterBuildable(typeof(NodeImageVersion))]
     [ModelReaderWriterBuildable(typeof(PropertySelector))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpdateRunGateStatus))]
     [ModelReaderWriterBuildable(typeof(UpdateRunGateTargetProperties))]
     [ModelReaderWriterBuildable(typeof(UpdateRunListResult))]
     [ModelReaderWriterBuildable(typeof(UpdateRunProperties))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerContainerServiceFleetContext : ModelReaderWriterContext
     {
     }
