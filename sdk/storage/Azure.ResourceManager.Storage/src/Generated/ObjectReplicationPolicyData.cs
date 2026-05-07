@@ -146,5 +146,23 @@ namespace Azure.ResourceManager.Storage
                 Properties.IsPriorityReplicationEnabled = value;
             }
         }
+
+        /// <summary> Indicates whether object replication tags replication feature is enabled for the policy. </summary>
+        [WirePath("properties.tagsReplication.enabled")]
+        public bool? TagsReplicationEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TagsReplicationEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ObjectReplicationPolicyProperties();
+                }
+                Properties.TagsReplicationEnabled = value;
+            }
+        }
     }
 }
