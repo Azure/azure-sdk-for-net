@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-alpha.20260506.1 (Unreleased)
+
+### Features Added
+
+- Enable AgentFramework telemetry
+
 ## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added

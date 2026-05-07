@@ -53,6 +53,14 @@ internal sealed class SseResult : IResult
 
     public async Task ExecuteAsync(HttpContext httpContext)
     {
+        // Restore Activity.Current so that spans created by the handler during
+        // streaming (HttpClient calls, Azure SDK calls, custom sources) are
+        // correctly parented under the invoke_agent activity.  Between returning
+        // the IResult from the endpoint handler and ASP.NET Core calling
+        // ExecuteAsync, the async context may change and Activity.Current can
+        // be reset to the hosting activity or null.
+        Activity.Current = _activity;
+
         // Set SSE headers
         httpContext.Response.ContentType = "text/event-stream; charset=utf-8";
         httpContext.Response.Headers["Cache-Control"] = "no-cache";

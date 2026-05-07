@@ -58,7 +58,25 @@ internal static class OpenTelemetryExtensions
         var otelBuilder = services.AddOpenTelemetry();
         otelBuilder.UseMicrosoftOpenTelemetry(options =>
         {
-            ConfigureAgent365Export(options);
+            var exporters = ExportTarget.None;
+
+            if (!string.IsNullOrEmpty(FoundryEnvironment.AppInsightsConnectionString))
+            {
+                exporters |= ExportTarget.AzureMonitor;
+            }
+
+            if (!string.IsNullOrEmpty(FoundryEnvironment.OtlpEndpoint))
+            {
+                exporters |= ExportTarget.Otlp;
+            }
+
+            if (FoundryEnvironment.IsAgent365TracingEnabled)
+            {
+                exporters |= ExportTarget.Agent365;
+                ConfigureAgent365Export(options);
+            }
+
+            options.Exporters = exporters;
         });
 
         otelBuilder
