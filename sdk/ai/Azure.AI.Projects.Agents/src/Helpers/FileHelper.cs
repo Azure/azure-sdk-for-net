@@ -14,27 +14,44 @@ internal class FileHelper
     {
         string temporaryFile = Path.GetTempFileName();
         File.Delete(temporaryFile);
-        File.WriteAllBytes(temporaryFile, content.ToArray());
-        ZipFile.ExtractToDirectory(temporaryFile, directoryPath);
+        try
+        {
+            File.WriteAllBytes(temporaryFile, content.ToArray());
+            ZipFile.ExtractToDirectory(temporaryFile, directoryPath);
+        }
+        finally
+        {
+            File.Delete(temporaryFile);
+        }
     }
 
     internal static BinaryData CreateAndReadZipFileFromDirectory(string directoryPath)
     {
         string temporaryFile = Path.GetTempFileName();
         File.Delete(temporaryFile);
-        ZipFile.CreateFromDirectory(directoryPath, temporaryFile);
-        return new(File.ReadAllBytes(temporaryFile));
+        try
+        {
+            ZipFile.CreateFromDirectory(directoryPath, temporaryFile);
+            return new(File.ReadAllBytes(temporaryFile));
+        }
+        finally
+        {
+            File.Delete(temporaryFile);
+        }
     }
 
     internal static (BinaryData Data, string Sha256sum) CreateAndReadZipFile(string fileName)
     {
-        string temporaryFile = Path.GetTempFileName();
-        File.Delete(temporaryFile);
-        using (ZipArchive tempZip = ZipFile.Open(temporaryFile, ZipArchiveMode.Create))
+        BinaryData zipContents;
+        using (MemoryStream stream = new())
         {
-            tempZip.CreateEntryFromFile(fileName, fileName);
+            using (ZipArchive tempZip = new(stream, ZipArchiveMode.Create))
+            {
+                tempZip.CreateEntryFromFile(fileName, Path.GetFileName(fileName));
+            }
+            stream.Position = 0;
+            zipContents = new(stream.ToArray());
         }
-        BinaryData zipContents = new(File.ReadAllBytes(temporaryFile));
         string strHash = default;
         using (SHA256 sha256Hash = SHA256.Create())
         {
