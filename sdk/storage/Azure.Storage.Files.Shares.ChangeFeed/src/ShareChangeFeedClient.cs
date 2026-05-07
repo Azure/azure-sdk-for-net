@@ -355,7 +355,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
             return await ChangeFeedFactoryBase<ShareChangeFeedEvent>.GetLastConsumableInternal(
                 containerClient,
-                Constants.FilesChangeFeed.MetaSegmentsPath,
+                Constants.ChangeFeed.MetaSegmentsPath,
                 async,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -379,12 +379,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             {
                 ContainerPrefix = containerName + "/",
                 EventParser = record => new ShareChangeFeedEvent(record),
-                DefaultPageSize = Constants.FilesChangeFeed.DefaultPageSize,
-                ChunkBlockDownloadSize = Constants.FilesChangeFeed.ChunkBlockDownloadSize,
-                AvroHeaderDownloadSize = Constants.FilesChangeFeed.LazyLoadingBlobStreamBlockSize,
-                InitializationSegment = Constants.FilesChangeFeed.InitializationSegment,
-                SegmentPrefix = Constants.FilesChangeFeed.SegmentPrefix,
-                MetaSegmentsPath = Constants.FilesChangeFeed.MetaSegmentsPath,
+                DefaultPageSize = Constants.ChangeFeed.DefaultPageSize,
+                ChunkBlockDownloadSize = Constants.ChangeFeed.ChunkBlockDownloadSize,
+                AvroHeaderDownloadSize = Constants.ChangeFeed.LazyLoadingBlobStreamBlockSize,
+                InitializationSegment = Constants.ChangeFeed.InitializationSegment,
+                SegmentPrefix = Constants.ChangeFeed.SegmentPrefix,
+                MetaSegmentsPath = Constants.ChangeFeed.MetaSegmentsPath,
             };
     }
 }

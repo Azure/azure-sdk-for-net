@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 cancellationToken: default)
                 .ConfigureAwait(false);
 
-            int pageSize = pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize;
+            int pageSize = pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize;
             while (changeFeed.HasNext())
             {
                 Page<ShareChangeFeedEvent> rawPage = await changeFeed.GetPage(async: true, pageSize: pageSize).ConfigureAwait(false);
