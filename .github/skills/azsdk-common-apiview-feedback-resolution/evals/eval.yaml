@@ -10,7 +10,7 @@ tags:
 
 config:
   runs: 1
-  timeout: 300
+  timeout: "5m"
   model: claude-opus-4.6
   executor: copilot-sdk
 
