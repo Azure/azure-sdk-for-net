@@ -1671,6 +1671,8 @@ namespace Azure.Identity
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0001")]
+        public System.Collections.Generic.IDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get { throw null; } }
         public System.Uri AuthorityHost { get { throw null; } set { } }
         public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
         public bool IsUnsafeSupportLoggingEnabled { get { throw null; } set { } }
@@ -1757,6 +1759,7 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0002")]
         public bool IsAzureProxyEnabled { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string TokenFilePath { get { throw null; } set { } }

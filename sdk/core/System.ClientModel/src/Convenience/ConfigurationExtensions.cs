@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-
+using System.Collections.Generic;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace System.ClientModel;
@@ -27,12 +27,147 @@ public static class ConfigurationExtensions
         where T : ClientSettings, new()
         => new ReferenceConfigurationSection(configuration, sectionName).GetClientSettings<T>();
 
+    /// <summary>
+    /// Creates an instance of <typeparamref name="T"/> and sets its properties
+    /// from the specified <see cref="IConfiguration"/>, additionally
+    /// resolving <see cref="ClientSettings.CredentialProvider"/> from the
+    /// supplied <see cref="CredentialResolver"/> chain.
+    /// </summary>
+    public static T GetClientSettings<T>(
+        this IConfiguration configuration,
+        string sectionName,
+        params CredentialResolver[] resolvers)
+        where T : ClientSettings, new()
+    {
+        T settings = configuration.GetClientSettings<T>(sectionName);
+        if (settings.CredentialProvider is null)
+        {
+            settings.CredentialProvider = configuration.GetCredential($"{sectionName}:Credential", resolvers);
+        }
+        return settings;
+    }
+
+    /// <summary>
+    /// Creates an instance of <typeparamref name="T"/> and sets its properties
+    /// from the specified <see cref="IConfiguration"/>, additionally
+    /// resolving <see cref="ClientSettings.CredentialProvider"/> from the
+    /// supplied <see cref="CredentialResolver"/> chain after applying
+    /// <paramref name="configureOverrides"/> to the credential section.
+    /// </summary>
+    public static T GetClientSettings<T>(
+        this IConfiguration configuration,
+        string sectionName,
+        IEnumerable<CredentialResolver> resolvers,
+        Action<IConfigurationSection> configureOverrides)
+        where T : ClientSettings, new()
+    {
+        T settings = configuration.GetClientSettings<T>(sectionName);
+        if (settings.CredentialProvider is null)
+        {
+            settings.CredentialProvider = configuration.GetCredential($"{sectionName}:Credential", resolvers, configureOverrides);
+        }
+        return settings;
+    }
+
     internal static T GetClientSettings<T>(this ReferenceConfigurationSection section)
         where T : ClientSettings, new()
     {
         T t = new();
         t.Bind(section);
         return t;
+    }
+
+    /// <summary>
+    /// Resolves an <see cref="AuthenticationTokenProvider"/> for the named
+    /// credential section. The supplied <paramref name="sectionName"/> is
+    /// treated as the credential section itself (not a parent client
+    /// section). This overload always returns <see langword="null"/>
+    /// because no <see cref="CredentialResolver"/> chain has been supplied —
+    /// use the overload that accepts resolvers to participate in resolution.
+    /// Never throws.
+    /// </summary>
+    public static AuthenticationTokenProvider? GetCredential(
+        this IConfiguration configuration,
+        string sectionName)
+        => configuration.GetCredential(sectionName, Array.Empty<CredentialResolver>());
+
+    /// <summary>
+    /// Walks the supplied <see cref="CredentialResolver"/> chain in order
+    /// (first match wins) against the named credential section and returns
+    /// the produced <see cref="AuthenticationTokenProvider"/>, or
+    /// <see langword="null"/> if no resolver claimed the section. The
+    /// supplied <paramref name="sectionName"/> is treated as the credential
+    /// section itself. Never throws.
+    /// </summary>
+    public static AuthenticationTokenProvider? GetCredential(
+        this IConfiguration configuration,
+        string sectionName,
+        params CredentialResolver[] resolvers)
+    {
+        if (configuration is null || sectionName is null)
+        {
+            return null;
+        }
+
+        IConfigurationSection section = new ReferenceConfigurationSection(configuration, sectionName);
+        return CredentialResolverEngine.Resolve(section, resolvers, configureOverrides: null);
+    }
+
+    /// <summary>
+    /// Applies <paramref name="configureOverrides"/> to a writable overlay of
+    /// the named credential section, then walks the supplied
+    /// <see cref="CredentialResolver"/> chain. The supplied
+    /// <paramref name="sectionName"/> is treated as the credential section
+    /// itself. Never throws.
+    /// </summary>
+    public static AuthenticationTokenProvider? GetCredential(
+        this IConfiguration configuration,
+        string sectionName,
+        IEnumerable<CredentialResolver> resolvers,
+        Action<IConfigurationSection> configureOverrides)
+    {
+        if (configuration is null || sectionName is null)
+        {
+            return null;
+        }
+
+        IConfigurationSection section = new ReferenceConfigurationSection(configuration, sectionName);
+        return CredentialResolverEngine.Resolve(section, resolvers, configureOverrides);
+    }
+
+    /// <summary>
+    /// Registers <typeparamref name="T"/> as a <see cref="CredentialResolver"/>
+    /// service. Idempotent by implementation type — calling twice with the
+    /// same <typeparamref name="T"/> registers a single instance.
+    /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="services"/> is null.</exception>
+    public static IServiceCollection AddCredentialResolver<T>(this IServiceCollection services)
+        where T : CredentialResolver, new()
+    {
+        if (services is null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
+
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<CredentialResolver, T>(_ => new T()));
+        return services;
+    }
+
+    /// <summary>
+    /// Registers <typeparamref name="T"/> as a <see cref="CredentialResolver"/>
+    /// service on the host's service collection.
+    /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="builder"/> is null.</exception>
+    public static IHostApplicationBuilder AddCredentialResolver<T>(this IHostApplicationBuilder builder)
+        where T : CredentialResolver, new()
+    {
+        if (builder is null)
+        {
+            throw new ArgumentNullException(nameof(builder));
+        }
+
+        builder.Services.AddCredentialResolver<T>();
+        return builder;
     }
 
     /// <summary>
@@ -77,9 +212,9 @@ public static class ConfigurationExtensions
     {
         IConfigurationSection section = host.Configuration.GetSection(sectionName);
         ClientBuilder builder = new(host, section);
-        host.Services.AddKeyedSingleton(key, (_, _) =>
+        host.Services.AddKeyedSingleton(key, (sp, _) =>
         {
-            return CreateSettings(configureSettings, builder);
+            return CreateSettings(configureSettings, builder, sp);
         });
         host.Services.AddKeyedSingleton(key, (sp, key) => ActivatorUtilities.CreateInstance<TClient>(sp, sp.GetRequiredKeyedService<TSettings>(key)));
         return builder;
@@ -122,19 +257,35 @@ public static class ConfigurationExtensions
     {
         IConfigurationSection section = host.Configuration.GetSection(sectionName);
         ClientBuilder builder = new(host, section);
-        host.Services.AddSingleton(_ =>
+        host.Services.AddSingleton(sp =>
         {
-            return CreateSettings(configureSettings, builder);
+            return CreateSettings(configureSettings, builder, sp);
         });
         host.Services.AddSingleton(sp => ActivatorUtilities.CreateInstance<TClient>(sp, sp.GetRequiredService<TSettings>()));
         return builder;
     }
 
-    private static TSettings CreateSettings<TSettings>(Action<TSettings> configureSettings, ClientBuilder builder) where TSettings : ClientSettings, new()
+    private static TSettings CreateSettings<TSettings>(
+        Action<TSettings>? configureSettings,
+        ClientBuilder builder,
+        IServiceProvider serviceProvider)
+        where TSettings : ClientSettings, new()
     {
         TSettings settings = builder.ConfigurationSection.GetClientSettings<TSettings>();
         configureSettings?.Invoke(settings);
+        // TODO (Phase 5a removal): Remove this line when PostConfigure is removed.
         builder.PostConfigureAction?.Invoke(settings);
+
+        if (settings.CredentialProvider is null)
+        {
+            IEnumerable<CredentialResolver> resolvers = serviceProvider.GetServices<CredentialResolver>();
+            IConfigurationSection credentialSection = builder.ConfigurationSection.GetSection("Credential");
+            settings.CredentialProvider = CredentialResolverEngine.Resolve(
+                credentialSection,
+                resolvers,
+                builder.ConfigureCredentialAction);
+        }
+
         return settings;
     }
 }

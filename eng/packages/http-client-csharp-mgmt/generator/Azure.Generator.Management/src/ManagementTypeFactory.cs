@@ -79,6 +79,17 @@ namespace Azure.Generator.Management
             [];
 
         /// <inheritdoc/>
+        protected override Type? CreateFrameworkType(string fullyQualifiedTypeName)
+        {
+            if (KnownManagementTypes.TryGetFrameworkType(fullyQualifiedTypeName, out var frameworkType))
+            {
+                return frameworkType;
+            }
+
+            return base.CreateFrameworkType(fullyQualifiedTypeName);
+        }
+
+        /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
             return base.CreateClientCore(inputClient);
@@ -87,19 +98,6 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
-            if (inputType is InputNullableType { Type: InputModelType nullableModel } &&
-                KnownManagementTypes.TryGetSystemType(nullableModel.CrossLanguageDefinitionId, out var nullableSystemType))
-            {
-                return nullableSystemType.WithNullable(true);
-            }
-
-            if (inputType is InputDictionaryType { ValueType: InputNullableType { Type: InputModelType nullableDictionaryValue } } dictionaryType &&
-                KnownManagementTypes.TryGetSystemType(nullableDictionaryValue.CrossLanguageDefinitionId, out var dictionaryValueSystemType))
-            {
-                var keyType = CreateCSharpType(dictionaryType.KeyType) ?? typeof(string);
-                return new CSharpType(typeof(IDictionary<,>), keyType, dictionaryValueSystemType.WithNullable(true));
-            }
-
             if (inputType is InputModelType model)
             {
                 if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var inheritableType))
@@ -200,11 +198,6 @@ namespace Azure.Generator.Management
             SerializationFormat format)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            if (KnownManagementTypes.TryGetSystemType(valueType, out var systemType))
-            {
-                valueType = systemType.WithNullable(valueType.IsNullable);
-            }
-
             if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
             {
                 return deserializationExpression(valueType, element, format);
@@ -212,10 +205,9 @@ namespace Azure.Generator.Management
 
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
-                var readType = valueType.WithNullable(false);
                 // For ManagedServiceIdentity with v3 format, select pre-allocated v3 options
                 // based on the caller's format: WireV3Options for "W", JsonV3Options for "J".
-                ValueExpression wireOptions = readType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
+                ValueExpression wireOptions = valueType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
                     ? new TernaryConditionalExpression(
                         mrwOptionsParameter.Property("Format").Equal(Literal("W")),
                         ModelSerializationExtensionsSnippets.WireV3,
@@ -238,7 +230,7 @@ namespace Azure.Generator.Management
                 return Static(typeof(ModelReaderWriter)).Invoke(
                     nameof(ModelReaderWriter.Read),
                     [.. readBody, ModelReaderWriterContextSnippets.Default],
-                    typeArgs: [readType]);
+                    typeArgs: [valueType]);
             }
 
             return base.DeserializeJsonValue(valueType, element, data, mrwOptionsParameter, format);
