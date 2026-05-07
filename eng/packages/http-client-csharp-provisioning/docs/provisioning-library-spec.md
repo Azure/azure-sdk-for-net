@@ -373,7 +373,7 @@ public static class ResourceVersions
 
 A "regular" ARM resource is uniquely identified by its **scope/parent + a single `name`**. Some ARM resource types, however, have a path with several variable segments and no single deployable parent — identifying one instance requires a **tuple** of values.
 
-**Example.** `Microsoft.Compute/locations/publishers/artifacttypes/types/versions` (the resource type backing `VirtualMachineExtensionImageResource` in `Azure.ResourceManager.Compute`) needs the 4-tuple `(location, publisherName, type, version)` to identify a single instance — see the [Bicep reference page](https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/locations/publishers/artifacttypes/types/versions). Its mgmt collection ctor reflects this:
+**Example.** `Microsoft.Compute/locations/publishers/artifacttypes/types/versions` (the resource type backing `VirtualMachineExtensionImageResource` in `Azure.ResourceManager.Compute`) needs the 4-tuple `(location, publisherName, type, version)` to identify a single instance — see the [Bicep reference page](https://learn.microsoft.com/azure/templates/microsoft.compute/locations/publishers/artifacttypes/types/versions). Its mgmt collection ctor reflects this:
 
 ```csharp
 internal VirtualMachineExtensionImageCollection(
