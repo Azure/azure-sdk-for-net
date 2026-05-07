@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public CosmosDBForPostgreSqlRoleData(string password) { }
         public Azure.Core.ResourceIdentifier ObjectId { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType PrincipalType { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType? PrincipalType { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType? RoleType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TenantId { get { throw null; } set { } }

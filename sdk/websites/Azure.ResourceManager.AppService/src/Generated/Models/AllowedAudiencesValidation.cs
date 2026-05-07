@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the Allowed Audiences validation flow. </summary>
+    /// <summary>
+    /// The configuration settings of the Allowed Audiences validation flow.
+    /// Serialized Name: AllowedAudiencesValidation
+    /// </summary>
     internal partial class AllowedAudiencesValidation
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AllowedAudiencesValidation"/>. </summary>
-        /// <param name="allowedAudiences"> The configuration settings of the allowed list of audiences from which to validate the JWT token. </param>
+        /// <param name="allowedAudiences">
+        /// The configuration settings of the allowed list of audiences from which to validate the JWT token.
+        /// Serialized Name: AllowedAudiencesValidation.allowedAudiences
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AllowedAudiencesValidation(IList<string> allowedAudiences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The configuration settings of the allowed list of audiences from which to validate the JWT token. </summary>
+        /// <summary>
+        /// The configuration settings of the allowed list of audiences from which to validate the JWT token.
+        /// Serialized Name: AllowedAudiencesValidation.allowedAudiences
+        /// </summary>
         [WirePath("allowedAudiences")]
         public IList<string> AllowedAudiences { get; }
     }

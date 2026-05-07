@@ -57,7 +57,8 @@ extends:
         # Exclude aot checking project, and imported azure-sdk-build-tools gpg/azcopy binaries
         # See https://dev.azure.com/securitytools/SecurityIntegration/_wiki/wikis/Guardian/1378/Glob-Format
         # Exclude Microsoft.Azure.KeyVault.Core.dll track 1 dependency that we no longer support but is causing issues
-        analyzeTargetGlob: +:file|**/*.dll;+:file|**/*.exe;-:f|**/net452/Microsoft.Azure.KeyVault.Core.dll;-:f|**/net461/Microsoft.Azure.KeyVault.Core.dll;-:f|**/tools/NuGet.exe;-:f|**/tools/gpg/**/*.dll;-:f|**/tools/gpg/**/*.exe;-:f|**/tools/azcopy/**/*.exe;-:f|**/tools/azcopy/**/*.dll;-:f|**/aotcompatibility/**/*.exe
+        # Exclude capstone.dll third-party native DLL from Gee.External.Capstone (transitive dep of BenchmarkDotNet.Diagnostics.Windows)
+        analyzeTargetGlob: +:file|**/*.dll;+:file|**/*.exe;-:f|**/net452/Microsoft.Azure.KeyVault.Core.dll;-:f|**/net461/Microsoft.Azure.KeyVault.Core.dll;-:f|**/tools/NuGet.exe;-:f|**/tools/gpg/**/*.dll;-:f|**/tools/gpg/**/*.exe;-:f|**/tools/azcopy/**/*.exe;-:f|**/tools/azcopy/**/*.dll;-:f|**/aotcompatibility/**/*.exe;-:f|**/capstone.dll
       # Turn off the build warnings caused by disabling some sdl checks
       createAdoIssuesForJustificationsForDisablement: false
       codeql:

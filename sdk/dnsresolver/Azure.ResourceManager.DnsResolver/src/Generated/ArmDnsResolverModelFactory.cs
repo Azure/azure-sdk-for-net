@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                dnsResolverState is null && provisioningState is null && resourceGuid is null && virtualNetworkId is null ? default : new DnsResolverProperties(new SubResource(virtualNetworkId, null), dnsResolverState, provisioningState, resourceGuid, null),
+                new DnsResolverProperties(new SubResource(virtualNetworkId, null), dnsResolverState, provisioningState, resourceGuid, null),
                 etag);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                ipConfigurations is null && provisioningState is null && resourceGuid is null ? default : new InboundEndpointProperties((ipConfigurations ?? new ChangeTrackingList<InboundEndpointIPConfiguration>()).ToList(), provisioningState, resourceGuid, null),
+                new InboundEndpointProperties((ipConfigurations ?? new ChangeTrackingList<InboundEndpointIPConfiguration>()).ToList(), provisioningState, resourceGuid, null),
                 etag);
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null && resourceGuid is null && subnetId is null ? default : new OutboundEndpointProperties(new SubResource(subnetId, null), provisioningState, resourceGuid, null),
+                new OutboundEndpointProperties(new SubResource(subnetId, null), provisioningState, resourceGuid, null),
                 etag);
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                dnsResolverOutboundEndpoints is null && provisioningState is null && resourceGuid is null ? default : new DnsForwardingRulesetProperties((dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>()).ToList(), provisioningState, resourceGuid, null),
+                new DnsForwardingRulesetProperties((dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>()).ToList(), provisioningState, resourceGuid, null),
                 rulesetName,
                 etag);
         }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                domainName is null && targetDnsServers is null && metadata is null && dnsForwardingRuleState is null && provisioningState is null ? default : new ForwardingRuleProperties(
+                new ForwardingRuleProperties(
                     domainName,
                     (targetDnsServers ?? new ChangeTrackingList<TargetDnsServer>()).ToList(),
                     metadata,
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                metadata is null && provisioningState is null && virtualNetworkId is null ? default : new VirtualNetworkLinkProperties(new SubResource(virtualNetworkId, null), metadata, provisioningState, null),
+                new VirtualNetworkLinkProperties(new SubResource(virtualNetworkId, null), metadata, provisioningState, null),
                 etag);
         }
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="actionType"> The type of action to take. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="DnsResolver.DnsSecurityRuleData"/> instance for mocking. </returns>
-        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? priority = default, IEnumerable<WritableSubResource> dnsResolverDomainLists = default, IEnumerable<ManagedDomainList> managedDomainLists = default, DnsSecurityRuleState? dnsSecurityRuleState = default, DnsResolverProvisioningState? provisioningState = default, DnsSecurityRuleActionType? actionType = default, ETag? etag = default)
+        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int priority = default, IEnumerable<WritableSubResource> dnsResolverDomainLists = default, IEnumerable<ManagedDomainList> managedDomainLists = default, DnsSecurityRuleState? dnsSecurityRuleState = default, DnsResolverProvisioningState? provisioningState = default, DnsSecurityRuleActionType? actionType = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -298,8 +298,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                priority is null && dnsResolverDomainLists is null && managedDomainLists is null && dnsSecurityRuleState is null && provisioningState is null && actionType is null ? default : new DnsSecurityRuleProperties(
-                    priority.Value,
+                new DnsSecurityRuleProperties(
+                    priority,
                     new DnsSecurityRuleAction(actionType, null),
                     (dnsResolverDomainLists ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (managedDomainLists ?? new ChangeTrackingList<ManagedDomainList>()).ToList(),
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null && virtualNetworkId is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(new SubResource(virtualNetworkId, null), provisioningState, null),
+                new DnsResolverPolicyVirtualNetworkLinkProperties(new SubResource(virtualNetworkId, null), provisioningState, null),
                 etag);
         }
 
@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="storageUri"> The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list. </param>
         /// <param name="action"> The action to take in the request, Upload or Download. </param>
         /// <returns> A new <see cref="Models.DnsResolverDomainListBulk"/> instance for mocking. </returns>
-        public static DnsResolverDomainListBulk DnsResolverDomainListBulk(Uri storageUri = default, DnsResolverDomainListBulkAction? action = default)
+        public static DnsResolverDomainListBulk DnsResolverDomainListBulk(Uri storageUri = default, DnsResolverDomainListBulkAction action = default)
         {
-            return new DnsResolverDomainListBulk(storageUri is null && action is null ? default : new DnsResolverDomainListBulkProperties(storageUri, action.Value, null), additionalBinaryDataProperties: null);
+            return new DnsResolverDomainListBulk(new DnsResolverDomainListBulkProperties(storageUri, action, null), additionalBinaryDataProperties: null);
         }
     }
 }

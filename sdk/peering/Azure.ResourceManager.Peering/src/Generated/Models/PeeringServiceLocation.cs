@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     Properties = new PeeringServiceLocationProperties();
                 }
-                Properties.AzureRegion = value.Value;
+                Properties.AzureRegion = value;
             }
         }
     }

@@ -1,14 +1,9 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.10.1 (2026-04-24)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fix NullPointerException with custom connection name.
 
 ## 1.10.0 (2026-01-19)
 

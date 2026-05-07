@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 throw new FormatException($"The model {nameof(SvmPeerCommandResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(SvmPeeringCommand))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("svmPeeringCommand"u8);
-                writer.WriteStringValue(SvmPeeringCommand);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,14 +76,18 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string svmPeeringCommand = default;
+            SvmPeerCommandResponseProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("svmPeeringCommand"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    svmPeeringCommand = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = SvmPeerCommandResponseProperties.DeserializeSvmPeerCommandResponseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SvmPeerCommandResult(svmPeeringCommand, serializedAdditionalRawData);
+            return new SvmPeerCommandResult(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SvmPeerCommandResult>.Write(ModelReaderWriterOptions options)

@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Specifies the IP mode of the app. </summary>
+    /// <summary>
+    /// Specifies the IP mode of the app.
+    /// Serialized Name: IPMode
+    /// </summary>
     public enum AppServiceIPMode
     {
-        /// <summary> IPv4. </summary>
+        /// <summary>
+        /// IPv4
+        /// Serialized Name: IPMode.IPv4
+        /// </summary>
         IPv4,
-        /// <summary> IPv6. </summary>
+        /// <summary>
+        /// IPv6
+        /// Serialized Name: IPMode.IPv6
+        /// </summary>
         IPv6,
-        /// <summary> IPv4AndIPv6. </summary>
+        /// <summary>
+        /// IPv4AndIPv6
+        /// Serialized Name: IPMode.IPv4AndIPv6
+        /// </summary>
         IPv4AndIPv6
     }
 }

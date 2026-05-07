@@ -387,7 +387,7 @@ public class AgentsTests : AgentsTestBase
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
-        AgentEndpoint config = new()
+        AgentEndpointConfig config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
             Protocols = { AgentEndpointProtocol.Responses }

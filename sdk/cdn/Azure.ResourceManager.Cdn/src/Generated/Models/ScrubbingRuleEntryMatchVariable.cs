@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,41 +15,75 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct ScrubbingRuleEntryMatchVariable : IEquatable<ScrubbingRuleEntryMatchVariable>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ScrubbingRuleEntryMatchVariable"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ScrubbingRuleEntryMatchVariable(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RequestIPAddressValue = "RequestIPAddress";
         private const string RequestUriValue = "RequestUri";
         private const string QueryStringArgNamesValue = "QueryStringArgNames";
+        private const string RequestHeaderNamesValue = "RequestHeaderNames";
+        private const string RequestCookieNamesValue = "RequestCookieNames";
+        private const string RequestBodyPostArgNamesValue = "RequestBodyPostArgNames";
+        private const string RequestBodyJsonArgNamesValue = "RequestBodyJsonArgNames";
 
-        /// <summary> RequestIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScrubbingRuleEntryMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ScrubbingRuleEntryMatchVariable(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the RequestIPAddress. </summary>
         public static ScrubbingRuleEntryMatchVariable RequestIPAddress { get; } = new ScrubbingRuleEntryMatchVariable(RequestIPAddressValue);
-        /// <summary> RequestUri. </summary>
+
+        /// <summary> Gets the RequestUri. </summary>
         public static ScrubbingRuleEntryMatchVariable RequestUri { get; } = new ScrubbingRuleEntryMatchVariable(RequestUriValue);
-        /// <summary> QueryStringArgNames. </summary>
+
+        /// <summary> Gets the QueryStringArgNames. </summary>
         public static ScrubbingRuleEntryMatchVariable QueryStringArgNames { get; } = new ScrubbingRuleEntryMatchVariable(QueryStringArgNamesValue);
+
+        /// <summary> Gets the RequestHeaderNames. </summary>
+        public static ScrubbingRuleEntryMatchVariable RequestHeaderNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestHeaderNamesValue);
+
+        /// <summary> Gets the RequestCookieNames. </summary>
+        public static ScrubbingRuleEntryMatchVariable RequestCookieNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestCookieNamesValue);
+
+        /// <summary> Gets the RequestBodyPostArgNames. </summary>
+        public static ScrubbingRuleEntryMatchVariable RequestBodyPostArgNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestBodyPostArgNamesValue);
+
+        /// <summary> Gets the RequestBodyJsonArgNames. </summary>
+        public static ScrubbingRuleEntryMatchVariable RequestBodyJsonArgNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestBodyJsonArgNamesValue);
+
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchVariable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScrubbingRuleEntryMatchVariable left, ScrubbingRuleEntryMatchVariable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchVariable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScrubbingRuleEntryMatchVariable left, ScrubbingRuleEntryMatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScrubbingRuleEntryMatchVariable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScrubbingRuleEntryMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScrubbingRuleEntryMatchVariable(string value) => new ScrubbingRuleEntryMatchVariable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScrubbingRuleEntryMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScrubbingRuleEntryMatchVariable?(string value) => value == null ? null : new ScrubbingRuleEntryMatchVariable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScrubbingRuleEntryMatchVariable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScrubbingRuleEntryMatchVariable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

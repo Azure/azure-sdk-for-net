@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Maintenance.Models
     public readonly partial struct MaintenanceImpactType : IEquatable<MaintenanceImpactType>
     {
         private readonly string _value;
+        /// <summary> Pending updates has no impact on resource. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Pending updates can freeze network or disk io operation on resource. </summary>
+        private const string FreezeValue = "Freeze";
+        /// <summary> Pending updates can cause resource to restart. </summary>
+        private const string RestartValue = "Restart";
+        /// <summary> Pending updates can redeploy resource. </summary>
+        private const string RedeployValue = "Redeploy";
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceImpactType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MaintenanceImpactType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string FreezeValue = "Freeze";
-        private const string RestartValue = "Restart";
-        private const string RedeployValue = "Redeploy";
+            _value = value;
+        }
 
         /// <summary> Pending updates has no impact on resource. </summary>
         public static MaintenanceImpactType None { get; } = new MaintenanceImpactType(NoneValue);
+
         /// <summary> Pending updates can freeze network or disk io operation on resource. </summary>
         public static MaintenanceImpactType Freeze { get; } = new MaintenanceImpactType(FreezeValue);
+
         /// <summary> Pending updates can cause resource to restart. </summary>
         public static MaintenanceImpactType Restart { get; } = new MaintenanceImpactType(RestartValue);
+
         /// <summary> Pending updates can redeploy resource. </summary>
         public static MaintenanceImpactType Redeploy { get; } = new MaintenanceImpactType(RedeployValue);
+
         /// <summary> Determines if two <see cref="MaintenanceImpactType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MaintenanceImpactType left, MaintenanceImpactType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MaintenanceImpactType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MaintenanceImpactType left, MaintenanceImpactType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenanceImpactType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MaintenanceImpactType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MaintenanceImpactType(string value) => new MaintenanceImpactType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MaintenanceImpactType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MaintenanceImpactType?(string value) => value == null ? null : new MaintenanceImpactType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MaintenanceImpactType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MaintenanceImpactType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

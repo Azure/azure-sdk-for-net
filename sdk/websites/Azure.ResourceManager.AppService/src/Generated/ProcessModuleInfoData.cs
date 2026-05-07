@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the ProcessModuleInfo data model.
     /// Process Module Information.
+    /// Serialized Name: ProcessModuleInfo
     /// </summary>
     public partial class ProcessModuleInfoData : ResourceData
     {
@@ -60,21 +61,58 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="baseAddress"> Base address. Used as module identifier in ARM resource URI. </param>
-        /// <param name="fileName"> File name. </param>
-        /// <param name="href"> HRef URI. </param>
-        /// <param name="filePath"> File path. </param>
-        /// <param name="moduleMemorySize"> Module memory size. </param>
-        /// <param name="fileVersion"> File version. </param>
-        /// <param name="fileDescription"> File description. </param>
-        /// <param name="product"> Product name. </param>
-        /// <param name="productVersion"> Product version. </param>
-        /// <param name="isDebug"> Is debug?. </param>
-        /// <param name="language"> Module language (locale). </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProcessModuleInfo.kind
+        /// </param>
+        /// <param name="baseAddress">
+        /// Base address. Used as module identifier in ARM resource URI.
+        /// Serialized Name: ProcessModuleInfo.properties.base_address
+        /// </param>
+        /// <param name="fileName">
+        /// File name.
+        /// Serialized Name: ProcessModuleInfo.properties.file_name
+        /// </param>
+        /// <param name="href">
+        /// HRef URI.
+        /// Serialized Name: ProcessModuleInfo.properties.href
+        /// </param>
+        /// <param name="filePath">
+        /// File path.
+        /// Serialized Name: ProcessModuleInfo.properties.file_path
+        /// </param>
+        /// <param name="moduleMemorySize">
+        /// Module memory size.
+        /// Serialized Name: ProcessModuleInfo.properties.module_memory_size
+        /// </param>
+        /// <param name="fileVersion">
+        /// File version.
+        /// Serialized Name: ProcessModuleInfo.properties.file_version
+        /// </param>
+        /// <param name="fileDescription">
+        /// File description.
+        /// Serialized Name: ProcessModuleInfo.properties.file_description
+        /// </param>
+        /// <param name="product">
+        /// Product name.
+        /// Serialized Name: ProcessModuleInfo.properties.product
+        /// </param>
+        /// <param name="productVersion">
+        /// Product version.
+        /// Serialized Name: ProcessModuleInfo.properties.product_version
+        /// </param>
+        /// <param name="isDebug">
+        /// Is debug?
+        /// Serialized Name: ProcessModuleInfo.properties.is_debug
+        /// </param>
+        /// <param name="language">
+        /// Module language (locale).
+        /// Serialized Name: ProcessModuleInfo.properties.language
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             BaseAddress = baseAddress;
             FileName = fileName;
             Href = href;
@@ -86,45 +124,80 @@ namespace Azure.ResourceManager.AppService
             ProductVersion = productVersion;
             IsDebug = isDebug;
             Language = language;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>
-        [WirePath("properties.base_address")]
-        public string BaseAddress { get; set; }
-        /// <summary> File name. </summary>
-        [WirePath("properties.file_name")]
-        public string FileName { get; set; }
-        /// <summary> HRef URI. </summary>
-        [WirePath("properties.href")]
-        public string Href { get; set; }
-        /// <summary> File path. </summary>
-        [WirePath("properties.file_path")]
-        public string FilePath { get; set; }
-        /// <summary> Module memory size. </summary>
-        [WirePath("properties.module_memory_size")]
-        public int? ModuleMemorySize { get; set; }
-        /// <summary> File version. </summary>
-        [WirePath("properties.file_version")]
-        public string FileVersion { get; set; }
-        /// <summary> File description. </summary>
-        [WirePath("properties.file_description")]
-        public string FileDescription { get; set; }
-        /// <summary> Product name. </summary>
-        [WirePath("properties.product")]
-        public string Product { get; set; }
-        /// <summary> Product version. </summary>
-        [WirePath("properties.product_version")]
-        public string ProductVersion { get; set; }
-        /// <summary> Is debug?. </summary>
-        [WirePath("properties.is_debug")]
-        public bool? IsDebug { get; set; }
-        /// <summary> Module language (locale). </summary>
-        [WirePath("properties.language")]
-        public string Language { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProcessModuleInfo.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// Base address. Used as module identifier in ARM resource URI.
+        /// Serialized Name: ProcessModuleInfo.properties.base_address
+        /// </summary>
+        [WirePath("properties.base_address")]
+        public string BaseAddress { get; set; }
+        /// <summary>
+        /// File name.
+        /// Serialized Name: ProcessModuleInfo.properties.file_name
+        /// </summary>
+        [WirePath("properties.file_name")]
+        public string FileName { get; set; }
+        /// <summary>
+        /// HRef URI.
+        /// Serialized Name: ProcessModuleInfo.properties.href
+        /// </summary>
+        [WirePath("properties.href")]
+        public string Href { get; set; }
+        /// <summary>
+        /// File path.
+        /// Serialized Name: ProcessModuleInfo.properties.file_path
+        /// </summary>
+        [WirePath("properties.file_path")]
+        public string FilePath { get; set; }
+        /// <summary>
+        /// Module memory size.
+        /// Serialized Name: ProcessModuleInfo.properties.module_memory_size
+        /// </summary>
+        [WirePath("properties.module_memory_size")]
+        public int? ModuleMemorySize { get; set; }
+        /// <summary>
+        /// File version.
+        /// Serialized Name: ProcessModuleInfo.properties.file_version
+        /// </summary>
+        [WirePath("properties.file_version")]
+        public string FileVersion { get; set; }
+        /// <summary>
+        /// File description.
+        /// Serialized Name: ProcessModuleInfo.properties.file_description
+        /// </summary>
+        [WirePath("properties.file_description")]
+        public string FileDescription { get; set; }
+        /// <summary>
+        /// Product name.
+        /// Serialized Name: ProcessModuleInfo.properties.product
+        /// </summary>
+        [WirePath("properties.product")]
+        public string Product { get; set; }
+        /// <summary>
+        /// Product version.
+        /// Serialized Name: ProcessModuleInfo.properties.product_version
+        /// </summary>
+        [WirePath("properties.product_version")]
+        public string ProductVersion { get; set; }
+        /// <summary>
+        /// Is debug?
+        /// Serialized Name: ProcessModuleInfo.properties.is_debug
+        /// </summary>
+        [WirePath("properties.is_debug")]
+        public bool? IsDebug { get; set; }
+        /// <summary>
+        /// Module language (locale).
+        /// Serialized Name: ProcessModuleInfo.properties.language
+        /// </summary>
+        [WirePath("properties.language")]
+        public string Language { get; set; }
     }
 }
