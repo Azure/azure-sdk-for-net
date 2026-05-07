@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 using Azure.Search.Documents.Utilities;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -632,6 +633,53 @@ namespace Azure.Search.Documents.Models
         public static QueryAnswerResult QueryAnswerResult(double? score = null, string key = null, string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             return new QueryAnswerResult(score, key, text, highlights, (IDictionary<string, object>)additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of FacetResult. </summary>
+        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FacetResult FacetResult(long? count, IDictionary<string, BinaryData> additionalProperties)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+
+            return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
+        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. </param>
+        /// <param name="oversampling"> Oversampling factor. </param>
+        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. </param>
+        /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string filterOverride)
+        {
+            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: filterOverride);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseActivityRecord. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="type"> The type of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id, string @type, int? elapsedMs, KnowledgeBaseErrorDetail error)
+        {
+            return KnowledgeBaseActivityRecord(id: id, @type: @type, elapsedMs: elapsedMs, error: error, warning: default);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeSourceParams. </summary>
+        /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
+        /// <param name="includeReferences"> Indicates whether references should be included. </param>
+        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data. </param>
+        /// <param name="rerankerThreshold"> The reranker threshold. </param>
+        /// <param name="kind"> The type of the knowledge source. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeSourceParams KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, string kind)
+        {
+            return KnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, kind: kind);
         }
     }
 }

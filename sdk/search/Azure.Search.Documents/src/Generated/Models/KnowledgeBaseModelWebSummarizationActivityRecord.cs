@@ -26,21 +26,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="inputTokens"> The number of input tokens for the LLM web summarization activity. </param>
-        /// <param name="outputTokens"> The number of output tokens for the LLM web summarization activity. </param>
+        /// <param name="inputTokensCount"> The number of input tokens for the LLM web summarization activity. </param>
+        /// <param name="outputTokensCount"> The number of output tokens for the LLM web summarization activity. </param>
         /// <param name="modelName"> The name of the model used for the LLM web summarization activity. </param>
-        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokens, int? outputTokens, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokensCount, int? outputTokensCount, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
-            InputTokens = inputTokens;
-            OutputTokens = outputTokens;
+            InputTokensCount = inputTokensCount;
+            OutputTokensCount = outputTokensCount;
             ModelName = modelName;
         }
 
         /// <summary> The number of input tokens for the LLM web summarization activity. </summary>
-        public int? InputTokens { get; }
+        public int? InputTokensCount { get; }
 
         /// <summary> The number of output tokens for the LLM web summarization activity. </summary>
-        public int? OutputTokens { get; }
+        public int? OutputTokensCount { get; }
 
         /// <summary> The name of the model used for the LLM web summarization activity. </summary>
         public string ModelName { get; }

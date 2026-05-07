@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases
 {
@@ -56,5 +60,49 @@ namespace Azure.Search.Documents.KnowledgeBases
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
+
+        /// <summary>
+        /// KnowledgeBase retrieves relevant data from backing stores.
+        /// </summary>
+        /// <param name="content">The content to send as the body of the request.</param>
+        /// <param name="context">The request context.</param>
+        /// <returns>The response returned from the service.</returns>
+        [ForwardsClientCalls]
+        public virtual Response Retrieve(RequestContent content, RequestContext context) =>
+            Retrieve(content, querySourceAuthorization: null, context);
+
+        /// <summary>
+        /// KnowledgeBase retrieves relevant data from backing stores.
+        /// </summary>
+        /// <param name="content">The content to send as the body of the request.</param>
+        /// <param name="context">The request context.</param>
+        /// <returns>The response returned from the service.</returns>
+        [ForwardsClientCalls]
+        public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context) =>
+            RetrieveAsync(content, querySourceAuthorization: null, context);
+
+        /// <summary>
+        /// KnowledgeBase retrieves relevant data from backing stores.
+        /// </summary>
+        /// <param name="retrievalRequest">The retrieval request to process.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The response returned from the service.</returns>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
+        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken) =>
+            Retrieve(retrievalRequest, querySourceAuthorization: null, cancellationToken);
+#pragma warning restore AZC0002
+
+        /// <summary>
+        /// KnowledgeBase retrieves relevant data from backing stores.
+        /// </summary>
+        /// <param name="retrievalRequest">The retrieval request to process.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The response returned from the service.</returns>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
+        public virtual Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken) =>
+            RetrieveAsync(retrievalRequest, querySourceAuthorization: null, cancellationToken);
+#pragma warning restore AZC0002
     }
 }

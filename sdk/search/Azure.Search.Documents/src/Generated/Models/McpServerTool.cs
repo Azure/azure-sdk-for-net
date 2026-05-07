@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="McpServerTool"/>. </summary>
         /// <param name="name"> The name of the MCP tool to invoke. </param>
         /// <param name="outputParsing"> Optional configuration for parsing the tool's output. </param>
-        /// <param name="inclusionMode"> Controls how the parsed results from this tool are integrated into the final result set. Defaults to 'reranked' when not specified. </param>
+        /// <param name="inclusionMode"> Controls how the parsed results from this tool are integrated into the final result set. Defaults to 'always' when not specified. </param>
         /// <param name="maxOutputTokens"> Optional post-parsing token cap for this tool's output. Must be greater than 0 when specified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal McpServerTool(string name, McpServerOutputParsing outputParsing, McpServerToolInclusionMode? inclusionMode, int? maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Optional configuration for parsing the tool's output. </summary>
         public McpServerOutputParsing OutputParsing { get; set; }
 
-        /// <summary> Controls how the parsed results from this tool are integrated into the final result set. Defaults to 'reranked' when not specified. </summary>
+        /// <summary> Controls how the parsed results from this tool are integrated into the final result set. Defaults to 'always' when not specified. </summary>
         public McpServerToolInclusionMode? InclusionMode { get; set; }
 
         /// <summary> Optional post-parsing token cap for this tool's output. Must be greater than 0 when specified. </summary>
