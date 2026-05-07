@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public FileSharePatchProperties() { }
         public Azure.ResourceManager.FileShares.Models.NfsProtocolProperties NfsProtocolProperties { get { throw null; } set { } }
         public int? ProvisionedIOPerSec { get { throw null; } set { } }
-        public int? ProvisionedStorageGiB { get { throw null; } set { } }
+        public int? ProvisionedStorageInGiB { get { throw null; } set { } }
         public int? ProvisionedThroughputMiBPerSec { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PublicAccessAllowedSubnets { get { throw null; } }
         public Azure.ResourceManager.FileShares.Models.FileSharePublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
