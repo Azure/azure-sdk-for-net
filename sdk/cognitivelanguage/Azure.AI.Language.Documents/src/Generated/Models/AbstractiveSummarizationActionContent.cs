@@ -17,11 +17,6 @@ namespace Azure.AI.Language.Documents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationActionContent"/>. </summary>
-        public AbstractiveSummarizationActionContent()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> Controls the approximate number of sentences in the output summaries. </param>
@@ -48,9 +43,6 @@ namespace Azure.AI.Language.Documents
 
         /// <summary> Controls the approximate number of sentences in the output summaries. </summary>
         public int? SentenceCount { get; set; }
-
-        /// <summary> String index type. </summary>
-        public StringIndexType? StringIndexType { get; set; }
 
         /// <summary> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </summary>
         public SummaryLengthBucket? SummaryLength { get; set; }
