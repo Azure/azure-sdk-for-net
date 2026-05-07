@@ -2181,7 +2181,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceAgentPoolData ContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, IEnumerable<string> availabilityZones, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolSecurityProfile securityProfile, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, LocalDnsProfile localDnsProfile, ContainerServiceStateCode? powerStateCode, ResourceIdentifier creationDataSourceResourceId, bool? isOutboundNatDisabled, AgentPoolGpuDriver? gpuDriver, int? gatewayPublicIPPrefixSize, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual, ResponseError statusProvisioningError, string upgradeMaxSurge, IEnumerable<ManualScaleProfile> scaleManual, bool? enableAutoScaling, bool? enableNodePublicIP, bool? enableEncryptionAtHost, bool? enableFips, bool? enableUltraSsd)
         {
-            return ContainerServiceAgentPoolData(id, name, resourceType, systemData, etag, count, vmSize, osDiskSizeInGB, osDiskType, kubeletDiskType, workloadRuntime, messageOfTheDay, vnetSubnetId, podSubnetId, podIPAllocationMode, maxPods, osType, osSku, maxCount, minCount, isAutoScalingEnabled, scaleDownMode, agentPoolType, mode, orchestratorVersion, currentOrchestratorVersion, nodeImageVersion, upgradeStrategy: default, isOSDiskFullCachingEnabled: default, upgradeSettings, upgradeSettingsBlueGreen: default, provisioningState, availabilityZones, isNodePublicIpEnabled, nodePublicIPPrefixId, scaleSetPriority, scaleSetEvictionPolicy, spotMaxPrice, tags, nodeLabels, nodeTaints, nodeInitializationTaints: default, proximityPlacementGroupId, kubeletConfig, linuxOSConfig, isEncryptionAtHostEnabled, isUltraSsdEnabled, isFipsEnabled, gpuInstanceProfile, capacityReservationGroupId, hostGroupId, networkProfile, securityProfile, gpuProfile: default, virtualMachineNodesStatus, localDnsProfile, powerStateCode, creationDataSourceResourceId, isOutboundNatDisabled, gatewayPublicIPPrefixSize, isArtifactStreamingEnabled: default, virtualMachinesScale: default, statusProvisioningError, nodeCustomizationId: default, upgradeMaxSurge, scaleManual, virtualMachinesScaleManual, gpuDriver, enableAutoScaling, enableNodePublicIP, enableEncryptionAtHost, enableFips, enableUltraSsd);
+            return ContainerServiceAgentPoolData(id: id, name: name, resourceType: resourceType, systemData: systemData, etag: etag, count: count, vmSize: vmSize, osDiskSizeInGB: osDiskSizeInGB, osDiskType: osDiskType, kubeletDiskType: kubeletDiskType, workloadRuntime: workloadRuntime, messageOfTheDay: messageOfTheDay, vnetSubnetId: vnetSubnetId, podSubnetId: podSubnetId, podIPAllocationMode: podIPAllocationMode, maxPods: maxPods, osType: osType, osSku: osSku, maxCount: maxCount, minCount: minCount, isAutoScalingEnabled: isAutoScalingEnabled, scaleDownMode: scaleDownMode, agentPoolType: agentPoolType, mode: mode, orchestratorVersion: orchestratorVersion, currentOrchestratorVersion: currentOrchestratorVersion, nodeImageVersion: nodeImageVersion, upgradeStrategy: default, isOSDiskFullCachingEnabled: default, upgradeSettings: upgradeSettings, upgradeSettingsBlueGreen: default, provisioningState: provisioningState, availabilityZones: availabilityZones, isNodePublicIpEnabled: isNodePublicIpEnabled, nodePublicIPPrefixId: nodePublicIPPrefixId, scaleSetPriority: scaleSetPriority, scaleSetEvictionPolicy: scaleSetEvictionPolicy, spotMaxPrice: spotMaxPrice, tags: tags, nodeLabels: nodeLabels, nodeTaints: nodeTaints, nodeInitializationTaints: default, proximityPlacementGroupId: proximityPlacementGroupId, kubeletConfig: kubeletConfig, linuxOSConfig: linuxOSConfig, isEncryptionAtHostEnabled: isEncryptionAtHostEnabled, isUltraSsdEnabled: isUltraSsdEnabled, isFipsEnabled: isFipsEnabled, gpuInstanceProfile: gpuInstanceProfile, capacityReservationGroupId: capacityReservationGroupId, hostGroupId: hostGroupId, networkProfile: networkProfile, securityProfile: securityProfile, gpuProfile: default, virtualMachineNodesStatus: virtualMachineNodesStatus, localDnsProfile: localDnsProfile, powerStateCode: powerStateCode, creationDataSourceResourceId: creationDataSourceResourceId, isOutboundNatDisabled: isOutboundNatDisabled, gatewayPublicIPPrefixSize: gatewayPublicIPPrefixSize, isArtifactStreamingEnabled: default, virtualMachinesScale: default, statusProvisioningError: statusProvisioningError, nodeCustomizationId: default, upgradeMaxSurge: upgradeMaxSurge, scaleManual: scaleManual, virtualMachinesScaleManual: virtualMachinesScaleManual, gpuDriver: gpuDriver, enableAutoScaling: enableAutoScaling, enableNodePublicIP: enableNodePublicIP, enableEncryptionAtHost: enableEncryptionAtHost, enableFips: enableFips, enableUltraSsd: enableUltraSsd);
         }
 
         /// <param name="etag"> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </param>
@@ -2329,7 +2329,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KubeletConfig KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IEnumerable<string> allowedUnsafeSysctls, bool? shouldFailStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids)
         {
-            return KubeletConfig(cpuManagerPolicy, isCpuCfsQuotaEnabled, cpuCfsQuotaPeriod, imageGcHighThreshold, imageGcLowThreshold, topologyManagerPolicy, allowedUnsafeSysctls, shouldFailStartWithSwapOn, containerLogMaxSizeInMB, containerLogMaxFiles, podMaxPids, seccompDefault: default);
+            return KubeletConfig(cpuManagerPolicy: cpuManagerPolicy, isCpuCfsQuotaEnabled: isCpuCfsQuotaEnabled, cpuCfsQuotaPeriod: cpuCfsQuotaPeriod, imageGcHighThreshold: imageGcHighThreshold, imageGcLowThreshold: imageGcLowThreshold, topologyManagerPolicy: topologyManagerPolicy, allowedUnsafeSysctls: allowedUnsafeSysctls, shouldFailStartWithSwapOn: shouldFailStartWithSwapOn, containerLogMaxSizeInMB: containerLogMaxSizeInMB, containerLogMaxFiles: containerLogMaxFiles, podMaxPids: podMaxPids, seccompDefault: default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2566,7 +2566,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceNetworkProfile ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, ManagedClusterAdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, bool? isStaticEgressGatewayAddonEnabled, IEnumerable<string> podCidrs, IEnumerable<string> serviceCidrs, IEnumerable<ContainerServiceIPFamily> networkIPFamilies)
         {
-            return ContainerServiceNetworkProfile(networkPlugin, networkPluginMode, networkPolicy, networkMode, networkDataplane, advancedNetworking, podCidr, serviceCidr, dnsServiceIP, outboundType, loadBalancerSku, loadBalancerProfile, natGatewayProfile, isStaticEgressGatewayAddonEnabled, podCidrs, serviceCidrs, networkIPFamilies, podLinkLocalAccess: default, kubeProxyConfig: default);
+            return ContainerServiceNetworkProfile(networkPlugin: networkPlugin, networkPluginMode: networkPluginMode, networkPolicy: networkPolicy, networkMode: networkMode, networkDataplane: networkDataplane, advancedNetworking: advancedNetworking, podCidr: podCidr, serviceCidr: serviceCidr, dnsServiceIP: dnsServiceIP, outboundType: outboundType, loadBalancerSku: loadBalancerSku, loadBalancerProfile: loadBalancerProfile, natGatewayProfile: natGatewayProfile, isStaticEgressGatewayAddonEnabled: isStaticEgressGatewayAddonEnabled, podCidrs: podCidrs, serviceCidrs: serviceCidrs, networkIPFamilies: networkIPFamilies, podLinkLocalAccess: default, kubeProxyConfig: default);
         }
 
         /// <summary> Cluster HTTP proxy configuration. </summary>
@@ -2579,7 +2579,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedClusterHttpProxyConfig ManagedClusterHttpProxyConfig(string httpProxy, string httpsProxy, IEnumerable<string> noProxy, string trustedCA, bool? isHttpProxyEnabled)
         {
-            return ManagedClusterHttpProxyConfig(httpProxy, httpsProxy, noProxy, effectiveNoProxy: default, trustedCA, isHttpProxyEnabled);
+            return ManagedClusterHttpProxyConfig(httpProxy: httpProxy, httpsProxy: httpsProxy, noProxy: noProxy, effectiveNoProxy: default, trustedCA: trustedCA, isHttpProxyEnabled: isHttpProxyEnabled);
         }
 
         /// <param name="defender"> Microsoft Defender settings for the security profile. </param>
@@ -2591,7 +2591,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedClusterSecurityProfile ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, bool? isWorkloadIdentityEnabled, ManagedClusterSecurityProfileImageCleaner imageCleaner, IEnumerable<byte[]> customCATrustCertificates)
         {
-            return ManagedClusterSecurityProfile(defender, azureKeyVaultKms, infrastructureEncryption: default, isWorkloadIdentityEnabled, imageCleaner, isImageIntegrityEnabled: default, isNodeRestrictionEnabled: default, customCATrustCertificates, serviceAccountImagePullProfile: default);
+            return ManagedClusterSecurityProfile(defender: defender, azureKeyVaultKms: azureKeyVaultKms, infrastructureEncryption: default, isWorkloadIdentityEnabled: isWorkloadIdentityEnabled, imageCleaner: imageCleaner, isImageIntegrityEnabled: default, isNodeRestrictionEnabled: default, customCATrustCertificates: customCATrustCertificates, serviceAccountImagePullProfile: default);
         }
 
         /// <param name="isEnabled"> Whether to enable the Application Routing add-on. </param>
@@ -2602,7 +2602,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedClusterIngressProfileWebAppRouting ManagedClusterIngressProfileWebAppRouting(bool? isEnabled, IEnumerable<ResourceIdentifier> dnsZoneResourceIds, NginxIngressControllerType? nginxDefaultIngressControllerType, ContainerServiceUserAssignedIdentity identity)
         {
-            return ManagedClusterIngressProfileWebAppRouting(isEnabled, gatewayAPIImplementationsIstioMode: default, dnsZoneResourceIds, nginxDefaultIngressControllerType, identity, defaultDomain: default);
+            return ManagedClusterIngressProfileWebAppRouting(isEnabled: isEnabled, gatewayAPIImplementationsIstioMode: default, dnsZoneResourceIds: dnsZoneResourceIds, nginxDefaultIngressControllerType: nginxDefaultIngressControllerType, identity: identity, defaultDomain: default);
         }
 
         /// <summary> The list of available upgrade versions. </summary>
@@ -2614,7 +2614,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedClusterPoolUpgradeProfile ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, ContainerServiceOSType osType, IEnumerable<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades)
         {
-            return ManagedClusterPoolUpgradeProfile(kubernetesVersion, name, osType, upgrades, componentsByReleases: default);
+            return ManagedClusterPoolUpgradeProfile(kubernetesVersion: kubernetesVersion, name: name, osType: osType, upgrades: upgrades, componentsByReleases: default);
         }
 
         /// <summary> Available upgrades for an AgentPool. </summary>
@@ -2624,7 +2624,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedClusterPoolUpgradeProfileUpgradesItem ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion, bool? isPreview)
         {
-            return ManagedClusterPoolUpgradeProfileUpgradesItem(kubernetesVersion, isPreview, isOutOfSupport: default);
+            return ManagedClusterPoolUpgradeProfileUpgradesItem(kubernetesVersion: kubernetesVersion, isPreview: isPreview, isOutOfSupport: default);
         }
 
         /// <summary> Available upgrades for an AgentPool. </summary>
@@ -2634,7 +2634,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AgentPoolUpgradeProfilePropertiesUpgradesItem AgentPoolUpgradeProfilePropertiesUpgradesItem(string kubernetesVersion, bool? isPreview)
         {
-            return AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion, isPreview, isOutOfSupport: default);
+            return AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion: kubernetesVersion, isPreview: isPreview, isOutOfSupport: default);
         }
 
         /// <param name="networkIPAddresses"> IPv4, IPv6 addresses of the machine. </param>
@@ -3052,7 +3052,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KubernetesVersion KubernetesVersion(string version, IEnumerable<KubernetesSupportPlan> capabilitiesSupportPlan, bool? isPreview, IReadOnlyDictionary<string, KubernetesPatchVersion> patchVersions)
         {
-            return KubernetesVersion(version, capabilitiesSupportPlan, isDefault: default, isPreview, patchVersions);
+            return KubernetesVersion(version: version, capabilitiesSupportPlan: capabilitiesSupportPlan, isDefault: default, isPreview: isPreview, patchVersions: patchVersions);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterAgentPoolProfile"/>. </summary>
