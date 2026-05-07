@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
@@ -57,6 +58,22 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.Core.armResourceType"] = typeof(ResourceType),
         };
 
+        private static readonly Type[] _additionalFrameworkTypes =
+        [
+            typeof(ArmClient),
+            typeof(ArmClientOptions),
+            typeof(ArmCollection),
+            typeof(ArmResource),
+        ];
+
+        private static readonly IReadOnlyDictionary<string, Type> _fullyQualifiedNameToFrameworkTypeMap =
+            _additionalFrameworkTypes
+                .Concat(_idToInheritableSystemTypeMap.Values.Select(type => type.FrameworkType))
+                .Concat(_idToSystemTypeMap.Values.Select(type => type.FrameworkType))
+                .Concat(_idToPrimitiveTypeMap.Values.Select(type => type.FrameworkType))
+                .Distinct()
+                .ToDictionary(type => type.FullName!, type => type);
+
         public static bool TryGetPrimitiveType(string crossLanguageDefinitionId, [MaybeNullWhen(false)] out CSharpType primitiveType)
             => _idToPrimitiveTypeMap.TryGetValue(crossLanguageDefinitionId, out primitiveType);
 
@@ -96,6 +113,9 @@ namespace Azure.Generator.Management.Primitives
         public static bool TryGetInheritableSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToInheritableSystemTypeMap.TryGetValue(id, out type);
 
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
+
+        public static bool TryGetFrameworkType(string fullyQualifiedTypeName, [MaybeNullWhen(false)] out Type frameworkType)
+            => _fullyQualifiedNameToFrameworkTypeMap.TryGetValue(fullyQualifiedTypeName, out frameworkType);
 
         // The comparison could be CSharpType from Azure.ResourceManager, which is a framework type
         // and CSharpType from InheritableSystemObjectModelProvider, which is not a framework type, they should still be equal if namespace and name match
