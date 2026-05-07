@@ -73,10 +73,8 @@
         "searchServiceName": "[concat('azs-net-', parameters('baseName'))]",
         "searchApiVersion": "2026-03-01-preview",
         "searchEncryptionLocations": [
-            "westus",
             "westus2",
             "eastus2",
-            "eastus",
             "southcentralus",
             "usgovvirginia",
             "usgovarizona"
