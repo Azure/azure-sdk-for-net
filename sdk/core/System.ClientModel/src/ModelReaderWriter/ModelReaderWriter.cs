@@ -165,7 +165,7 @@ public static class ModelReaderWriter
     [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static T? Read<T>(BinaryData data, ModelReaderWriterOptions? options = default)
     {
-        return ReadInternal<T>(data, GetOptions(options) ??= ModelReaderWriterOptions.Json, ModelReaderWriterReflectionContext.Default);
+        return ReadInternal<T>(data, GetOptions(options), ModelReaderWriterReflectionContext.Default);
     }
 
     /// <summary>
@@ -210,7 +210,7 @@ public static class ModelReaderWriter
     [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static object? Read(BinaryData data, Type returnType, ModelReaderWriterOptions? options = default)
     {
-        return ReadInternal(data, returnType, GetOptions(options) ??= ModelReaderWriterOptions.Json, ModelReaderWriterReflectionContext.Default);
+        return ReadInternal(data, returnType, GetOptions(options), ModelReaderWriterReflectionContext.Default);
     }
 
     /// <summary>
@@ -268,15 +268,7 @@ public static class ModelReaderWriter
         }
         else if (returnObj is IPersistableModel<object> persistableModel)
         {
-            if (ShouldWriteAsJson(persistableModel, options, out IJsonModel<object>? jsonModel))
-            {
-                Utf8JsonReader reader = new(data);
-                return options.ResolveProxy(jsonModel).Create(ref reader, options);
-            }
-            else
-            {
-                return options.ResolveProxy(persistableModel).Create(data, options);
-            }
+            return options.ResolveProxy(persistableModel).Create(data, options);
         }
         else
         {
