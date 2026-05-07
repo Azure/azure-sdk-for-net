@@ -130,7 +130,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="doubleValue"> double value. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets the Prop2. </param>
-        /// <param name="etag"> ETag property for testing etag parameter name generation. </param>
+        /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
@@ -139,9 +139,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="extendedLocation"></param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -164,7 +163,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     new NestedFooModel(nestedPropertyProperties, null),
                     new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), null),
                     new VmProfile(new ApplicationProfile((vmGalleryApplications ?? new ChangeTrackingList<string>()).ToList(), null), null),
-                    etag,
+                    eTag,
                     writableSubResourceProp,
                     new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, null), null), null),
                     null),
@@ -183,12 +182,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
         /// <param name="vmGalleryApplications"> Specifies the gallery applications that should be made available. </param>
-        /// <param name="etag"> ETag property for testing etag parameter name generation. </param>
+        /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="computeFleetVmCapacityReservationGroupId"> Gets or sets the Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default)
         {
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();
@@ -204,7 +202,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 new NestedFooModel(nestedPropertyProperties, null),
                 flattenedProperty is null ? default : new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), null),
                 vmGalleryApplications is null ? default : new VmProfile(new ApplicationProfile((vmGalleryApplications ?? new ChangeTrackingList<string>()).ToList(), null), null),
-                etag,
+                eTag,
                 writableSubResourceProp,
                 computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, null), null), null),
                 additionalBinaryDataProperties: null);
@@ -1451,10 +1449,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="eTag"> Resource Etag. </param>
         /// <param name="containerItemLikeSomething"> A simple string property. </param>
         /// <returns> A new <see cref="Models.ContainerItemLike"/> instance for mocking. </returns>
-        public static ContainerItemLike ContainerItemLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default, string containerItemLikeSomething = default)
+        public static ContainerItemLike ContainerItemLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default, string containerItemLikeSomething = default)
         {
             return new ContainerItemLike(
                 id,
@@ -1462,17 +1460,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                etag,
+                eTag,
                 containerItemLikeSomething is null ? default : new ContainerItemLikeProperties(containerItemLikeSomething, null));
         }
 
+        /// <summary> Entity Resource Like. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="eTag"> Resource Etag. </param>
         /// <returns> A new <see cref="Models.EntityResourceLike"/> instance for mocking. </returns>
-        public static EntityResourceLike EntityResourceLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default)
+        public static EntityResourceLike EntityResourceLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default)
         {
             return new EntityResourceLike(
                 id,
@@ -1480,7 +1479,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                etag);
+                eTag);
         }
 
         /// <summary> Paged collection of DerivedPatch items. </summary>
