@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         private readonly int? _maxCount;
         private readonly int? _skip;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ImagesGetByDisconnectedOperationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Images client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ImagesGetByDisconnectedOperationCollectionResultOfT(Images client, Guid subscriptionId, string resourceGroupName, string name, string filter, int? maxCount, int? skip, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ImagesGetByDisconnectedOperationCollectionResultOfT(Images client, Guid subscriptionId, string resourceGroupName, string name, string filter, int? maxCount, int? skip, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             _maxCount = maxCount;
             _skip = skip;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ImagesGetByDisconnectedOperationCollectionResultOfT as an enumerable collection. </summary>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByDisconnectedOperationRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _filter, _maxCount, _skip, _context) : _client.CreateGetByDisconnectedOperationRequest(_subscriptionId, _resourceGroupName, _name, _filter, _maxCount, _skip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

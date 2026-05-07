@@ -70,9 +70,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(searchIndexerDataSourceConnection, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(searchIndexerDataSourceConnection, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchIndexerDataSourceConnection"/> from. </param>
@@ -109,11 +107,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && Optional.IsDefined(SubType))
-            {
-                writer.WritePropertyName("subType"u8);
-                writer.WriteStringValue(SubType);
-            }
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(CredentialsInternal, options);
             writer.WritePropertyName("container"u8);
@@ -122,16 +115,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
-            }
-            if (Optional.IsCollectionDefined(IndexerPermissionOptions))
-            {
-                writer.WritePropertyName("indexerPermissionOptions"u8);
-                writer.WriteStartArray();
-                foreach (IndexerPermissionOption item in IndexerPermissionOptions)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
             }
             if (Optional.IsDefined(DataChangeDetectionPolicy))
             {
@@ -198,11 +181,9 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             SearchIndexerDataSourceType @type = default;
-            string subType = default;
             DataSourceCredentials credentialsInternal = default;
             SearchIndexerDataContainer container = default;
             SearchIndexerDataIdentity identity = default;
-            IList<IndexerPermissionOption> indexerPermissionOptions = default;
             DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
             DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
             SearchResourceEncryptionKey encryptionKey = default;
@@ -225,11 +206,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     @type = new SearchIndexerDataSourceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("subType"u8))
-                {
-                    subType = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("credentials"u8))
                 {
                     credentialsInternal = DataSourceCredentials.DeserializeDataSourceCredentials(prop.Value, options);
@@ -248,20 +224,6 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("indexerPermissionOptions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<IndexerPermissionOption> array = new List<IndexerPermissionOption>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(new IndexerPermissionOption(item.GetString()));
-                    }
-                    indexerPermissionOptions = array;
                     continue;
                 }
                 if (prop.NameEquals("dataChangeDetectionPolicy"u8))
@@ -308,11 +270,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 @type,
-                subType,
                 credentialsInternal,
                 container,
                 identity,
-                indexerPermissionOptions ?? new ChangeTrackingList<IndexerPermissionOption>(),
                 dataChangeDetectionPolicy,
                 dataDeletionDetectionPolicy,
                 encryptionKey,

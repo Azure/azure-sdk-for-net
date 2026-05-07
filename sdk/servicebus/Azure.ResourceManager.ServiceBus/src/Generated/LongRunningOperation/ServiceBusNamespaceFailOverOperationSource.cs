@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    internal class ServiceBusNamespaceFailOverOperationSource : IOperationSource<ServiceBusNamespaceFailOver>
+    /// <summary></summary>
+    internal partial class ServiceBusNamespaceFailOverOperationSource : IOperationSource<ServiceBusNamespaceFailOver>
     {
-        ServiceBusNamespaceFailOver IOperationSource<ServiceBusNamespaceFailOver>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal ServiceBusNamespaceFailOverOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ServiceBusNamespaceFailOver.DeserializeServiceBusNamespaceFailOver(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        ServiceBusNamespaceFailOver IOperationSource<ServiceBusNamespaceFailOver>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ServiceBusNamespaceFailOver result = ServiceBusNamespaceFailOver.DeserializeServiceBusNamespaceFailOver(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ServiceBusNamespaceFailOver> IOperationSource<ServiceBusNamespaceFailOver>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ServiceBusNamespaceFailOver.DeserializeServiceBusNamespaceFailOver(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ServiceBusNamespaceFailOver result = ServiceBusNamespaceFailOver.DeserializeServiceBusNamespaceFailOver(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

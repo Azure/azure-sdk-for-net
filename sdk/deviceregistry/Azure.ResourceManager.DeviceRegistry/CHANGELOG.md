@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.3 (2026-04-01)
+
+### Features Added
+
+- Aligned resource types to Microsoft.DeviceRegistry API version `2026-03-01-preview`.
+
+### Breaking Changes
+
+- `PolicyData` no longer extends `TrackedResourceData`; it now extends `ResourceData`. The `Location` property is now of type `string` instead of `AzureLocation`.
 
 ## 1.1.0-beta.2 (2025-11-19)
 

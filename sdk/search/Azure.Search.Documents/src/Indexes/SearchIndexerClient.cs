@@ -85,7 +85,6 @@ namespace Azure.Search.Documents.Indexes
             options ??= new SearchClientOptions();
 
             _endpoint = endpoint;
-            _keyCredential = credential;
             Pipeline = options.Build(credential);
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options);
@@ -111,10 +110,25 @@ namespace Azure.Search.Documents.Indexes
             options ??= new SearchClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = tokenCredential;
             Pipeline = options.Build(tokenCredential);
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexerClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal SearchIndexerClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new SearchClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         #region Indexer operations - Convenience overloads
@@ -146,8 +160,6 @@ namespace Azure.Search.Documents.Indexes
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
-                skipIndexerResetRequirementForCache: null,
-                disableCacheReprocessingChangeDetection: null,
                 cancellationToken);
         }
 
@@ -178,8 +190,6 @@ namespace Azure.Search.Documents.Indexes
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
-                skipIndexerResetRequirementForCache: null,
-                disableCacheReprocessingChangeDetection: null,
                 cancellationToken).ConfigureAwait(false);
         }
 

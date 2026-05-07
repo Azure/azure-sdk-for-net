@@ -32,9 +32,29 @@ public sealed class CredentialSettings
     /// Gets or sets the source of the credential.
     /// </summary>
     /// <remarks>
-    /// This value determines the type of authentication policy to use. For example, "ApiKey" creates an <see cref="ApiKeyAuthenticationPolicy"/>.
+    /// This value determines the type of authentication policy to use. For example, "ApiKeyCredential" creates an <see cref="ApiKeyAuthenticationPolicy"/>.
     /// </remarks>
-    public string? CredentialSource { get; set; }
+    public string? CredentialSource
+    {
+        get => field;
+        set => field = NormalizeCredentialSource(value);
+    }
+
+    private static string? NormalizeCredentialSource(string? value)
+    {
+        if (value is null)
+        {
+            return null;
+        }
+
+        string lower = value.ToLowerInvariant();
+
+        return lower switch
+        {
+            "apikey" => "apikeycredential",
+            _ => lower
+        };
+    }
 
     /// <summary>
     /// Gets or sets the ApiKey.

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 {
                     Properties = new AdvisorConfigurationProperties();
                 }
-                Properties.IsExcluded = value.Value;
+                Properties.IsExcluded = value;
             }
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 {
                     Properties = new AdvisorConfigurationProperties();
                 }
-                Properties.LowCpuThreshold = value.Value;
+                Properties.LowCpuThreshold = value;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 {
                     Properties = new AdvisorConfigurationProperties();
                 }
-                Properties.Duration = value.Value;
+                Properties.Duration = value;
             }
         }
 

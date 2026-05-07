@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -25,69 +26,75 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudRackCollection : ArmCollection, IEnumerable<NetworkCloudRackResource>, IAsyncEnumerable<NetworkCloudRackResource>
     {
-        private readonly ClientDiagnostics _networkCloudRackRacksClientDiagnostics;
-        private readonly RacksRestOperations _networkCloudRackRacksRestClient;
+        private readonly ClientDiagnostics _racksClientDiagnostics;
+        private readonly Racks _racksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudRackCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkCloudRackCollection for mocking. </summary>
         protected NetworkCloudRackCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudRackCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudRackCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkCloudRackRacksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudRackResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkCloudRackResource.ResourceType, out string networkCloudRackRacksApiVersion);
-            _networkCloudRackRacksRestClient = new RacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudRackRacksApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetworkCloudRackResource.ResourceType, out string networkCloudRackApiVersion);
+            _racksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudRackResource.ResourceType.Namespace, Diagnostics);
+            _racksRestClient = new Racks(_racksClientDiagnostics, Pipeline, Endpoint, networkCloudRackApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get properties of the provided rack.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Racks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rackName"> The name of the rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkCloudRackResource>> GetAsync(string rackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
-            using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Get");
+            using DiagnosticScope scope = _racksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkCloudRackRacksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, rackName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _racksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rackName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkCloudRackData> response = Response.FromValue(NetworkCloudRackData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudRackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,38 +108,42 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get properties of the provided rack.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Racks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rackName"> The name of the rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkCloudRackResource> Get(string rackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
-            using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Get");
+            using DiagnosticScope scope = _racksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkCloudRackRacksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, rackName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _racksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rackName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkCloudRackData> response = Response.FromValue(NetworkCloudRackData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudRackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,52 +157,16 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get a list of racks in the provided resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Racks_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Racks_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudRackResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackRacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudRackRacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), _networkCloudRackRacksClientDiagnostics, Pipeline, "NetworkCloudRackCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of racks in the provided resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Racks_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,47 +174,107 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudRackResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudRackResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackRacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudRackRacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), _networkCloudRackRacksClientDiagnostics, Pipeline, "NetworkCloudRackCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new RacksGetByResourceGroupAsyncCollectionResultOfT(
+                _racksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                skipToken,
+                context,
+                "NetworkCloudRackCollection.GetAll"), data => new NetworkCloudRackResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a list of racks in the provided resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Racks_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudRackResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new RacksGetByResourceGroupCollectionResultOfT(
+                _racksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                skipToken,
+                context,
+                "NetworkCloudRackCollection.GetAll"), data => new NetworkCloudRackResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Racks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rackName"> The name of the rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string rackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
-            using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Exists");
+            using DiagnosticScope scope = _racksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkCloudRackRacksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, rackName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _racksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rackName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkCloudRackData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudRackData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudRackData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -253,36 +288,50 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Racks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rackName"> The name of the rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string rackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
-            using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Exists");
+            using DiagnosticScope scope = _racksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkCloudRackRacksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, rackName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _racksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rackName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkCloudRackData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudRackData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudRackData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,38 +345,54 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Racks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rackName"> The name of the rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkCloudRackResource>> GetIfExistsAsync(string rackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
-            using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.GetIfExists");
+            using DiagnosticScope scope = _racksClientDiagnostics.CreateScope("NetworkCloudRackCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkCloudRackRacksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, rackName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _racksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rackName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkCloudRackData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudRackData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudRackData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkCloudRackResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudRackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,38 +406,54 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Racks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rackName"> The name of the rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkCloudRackResource> GetIfExists(string rackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
-            using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.GetIfExists");
+            using DiagnosticScope scope = _racksClientDiagnostics.CreateScope("NetworkCloudRackCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkCloudRackRacksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, rackName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _racksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rackName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkCloudRackData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudRackData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudRackData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkCloudRackResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudRackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,6 +473,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkCloudRackResource> IAsyncEnumerable<NetworkCloudRackResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

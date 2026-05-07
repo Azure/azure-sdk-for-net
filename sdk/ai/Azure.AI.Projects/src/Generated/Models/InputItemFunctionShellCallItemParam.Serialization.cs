@@ -90,6 +90,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
+            if (Optional.IsDefined(Environment))
+            {
+                writer.WritePropertyName("environment"u8);
+                writer.WriteObjectValue(Environment, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -123,6 +128,7 @@ namespace Azure.AI.Projects
             string callId = default;
             FunctionShellActionParam action = default;
             FunctionShellCallItemStatus? status = default;
+            FunctionShellCallItemParamEnvironment environment = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -160,6 +166,16 @@ namespace Azure.AI.Projects
                     status = prop.Value.GetString().ToFunctionShellCallItemStatus();
                     continue;
                 }
+                if (prop.NameEquals("environment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        environment = null;
+                        continue;
+                    }
+                    environment = FunctionShellCallItemParamEnvironment.DeserializeFunctionShellCallItemParamEnvironment(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -171,7 +187,8 @@ namespace Azure.AI.Projects
                 id,
                 callId,
                 action,
-                status);
+                status,
+                environment);
         }
     }
 }

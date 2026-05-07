@@ -13,8 +13,7 @@ namespace Azure.Data.AppConfiguration
     /// <summary>
     /// Represents the settings used to configure a <see cref="ConfigurationClient"/> that can be loaded from an <see cref="IConfigurationSection"/>.
     /// </summary>
-    [Experimental("SCME0002")]
-    public class ConfigurationClientSettings : ClientSettings
+    public partial class ConfigurationClientSettings : ClientSettings
     {
         /// <summary>
         /// Gets or sets the <see cref="Uri"/> referencing the app configuration storage.
@@ -25,21 +24,5 @@ namespace Azure.Data.AppConfiguration
         /// Gets or sets the <see cref="ConfigurationClientOptions"/> used to configure requests sent to the App Configuration service.
         /// </summary>
         public ConfigurationClientOptions? Options { get; set; }
-
-        /// <inheritdoc/>
-        protected override void BindCore(IConfigurationSection section)
-        {
-            string? endpoint = section["Endpoint"];
-            if (!string.IsNullOrEmpty(endpoint))
-            {
-                Endpoint = new Uri(endpoint);
-            }
-
-            IConfigurationSection optionsSection = section.GetSection("Options");
-            if (optionsSection.Exists())
-            {
-                Options = new ConfigurationClientOptions(optionsSection);
-            }
-        }
     }
 }

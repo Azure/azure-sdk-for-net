@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 throw new FormatException($"The model {nameof(NetAppCacheProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("filepath"u8);
-            writer.WriteStringValue(Filepath);
+            writer.WritePropertyName("filePath"u8);
+            writer.WriteStringValue(FilePath);
             writer.WritePropertyName("size"u8);
             writer.WriteNumberValue(Size);
             if (Optional.IsDefined(ExportPolicy))
@@ -183,37 +183,37 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string filepath = default;
+            string filePath = default;
             long size = default;
             CachePropertiesExportPolicy exportPolicy = default;
-            IList<ProtocolType> protocolTypes = default;
-            CacheProvisioningState? provisioningState = default;
-            CacheLifeCycleState? cacheState = default;
+            IList<NetAppProtocolType> protocolTypes = default;
+            NetAppCacheProvisioningState? provisioningState = default;
+            NetAppCacheLifeCycleState? cacheState = default;
             ResourceIdentifier cacheSubnetResourceId = default;
             ResourceIdentifier peeringSubnetResourceId = default;
-            IReadOnlyList<CacheMountTargetProperties> mountTargets = default;
-            KerberosState? kerberos = default;
-            SmbSettings smbSettings = default;
+            IReadOnlyList<NetAppCacheMountTargetProperties> mountTargets = default;
+            NetAppKerberosState? kerberos = default;
+            NetAppSmbSettings smbSettings = default;
             float? throughputMibps = default;
             float? actualThroughputMibps = default;
             NetAppEncryptionKeySource encryptionKeySource = default;
             ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
             long? maximumNumberOfFiles = default;
-            EncryptionState? encryption = default;
+            NetAppEncryptionState? encryption = default;
             NetAppVolumeLanguage? language = default;
-            LdapState? ldap = default;
-            LdapServerType? ldapServerType = default;
-            OriginClusterInformation originClusterInformation = default;
-            CifsChangeNotifyState? cifsChangeNotifications = default;
-            GlobalFileLockingState? globalFileLocking = default;
-            EnableWriteBackState? writeBack = default;
+            NetAppLdapState? ldap = default;
+            NetAppLdapServerType? ldapServerType = default;
+            NetAppOriginClusterInformation originClusterInformation = default;
+            NetAppCifsChangeNotifyState? cifsChangeNotifications = default;
+            NetAppGlobalFileLockingState? globalFileLocking = default;
+            NetAppEnableWriteBackState? writeBack = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filepath"u8))
+                if (property.NameEquals("filePath"u8))
                 {
-                    filepath = property.Value.GetString();
+                    filePath = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("size"u8))
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<ProtocolType> array = new List<ProtocolType>();
+                    List<NetAppProtocolType> array = new List<NetAppProtocolType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ProtocolType(item.GetString()));
+                        array.Add(new NetAppProtocolType(item.GetString()));
                     }
                     protocolTypes = array;
                     continue;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = new CacheProvisioningState(property.Value.GetString());
+                    provisioningState = new NetAppCacheProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cacheState"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    cacheState = new CacheLifeCycleState(property.Value.GetString());
+                    cacheState = new NetAppCacheLifeCycleState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cacheSubnetResourceId"u8))
@@ -278,10 +278,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<CacheMountTargetProperties> array = new List<CacheMountTargetProperties>();
+                    List<NetAppCacheMountTargetProperties> array = new List<NetAppCacheMountTargetProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CacheMountTargetProperties.DeserializeCacheMountTargetProperties(item, options));
+                        array.Add(NetAppCacheMountTargetProperties.DeserializeNetAppCacheMountTargetProperties(item, options));
                     }
                     mountTargets = array;
                     continue;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    kerberos = new KerberosState(property.Value.GetString());
+                    kerberos = new NetAppKerberosState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("smbSettings"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    smbSettings = SmbSettings.DeserializeSmbSettings(property.Value, options);
+                    smbSettings = NetAppSmbSettings.DeserializeNetAppSmbSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("throughputMibps"u8))
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    encryption = new EncryptionState(property.Value.GetString());
+                    encryption = new NetAppEncryptionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("language"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    ldap = new LdapState(property.Value.GetString());
+                    ldap = new NetAppLdapState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ldapServerType"u8))
@@ -378,12 +378,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    ldapServerType = new LdapServerType(property.Value.GetString());
+                    ldapServerType = new NetAppLdapServerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("originClusterInformation"u8))
                 {
-                    originClusterInformation = OriginClusterInformation.DeserializeOriginClusterInformation(property.Value, options);
+                    originClusterInformation = NetAppOriginClusterInformation.DeserializeNetAppOriginClusterInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cifsChangeNotifications"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    cifsChangeNotifications = new CifsChangeNotifyState(property.Value.GetString());
+                    cifsChangeNotifications = new NetAppCifsChangeNotifyState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("globalFileLocking"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    globalFileLocking = new GlobalFileLockingState(property.Value.GetString());
+                    globalFileLocking = new NetAppGlobalFileLockingState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("writeBack"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    writeBack = new EnableWriteBackState(property.Value.GetString());
+                    writeBack = new NetAppEnableWriteBackState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -420,15 +420,15 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new NetAppCacheProperties(
-                filepath,
+                filePath,
                 size,
                 exportPolicy,
-                protocolTypes ?? new ChangeTrackingList<ProtocolType>(),
+                protocolTypes ?? new ChangeTrackingList<NetAppProtocolType>(),
                 provisioningState,
                 cacheState,
                 cacheSubnetResourceId,
                 peeringSubnetResourceId,
-                mountTargets ?? new ChangeTrackingList<CacheMountTargetProperties>(),
+                mountTargets ?? new ChangeTrackingList<NetAppCacheMountTargetProperties>(),
                 kerberos,
                 smbSettings,
                 throughputMibps,

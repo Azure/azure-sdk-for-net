@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             if (id.ResourceType != AppConfigurationStoreResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), nameof(id));
             }
         }
 

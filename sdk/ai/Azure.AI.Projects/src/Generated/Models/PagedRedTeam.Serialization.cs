@@ -9,9 +9,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
 
-namespace Azure.Core
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Paged collection of RedTeam items. </summary>
     internal partial class PagedRedTeam : IJsonModel<PagedRedTeam>
     {
         /// <summary> Initializes a new instance of <see cref="PagedRedTeam"/> for deserialization. </summary>

@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-02-01-preview"
+  "apiVersions": {
+    "Microsoft.Devices": "2025-02-01-preview"
+  }
 }

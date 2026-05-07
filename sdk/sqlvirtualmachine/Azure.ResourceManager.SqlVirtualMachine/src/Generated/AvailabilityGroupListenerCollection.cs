@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             if (id.ResourceType != SqlVmGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlVmGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlVmGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenersGetByGroupAsyncCollectionResultOfT(_availabilityGroupListenersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new AvailabilityGroupListenerResource(Client, data));
+            return new AsyncPageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenersGetByGroupAsyncCollectionResultOfT(
+                _availabilityGroupListenersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvailabilityGroupListenerCollection.GetAll"), data => new AvailabilityGroupListenerResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +329,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenersGetByGroupCollectionResultOfT(_availabilityGroupListenersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new AvailabilityGroupListenerResource(Client, data));
+            return new PageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenersGetByGroupCollectionResultOfT(
+                _availabilityGroupListenersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvailabilityGroupListenerCollection.GetAll"), data => new AvailabilityGroupListenerResource(Client, data));
         }
 
         /// <summary>

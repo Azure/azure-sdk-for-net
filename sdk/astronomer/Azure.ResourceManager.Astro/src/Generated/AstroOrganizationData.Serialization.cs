@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Astro
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(astroOrganizationData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(astroOrganizationData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AstroOrganizationData"/> from. </param>

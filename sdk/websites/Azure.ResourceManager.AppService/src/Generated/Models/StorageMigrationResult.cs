@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Response for a migration of app content request. </summary>
+    /// <summary>
+    /// Response for a migration of app content request.
+    /// Serialized Name: StorageMigrationResponse
+    /// </summary>
     public partial class StorageMigrationResult : ResourceData
     {
         /// <summary>
@@ -57,8 +60,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="operationId"> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="operationId">
+        /// When server starts the migration process, it will return an operation ID identifying that particular migration operation.
+        /// Serialized Name: StorageMigrationResponse.properties.operationId
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StorageMigrationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operationId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -67,10 +76,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </summary>
+        /// <summary>
+        /// When server starts the migration process, it will return an operation ID identifying that particular migration operation.
+        /// Serialized Name: StorageMigrationResponse.properties.operationId
+        /// </summary>
         [WirePath("properties.operationId")]
         public string OperationId { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

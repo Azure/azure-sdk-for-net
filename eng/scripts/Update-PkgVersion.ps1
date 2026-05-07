@@ -122,6 +122,25 @@ else {
     $versionPattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")(\d[^"]*?)(")'
     $totalUpdates = 0
 
+    # Helper: returns $true if the released version is strictly greater than the
+    # version already present in $Content for this package.  When the existing
+    # version is already >= the released version (e.g. hotfix scenario) the CPM
+    # entry must not be downgraded.
+    function Test-ShouldUpdateCpm([string]$Content, [string]$Pattern, [string]$NewVersion) {
+      $newSemVer = [AzureEngSemanticVersion]::ParseVersionString($NewVersion)
+      if ($newSemVer -and $newSemVer.IsPrerelease) {
+        return $false
+      }
+      $m = [regex]::Match($Content, $Pattern)
+      if (-not $m.Success) { return $true }  # no existing entry to compare — allow update attempt
+      $existingVer = $m.Groups[2].Value
+      $existingSemVer = [AzureEngSemanticVersion]::ParseVersionString($existingVer)
+      if ($existingSemVer -and $newSemVer -and $newSemVer.CompareTo($existingSemVer) -le 0) {
+        return $false
+      }
+      return $true
+    }
+
     # New CPM structure (post CPM migration): eng/centralpackagemanagement/*.Packages.props
     # Update all occurrences in files directly in this directory — NOT in overrides/ subdirectory.
     $cpmDir = Join-Path $RepoRoot "eng" "centralpackagemanagement"
@@ -130,6 +149,12 @@ else {
       foreach ($file in $cpmFiles) {
         $content = Get-Content -LiteralPath $file.FullName -Raw
         if (-not $content) { continue }
+
+        if (-not (Test-ShouldUpdateCpm $content $versionPattern $releasedVersion)) {
+          Write-Host "Skipping CPM update for '$PackageName' in '$($file.FullName)': existing version >= $releasedVersion"
+          continue
+        }
+
         $newContent = [regex]::Replace($content, $versionPattern, '${1}' + $releasedVersion + '${3}')
 
         if ($newContent -ne $content) {
@@ -148,48 +173,53 @@ else {
     if (Test-Path -LiteralPath $oldFile -PathType Leaf) {
       $content = Get-Content -LiteralPath $oldFile -Raw
 
-      # Walk each ItemGroup block individually. Check the Condition attribute to decide
-      # whether this block is safe to update, then only replace within that block's body.
-      $itemGroupPattern = '<ItemGroup(?<attrs>[^>]*)>(?<body>.*?)</ItemGroup>'
-      $regexOptions = [System.Text.RegularExpressions.RegexOptions]::Singleline
-      $packagePattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")(\d[^"]*?)(")'
+      if (-not (Test-ShouldUpdateCpm $content $versionPattern $releasedVersion)) {
+        Write-Host "Skipping CPM update for '$PackageName' in '$oldFile': existing version >= $releasedVersion"
+      }
+      else {
+        # Walk each ItemGroup block individually. Check the Condition attribute to decide
+        # whether this block is safe to update, then only replace within that block's body.
+        $itemGroupPattern = '<ItemGroup(?<attrs>[^>]*)>(?<body>.*?)</ItemGroup>'
+        $regexOptions = [System.Text.RegularExpressions.RegexOptions]::Singleline
+        $packagePattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")(\d[^"]*?)(")'
 
-      $builder = New-Object System.Text.StringBuilder
-      $lastIndex = 0
-      $oldFileUpdated = $false
+        $builder = New-Object System.Text.StringBuilder
+        $lastIndex = 0
+        $oldFileUpdated = $false
 
-      foreach ($match in [regex]::Matches($content, $itemGroupPattern, $regexOptions)) {
-        # Append content before this ItemGroup unchanged.
-        if ($match.Index -gt $lastIndex) {
-          [void]$builder.Append($content.Substring($lastIndex, $match.Index - $lastIndex))
+        foreach ($match in [regex]::Matches($content, $itemGroupPattern, $regexOptions)) {
+          # Append content before this ItemGroup unchanged.
+          if ($match.Index -gt $lastIndex) {
+            [void]$builder.Append($content.Substring($lastIndex, $match.Index - $lastIndex))
+          }
+
+          $attrs = $match.Groups['attrs'].Value
+          $body = $match.Groups['body'].Value
+
+          # Determine if this ItemGroup is safe to update.
+          $isUnsafe = ($attrs -match 'MSBuildProjectName') -or
+                      ($attrs -match 'TargetFramework') -or
+                      ($attrs -match "IsClientLibrary\)'\s*!=\s*'true'")
+
+          $newBody = $body
+          if (-not $isUnsafe) {
+            $newBody = [regex]::Replace($body, $packagePattern, '${1}' + $releasedVersion + '${3}')
+            if ($newBody -ne $body) { $oldFileUpdated = $true }
+          }
+
+          [void]$builder.Append('<ItemGroup' + $attrs + '>' + $newBody + '</ItemGroup>')
+          $lastIndex = $match.Index + $match.Length
         }
 
-        $attrs = $match.Groups['attrs'].Value
-        $body = $match.Groups['body'].Value
-
-        # Determine if this ItemGroup is safe to update.
-        $isUnsafe = ($attrs -match 'MSBuildProjectName') -or
-                    ($attrs -match 'TargetFramework') -or
-                    ($attrs -match "IsClientLibrary\)'\s*!=\s*'true'")
-
-        $newBody = $body
-        if (-not $isUnsafe) {
-          $newBody = [regex]::Replace($body, $packagePattern, '${1}' + $releasedVersion + '${3}')
-          if ($newBody -ne $body) { $oldFileUpdated = $true }
+        if ($lastIndex -lt $content.Length) {
+          [void]$builder.Append($content.Substring($lastIndex))
         }
 
-        [void]$builder.Append('<ItemGroup' + $attrs + '>' + $newBody + '</ItemGroup>')
-        $lastIndex = $match.Index + $match.Length
-      }
-
-      if ($lastIndex -lt $content.Length) {
-        [void]$builder.Append($content.Substring($lastIndex))
-      }
-
-      if ($oldFileUpdated) {
-        Set-Content -LiteralPath $oldFile -Value $builder.ToString() -NoNewline
-        Write-Host "Updated package '$PackageName' version to '$releasedVersion' in '$oldFile'"
-        $totalUpdates++
+        if ($oldFileUpdated) {
+          Set-Content -LiteralPath $oldFile -Value $builder.ToString() -NoNewline
+          Write-Host "Updated package '$PackageName' version to '$releasedVersion' in '$oldFile'"
+          $totalUpdates++
+        }
       }
     }
 

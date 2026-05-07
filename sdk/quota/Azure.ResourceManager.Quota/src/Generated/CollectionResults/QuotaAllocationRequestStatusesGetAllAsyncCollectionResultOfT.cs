@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Quota
         private readonly string _resourceProviderName;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of QuotaAllocationRequestStatusesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The QuotaAllocationRequestStatuses client used to send requests. </param>
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager.Quota
         /// Example: $filter=location eq eastus
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public QuotaAllocationRequestStatusesGetAllAsyncCollectionResultOfT(QuotaAllocationRequestStatuses client, string managementGroupId, Guid subscriptionId, string groupQuotaName, string resourceProviderName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public QuotaAllocationRequestStatusesGetAllAsyncCollectionResultOfT(QuotaAllocationRequestStatuses client, string managementGroupId, Guid subscriptionId, string groupQuotaName, string resourceProviderName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _managementGroupId = managementGroupId;
@@ -47,6 +49,7 @@ namespace Azure.ResourceManager.Quota
             _resourceProviderName = resourceProviderName;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of QuotaAllocationRequestStatusesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -79,7 +82,7 @@ namespace Azure.ResourceManager.Quota
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, _filter, _context) : _client.CreateGetAllRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

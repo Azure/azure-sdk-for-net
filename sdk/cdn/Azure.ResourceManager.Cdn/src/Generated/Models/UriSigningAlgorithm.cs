@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct UriSigningAlgorithm : IEquatable<UriSigningAlgorithm>
     {
         private readonly string _value;
+        private const string Sha256Value = "SHA256";
 
         /// <summary> Initializes a new instance of <see cref="UriSigningAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UriSigningAlgorithm(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string Sha256Value = "SHA256";
-
-        /// <summary> SHA256. </summary>
+        /// <summary> Gets the Sha256. </summary>
         public static UriSigningAlgorithm Sha256 { get; } = new UriSigningAlgorithm(Sha256Value);
+
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UriSigningAlgorithm left, UriSigningAlgorithm right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UriSigningAlgorithm left, UriSigningAlgorithm right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UriSigningAlgorithm"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UriSigningAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UriSigningAlgorithm(string value) => new UriSigningAlgorithm(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UriSigningAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UriSigningAlgorithm?(string value) => value == null ? null : new UriSigningAlgorithm(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UriSigningAlgorithm other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UriSigningAlgorithm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

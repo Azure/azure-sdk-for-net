@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-09-01-preview";
+            _apiVersion = apiVersion ?? "2026-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByCapacityPoolsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
             return uri;
         }
 
-        internal HttpMessage CreateListByCapacityPoolsRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -84,22 +84,22 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetAppCacheList>> ListByCapacityPoolsAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
+        public async Task<Response<CacheList>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var message = CreateListByCapacityPoolsRequest(subscriptionId, resourceGroupName, accountName, poolName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, poolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NetAppCacheList value = default;
+                        CacheList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetAppCacheList.DeserializeNetAppCacheList(document.RootElement);
+                        value = CacheList.DeserializeCacheList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -115,22 +115,22 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetAppCacheList> ListByCapacityPools(string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
+        public Response<CacheList> List(string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var message = CreateListByCapacityPoolsRequest(subscriptionId, resourceGroupName, accountName, poolName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, poolName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NetAppCacheList value = default;
+                        CacheList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetAppCacheList.DeserializeNetAppCacheList(document.RootElement);
+                        value = CacheList.DeserializeCacheList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PeeringPassphrases>> ListPeeringPassphrasesAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string cacheName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppPeeringPassphrases>> ListPeeringPassphrasesAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -633,9 +633,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        PeeringPassphrases value = default;
+                        NetAppPeeringPassphrases value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PeeringPassphrases.DeserializePeeringPassphrases(document.RootElement);
+                        value = NetAppPeeringPassphrases.DeserializeNetAppPeeringPassphrases(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PeeringPassphrases> ListPeeringPassphrases(string subscriptionId, string resourceGroupName, string accountName, string poolName, string cacheName, CancellationToken cancellationToken = default)
+        public Response<NetAppPeeringPassphrases> ListPeeringPassphrases(string subscriptionId, string resourceGroupName, string accountName, string poolName, string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -666,9 +666,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        PeeringPassphrases value = default;
+                        NetAppPeeringPassphrases value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PeeringPassphrases.DeserializePeeringPassphrases(document.RootElement);
+                        value = NetAppPeeringPassphrases.DeserializeNetAppPeeringPassphrases(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -786,7 +786,109 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal RequestUriBuilder CreateListByCapacityPoolsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName)
+        internal RequestUriBuilder CreateResetSmbPasswordRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string cacheName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/resetSmbPassword", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateResetSmbPasswordRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string cacheName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/resetSmbPassword", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Resets the SMB password for the cache. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> The name of the NetApp account. </param>
+        /// <param name="poolName"> The name of the capacity pool. </param>
+        /// <param name="cacheName"> The name of the cache resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="cacheName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ResetSmbPasswordAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string cacheName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+
+            using var message = CreateResetSmbPasswordRequest(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Resets the SMB password for the cache. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> The name of the NetApp account. </param>
+        /// <param name="poolName"> The name of the capacity pool. </param>
+        /// <param name="cacheName"> The name of the cache resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="cacheName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ResetSmbPassword(string subscriptionId, string resourceGroupName, string accountName, string poolName, string cacheName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+
+            using var message = CreateResetSmbPasswordRequest(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -794,7 +896,7 @@ namespace Azure.ResourceManager.NetApp
             return uri;
         }
 
-        internal HttpMessage CreateListByCapacityPoolsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -817,7 +919,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetAppCacheList>> ListByCapacityPoolsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
+        public async Task<Response<CacheList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -825,15 +927,15 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var message = CreateListByCapacityPoolsNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, poolName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, poolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NetAppCacheList value = default;
+                        CacheList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetAppCacheList.DeserializeNetAppCacheList(document.RootElement);
+                        value = CacheList.DeserializeCacheList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -850,7 +952,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetAppCacheList> ListByCapacityPoolsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
+        public Response<CacheList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -858,15 +960,15 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var message = CreateListByCapacityPoolsNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, poolName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, poolName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NetAppCacheList value = default;
+                        CacheList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetAppCacheList.DeserializeNetAppCacheList(document.RootElement);
+                        value = CacheList.DeserializeCacheList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

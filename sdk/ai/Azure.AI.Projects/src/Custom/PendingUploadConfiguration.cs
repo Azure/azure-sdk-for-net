@@ -3,6 +3,7 @@
 
 namespace Azure.AI.Projects
 {
+    [CodeGenType("PendingUploadConfiguration")]
     public partial class PendingUploadConfiguration
     {
         /// <summary> BlobReference is the only supported type. </summary>

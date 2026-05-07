@@ -691,6 +691,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
         }
 
+        [Fact]
+        public void ComponentVersionOverriddenByEnvironmentVariable()
+        {
+            var priorComponentVersion = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_COMPONENT_VERSION");
+            TelemetryItem.ResetEnvironmentVariableOverrides();
+            try
+            {
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_COMPONENT_VERSION", "2.0.0-beta1");
+
+                using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+                using var activity = activitySource.StartActivity(
+                    ActivityName,
+                    ActivityKind.Client,
+                    parentContext: default,
+                    startTime: DateTime.UtcNow)
+                    ?? throw new Exception("Failed to create Activity");
+
+                var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
+                var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+                var traceResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
+                var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
+
+                Assert.Equal("2.0.0-beta1", telemetryItem.Tags[ContextTagKeys.AiApplicationVer.ToString()]);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_COMPONENT_VERSION", priorComponentVersion);
+                TelemetryItem.ResetEnvironmentVariableOverrides();
+            }
+        }
+
         /// <summary>
         /// If SERVICE.NAME is not defined, it will fall-back to "unknown_service".
         /// (https://github.com/open-telemetry/opentelemetry-specification/tree/main/specification/resource/semantic_conventions#semantic-attributes-with-sdk-provided-default-value).

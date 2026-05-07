@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <returns>True if the message processing should continue, false otherwise.</returns>
         internal protected virtual async Task<bool> BeginProcessingMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
-            if (message.DequeueCount > QueuesOptions.MaxDequeueCount)
+            if (_poisonQueue != null && message.DequeueCount > QueuesOptions.MaxDequeueCount)
             {
                 await HandlePoisonMessageAsync(message, cancellationToken).ConfigureAwait(false);
                 return await Task.FromResult<bool>(false).ConfigureAwait(false);

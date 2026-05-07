@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableTrafficManagerResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableTrafficManagerResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableTrafficManagerResourceGroupResource for mocking. </summary>
         protected MockableTrafficManagerResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableTrafficManagerResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableTrafficManagerResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableTrafficManagerResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of TrafficManagerProfileResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of TrafficManagerProfileResources and their operations over a TrafficManagerProfileResource. </returns>
+        /// <summary> Gets a collection of TrafficManagerProfiles in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of TrafficManagerProfiles and their operations over a TrafficManagerProfileResource. </returns>
         public virtual TrafficManagerProfileCollection GetTrafficManagerProfiles()
         {
             return GetCachedClient(client => new TrafficManagerProfileCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// Gets a Traffic Manager profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<TrafficManagerProfileResource>> GetTrafficManagerProfileAsync(string profileName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
             return await GetTrafficManagerProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// Gets a Traffic Manager profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         [ForwardsClientCalls]
         public virtual Response<TrafficManagerProfileResource> GetTrafficManagerProfile(string profileName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
             return GetTrafficManagerProfiles().Get(profileName, cancellationToken);
         }
     }

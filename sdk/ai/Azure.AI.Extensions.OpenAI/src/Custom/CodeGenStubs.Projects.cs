@@ -1,0 +1,22 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.AI.Extensions.OpenAI;
+
+namespace Azure.AI.Extensions.OpenAI;
+
+/// <summary> The ProjectsClient. </summary>
+[CodeGenType("ProjectsClient")]
+[CodeGenSuppress("GetConversationsClient")]
+[CodeGenSuppress("GetAgentClient")]
+[CodeGenSuppress("GetMemoryStoresClient")]
+[CodeGenSuppress("_cachedAgentClient")]
+[CodeGenSuppress("_cachedConversations")]
+[CodeGenSuppress("_cachedMemoryStores")]
+internal partial class InternalProjectsClient
+{
+}
+
+[CodeGenType("InternalProjectsClientOptions")] internal partial class InternalProjectsClientOptions { }
+[CodeGenType("ConversationList")] internal partial class InternalConversationList { }
+[CodeGenType("MemorySearchItem")] public partial class MemoryToolSearchItem { }

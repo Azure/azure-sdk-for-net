@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Represents a knowledge source definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSource"/>, <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="WebKnowledgeSource"/>, and <see cref="RemoteSharePointKnowledgeSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSource"/>, <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, and <see cref="WebKnowledgeSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeSource))]
     public abstract partial class KnowledgeSource : IJsonModel<KnowledgeSource>
@@ -73,9 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(knowledgeSource, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(knowledgeSource, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeSource"/> from. </param>
@@ -172,14 +170,10 @@ namespace Azure.Search.Documents.Indexes.Models
                         return SearchIndexKnowledgeSource.DeserializeSearchIndexKnowledgeSource(element, options);
                     case "azureBlob":
                         return AzureBlobKnowledgeSource.DeserializeAzureBlobKnowledgeSource(element, options);
-                    case "indexedSharePoint":
-                        return IndexedSharePointKnowledgeSource.DeserializeIndexedSharePointKnowledgeSource(element, options);
                     case "indexedOneLake":
                         return IndexedOneLakeKnowledgeSource.DeserializeIndexedOneLakeKnowledgeSource(element, options);
                     case "web":
                         return WebKnowledgeSource.DeserializeWebKnowledgeSource(element, options);
-                    case "remoteSharePoint":
-                        return RemoteSharePointKnowledgeSource.DeserializeRemoteSharePointKnowledgeSource(element, options);
                 }
             }
             return UnknownKnowledgeSource.DeserializeUnknownKnowledgeSource(element, options);

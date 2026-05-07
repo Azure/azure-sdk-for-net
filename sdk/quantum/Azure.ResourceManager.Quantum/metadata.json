@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-12-15-preview"
+  "apiVersions": {
+    "Microsoft.Quantum": "2025-12-15-preview"
+  }
 }

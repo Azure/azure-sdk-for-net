@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServiceNetworkPlugin : IEquatable<ContainerServiceNetworkPlugin>
     {
         private readonly string _value;
+        /// <summary> Use the Azure CNI network plugin. See [Azure CNI (advanced) networking](https://docs.microsoft.com/azure/aks/concepts-network#azure-cni-advanced-networking) for more information. </summary>
+        private const string AzureValue = "azure";
+        /// <summary> Use the Kubenet network plugin. See [Kubenet (basic) networking](https://docs.microsoft.com/azure/aks/concepts-network#kubenet-basic-networking) for more information. </summary>
+        private const string KubenetValue = "kubenet";
+        /// <summary> No CNI plugin is pre-installed. See [BYO CNI](https://docs.microsoft.com/en-us/azure/aks/use-byo-cni) for more information. </summary>
+        private const string NoneValue = "none";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkPlugin"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceNetworkPlugin(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureValue = "azure";
-        private const string KubenetValue = "kubenet";
-        private const string NoneValue = "none";
+            _value = value;
+        }
 
         /// <summary> Use the Azure CNI network plugin. See [Azure CNI (advanced) networking](https://docs.microsoft.com/azure/aks/concepts-network#azure-cni-advanced-networking) for more information. </summary>
         public static ContainerServiceNetworkPlugin Azure { get; } = new ContainerServiceNetworkPlugin(AzureValue);
+
         /// <summary> Use the Kubenet network plugin. See [Kubenet (basic) networking](https://docs.microsoft.com/azure/aks/concepts-network#kubenet-basic-networking) for more information. </summary>
         public static ContainerServiceNetworkPlugin Kubenet { get; } = new ContainerServiceNetworkPlugin(KubenetValue);
+
         /// <summary> No CNI plugin is pre-installed. See [BYO CNI](https://docs.microsoft.com/en-us/azure/aks/use-byo-cni) for more information. </summary>
         public static ContainerServiceNetworkPlugin None { get; } = new ContainerServiceNetworkPlugin(NoneValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPlugin"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceNetworkPlugin left, ContainerServiceNetworkPlugin right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPlugin"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceNetworkPlugin left, ContainerServiceNetworkPlugin right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceNetworkPlugin"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkPlugin"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceNetworkPlugin(string value) => new ContainerServiceNetworkPlugin(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkPlugin"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceNetworkPlugin?(string value) => value == null ? null : new ContainerServiceNetworkPlugin(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceNetworkPlugin other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceNetworkPlugin other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

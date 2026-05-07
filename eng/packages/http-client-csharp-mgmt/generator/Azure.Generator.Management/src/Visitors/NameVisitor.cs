@@ -103,7 +103,7 @@ internal class NameVisitor : ScmLibraryVisitor
         }
         var enclosingType = propertyProvider.EnclosingType;
         if (enclosingType is not InheritableSystemObjectModelProvider modelProvider
-            || !modelProvider.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResourceId))
+            || modelProvider.CrossLanguageDefinitionId?.Equals(KnownManagementTypes.ArmResourceId) != true)
         {
             return;
         }
@@ -135,7 +135,7 @@ internal class NameVisitor : ScmLibraryVisitor
         };
     private void DoPreVisitPropertyForTimePropertyName(InputProperty property, PropertyProvider? propertyProvider)
     {
-        if (propertyProvider != null && propertyProvider.Type.Equals(typeof(DateTimeOffset)))
+        if (propertyProvider != null && IsDateTimeInputType(property.Type))
         {
             var propertyName = propertyProvider.Name;
             // Skip properties that are not following the pattern we want to change
@@ -209,4 +209,17 @@ internal class NameVisitor : ScmLibraryVisitor
 
         return false;
     }
+
+    /// <summary>
+    /// Checks the input type (rather than the C# type) to determine if it represents a date/time,
+    /// so the rename logic works regardless of what C# type the downstream generator maps it to
+    /// (e.g., DateTimeOffset, BicepValue&lt;DateTimeOffset&gt;, etc.).
+    /// </summary>
+    private static bool IsDateTimeInputType(InputType inputType) => inputType switch
+    {
+        InputDateTimeType => true,
+        InputPrimitiveType { Kind: InputPrimitiveTypeKind.PlainDate } => true,
+        InputNullableType nullableType => IsDateTimeInputType(nullableType.Type),
+        _ => false
+    };
 }

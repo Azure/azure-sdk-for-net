@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Relay
 {
+    /// <summary></summary>
     public partial class RelayNetworkRuleSetResource : IJsonModel<RelayNetworkRuleSetData>
     {
-        private static RelayNetworkRuleSetData s_dataDeserializationInstance;
-        private static RelayNetworkRuleSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RelayNetworkRuleSetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RelayNetworkRuleSetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RelayNetworkRuleSetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RelayNetworkRuleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelayNetworkRuleSetData>)Data).Write(writer, options);
 
-        RelayNetworkRuleSetData IJsonModel<RelayNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayNetworkRuleSetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RelayNetworkRuleSetData IJsonModel<RelayNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RelayNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayNetworkRuleSetData>(Data, options, AzureResourceManagerRelayContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RelayNetworkRuleSetData IPersistableModel<RelayNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayNetworkRuleSetData>(data, options, AzureResourceManagerRelayContext.Default);
 
-        string IPersistableModel<RelayNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayNetworkRuleSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RelayNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

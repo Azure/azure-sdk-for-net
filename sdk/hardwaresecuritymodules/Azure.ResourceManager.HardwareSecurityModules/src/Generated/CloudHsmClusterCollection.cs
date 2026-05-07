@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -307,7 +307,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupAsyncCollectionResultOfT(_cloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, skiptoken, context), data => new CloudHsmClusterResource(Client, data));
+            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupAsyncCollectionResultOfT(
+                _cloudHsmClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                skiptoken,
+                context,
+                "CloudHsmClusterCollection.GetAll"), data => new CloudHsmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -336,7 +342,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupCollectionResultOfT(_cloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, skiptoken, context), data => new CloudHsmClusterResource(Client, data));
+            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupCollectionResultOfT(
+                _cloudHsmClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                skiptoken,
+                context,
+                "CloudHsmClusterCollection.GetAll"), data => new CloudHsmClusterResource(Client, data));
         }
 
         /// <summary>

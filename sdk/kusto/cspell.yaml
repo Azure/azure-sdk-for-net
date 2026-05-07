@@ -1,0 +1,11 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/kusto/**/*.cs'
+    words:
+      - apacheavro
+      - openai
+      - scsv
+      - sohsv
+      - tbps
+      - tsve

@@ -4,16 +4,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insight task for the schedule. </summary>
-    public partial class InsightScheduleTask : ScheduleTask
+    public partial class InsightScheduleTask : ProjectsScheduleTask
     {
         /// <summary> Initializes a new instance of <see cref="InsightScheduleTask"/>. </summary>
         /// <param name="insight"> The insight payload. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="insight"/> is null. </exception>
-        public InsightScheduleTask(Insight insight) : base(ScheduleTaskType.Insight)
+        public InsightScheduleTask(ProjectsInsight insight) : base(ScheduleTaskType.Insight)
         {
             Argument.AssertNotNull(insight, nameof(insight));
 
@@ -25,12 +26,12 @@ namespace Azure.AI.Projects
         /// <param name="configuration"> Configuration for the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="insight"> The insight payload. </param>
-        internal InsightScheduleTask(ScheduleTaskType @type, IDictionary<string, string> configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties, Insight insight) : base(@type, configuration, additionalBinaryDataProperties)
+        internal InsightScheduleTask(ScheduleTaskType @type, IDictionary<string, string> configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProjectsInsight insight) : base(@type, configuration, additionalBinaryDataProperties)
         {
             Insight = insight;
         }
 
         /// <summary> The insight payload. </summary>
-        public Insight Insight { get; set; }
+        public ProjectsInsight Insight { get; set; }
     }
 }

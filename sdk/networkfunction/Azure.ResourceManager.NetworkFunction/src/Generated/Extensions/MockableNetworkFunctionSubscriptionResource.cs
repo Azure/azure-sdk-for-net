@@ -6,79 +6,79 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkFunction;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkFunction.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableNetworkFunctionSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _azureTrafficCollectorsBySubscriptionClientDiagnostics;
-        private AzureTrafficCollectorsBySubscriptionRestOperations _azureTrafficCollectorsBySubscriptionRestClient;
+        private AzureTrafficCollectorsBySubscription _azureTrafficCollectorsBySubscriptionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNetworkFunctionSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNetworkFunctionSubscriptionResource for mocking. </summary>
         protected MockableNetworkFunctionSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNetworkFunctionSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNetworkFunctionSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNetworkFunctionSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics AzureTrafficCollectorsBySubscriptionClientDiagnostics => _azureTrafficCollectorsBySubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AzureTrafficCollectorsBySubscriptionRestOperations AzureTrafficCollectorsBySubscriptionRestClient => _azureTrafficCollectorsBySubscriptionRestClient ??= new AzureTrafficCollectorsBySubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics AzureTrafficCollectorsBySubscriptionClientDiagnostics => _azureTrafficCollectorsBySubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkFunction.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private AzureTrafficCollectorsBySubscription AzureTrafficCollectorsBySubscriptionRestClient => _azureTrafficCollectorsBySubscriptionRestClient ??= new AzureTrafficCollectorsBySubscription(AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
 
         /// <summary>
         /// Return list of Azure Traffic Collectors in a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureTrafficCollectorsBySubscription_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureTrafficCollectors_AzureTrafficCollectorsBySubscriptionList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureTrafficCollectorResource(Client, AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e)), AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, "MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllAsyncCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context, "MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors"), data => new AzureTrafficCollectorResource(Client, data));
         }
 
         /// <summary>
         /// Return list of Azure Traffic Collectors in a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureTrafficCollectorsBySubscription_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureTrafficCollectors_AzureTrafficCollectorsBySubscriptionList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -86,9 +86,11 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureTrafficCollectorResource> GetAzureTrafficCollectors(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureTrafficCollectorResource(Client, AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e)), AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, "MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context, "MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors"), data => new AzureTrafficCollectorResource(Client, data));
         }
     }
 }

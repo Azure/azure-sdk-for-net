@@ -2,12 +2,12 @@
 
 ## Runtime Environment
 
-- Install Visual Studio 2022 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
+- Install Visual Studio 2026 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
   - Install the **.NET Core cross-platform development** workloads in Visual Studio
-- Install **.NET 8.0 SDK** for your specific platform. (or a higher version)
+- Install **.NET 10.0 SDK** for your specific platform. (or a higher version within the 10.0.* band)
 - Install the latest version of [git](https://git-scm.com/downloads)
-- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
+- Install [PowerShell](https://learn.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
 - Install [NodeJS](https://nodejs.org/) (18.x.x or above).
 
 ## Set up TypeSpec project

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `TextTranslationClientSettings` to support creating a `TextTranslationClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

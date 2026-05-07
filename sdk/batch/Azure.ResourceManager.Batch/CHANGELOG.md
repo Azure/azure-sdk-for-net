@@ -4,11 +4,16 @@
 
 ### Features Added
 
+- Upgraded API version to `2025-06-01`
+- Added `AddTag`, `RemoveTag`, and `SetTags` convenience methods to `BatchAccountResource`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated from AutoRest to TypeSpec-based code generation.
 
 ## 1.6.0 (2026-02-26)
 

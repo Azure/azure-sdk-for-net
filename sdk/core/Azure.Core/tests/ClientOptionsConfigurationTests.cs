@@ -32,10 +32,10 @@ namespace Azure.Core.Tests
                 { "TestClient:Diagnostics:IsDistributedTracingEnabled", "false" },
                 { "TestClient:Diagnostics:IsLoggingContentEnabled", "true" },
                 { "TestClient:Diagnostics:LoggedContentSizeLimit", "8192" },
-                { "TestClient:Diagnostics:LoggedHeaderNames:0", "custom-header-1" },
-                { "TestClient:Diagnostics:LoggedHeaderNames:1", "custom-header-2" },
-                { "TestClient:Diagnostics:LoggedQueryParameters:0", "param1" },
-                { "TestClient:Diagnostics:LoggedQueryParameters:1", "param2" }
+                { "TestClient:Diagnostics:AdditionalLoggedHeaderNames:0", "custom-header-1" },
+                { "TestClient:Diagnostics:AdditionalLoggedHeaderNames:1", "custom-header-2" },
+                { "TestClient:Diagnostics:AdditionalLoggedQueryParameters:0", "param1" },
+                { "TestClient:Diagnostics:AdditionalLoggedQueryParameters:1", "param2" }
             };
 
             var configuration = new ConfigurationBuilder()
@@ -52,8 +52,13 @@ namespace Azure.Core.Tests
             Assert.IsFalse(options.Diagnostics.IsDistributedTracingEnabled);
             Assert.IsTrue(options.Diagnostics.IsLoggingContentEnabled);
             Assert.AreEqual(8192, options.Diagnostics.LoggedContentSizeLimit);
-            CollectionAssert.AreEqual(new[] { "custom-header-1", "custom-header-2" }, options.Diagnostics.LoggedHeaderNames);
-            CollectionAssert.AreEqual(new[] { "param1", "param2" }, options.Diagnostics.LoggedQueryParameters);
+            CollectionAssert.Contains(options.Diagnostics.LoggedHeaderNames, "custom-header-1");
+            CollectionAssert.Contains(options.Diagnostics.LoggedHeaderNames, "custom-header-2");
+            CollectionAssert.Contains(options.Diagnostics.LoggedQueryParameters, "param1");
+            CollectionAssert.Contains(options.Diagnostics.LoggedQueryParameters, "param2");
+            // Defaults are preserved
+            CollectionAssert.Contains(options.Diagnostics.LoggedHeaderNames, "x-ms-request-id");
+            CollectionAssert.Contains(options.Diagnostics.LoggedQueryParameters, "api-version");
         }
 
         [Test]
@@ -235,12 +240,12 @@ namespace Azure.Core.Tests
         {
             var configData = new Dictionary<string, string>
             {
-                { "TestClient:Diagnostics:LoggedHeaderNames:0", "header1" },
-                { "TestClient:Diagnostics:LoggedHeaderNames:1", null }, // Null value
-                { "TestClient:Diagnostics:LoggedHeaderNames:2", "header2" },
-                { "TestClient:Diagnostics:LoggedQueryParameters:0", "param1" },
-                { "TestClient:Diagnostics:LoggedQueryParameters:1", null }, // Null value
-                { "TestClient:Diagnostics:LoggedQueryParameters:2", "param2" }
+                { "TestClient:Diagnostics:AdditionalLoggedHeaderNames:0", "header1" },
+                { "TestClient:Diagnostics:AdditionalLoggedHeaderNames:1", null }, // Null value
+                { "TestClient:Diagnostics:AdditionalLoggedHeaderNames:2", "header2" },
+                { "TestClient:Diagnostics:AdditionalLoggedQueryParameters:0", "param1" },
+                { "TestClient:Diagnostics:AdditionalLoggedQueryParameters:1", null }, // Null value
+                { "TestClient:Diagnostics:AdditionalLoggedQueryParameters:2", "param2" }
             };
 
             var configuration = new ConfigurationBuilder()
@@ -252,9 +257,13 @@ namespace Azure.Core.Tests
 
             Assert.IsNotNull(options);
 
-            // Null values should be filtered out
-            CollectionAssert.AreEqual(new[] { "header1", "header2" }, options.Diagnostics.LoggedHeaderNames);
-            CollectionAssert.AreEqual(new[] { "param1", "param2" }, options.Diagnostics.LoggedQueryParameters);
+            // Null values should be filtered out, additional values appended to defaults
+            CollectionAssert.Contains(options.Diagnostics.LoggedHeaderNames, "header1");
+            CollectionAssert.Contains(options.Diagnostics.LoggedHeaderNames, "header2");
+            CollectionAssert.DoesNotContain(options.Diagnostics.LoggedHeaderNames, null);
+            CollectionAssert.Contains(options.Diagnostics.LoggedQueryParameters, "param1");
+            CollectionAssert.Contains(options.Diagnostics.LoggedQueryParameters, "param2");
+            CollectionAssert.DoesNotContain(options.Diagnostics.LoggedQueryParameters, null);
         }
 
         [Test]
@@ -436,8 +445,8 @@ namespace Azure.Core.Tests
             var configData = new Dictionary<string, string>();
             for (int i = 0; i < headers.Count; i++)
             {
-                configData[$"TestClient:Diagnostics:LoggedHeaderNames:{i}"] = headers[i];
-                configData[$"TestClient:Diagnostics:LoggedQueryParameters:{i}"] = parameters[i];
+                configData[$"TestClient:Diagnostics:AdditionalLoggedHeaderNames:{i}"] = headers[i];
+                configData[$"TestClient:Diagnostics:AdditionalLoggedQueryParameters:{i}"] = parameters[i];
             }
 
             var configuration = new ConfigurationBuilder()
@@ -449,8 +458,18 @@ namespace Azure.Core.Tests
 
             Assert.IsNotNull(options);
 
-            CollectionAssert.AreEqual(headers, options.Diagnostics.LoggedHeaderNames);
-            CollectionAssert.AreEqual(parameters, options.Diagnostics.LoggedQueryParameters);
+            // All additional values are appended to defaults
+            foreach (var header in headers)
+            {
+                CollectionAssert.Contains(options.Diagnostics.LoggedHeaderNames, header);
+            }
+            foreach (var param in parameters)
+            {
+                CollectionAssert.Contains(options.Diagnostics.LoggedQueryParameters, param);
+            }
+            // Defaults are still present
+            CollectionAssert.Contains(options.Diagnostics.LoggedHeaderNames, "x-ms-request-id");
+            CollectionAssert.Contains(options.Diagnostics.LoggedQueryParameters, "api-version");
         }
 
         [TestCase("true", true)]

@@ -32,6 +32,15 @@ public partial struct JsonPatch
 
         if (_propagatorGetter is not null && _propagatorGetter(jsonPath, out value))
         {
+            // If there are also appends at this path, merge them with the propagator result.
+            // This handles V2-style propagators that return CLR-serialized arrays
+            // while the patch also has ArrayItemAppend entries at the same path.
+            if (_properties is not null && _properties.TryGetValue(jsonPath, out var appendValue)
+                && appendValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
+            {
+                value = new(value.Kind, GetCombinedArray(jsonPath, value.Value, appendValue));
+            }
+
             return true;
         }
 

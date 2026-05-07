@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Search.Models
     public readonly partial struct SearchServiceNameUnavailableReason : IEquatable<SearchServiceNameUnavailableReason>
     {
         private readonly string _value;
+        /// <summary> The search service name doesn't match naming requirements. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> The search service name is already assigned to a different search service. </summary>
+        private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchServiceNameUnavailableReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidValue = "Invalid";
-        private const string AlreadyExistsValue = "AlreadyExists";
+            _value = value;
+        }
 
         /// <summary> The search service name doesn't match naming requirements. </summary>
         public static SearchServiceNameUnavailableReason Invalid { get; } = new SearchServiceNameUnavailableReason(InvalidValue);
+
         /// <summary> The search service name is already assigned to a different search service. </summary>
         public static SearchServiceNameUnavailableReason AlreadyExists { get; } = new SearchServiceNameUnavailableReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="SearchServiceNameUnavailableReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchServiceNameUnavailableReason left, SearchServiceNameUnavailableReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchServiceNameUnavailableReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchServiceNameUnavailableReason left, SearchServiceNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceNameUnavailableReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchServiceNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchServiceNameUnavailableReason(string value) => new SearchServiceNameUnavailableReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchServiceNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchServiceNameUnavailableReason?(string value) => value == null ? null : new SearchServiceNameUnavailableReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchServiceNameUnavailableReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchServiceNameUnavailableReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

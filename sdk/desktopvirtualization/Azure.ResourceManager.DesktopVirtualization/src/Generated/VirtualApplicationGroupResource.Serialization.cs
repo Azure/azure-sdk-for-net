@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class VirtualApplicationGroupResource : IJsonModel<VirtualApplicationGroupData>
+    /// <summary></summary>
+    public partial class VirtualApplicationGroupResource : ArmResource, IJsonModel<VirtualApplicationGroupData>
     {
-        private static VirtualApplicationGroupData s_dataDeserializationInstance;
-        private static VirtualApplicationGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualApplicationGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualApplicationGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualApplicationGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualApplicationGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualApplicationGroupData>)Data).Write(writer, options);
 
-        VirtualApplicationGroupData IJsonModel<VirtualApplicationGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualApplicationGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualApplicationGroupData IJsonModel<VirtualApplicationGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VirtualApplicationGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualApplicationGroupData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VirtualApplicationGroupData IPersistableModel<VirtualApplicationGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualApplicationGroupData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<VirtualApplicationGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualApplicationGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualApplicationGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

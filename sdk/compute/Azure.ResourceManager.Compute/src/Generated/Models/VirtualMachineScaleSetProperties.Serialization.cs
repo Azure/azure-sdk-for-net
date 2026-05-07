@@ -156,6 +156,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("highSpeedInterconnectPlacement"u8);
                 writer.WriteStringValue(HighSpeedInterconnectPlacement.Value.ToString());
             }
+            if (Optional.IsDefined(LifecycleHooksProfile))
+            {
+                writer.WritePropertyName("lifecycleHooksProfile"u8);
+                writer.WriteObjectValue(LifecycleHooksProfile, options);
+            }
+            if (Optional.IsDefined(ExternalHealthPolicy))
+            {
+                writer.WritePropertyName("externalHealthPolicy"u8);
+                writer.WriteObjectValue(ExternalHealthPolicy, options);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -214,6 +224,8 @@ namespace Azure.ResourceManager.Compute.Models
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
             ComputeSkuProfile skuProfile = default;
             HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default;
+            LifecycleHooksProfile lifecycleHooksProfile = default;
+            ExternalHealthPolicy externalHealthPolicy = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -426,6 +438,24 @@ namespace Azure.ResourceManager.Compute.Models
                     highSpeedInterconnectPlacement = new HighSpeedInterconnectPlacement(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("lifecycleHooksProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lifecycleHooksProfile = LifecycleHooksProfile.DeserializeLifecycleHooksProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("externalHealthPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    externalHealthPolicy = ExternalHealthPolicy.DeserializeExternalHealthPolicy(property.Value, options);
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
@@ -454,6 +484,8 @@ namespace Azure.ResourceManager.Compute.Models
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,
                 highSpeedInterconnectPlacement,
+                lifecycleHooksProfile,
+                externalHealthPolicy,
                 additionalProperties);
         }
 

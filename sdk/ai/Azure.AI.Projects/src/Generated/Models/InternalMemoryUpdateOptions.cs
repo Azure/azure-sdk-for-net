@@ -22,7 +22,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="InternalMemoryUpdateOptions"/>. </summary>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="items"> Conversation items from which to extract memories. </param>
+        /// <param name="items"> Conversation items to be stored in memory. </param>
         /// <param name="previousUpdateId"> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. </param>
         /// <param name="updateDelay">
         /// Timeout period before processing the memory update in seconds.
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects
         /// <summary> The namespace that logically groups and isolates memories, such as a user ID. </summary>
         public string Scope { get; }
 
-        /// <summary> Conversation items from which to extract memories. </summary>
+        /// <summary> Conversation items to be stored in memory. </summary>
         public IList<InputItem> Items { get; }
 
         /// <summary> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. </summary>

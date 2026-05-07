@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Quota Report for volume. </summary>
-    public partial class NetAppVolumeQuotaReportListResult
+    internal partial class NetAppVolumeQuotaReportListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
         internal NetAppVolumeQuotaReportListResult()
         {
-            Value = new ChangeTrackingList<NetAppVolumeQuotaReport>();
+            QuotaReportRecords = new ChangeTrackingList<NetAppVolumeQuotaReport>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
-        /// <param name="value"> List of quota reports. </param>
+        /// <param name="quotaReportRecords"> List of quota reports. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeQuotaReportListResult(IReadOnlyList<NetAppVolumeQuotaReport> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumeQuotaReportListResult(IReadOnlyList<NetAppVolumeQuotaReport> quotaReportRecords, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            QuotaReportRecords = quotaReportRecords;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of quota reports. </summary>
-        public IReadOnlyList<NetAppVolumeQuotaReport> Value { get; }
+        public IReadOnlyList<NetAppVolumeQuotaReport> QuotaReportRecords { get; }
     }
 }

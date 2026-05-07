@@ -7,59 +7,36 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    /// <summary> Additional Map account properties. </summary>
+    /// <summary> Additional Maps account properties. </summary>
     public partial class MapsAccountProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MapsAccountProperties"/>. </summary>
         public MapsAccountProperties()
         {
             LinkedResources = new ChangeTrackingList<MapsLinkedResource>();
+            Locations = new ChangeTrackingList<MapsLocationItem>();
+            PrivateEndpointConnections = new ChangeTrackingList<MapsPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MapsAccountProperties"/>. </summary>
-        /// <param name="uniqueId"> A unique identifier for the maps account. </param>
+        /// <param name="uniqueId"> A unique identifier for the Maps Account. </param>
         /// <param name="disableLocalAuth"> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys and Shared Access Signature Token authentication from any usage. </param>
-        /// <param name="provisioningState"> The provisioning state of the Map account resource, Account updates can only be performed on terminal states. Terminal states: `Succeeded` and `Failed`. </param>
-        /// <param name="linkedResources"> The array of associated resources to the Map account. Linked resource in the array cannot individually update, you must update all linked resources in the array together. These resources may be used on operations on the Azure Maps REST API. Access is controlled by the Map Account Managed Identity(s) permissions to those resource(s). </param>
+        /// <param name="provisioningState"> The provisioning state of the Maps account resource, Account updates can only be performed on terminal states. Terminal states: `Succeeded` and `Failed`. </param>
+        /// <param name="linkedResources"> The array of associated resources to the Maps account. Linked resource in the array cannot individually update, you must update all linked resources in the array together. These resources may be used on operations on the Azure Maps REST API. Access is controlled by the Maps Account Managed Identity(s) permissions to those resource(s). </param>
         /// <param name="cors"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
-        /// <param name="encryption"> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, CorsRules cors, MapsEncryption encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="encryption"> All encryption configuration for a resource. </param>
+        /// <param name="locations"> List of additional data processing regions for the Maps Account, which may result in requests being processed in another geography. Some features or results may be restricted to specific regions. By default, Maps REST APIs process requests according to the account location or the [geographic scope](https://learn.microsoft.com/azure/azure-maps/geographic-scope). </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Maps Account. </param>
+        /// <param name="publicNetworkAccess"> Property to specify whether the Maps Account will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, MapsCorsRules cors, MapsEncryption encryption, IList<MapsLocationItem> locations, IReadOnlyList<MapsPrivateEndpointConnectionData> privateEndpointConnections, MapsPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueId = uniqueId;
             DisableLocalAuth = disableLocalAuth;
@@ -67,31 +44,50 @@ namespace Azure.ResourceManager.Maps.Models
             LinkedResources = linkedResources;
             Cors = cors;
             Encryption = encryption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Locations = locations;
+            PrivateEndpointConnections = privateEndpointConnections;
+            PublicNetworkAccess = publicNetworkAccess;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> A unique identifier for the maps account. </summary>
+        /// <summary> A unique identifier for the Maps Account. </summary>
         public Guid? UniqueId { get; }
+
         /// <summary> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys and Shared Access Signature Token authentication from any usage. </summary>
         public bool? DisableLocalAuth { get; set; }
-        /// <summary> The provisioning state of the Map account resource, Account updates can only be performed on terminal states. Terminal states: `Succeeded` and `Failed`. </summary>
+
+        /// <summary> The provisioning state of the Maps account resource, Account updates can only be performed on terminal states. Terminal states: `Succeeded` and `Failed`. </summary>
         public string ProvisioningState { get; }
-        /// <summary> The array of associated resources to the Map account. Linked resource in the array cannot individually update, you must update all linked resources in the array together. These resources may be used on operations on the Azure Maps REST API. Access is controlled by the Map Account Managed Identity(s) permissions to those resource(s). </summary>
-        public IList<MapsLinkedResource> LinkedResources { get; }
+
+        /// <summary> The array of associated resources to the Maps account. Linked resource in the array cannot individually update, you must update all linked resources in the array together. These resources may be used on operations on the Azure Maps REST API. Access is controlled by the Maps Account Managed Identity(s) permissions to those resource(s). </summary>
+        public IList<MapsLinkedResource> LinkedResources { get; } = new ChangeTrackingList<MapsLinkedResource>();
+
         /// <summary> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </summary>
-        internal CorsRules Cors { get; set; }
+        internal MapsCorsRules Cors { get; set; }
+
+        /// <summary> All encryption configuration for a resource. </summary>
+        public MapsEncryption Encryption { get; set; }
+
+        /// <summary> List of additional data processing regions for the Maps Account, which may result in requests being processed in another geography. Some features or results may be restricted to specific regions. By default, Maps REST APIs process requests according to the account location or the [geographic scope](https://learn.microsoft.com/azure/azure-maps/geographic-scope). </summary>
+        public IList<MapsLocationItem> Locations { get; } = new ChangeTrackingList<MapsLocationItem>();
+
+        /// <summary> List of private endpoint connections associated with the Maps Account. </summary>
+        public IReadOnlyList<MapsPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<MapsPrivateEndpointConnectionData>();
+
+        /// <summary> Property to specify whether the Maps Account will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. </summary>
+        public MapsPublicNetworkAccess? PublicNetworkAccess { get; set; }
+
         /// <summary> The list of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<MapsCorsRule> CorsRulesValue
+        public IList<MapsCorsRule> CorsRules
         {
             get
             {
                 if (Cors is null)
-                    Cors = new CorsRules();
-                return Cors.CorsRulesValue;
+                {
+                    Cors = new MapsCorsRules();
+                }
+                return Cors.CorsRules;
             }
         }
-
-        /// <summary> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </summary>
-        public MapsEncryption Encryption { get; set; }
     }
 }

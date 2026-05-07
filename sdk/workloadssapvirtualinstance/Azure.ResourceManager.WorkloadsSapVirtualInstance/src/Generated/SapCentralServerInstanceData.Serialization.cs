@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sapCentralServerInstanceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(sapCentralServerInstanceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SapCentralServerInstanceData"/> from. </param>

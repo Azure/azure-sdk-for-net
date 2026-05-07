@@ -189,12 +189,8 @@ namespace Azure.Search.Documents.Indexes.Models
                         return DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(element, options);
                     case "#Microsoft.Skills.Custom.WebApiSkill":
                         return WebApiSkill.DeserializeWebApiSkill(element, options);
-                    case "#Microsoft.Skills.Custom.AmlSkill":
-                        return AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element, options);
                     case "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill":
                         return AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element, options);
-                    case "#Microsoft.Skills.Vision.VectorizeSkill":
-                        return VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element, options);
                     case "#Microsoft.Skills.Util.ContentUnderstandingSkill":
                         return ContentUnderstandingSkill.DeserializeContentUnderstandingSkill(element, options);
                     case "#Microsoft.Skills.Custom.ChatCompletionSkill":

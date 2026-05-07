@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Chaos
         private readonly bool? _running;
         private readonly string _continuationToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ExperimentsGetExperimentsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Experiments client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ExperimentsGetExperimentsAsyncCollectionResultOfT(Experiments client, Guid subscriptionId, bool? running, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ExperimentsGetExperimentsAsyncCollectionResultOfT(Experiments client, Guid subscriptionId, bool? running, string continuationToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _running = running;
             _continuationToken = continuationToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ExperimentsGetExperimentsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Chaos
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetExperimentsRequest(nextLink, _subscriptionId, _running, _continuationToken, _context) : _client.CreateGetExperimentsRequest(_subscriptionId, _running, _continuationToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableChaosSubscriptionResource.GetChaosExperiments");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

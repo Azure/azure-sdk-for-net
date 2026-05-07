@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 throw new FormatException($"The model {nameof(ListReplicationsContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ExcludeReplicationsFilter))
+            if (Optional.IsDefined(Exclude))
             {
                 writer.WritePropertyName("exclude"u8);
-                writer.WriteStringValue(ExcludeReplicationsFilter.Value.ToString());
+                writer.WriteStringValue(Exclude.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

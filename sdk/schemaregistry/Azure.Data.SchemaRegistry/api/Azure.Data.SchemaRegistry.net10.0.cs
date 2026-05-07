@@ -35,6 +35,8 @@ namespace Azure.Data.SchemaRegistry
     public partial class SchemaRegistryClient
     {
         protected SchemaRegistryClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public SchemaRegistryClient(Azure.Data.SchemaRegistry.SchemaRegistryClientSettings settings) { }
         public SchemaRegistryClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential) { }
         public SchemaRegistryClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Data.SchemaRegistry.SchemaRegistryClientOptions options) { }
         public string FullyQualifiedNamespace { get { throw null; } }
@@ -48,6 +50,14 @@ namespace Azure.Data.SchemaRegistry
         public virtual Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties> RegisterSchema(string groupName, string schemaName, string schemaDefinition, Azure.Data.SchemaRegistry.SchemaFormat format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.SchemaRegistry.SchemaProperties>> RegisterSchemaAsync(string groupName, string schemaName, string schemaDefinition, Azure.Data.SchemaRegistry.SchemaFormat format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class SchemaRegistryClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedSchemaRegistryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedSchemaRegistryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Data.SchemaRegistry.SchemaRegistryClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddSchemaRegistryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddSchemaRegistryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Data.SchemaRegistry.SchemaRegistryClientSettings> configureSettings) { throw null; }
+    }
     public partial class SchemaRegistryClientOptions : Azure.Core.ClientOptions
     {
         public SchemaRegistryClientOptions(Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion version = Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion.V2023_07_01) { }
@@ -57,6 +67,14 @@ namespace Azure.Data.SchemaRegistry
             V2022_10 = 2,
             V2023_07_01 = 3,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class SchemaRegistryClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public SchemaRegistryClientSettings() { }
+        public string FullyQualifiedNamespace { get { throw null; } set { } }
+        public Azure.Data.SchemaRegistry.SchemaRegistryClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class SchemaRegistryModelFactory
     {

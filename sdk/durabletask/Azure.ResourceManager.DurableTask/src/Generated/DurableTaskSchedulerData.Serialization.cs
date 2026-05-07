@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(durableTaskSchedulerData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(durableTaskSchedulerData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DurableTaskSchedulerData"/> from. </param>

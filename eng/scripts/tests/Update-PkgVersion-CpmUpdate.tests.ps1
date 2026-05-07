@@ -23,6 +23,23 @@ BeforeAll {
     # Helper functions that replicate the CPM update logic from Update-PkgVersion.ps1.
     # We test in isolation since Update-PkgVersion.ps1 has heavy dependencies on common.ps1.
 
+    . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "SemVer.ps1")
+
+    function Test-ShouldUpdateCpm([string]$Content, [string]$Pattern, [string]$NewVersion) {
+        $newSemVer = [AzureEngSemanticVersion]::ParseVersionString($NewVersion)
+        if ($newSemVer -and $newSemVer.IsPrerelease) {
+            return $false
+        }
+        $m = [regex]::Match($Content, $Pattern)
+        if (-not $m.Success) { return $true }
+        $existingVer = $m.Groups[2].Value
+        $existingSemVer = [AzureEngSemanticVersion]::ParseVersionString($existingVer)
+        if ($existingSemVer -and $newSemVer -and $newSemVer.CompareTo($existingSemVer) -le 0) {
+            return $false
+        }
+        return $true
+    }
+
     function Update-NewCpmFiles {
         param (
             [Parameter(Mandatory = $true)] [string]$RepoRoot,
@@ -39,6 +56,11 @@ BeforeAll {
             foreach ($file in $cpmFiles) {
                 $content = Get-Content -LiteralPath $file.FullName -Raw
                 if (-not $content) { continue }
+
+                if (-not (Test-ShouldUpdateCpm $content $versionPattern $ReleasedVersion)) {
+                    continue
+                }
+
                 $newContent = [regex]::Replace($content, $versionPattern, '${1}' + $ReleasedVersion + '${3}')
                 if ($newContent -ne $content) {
                     Set-Content -LiteralPath $file.FullName -Value $newContent -NoNewline
@@ -60,6 +82,12 @@ BeforeAll {
         if (-not (Test-Path -LiteralPath $oldFile -PathType Leaf)) { return 0 }
 
         $content = Get-Content -LiteralPath $oldFile -Raw
+        $versionPattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")(\d[^"]*?)(")'
+
+        if (-not (Test-ShouldUpdateCpm $content $versionPattern $ReleasedVersion)) {
+            return 0
+        }
+
         $itemGroupPattern = '<ItemGroup(?<attrs>[^>]*)>(?<body>.*?)</ItemGroup>'
         $regexOptions = [System.Text.RegularExpressions.RegexOptions]::Singleline
         $packagePattern = '(<Package(?:Version|Reference)\s+(?:Include|Update)="' + $escapedName + '"\s+Version=")(\d[^"]*?)(")'
@@ -208,7 +236,7 @@ Describe "New CPM version replacement" -Tag "UnitTest" {
     }
 
     Context "with prerelease version" {
-        It "updates prerelease versions" {
+        It "does not update prerelease versions" {
             $root = Join-Path $TestDrive "upd-pre"
             $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
             New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
@@ -216,10 +244,10 @@ Describe "New CPM version replacement" -Tag "UnitTest" {
 
             Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.Generator" -ReleasedVersion "1.0.0-alpha.20260225.1"
 
-            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="1.0.0-alpha.20260225.1"'
+            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="1.0.0-alpha.20260219.1"'
         }
 
-        It "updates beta versions" {
+        It "does not update beta versions" {
             $root = Join-Path $TestDrive "upd-beta"
             $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
             New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
@@ -227,10 +255,10 @@ Describe "New CPM version replacement" -Tag "UnitTest" {
 
             Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.AI.OpenAI" -ReleasedVersion "2.0.0-beta.4"
 
-            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="2.0.0-beta.4"'
+            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="2.0.0-beta.3"'
         }
 
-        It "updates preview versions" {
+        It "does not update preview versions" {
             $root = Join-Path $TestDrive "upd-preview"
             $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
             New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
@@ -238,7 +266,7 @@ Describe "New CPM version replacement" -Tag "UnitTest" {
 
             Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.Monitor.OpenTelemetry" -ReleasedVersion "1.0.0-preview.6"
 
-            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="1.0.0-preview.6"'
+            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="1.0.0-preview.5"'
         }
     }
 
@@ -256,15 +284,15 @@ Describe "New CPM version replacement" -Tag "UnitTest" {
     }
 
     Context "with PrivateAssets attribute" {
-        It "preserves other attributes" {
+        It "preserves other attributes when updating GA version" {
             $root = Join-Path $TestDrive "upd-pa"
             $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
             New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
-            '<Project><ItemGroup><PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.0" PrivateAssets="All" /></ItemGroup></Project>' | Set-Content (Join-Path $cpmDir "Directory.Packages.props") -NoNewline
+            '<Project><ItemGroup><PackageVersion Include="Azure.Core" Version="1.43.0" PrivateAssets="All" /></ItemGroup></Project>' | Set-Content (Join-Path $cpmDir "Directory.Packages.props") -NoNewline
 
-            Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.ClientSdk.Analyzers" -ReleasedVersion "0.1.1"
+            Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
 
-            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="0.1.1" PrivateAssets="All"'
+            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="1.44.0" PrivateAssets="All"'
         }
     }
 
@@ -341,15 +369,15 @@ Describe "Old Packages.Data.props scoped update" -Tag "UnitTest" {
             @"
 <Project>
   <ItemGroup>
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.0" PrivateAssets="All" />
+    <PackageReference Update="Azure.Core" Version="1.43.0" />
   </ItemGroup>
 </Project>
 "@ | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
 
-            $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.ClientSdk.Analyzers" -ReleasedVersion "0.1.1"
+            $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
 
             $result | Should -Be 1
-            (Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw) | Should -Match 'Version="0.1.1"'
+            (Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw) | Should -Match 'Version="1.44.0"'
         }
     }
 
@@ -571,7 +599,7 @@ Describe "Old Packages.Data.props scoped update" -Tag "UnitTest" {
     }
 
     Context "with beta version in old format" {
-        It "updates beta versions in safe group" {
+        It "does not update beta versions in CPM" {
             $root = Join-Path $TestDrive "old-beta"
             New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
             @"
@@ -584,8 +612,8 @@ Describe "Old Packages.Data.props scoped update" -Tag "UnitTest" {
 
             $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.AI.OpenAI" -ReleasedVersion "2.0.0-beta.4"
 
-            $result | Should -Be 1
-            (Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw) | Should -Match 'Version="2.0.0-beta.4"'
+            $result | Should -Be 0
+            (Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw) | Should -Match 'Version="2.0.0-beta.3"'
         }
     }
 
@@ -801,6 +829,162 @@ Describe "SkipCpmUpdate gating" {
 
             $content = Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw
             $content | Should -BeLike '*Version="1.44.0"*'
+        }
+    }
+}
+
+# --------------------- Version Guard (no downgrade) ---------------------
+Describe "CPM version guard — no downgrade" -Tag "UnitTest" {
+
+    Context "New CPM: released version lower than existing" {
+        It "does not downgrade when CPM has higher GA version" {
+            $root = Join-Path $TestDrive "guard-new-higher"
+            $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
+            New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
+            '<Project><ItemGroup><PackageVersion Include="Azure.Core" Version="1.44.0" /></ItemGroup></Project>' |
+                Set-Content (Join-Path $cpmDir "Directory.Packages.props") -NoNewline
+
+            $result = Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.43.0"
+
+            $result | Should -Be 0
+            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="1.44.0"'
+        }
+
+        It "does not downgrade when CPM has higher GA and release is hotfix" {
+            $root = Join-Path $TestDrive "guard-new-hotfix"
+            $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
+            New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
+            '<Project><ItemGroup><PackageVersion Include="Azure.Core" Version="1.44.0" /></ItemGroup></Project>' |
+                Set-Content (Join-Path $cpmDir "Directory.Packages.props") -NoNewline
+
+            $result = Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.43.1"
+
+            $result | Should -Be 0
+            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="1.44.0"'
+        }
+
+        It "does not write prerelease over same GA version" {
+            $root = Join-Path $TestDrive "guard-new-prerelease"
+            $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
+            New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
+            '<Project><ItemGroup><PackageVersion Include="Azure.Core" Version="1.44.0" /></ItemGroup></Project>' |
+                Set-Content (Join-Path $cpmDir "Directory.Packages.props") -NoNewline
+
+            $result = Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0-beta.1"
+
+            $result | Should -Be 0
+            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="1.44.0"'
+        }
+
+        It "updates when released version is strictly higher" {
+            $root = Join-Path $TestDrive "guard-new-update"
+            $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
+            New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
+            '<Project><ItemGroup><PackageVersion Include="Azure.Core" Version="1.43.0" /></ItemGroup></Project>' |
+                Set-Content (Join-Path $cpmDir "Directory.Packages.props") -NoNewline
+
+            $result = Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+
+            $result | Should -Be 1
+            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="1.44.0"'
+        }
+    }
+
+    Context "Old CPM: released version lower than existing" {
+        It "does not downgrade old format CPM" {
+            $root = Join-Path $TestDrive "guard-old-higher"
+            New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
+            @"
+<Project>
+  <ItemGroup>
+    <PackageReference Update="Azure.Core" Version="1.44.0" />
+  </ItemGroup>
+</Project>
+"@ | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
+
+            $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.43.0"
+
+            $result | Should -Be 0
+            (Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw) | Should -Match 'Version="1.44.0"'
+        }
+
+        It "does not downgrade old format CPM in hotfix scenario" {
+            $root = Join-Path $TestDrive "guard-old-hotfix"
+            New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
+            @"
+<Project>
+  <ItemGroup>
+    <PackageReference Update="Azure.Core" Version="1.44.0" />
+  </ItemGroup>
+</Project>
+"@ | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
+
+            $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.43.1"
+
+            $result | Should -Be 0
+            (Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw) | Should -Match 'Version="1.44.0"'
+        }
+
+        It "updates old format when released version is strictly higher" {
+            $root = Join-Path $TestDrive "guard-old-update"
+            New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
+            @"
+<Project>
+  <ItemGroup>
+    <PackageReference Update="Azure.Core" Version="1.43.0" />
+  </ItemGroup>
+</Project>
+"@ | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
+
+            $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+
+            $result | Should -Be 1
+            (Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw) | Should -Match 'Version="1.44.0"'
+        }
+    }
+
+    Context "Beta releases never update CPM" {
+        It "does not update new CPM when released version is beta" {
+            $root = Join-Path $TestDrive "guard-new-beta"
+            $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
+            New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
+            '<Project><ItemGroup><PackageVersion Include="Azure.Core" Version="1.43.0" /></ItemGroup></Project>' |
+                Set-Content (Join-Path $cpmDir "Directory.Packages.props") -NoNewline
+
+            $result = Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0-beta.1"
+
+            $result | Should -Be 0
+            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="1.43.0"'
+        }
+
+        It "does not update new CPM when released version is preview" {
+            $root = Join-Path $TestDrive "guard-new-preview"
+            $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
+            New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
+            '<Project><ItemGroup><PackageVersion Include="Azure.AI.OpenAI" Version="2.0.0-beta.3" /></ItemGroup></Project>' |
+                Set-Content (Join-Path $cpmDir "Directory.Packages.props") -NoNewline
+
+            $result = Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.AI.OpenAI" -ReleasedVersion "2.0.0-beta.4"
+
+            $result | Should -Be 0
+            (Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw) | Should -Match 'Version="2.0.0-beta.3"'
+        }
+
+        It "does not update old CPM when released version is beta" {
+            $root = Join-Path $TestDrive "guard-old-beta"
+            New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
+            @"
+<Project>
+  <ItemGroup>
+    <PackageReference Update="Azure.Core" Version="1.43.0" />
+  </ItemGroup>
+</Project>
+"@ | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
+
+            $result = Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0-beta.1"
+
+            $result | Should -Be 0
+            (Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw) | Should -Match 'Version="1.43.0"'
         }
     }
 }

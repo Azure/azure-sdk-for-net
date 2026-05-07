@@ -66,15 +66,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         public LexicalNormalizerName? NormalizerName { get; set; }
 
-        /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
-        public PermissionFilter? PermissionFilter { get; set; }
-
-        /// <summary>
-        /// A value indicating whether the field should be used for sensitivity label filtering.
-        /// This enables document-level filtering based on Microsoft Purview sensitivity labels.
-        /// </summary>
-        public bool? SensitivityLabel { get; set; }
-
         /// <inheritdoc/>
         private protected override void Save(SearchField field)
         {
@@ -84,8 +75,6 @@ namespace Azure.Search.Documents.Indexes.Models
             field.IsFacetable = IsFacetable;
             field.IsSortable = IsSortable;
             field.NormalizerName = NormalizerName;
-            field.PermissionFilter = PermissionFilter;
-            field.SensitivityLabel = SensitivityLabel;
 
             // Use a SearchableField instead, which will override this property.
             // The service will return Searchable == false for all non-searchable simple types.

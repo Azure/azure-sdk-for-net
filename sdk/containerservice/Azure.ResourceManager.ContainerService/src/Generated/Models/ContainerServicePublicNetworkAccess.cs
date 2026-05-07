@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,62 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServicePublicNetworkAccess : IEquatable<ContainerServicePublicNetworkAccess>
     {
         private readonly string _value;
+        /// <summary> Inbound/Outbound to the managedCluster is allowed. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Inbound traffic to managedCluster is disabled, traffic from managedCluster is allowed. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Inbound/Outbound traffic is managed by Microsoft.Network/NetworkSecurityPerimeters. </summary>
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServicePublicNetworkAccess(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Inbound/Outbound to the managedCluster is allowed. </summary>
         public static ContainerServicePublicNetworkAccess Enabled { get; } = new ContainerServicePublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Inbound traffic to managedCluster is disabled, traffic from managedCluster is allowed. </summary>
         public static ContainerServicePublicNetworkAccess Disabled { get; } = new ContainerServicePublicNetworkAccess(DisabledValue);
+
+        /// <summary> Inbound/Outbound traffic is managed by Microsoft.Network/NetworkSecurityPerimeters. </summary>
+        public static ContainerServicePublicNetworkAccess SecuredByPerimeter { get; } = new ContainerServicePublicNetworkAccess(SecuredByPerimeterValue);
+
         /// <summary> Determines if two <see cref="ContainerServicePublicNetworkAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServicePublicNetworkAccess left, ContainerServicePublicNetworkAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServicePublicNetworkAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServicePublicNetworkAccess left, ContainerServicePublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServicePublicNetworkAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServicePublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServicePublicNetworkAccess(string value) => new ContainerServicePublicNetworkAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServicePublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServicePublicNetworkAccess?(string value) => value == null ? null : new ContainerServicePublicNetworkAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServicePublicNetworkAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServicePublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

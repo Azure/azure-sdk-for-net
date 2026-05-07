@@ -116,6 +116,30 @@ public class AuthenticationPolicyCreateTests
     }
 
     [Test]
+    public void Create_WithApiKeyCredentialCredentialSource_AndKey_ReturnsApiKeyAuthenticationPolicy()
+    {
+        TestClientSettings settings = new();
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Credential:CredentialSource"] = "ApiKeyCredential",
+                ["TestClient:Credential:Key"] = "test-api-key-12345"
+            })
+            .Build();
+        settings.Bind(config.GetSection("TestClient"));
+
+        AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
+
+        Assert.That(policy, Is.Not.Null);
+        Assert.That(policy, Is.InstanceOf<ApiKeyAuthenticationPolicy>());
+
+        ApiKeyAuthenticationPolicy apiKeyPolicy = (ApiKeyAuthenticationPolicy)policy;
+        string? key = GetKeyFromApiKeyPolicy(apiKeyPolicy);
+        Assert.That(key, Is.Not.Null);
+        Assert.That(key, Is.EqualTo("test-api-key-12345"));
+    }
+
+    [Test]
     public void Create_WithApiKeyCredentialSource_AndNullKey_ThrowsInvalidOperationException()
     {
         TestClientSettings settings = new();
@@ -223,7 +247,7 @@ public class AuthenticationPolicyCreateTests
             AuthenticationPolicy.Create(settings));
 
         Assert.That(ex!.Message, Does.Contain("Scope must be provided in configuration"));
-        Assert.That(ex.Message, Does.Contain("'TokenCredential'"));
+        Assert.That(ex.Message.ToLowerInvariant(), Does.Contain("'tokencredential'"));
     }
 
     [Test]

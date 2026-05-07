@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> MSDeploy log entry. </summary>
+    /// <summary>
+    /// MSDeploy log entry
+    /// Serialized Name: MSDeployLogEntry
+    /// </summary>
     public partial class WebAppMSDeployLogEntry
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppMSDeployLogEntry"/>. </summary>
-        /// <param name="time"> Timestamp of log entry. </param>
-        /// <param name="entryType"> Log entry type. </param>
-        /// <param name="message"> Log entry message. </param>
+        /// <param name="time">
+        /// Timestamp of log entry
+        /// Serialized Name: MSDeployLogEntry.time
+        /// </param>
+        /// <param name="entryType">
+        /// Log entry type
+        /// Serialized Name: MSDeployLogEntry.type
+        /// </param>
+        /// <param name="message">
+        /// Log entry message
+        /// Serialized Name: MSDeployLogEntry.message
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppMSDeployLogEntry(DateTimeOffset? time, WebAppMSDeployLogEntryType? entryType, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Timestamp of log entry. </summary>
+        /// <summary>
+        /// Timestamp of log entry
+        /// Serialized Name: MSDeployLogEntry.time
+        /// </summary>
         [WirePath("time")]
         public DateTimeOffset? Time { get; }
-        /// <summary> Log entry type. </summary>
+        /// <summary>
+        /// Log entry type
+        /// Serialized Name: MSDeployLogEntry.type
+        /// </summary>
         [WirePath("type")]
         public WebAppMSDeployLogEntryType? EntryType { get; }
-        /// <summary> Log entry message. </summary>
+        /// <summary>
+        /// Log entry message
+        /// Serialized Name: MSDeployLogEntry.message
+        /// </summary>
         [WirePath("message")]
         public string Message { get; }
     }

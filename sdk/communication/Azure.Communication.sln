@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32516.85
@@ -36,10 +36,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.PhoneNu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.PhoneNumbers.Tests", "Azure.Communication.PhoneNumbers\tests\Azure.Communication.PhoneNumbers.Tests.csproj", "{7A17601B-FDEC-49E7-BFD1-7AFE9C0B6A89}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.CallingServer", "Azure.Communication.CallingServer\src\Azure.Communication.CallingServer.csproj", "{B41D0602-4A84-479B-8369-D0E75E66E946}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.CallingServer.Tests", "Azure.Communication.CallingServer\tests\Azure.Communication.CallingServer.Tests.csproj", "{B7C0269B-1809-4713-A7BD-390098AB7135}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ShortCodes", "Azure.Communication.ShortCodes\src\Azure.Communication.ShortCodes.csproj", "{F7C16A81-CCB6-4F86-8815-3CE8B6321258}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ShortCodes.Tests", "Azure.Communication.ShortCodes\tests\Azure.Communication.ShortCodes.Tests.csproj", "{A3D05FF9-848B-483E-A34E-49C50E73F675}"
@@ -63,10 +59,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Messages", "Azure.Communication.Messages\src\Azure.Communication.Messages.csproj", "{EC7299A9-8563-4FF3-97E2-CB3DDE8AEFBE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Messages.Tests", "Azure.Communication.Messages\tests\Azure.Communication.Messages.Tests.csproj", "{4232B393-700D-4AC5-9358-70ED4B98B0ED}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ProgrammableConnectivity", "Azure.Communication.ProgrammableConnectivity\src\Azure.Communication.ProgrammableConnectivity.csproj", "{28D9C703-0B74-403C-9503-71C602228843}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ProgrammableConnectivity.Tests", "Azure.Communication.ProgrammableConnectivity\tests\Azure.Communication.ProgrammableConnectivity.Tests.csproj", "{414C616C-56A8-4F6B-918F-2E0CB2859A52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -126,14 +118,6 @@ Global
 		{7A17601B-FDEC-49E7-BFD1-7AFE9C0B6A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A17601B-FDEC-49E7-BFD1-7AFE9C0B6A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A17601B-FDEC-49E7-BFD1-7AFE9C0B6A89}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B41D0602-4A84-479B-8369-D0E75E66E946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B41D0602-4A84-479B-8369-D0E75E66E946}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B41D0602-4A84-479B-8369-D0E75E66E946}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B41D0602-4A84-479B-8369-D0E75E66E946}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7C0269B-1809-4713-A7BD-390098AB7135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7C0269B-1809-4713-A7BD-390098AB7135}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7C0269B-1809-4713-A7BD-390098AB7135}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7C0269B-1809-4713-A7BD-390098AB7135}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F7C16A81-CCB6-4F86-8815-3CE8B6321258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F7C16A81-CCB6-4F86-8815-3CE8B6321258}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7C16A81-CCB6-4F86-8815-3CE8B6321258}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -190,14 +174,6 @@ Global
 		{4232B393-700D-4AC5-9358-70ED4B98B0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4232B393-700D-4AC5-9358-70ED4B98B0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4232B393-700D-4AC5-9358-70ED4B98B0ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28D9C703-0B74-403C-9503-71C602228843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28D9C703-0B74-403C-9503-71C602228843}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28D9C703-0B74-403C-9503-71C602228843}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28D9C703-0B74-403C-9503-71C602228843}.Release|Any CPU.Build.0 = Release|Any CPU
-		{414C616C-56A8-4F6B-918F-2E0CB2859A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{414C616C-56A8-4F6B-918F-2E0CB2859A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{414C616C-56A8-4F6B-918F-2E0CB2859A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{414C616C-56A8-4F6B-918F-2E0CB2859A52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

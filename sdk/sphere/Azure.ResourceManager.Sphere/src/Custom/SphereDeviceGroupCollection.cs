@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereDeviceGroupResource(Client, data));
+                context,
+                "SphereDeviceGroupCollection.GetAll"), data => new SphereDeviceGroupResource(Client, data));
         }
 
         /// <summary> List DeviceGroup resources by Product. </summary>
@@ -64,7 +65,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereDeviceGroupResource(Client, data));
+                context,
+                "SphereDeviceGroupCollection.GetAll"), data => new SphereDeviceGroupResource(Client, data));
         }
     }
 }

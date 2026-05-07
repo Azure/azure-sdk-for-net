@@ -13,92 +13,84 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary>
-    /// A class representing the AgentPoolUpgradeProfile data model.
-    /// The list of available upgrades for an agent pool.
-    /// </summary>
+    /// <summary> The list of available upgrades for an agent pool. </summary>
     public partial class AgentPoolUpgradeProfileData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileData"/>. </summary>
-        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
-        /// <param name="osType"> The operating system type. The default is Linux. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
-        internal AgentPoolUpgradeProfileData(string kubernetesVersion, ContainerServiceOSType osType)
+        /// <param name="properties"> The properties of the agent pool upgrade profile. </param>
+        internal AgentPoolUpgradeProfileData(AgentPoolUpgradeProfileProperties properties)
         {
-            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
-
-            KubernetesVersion = kubernetesVersion;
-            OSType = osType;
-            Upgrades = new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
-        /// <param name="osType"> The operating system type. The default is Linux. </param>
-        /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
-        /// <param name="latestNodeImageVersion"> The latest AKS supported node image version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kubernetesVersion, ContainerServiceOSType osType, IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, string latestNodeImageVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the agent pool upgrade profile. </param>
+        internal AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AgentPoolUpgradeProfileProperties properties) : base(id, name, resourceType, systemData)
         {
-            KubernetesVersion = kubernetesVersion;
-            OSType = osType;
-            Upgrades = upgrades;
-            LatestNodeImageVersion = latestNodeImageVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileData"/> for deserialization. </summary>
-        internal AgentPoolUpgradeProfileData()
-        {
-        }
+        /// <summary> The properties of the agent pool upgrade profile. </summary>
+        [WirePath("properties")]
+        internal AgentPoolUpgradeProfileProperties Properties { get; }
 
         /// <summary> The Kubernetes version (major.minor.patch). </summary>
         [WirePath("properties.kubernetesVersion")]
-        public string KubernetesVersion { get; }
+        public string KubernetesVersion
+        {
+            get
+            {
+                return Properties.KubernetesVersion;
+            }
+        }
+
         /// <summary> The operating system type. The default is Linux. </summary>
         [WirePath("properties.osType")]
-        public ContainerServiceOSType OSType { get; }
-        /// <summary> List of orchestrator types and versions available for upgrade. </summary>
-        [WirePath("properties.upgrades")]
-        public IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> Upgrades { get; }
+        public ContainerServiceOSType OSType
+        {
+            get
+            {
+                return Properties.OSType;
+            }
+        }
+
+        /// <summary> List of components grouped by kubernetes major.minor version. </summary>
+        [WirePath("properties.componentsByReleases")]
+        public IList<KubernetesVersionComponents> ComponentsByReleases
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComponentsByReleases;
+            }
+        }
+
+        /// <summary> List of historical good versions for rollback operations. </summary>
+        [WirePath("properties.recentlyUsedVersions")]
+        public IReadOnlyList<AgentPoolRecentlyUsedVersion> RecentlyUsedVersions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecentlyUsedVersions;
+            }
+        }
+
         /// <summary> The latest AKS supported node image version. </summary>
         [WirePath("properties.latestNodeImageVersion")]
-        public string LatestNodeImageVersion { get; }
+        public string LatestNodeImageVersion
+        {
+            get
+            {
+                return Properties.LatestNodeImageVersion;
+            }
+        }
     }
 }

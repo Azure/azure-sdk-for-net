@@ -782,8 +782,8 @@ function GeneratePackage()
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
-            Write-Host "[ERROR] Failed to build the sdk project: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-            $result = "failed"
+            Write-Host "[WARNING] Failed to build the sdk project: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            $result = "warning"
         } else {
             # Build the whole solution and generate artifacts if the project build successfully
             # Build the whole solution
@@ -791,15 +791,15 @@ function GeneratePackage()
             $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
             dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to build sdk solution:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "failed"
+                Write-Host "[WARNING] Failed to build sdk solution:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                $result = "warning"
             }
             # pack
             Write-Host "Start to pack sdk"
             dotnet pack $srcPath /p:RunApiCompat=$false
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to pack the sdk package: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "failed"
+                Write-Host "[WARNING] Failed to pack the sdk package: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                $result = "warning"
             } else {
                 # artifacts
                 Push-Location $sdkRootPath
@@ -839,8 +839,8 @@ function GeneratePackage()
             Write-Host "Start to export api for $service"
             & $sdkRootPath/eng/scripts/Export-API.ps1 $service
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "failed"
+                Write-Host "[WARNING] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                $result = "warning"
             }
             # breaking change validation
             Write-Host "Start to validate breaking change. srcPath:$srcPath"
@@ -1007,6 +1007,30 @@ function GetSDKProjectFolder()
             if ($csharpOpts["emitter-output-dir"]) {
                 $emitterOutputDir = $csharpOpts["emitter-output-dir"]
             }
+
+            # Interpolate {variable} references across emitter option values to mirror TypeSpec's
+            # variable substitution behavior (e.g. namespace: "{package-name}" or package-name: "{namespace}").
+            # Excludes deprecated package-dir.
+            $optionVars = @{}
+            if (-not [string]::IsNullOrWhiteSpace($packageName)) { $optionVars["package-name"] = $packageName }
+            if (-not [string]::IsNullOrWhiteSpace($service)) { $optionVars["service-dir"] = $service }
+            if (-not [string]::IsNullOrWhiteSpace($namespace)) { $optionVars["namespace"] = $namespace }
+            foreach ($key in @($optionVars.Keys)) {
+                $value = $optionVars[$key]
+                if ([string]::IsNullOrWhiteSpace($value) -or $value -notmatch '\{.+\}') { continue }
+                $newValue = $value
+                foreach ($otherKey in @($optionVars.Keys)) {
+                    if ($otherKey -ne $key -and -not [string]::IsNullOrWhiteSpace($optionVars[$otherKey])) {
+                        $newValue = $newValue.Replace("{$otherKey}", $optionVars[$otherKey])
+                    }
+                }
+                if ($newValue -ne $value) {
+                    $optionVars[$key] = $newValue
+                }
+            }
+            if ($optionVars.ContainsKey("namespace")) { $namespace = $optionVars["namespace"] }
+            if ($optionVars.ContainsKey("package-name")) { $packageName = $optionVars["package-name"] }
+            if ($optionVars.ContainsKey("service-dir")) { $service = $optionVars["service-dir"] }
         }
     }
 

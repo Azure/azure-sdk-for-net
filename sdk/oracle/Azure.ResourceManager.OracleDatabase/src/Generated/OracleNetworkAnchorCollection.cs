@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetByResourceGroupAsyncCollectionResultOfT(_networkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OracleNetworkAnchorResource(Client, data));
+            return new AsyncPageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetByResourceGroupAsyncCollectionResultOfT(_networkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleNetworkAnchorCollection.GetAll"), data => new OracleNetworkAnchorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetByResourceGroupCollectionResultOfT(_networkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OracleNetworkAnchorResource(Client, data));
+            return new PageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetByResourceGroupCollectionResultOfT(_networkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleNetworkAnchorCollection.GetAll"), data => new OracleNetworkAnchorResource(Client, data));
         }
 
         /// <summary>

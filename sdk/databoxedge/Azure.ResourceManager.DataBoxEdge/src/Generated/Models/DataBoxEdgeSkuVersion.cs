@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeSkuVersion : IEquatable<DataBoxEdgeSkuVersion>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuVersion"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeSkuVersion(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StableValue = "Stable";
         private const string PreviewValue = "Preview";
 
-        /// <summary> Stable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeSkuVersion(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Stable. </summary>
         public static DataBoxEdgeSkuVersion Stable { get; } = new DataBoxEdgeSkuVersion(StableValue);
-        /// <summary> Preview. </summary>
+
+        /// <summary> Gets the Preview. </summary>
         public static DataBoxEdgeSkuVersion Preview { get; } = new DataBoxEdgeSkuVersion(PreviewValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeSkuVersion left, DataBoxEdgeSkuVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeSkuVersion left, DataBoxEdgeSkuVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeSkuVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeSkuVersion(string value) => new DataBoxEdgeSkuVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeSkuVersion?(string value) => value == null ? null : new DataBoxEdgeSkuVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeSkuVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeSkuVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

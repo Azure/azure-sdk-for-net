@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct CognitiveServicesRoutingMethod : IEquatable<CognitiveServicesRoutingMethod>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesRoutingMethod"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CognitiveServicesRoutingMethod(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PriorityValue = "Priority";
         private const string WeightedValue = "Weighted";
         private const string PerformanceValue = "Performance";
 
-        /// <summary> Priority. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesRoutingMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CognitiveServicesRoutingMethod(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Priority. </summary>
         public static CognitiveServicesRoutingMethod Priority { get; } = new CognitiveServicesRoutingMethod(PriorityValue);
-        /// <summary> Weighted. </summary>
+
+        /// <summary> Gets the Weighted. </summary>
         public static CognitiveServicesRoutingMethod Weighted { get; } = new CognitiveServicesRoutingMethod(WeightedValue);
-        /// <summary> Performance. </summary>
+
+        /// <summary> Gets the Performance. </summary>
         public static CognitiveServicesRoutingMethod Performance { get; } = new CognitiveServicesRoutingMethod(PerformanceValue);
+
         /// <summary> Determines if two <see cref="CognitiveServicesRoutingMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CognitiveServicesRoutingMethod left, CognitiveServicesRoutingMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CognitiveServicesRoutingMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CognitiveServicesRoutingMethod left, CognitiveServicesRoutingMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CognitiveServicesRoutingMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CognitiveServicesRoutingMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CognitiveServicesRoutingMethod(string value) => new CognitiveServicesRoutingMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CognitiveServicesRoutingMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CognitiveServicesRoutingMethod?(string value) => value == null ? null : new CognitiveServicesRoutingMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CognitiveServicesRoutingMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CognitiveServicesRoutingMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

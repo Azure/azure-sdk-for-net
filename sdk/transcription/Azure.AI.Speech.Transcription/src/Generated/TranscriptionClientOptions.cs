@@ -4,6 +4,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Speech.Transcription
 {
@@ -21,6 +23,22 @@ namespace Azure.AI.Speech.Transcription
                 ServiceVersion.V20251015 => "2025-10-15",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Initializes a new instance of TranscriptionClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal TranscriptionClientOptions(IConfigurationSection section) : base(section)
+        {
+            Version = "2025-10-15";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
         }
 
         /// <summary> Gets the Version. </summary>

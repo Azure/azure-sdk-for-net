@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(devTestLabCustomImageData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(devTestLabCustomImageData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevTestLabCustomImageData"/> from. </param>

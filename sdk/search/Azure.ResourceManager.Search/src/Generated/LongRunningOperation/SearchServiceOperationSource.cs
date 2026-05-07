@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Search
 {
-    internal class SearchServiceOperationSource : IOperationSource<SearchServiceResource>
+    /// <summary></summary>
+    internal partial class SearchServiceOperationSource : IOperationSource<SearchServiceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SearchServiceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SearchServiceResource IOperationSource<SearchServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SearchServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSearchContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SearchServiceData data = SearchServiceData.DeserializeSearchServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SearchServiceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SearchServiceResource> IOperationSource<SearchServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SearchServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSearchContext.Default);
-            return await Task.FromResult(new SearchServiceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SearchServiceData data = SearchServiceData.DeserializeSearchServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SearchServiceResource(_client, data);
         }
     }
 }

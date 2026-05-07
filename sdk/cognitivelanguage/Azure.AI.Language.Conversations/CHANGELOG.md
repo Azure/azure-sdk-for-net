@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `ConversationAnalysisClientSettings` to support creating a `ConversationAnalysisClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

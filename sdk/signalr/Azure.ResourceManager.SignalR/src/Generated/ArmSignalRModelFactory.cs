@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && keyVaultBaseUri is null && keyVaultSecretName is null && keyVaultSecretVersion is null ? default : new CustomCertificateProperties(provisioningState, keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion, null));
+                new CustomCertificateProperties(provisioningState, keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && domainName is null && customCertificateId is null ? default : new CustomDomainProperties(provisioningState, domainName, new ResourceReference(customCertificateId, null), null));
+                new CustomDomainProperties(provisioningState, domainName, new ResourceReference(customCertificateId, null), null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

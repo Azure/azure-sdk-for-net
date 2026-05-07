@@ -417,6 +417,48 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             tcs.AssertNoMoreCalls();
         }
 
+        [Test]
+        public async Task InvokeEventRetryTest()
+        {
+            var tcs = new MultipleTimesTaskCompletionSource<object>(10);
+
+            var clientMoc = new Mock<WebPubSubClient>(new Uri("wss://test.com"), TestUtils.GetClientOptionsForRetryTest());
+            clientMoc.Setup(c => c.InvokeEventAttemptAsync(It.IsAny<string>(), It.IsAny<BinaryData>(), It.IsAny<WebPubSubDataType>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            {
+                tcs.IncreaseCallTimes(null);
+                throw new SendMessageFailedException("msg", null, string.Empty);
+            });
+            clientMoc.CallBase = true;
+            var client = clientMoc.Object;
+
+            Assert.ThrowsAsync<SendMessageFailedException>(() => client.InvokeEventAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text));
+            await tcs.VerifyCalledTimesAsync(1).OrTimeout();
+            await tcs.VerifyCalledTimesAsync(2).OrTimeout();
+            await tcs.VerifyCalledTimesAsync(3).OrTimeout();
+            await tcs.VerifyCalledTimesAsync(4).OrTimeout();
+            tcs.AssertNoMoreCalls();
+        }
+
+        [Test]
+        public async Task InvokeEventNoRetryOnInvocationFailureTest()
+        {
+            var tcs = new MultipleTimesTaskCompletionSource<object>(10);
+
+            var clientMoc = new Mock<WebPubSubClient>(new Uri("wss://test.com"), TestUtils.GetClientOptionsForRetryTest());
+            clientMoc.Setup(c => c.InvokeEventAttemptAsync(It.IsAny<string>(), It.IsAny<BinaryData>(), It.IsAny<WebPubSubDataType>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            {
+                tcs.IncreaseCallTimes(null);
+                throw new InvocationFailedException("invocation failed", "invoke-1", "BadRequest");
+            });
+            clientMoc.CallBase = true;
+            var client = clientMoc.Object;
+
+            Assert.ThrowsAsync<InvocationFailedException>(() => client.InvokeEventAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text));
+            await tcs.VerifyCalledTimesAsync(1).OrTimeout();
+            TestUtils.AssertTimeout(tcs.VerifyCalledTimesAsync(2));
+            tcs.AssertNoMoreCalls();
+        }
+
         private TaskCompletionSource<object> NewTcs() => new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
     }
 }

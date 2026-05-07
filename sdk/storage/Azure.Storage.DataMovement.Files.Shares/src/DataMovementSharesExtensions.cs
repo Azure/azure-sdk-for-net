@@ -766,6 +766,45 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 DataMovementFileShareEventSource.Singleton.ProtocolValidationSkipped(transferId, endpoint, resourceUri);
             }
         }
+
+        internal static T ValidateAndApplySnapshotAndVersionId<T>(
+            this T client,
+            Uri clientUri,
+            ShareFileStorageResourceOptions options,
+            Func<T, string, T> withSnapshot)
+        {
+            if (options == null)
+            {
+                return client;
+            }
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(clientUri);
+
+            if (!string.IsNullOrEmpty(options.Snapshot))
+            {
+                if (!string.IsNullOrEmpty(uriBuilder.Snapshot) &&
+                    options.Snapshot != uriBuilder.Snapshot)
+                {
+                    throw Azure.Storage.Errors.SnapshotMismatch(uriBuilder.Snapshot, options.Snapshot);
+                }
+                if (string.IsNullOrEmpty(uriBuilder.Snapshot))
+                {
+                    client = withSnapshot(client, options.Snapshot);
+                }
+            }
+            return client;
+        }
+
+        internal static Uri BuildSanitizedUri(this Uri uri)
+        {
+            // Strip SAS from URI for security - snapshot is preserved automatically
+            // SAS should not be exposed in events/logs
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
+            {
+                Sas = null
+            };
+            return uriBuilder.ToUri();
+        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type

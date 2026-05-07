@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AppContainers
       safeName: AzureResourceManagerAppContainers
+    - name: Azure.Provisioning.AppContainers
+      safeName: AzureProvisioningAppContainers

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Describes the result of resource validation. </summary>
+    /// <summary>
+    /// Describes the result of resource validation.
+    /// Serialized Name: ValidateResponse
+    /// </summary>
     public partial class AppServiceValidateResult
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceValidateResult"/>. </summary>
-        /// <param name="status"> Result of validation. </param>
-        /// <param name="error"> Error details for the case when validation fails. </param>
+        /// <param name="status">
+        /// Result of validation.
+        /// Serialized Name: ValidateResponse.status
+        /// </param>
+        /// <param name="error">
+        /// Error details for the case when validation fails.
+        /// Serialized Name: ValidateResponse.error
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceValidateResult(string status, ValidateResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of validation. </summary>
+        /// <summary>
+        /// Result of validation.
+        /// Serialized Name: ValidateResponse.status
+        /// </summary>
         [WirePath("status")]
         public string Status { get; }
-        /// <summary> Error details for the case when validation fails. </summary>
+        /// <summary>
+        /// Error details for the case when validation fails.
+        /// Serialized Name: ValidateResponse.error
+        /// </summary>
         [WirePath("error")]
         public ValidateResponseError Error { get; }
     }

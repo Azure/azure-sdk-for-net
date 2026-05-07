@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Usage of the quota resource. </summary>
+    /// <summary>
+    /// Usage of the quota resource.
+    /// Serialized Name: CsmUsageQuota
+    /// </summary>
     public partial class CsmUsageQuota
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CsmUsageQuota"/>. </summary>
-        /// <param name="unit"> Units of measurement for the quota resource. </param>
-        /// <param name="nextResetOn"> Next reset time for the resource counter. </param>
-        /// <param name="currentValue"> The current value of the resource counter. </param>
-        /// <param name="limit"> The resource limit. </param>
-        /// <param name="name"> Quota name. </param>
+        /// <param name="unit">
+        /// Units of measurement for the quota resource.
+        /// Serialized Name: CsmUsageQuota.unit
+        /// </param>
+        /// <param name="nextResetOn">
+        /// Next reset time for the resource counter.
+        /// Serialized Name: CsmUsageQuota.nextResetTime
+        /// </param>
+        /// <param name="currentValue">
+        /// The current value of the resource counter.
+        /// Serialized Name: CsmUsageQuota.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// The resource limit.
+        /// Serialized Name: CsmUsageQuota.limit
+        /// </param>
+        /// <param name="name">
+        /// Quota name.
+        /// Serialized Name: CsmUsageQuota.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CsmUsageQuota(string unit, DateTimeOffset? nextResetOn, long? currentValue, long? limit, LocalizableString name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,19 +85,34 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Units of measurement for the quota resource. </summary>
+        /// <summary>
+        /// Units of measurement for the quota resource.
+        /// Serialized Name: CsmUsageQuota.unit
+        /// </summary>
         [WirePath("unit")]
         public string Unit { get; }
-        /// <summary> Next reset time for the resource counter. </summary>
+        /// <summary>
+        /// Next reset time for the resource counter.
+        /// Serialized Name: CsmUsageQuota.nextResetTime
+        /// </summary>
         [WirePath("nextResetTime")]
         public DateTimeOffset? NextResetOn { get; }
-        /// <summary> The current value of the resource counter. </summary>
+        /// <summary>
+        /// The current value of the resource counter.
+        /// Serialized Name: CsmUsageQuota.currentValue
+        /// </summary>
         [WirePath("currentValue")]
         public long? CurrentValue { get; }
-        /// <summary> The resource limit. </summary>
+        /// <summary>
+        /// The resource limit.
+        /// Serialized Name: CsmUsageQuota.limit
+        /// </summary>
         [WirePath("limit")]
         public long? Limit { get; }
-        /// <summary> Quota name. </summary>
+        /// <summary>
+        /// Quota name.
+        /// Serialized Name: CsmUsageQuota.name
+        /// </summary>
         [WirePath("name")]
         public LocalizableString Name { get; }
     }

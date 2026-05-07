@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci.Vm
     /// <summary>
     /// A class representing a HciVmAttestationStatus along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciVmAttestationStatusResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetHciVmAttestationStatus method.
+    /// Otherwise you can get one from its parent resource <see cref="HciVmInstanceResource"/> using the GetHciVmAttestationStatus method.
     /// </summary>
     public partial class HciVmAttestationStatusResource : ArmResource
     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationStatusesRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                HttpMessage message = _attestationStatusesRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmAttestationStatusData> response = Response.FromValue(HciVmAttestationStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationStatusesRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                HttpMessage message = _attestationStatusesRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmAttestationStatusData> response = Response.FromValue(HciVmAttestationStatusData.FromResponse(result), result);
                 if (response.Value == null)

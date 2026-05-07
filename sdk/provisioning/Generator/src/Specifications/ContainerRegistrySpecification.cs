@@ -8,7 +8,7 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class ContainerRegistrySpecification() :
-    Specification("ContainerRegistry", typeof(ContainerRegistryExtensions))
+    Specification("ContainerRegistry", typeof(ContainerRegistryExtensions), serviceDirectory: "containerregistry")
 {
     protected override void Customize()
     {

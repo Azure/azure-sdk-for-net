@@ -12,6 +12,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.AI.Projects
 {
+    [CodeGenType("AIProjectDatasetsOperations")]
     public partial class AIProjectDatasetsOperations
     {
         private readonly AuthenticationTokenProvider _tokenProvider;

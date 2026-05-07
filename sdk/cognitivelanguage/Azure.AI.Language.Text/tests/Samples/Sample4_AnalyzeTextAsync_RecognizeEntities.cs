@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -214,7 +214,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         }
 
         #region Snippet:Sample4_AnalyzeTextAsync_RecognizeEntities_PrintDateValue
-        public void PrintDateValue(IReadOnlyList<DateValue> dateValues)
+        public void PrintDateValue(IEnumerable<DateValue> dateValues)
         {
             foreach (DateValue date in dateValues)
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -48,12 +49,22 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="endpoint"> URL of the durable task scheduler. </param>
         /// <param name="ipAllowlist"> IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR. </param>
         /// <param name="sku"> SKU of the durable task scheduler. </param>
+        /// <param name="publicNetworkAccess"> Allow or disallow public network access to durable task scheduler. </param>
+        /// <param name="privateEndpointConnections"> The private endpoints exposed by this resource. </param>
         /// <returns> A new <see cref="Models.DurableTaskSchedulerProperties"/> instance for mocking. </returns>
-        public static DurableTaskSchedulerProperties DurableTaskSchedulerProperties(DurableTaskProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<string> ipAllowlist = default, DurableTaskSchedulerSku sku = default)
+        public static DurableTaskSchedulerProperties DurableTaskSchedulerProperties(DurableTaskProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<string> ipAllowlist = default, DurableTaskSchedulerSku sku = default, DurableTaskPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DurableTaskPrivateEndpointConnectionData> privateEndpointConnections = default)
         {
             ipAllowlist ??= new ChangeTrackingList<string>();
+            privateEndpointConnections ??= new ChangeTrackingList<DurableTaskPrivateEndpointConnectionData>();
 
-            return new DurableTaskSchedulerProperties(provisioningState, endpoint, ipAllowlist.ToList(), sku, additionalBinaryDataProperties: null);
+            return new DurableTaskSchedulerProperties(
+                provisioningState,
+                endpoint,
+                ipAllowlist.ToList(),
+                sku,
+                publicNetworkAccess,
+                privateEndpointConnections.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The SKU (Stock Keeping Unit) assigned to this durable task scheduler. </summary>
@@ -64,6 +75,36 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static DurableTaskSchedulerSku DurableTaskSchedulerSku(DurableTaskSchedulerSkuName name = default, int? capacity = default, DurableTaskResourceRedundancyState? redundancyState = default)
         {
             return new DurableTaskSchedulerSku(name, capacity, redundancyState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A private endpoint connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The private endpoint connection properties. </param>
+        /// <returns> A new <see cref="DurableTask.DurableTaskPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static DurableTaskPrivateEndpointConnectionData DurableTaskPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DurableTaskPrivateEndpointConnectionProperties properties = default)
+        {
+            return new DurableTaskPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <returns> A new <see cref="Models.DurableTaskPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static DurableTaskPrivateEndpointConnectionProperties DurableTaskPrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, DurableTaskPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, DurableTaskPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        {
+            groupIds ??= new ChangeTrackingList<string>();
+
+            return new DurableTaskPrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The update request model for the Scheduler resource. </summary>
@@ -82,12 +123,19 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="endpoint"> URL of the durable task scheduler. </param>
         /// <param name="ipAllowlist"> IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR. </param>
         /// <param name="sku"> SKU of the durable task scheduler. </param>
+        /// <param name="publicNetworkAccess"> Allow or disallow public network access to durable task scheduler. </param>
         /// <returns> A new <see cref="Models.DurableTaskSchedulerPatchProperties"/> instance for mocking. </returns>
-        public static DurableTaskSchedulerPatchProperties DurableTaskSchedulerPatchProperties(DurableTaskProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<string> ipAllowlist = default, DurableTaskSchedulerSkuUpdate sku = default)
+        public static DurableTaskSchedulerPatchProperties DurableTaskSchedulerPatchProperties(DurableTaskProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<string> ipAllowlist = default, DurableTaskSchedulerSkuUpdate sku = default, DurableTaskPublicNetworkAccess? publicNetworkAccess = default)
         {
             ipAllowlist ??= new ChangeTrackingList<string>();
 
-            return new DurableTaskSchedulerPatchProperties(provisioningState, endpoint, ipAllowlist.ToList(), sku, additionalBinaryDataProperties: null);
+            return new DurableTaskSchedulerPatchProperties(
+                provisioningState,
+                endpoint,
+                ipAllowlist.ToList(),
+                sku,
+                publicNetworkAccess,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The SKU (Stock Keeping Unit) properties to be updated. </summary>
@@ -98,6 +146,37 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static DurableTaskSchedulerSkuUpdate DurableTaskSchedulerSkuUpdate(DurableTaskSchedulerSkuName? name = default, int? capacity = default, DurableTaskResourceRedundancyState? redundancyState = default)
         {
             return new DurableTaskSchedulerSkuUpdate(name, capacity, redundancyState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A private link resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <returns> A new <see cref="DurableTask.DurableTaskSchedulerPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static DurableTaskSchedulerPrivateLinkResourceData DurableTaskSchedulerPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DurableTaskPrivateLinkResourceProperties properties = default)
+        {
+            return new DurableTaskSchedulerPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of a private link resource. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.DurableTaskPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static DurableTaskPrivateLinkResourceProperties DurableTaskPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new DurableTaskPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A Task Hub resource belonging to the scheduler. </summary>
@@ -154,6 +233,30 @@ namespace Azure.ResourceManager.DurableTask.Models
             retentionPolicies ??= new ChangeTrackingList<DurableTaskRetentionPolicyDetails>();
 
             return new DurableTaskRetentionPolicyProperties(provisioningState, retentionPolicies.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of the Scheduler. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="endpoint"> URL of the durable task scheduler. </param>
+        /// <param name="ipAllowlist"> IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR. </param>
+        /// <param name="sku"> SKU of the durable task scheduler. </param>
+        /// <returns> A new <see cref="Models.DurableTaskSchedulerProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DurableTaskSchedulerProperties DurableTaskSchedulerProperties(DurableTaskProvisioningState? provisioningState, string endpoint, IEnumerable<string> ipAllowlist, DurableTaskSchedulerSku sku)
+        {
+            return DurableTaskSchedulerProperties(provisioningState, endpoint, ipAllowlist, sku, publicNetworkAccess: default, privateEndpointConnections: default);
+        }
+
+        /// <summary> The Scheduler resource properties to be updated. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="endpoint"> URL of the durable task scheduler. </param>
+        /// <param name="ipAllowlist"> IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR. </param>
+        /// <param name="sku"> SKU of the durable task scheduler. </param>
+        /// <returns> A new <see cref="Models.DurableTaskSchedulerPatchProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DurableTaskSchedulerPatchProperties DurableTaskSchedulerPatchProperties(DurableTaskProvisioningState? provisioningState, string endpoint, IEnumerable<string> ipAllowlist, DurableTaskSchedulerSkuUpdate sku)
+        {
+            return DurableTaskSchedulerPatchProperties(provisioningState, endpoint, ipAllowlist, sku, publicNetworkAccess: default);
         }
     }
 }

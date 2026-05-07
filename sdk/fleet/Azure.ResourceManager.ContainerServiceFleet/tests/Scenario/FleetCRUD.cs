@@ -14,12 +14,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
 {
-    [TestFixture]
+    [TestFixture(true)]
+    [TestFixture(false)]
     public class FleetCRUD : ContainerServiceFleetManagementTestBase
     {
-        // TODO -- add a isAsync parameter instead of hard coding the async to be true
-        // tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/56422
-        public FleetCRUD() : base(true)
+        public FleetCRUD(bool isAsync): base(isAsync)
         {
         }
 
@@ -35,7 +34,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             ContainerServiceFleetCollection fleetCollection = resourceGroupResource.GetContainerServiceFleets();
 
             string fleetName = Recording.GenerateAssetName("fleet-");
-            ContainerServiceFleetData fleetData = new ContainerServiceFleetData(DefaultLocation);
+            ContainerServiceFleetData fleetData = new ContainerServiceFleetData(DefaultLocation)
+            {
+                HubProfile = new FleetHubProfile
+                {
+                    DnsPrefix = fleetName
+                }
+            };
 
             ResourceIdentifier fleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             // Test Fleet operations
@@ -102,6 +107,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                 "\"team\" label was missing or not equal to \"fleet\""
             );
 
+            // ===== UpdateRun =====
             // Create UpdateRun
             ContainerServiceFleetUpdateRunCollection updateRunCollection = fleetResource.GetContainerServiceFleetUpdateRuns();
             string updateRunName = "run1";
@@ -127,14 +133,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                 DisplayName = "group after gate"
             };
 
-            // Create group
+            // Create group with MaxConcurrency set to a percentage
+            group1.MaxConcurrency = "50%";
             group1.BeforeGates.Add(groupBeforeGate);
             group1.AfterGates.Add(groupAfterGate);
 
-            // Create stage and attach group
+            // Create stage and attach group with MaxConcurrency set to a fixed integer
             var stage1 = new ContainerServiceFleetUpdateStage("stage1")
             {
-                AfterStageWaitInSeconds = 3600
+                AfterStageWaitInSeconds = 3600,
+                MaxConcurrency = "7"
             };
             stage1.BeforeGates.Add(stageBeforeGate);
             stage1.AfterGates.Add(stageAfterGate);
@@ -164,15 +172,44 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             Debug.Assert(updateRunResource.HasData, "No UpdateRunData found");
             Console.WriteLine($"Succeeded on id: {updateRunResource.Data.Id}");
 
+            // Verify MaxConcurrency on the strategy (input values echoed back)
+            var createdStrategyStage = updateRunResource.Data.StrategyStages[0];
+            Debug.Assert(createdStrategyStage.MaxConcurrency == "7", $"Expected stage MaxConcurrency '7' but got '{createdStrategyStage.MaxConcurrency}'");
+            var createdStrategyGroup = createdStrategyStage.Groups[0];
+            Debug.Assert(createdStrategyGroup.MaxConcurrency == "50%", $"Expected group MaxConcurrency '50%' but got '{createdStrategyGroup.MaxConcurrency}'");
+            Console.WriteLine("MaxConcurrency strategy values verified on create response");
+
             // Get UpdateRun
             ContainerServiceFleetUpdateRunResource getUpdateRun = await updateRunResource.GetAsync();
             Console.WriteLine($"Succeeded on id: {getUpdateRun.Data.Id}");
+
+            // Verify MaxConcurrency on GET strategy (input values)
+            var getStrategyStage = getUpdateRun.Data.StrategyStages[0];
+            Debug.Assert(getStrategyStage.MaxConcurrency == "7", $"Expected stage strategy MaxConcurrency '7' but got '{getStrategyStage.MaxConcurrency}'");
+            var getStrategyGroup = getStrategyStage.Groups[0];
+            Debug.Assert(getStrategyGroup.MaxConcurrency == "50%", $"Expected group strategy MaxConcurrency '50%' but got '{getStrategyGroup.MaxConcurrency}'");
+            Console.WriteLine("MaxConcurrency strategy values verified on GET response");
 
             // Start UpdateRun
             ArmOperation<ContainerServiceFleetUpdateRunResource> startUpdateRunLRO = await updateRunResource.StartAsync(WaitUntil.Completed, ifMatch: (string)null);
             Console.WriteLine($"Succeeded on id: {startUpdateRunLRO.Value.Data.Id}");
 
-            // Test Gates
+            // Verify resolved MaxConcurrency on the run status
+            // Stage: fixed "7" resolves to 7
+            // Group: 50% of 1 cluster = 0.5 -> rounded down = 0 -> min 1 enforced = 1
+            var runStatus = startUpdateRunLRO.Value.Data.Status;
+            Debug.Assert(runStatus != null, "UpdateRun status should not be null after start");
+            var statusStage = runStatus.Stages[0];
+            Debug.Assert(statusStage.MaxConcurrency.HasValue, "Resolved stage MaxConcurrency should have a value");
+            Console.WriteLine($"Resolved stage MaxConcurrency: {statusStage.MaxConcurrency.Value}");
+            Debug.Assert(statusStage.MaxConcurrency.Value == 7, $"Expected resolved stage MaxConcurrency 7 but got {statusStage.MaxConcurrency.Value}");
+            var statusGroup = statusStage.Groups[0];
+            Debug.Assert(statusGroup.MaxConcurrency.HasValue, "Resolved group MaxConcurrency should have a value");
+            Console.WriteLine($"Resolved group MaxConcurrency: {statusGroup.MaxConcurrency.Value}");
+            Debug.Assert(statusGroup.MaxConcurrency.Value == 1, $"Expected resolved group MaxConcurrency 1 (50% of 1 cluster, min 1) but got {statusGroup.MaxConcurrency.Value}");
+            Console.WriteLine("MaxConcurrency resolved status values verified after start");
+
+            // ===== Gates =====
             // List Gates
             fleetResource = armClient.GetContainerServiceFleetResource(fleetResourceId);
             ContainerServiceFleetGateCollection gates = fleetResource.GetContainerServiceFleetGates();
@@ -197,6 +234,93 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                 $"Gate '{updatedGate.Data.Name}' did not reach the expected state. Actual: {updatedGate.Data.State}"
             );
 
+            // ===== Managed Namespace =====
+            ContainerServiceFleetManagedNamespaceCollection managedNamespaceCollection = fleetResource.GetContainerServiceFleetManagedNamespaces();
+
+            // Create a basic managed namespace
+            string nsName1 = "ns-basic";
+            var basicPropagationPolicy = new ContainerServiceFleetPropagationPolicy(ContainerServiceFleetPropagationType.Placement)
+            {
+                DefaultClusterResourcePlacementPolicy = new ContainerServiceFleetPlacementPolicy
+                {
+                    PlacementType = ContainerServiceFleetPlacementType.PickAll
+                }
+            };
+            var nsData1 = new ContainerServiceFleetManagedNamespaceData(DefaultLocation)
+            {
+                AdoptionPolicy = ContainerServiceFleetAdoptionPolicy.Never,
+                DeletePolicy = ContainerServiceFleetDeletePolicy.Keep,
+                PropagationPolicy = basicPropagationPolicy
+            };
+            ArmOperation<ContainerServiceFleetManagedNamespaceResource> createNsLRO1 = await managedNamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nsName1, nsData1);
+            ContainerServiceFleetManagedNamespaceResource nsResource1 = createNsLRO1.Value;
+            Debug.Assert(nsResource1.HasData, "Basic managed namespace was not created");
+            Console.WriteLine($"Created managed namespace: {nsResource1.Data.Id}");
+
+            // Create a managed namespace with full options
+            string nsName2 = "ns-full";
+            var nsData2 = new ContainerServiceFleetManagedNamespaceData(DefaultLocation)
+            {
+                AdoptionPolicy = ContainerServiceFleetAdoptionPolicy.Never,
+                DeletePolicy = ContainerServiceFleetDeletePolicy.Delete,
+                PropagationPolicy = new ContainerServiceFleetPropagationPolicy(ContainerServiceFleetPropagationType.Placement)
+                {
+                    DefaultClusterResourcePlacementPolicy = new ContainerServiceFleetPlacementPolicy
+                    {
+                        PlacementType = ContainerServiceFleetPlacementType.PickAll
+                    }
+                },
+                ManagedNamespaceProperties = new ManagedNamespaceProperties
+                {
+                    DefaultResourceQuota = new ContainerServiceFleetResourceQuota
+                    {
+                        CpuRequest = "1m",
+                        CpuLimit = "4m",
+                        MemoryRequest = "1Mi",
+                        MemoryLimit = "4Mi"
+                    },
+                    DefaultNetworkPolicy = new ContainerServiceFleetNetworkPolicy
+                    {
+                        Ingress = ContainerServiceFleetPolicyRule.AllowAll,
+                        Egress = ContainerServiceFleetPolicyRule.DenyAll
+                    }
+                }
+            };
+            nsData2.ManagedNamespaceProperties.Annotations["annotation1"] = "value1";
+            ArmOperation<ContainerServiceFleetManagedNamespaceResource> createNsLRO2 = await managedNamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nsName2, nsData2);
+            ContainerServiceFleetManagedNamespaceResource nsResource2 = createNsLRO2.Value;
+            Debug.Assert(nsResource2.HasData, "Full managed namespace was not created");
+            Console.WriteLine($"Created managed namespace with full options: {nsResource2.Data.Id}");
+
+            // List managed namespaces
+            int nsCount = 0;
+            await foreach (ContainerServiceFleetManagedNamespaceResource item in managedNamespaceCollection.GetAllAsync())
+            {
+                nsCount++;
+            }
+            Debug.Assert(nsCount == 2, $"Expected 2 managed namespaces, found {nsCount}");
+
+            // Get managed namespace and verify properties
+            ContainerServiceFleetManagedNamespaceResource getNs2 = await managedNamespaceCollection.GetAsync(nsName2);
+            Debug.Assert(getNs2.HasData, "GetAsync managed namespace was not valid");
+            Debug.Assert(getNs2.Data.AdoptionPolicy == ContainerServiceFleetAdoptionPolicy.Never, "AdoptionPolicy mismatch");
+            Debug.Assert(getNs2.Data.DeletePolicy == ContainerServiceFleetDeletePolicy.Delete, "DeletePolicy mismatch");
+            Debug.Assert(getNs2.Data.ManagedNamespaceProperties.DefaultResourceQuota.CpuRequest == "1m", "CpuRequest mismatch");
+            Debug.Assert(getNs2.Data.ManagedNamespaceProperties.DefaultNetworkPolicy.Ingress == ContainerServiceFleetPolicyRule.AllowAll, "Ingress mismatch");
+            Debug.Assert(getNs2.Data.ManagedNamespaceProperties.DefaultNetworkPolicy.Egress == ContainerServiceFleetPolicyRule.DenyAll, "Egress mismatch");
+            Console.WriteLine($"Get managed namespace verified: {getNs2.Data.Id}");
+
+            // Delete managed namespaces
+            await nsResource2.DeleteAsync(WaitUntil.Completed);
+            bool doesNs2Exist = await managedNamespaceCollection.ExistsAsync(nsName2);
+            Debug.Assert(doesNs2Exist == false, "Managed namespace ns-full was not deleted");
+
+            await nsResource1.DeleteAsync(WaitUntil.Completed);
+            bool doesNs1Exist = await managedNamespaceCollection.ExistsAsync(nsName1);
+            Debug.Assert(doesNs1Exist == false, "Managed namespace ns-basic was not deleted");
+            Console.WriteLine("Managed namespace CRUD tests passed");
+
+            // ===== AutoUpgradeProfile =====
             // Create AutoUpgradeProfile
             AutoUpgradeProfileCollection autoUpgradeProfileCollection = fleetResource.GetAutoUpgradeProfiles();
             string autoUpgradeProfileName = "autoupgradeprofile1";

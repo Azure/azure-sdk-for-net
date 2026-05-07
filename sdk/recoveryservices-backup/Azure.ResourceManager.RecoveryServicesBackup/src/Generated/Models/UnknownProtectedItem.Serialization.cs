@@ -10,13 +10,59 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class UnknownProtectedItem : IUtf8JsonSerializable, IJsonModel<BackupGenericProtectedItem>
+    internal partial class UnknownProtectedItem : BackupGenericProtectedItem, IJsonModel<BackupGenericProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupGenericProtectedItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectedItem"/> for deserialization. </summary>
+        internal UnknownProtectedItem()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupGenericProtectedItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBackupGenericProtectedItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BackupGenericProtectedItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupGenericProtectedItem IPersistableModel<BackupGenericProtectedItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupGenericProtectedItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupGenericProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,45 +74,49 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        BackupGenericProtectedItem IJsonModel<BackupGenericProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupGenericProtectedItem IJsonModel<BackupGenericProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupGenericProtectedItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBackupGenericProtectedItem(document.RootElement, options);
         }
 
-        internal static UnknownProtectedItem DeserializeUnknownProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UnknownProtectedItem DeserializeUnknownProtectedItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string protectedItemType = "Unknown";
+            string protectedItemType = "unknown";
             BackupManagementType? backupManagementType = default;
             BackupDataSourceType? workloadType = default;
             string containerName = default;
             ResourceIdentifier sourceResourceId = default;
             ResourceIdentifier policyId = default;
-            DateTimeOffset? lastRecoveryPoint = default;
+            DateTimeOffset? lastRecoverOn = default;
             string backupSetName = default;
             BackupCreateMode? createMode = default;
-            DateTimeOffset? deferredDeleteTimeInUTC = default;
+            DateTimeOffset? deferredDeletedOn = default;
             bool? isScheduledForDeferredDelete = default;
             string deferredDeleteTimeRemaining = default;
             bool? isDeferredDeleteScheduleUpcoming = default;
@@ -76,168 +126,183 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string policyName = default;
             int? softDeleteRetentionPeriodInDays = default;
             string vaultId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            BackupSourceSideScanInfo sourceSideScanInfo = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("protectedItemType"u8))
+                if (prop.NameEquals("protectedItemType"u8))
                 {
-                    protectedItemType = property.Value.GetString();
+                    protectedItemType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"u8))
+                if (prop.NameEquals("backupManagementType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupManagementType = new BackupManagementType(property.Value.GetString());
+                    backupManagementType = new BackupManagementType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("workloadType"u8))
+                if (prop.NameEquals("workloadType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    workloadType = new BackupDataSourceType(property.Value.GetString());
+                    workloadType = new BackupDataSourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerName"u8))
+                if (prop.NameEquals("containerName"u8))
                 {
-                    containerName = property.Value.GetString();
+                    containerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceResourceId"u8))
+                if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyId"u8))
+                if (prop.NameEquals("policyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyId = new ResourceIdentifier(property.Value.GetString());
+                    policyId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastRecoveryPoint"u8))
+                if (prop.NameEquals("lastRecoveryPoint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRecoveryPoint = property.Value.GetDateTimeOffset("O");
+                    lastRecoverOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("backupSetName"u8))
+                if (prop.NameEquals("backupSetName"u8))
                 {
-                    backupSetName = property.Value.GetString();
+                    backupSetName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createMode"u8))
+                if (prop.NameEquals("createMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createMode = new BackupCreateMode(property.Value.GetString());
+                    createMode = new BackupCreateMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deferredDeleteTimeInUTC"u8))
+                if (prop.NameEquals("deferredDeleteTimeInUTC"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deferredDeleteTimeInUTC = property.Value.GetDateTimeOffset("O");
+                    deferredDeletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isScheduledForDeferredDelete"u8))
+                if (prop.NameEquals("isScheduledForDeferredDelete"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isScheduledForDeferredDelete = property.Value.GetBoolean();
+                    isScheduledForDeferredDelete = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("deferredDeleteTimeRemaining"u8))
+                if (prop.NameEquals("deferredDeleteTimeRemaining"u8))
                 {
-                    deferredDeleteTimeRemaining = property.Value.GetString();
+                    deferredDeleteTimeRemaining = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDeferredDeleteScheduleUpcoming"u8))
+                if (prop.NameEquals("isDeferredDeleteScheduleUpcoming"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDeferredDeleteScheduleUpcoming = property.Value.GetBoolean();
+                    isDeferredDeleteScheduleUpcoming = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isRehydrate"u8))
+                if (prop.NameEquals("isRehydrate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isRehydrate = property.Value.GetBoolean();
+                    isRehydrate = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                if (prop.NameEquals("resourceGuardOperationRequests"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     resourceGuardOperationRequests = array;
                     continue;
                 }
-                if (property.NameEquals("isArchiveEnabled"u8))
+                if (prop.NameEquals("isArchiveEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isArchiveEnabled = property.Value.GetBoolean();
+                    isArchiveEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("policyName"u8))
+                if (prop.NameEquals("policyName"u8))
                 {
-                    policyName = property.Value.GetString();
+                    policyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("softDeleteRetentionPeriodInDays"u8))
+                if (prop.NameEquals("softDeleteRetentionPeriodInDays"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    softDeleteRetentionPeriodInDays = property.Value.GetInt32();
+                    softDeleteRetentionPeriodInDays = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vaultId"u8))
+                if (prop.NameEquals("vaultId"u8))
                 {
-                    vaultId = property.Value.GetString();
+                    vaultId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceSideScanInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceSideScanInfo = BackupSourceSideScanInfo.DeserializeBackupSourceSideScanInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new UnknownProtectedItem(
                 protectedItemType,
                 backupManagementType,
@@ -245,10 +310,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 containerName,
                 sourceResourceId,
                 policyId,
-                lastRecoveryPoint,
+                lastRecoverOn,
                 backupSetName,
                 createMode,
-                deferredDeleteTimeInUTC,
+                deferredDeletedOn,
                 isScheduledForDeferredDelete,
                 deferredDeleteTimeRemaining,
                 isDeferredDeleteScheduleUpcoming,
@@ -258,38 +323,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 policyName,
                 softDeleteRetentionPeriodInDays,
                 vaultId,
-                serializedAdditionalRawData);
+                sourceSideScanInfo,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<BackupGenericProtectedItem>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BackupGenericProtectedItem IPersistableModel<BackupGenericProtectedItem>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBackupGenericProtectedItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BackupGenericProtectedItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

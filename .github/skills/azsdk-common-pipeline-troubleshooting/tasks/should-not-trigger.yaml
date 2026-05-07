@@ -1,0 +1,13 @@
+id: pipeline-negative-001
+name: Should Not Trigger - TypeSpec Authoring Request
+description: |
+  Test that the skill does NOT activate for TypeSpec authoring questions.
+tags:
+  - negative-test
+  - anti-trigger
+inputs:
+  prompt: "How do I define a new REST operation in my TypeSpec project?"
+expected:
+  output_not_contains:
+    - "azsdk_analyze_pipeline"
+    - "pipeline failure"

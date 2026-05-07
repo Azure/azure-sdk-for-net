@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.WebPubSub
 {
+    /// <summary></summary>
     public partial class WebPubSubSharedPrivateLinkResource : IJsonModel<WebPubSubSharedPrivateLinkData>
     {
-        private static WebPubSubSharedPrivateLinkData s_dataDeserializationInstance;
-        private static WebPubSubSharedPrivateLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WebPubSubSharedPrivateLinkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WebPubSubSharedPrivateLinkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WebPubSubSharedPrivateLinkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebPubSubSharedPrivateLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubSharedPrivateLinkData>)Data).Write(writer, options);
 
-        WebPubSubSharedPrivateLinkData IJsonModel<WebPubSubSharedPrivateLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubSharedPrivateLinkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebPubSubSharedPrivateLinkData IJsonModel<WebPubSubSharedPrivateLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WebPubSubSharedPrivateLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebPubSubSharedPrivateLinkData>(Data, options, AzureResourceManagerWebPubSubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WebPubSubSharedPrivateLinkData IPersistableModel<WebPubSubSharedPrivateLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubSharedPrivateLinkData>(data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        string IPersistableModel<WebPubSubSharedPrivateLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubSharedPrivateLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebPubSubSharedPrivateLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

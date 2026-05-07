@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(advisorAssessmentData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(advisorAssessmentData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AdvisorAssessmentData"/> from. </param>

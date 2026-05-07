@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,27 +15,35 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ApplicationGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(ApplicationGroupProperties))]
     [ModelReaderWriterBuildable(typeof(ArmDisasterRecoveryListResult))]
+    [ModelReaderWriterBuildable(typeof(ArmDisasterRecoveryProperties))]
     [ModelReaderWriterBuildable(typeof(AuthorizationRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(AuthorizationRuleProperties))]
     [ModelReaderWriterBuildable(typeof(AvailableCluster))]
     [ModelReaderWriterBuildable(typeof(AvailableClustersList))]
     [ModelReaderWriterBuildable(typeof(CaptureDescription))]
     [ModelReaderWriterBuildable(typeof(ClusterListResult))]
+    [ModelReaderWriterBuildable(typeof(ClusterProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterQuotaConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ConfidentialCompute))]
     [ModelReaderWriterBuildable(typeof(ConsumerGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(ConsumerGroupProperties))]
+    [ModelReaderWriterBuildable(typeof(DestinationProperties))]
     [ModelReaderWriterBuildable(typeof(EHNamespaceIdListResult))]
     [ModelReaderWriterBuildable(typeof(EHNamespaceListResult))]
+    [ModelReaderWriterBuildable(typeof(EHNamespaceProperties))]
     [ModelReaderWriterBuildable(typeof(EventHubAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(EventHubData))]
     [ModelReaderWriterBuildable(typeof(EventHubDestination))]
     [ModelReaderWriterBuildable(typeof(EventHubListResult))]
+    [ModelReaderWriterBuildable(typeof(EventhubProperties))]
     [ModelReaderWriterBuildable(typeof(EventHubResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsAccessKeys))]
     [ModelReaderWriterBuildable(typeof(EventHubsApplicationGroupData))]
-    [ModelReaderWriterBuildable(typeof(EventHubsApplicationGroupListResult))]
     [ModelReaderWriterBuildable(typeof(EventHubsApplicationGroupPolicy))]
     [ModelReaderWriterBuildable(typeof(EventHubsApplicationGroupResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsAuthorizationRuleData))]
@@ -53,7 +62,8 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(EventHubsNamespaceAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNamespaceData))]
-    [ModelReaderWriterBuildable(typeof(EventHubsNamespaceFailOver))]
+    [ModelReaderWriterBuildable(typeof(EventHubsNamespaceFailover))]
+    [ModelReaderWriterBuildable(typeof(EventHubsNamespaceGeoDataReplicationProperties))]
     [ModelReaderWriterBuildable(typeof(EventHubsNamespaceReplicaLocation))]
     [ModelReaderWriterBuildable(typeof(EventHubsNamespaceResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetData))]
@@ -61,15 +71,17 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetVirtualNetworkRules))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeter))]
-    [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeterConfiguration))]
+    [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeterConfigurationData))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation))]
+    [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeterConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNspAccessRule))]
     [ModelReaderWriterBuildable(typeof(EventHubsNspAccessRuleProperties))]
     [ModelReaderWriterBuildable(typeof(EventHubsPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(EventHubsPrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(EventHubsPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(EventHubsPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(EventHubsPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(EventHubsProvisioningIssue))]
     [ModelReaderWriterBuildable(typeof(EventHubsProvisioningIssueProperties))]
@@ -78,22 +90,26 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsSchemaGroupResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsSku))]
     [ModelReaderWriterBuildable(typeof(EventHubsThrottlingPolicy))]
+    [ModelReaderWriterBuildable(typeof(FailOverProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessageTimestampDescription))]
-    [ModelReaderWriterBuildable(typeof(NamespaceGeoDataReplicationProperties))]
-    [ModelReaderWriterBuildable(typeof(NetworkRuleSetListResult))]
+    [ModelReaderWriterBuildable(typeof(NetworkRuleSetProperties))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationList))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(PlatformCapabilities))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RetentionDescription))]
     [ModelReaderWriterBuildable(typeof(SchemaGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(SchemaGroupProperties))]
+    [ModelReaderWriterBuildable(typeof(Subnet))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownApplicationGroupPolicy))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerEventHubsContext : ModelReaderWriterContext
     {
     }

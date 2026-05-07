@@ -10,7 +10,20 @@
 
 ### Other Changes
 
-Migrated to TypeSpec-based code generation.
+## 1.1.2 (2026-03-25)
+
+### Features Added
+
+- Make `Azure.ResourceManager.DevTestLabs` AOT-compatible.
+
+### Bugs Fixed
+
+- Fixed https://github.com/Azure/azure-sdk-for-net/issues/57342 by correctly handling empty string values for URI properties.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.51.1.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.1.1 (2024-12-24)
 

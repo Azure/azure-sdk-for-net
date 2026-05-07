@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Client.Overload
 {
     public partial class OverloadClientOptions : ClientOptions
     {
+        public OverloadClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal OverloadClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary> Association Type. </summary>
+        [CodeGenMember("AssociationType")]
         public TrafficControllerAssociationType? AssociationType
         {
             get
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     Properties = new AssociationProperties();
                 }
-                Properties.AssociationType = value.Value;
+                Properties.AssociationType = value;
             }
         }
     }

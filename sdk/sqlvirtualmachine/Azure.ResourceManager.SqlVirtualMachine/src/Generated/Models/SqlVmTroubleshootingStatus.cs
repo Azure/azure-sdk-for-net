@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         {
             get
             {
-                return Properties.UnhealthyReplicaInfoAvailabilityGroupName;
+                return Properties is null ? default : Properties.UnhealthyReplicaInfoAvailabilityGroupName;
             }
         }
     }

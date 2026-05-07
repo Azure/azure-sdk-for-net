@@ -29,22 +29,24 @@ namespace OpenAI
         /// <param name="description"></param>
         /// <param name="parameters"></param>
         /// <param name="strict"></param>
-        internal InternalFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, BinaryData> parameters, bool? strict) : base(@type, additionalBinaryDataProperties)
+        /// <param name="deferLoading"> Whether this function is deferred and loaded via tool search. </param>
+        internal InternalFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, BinaryData> parameters, bool? strict, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Parameters = parameters;
             Strict = strict;
+            DeferLoading = deferLoading;
         }
 
         /// <summary> The name of the function to call. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the Parameters.
+        /// Gets the Parameters.
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -69,9 +71,12 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Parameters { get; set; }
+        public IDictionary<string, BinaryData> Parameters { get; }
 
-        /// <summary> Gets or sets the Strict. </summary>
-        public bool? Strict { get; set; }
+        /// <summary> Gets the Strict. </summary>
+        public bool? Strict { get; }
+
+        /// <summary> Whether this function is deferred and loaded via tool search. </summary>
+        public bool? DeferLoading { get; set; }
     }
 }

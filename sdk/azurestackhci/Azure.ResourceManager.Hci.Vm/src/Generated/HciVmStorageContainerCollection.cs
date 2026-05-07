@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetByResourceGroupAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmStorageContainerResource(Client, data));
+            return new AsyncPageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetByResourceGroupAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmStorageContainerCollection.GetAll"), data => new HciVmStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetByResourceGroupCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmStorageContainerResource(Client, data));
+            return new PageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetByResourceGroupCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmStorageContainerCollection.GetAll"), data => new HciVmStorageContainerResource(Client, data));
         }
 
         /// <summary>

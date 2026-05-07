@@ -3,9 +3,10 @@
 
 using System;
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Evaluation;
 
 /// <summary> The EvaluatorDefinition. </summary>
+[CodeGenType("EvaluatorDefinition")]
 public partial class EvaluatorDefinition
 {
     // Customization: retain BinaryData despite Record<unknown> basis

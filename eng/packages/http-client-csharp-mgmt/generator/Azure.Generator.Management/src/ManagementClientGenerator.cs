@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
 using System;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Management
 {
@@ -60,6 +61,7 @@ namespace Azure.Generator.Management
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new PaginationVisitor());
             AddVisitor(new ModelFactoryVisitor());
+            AddVisitor(new ManagedIdentityV3Visitor());
             if (IsWirePathEnabled())
             {
                 AddVisitor(new WirePathVisitor());
@@ -67,6 +69,7 @@ namespace Azure.Generator.Management
         }
 
         private const string EnableWirePathFeatureFlag = "enable-wire-path-attribute";
+        private const string SkipApiVersionOverrideFlag = "skip-api-version-override";
 
         private bool IsWirePathEnabled()
         {
@@ -77,5 +80,22 @@ namespace Azure.Generator.Management
             }
             return false;
         }
+
+        // TODO: This is a temporary workaround until the api-version override issue is properly resolved in Azure.Core.
+        // Once Azure.Core handles api-version correctly during LRO polling, this flag and related logic should be removed.
+        internal bool IsSkipApiVersionOverrideEnabled()
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(SkipApiVersionOverrideFlag, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Management plane SDKs do not need ConfigurationSchema.json generation.
+        /// </summary>
+        public override Task WriteAdditionalFiles(string outputPath) => Task.CompletedTask;
     }
 }

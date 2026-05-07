@@ -91,8 +91,6 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue(Counters, options);
             writer.WritePropertyName("limits"u8);
             writer.WriteObjectValue(Limits, options);
-            writer.WritePropertyName("indexersRuntime"u8);
-            writer.WriteObjectValue(IndexersRuntime, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -137,7 +135,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             SearchServiceCounters counters = default;
             SearchServiceLimits limits = default;
-            ServiceIndexersRuntime indexersRuntime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,17 +148,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     limits = SearchServiceLimits.DeserializeSearchServiceLimits(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("indexersRuntime"u8))
-                {
-                    indexersRuntime = ServiceIndexersRuntime.DeserializeServiceIndexersRuntime(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SearchServiceStatistics(counters, limits, indexersRuntime, additionalBinaryDataProperties);
+            return new SearchServiceStatistics(counters, limits, additionalBinaryDataProperties);
         }
     }
 }

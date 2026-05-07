@@ -3,66 +3,21 @@
 
 #nullable disable
 
+#pragma warning disable CS1591
+
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Gets the status of the VolumeQuotaRule at the time the operation was called.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
     public enum NetAppProvisioningState
     {
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: ProvisioningState.Accepted
-        /// </summary>
-        Accepted,
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ProvisioningState.Creating
-        /// </summary>
-        Creating,
-        /// <summary>
-        /// Patching
-        /// Serialized Name: ProvisioningState.Patching
-        /// </summary>
-        Patching,
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
-        Deleting,
-        /// <summary>
-        /// Moving
-        /// Serialized Name: ProvisioningState.Moving
-        /// </summary>
-        Moving,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
-        Failed,
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
-        Succeeded,
-
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
-        Canceled,
-
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Provisioning
-        /// </summary>
-        Provisioning,
-
-        /// <summary>
-        /// Moving
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
-        Updating
+        Accepted = 0,
+        Creating = 1,
+        Patching = 2,
+        Deleting = 3,
+        Moving = 4,
+        Failed = 5,
+        Succeeded = 6,
+        Canceled = 7,
+        Provisioning = 8,
+        Updating = 9,
     }
 }

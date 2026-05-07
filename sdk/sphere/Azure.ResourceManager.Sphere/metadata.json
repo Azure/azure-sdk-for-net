@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-04-01"
+  "apiVersions": {
+    "Microsoft.AzureSphere": "2024-04-01"
+  }
 }

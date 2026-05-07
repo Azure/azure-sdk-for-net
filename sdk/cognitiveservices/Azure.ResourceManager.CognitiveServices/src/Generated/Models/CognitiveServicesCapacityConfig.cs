@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The capacity configuration. </summary>
     public partial class CognitiveServicesCapacityConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesCapacityConfig"/>. </summary>
         public CognitiveServicesCapacityConfig()
@@ -57,29 +29,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="step"> The minimal incremental between allowed values for capacity. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="allowedValues"> The array of allowed values for capacity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesCapacityConfig(int? minimum, int? maximum, int? step, int? @default, IList<int> allowedValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesCapacityConfig(int? minimum, int? maximum, int? step, int? @default, IList<int> allowedValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Minimum = minimum;
             Maximum = maximum;
             Step = step;
             Default = @default;
             AllowedValues = allowedValues;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The minimum capacity. </summary>
         [WirePath("minimum")]
         public int? Minimum { get; set; }
+
         /// <summary> The maximum capacity. </summary>
         [WirePath("maximum")]
         public int? Maximum { get; set; }
+
         /// <summary> The minimal incremental between allowed values for capacity. </summary>
         [WirePath("step")]
         public int? Step { get; set; }
+
         /// <summary> The default capacity. </summary>
         [WirePath("default")]
         public int? Default { get; set; }
+
         /// <summary> The array of allowed values for capacity. </summary>
         [WirePath("allowedValues")]
         public IList<int> AllowedValues { get; }

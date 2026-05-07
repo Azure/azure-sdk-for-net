@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Translation.Text
 {
@@ -14,8 +16,28 @@ namespace Azure.AI.Translation.Text
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_10_01_Preview;
 
+        /// <summary> Initializes a new instance of TextTranslationClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal TextTranslationClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2025-10-01-preview";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
+        }
+
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion

@@ -30,6 +30,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The Azure Function Tool definition. </summary>
-        public AzureFunctionDefinition AzureFunction { get; set; }
+        public AzureFunctionDefinition AzureFunction { get; }
     }
 }

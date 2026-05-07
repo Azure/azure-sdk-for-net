@@ -11,3 +11,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Sql
       safeName: AzureResourceManagerSql
+    - name: Azure.Provisioning.Sql
+      safeName: AzureProvisioningSql

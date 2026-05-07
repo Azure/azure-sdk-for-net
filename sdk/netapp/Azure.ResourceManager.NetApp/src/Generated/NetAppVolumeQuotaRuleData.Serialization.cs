@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.NetApp
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(VolumeQuotaRuleProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(VolumeQuotaRuleProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(QuotaSizeInKiBs))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            NetAppProvisioningState? provisioningState = default;
+            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
             long? quotaSizeInKiBs = default;
             NetAppVolumeQuotaType? quotaType = default;
             string quotaTarget = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToNetAppProvisioningState();
+                            provisioningState = new NetAppVolumeQuotaRuleProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("quotaSizeInKiBs"u8))

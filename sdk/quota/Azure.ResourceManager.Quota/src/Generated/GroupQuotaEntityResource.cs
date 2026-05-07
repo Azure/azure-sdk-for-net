@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The  GroupQuotas Patch Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GroupQuotaEntityResource>> UpdateAsync(WaitUntil waitUntil, GroupQuotaEntityPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotaEntityResource>> UpdateAsync(WaitUntil waitUntil, GroupQuotaEntityPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityResource.Update");
             scope.Start();
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The  GroupQuotas Patch Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GroupQuotaEntityResource> Update(WaitUntil waitUntil, GroupQuotaEntityPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotaEntityResource> Update(WaitUntil waitUntil, GroupQuotaEntityPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityResource.Update");
             scope.Start();
@@ -441,7 +441,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 filter,
-                context), data => new GroupQuotaRequestStatusResource(Client, data));
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests"), data => new GroupQuotaRequestStatusResource(Client, data));
         }
 
         /// <summary>
@@ -486,7 +487,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 filter,
-                context), data => new GroupQuotaRequestStatusResource(Client, data));
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests"), data => new GroupQuotaRequestStatusResource(Client, data));
         }
 
         /// <summary>
@@ -530,7 +532,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 location,
-                context);
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaUsages");
         }
 
         /// <summary>
@@ -574,7 +577,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 location,
-                context);
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaUsages");
         }
 
         /// <summary> Gets a collection of GroupQuotaSubscriptions in the <see cref="GroupQuotaEntityResource"/>. </summary>

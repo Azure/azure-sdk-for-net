@@ -57,7 +57,7 @@ describe("Test Usage", () => {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const fooInfo = root.models.find((model) => model.name === "FooInfo");
     const batchCreateFooListItemsRequest = root.models.find(
       (model) => model.name === "BatchCreateFooListItemsRequest"
@@ -106,7 +106,7 @@ describe("Test Usage", () => {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const fooModel = root.models.find((model) => model.name === "Foo");
     ok(fooModel);
     strictEqual(
@@ -165,7 +165,7 @@ describe("Test Usage", () => {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const baseModel = root.models.find(
       (model) => model.name === "BaseModelWithDiscriminator"
     );
@@ -234,7 +234,7 @@ describe("Test Usage", () => {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const baseModel = root.models.find(
       (model) => model.name === "BaseModelWithDiscriminator"
     );
@@ -400,7 +400,7 @@ interface LegacyLro {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const radiologyInsightsInferenceResult = root.models.find(
       (model) => model.name === "RadiologyInsightsInferenceResult"
     );

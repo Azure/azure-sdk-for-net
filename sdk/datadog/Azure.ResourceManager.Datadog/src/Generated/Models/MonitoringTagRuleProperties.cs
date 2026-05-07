@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Definition of the properties for a TagRules resource. </summary>
     public partial class MonitoringTagRuleProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitoringTagRuleProperties"/>. </summary>
         public MonitoringTagRuleProperties()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="agentRules"> Set of rules for managing agents for the Monitor resource. </param>
         /// <param name="isAutomutingEnabled"> Configuration to enable/disable auto-muting flag. </param>
         /// <param name="isCustomMetricsEnabled"> Configuration to enable/disable custom metrics. If enabled, custom metrics from app insights will be sent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringTagRuleProperties(DatadogProvisioningState? provisioningState, DatadogMonitorLogRules logRules, DatadogMonitorMetricRules metricRules, DatadogMonitorAgentRules agentRules, bool? isAutomutingEnabled, bool? isCustomMetricsEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringTagRuleProperties(DatadogProvisioningState? provisioningState, DatadogMonitorLogRules logRules, DatadogMonitorMetricRules metricRules, DatadogMonitorAgentRules agentRules, bool? isAutomutingEnabled, bool? isCustomMetricsEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             LogRules = logRules;
@@ -66,31 +37,38 @@ namespace Azure.ResourceManager.Datadog.Models
             AgentRules = agentRules;
             IsAutomutingEnabled = isAutomutingEnabled;
             IsCustomMetricsEnabled = isCustomMetricsEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
+        /// <summary> Gets the ProvisioningState. </summary>
         public DatadogProvisioningState? ProvisioningState { get; }
+
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
         public DatadogMonitorLogRules LogRules { get; set; }
+
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
         internal DatadogMonitorMetricRules MetricRules { get; set; }
+
+        /// <summary> Set of rules for managing agents for the Monitor resource. </summary>
+        public DatadogMonitorAgentRules AgentRules { get; set; }
+
+        /// <summary> Configuration to enable/disable auto-muting flag. </summary>
+        public bool? IsAutomutingEnabled { get; set; }
+
+        /// <summary> Configuration to enable/disable custom metrics. If enabled, custom metrics from app insights will be sent. </summary>
+        public bool? IsCustomMetricsEnabled { get; set; }
+
         /// <summary> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </summary>
         public IList<DatadogMonitorFilteringTag> MetricRulesFilteringTags
         {
             get
             {
                 if (MetricRules is null)
+                {
                     MetricRules = new DatadogMonitorMetricRules();
+                }
                 return MetricRules.FilteringTags;
             }
         }
-
-        /// <summary> Set of rules for managing agents for the Monitor resource. </summary>
-        public DatadogMonitorAgentRules AgentRules { get; set; }
-        /// <summary> Configuration to enable/disable auto-muting flag. </summary>
-        public bool? IsAutomutingEnabled { get; set; }
-        /// <summary> Configuration to enable/disable custom metrics. If enabled, custom metrics from app insights will be sent. </summary>
-        public bool? IsCustomMetricsEnabled { get; set; }
     }
 }

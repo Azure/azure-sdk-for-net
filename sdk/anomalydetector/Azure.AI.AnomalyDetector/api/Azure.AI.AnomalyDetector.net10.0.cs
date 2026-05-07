@@ -54,11 +54,21 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyDetectorClient
     {
         protected AnomalyDetectorClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public AnomalyDetectorClient(Azure.AI.AnomalyDetector.AnomalyDetectorClientSettings settings) { }
         public AnomalyDetectorClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public AnomalyDetectorClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.AI.AnomalyDetector.Multivariate GetMultivariateClient() { throw null; }
         public virtual Azure.AI.AnomalyDetector.Univariate GetUnivariateClient() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class AnomalyDetectorClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddAnomalyDetectorClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddAnomalyDetectorClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.AnomalyDetector.AnomalyDetectorClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAnomalyDetectorClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAnomalyDetectorClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.AnomalyDetector.AnomalyDetectorClientSettings> configureSettings) { throw null; }
     }
     public partial class AnomalyDetectorClientOptions : Azure.Core.ClientOptions
     {
@@ -67,6 +77,14 @@ namespace Azure.AI.AnomalyDetector
         {
             V1_1 = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class AnomalyDetectorClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public AnomalyDetectorClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class AnomalyDetectorModelFactory
     {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ConsoleEnabled : IEquatable<ConsoleEnabled>
     {
         private readonly string _value;
+        /// <summary> Console access enabled. </summary>
+        private const string TrueValue = "True";
+        /// <summary> Console access disabled. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="ConsoleEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConsoleEnabled(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> Console access enabled. </summary>
         public static ConsoleEnabled True { get; } = new ConsoleEnabled(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> Console access disabled. </summary>
         public static ConsoleEnabled False { get; } = new ConsoleEnabled(FalseValue);
+
         /// <summary> Determines if two <see cref="ConsoleEnabled"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConsoleEnabled left, ConsoleEnabled right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConsoleEnabled"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConsoleEnabled left, ConsoleEnabled right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsoleEnabled"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConsoleEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConsoleEnabled(string value) => new ConsoleEnabled(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConsoleEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConsoleEnabled?(string value) => value == null ? null : new ConsoleEnabled(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConsoleEnabled other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConsoleEnabled other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

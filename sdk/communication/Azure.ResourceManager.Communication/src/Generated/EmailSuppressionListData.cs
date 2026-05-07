@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary>
-    /// A class representing the EmailSuppressionList data model.
-    /// A class representing a SuppressionList resource.
-    /// </summary>
+    /// <summary> A class representing a SuppressionList resource. </summary>
     public partial class EmailSuppressionListData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EmailSuppressionListData"/>. </summary>
         public EmailSuppressionListData()
@@ -56,35 +25,68 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Initializes a new instance of <see cref="EmailSuppressionListData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="listName"> The name of the suppression list. This value must match one of the valid sender usernames of the sending domain. </param>
-        /// <param name="lastUpdatedOn"> The date the resource was last updated. </param>
-        /// <param name="createdOn"> The date the resource was created. </param>
-        /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EmailSuppressionListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string listName, DateTimeOffset? lastUpdatedOn, DateTimeOffset? createdOn, string dataLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a SuppressionList resource. </param>
+        internal EmailSuppressionListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SuppressionListProperties properties) : base(id, name, resourceType, systemData)
         {
-            ListName = listName;
-            LastUpdatedOn = lastUpdatedOn;
-            CreatedOn = createdOn;
-            DataLocation = dataLocation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The properties of a SuppressionList resource. </summary>
+        [WirePath("properties")]
+        internal SuppressionListProperties Properties { get; set; }
 
         /// <summary> The name of the suppression list. This value must match one of the valid sender usernames of the sending domain. </summary>
         [WirePath("properties.listName")]
-        public string ListName { get; set; }
+        public string ListName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ListName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SuppressionListProperties();
+                }
+                Properties.ListName = value;
+            }
+        }
+
         /// <summary> The date the resource was last updated. </summary>
         [WirePath("properties.lastUpdatedTimeStamp")]
-        public DateTimeOffset? LastUpdatedOn { get; }
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUpdatedOn;
+            }
+        }
+
         /// <summary> The date the resource was created. </summary>
         [WirePath("properties.createdTimeStamp")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </summary>
         [WirePath("properties.dataLocation")]
-        public string DataLocation { get; }
+        public string DataLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataLocation;
+            }
+        }
     }
 }

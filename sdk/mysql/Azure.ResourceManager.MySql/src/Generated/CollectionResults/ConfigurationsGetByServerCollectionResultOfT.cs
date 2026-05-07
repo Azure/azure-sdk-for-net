@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private readonly int? _page;
         private readonly int? _pageSize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ConfigurationsGetByServerCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Configurations client used to send requests. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="page"> The page of the server configuration. </param>
         /// <param name="pageSize"> The pageSize of the server configuration. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConfigurationsGetByServerCollectionResultOfT(Configurations client, Guid subscriptionId, string resourceGroupName, string serverName, string tags, string keyword, int? page, int? pageSize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ConfigurationsGetByServerCollectionResultOfT(Configurations client, Guid subscriptionId, string resourceGroupName, string serverName, string tags, string keyword, int? page, int? pageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,6 +49,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _page = page;
             _pageSize = pageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ConfigurationsGetByServerCollectionResultOfT as an enumerable collection. </summary>
@@ -79,7 +82,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByServerRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _tags, _keyword, _page, _pageSize, _context) : _client.CreateGetByServerRequest(_subscriptionId, _resourceGroupName, _serverName, _tags, _keyword, _page, _pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MySqlFlexibleServerConfigurationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

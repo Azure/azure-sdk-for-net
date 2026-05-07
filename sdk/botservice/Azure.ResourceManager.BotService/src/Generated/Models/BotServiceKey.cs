@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Determines which key is to be regenerated. </summary>
     public enum BotServiceKey
     {
-        /// <summary> key1. </summary>
+        /// <summary> Key1. </summary>
         Key1,
-        /// <summary> key2. </summary>
+        /// <summary> Key2. </summary>
         Key2
     }
 }

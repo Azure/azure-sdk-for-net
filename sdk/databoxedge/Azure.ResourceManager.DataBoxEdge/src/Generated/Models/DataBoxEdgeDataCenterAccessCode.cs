@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> DC Access code in the case of Self Managed Shipping. </summary>
     public partial class DataBoxEdgeDataCenterAccessCode
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDataCenterAccessCode"/>. </summary>
         internal DataBoxEdgeDataCenterAccessCode()
@@ -51,15 +22,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDataCenterAccessCode"/>. </summary>
-        /// <param name="authCode"> DCAccess Code for the Self Managed shipment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeDataCenterAccessCode(string authCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> DCAccessCode properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDataCenterAccessCode(DCAccessCodeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AuthCode = authCode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> DCAccessCode properties. </summary>
+        internal DCAccessCodeProperties Properties { get; }
+
         /// <summary> DCAccess Code for the Self Managed shipment. </summary>
-        public string AuthCode { get; }
+        public string AuthCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthCode;
+            }
+        }
     }
 }

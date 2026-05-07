@@ -33,6 +33,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The project connection parameters associated with the Browser Automation Tool. </summary>
-        public BrowserAutomationToolConnectionParameters Connection { get; set; }
+        public BrowserAutomationToolConnectionParameters Connection { get; }
     }
 }
