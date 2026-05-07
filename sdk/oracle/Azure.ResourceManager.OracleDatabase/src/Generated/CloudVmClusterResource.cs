@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new CloudVmClusterResourceGetPrivateIPAddressesAsyncCollectionResultOfT(
+            return new OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT(
                 _cloudVmClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT(
+            return new OracleDatabaseCloudVmClustersListPrivateIpAddressesCollectionResultOfT(
                 _cloudVmClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
