@@ -121,6 +121,7 @@ namespace Azure.Generator.Mgmt.Tests
                     InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputFactory.Primitive.String("azureLocation", "Azure.Core.azureLocation"), isRequired: true),
                 ],
                 null,
                 [],

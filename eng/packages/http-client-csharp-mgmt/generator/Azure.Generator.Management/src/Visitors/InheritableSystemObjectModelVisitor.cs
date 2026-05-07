@@ -510,13 +510,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     private static IReadOnlyList<ParameterProvider> GetRequiredBaseConstructorParameters(InheritableSystemObjectModelProvider baseSystemType)
     {
-        if (baseSystemType.CrossLanguageDefinitionId is string id &&
-            KnownManagementTypes.TryGetInheritableSystemConstructorParameters(id, out var parameters))
-        {
-            return parameters;
-        }
-
-        return [];
+        return baseSystemType.Constructors
+            .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+            ?.Signature.Parameters ?? [];
     }
 
     private const string RawDataParameterName = "additionalBinaryDataProperties";

@@ -9,7 +9,6 @@ using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
@@ -38,17 +37,6 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.Resource"] = typeof(ResourceData),
             [TrackedResourceId] = typeof(TrackedResourceData),
         };
-
-        private readonly record struct ConstructorParameterSpec(string Name, FormattableString Description, CSharpType Type);
-
-        private static readonly IReadOnlyDictionary<string, IReadOnlyList<ConstructorParameterSpec>> _idToInheritableSystemConstructorParametersMap =
-            new Dictionary<string, IReadOnlyList<ConstructorParameterSpec>>()
-            {
-                [TrackedResourceId] =
-                [
-                    new ConstructorParameterSpec("location", $"The location of the resource.", typeof(AzureLocation))
-                ]
-            };
 
         private static readonly IReadOnlyDictionary<string, CSharpType> _idToSystemTypeMap = new Dictionary<string, CSharpType>()
         {
@@ -137,22 +125,6 @@ namespace Azure.Generator.Management.Primitives
         public static bool IsKnownManagementType(CSharpType type) => _knownTypes.Contains(type);
 
         public static bool TryGetInheritableSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToInheritableSystemTypeMap.TryGetValue(id, out type);
-
-        public static bool TryGetInheritableSystemConstructorParameters(
-            string id,
-            [MaybeNullWhen(false)] out IReadOnlyList<ParameterProvider> parameters)
-        {
-            if (_idToInheritableSystemConstructorParametersMap.TryGetValue(id, out var specs))
-            {
-                parameters = specs
-                    .Select(spec => new ParameterProvider(spec.Name, spec.Description, spec.Type))
-                    .ToArray();
-                return true;
-            }
-
-            parameters = null;
-            return false;
-        }
 
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
 
