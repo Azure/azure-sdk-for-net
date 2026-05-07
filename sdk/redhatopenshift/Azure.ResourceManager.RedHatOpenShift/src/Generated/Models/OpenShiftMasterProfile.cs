@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     /// <summary> MasterProfile represents a master profile. </summary>
     public partial class OpenShiftMasterProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftMasterProfile"/>. </summary>
         public OpenShiftMasterProfile()
@@ -56,22 +27,25 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="subnetId"> The Azure resource ID of the master subnet. </param>
         /// <param name="encryptionAtHost"> Whether master virtual machines are encrypted at host. </param>
         /// <param name="diskEncryptionSetId"> The resource ID of an associated DiskEncryptionSet, if applicable. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftMasterProfile(string vmSize, ResourceIdentifier subnetId, OpenShiftEncryptionAtHost? encryptionAtHost, ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenShiftMasterProfile(string vmSize, ResourceIdentifier subnetId, OpenShiftEncryptionAtHost? encryptionAtHost, ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             SubnetId = subnetId;
             EncryptionAtHost = encryptionAtHost;
             DiskEncryptionSetId = diskEncryptionSetId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The size of the master VMs. </summary>
         public string VmSize { get; set; }
+
         /// <summary> The Azure resource ID of the master subnet. </summary>
         public ResourceIdentifier SubnetId { get; set; }
+
         /// <summary> Whether master virtual machines are encrypted at host. </summary>
         public OpenShiftEncryptionAtHost? EncryptionAtHost { get; set; }
+
         /// <summary> The resource ID of an associated DiskEncryptionSet, if applicable. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
     }

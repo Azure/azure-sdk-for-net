@@ -206,7 +206,7 @@ $md = @"
 > **Auto-generated** by ``Emitter_Version_Dashboard`` on $timestamp.
 > Run that script to refresh this file after dependency version changes.
 
-## Dependency Chain
+## Latest Published Version Chain
 
 ``````
 @typespec/http-client-csharp ($(Get-ShortVersion $latestBase))
