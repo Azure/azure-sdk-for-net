@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.DataProtectionBackup.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
@@ -139,7 +138,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(KubernetesClusterVaultTierRestoreCriteria))]
     [ModelReaderWriterBuildable(typeof(KubernetesPVRestoreCriteria))]
     [ModelReaderWriterBuildable(typeof(KubernetesStorageClassRestoreCriteria))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MonitoringSettings))]
     [ModelReaderWriterBuildable(typeof(NamespacedName))]
     [ModelReaderWriterBuildable(typeof(OperationalDataStoreSettings))]
@@ -172,7 +170,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(SourceLifeCycle))]
     [ModelReaderWriterBuildable(typeof(StopProtectionContent))]
     [ModelReaderWriterBuildable(typeof(SuspendBackupContent))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetCopySetting))]
     [ModelReaderWriterBuildable(typeof(UnknownAuthCredentials))]
     [ModelReaderWriterBuildable(typeof(UnknownAzureBackupRecoveryPoint))]
@@ -194,7 +191,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(UnknownOperationExtendedInfo))]
     [ModelReaderWriterBuildable(typeof(UnknownRestoreTargetInfoBase))]
     [ModelReaderWriterBuildable(typeof(UnknownTriggerContext))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserFacingWarningDetail))]
     [ModelReaderWriterBuildable(typeof(ValidateCrossRegionRestoreRequestObject))]
     [ModelReaderWriterBuildable(typeof(ValidateForModifyBackupContent))]

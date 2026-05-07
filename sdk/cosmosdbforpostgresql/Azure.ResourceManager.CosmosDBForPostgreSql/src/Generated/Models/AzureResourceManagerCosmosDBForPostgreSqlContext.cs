@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     [ModelReaderWriterBuildable(typeof(ServerConfigurationListResult))]
     [ModelReaderWriterBuildable(typeof(ServerConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ServerProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerCosmosDBForPostgreSqlContext : ModelReaderWriterContext
     {

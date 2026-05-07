@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(RequestResourceType))
             {
                 writer.WritePropertyName("requestResourceType"u8);
-                writer.WriteStringValue(RequestResourceType.Value);
+                writer.WriteObjectValue<ResourceType?>(RequestResourceType.Value, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    requestResourceType = new ResourceType(prop.Value.GetString());
+                    requestResourceType = ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

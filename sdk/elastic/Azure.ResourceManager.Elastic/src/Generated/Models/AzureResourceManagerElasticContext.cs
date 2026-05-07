@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Elastic.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Elastic
 {
@@ -62,7 +61,6 @@ namespace Azure.ResourceManager.Elastic
     [ModelReaderWriterBuildable(typeof(ElasticVersionsListResponse))]
     [ModelReaderWriterBuildable(typeof(ElasticVmListResult))]
     [ModelReaderWriterBuildable(typeof(ElasticVmResourceInfo))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfoMarketplaceSubscription))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceInfo))]
@@ -75,9 +73,7 @@ namespace Azure.ResourceManager.Elastic
     [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResubscribeProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionListResult))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VmCollectionContent))]
     [ModelReaderWriterBuildable(typeof(VmIngestionDetailsResult))]
     public partial class AzureResourceManagerElasticContext : ModelReaderWriterContext

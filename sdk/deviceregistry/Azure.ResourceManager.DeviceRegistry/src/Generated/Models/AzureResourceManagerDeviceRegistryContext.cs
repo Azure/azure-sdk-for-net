@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.DeviceRegistry.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
@@ -165,8 +164,7 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(StreamDestination))]
     [ModelReaderWriterBuildable(typeof(StreamMqttDestination))]
     [ModelReaderWriterBuildable(typeof(StreamStorageDestination))]
-    [ModelReaderWriterBuildable(typeof(Models.SystemAssignedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(SystemAssignedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(TrustSettings))]
     [ModelReaderWriterBuildable(typeof(UnknownDatasetDestination))]
     [ModelReaderWriterBuildable(typeof(UnknownEventDestination))]

@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     [ModelReaderWriterBuildable(typeof(ProvisioningServiceDescriptionListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDeviceProvisioningServicesContext : ModelReaderWriterContext
     {

@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.ContainerService.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService
@@ -108,7 +107,6 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(ContainerServiceVmSkuRestrictions))]
     [ModelReaderWriterBuildable(typeof(ContainerServiceVmSkuZoneDetails))]
     [ModelReaderWriterBuildable(typeof(DailySchedule))]
-    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(GuardrailsAvailableVersionData))]
     [ModelReaderWriterBuildable(typeof(GuardrailsAvailableVersionResource))]
     [ModelReaderWriterBuildable(typeof(GuardrailsAvailableVersionsList))]
@@ -289,7 +287,6 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(SnapshotListResult))]
     [ModelReaderWriterBuildable(typeof(SnapshotProperties))]
     [ModelReaderWriterBuildable(typeof(SysctlConfig))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrustedAccessRoleBindingListResult))]
     [ModelReaderWriterBuildable(typeof(TrustedAccessRoleBindingProperties))]
     [ModelReaderWriterBuildable(typeof(TrustedAccessRoleListResult))]

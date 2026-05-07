@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(IdentityType.Value.ToString());
+                ((IJsonModel<ManagedServiceIdentityType?>)IdentityType).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DelegatedResources))
             {

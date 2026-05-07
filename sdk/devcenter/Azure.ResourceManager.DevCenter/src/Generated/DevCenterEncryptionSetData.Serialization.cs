@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDevCenterContext.Default);
+                    systemData = ResourceManager.Models.SystemData.DeserializeSystemData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

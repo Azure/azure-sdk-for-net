@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku)
         {
-            return DeviceProvisioningServiceData(id, name, resourceType, systemData, tags, location, etag, resourceGroup: default, subscriptionId: default, properties, sku, identity: default);
+            return DeviceProvisioningServiceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, resourceGroup: default, subscriptionId: default, properties: properties, sku: sku, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServiceProperties"/>. </summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IEnumerable<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled)
         {
-            return DeviceProvisioningServiceProperties(state, publicNetworkAccess, ipFilterRules, privateEndpointConnections, provisioningState, iotHubs, deviceRegistryNamespace: default, allocationPolicy, serviceOperationsHostName, deviceProvisioningHostName, idScope, authorizationPolicies, isDataResidencyEnabled, portalOperationsHostName: default);
+            return DeviceProvisioningServiceProperties(state: state, publicNetworkAccess: publicNetworkAccess, ipFilterRules: ipFilterRules, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, iotHubs: iotHubs, deviceRegistryNamespace: default, allocationPolicy: allocationPolicy, serviceOperationsHostName: serviceOperationsHostName, deviceProvisioningHostName: deviceProvisioningHostName, idScope: idScope, authorizationPolicies: authorizationPolicies, isDataResidencyEnabled: isDataResidencyEnabled, portalOperationsHostName: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeResult"/>. </summary>

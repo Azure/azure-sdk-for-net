@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.DnsResolver.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
@@ -75,7 +74,6 @@ namespace Azure.ResourceManager.DnsResolver
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(Models.SubResource))]
     [ModelReaderWriterBuildable(typeof(SubResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetDnsServer))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkDnsForwardingRuleset))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkDnsForwardingRulesetListResult))]

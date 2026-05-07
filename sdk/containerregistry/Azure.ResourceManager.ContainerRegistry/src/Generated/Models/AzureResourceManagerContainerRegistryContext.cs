@@ -157,7 +157,6 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ScopeMapProperties))]
     [ModelReaderWriterBuildable(typeof(ScopeMapPropertiesUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(ScopeMapResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TokenListResult))]
     [ModelReaderWriterBuildable(typeof(TokenProperties))]
     [ModelReaderWriterBuildable(typeof(TokenUpdateProperties))]

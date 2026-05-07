@@ -9,7 +9,6 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.EdgeOrder.Custom.Models;
 using Azure.ResourceManager.EdgeOrder.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ReverseShippingDetails))]
     [ModelReaderWriterBuildable(typeof(SiteDetails))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransportPreferences))]
     [ModelReaderWriterBuildable(typeof(UnknownMeterDetails))]
     public partial class AzureResourceManagerEdgeOrderContext : ModelReaderWriterContext

@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Datadog.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog
 {
@@ -66,7 +65,6 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(DataMonitoringTagRuleData))]
     [ModelReaderWriterBuildable(typeof(DataMonitoringTagRuleResource))]
     [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertiesList))]
@@ -75,8 +73,6 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResubscribeOrganizationContent))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDatadogContext : ModelReaderWriterContext
     {
     }

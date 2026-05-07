@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.DurableTask.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DurableTask
 {
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.DurableTask
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SchedulerListResult))]
     [ModelReaderWriterBuildable(typeof(SchedulerPrivateLinkResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TaskHubListResult))]
     public partial class AzureResourceManagerDurableTaskContext : ModelReaderWriterContext
     {

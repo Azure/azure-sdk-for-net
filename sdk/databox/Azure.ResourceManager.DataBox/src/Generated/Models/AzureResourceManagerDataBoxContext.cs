@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.DataBox.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBox
 {
@@ -103,7 +102,6 @@ namespace Azure.ResourceManager.DataBox
     [ModelReaderWriterBuildable(typeof(JobSecrets))]
     [ModelReaderWriterBuildable(typeof(LastMitigationActionOnJob))]
     [ModelReaderWriterBuildable(typeof(ManagedDiskDetails))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarkDevicesShippedContent))]
     [ModelReaderWriterBuildable(typeof(MitigateJobContent))]
     [ModelReaderWriterBuildable(typeof(NotificationPreference))]
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.DataBox
     [ModelReaderWriterBuildable(typeof(SkuProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionIsAllowedToCreateJobValidationContent))]
     [ModelReaderWriterBuildable(typeof(SubscriptionIsAllowedToCreateJobValidationResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransferAllDetails))]
     [ModelReaderWriterBuildable(typeof(TransferConfiguration))]
     [ModelReaderWriterBuildable(typeof(TransferConfigurationTransferAllDetails))]
@@ -149,7 +146,6 @@ namespace Azure.ResourceManager.DataBox
     [ModelReaderWriterBuildable(typeof(UnknownValidationRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateJobDetails))]
     [ModelReaderWriterBuildable(typeof(UpdateJobProperties))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ValidationResponseProperties))]
     public partial class AzureResourceManagerDataBoxContext : ModelReaderWriterContext
     {

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteObjectValue<ResourceType?>(ResourceType.Value, options);
             }
             if (Optional.IsDefined(ResourceUriString))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = Core.ResourceType.DeserializeResourceType(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceUri"u8))

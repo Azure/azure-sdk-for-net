@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.DevOpsInfrastructure.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure
 {
@@ -50,7 +49,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(DevOpsVmssFabricProfile))]
     [ModelReaderWriterBuildable(typeof(ImageVersionListResult))]
     [ModelReaderWriterBuildable(typeof(ImageVersionProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManualResourcePredictionsProfile))]
     [ModelReaderWriterBuildable(typeof(PagedQuota))]
     [ModelReaderWriterBuildable(typeof(PoolListResult))]
@@ -67,12 +65,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuntimeConfiguration))]
     [ModelReaderWriterBuildable(typeof(SecretsManagementSettings))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownDevOpsFabricProfile))]
     [ModelReaderWriterBuildable(typeof(UnknownDevOpsOrganizationProfile))]
     [ModelReaderWriterBuildable(typeof(UnknownDevOpsPoolAgentProfile))]
     [ModelReaderWriterBuildable(typeof(UnknownResourcePredictionsProfile))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDevOpsInfrastructureContext : ModelReaderWriterContext
     {
     }

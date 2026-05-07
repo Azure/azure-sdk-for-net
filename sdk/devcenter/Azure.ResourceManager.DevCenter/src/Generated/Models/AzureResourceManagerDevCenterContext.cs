@@ -200,7 +200,6 @@ namespace Azure.ResourceManager.DevCenter
     [ModelReaderWriterBuildable(typeof(ScheduleUpdatePropertiesReplacement))]
     [ModelReaderWriterBuildable(typeof(SkuListResult))]
     [ModelReaderWriterBuildable(typeof(StopOnDisconnectConfiguration))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkspaceStorageSettings))]
     public partial class AzureResourceManagerDevCenterContext : ModelReaderWriterContext

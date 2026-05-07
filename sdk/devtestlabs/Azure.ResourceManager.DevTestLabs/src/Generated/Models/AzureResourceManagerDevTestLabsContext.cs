@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.DevTestLabs.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
@@ -175,7 +174,6 @@ namespace Azure.ResourceManager.DevTestLabs
     [ModelReaderWriterBuildable(typeof(ServiceFabricProperties))]
     [ModelReaderWriterBuildable(typeof(SharedPublicIpAddressConfiguration))]
     [ModelReaderWriterBuildable(typeof(SubnetSharedPublicIPAddressConfiguration))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserList))]
     [ModelReaderWriterBuildable(typeof(UserProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkList))]

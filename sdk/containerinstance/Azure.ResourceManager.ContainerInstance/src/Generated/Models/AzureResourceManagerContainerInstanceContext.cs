@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.ContainerInstance.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(InitContainerPropertiesDefinitionInstanceView))]
     [ModelReaderWriterBuildable(typeof(LoadBalancer))]
     [ModelReaderWriterBuildable(typeof(LoadBalancerBackendAddressPool))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NGroupCGPropertyContainerProperties))]
     [ModelReaderWriterBuildable(typeof(NGroupContainerGroupProperties))]
     [ModelReaderWriterBuildable(typeof(NGroupContainerGroupPropertyContainer))]
@@ -108,9 +106,7 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StandbyPoolProfileDefinition))]
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UsageListResult))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerContainerInstanceContext : ModelReaderWriterContext
     {
     }

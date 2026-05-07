@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.CostManagement.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
@@ -43,6 +42,8 @@ namespace Azure.ResourceManager.CostManagement
     [ModelReaderWriterBuildable(typeof(CommonExportProperties))]
     [ModelReaderWriterBuildable(typeof(CostAllocationEntity))]
     [ModelReaderWriterBuildable(typeof(CostAllocationProportion))]
+    [ModelReaderWriterBuildable(typeof(CostAllocationRuleCheckNameAvailabilityRequest))]
+    [ModelReaderWriterBuildable(typeof(CostAllocationRuleCheckNameAvailabilityResponse))]
     [ModelReaderWriterBuildable(typeof(CostAllocationRuleData))]
     [ModelReaderWriterBuildable(typeof(CostAllocationRuleDetails))]
     [ModelReaderWriterBuildable(typeof(CostAllocationRuleList))]
@@ -107,7 +108,6 @@ namespace Azure.ResourceManager.CostManagement
     [ModelReaderWriterBuildable(typeof(GenerateDetailedCostReportTimePeriod))]
     [ModelReaderWriterBuildable(typeof(IncludedQuantityUtilizationSummary))]
     [ModelReaderWriterBuildable(typeof(IncludedQuantityUtilizationSummaryProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(McaPriceSheetProperties))]
     [ModelReaderWriterBuildable(typeof(NotificationProperties))]
     [ModelReaderWriterBuildable(typeof(OperationStatus))]
@@ -149,7 +149,6 @@ namespace Azure.ResourceManager.CostManagement
     [ModelReaderWriterBuildable(typeof(SharedScopeBenefitRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(SingleScopeBenefitRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(SourceCostAllocationEntity))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagInheritanceProperties))]
     [ModelReaderWriterBuildable(typeof(TagInheritanceSetting))]
     [ModelReaderWriterBuildable(typeof(TargetCostAllocationEntity))]
@@ -158,7 +157,6 @@ namespace Azure.ResourceManager.CostManagement
     [ModelReaderWriterBuildable(typeof(UnknownBenefitRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownBenefitUtilizationSummary))]
     [ModelReaderWriterBuildable(typeof(UnknownCostManagementSetting))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ViewKpiProperties))]
     [ModelReaderWriterBuildable(typeof(ViewListResult))]
     [ModelReaderWriterBuildable(typeof(ViewPivotProperties))]
