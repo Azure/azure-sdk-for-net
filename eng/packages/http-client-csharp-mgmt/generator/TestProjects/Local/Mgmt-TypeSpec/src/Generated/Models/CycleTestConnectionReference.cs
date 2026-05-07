@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -23,31 +25,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CycleTestConnectionReference"/>. </summary>
-        /// <param name="id"> The resource ID. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. </param>
-        /// <param name="properties"> The properties of the connection. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CycleTestConnectionReference(string id, string name, string @type, CycleTestConnectionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="properties"> The properties of the connection. </param>
+        internal CycleTestConnectionReference(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, CycleTestConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
-
-        /// <summary> The resource ID. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
-        /// <summary> The name of the resource. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The type of the resource. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The properties of the connection. </summary>
         [WirePath("properties")]

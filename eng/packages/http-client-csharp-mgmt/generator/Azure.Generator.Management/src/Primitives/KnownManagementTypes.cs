@@ -67,12 +67,21 @@ namespace Azure.Generator.Management.Primitives
         ];
 
         private static readonly IReadOnlyDictionary<string, Type> _fullyQualifiedNameToFrameworkTypeMap =
-            _additionalFrameworkTypes
-                .Concat(_idToInheritableSystemTypeMap.Values.Select(type => type.FrameworkType))
+            CreateFrameworkTypeMap();
+
+        private static IReadOnlyDictionary<string, Type> CreateFrameworkTypeMap()
+        {
+            var result = _additionalFrameworkTypes
                 .Concat(_idToSystemTypeMap.Values.Select(type => type.FrameworkType))
                 .Concat(_idToPrimitiveTypeMap.Values.Select(type => type.FrameworkType))
                 .Distinct()
                 .ToDictionary(type => type.FullName!, type => type);
+
+            result["Azure.ResourceManager.Resources.Models.ResourceData"] = typeof(ResourceData);
+            result["Azure.ResourceManager.Resources.Models.TrackedResourceData"] = typeof(TrackedResourceData);
+
+            return result;
+        }
 
         public static bool TryGetPrimitiveType(string crossLanguageDefinitionId, [MaybeNullWhen(false)] out CSharpType primitiveType)
             => _idToPrimitiveTypeMap.TryGetValue(crossLanguageDefinitionId, out primitiveType);

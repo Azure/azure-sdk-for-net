@@ -1,8 +1,0 @@
-<Project>
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)..'))" />
-
-  <PropertyGroup>
-    <!-- CycleTestConnectionReference intentionally uses a custom partial ResourceData base to exercise flattening cycle handling. -->
-    <NoWarn>$(NoWarn);CS0108;CS0114</NoWarn>
-  </PropertyGroup>
-</Project>

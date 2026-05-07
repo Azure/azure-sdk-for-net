@@ -1706,15 +1706,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new CycleTestStoreProperties(endpoint, connections.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> The resource ID. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. </param>
         /// <param name="provisioningState"> The provisioning status. </param>
         /// <param name="description"> Description of the connection. </param>
         /// <returns> A new <see cref="Models.CycleTestConnectionReference"/> instance for mocking. </returns>
-        public static CycleTestConnectionReference CycleTestConnectionReference(string id = default, string name = default, string @type = default, string provisioningState = default, string description = default)
+        public static CycleTestConnectionReference CycleTestConnectionReference(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, string provisioningState = default, string description = default)
         {
-            return new CycleTestConnectionReference(id, name, @type, provisioningState is null && description is null ? default : new CycleTestConnectionProperties(provisioningState, description, null), additionalBinaryDataProperties: null);
+            return new CycleTestConnectionReference(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                name,
+                provisioningState is null && description is null ? default : new CycleTestConnectionProperties(provisioningState, description, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
