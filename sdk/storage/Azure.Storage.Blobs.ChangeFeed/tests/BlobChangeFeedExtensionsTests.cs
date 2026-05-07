@@ -2,216 +2,97 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs.Models;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
+    /// <summary>
+    /// Verifies that the public <see cref="BlobChangeFeedExtensions.GetChangeFeedClient"/>
+    /// extension constructs a working <see cref="BlobChangeFeedClient"/> regardless of
+    /// the credential the source <see cref="BlobServiceClient"/> was built with.
+    /// </summary>
     public class BlobChangeFeedExtensionsTests : ChangeFeedTestBase
     {
+        private static readonly Uri BlobServiceUri = new Uri("https://account.blob.core.windows.net");
+
         public BlobChangeFeedExtensionsTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null)
         {
         }
 
-        /// <summary>
-        /// Tests conversion of segment paths to DateTimeOffset values at various levels of path granularity.
-        /// </summary>
         [Test]
-        public void ToDateTimeOffsetTests()
+        public void BlobServiceClient_SharedKey_PropagatesCredentialToChangeFeedClient()
         {
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700/meta.json"));
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(
+                "account",
+                Convert.ToBase64String(new byte[64]));
+            BlobServiceClient serviceClient = new BlobServiceClient(BlobServiceUri, credential);
 
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700/"));
+            BlobChangeFeedClient changeFeedClient = serviceClient.GetChangeFeedClient();
 
+            Assert.IsNotNull(changeFeedClient);
+            Assert.AreSame(serviceClient, changeFeedClient._blobServiceClient);
             Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700"));
-
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 2, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/"));
-
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 2, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02"));
-
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 1, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/"));
-
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 11, 1, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11"));
-
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 1, 1, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/"));
-
-            Assert.AreEqual(
-                new DateTimeOffset(2019, 1, 1, 0, 0, 0, TimeSpan.Zero),
-                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019"));
-
-            Assert.AreEqual(
-                null,
-                BlobChangeFeedExtensions.ToDateTimeOffset(((string)null)));
+                "https://account.blob.core.windows.net/$blobchangefeed",
+                changeFeedClient._containerClient.Uri.ToString());
         }
 
-        /// <summary>
-        /// Tests rounding down a DateTimeOffset to the nearest hour.
-        /// </summary>
         [Test]
-        public void RoundDownToNearestHourTests()
+        public void BlobServiceClient_TokenCredential_PropagatesCredentialToChangeFeedClient()
         {
-            Assert.AreEqual(
-                new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 20, 0, 0, TimeSpan.Zero)),
-                (new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 20, 25, 30, TimeSpan.Zero))).RoundDownToNearestHour());
+            BlobServiceClient serviceClient = new BlobServiceClient(BlobServiceUri, new MockCredential());
 
+            BlobChangeFeedClient changeFeedClient = serviceClient.GetChangeFeedClient();
+
+            Assert.IsNotNull(changeFeedClient);
+            Assert.AreSame(serviceClient, changeFeedClient._blobServiceClient);
             Assert.AreEqual(
-                null,
-                ((DateTimeOffset?)null).RoundDownToNearestHour());
+                "https://account.blob.core.windows.net/$blobchangefeed",
+                changeFeedClient._containerClient.Uri.ToString());
         }
 
-        /// <summary>
-        /// Tests rounding up a DateTimeOffset to the nearest hour, including when already on the hour.
-        /// </summary>
         [Test]
-        public void RoundUpToNearestHourTests()
+        public void BlobServiceClient_SasToken_PreservesSasInContainerEndpoint()
         {
-            Assert.AreEqual(
-                new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero)),
-                (new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 20, 25, 30, TimeSpan.Zero))).RoundUpToNearestHour());
+            Uri serviceUriWithSas = new Uri("https://account.blob.core.windows.net?sv=2024-01-01&ss=b&srt=sco&sig=fakesig");
+            BlobServiceClient serviceClient = new BlobServiceClient(serviceUriWithSas);
 
-            Assert.AreEqual(
-                new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero)),
-                (new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero))).RoundUpToNearestHour());
+            BlobChangeFeedClient changeFeedClient = serviceClient.GetChangeFeedClient();
 
-            Assert.AreEqual(
-                null,
-                ((DateTimeOffset?)null).RoundUpToNearestHour());
+            Assert.IsNotNull(changeFeedClient);
+            string containerUri = changeFeedClient._containerClient.Uri.ToString();
+            Assert.That(containerUri, Does.StartWith("https://account.blob.core.windows.net/$blobchangefeed"));
+            Assert.That(containerUri, Does.Contain("sig=fakesig"));
         }
 
-        /// <summary>
-        /// Tests rounding down a DateTimeOffset to January 1st of the same year.
-        /// </summary>
         [Test]
-        public void RoundDownToNearestYearTests()
+        public void BlobServiceClient_NullOptions_StillReturnsClient()
         {
-            Assert.AreEqual(
-                new DateTimeOffset?(
-                    new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero)),
-                (new DateTimeOffset?(
-                    new DateTimeOffset(2020, 03, 17, 20, 25, 30, TimeSpan.Zero))).RoundDownToNearestYear());
+            BlobServiceClient serviceClient = new BlobServiceClient(BlobServiceUri);
 
-            Assert.AreEqual(
-                null,
-                ((DateTimeOffset?)null).RoundDownToNearestYear());
+            // Calling GetChangeFeedClient without options should produce a client with default options.
+            BlobChangeFeedClient changeFeedClient = serviceClient.GetChangeFeedClient(options: null);
+
+            Assert.IsNotNull(changeFeedClient);
+            Assert.IsFalse(changeFeedClient._includeNonFinalizedEvents);
+            Assert.IsNull(changeFeedClient._maxTransferSize);
         }
 
-        /// <summary>
-        /// Tests that ToDateTimeOffset throws ArgumentException for paths with fewer than three segments.
-        /// </summary>
         [Test]
-        public void ToDateTimeOffset_ThrowsOnInvalidShortPaths()
+        public void BlobServiceClient_OptionsFlowThroughToChangeFeedClient()
         {
-            // Paths with fewer than 3 non-empty segments should throw ArgumentException
-            Assert.Throws<ArgumentException>(
-                () => BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/"));
-
-            Assert.Throws<ArgumentException>(
-                () => BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments"));
-
-            Assert.Throws<ArgumentException>(
-                () => BlobChangeFeedExtensions.ToDateTimeOffset("a/b"));
-
-            Assert.Throws<ArgumentException>(
-                () => BlobChangeFeedExtensions.ToDateTimeOffset("single"));
-        }
-
-        /// <summary>
-        /// Tests MinDateTime returns the earlier of lastConsumable and endDate.
-        /// </summary>
-        [Test]
-        public void MinDateTimeTests()
-        {
-            DateTimeOffset lastConsumable = new DateTimeOffset(2020, 6, 1, 0, 0, 0, TimeSpan.Zero);
-
-            // When endDate is null, returns lastConsumable
-            Assert.AreEqual(lastConsumable, BlobChangeFeedExtensions.MinDateTime(lastConsumable, null));
-
-            // When endDate > lastConsumable, returns lastConsumable
-            DateTimeOffset laterDate = new DateTimeOffset(2020, 7, 1, 0, 0, 0, TimeSpan.Zero);
-            Assert.AreEqual(lastConsumable, BlobChangeFeedExtensions.MinDateTime(lastConsumable, laterDate));
-
-            // When endDate < lastConsumable, returns endDate
-            DateTimeOffset earlierDate = new DateTimeOffset(2020, 5, 1, 0, 0, 0, TimeSpan.Zero);
-            Assert.AreEqual(earlierDate, BlobChangeFeedExtensions.MinDateTime(lastConsumable, earlierDate));
-
-            // When endDate == lastConsumable, returns lastConsumable
-            Assert.AreEqual(lastConsumable, BlobChangeFeedExtensions.MinDateTime(lastConsumable, lastConsumable));
-        }
-
-        /// <summary>
-        /// Tests retrieving segment paths within a specific year filtered by start and end times.
-        /// </summary>
-        [Test]
-        public async Task GetSegmentsInYearTest()
-        {
-            // Arrange
-            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>();
-
-            if (IsAsync)
+            BlobServiceClient serviceClient = new BlobServiceClient(BlobServiceUri);
+            BlobChangeFeedClientOptions options = new BlobChangeFeedClientOptions
             {
-                AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetSegmentsInYearFuncAsync);
+                IncludeNonFinalizedEvents = true,
+                MaximumTransferSize = 8 * 1024 * 1024,
+            };
 
-                containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    It.Is<GetBlobsByHierarchyOptions>(
-                        r => r.Prefix == "idx/segments/2020/"),
-                    default)).Returns(asyncPageable);
-            }
-            else
-            {
-                Pageable<BlobHierarchyItem> pageable =
-                    PageResponseEnumerator.CreateEnumerable(GetSegmentsInYearFunc);
+            BlobChangeFeedClient changeFeedClient = serviceClient.GetChangeFeedClient(options);
 
-                containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    It.Is<GetBlobsByHierarchyOptions>(
-                        r => r.Prefix == "idx/segments/2020/"),
-                    default)).Returns(pageable);
-            }
-
-            // Act
-            Queue<string> segmentPaths = await BlobChangeFeedExtensions.GetSegmentsInYearInternal(
-                containerClient.Object,
-                "idx/segments/2020/",
-                startTime: new DateTimeOffset(2020, 3, 3, 0, 0, 0, TimeSpan.Zero),
-                endTime: new DateTimeOffset(2020, 3, 3, 22, 0, 0, TimeSpan.Zero),
-                IsAsync,
-                default);
-
-            // Assert
-            Queue<string> expectedSegmentPaths = new Queue<string>();
-            expectedSegmentPaths.Enqueue("idx/segments/2020/03/03/0000/meta.json");
-            expectedSegmentPaths.Enqueue("idx/segments/2020/03/03/1800/meta.json");
-            expectedSegmentPaths.Enqueue("idx/segments/2020/03/03/2000/meta.json");
-            expectedSegmentPaths.Enqueue("idx/segments/2020/03/03/2200/meta.json");
-
-            Assert.AreEqual(expectedSegmentPaths, segmentPaths);
+            Assert.IsTrue(changeFeedClient._includeNonFinalizedEvents);
+            Assert.AreEqual(8 * 1024 * 1024L, changeFeedClient._maxTransferSize);
         }
     }
 }

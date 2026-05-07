@@ -3,12 +3,15 @@
 ## 12.0.0-preview.62 (Unreleased)
 
 ### Features Added
+- Added `BlobChangeFeedClientOptions.IncludeNonFinalizedEvents`. When enabled, the change feed reader returns events past the finalized watermark; pages produced in this mode do not carry a continuation token, and `GetChanges(string)` / `GetChangesAsync(string)` will throw if a continuation token is supplied.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+- Rebuilt on top of the shared `Azure.Storage.ChangeFeed.Common` change-feed engine for parity with `Azure.Storage.Files.Shares.ChangeFeed`. Continuation tokens issued by prior previews remain compatible (cursor JSON shape is unchanged).
+- Default chunk download size raised from 1 MB to 256 MB to match Files Change Feed (reduces round trips on large feeds). Override via `BlobChangeFeedClientOptions.MaximumTransferSize`.
 
 ## 12.0.0-preview.61 (2026-03-24)
 

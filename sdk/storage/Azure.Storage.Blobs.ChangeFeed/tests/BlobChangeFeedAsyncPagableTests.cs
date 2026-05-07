@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.ChangeFeed.Common;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
@@ -20,6 +21,24 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         public BlobChangeFeedAsyncPagableTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+        }
+
+        /// <summary>
+        /// Verifies that calling <see cref="AsyncPageable{T}.AsPages"/> with a non-null continuation
+        /// token throws — callers must use <see cref="BlobChangeFeedClient.GetChangesAsync(string)"/>
+        /// instead. This is the documented contract; the pageable cannot validate the token.
+        /// </summary>
+        [Test]
+        public void AsyncAsPages_NonNullContinuationToken_Throws()
+        {
+            BlobChangeFeedClient client = new BlobChangeFeedClient(
+                new Uri("https://account.blob.core.windows.net?sv=2024-01-01&ss=b&srt=sco&sig=fakesig"));
+            AsyncPageable<BlobChangeFeedEvent> pageable = client.GetChangesAsync();
+
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+            {
+                await foreach (Page<BlobChangeFeedEvent> _ in pageable.AsPages(continuationToken: "any-token")) { }
+            });
         }
 
         /// <summary>
@@ -737,7 +756,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // Verify
             // You may need to update expected values when re-recording
             var cursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor);
-            Assert.AreEqual(new DateTimeOffset(2020, 7, 31, 00, 00, 00, TimeSpan.Zero), cursor.EndTime);
+            // EndTime in the cursor reflects the raw user-supplied end time;
+            // the Common factory does not round to the nearest hour.
+            Assert.AreEqual(endTime, cursor.EndTime);
             Assert.AreEqual(1, cursor.CursorVersion);
             Assert.AreEqual("emilydevtest.blob.core.windows.net", cursor.UrlHost);
             var currentSegmentCursor = cursor.CurrentSegmentCursor;

@@ -63,7 +63,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             {
                 yield return await changeFeed.GetPage(
                     async: true,
-                    pageSize: pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize)
+                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize)
                     .ConfigureAwait(false);
             }
         }
