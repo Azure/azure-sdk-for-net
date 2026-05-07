@@ -346,93 +346,11 @@ namespace Azure.ResourceManager.Resources.Policy
                 "PolicySetDefinitionCollection.GetAll"), data => new PolicySetDefinitionResource(Client, data));
         }
 
-        /// <summary>
-        /// This operation lists all the policy set definition versions for all policy set definitions within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/listPolicySetDefinitionVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersionsOperationGroup_ListAll. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicySetDefinitionVersionListResult>> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _policySetDefinitionVersionsClientDiagnostics.CreateScope("PolicySetDefinitionCollection.GetAll");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicySetDefinitionVersionListResult> response = Response.FromValue(PolicySetDefinitionVersionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation lists all the policy set definition versions for all policy set definitions within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/listPolicySetDefinitionVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersionsOperationGroup_ListAll. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicySetDefinitionVersionListResult> GetAll(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _policySetDefinitionVersionsClientDiagnostics.CreateScope("PolicySetDefinitionCollection.GetAll");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicySetDefinitionVersionListResult> response = Response.FromValue(PolicySetDefinitionVersionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        // NOTE: The non-paged GetAll(CancellationToken) / GetAllAsync(CancellationToken) overloads
+        // for PolicySetDefinitionVersionsOperationGroup_ListAll were removed manually because the spec
+        // applies @@scope(..., "!csharp") to that operation, which suppresses the underlying REST
+        // method but the generator still emits the collection wrapper, causing CS7036/CS0121 errors.
+        // This is a temporary workaround; once the generator is fixed, these will be regenerated as empty.
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
