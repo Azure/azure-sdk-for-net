@@ -20,6 +20,15 @@ namespace Azure.Storage.Blobs.Models
         /// Must be set if <see cref="Models.SessionMode"/> is <see cref="SessionMode.Enabled"/>.
         /// </summary>
         public string AccountName { get; set; }
+
+        /// <summary>
+        /// Creates a shallow copy.
+        /// </summary>
+        internal SessionOptions Clone() => new SessionOptions
+        {
+            SessionMode = this.SessionMode,
+            AccountName = this.AccountName,
+        };
     }
 
     /// <summary>

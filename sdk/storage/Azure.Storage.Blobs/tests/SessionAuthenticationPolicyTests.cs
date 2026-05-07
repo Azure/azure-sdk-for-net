@@ -248,6 +248,25 @@ namespace Azure.Storage.Blobs.Tests
                 blobServiceClientFactory: () => CreateMockServiceClient(),
                 sessionOptions: EnabledOptions));
         }
+
+        [Test]
+        public async Task Ctor_SnapshotsSessionOptions_MutationsAfterCtorIgnored()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            var options = new SessionOptions { SessionMode = SessionMode.Disabled };
+            var policy = CreateSessionPolicy(mockBearer, options);
+
+            options.SessionMode = SessionMode.Enabled;
+            options.AccountName = AccountName;
+
+            await SendBlobGetAsync(
+                policy,
+                BlobUri,
+                RequestMethod.Get,
+                new MockResponse(200));
+
+            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
+        }
         #endregion
 
         #region Request Routing — Mode-Agnostic

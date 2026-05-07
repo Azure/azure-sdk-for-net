@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs
         {
             _bearerTokenPolicy = bearerTokenPolicy ?? throw Errors.ArgumentNull(nameof(bearerTokenPolicy));
             _blobServiceClientFactory = blobServiceClientFactory ?? throw Errors.ArgumentNull(nameof(blobServiceClientFactory));
-            _sessionOptions = sessionOptions ?? new SessionOptions();
+            _sessionOptions = sessionOptions?.Clone() ?? new SessionOptions();
 
             // AccountName is required whenever sessions are used (needed to sign requests).
             if (_sessionOptions.SessionMode == SessionMode.Enabled
