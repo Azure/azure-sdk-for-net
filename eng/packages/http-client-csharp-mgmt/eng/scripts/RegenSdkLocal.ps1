@@ -7,28 +7,17 @@
 .DESCRIPTION
     Builds the mgmt generator locally and regenerates SDK folders using TypeSpec.
     Does NOT modify package.json files or create versioned packages.
-    By default, regenerates ALL mgmt SDKs. Use -Services to limit scope.
-    
-    Pattern matching: The -Services parameter uses substring matching.
-    For example, "Key" matches both "KeyVault" and "MyKeyService".
-    Use wildcards for more precise matching (e.g., "KeyVault*").
+    By default (when -Services is omitted), regenerates ALL mgmt SDKs.
+    Use -Services to regenerate one or more specific libraries by exact name.
 
 .PARAMETER Services
-    One or more service name patterns to regenerate (e.g., "KeyVault", "Compute").
-    Case-insensitive. Matching rules:
-      * If the pattern contains a wildcard ('*' or '?'), it is matched verbatim
-        with -like (no implicit padding).
-      * Otherwise the pattern is treated as a literal substring and matched
-        against both Library and Service names (the legacy behavior).
-      * As a special case, a pattern that starts with "Azure.ResourceManager."
-        and contains no wildcards is matched as an exact Library name. This
-        avoids the common pitfall where "Azure.ResourceManager.Compute" also
-        selects ComputeFleet, ComputeLimit, ComputeSchedule, etc.
-      * Use -Exact to force exact Library-name matching for any pattern.
-
-.PARAMETER Exact
-    When specified, every pattern in -Services must match a Library name
-    exactly (case-insensitive). Disables substring/wildcard matching.
+    One or more library names to regenerate, matched exactly against the SDK
+    folder name (case-insensitive). Each value must be the full library name,
+    e.g. "Azure.ResourceManager.Compute". Substring and wildcard matching are
+    intentionally not supported: in practice we either regenerate exactly one
+    library or regenerate everything, so requiring an exact match avoids the
+    common pitfall where "Compute" also picks up ComputeFleet, ComputeLimit,
+    ComputeSchedule, etc. Omit -Services to regenerate ALL mgmt SDKs.
 
 .PARAMETER Parallel
     Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
@@ -49,30 +38,21 @@
     The powershell-yaml module will be auto-installed if not present.
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "KeyVault"
+    .\RegenSdkLocal.ps1
+    # Regenerates ALL mgmt SDKs.
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "KeyVault","Compute","Network"
+    .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.KeyVault"
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "Key*" -Parallel 8
+    .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.KeyVault","Azure.ResourceManager.Compute"
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs"
-
-.EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.Compute"
-    # Auto-treated as exact Library match because it starts with "Azure.ResourceManager."
-    # Will NOT also pick up ComputeFleet, ComputeLimit, ComputeSchedule.
-
-.EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "Compute" -Exact
-    # Forces exact match against Library name only (no service-arm, no substring).
+    .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs"
 #>
 
 param(
     [string[]]$Services,
-    [switch]$Exact,
     [ValidateRange(1, [int]::MaxValue)]
     [int]$Parallel = 4,
     [string]$LocalSpecRepoPath,
@@ -167,34 +147,21 @@ foreach ($tspFile in $tspFiles) {
 
 Write-Host "Found $($mgmtSdkFolders.Count) mgmt SDK folders"
 
-# Apply services filter
+# Apply services filter (exact Library-name match, case-insensitive)
 if ($Services -and $Services.Count -gt 0) {
-    $mgmtSdkFolders = @($mgmtSdkFolders | Where-Object {
-        $folder = $_
-        $matched = $false
-        foreach ($pattern in $Services) {
-            $hasWildcard = $pattern -match '[\*\?]'
-            $isFullLibName = -not $hasWildcard -and $pattern -like 'Azure.ResourceManager.*'
+    $serviceSet = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+    foreach ($name in $Services) { [void]$serviceSet.Add($name) }
 
-            if ($Exact -or $isFullLibName) {
-                # Exact Library-name match (case-insensitive)
-                if ($folder.Library -ieq $pattern) { $matched = $true; break }
-            }
-            elseif ($hasWildcard) {
-                # User-supplied wildcard pattern, used verbatim
-                if ($folder.Library -like $pattern -or $folder.Service -like $pattern) {
-                    $matched = $true; break
-                }
-            }
-            else {
-                # Legacy substring match against Library or Service
-                if ($folder.Library -like "*$pattern*" -or $folder.Service -like "*$pattern*") {
-                    $matched = $true; break
-                }
-            }
-        }
-        $matched
+    $mgmtSdkFolders = @($mgmtSdkFolders | Where-Object { $serviceSet.Contains($_.Library) })
+
+    $matchedNames = $mgmtSdkFolders | ForEach-Object { $_.Library }
+    $missing = @($Services | Where-Object {
+        $name = $_
+        -not ($matchedNames | Where-Object { $_ -ieq $name })
     })
+    if ($missing.Count -gt 0) {
+        throw "No mgmt SDK folder found for: $($missing -join ', '). -Services requires the exact library name (e.g. 'Azure.ResourceManager.Compute')."
+    }
     Write-Host "Filtered to $($mgmtSdkFolders.Count) matching: $($Services -join ', ')"
 }
 
