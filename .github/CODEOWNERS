@@ -262,6 +262,13 @@
 # ServiceLabel: %Digital Twins
 # ServiceOwners: @Aashish93-stack @abhinav-ghai @efriesner @johngallardo @Satya-Kolluri @sjiherzig
 
+# PRLabel: %EngSys
+/sdk/template/    @danieljurek @weshaggard
+
+# AzureSdkOwners: @danieljurek @weshaggard
+# ServiceLabel: %EngSys
+# ServiceOwners: @danieljurek @weshaggard
+
 # PRLabel: %Event Grid
 /sdk/eventgrid/    @Kishp01 @rajeshka @shankarsama
 

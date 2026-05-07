@@ -66,12 +66,14 @@ namespace Azure.Core.Tests.Identity.Samples
         [Test]
         public void WorkloadIdentityCredentialWithIdentityBinding()
         {
+#pragma warning disable AZID0002 // IsAzureProxyEnabled is experimental
             #region Snippet:WorkloadIdentityCredentialWithIdentityBinding
             var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
             {
                 IsAzureProxyEnabled = true  // Enable identity binding mode
             });
             #endregion
+#pragma warning restore AZID0002
         }
 
         [Test]
@@ -80,6 +82,7 @@ namespace Azure.Core.Tests.Identity.Samples
             // Verify commented code compiles.
             var fooCredential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
 
+#pragma warning disable AZID0002 // IsAzureProxyEnabled is experimental
             #region Snippet:MigrationToWorkloadIdentityCredential
             // Before (no identity binding support):
             // var credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
@@ -90,6 +93,7 @@ namespace Azure.Core.Tests.Identity.Samples
                 IsAzureProxyEnabled = true
             });
             #endregion
+#pragma warning restore AZID0002
         }
     }
 }
