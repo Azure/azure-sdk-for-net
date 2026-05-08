@@ -317,6 +317,92 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertiesArgument, Does.Contain("TestProperties"));
         }
 
+        [Test]
+        public void TestBackwardCompatNewInstanceUsesCombinedNestedParameterNameBeforeResourceName()
+        {
+            var policySettingsProperty = InputFactory.Property("policySettings", InputPrimitiveType.String, serializedName: "policySettings");
+            var rulesProperty = InputFactory.Property("rules", InputFactory.Array(InputPrimitiveType.String), serializedName: "rules");
+            var ruleListModel = InputFactory.Model(
+                "TestRuleList",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [rulesProperty]);
+            var rulesListProperty = InputFactory.Property("rulesList", ruleListModel, serializedName: "customRules");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [policySettingsProperty, rulesListProperty]);
+            var skuNameProperty = InputFactory.Property("name", InputPrimitiveType.String, serializedName: "name");
+            var skuModel = InputFactory.Model(
+                "TestSku",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [skuNameProperty]);
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var eTagProperty = InputFactory.Property("eTag", InputPrimitiveType.String, serializedName: "etag");
+            var skuProperty = InputFactory.Property("sku", skuModel, isRequired: false, serializedName: "sku");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty, eTagProperty, skuProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, ruleListModel, skuModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var ruleListProvider = plugin.Object.TypeFactory.CreateModel(ruleListModel)!;
+            var skuProvider = plugin.Object.TypeFactory.CreateModel(skuModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var policySettingsParam = propertiesProvider.FullConstructor.Signature.Parameters.Single(p => p.Name == "policySettings");
+            var rulesParam = ruleListProvider.FullConstructor.Signature.Parameters.Single(p => p.Name == "rules");
+            var eTagParam = parentProvider.FullConstructor.Signature.Parameters.Single(p => string.Equals(p.Name, "eTag", StringComparison.OrdinalIgnoreCase));
+            var skuNameParam = skuProvider.FullConstructor.Signature.Parameters.Single(p => p.Name == "name");
+            var oldResourceNameParam = new ParameterProvider("name", $"", typeof(string));
+            var oldPolicySettingsParam = new ParameterProvider("policySettings", $"", policySettingsParam.Type);
+            var oldRulesParam = new ParameterProvider("rules", $"", rulesParam.Type.InputType);
+            var oldETagParam = new ParameterProvider("etag", $"", eTagParam.Type);
+            var oldSkuNameParam = new ParameterProvider("skuName", $"", skuNameParam.Type);
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldResourceNameParam, oldETagParam, oldSkuNameParam, oldPolicySettingsParam, oldRulesParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var eTagIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => string.Equals(p.Name, "eTag", StringComparison.OrdinalIgnoreCase)).i;
+            var skuIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "sku").i;
+            var constructorArguments = constructorParameters
+                .Select(p => p.Name is "properties" or "sku" || string.Equals(p.Name, "eTag", StringComparison.OrdinalIgnoreCase) ? Default : p.DefaultValue ?? Default)
+                .ToArray();
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            var updateModelFactory = typeof(FlattenPropertyVisitor).GetMethod(
+                "UpdateModelFactory",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(updateModelFactory, Is.Not.Null);
+
+            updateModelFactory!.Invoke(new FlattenPropertyVisitor(), [modelFactory]);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
+            var eTagArgument = newInstance.Parameters[eTagIndex].ToDisplayString();
+            var skuArgument = newInstance.Parameters[skuIndex].ToDisplayString();
+            Assert.That(propertiesArgument, Does.Contain("policySettings"));
+            Assert.That(propertiesArgument, Does.Contain("rules"));
+            Assert.That(propertiesArgument, Does.Contain("ToList"));
+            Assert.That(eTagArgument, Is.EqualTo("etag"));
+            Assert.That(skuArgument, Does.Contain("skuName"));
+            Assert.That(skuArgument, Does.Not.Contain("new TestSku(name"));
+        }
+
         private static void AssertArgIsParameter(ValueExpression arg, string expectedName, string context)
         {
             string? actualName = arg is VariableExpression v ? v.Declaration.RequestedName : null;

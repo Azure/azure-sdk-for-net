@@ -250,10 +250,10 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                if (TryBuildCompatibilityArgument(method, constructorParameters[i], out var replacement))
+                if (TryBuildCompatibilityArgument(method, constructorParameters[i], new HashSet<CSharpType>(new CSharpTypeNameComparer()), out var replacement))
                 {
                     arguments ??= [.. newInstanceExpression.Parameters];
-                    arguments[i] = replacement;
+                    arguments[i] = replacement.Argument;
                 }
             }
 
@@ -261,17 +261,24 @@ namespace Azure.Generator.Management.Visitors
             return arguments is not null;
         }
 
-        private static bool TryBuildCompatibilityArgument(MethodProvider method, ParameterProvider constructorParameter, [NotNullWhen(true)] out ValueExpression? argument)
+        private static bool TryBuildCompatibilityArgument(MethodProvider method, ParameterProvider constructorParameter, HashSet<CSharpType> visitedTypes, [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
-            if (TryGetMethodParameter(method, constructorParameter.Name, out var directParameter))
+            if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, out var directParameter))
             {
-                argument = directParameter;
+                argument = new CompatibilityArgument(BuildParameterArgument(directParameter, constructorParameter.Type), [directParameter]);
                 return true;
+            }
+
+            if (!visitedTypes.Add(constructorParameter.Type))
+            {
+                argument = null;
+                return false;
             }
 
             if (!TryGetModelProvider(constructorParameter.Type, out var nestedModel))
             {
                 argument = null;
+                visitedTypes.Remove(constructorParameter.Type);
                 return false;
             }
 
@@ -280,10 +287,10 @@ namespace Azure.Generator.Management.Visitors
             var matchedParameters = new List<ParameterProvider>();
             foreach (var nestedParameter in nestedConstructorParameters)
             {
-                if (TryGetNestedCompatibilityParameter(method, constructorParameter.Property, nestedParameter, out var methodParameter))
+                if (TryGetNestedCompatibilityArgument(method, constructorParameter.Property, nestedParameter, visitedTypes, out var nestedArgument))
                 {
-                    nestedArguments.Add(methodParameter);
-                    matchedParameters.Add(methodParameter);
+                    nestedArguments.Add(nestedArgument.Argument);
+                    matchedParameters.AddRange(nestedArgument.MatchedParameters);
                 }
                 else
                 {
@@ -294,42 +301,66 @@ namespace Azure.Generator.Management.Visitors
             if (matchedParameters.Count == 0)
             {
                 argument = null;
+                visitedTypes.Remove(constructorParameter.Type);
                 return false;
             }
 
             var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
             var condition = BuildAllNullCondition(matchedParameters);
-            argument = condition is null
+            var expression = condition is null
                 ? newInstance
                 : new TernaryConditionalExpression(condition, Default, newInstance);
+            argument = new CompatibilityArgument(expression, matchedParameters);
+            visitedTypes.Remove(constructorParameter.Type);
             return true;
         }
 
-        private static bool TryGetNestedCompatibilityParameter(MethodProvider method, PropertyProvider? parentProperty, ParameterProvider nestedParameter, [NotNullWhen(true)] out ParameterProvider? methodParameter)
+        private static bool TryGetNestedCompatibilityArgument(MethodProvider method, PropertyProvider? parentProperty, ParameterProvider nestedParameter, HashSet<CSharpType> visitedTypes, [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
-            if (TryGetMethodParameter(method, nestedParameter.Name, out methodParameter))
-            {
-                return true;
-            }
-
             if (parentProperty is not null && nestedParameter.Property is not null)
             {
                 var combinedName = PropertyHelpers.GetCombinedPropertyName(nestedParameter.Property, parentProperty).ToVariableName();
-                if (TryGetMethodParameter(method, combinedName, out methodParameter))
+                if (TryGetMethodParameter(method, combinedName, nestedParameter.Type, out var combinedParameter))
                 {
+                    argument = new CompatibilityArgument(BuildParameterArgument(combinedParameter, nestedParameter.Type), [combinedParameter]);
                     return true;
                 }
             }
 
-            methodParameter = null;
-            return false;
+            if (TryGetMethodParameter(method, nestedParameter.Name, nestedParameter.Type, out var directParameter))
+            {
+                argument = new CompatibilityArgument(BuildParameterArgument(directParameter, nestedParameter.Type), [directParameter]);
+                return true;
+            }
+
+            return TryBuildCompatibilityArgument(method, nestedParameter, visitedTypes, out argument);
         }
 
-        private static bool TryGetMethodParameter(MethodProvider method, string name, [NotNullWhen(true)] out ParameterProvider? parameter)
+        private static bool TryGetMethodParameter(MethodProvider method, string name, CSharpType expectedType, [NotNullWhen(true)] out ParameterProvider? parameter)
         {
-            parameter = method.Signature.Parameters.FirstOrDefault(p => string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase));
+            parameter = method.Signature.Parameters.FirstOrDefault(p =>
+                string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase)
+                && AreCompatibleParameterTypes(p.Type, expectedType));
             return parameter is not null;
         }
+
+        private static bool AreCompatibleParameterTypes(CSharpType parameterType, CSharpType expectedType)
+            => parameterType.AreNamesEqual(expectedType)
+            || parameterType.InputType.AreNamesEqual(expectedType.InputType)
+            || AreCompatibleListTypes(parameterType, expectedType);
+
+        private static bool AreCompatibleListTypes(CSharpType parameterType, CSharpType expectedType)
+            => parameterType.IsList
+            && expectedType.IsList
+            && parameterType.Arguments.Count == expectedType.Arguments.Count
+            && parameterType.Arguments.Zip(expectedType.Arguments).All(pair => pair.First.AreNamesEqual(pair.Second));
+
+        private static ValueExpression BuildParameterArgument(ParameterProvider parameter, CSharpType expectedType)
+            => AreCompatibleListTypes(parameter.Type, expectedType) && !parameter.Type.AreNamesEqual(expectedType)
+                ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList()
+                : parameter;
+
+        private record CompatibilityArgument(ValueExpression Argument, IReadOnlyList<ParameterProvider> MatchedParameters);
 
         private static ScopedApi<bool>? BuildAllNullCondition(IEnumerable<ParameterProvider> parameters)
         {
