@@ -34,6 +34,7 @@ public class FoundryEnrichmentProcessorTests
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_INSTANCE_CLIENT_ID", null);
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID", null);
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_TENANT_ID", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
         FoundryEnvironment.Reload();
     }
 
@@ -395,5 +396,51 @@ public class FoundryEnrichmentProcessorTests
         Assert.That(activity.GetTagItem("gen_ai.agent.blueprint.id"), Is.EqualTo("blueprint-id"));
         Assert.That(activity.GetTagItem("microsoft.tenant.id"), Is.EqualTo("tenant-id"));
         Assert.That(activity.GetTagItem("microsoft.foundry.project.id"), Is.EqualTo("/sub/rg/proj"));
+    }
+
+    // ── agent_type attribute scoping ──────────────────────────────────
+
+    [Test]
+    public void SetsAgentType_OnInvokeAgentSpan_WhenHosted()
+    {
+        SetEnv("my-agent", "1.0");
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "managed");
+        FoundryEnvironment.Reload();
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("invoke_agent")!;
+        activity.SetTag("gen_ai.operation.name", "invoke_agent");
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("microsoft.foundry.agent.type"), Is.EqualTo("hosted"));
+    }
+
+    [Test]
+    public void DoesNotSetAgentType_OnOtherSpans_WhenHosted()
+    {
+        SetEnv("my-agent", "1.0");
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "managed");
+        FoundryEnvironment.Reload();
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("some_other_span")!;
+        activity.SetTag("gen_ai.operation.name", "chat");
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("microsoft.foundry.agent.type"), Is.Null);
+    }
+
+    [Test]
+    public void DoesNotSetAgentType_OnInvokeAgentSpan_WhenNotHosted()
+    {
+        SetEnv("my-agent", "1.0");
+        // FOUNDRY_HOSTING_ENVIRONMENT not set — not hosted
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("invoke_agent")!;
+        activity.SetTag("gen_ai.operation.name", "invoke_agent");
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("microsoft.foundry.agent.type"), Is.Null);
     }
 }

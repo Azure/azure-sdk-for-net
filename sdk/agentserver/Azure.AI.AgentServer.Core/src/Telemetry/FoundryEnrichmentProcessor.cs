@@ -26,6 +26,7 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
     private readonly string? _projectId;
     private readonly string? _blueprintId;
     private readonly string? _tenantId;
+    private readonly string? _agentType;
 
     public FoundryEnrichmentProcessor()
     {
@@ -34,6 +35,7 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
         _projectId = FoundryEnvironment.ProjectArmId;
         _blueprintId = FoundryEnvironment.AgentBlueprintClientId;
         _tenantId = FoundryEnvironment.AgentTenantId;
+        _agentType = FoundryEnvironment.IsHosted ? "hosted" : null;
 
         // Agent ID resolution: prefer instance client ID (managed identity),
         // fall back to name:version or just name.
@@ -107,6 +109,12 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
         if (!string.IsNullOrEmpty(_tenantId))
         {
             activity.SetTag("microsoft.tenant.id", _tenantId);
+        }
+
+        if (_agentType is not null
+            && string.Equals(activity.GetTagItem("gen_ai.operation.name") as string, "invoke_agent", StringComparison.Ordinal))
+        {
+            activity.SetTag("microsoft.foundry.agent.type", _agentType);
         }
     }
 }
