@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CostManagementSettingData IPersistableModel<CostManagementSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CostManagementSettingData)PersistableModelCreateCore(data, options);
+        CostManagementSettingData IPersistableModel<CostManagementSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownCostManagementSetting)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CostManagementSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CostManagementSettingData IJsonModel<CostManagementSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CostManagementSettingData)JsonModelCreateCore(ref reader, options);
+        CostManagementSettingData IJsonModel<CostManagementSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownCostManagementSetting)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
