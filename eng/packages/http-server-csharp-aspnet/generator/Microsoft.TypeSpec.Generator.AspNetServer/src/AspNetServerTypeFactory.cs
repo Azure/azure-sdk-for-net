@@ -1,28 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.AspNetServer.Providers;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Microsoft.TypeSpec.Generator.AspNetServer
 {
     /// <summary>
-    /// Type factory for the ASP.NET server generator. Routes model and primitive
-    /// type creation to the simplified server-side providers (POCOs) instead of
-    /// the default client-model providers (which emit serialization machinery
-    /// the server side does not need).
+    /// Type factory for the ASP.NET server generator. Routes model creation to
+    /// <see cref="ServerModelProvider"/> (a POCO) instead of the default
+    /// client-model provider, which emits serialization machinery the server
+    /// side does not need.
     /// </summary>
     public sealed class AspNetServerTypeFactory : TypeFactory
     {
-        private readonly Dictionary<InputModelType, ServerModelProvider> _modelCache = new();
-        private readonly Dictionary<InputEnumType, EnumProvider> _enumCache = new();
-
         /// <summary>Initializes a new instance of <see cref="AspNetServerTypeFactory"/>.</summary>
         public AspNetServerTypeFactory()
         {
@@ -31,77 +23,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
         /// <inheritdoc/>
         protected override ModelProvider? CreateModelCore(InputModelType model)
         {
-            if (_modelCache.TryGetValue(model, out var existing))
-            {
-                return existing;
-            }
-
-            var provider = new ServerModelProvider(model);
-            _modelCache[model] = provider;
-            return provider;
-        }
-
-        /// <summary>
-        /// Returns all enum providers created so far. The output library uses
-        /// this to register enum types alongside models in the generated output.
-        /// </summary>
-        internal IReadOnlyCollection<EnumProvider> GetCachedEnums() => _enumCache.Values;
-
-        private EnumProvider? GetOrCreateEnum(InputEnumType inputEnum)
-        {
-            if (_enumCache.TryGetValue(inputEnum, out var existing))
-            {
-                return existing;
-            }
-            var provider = base.CreateEnum(inputEnum, declaringType: null!);
-            if (provider is not null)
-            {
-                _enumCache[inputEnum] = provider;
-            }
-            return provider;
-        }
-
-        /// <inheritdoc/>
-        protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
-        {
-            return inputType switch
-            {
-                InputPrimitiveType p => MapPrimitive(p),
-                InputDateTimeType => typeof(DateTimeOffset),
-                InputDurationType => typeof(TimeSpan),
-                InputArrayType array => new CSharpType(typeof(IList<>), CreateCSharpType(array.ValueType) ?? typeof(object)),
-                InputDictionaryType dict => new CSharpType(
-                    typeof(IDictionary<,>),
-                    CreateCSharpType(dict.KeyType) ?? typeof(string),
-                    CreateCSharpType(dict.ValueType) ?? typeof(object)),
-                InputLiteralType literal => CreateCSharpType(literal.ValueType),
-                InputEnumType inputEnum => GetOrCreateEnum(inputEnum)?.Type,
-                InputModelType model => CreateModel(model)?.Type,
-                InputNullableType nullable => (CreateCSharpType(nullable.Type) ?? typeof(object)).WithNullable(true),
-                _ => typeof(JsonElement),
-            };
-        }
-
-        private static CSharpType MapPrimitive(InputPrimitiveType primitive)
-        {
-            return primitive.Kind switch
-            {
-                InputPrimitiveTypeKind.Boolean => typeof(bool),
-                InputPrimitiveTypeKind.String => typeof(string),
-                InputPrimitiveTypeKind.Int32 => typeof(int),
-                InputPrimitiveTypeKind.Int64 => typeof(long),
-                InputPrimitiveTypeKind.Float32 => typeof(float),
-                InputPrimitiveTypeKind.Float64 => typeof(double),
-                InputPrimitiveTypeKind.Decimal => typeof(decimal),
-                InputPrimitiveTypeKind.Decimal128 => typeof(decimal),
-                InputPrimitiveTypeKind.Bytes => typeof(byte[]),
-                InputPrimitiveTypeKind.Url => typeof(Uri),
-                InputPrimitiveTypeKind.SafeInt => typeof(long),
-                InputPrimitiveTypeKind.PlainDate => typeof(DateTimeOffset),
-                InputPrimitiveTypeKind.PlainTime => typeof(TimeSpan),
-                // Unknown / Stream / etc. — preserve raw payload instead of corrupting it as a string.
-                _ => typeof(JsonElement),
-            };
+            return new ServerModelProvider(model);
         }
     }
 }

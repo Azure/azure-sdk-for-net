@@ -26,7 +26,7 @@ $testProjects = @(
         FilterName = "AzureSql"
         Folder     = "AzureSql"
         EntryTsp   = "main.tsp"
-        Csproj     = "Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.csproj"
+        Csproj     = "Azure.TypeSpec.Generator.AspNetServer.AzureSql.csproj"
     }
 )
 

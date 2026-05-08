@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql
 {
     internal static partial class Optional
     {

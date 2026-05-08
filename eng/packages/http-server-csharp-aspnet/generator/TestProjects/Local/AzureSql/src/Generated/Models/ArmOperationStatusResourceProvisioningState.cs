@@ -6,7 +6,7 @@ using System;
 using System.Text.Json.Serialization;
 using Azure.ResourceManager;
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models
 {
     /// <summary>
     /// Standard Azure Resource Manager operation status response, used as the response

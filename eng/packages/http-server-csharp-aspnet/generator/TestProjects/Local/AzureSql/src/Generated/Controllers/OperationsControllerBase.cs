@@ -4,10 +4,10 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models;
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
 {
     /// <summary> ARM operations endpoint. </summary>
     [ApiController]

@@ -9,7 +9,7 @@
 - Emits one abstract `[ApiController]`-annotated `ControllerBase` subclass per TypeSpec interface (and its child clients) under `src/Generated/Controllers/`, with one abstract `Task<ActionResult<T>>` method per operation and `[FromRoute]`/`[FromQuery]`/`[FromHeader]`/`[FromBody]` parameter binding.
 - Emits TypeSpec enums and unions as real (extensible) C# enum types, including the required `Argument` helper.
 - Preserves wire-level paging envelopes (e.g. `DatabaseListResult`) on operation return types.
-- Maps unknown primitive kinds to `System.Text.Json.JsonElement` to preserve non-string payloads.
+- Maps the TypeSpec `unknown` primitive to `System.BinaryData` to preserve non-string payloads.
 - Registers ASP.NET Core MVC `MetadataReference`s so Roslyn shortens emitted type names against `using` directives.
 
 ### Breaking Changes

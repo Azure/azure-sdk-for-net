@@ -4,7 +4,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models
 {
     /// <summary> Error response. </summary>
     public partial class ErrorResponse

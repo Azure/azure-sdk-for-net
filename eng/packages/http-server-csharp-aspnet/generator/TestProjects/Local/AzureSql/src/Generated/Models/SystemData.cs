@@ -6,7 +6,7 @@ using System;
 using System.Text.Json.Serialization;
 using Azure.ResourceManager.CommonTypes;
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models
 {
     /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
     public partial class SystemData

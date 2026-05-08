@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models
 {
     /// <summary> A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results. </summary>
     public partial class OperationListResult

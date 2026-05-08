@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel.Composition;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
@@ -23,11 +24,18 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
     [ExportMetadata(GeneratorMetadataName, nameof(AspNetServerCodeModelGenerator))]
     public class AspNetServerCodeModelGenerator : CodeModelGenerator
     {
+        private static AspNetServerCodeModelGenerator? _instance;
+
+        /// <summary>The singleton instance, set by MEF when the generator is loaded.</summary>
+        internal static new AspNetServerCodeModelGenerator Instance =>
+            _instance ?? throw new InvalidOperationException($"{nameof(AspNetServerCodeModelGenerator)} is not loaded.");
+
         /// <summary>Initializes a new instance of <see cref="AspNetServerCodeModelGenerator"/>.</summary>
         [ImportingConstructor]
         public AspNetServerCodeModelGenerator(GeneratorContext context) : base(context)
         {
             TypeFactory = new AspNetServerTypeFactory();
+            _instance = this;
         }
 
         /// <inheritdoc/>

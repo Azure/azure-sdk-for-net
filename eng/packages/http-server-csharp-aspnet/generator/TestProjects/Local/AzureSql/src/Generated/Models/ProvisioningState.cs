@@ -4,7 +4,7 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.AspNetServer.AzureSql;
+using Azure.TypeSpec.Generator.AspNetServer.AzureSql;
 
 namespace Microsoft.Sql
 {
@@ -78,7 +78,7 @@ namespace Microsoft.Sql
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningState other && this.Equals(other);
+        public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
         public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);

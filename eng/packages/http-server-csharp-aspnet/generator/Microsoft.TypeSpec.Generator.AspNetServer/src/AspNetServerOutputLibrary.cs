@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.TypeSpec.Generator.AspNetServer.Providers;
-using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Microsoft.TypeSpec.Generator.AspNetServer
@@ -20,38 +19,20 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            var inputLibrary = CodeModelGenerator.Instance.InputLibrary;
-            var typeFactory = (AspNetServerTypeFactory)CodeModelGenerator.Instance.TypeFactory;
+            var generator = AspNetServerCodeModelGenerator.Instance;
 
-            // Pull in framework helper definitions (ArgumentDefinition,
-            // ChangeTrackingListDefinition, etc.) from the base implementation
-            // so they get emitted alongside our providers. ArgumentDefinition
-            // in particular is required by the extensible-enum template.
-            // We exclude ModelFactoryProvider because we emit POCOs without
-            // the additionalBinaryDataProperties parameter the framework's
-            // model factory expects.
+            // base.BuildTypeProviders() already iterates InputLibrary models /
+            // enums through TypeFactory.CreateModel / CreateEnum (which we route
+            // to ServerModelProvider via CreateModelCore), and adds the
+            // framework helper definitions (ArgumentDefinition, etc.) required
+            // by the extensible-enum template. We just need to:
+            //   - drop ModelFactoryProvider (our POCOs don't carry the
+            //     additionalBinaryDataProperties parameter it expects), and
+            //   - append a ControllerProvider per input client.
             var providers = new List<TypeProvider>(
                 base.BuildTypeProviders().Where(p => p is not ModelFactoryProvider));
-            foreach (var model in inputLibrary.InputNamespace.Models)
-            {
-                if (model.IsPropertyBag)
-                {
-                    continue;
-                }
-                var provider = typeFactory.CreateModel(model);
-                if (provider is not null)
-                {
-                    providers.Add(provider);
-                }
-            }
-            foreach (var inputEnum in inputLibrary.InputNamespace.Enums)
-            {
-                // Realize the enum so it gets cached in the type factory; it
-                // will also be created on demand via property/parameter type
-                // resolution. Either path lands in the same cache.
-                typeFactory.CreateCSharpType(inputEnum);
-            }
-            foreach (var client in EnumerateClients(inputLibrary.InputNamespace.RootClients))
+
+            foreach (var client in generator.InputLibrary.InputNamespace.Clients)
             {
                 if (client.Methods.Count == 0)
                 {
@@ -59,20 +40,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
                 }
                 providers.Add(new ControllerProvider(client));
             }
-            providers.AddRange(typeFactory.GetCachedEnums());
             return providers.ToArray();
-        }
-
-        private static IEnumerable<InputClient> EnumerateClients(IEnumerable<InputClient> roots)
-        {
-            foreach (var client in roots)
-            {
-                yield return client;
-                foreach (var child in EnumerateClients(client.Children))
-                {
-                    yield return child;
-                }
-            }
         }
     }
 }

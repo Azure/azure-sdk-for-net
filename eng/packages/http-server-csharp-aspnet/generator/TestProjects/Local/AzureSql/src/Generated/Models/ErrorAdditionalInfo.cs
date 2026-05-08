@@ -2,10 +2,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models
 {
     /// <summary> The resource management error additional info. </summary>
     public partial class ErrorAdditionalInfo
@@ -16,6 +16,6 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
 
         /// <summary> The additional info. </summary>
         [JsonPropertyName("info")]
-        public JsonElement? Info { get; set; }
+        public System.BinaryData Info { get; set; }
     }
 }

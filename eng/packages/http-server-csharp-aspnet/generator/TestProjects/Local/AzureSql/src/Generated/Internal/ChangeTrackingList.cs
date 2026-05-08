@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql
 {
     internal partial class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {

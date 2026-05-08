@@ -5,7 +5,7 @@
 using System.Text.Json.Serialization;
 using Azure.ResourceManager.CommonTypes;
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql.Models
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models
 {
     /// <summary> REST API Operation. </summary>
     public partial class Operation

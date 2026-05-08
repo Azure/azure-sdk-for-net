@@ -4,7 +4,7 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.AspNetServer.AzureSql;
+using Azure.TypeSpec.Generator.AspNetServer.AzureSql;
 
 namespace Azure.ResourceManager.CommonTypes
 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CommonTypes
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ActionType other && this.Equals(other);
+        public override bool Equals(object obj) => obj is ActionType other && Equals(other);
 
         /// <inheritdoc/>
         public bool Equals(ActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);

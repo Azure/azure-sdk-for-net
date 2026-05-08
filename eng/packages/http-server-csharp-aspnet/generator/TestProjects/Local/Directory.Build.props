@@ -9,4 +9,13 @@
     repo's SDK build infrastructure from treating them as shipping libraries.
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+  <ItemGroup>
+    <!--
+      Generated server code may reference System.BinaryData (the base TypeFactory's
+      mapping for the TypeSpec `unknown` primitive). System.Memory.Data is the
+      package that ships BinaryData. Real consumers of this generator will add the
+      same dependency to their own server projects.
+    -->
+    <PackageReference Include="System.Memory.Data" />
+  </ItemGroup>
 </Project>

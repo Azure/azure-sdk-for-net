@@ -6,7 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Microsoft.TypeSpec.Generator.AspNetServer.AzureSql
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql
 {
     internal partial class ChangeTrackingDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>
         where TKey : notnull
