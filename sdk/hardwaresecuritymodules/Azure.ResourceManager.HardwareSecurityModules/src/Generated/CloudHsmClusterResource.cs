@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="patch"> Parameters to create Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudHsmClusterResource>> UpdateAsync(WaitUntil waitUntil, CloudHsmClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CloudHsmClusterResource>> UpdateAsync(WaitUntil waitUntil, DedicatedHsmPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterPatch.ToRequestContent(patch), context);
+                HttpMessage message = _cloudHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DedicatedHsmPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(
                     new CloudHsmClusterOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="patch"> Parameters to create Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<CloudHsmClusterResource> Update(WaitUntil waitUntil, CloudHsmClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CloudHsmClusterResource> Update(WaitUntil waitUntil, DedicatedHsmPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterPatch.ToRequestContent(patch), context);
+                HttpMessage message = _cloudHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DedicatedHsmPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(
                     new CloudHsmClusterOperationSource(Client),
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 else
                 {
                     CloudHsmClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CloudHsmClusterPatch patch = new CloudHsmClusterPatch();
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 else
                 {
                     CloudHsmClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CloudHsmClusterPatch patch = new CloudHsmClusterPatch();
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 else
                 {
                     CloudHsmClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CloudHsmClusterPatch patch = new CloudHsmClusterPatch();
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<CloudHsmClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1328,7 +1328,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 else
                 {
                     CloudHsmClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CloudHsmClusterPatch patch = new CloudHsmClusterPatch();
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<CloudHsmClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 else
                 {
                     CloudHsmClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CloudHsmClusterPatch patch = new CloudHsmClusterPatch();
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1416,7 +1416,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 else
                 {
                     CloudHsmClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CloudHsmClusterPatch patch = new CloudHsmClusterPatch();
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
