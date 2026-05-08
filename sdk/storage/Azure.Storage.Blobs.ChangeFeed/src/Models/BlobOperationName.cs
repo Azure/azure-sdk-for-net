@@ -90,6 +90,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static BlobOperationName CreateRestorePointMarker { get; } = new BlobOperationName("CreateRestorePointMarker");
 
         /// <summary>
+        /// Append Block.
+        /// </summary>
+        public static BlobOperationName AppendBlock { get; } = new BlobOperationName("AppendBlock");
+
+        /// <summary>
         /// Compares equality of two <see cref="BlobOperationName"/> instances.
         /// </summary>
         /// <param name="left">The <see cref="BlobOperationName"/> to compare.</param>

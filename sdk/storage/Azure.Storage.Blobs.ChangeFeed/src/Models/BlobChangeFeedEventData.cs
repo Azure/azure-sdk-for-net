@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -47,6 +48,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
             record.TryGetValue(Constants.ChangeFeed.EventData.ContentOffset, out object contentOffset);
             ContentOffset = (long?)contentOffset;
+            record.TryGetValue(Constants.ChangeFeed.EventData.CreationTime, out object creationTime);
+            CreationTime = creationTime != null
+                ? DateTimeOffset.Parse((string)creationTime, CultureInfo.InvariantCulture)
+                : (DateTimeOffset?)null;
             record.TryGetValue(Constants.ChangeFeed.EventData.DestinationUrl, out object destinationUrl);
             DestinationUri = !string.IsNullOrEmpty((string)destinationUrl) ? new Uri((string)destinationUrl) : null;
             record.TryGetValue(Constants.ChangeFeed.EventData.SourceUrl, out object sourceUrl);
@@ -125,6 +130,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// Appears only for events triggered on blob storage accounts that have a hierarchical namespace.
         /// </summary>
         public long? ContentOffset { get; internal set; }
+
+        /// <summary>
+        /// The time the blob was created.
+        /// </summary>
+        public DateTimeOffset? CreationTime { get; internal set; }
 
         /// <summary>
         /// The url of the file that will exist after the operation completes. For example, if a file is renamed,
