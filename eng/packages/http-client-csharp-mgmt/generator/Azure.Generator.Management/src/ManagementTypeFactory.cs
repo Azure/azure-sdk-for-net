@@ -128,7 +128,15 @@ namespace Azure.Generator.Management
             // First check for standard ARM types that map to system types
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
-                return InheritableSystemObjectModelProvider.CreateSystemBase(replacedType.FrameworkType, model);
+                var systemBase = InheritableSystemObjectModelProvider.CreateSystemBase(replacedType.FrameworkType, model);
+                // After microsoft/typespec#10600, ModelProvider.BaseModelProvider is auto-resolved by
+                // looking up BaseType in CSharpTypeMap. Derived InheritableSystemObjectModelProviders
+                // return the framework CSharpType from BuildBaseType(), so we register the SystemBase
+                // provider here under that framework key. Without this, BaseModelProvider on derived
+                // resource models would resolve to null and InheritableSystemObjectModelVisitor would
+                // skip property/ctor/serialization fix-ups, causing CS0108/CS0114 build errors.
+                CSharpTypeMap[replacedType] = systemBase;
+                return systemBase;
             }
             if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
             {
