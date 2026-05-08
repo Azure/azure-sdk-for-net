@@ -226,6 +226,36 @@ public class AgentsTests : AgentsTestBase
         Assert.ThrowsAsync<ClientResultException>(async () => await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").ToListAsync());
     }
 
+    [Test]
+    [SyncOnly]
+    public async Task TestArchiveFile()
+    {
+        string path = GetTestFile(GetTestFile("test.txt"));
+        (BinaryData data, string sha256sum)  =  FileHelper.CreateAndReadZipFile(path);
+        Assert.That(sha256sum, Is.Not.Null);
+        string tempDir = Path.GetTempPath();
+        string tempFile = Path.Combine(tempDir, "unzipped.txt");
+        FileHelper.SaveAndUnzipData(tempFile, data);
+        Assert.That(Path.Exists(tempFile));
+        try
+        {
+            
+            
+        }
+        finally
+        {
+            File.Delete(tempFile)
+        }
+    }
+
+    [Test]
+    [SyncOnly]
+    public async Task TestArchiveDirectory()
+    {
+        string path = GetTestFile(GetTestFile("roll-dice"));
+        FileHelper.SaveAndUnzipData();
+    }
+
     [RecordedTest]
     [TestCase(ToolType.CodeInterpreter)]
     [TestCase(ToolType.CodeInterpreterGen)]
@@ -429,7 +459,8 @@ public class AgentsTests : AgentsTestBase
         // Create
         ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionRefIndicator(agentVersion.Version),
+            cancellationToken: default
         );
         Assert.That(session1.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
         Assert.That(((VersionRefIndicator)session1.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
