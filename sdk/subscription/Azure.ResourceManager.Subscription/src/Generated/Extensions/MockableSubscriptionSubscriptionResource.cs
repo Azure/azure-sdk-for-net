@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Subscription.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableSubscriptionSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _subscriptionActionClientDiagnostics;
-        private SubscriptionAction _subscriptionActionRestClient;
+        private ClientDiagnostics _subscriptionOperationGroupClientDiagnostics;
+        private SubscriptionOperationGroup _subscriptionOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of MockableSubscriptionSubscriptionResource for mocking. </summary>
         protected MockableSubscriptionSubscriptionResource()
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
         }
 
-        private ClientDiagnostics SubscriptionActionClientDiagnostics => _subscriptionActionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SubscriptionOperationGroupClientDiagnostics => _subscriptionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionAction SubscriptionActionRestClient => _subscriptionActionRestClient ??= new SubscriptionAction(SubscriptionActionClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private SubscriptionOperationGroup SubscriptionOperationGroupRestClient => _subscriptionOperationGroupRestClient ??= new SubscriptionOperationGroup(SubscriptionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
         /// <summary>
         /// The operation to view Initiator Subscription Changed Request
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CanceledSubscriptionId>> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Cancel");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Cancel");
             scope.Start();
             try
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionActionRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CanceledSubscriptionId> response = Response.FromValue(CanceledSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CanceledSubscriptionId> Cancel(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Cancel");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Cancel");
             scope.Start();
             try
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionActionRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CanceledSubscriptionId> response = Response.FromValue(CanceledSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Rename");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Rename");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionActionRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), SubscriptionName.ToRequestContent(body), context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), SubscriptionName.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RenamedSubscriptionId> response = Response.FromValue(RenamedSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Rename");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Rename");
             scope.Start();
             try
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionActionRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), SubscriptionName.ToRequestContent(body), context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), SubscriptionName.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RenamedSubscriptionId> response = Response.FromValue(RenamedSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EnabledSubscriptionId>> EnableAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Enable");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Enable");
             scope.Start();
             try
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionActionRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EnabledSubscriptionId> response = Response.FromValue(EnabledSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EnabledSubscriptionId> Enable(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Enable");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.Enable");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionActionRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EnabledSubscriptionId> response = Response.FromValue(EnabledSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)

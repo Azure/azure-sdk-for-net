@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Subscription
     /// </summary>
     public partial class SubscriptionAliasCollection : ArmCollection, IEnumerable<SubscriptionAliasResource>, IAsyncEnumerable<SubscriptionAliasResource>
     {
-        private readonly ClientDiagnostics _aliasClientDiagnostics;
-        private readonly Alias _aliasRestClient;
+        private readonly ClientDiagnostics _subscriptionAliasResponsesClientDiagnostics;
+        private readonly SubscriptionAliasResponses _subscriptionAliasResponsesRestClient;
 
         /// <summary> Initializes a new instance of SubscriptionAliasCollection for mocking. </summary>
         protected SubscriptionAliasCollection()
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Subscription
         internal SubscriptionAliasCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SubscriptionAliasResource.ResourceType, out string subscriptionAliasApiVersion);
-            _aliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", SubscriptionAliasResource.ResourceType.Namespace, Diagnostics);
-            _aliasRestClient = new Alias(_aliasClientDiagnostics, Pipeline, Endpoint, subscriptionAliasApiVersion ?? "2025-11-01-preview");
+            _subscriptionAliasResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", SubscriptionAliasResource.ResourceType.Namespace, Diagnostics);
+            _subscriptionAliasResponsesRestClient = new SubscriptionAliasResponses(_subscriptionAliasResponsesClientDiagnostics, Pipeline, Endpoint, subscriptionAliasApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Subscription
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _subscriptionAliasResponsesClientDiagnostics.CreateScope("SubscriptionAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aliasRestClient.CreateCreateRequest(aliasName, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(aliasName, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
                     new SubscriptionAliasOperationSource(Client),
-                    _aliasClientDiagnostics,
+                    _subscriptionAliasResponsesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Subscription
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _subscriptionAliasResponsesClientDiagnostics.CreateScope("SubscriptionAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aliasRestClient.CreateCreateRequest(aliasName, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(aliasName, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
                     new SubscriptionAliasOperationSource(Client),
-                    _aliasClientDiagnostics,
+                    _subscriptionAliasResponsesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Get");
+            using DiagnosticScope scope = _subscriptionAliasResponsesClientDiagnostics.CreateScope("SubscriptionAliasCollection.Get");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionAliasData> response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Get");
+            using DiagnosticScope scope = _subscriptionAliasResponsesClientDiagnostics.CreateScope("SubscriptionAliasCollection.Get");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionAliasData> response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Subscription
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SubscriptionAliasData, SubscriptionAliasResource>(new AliasGetAllAsyncCollectionResultOfT(_aliasRestClient, context, "SubscriptionAliasCollection.GetAll"), data => new SubscriptionAliasResource(Client, data));
+            return new AsyncPageableWrapper<SubscriptionAliasData, SubscriptionAliasResource>(new SubscriptionAliasResponsesGetAllAsyncCollectionResultOfT(_subscriptionAliasResponsesRestClient, context, "SubscriptionAliasCollection.GetAll"), data => new SubscriptionAliasResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Subscription
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SubscriptionAliasData, SubscriptionAliasResource>(new AliasGetAllCollectionResultOfT(_aliasRestClient, context, "SubscriptionAliasCollection.GetAll"), data => new SubscriptionAliasResource(Client, data));
+            return new PageableWrapper<SubscriptionAliasData, SubscriptionAliasResource>(new SubscriptionAliasResponsesGetAllCollectionResultOfT(_subscriptionAliasResponsesRestClient, context, "SubscriptionAliasCollection.GetAll"), data => new SubscriptionAliasResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Exists");
+            using DiagnosticScope scope = _subscriptionAliasResponsesClientDiagnostics.CreateScope("SubscriptionAliasCollection.Exists");
             scope.Start();
             try
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionAliasData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.Exists");
+            using DiagnosticScope scope = _subscriptionAliasResponsesClientDiagnostics.CreateScope("SubscriptionAliasCollection.Exists");
             scope.Start();
             try
             {
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionAliasData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.GetIfExists");
+            using DiagnosticScope scope = _subscriptionAliasResponsesClientDiagnostics.CreateScope("SubscriptionAliasCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionAliasData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using DiagnosticScope scope = _aliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.GetIfExists");
+            using DiagnosticScope scope = _subscriptionAliasResponsesClientDiagnostics.CreateScope("SubscriptionAliasCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aliasRestClient.CreateGetRequest(aliasName, context);
+                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionAliasData> response = default;

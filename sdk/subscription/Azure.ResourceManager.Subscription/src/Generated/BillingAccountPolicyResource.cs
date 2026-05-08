@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Subscription
     /// </summary>
     public partial class BillingAccountPolicyResource : ArmResource
     {
-        private readonly ClientDiagnostics _billingAccountClientDiagnostics;
-        private readonly BillingAccount _billingAccountRestClient;
+        private readonly ClientDiagnostics _billingAccountPoliciesResponsesClientDiagnostics;
+        private readonly BillingAccountPoliciesResponses _billingAccountPoliciesResponsesRestClient;
         private readonly BillingAccountPolicyData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Subscription/policies";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Subscription
         internal BillingAccountPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string billingAccountPolicyApiVersion);
-            _billingAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
-            _billingAccountRestClient = new BillingAccount(_billingAccountClientDiagnostics, Pipeline, Endpoint, billingAccountPolicyApiVersion ?? "2025-11-01-preview");
+            _billingAccountPoliciesResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
+            _billingAccountPoliciesResponsesRestClient = new BillingAccountPoliciesResponses(_billingAccountPoliciesResponsesClientDiagnostics, Pipeline, Endpoint, billingAccountPolicyApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingAccountPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
+            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
             scope.Start();
             try
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingAccountPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
+            using DiagnosticScope scope = _billingAccountPoliciesResponsesClientDiagnostics.CreateScope("BillingAccountPolicyResource.Get");
             scope.Start();
             try
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)

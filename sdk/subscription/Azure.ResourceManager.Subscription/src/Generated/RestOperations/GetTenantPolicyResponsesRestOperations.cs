@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Subscription
 {
-    internal partial class TargetDirectoryList
+    internal partial class GetTenantPolicyResponses
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of TargetDirectoryList for mocking. </summary>
-        protected TargetDirectoryList()
+        /// <summary> Initializes a new instance of GetTenantPolicyResponses for mocking. </summary>
+        protected GetTenantPolicyResponses()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetDirectoryList. </summary>
+        /// <summary> Initializes a new instance of GetTenantPolicyResponses. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal TargetDirectoryList(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal GetTenantPolicyResponses(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,13 +41,11 @@ namespace Azure.ResourceManager.Subscription
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetTargetDirectoryRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetPolicyForTenantRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.Subscription/changeTenantRequest", false);
+            uri.AppendPath("/providers/Microsoft.Subscription/policies/default", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -60,26 +58,22 @@ namespace Azure.ResourceManager.Subscription
             return message;
         }
 
-        internal HttpMessage CreateNextGetTargetDirectoryRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateAddUpdatePolicyForTenantRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/policies/default", false);
             if (_apiVersion != null)
             {
-                uri.UpdateQuery("api-version", _apiVersion);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Put;
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
     }

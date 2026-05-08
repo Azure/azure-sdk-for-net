@@ -19,120 +19,6 @@ namespace Azure.ResourceManager.Subscription.Models
     public static partial class ArmSubscriptionModelFactory
     {
 
-        /// <summary> The ID of the canceled subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the canceled subscription. </param>
-        /// <returns> A new <see cref="Models.CanceledSubscriptionId"/> instance for mocking. </returns>
-        public static CanceledSubscriptionId CanceledSubscriptionId(string subscriptionId = default)
-        {
-            return new CanceledSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ID of the subscriptions that is being renamed. </summary>
-        /// <param name="subscriptionId"> The ID of the subscriptions that is being renamed. </param>
-        /// <returns> A new <see cref="Models.RenamedSubscriptionId"/> instance for mocking. </returns>
-        public static RenamedSubscriptionId RenamedSubscriptionId(string subscriptionId = default)
-        {
-            return new RenamedSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ID of the subscriptions that is being enabled. </summary>
-        /// <param name="subscriptionId"> The ID of the subscriptions that is being enabled. </param>
-        /// <returns> A new <see cref="Models.EnabledSubscriptionId"/> instance for mocking. </returns>
-        public static EnabledSubscriptionId EnabledSubscriptionId(string subscriptionId = default)
-        {
-            return new EnabledSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Accept subscription ownership request properties. </summary>
-        /// <param name="displayName"> The friendly name of the subscription. </param>
-        /// <param name="managementGroupId"> Management group Id for the subscription. </param>
-        /// <param name="tags"> Tags for the subscription. </param>
-        /// <returns> A new <see cref="Models.AcceptOwnershipRequestProperties"/> instance for mocking. </returns>
-        public static AcceptOwnershipRequestProperties AcceptOwnershipRequestProperties(string displayName = default, string managementGroupId = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AcceptOwnershipRequestProperties(displayName, managementGroupId, tags, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Subscription Accept Ownership Response. </summary>
-        /// <param name="subscriptionId"> Newly created subscription Id. </param>
-        /// <param name="acceptOwnershipState"> The accept ownership state of the resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="billingOwner"> UPN of the billing owner. </param>
-        /// <param name="subscriptionTenantId"> Tenant Id of the subscription. </param>
-        /// <param name="displayName"> The display name of the subscription. </param>
-        /// <param name="tags"> Tags for the subscription. </param>
-        /// <returns> A new <see cref="Models.AcceptOwnershipStatus"/> instance for mocking. </returns>
-        public static AcceptOwnershipStatus AcceptOwnershipStatus(string subscriptionId = default, AcceptOwnershipState? acceptOwnershipState = default, AcceptOwnershipProvisioningState? provisioningState = default, string billingOwner = default, string subscriptionTenantId = default, string displayName = default, IReadOnlyDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AcceptOwnershipStatus(
-                subscriptionId,
-                acceptOwnershipState,
-                provisioningState,
-                billingOwner,
-                subscriptionTenantId,
-                displayName,
-                tags,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The created subscription object. </summary>
-        /// <param name="subscriptionLink"> The link to the new subscription. Use this link to check the status of subscription creation operation. </param>
-        /// <returns> A new <see cref="Models.SubscriptionCreationResult"/> instance for mocking. </returns>
-        public static SubscriptionCreationResult SubscriptionCreationResult(string subscriptionLink = default)
-        {
-            return new SubscriptionCreationResult(subscriptionLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Subscription Response for Changed Target Directory. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Subscription Changed Target Directory response properties. </param>
-        /// <returns> A new <see cref="Subscription.TargetDirectoryResultData"/> instance for mocking. </returns>
-        public static TargetDirectoryResultData TargetDirectoryResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetDirectoryResultProperties properties = default)
-        {
-            return new TargetDirectoryResultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> Properties of subscription Response for Changed Target Directory. </summary>
-        /// <param name="destinationTenantId"> Destination Tenant Id where Subscription will be accepted. </param>
-        /// <param name="destinationOwnerId"> Destination Owner Id where Subscription will be accepted. </param>
-        /// <param name="subscriptionId"> The id of the subscription being transferred. </param>
-        /// <param name="createdOn"> The UTC date and time when the transfer request was created. </param>
-        /// <param name="acceptedOn"> The UTC date and time when the transfer request was accepted. </param>
-        /// <param name="sourceOwnerEmail"> The email address of the user who initiated the transfer request. If the request was generated by a Service Principal, this field may be null. </param>
-        /// <param name="sourceOwnerId"> The object id of the user who initiated the transfer request. </param>
-        /// <param name="sourceTenantId"> The id of the tenant where the subscription originally resided. </param>
-        /// <param name="status"> Status of the subscription transfer operation. </param>
-        /// <param name="expiresOn"> Subscription Initiate Request Expiry time. </param>
-        /// <returns> A new <see cref="Models.TargetDirectoryResultProperties"/> instance for mocking. </returns>
-        public static TargetDirectoryResultProperties TargetDirectoryResultProperties(string destinationTenantId = default, string destinationOwnerId = default, string subscriptionId = default, DateTimeOffset? createdOn = default, DateTimeOffset? acceptedOn = default, string sourceOwnerEmail = default, string sourceOwnerId = default, string sourceTenantId = default, ChangeDirectoryOperationStatus? status = default, DateTimeOffset? expiresOn = default)
-        {
-            return new TargetDirectoryResultProperties(
-                destinationTenantId,
-                destinationOwnerId,
-                subscriptionId,
-                createdOn,
-                acceptedOn,
-                sourceOwnerEmail,
-                sourceOwnerId,
-                sourceTenantId,
-                status,
-                expiresOn,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Subscription Information with the alias. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -196,7 +82,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="subscriptionOwnerId"> Owner Id of the subscription. </param>
         /// <param name="tags"> Tags for the subscription. </param>
         /// <returns> A new <see cref="Models.SubscriptionAliasAdditionalProperties"/> instance for mocking. </returns>
-        public static SubscriptionAliasAdditionalProperties SubscriptionAliasAdditionalProperties(string managementGroupId = default, string subscriptionTenantId = default, string subscriptionOwnerId = default, IDictionary<string, string> tags = default)
+        public static SubscriptionAliasAdditionalProperties SubscriptionAliasAdditionalProperties(string managementGroupId = default, Guid? subscriptionTenantId = default, string subscriptionOwnerId = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -279,9 +165,115 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="tenantId"> Service tenant id. </param>
         /// <param name="tenantName"> Service tenant name. </param>
         /// <returns> A new <see cref="Models.ServiceTenant"/> instance for mocking. </returns>
-        public static ServiceTenant ServiceTenant(string tenantId = default, string tenantName = default)
+        public static ServiceTenant ServiceTenant(Guid? tenantId = default, string tenantName = default)
         {
             return new ServiceTenant(tenantId, tenantName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Subscription Response for Changed Target Directory. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Subscription Changed Target Directory response properties. </param>
+        /// <returns> A new <see cref="Subscription.TargetDirectoryResultData"/> instance for mocking. </returns>
+        public static TargetDirectoryResultData TargetDirectoryResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetDirectoryResultProperties properties = default)
+        {
+            return new TargetDirectoryResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of subscription Response for Changed Target Directory. </summary>
+        /// <param name="destinationTenantId"> Destination Tenant Id where Subscription will be accepted. </param>
+        /// <param name="destinationOwnerId"> Destination Owner Id where Subscription will be accepted. </param>
+        /// <param name="subscriptionId"> The id of the subscription being transferred. </param>
+        /// <param name="createdOn"> The UTC date and time when the transfer request was created. </param>
+        /// <param name="acceptedOn"> The UTC date and time when the transfer request was accepted. </param>
+        /// <param name="sourceOwnerEmail"> The email address of the user who initiated the transfer request. If the request was generated by a Service Principal, this field may be null. </param>
+        /// <param name="sourceOwnerId"> The object id of the user who initiated the transfer request. </param>
+        /// <param name="sourceTenantId"> The id of the tenant where the subscription originally resided. </param>
+        /// <param name="status"> Status of the subscription transfer operation. </param>
+        /// <param name="expiresOn"> Subscription Initiate Request Expiry time. </param>
+        /// <returns> A new <see cref="Models.TargetDirectoryResultProperties"/> instance for mocking. </returns>
+        public static TargetDirectoryResultProperties TargetDirectoryResultProperties(string destinationTenantId = default, string destinationOwnerId = default, string subscriptionId = default, DateTimeOffset? createdOn = default, DateTimeOffset? acceptedOn = default, string sourceOwnerEmail = default, string sourceOwnerId = default, string sourceTenantId = default, ChangeDirectoryOperationStatus? status = default, DateTimeOffset? expiresOn = default)
+        {
+            return new TargetDirectoryResultProperties(
+                destinationTenantId,
+                destinationOwnerId,
+                subscriptionId,
+                createdOn,
+                acceptedOn,
+                sourceOwnerEmail,
+                sourceOwnerId,
+                sourceTenantId,
+                status,
+                expiresOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ID of the canceled subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the canceled subscription. </param>
+        /// <returns> A new <see cref="Models.CanceledSubscriptionId"/> instance for mocking. </returns>
+        public static CanceledSubscriptionId CanceledSubscriptionId(string subscriptionId = default)
+        {
+            return new CanceledSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ID of the subscriptions that is being renamed. </summary>
+        /// <param name="subscriptionId"> The ID of the subscriptions that is being renamed. </param>
+        /// <returns> A new <see cref="Models.RenamedSubscriptionId"/> instance for mocking. </returns>
+        public static RenamedSubscriptionId RenamedSubscriptionId(string subscriptionId = default)
+        {
+            return new RenamedSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ID of the subscriptions that is being enabled. </summary>
+        /// <param name="subscriptionId"> The ID of the subscriptions that is being enabled. </param>
+        /// <returns> A new <see cref="Models.EnabledSubscriptionId"/> instance for mocking. </returns>
+        public static EnabledSubscriptionId EnabledSubscriptionId(string subscriptionId = default)
+        {
+            return new EnabledSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Accept subscription ownership request properties. </summary>
+        /// <param name="displayName"> The friendly name of the subscription. </param>
+        /// <param name="managementGroupId"> Management group Id for the subscription. </param>
+        /// <param name="tags"> Tags for the subscription. </param>
+        /// <returns> A new <see cref="Models.AcceptOwnershipRequestProperties"/> instance for mocking. </returns>
+        public static AcceptOwnershipRequestProperties AcceptOwnershipRequestProperties(string displayName = default, string managementGroupId = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AcceptOwnershipRequestProperties(displayName, managementGroupId, tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Subscription Accept Ownership Response. </summary>
+        /// <param name="subscriptionId"> Newly created subscription Id. </param>
+        /// <param name="acceptOwnershipState"> The accept ownership state of the resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="billingOwner"> UPN of the billing owner. </param>
+        /// <param name="subscriptionTenantId"> Tenant Id of the subscription. </param>
+        /// <param name="displayName"> The display name of the subscription. </param>
+        /// <param name="tags"> Tags for the subscription. </param>
+        /// <returns> A new <see cref="Models.AcceptOwnershipStatus"/> instance for mocking. </returns>
+        public static AcceptOwnershipStatus AcceptOwnershipStatus(string subscriptionId = default, AcceptOwnershipState? acceptOwnershipState = default, AcceptOwnershipProvisioningState? provisioningState = default, string billingOwner = default, Guid? subscriptionTenantId = default, string displayName = default, IReadOnlyDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AcceptOwnershipStatus(
+                subscriptionId,
+                acceptOwnershipState,
+                provisioningState,
+                billingOwner,
+                subscriptionTenantId,
+                displayName,
+                tags,
+                additionalBinaryDataProperties: null);
         }
     }
 }

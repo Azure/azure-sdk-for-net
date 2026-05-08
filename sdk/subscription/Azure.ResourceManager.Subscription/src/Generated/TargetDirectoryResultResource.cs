@@ -25,10 +25,8 @@ namespace Azure.ResourceManager.Subscription
     /// </summary>
     public partial class TargetDirectoryResultResource : ArmResource
     {
-        private readonly ClientDiagnostics _subscriptionsClientDiagnostics;
-        private readonly Subscriptions _subscriptionsRestClient;
-        private readonly ClientDiagnostics _targetDirectoryListClientDiagnostics;
-        private readonly TargetDirectoryList _targetDirectoryListRestClient;
+        private readonly ClientDiagnostics _targetDirectoryResultsClientDiagnostics;
+        private readonly TargetDirectoryResults _targetDirectoryResultsRestClient;
         private readonly TargetDirectoryResultData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Subscription/changeTenantRequest";
@@ -53,10 +51,8 @@ namespace Azure.ResourceManager.Subscription
         internal TargetDirectoryResultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string targetDirectoryResultApiVersion);
-            _subscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
-            _subscriptionsRestClient = new Subscriptions(_subscriptionsClientDiagnostics, Pipeline, Endpoint, targetDirectoryResultApiVersion ?? "2025-11-01-preview");
-            _targetDirectoryListClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
-            _targetDirectoryListRestClient = new TargetDirectoryList(_targetDirectoryListClientDiagnostics, Pipeline, Endpoint, targetDirectoryResultApiVersion ?? "2025-11-01-preview");
+            _targetDirectoryResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
+            _targetDirectoryResultsRestClient = new TargetDirectoryResults(_targetDirectoryResultsClientDiagnostics, Pipeline, Endpoint, targetDirectoryResultApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -123,7 +119,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _subscriptionsClientDiagnostics.CreateScope("TargetDirectoryResultResource.CreateOrUpdate");
+            using DiagnosticScope scope = _targetDirectoryResultsClientDiagnostics.CreateScope("TargetDirectoryResultResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -131,7 +127,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionsRestClient.CreatePutTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), TargetDirectoryContent.ToRequestContent(content), context);
+                HttpMessage message = _targetDirectoryResultsRestClient.CreatePutTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), TargetDirectoryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TargetDirectoryResultData> response = Response.FromValue(TargetDirectoryResultData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -179,7 +175,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _subscriptionsClientDiagnostics.CreateScope("TargetDirectoryResultResource.CreateOrUpdate");
+            using DiagnosticScope scope = _targetDirectoryResultsClientDiagnostics.CreateScope("TargetDirectoryResultResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -187,7 +183,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionsRestClient.CreatePutTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), TargetDirectoryContent.ToRequestContent(content), context);
+                HttpMessage message = _targetDirectoryResultsRestClient.CreatePutTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), TargetDirectoryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TargetDirectoryResultData> response = Response.FromValue(TargetDirectoryResultData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -230,7 +226,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TargetDirectoryResultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _subscriptionsClientDiagnostics.CreateScope("TargetDirectoryResultResource.Get");
+            using DiagnosticScope scope = _targetDirectoryResultsClientDiagnostics.CreateScope("TargetDirectoryResultResource.Get");
             scope.Start();
             try
             {
@@ -238,7 +234,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionsRestClient.CreateGetTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = _targetDirectoryResultsRestClient.CreateGetTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TargetDirectoryResultData> response = Response.FromValue(TargetDirectoryResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +274,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TargetDirectoryResultResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _subscriptionsClientDiagnostics.CreateScope("TargetDirectoryResultResource.Get");
+            using DiagnosticScope scope = _targetDirectoryResultsClientDiagnostics.CreateScope("TargetDirectoryResultResource.Get");
             scope.Start();
             try
             {
@@ -286,7 +282,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionsRestClient.CreateGetTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = _targetDirectoryResultsRestClient.CreateGetTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TargetDirectoryResultData> response = Response.FromValue(TargetDirectoryResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -327,7 +323,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _subscriptionsClientDiagnostics.CreateScope("TargetDirectoryResultResource.Delete");
+            using DiagnosticScope scope = _targetDirectoryResultsClientDiagnostics.CreateScope("TargetDirectoryResultResource.Delete");
             scope.Start();
             try
             {
@@ -335,7 +331,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionsRestClient.CreateDeleteTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = _targetDirectoryResultsRestClient.CreateDeleteTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -378,7 +374,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _subscriptionsClientDiagnostics.CreateScope("TargetDirectoryResultResource.Delete");
+            using DiagnosticScope scope = _targetDirectoryResultsClientDiagnostics.CreateScope("TargetDirectoryResultResource.Delete");
             scope.Start();
             try
             {
@@ -386,7 +382,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionsRestClient.CreateDeleteTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = _targetDirectoryResultsRestClient.CreateDeleteTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

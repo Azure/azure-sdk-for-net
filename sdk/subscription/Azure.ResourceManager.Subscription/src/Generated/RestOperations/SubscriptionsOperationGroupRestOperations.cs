@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Subscription
 {
-    internal partial class TenantPolicies
+    internal partial class SubscriptionsOperationGroup
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of TenantPolicies for mocking. </summary>
-        protected TenantPolicies()
+        /// <summary> Initializes a new instance of SubscriptionsOperationGroup for mocking. </summary>
+        protected SubscriptionsOperationGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of TenantPolicies. </summary>
+        /// <summary> Initializes a new instance of SubscriptionsOperationGroup. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal TenantPolicies(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal SubscriptionsOperationGroup(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,11 +41,13 @@ namespace Azure.ResourceManager.Subscription
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetPolicyForTenantRequest(RequestContext context)
+        internal HttpMessage CreateAcceptTargetDirectoryRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Subscription/policies", false);
+            uri.AppendPath("/providers/Microsoft.Subscription/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/acceptChangeTenant", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -53,30 +55,25 @@ namespace Azure.ResourceManager.Subscription
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Method = RequestMethod.Post;
             return message;
         }
 
-        internal HttpMessage CreateNextGetPolicyForTenantRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateTargetDirectoryStatusRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/changeTenantStatus", false);
             if (_apiVersion != null)
             {
-                uri.UpdateQuery("api-version", _apiVersion);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

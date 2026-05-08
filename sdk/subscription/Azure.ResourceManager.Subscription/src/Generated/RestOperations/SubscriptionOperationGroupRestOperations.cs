@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Subscription
 {
-    internal partial class SubscriptionAction
+    internal partial class SubscriptionOperationGroup
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of SubscriptionAction for mocking. </summary>
-        protected SubscriptionAction()
+        /// <summary> Initializes a new instance of SubscriptionOperationGroup for mocking. </summary>
+        protected SubscriptionOperationGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionAction. </summary>
+        /// <summary> Initializes a new instance of SubscriptionOperationGroup. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal SubscriptionAction(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal SubscriptionOperationGroup(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

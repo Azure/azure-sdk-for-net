@@ -25,10 +25,8 @@ namespace Azure.ResourceManager.Subscription
     /// </summary>
     public partial class TenantPolicyResource : ArmResource
     {
-        private readonly ClientDiagnostics _subscriptionPolicyClientDiagnostics;
-        private readonly SubscriptionPolicy _subscriptionPolicyRestClient;
-        private readonly ClientDiagnostics _tenantPoliciesClientDiagnostics;
-        private readonly TenantPolicies _tenantPoliciesRestClient;
+        private readonly ClientDiagnostics _getTenantPolicyResponsesClientDiagnostics;
+        private readonly GetTenantPolicyResponses _getTenantPolicyResponsesRestClient;
         private readonly TenantPolicyData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Subscription/policies";
@@ -53,10 +51,8 @@ namespace Azure.ResourceManager.Subscription
         internal TenantPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string tenantPolicyApiVersion);
-            _subscriptionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
-            _subscriptionPolicyRestClient = new SubscriptionPolicy(_subscriptionPolicyClientDiagnostics, Pipeline, Endpoint, tenantPolicyApiVersion ?? "2025-11-01-preview");
-            _tenantPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
-            _tenantPoliciesRestClient = new TenantPolicies(_tenantPoliciesClientDiagnostics, Pipeline, Endpoint, tenantPolicyApiVersion ?? "2025-11-01-preview");
+            _getTenantPolicyResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
+            _getTenantPolicyResponsesRestClient = new GetTenantPolicyResponses(_getTenantPolicyResponsesClientDiagnostics, Pipeline, Endpoint, tenantPolicyApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -122,7 +118,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _subscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
+            using DiagnosticScope scope = _getTenantPolicyResponsesClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -130,7 +126,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionPolicyRestClient.CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _getTenantPolicyResponsesRestClient.CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -178,7 +174,7 @@ namespace Azure.ResourceManager.Subscription
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _subscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
+            using DiagnosticScope scope = _getTenantPolicyResponsesClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -186,7 +182,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionPolicyRestClient.CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _getTenantPolicyResponsesRestClient.CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -229,7 +225,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TenantPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _subscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.Get");
+            using DiagnosticScope scope = _getTenantPolicyResponsesClientDiagnostics.CreateScope("TenantPolicyResource.Get");
             scope.Start();
             try
             {
@@ -237,7 +233,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionPolicyRestClient.CreateGetPolicyForTenantRequest(context);
+                HttpMessage message = _getTenantPolicyResponsesRestClient.CreateGetPolicyForTenantRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +273,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TenantPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _subscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.Get");
+            using DiagnosticScope scope = _getTenantPolicyResponsesClientDiagnostics.CreateScope("TenantPolicyResource.Get");
             scope.Start();
             try
             {
@@ -285,7 +281,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionPolicyRestClient.CreateGetPolicyForTenantRequest(context);
+                HttpMessage message = _getTenantPolicyResponsesRestClient.CreateGetPolicyForTenantRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
                 if (response.Value == null)

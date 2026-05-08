@@ -26,15 +26,6 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="TargetDirectoryResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TargetDirectoryResultResource"/> object. </returns>
-        public virtual TargetDirectoryResultResource GetTargetDirectoryResultResource(ResourceIdentifier id)
-        {
-            TargetDirectoryResultResource.ValidateResourceId(id);
-            return new TargetDirectoryResultResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="SubscriptionAliasResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubscriptionAliasResource"/> object. </returns>
@@ -68,6 +59,15 @@ namespace Azure.ResourceManager.Subscription.Mocking
         public virtual BillingAccountPolicyResource GetBillingAccountPolicy(ResourceIdentifier scope)
         {
             return new BillingAccountPolicyResource(Client, scope.AppendProviderResource("Microsoft.Subscription", "policies", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="TargetDirectoryResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TargetDirectoryResultResource"/> object. </returns>
+        public virtual TargetDirectoryResultResource GetTargetDirectoryResultResource(ResourceIdentifier id)
+        {
+            TargetDirectoryResultResource.ValidateResourceId(id);
+            return new TargetDirectoryResultResource(Client, id);
         }
     }
 }

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(SubscriptionTenantId))
             {
                 writer.WritePropertyName("subscriptionTenantId"u8);
-                writer.WriteStringValue(SubscriptionTenantId);
+                writer.WriteStringValue(SubscriptionTenantId.Value);
             }
             if (Optional.IsDefined(SubscriptionOwnerId))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 return null;
             }
             string managementGroupId = default;
-            string subscriptionTenantId = default;
+            Guid? subscriptionTenantId = default;
             string subscriptionOwnerId = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -161,7 +161,11 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (prop.NameEquals("subscriptionTenantId"u8))
                 {
-                    subscriptionTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionOwnerId"u8))

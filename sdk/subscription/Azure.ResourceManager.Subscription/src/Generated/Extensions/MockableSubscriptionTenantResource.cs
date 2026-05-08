@@ -21,12 +21,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableSubscriptionTenantResource : ArmResource
     {
-        private ClientDiagnostics _subscriptionActionClientDiagnostics;
-        private SubscriptionAction _subscriptionActionRestClient;
-        private ClientDiagnostics _subscriptionOperationClientDiagnostics;
-        private SubscriptionOperation _subscriptionOperationRestClient;
-        private ClientDiagnostics _subscriptionsClientDiagnostics;
-        private Subscriptions _subscriptionsRestClient;
+        private ClientDiagnostics _subscriptionOperationGroupClientDiagnostics;
+        private SubscriptionOperationGroup _subscriptionOperationGroupRestClient;
+        private ClientDiagnostics _subscriptionsOperationGroupClientDiagnostics;
+        private SubscriptionsOperationGroup _subscriptionsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of MockableSubscriptionTenantResource for mocking. </summary>
         protected MockableSubscriptionTenantResource()
@@ -40,17 +38,13 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
         }
 
-        private ClientDiagnostics SubscriptionActionClientDiagnostics => _subscriptionActionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SubscriptionOperationGroupClientDiagnostics => _subscriptionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionAction SubscriptionActionRestClient => _subscriptionActionRestClient ??= new SubscriptionAction(SubscriptionActionClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private SubscriptionOperationGroup SubscriptionOperationGroupRestClient => _subscriptionOperationGroupRestClient ??= new SubscriptionOperationGroup(SubscriptionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
-        private ClientDiagnostics SubscriptionOperationClientDiagnostics => _subscriptionOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SubscriptionsOperationGroupClientDiagnostics => _subscriptionsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionOperation SubscriptionOperationRestClient => _subscriptionOperationRestClient ??= new SubscriptionOperation(SubscriptionOperationClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
-
-        private ClientDiagnostics SubscriptionsClientDiagnostics => _subscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Subscriptions SubscriptionsRestClient => _subscriptionsRestClient ??= new Subscriptions(SubscriptionsClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private SubscriptionsOperationGroup SubscriptionsOperationGroupRestClient => _subscriptionsOperationGroupRestClient ??= new SubscriptionsOperationGroup(SubscriptionsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
         /// <summary> Gets a collection of SubscriptionAliases in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of SubscriptionAliases and their operations over a SubscriptionAliasResource. </returns>
@@ -172,7 +166,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnership");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnership");
             scope.Start();
             try
             {
@@ -180,9 +174,9 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionActionRestClient.CreateAcceptOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SubscriptionArmOperation operation = new SubscriptionArmOperation(SubscriptionActionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                SubscriptionArmOperation operation = new SubscriptionArmOperation(SubscriptionOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -224,7 +218,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnership");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnership");
             scope.Start();
             try
             {
@@ -232,9 +226,9 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionActionRestClient.CreateAcceptOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                SubscriptionArmOperation operation = new SubscriptionArmOperation(SubscriptionActionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                SubscriptionArmOperation operation = new SubscriptionArmOperation(SubscriptionOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -273,7 +267,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnershipStatus");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnershipStatus");
             scope.Start();
             try
             {
@@ -281,7 +275,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionActionRestClient.CreateAcceptOwnershipStatusRequest(subscriptionId, context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptOwnershipStatusRequest(subscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AcceptOwnershipStatus> response = Response.FromValue(Models.AcceptOwnershipStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -322,7 +316,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = SubscriptionActionClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnershipStatus");
+            using DiagnosticScope scope = SubscriptionOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptOwnershipStatus");
             scope.Start();
             try
             {
@@ -330,107 +324,9 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionActionRestClient.CreateAcceptOwnershipStatusRequest(subscriptionId, context);
+                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptOwnershipStatusRequest(subscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AcceptOwnershipStatus> response = Response.FromValue(Models.AcceptOwnershipStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of the pending Microsoft.Subscription API operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Subscription/subscriptionOperations/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SubscriptionOperationOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SubscriptionCreationResult>> GetAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = SubscriptionOperationClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SubscriptionOperationRestClient.CreateGetRequest(operationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionCreationResult> response = Response.FromValue(SubscriptionCreationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of the pending Microsoft.Subscription API operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Subscription/subscriptionOperations/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SubscriptionOperationOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SubscriptionCreationResult> Get(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = SubscriptionOperationClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SubscriptionOperationRestClient.CreateGetRequest(operationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionCreationResult> response = Response.FromValue(SubscriptionCreationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -469,7 +365,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = SubscriptionsClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptTargetDirectory");
+            using DiagnosticScope scope = SubscriptionsOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptTargetDirectory");
             scope.Start();
             try
             {
@@ -477,7 +373,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionsRestClient.CreateAcceptTargetDirectoryRequest(subscriptionId, context);
+                HttpMessage message = SubscriptionsOperationGroupRestClient.CreateAcceptTargetDirectoryRequest(subscriptionId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -513,7 +409,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = SubscriptionsClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptTargetDirectory");
+            using DiagnosticScope scope = SubscriptionsOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.AcceptTargetDirectory");
             scope.Start();
             try
             {
@@ -521,7 +417,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionsRestClient.CreateAcceptTargetDirectoryRequest(subscriptionId, context);
+                HttpMessage message = SubscriptionsOperationGroupRestClient.CreateAcceptTargetDirectoryRequest(subscriptionId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -557,7 +453,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = SubscriptionsClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.TargetDirectoryStatus");
+            using DiagnosticScope scope = SubscriptionsOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.TargetDirectoryStatus");
             scope.Start();
             try
             {
@@ -565,7 +461,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionsRestClient.CreateTargetDirectoryStatusRequest(subscriptionId, context);
+                HttpMessage message = SubscriptionsOperationGroupRestClient.CreateTargetDirectoryStatusRequest(subscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TargetDirectoryResultProperties> response = Response.FromValue(TargetDirectoryResultProperties.FromResponse(result), result);
                 if (response.Value == null)
@@ -606,7 +502,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using DiagnosticScope scope = SubscriptionsClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.TargetDirectoryStatus");
+            using DiagnosticScope scope = SubscriptionsOperationGroupClientDiagnostics.CreateScope("MockableSubscriptionTenantResource.TargetDirectoryStatus");
             scope.Start();
             try
             {
@@ -614,7 +510,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionsRestClient.CreateTargetDirectoryStatusRequest(subscriptionId, context);
+                HttpMessage message = SubscriptionsOperationGroupRestClient.CreateTargetDirectoryStatusRequest(subscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TargetDirectoryResultProperties> response = Response.FromValue(TargetDirectoryResultProperties.FromResponse(result), result);
                 if (response.Value == null)

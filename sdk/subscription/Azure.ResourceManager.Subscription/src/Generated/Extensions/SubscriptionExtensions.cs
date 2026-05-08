@@ -39,24 +39,6 @@ namespace Azure.ResourceManager.Subscription
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TargetDirectoryResultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionArmClient.GetTargetDirectoryResultResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TargetDirectoryResultResource"/> object. </returns>
-        public static TargetDirectoryResultResource GetTargetDirectoryResultResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSubscriptionArmClient(client).GetTargetDirectoryResultResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SubscriptionAliasResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -126,6 +108,24 @@ namespace Azure.ResourceManager.Subscription
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSubscriptionArmClient(client).GetBillingAccountPolicy(scope);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TargetDirectoryResultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSubscriptionArmClient.GetTargetDirectoryResultResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TargetDirectoryResultResource"/> object. </returns>
+        public static TargetDirectoryResultResource GetTargetDirectoryResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSubscriptionArmClient(client).GetTargetDirectoryResultResource(id);
         }
 
         /// <summary>
@@ -395,42 +395,6 @@ namespace Azure.ResourceManager.Subscription
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableSubscriptionTenantResource(tenantResource).AcceptOwnershipStatus(subscriptionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the status of the pending Microsoft.Subscription API operations.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<SubscriptionCreationResult>> GetAsync(this TenantResource tenantResource, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableSubscriptionTenantResource(tenantResource).GetAsync(operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the status of the pending Microsoft.Subscription API operations.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSubscriptionTenantResource.Get(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<SubscriptionCreationResult> Get(this TenantResource tenantResource, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSubscriptionTenantResource(tenantResource).Get(operationId, cancellationToken);
         }
 
         /// <summary>

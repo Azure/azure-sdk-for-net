@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Subscription
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasListResult))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasResource))]
-    [ModelReaderWriterBuildable(typeof(SubscriptionCreationResult))]
     [ModelReaderWriterBuildable(typeof(SubscriptionName))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetDirectoryContent))]

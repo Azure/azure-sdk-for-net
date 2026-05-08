@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Subscription
 {
-    internal partial class Alias
+    internal partial class SubscriptionAliasResponses
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Alias for mocking. </summary>
-        protected Alias()
+        /// <summary> Initializes a new instance of SubscriptionAliasResponses for mocking. </summary>
+        protected SubscriptionAliasResponses()
         {
         }
 
-        /// <summary> Initializes a new instance of Alias. </summary>
+        /// <summary> Initializes a new instance of SubscriptionAliasResponses. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Alias(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal SubscriptionAliasResponses(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

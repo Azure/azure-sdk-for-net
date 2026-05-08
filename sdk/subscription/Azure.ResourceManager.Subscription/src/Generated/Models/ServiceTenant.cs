@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="tenantId"> Service tenant id. </param>
         /// <param name="tenantName"> Service tenant name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceTenant(string tenantId, string tenantName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceTenant(Guid? tenantId, string tenantName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             TenantName = tenantName;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> Service tenant id. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
 
         /// <summary> Service tenant name. </summary>
         public string TenantName { get; }

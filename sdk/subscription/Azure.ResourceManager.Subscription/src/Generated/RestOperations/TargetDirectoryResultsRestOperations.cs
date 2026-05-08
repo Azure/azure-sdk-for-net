@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Subscription
 {
-    internal partial class Subscriptions
+    internal partial class TargetDirectoryResults
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Subscriptions for mocking. </summary>
-        protected Subscriptions()
+        /// <summary> Initializes a new instance of TargetDirectoryResults for mocking. </summary>
+        protected TargetDirectoryResults()
         {
         }
 
-        /// <summary> Initializes a new instance of Subscriptions. </summary>
+        /// <summary> Initializes a new instance of TargetDirectoryResults. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Subscriptions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal TargetDirectoryResults(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -96,43 +96,6 @@ namespace Azure.ResourceManager.Subscription
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            return message;
-        }
-
-        internal HttpMessage CreateAcceptTargetDirectoryRequest(string subscriptionId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Subscription/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/acceptChangeTenant", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            return message;
-        }
-
-        internal HttpMessage CreateTargetDirectoryStatusRequest(string subscriptionId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Subscription/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/changeTenantStatus", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

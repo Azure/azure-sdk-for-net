@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Subscription
 {
-    internal partial class SubscriptionPolicy
+    internal partial class BillingAccountPoliciesResponses
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of SubscriptionPolicy for mocking. </summary>
-        protected SubscriptionPolicy()
+        /// <summary> Initializes a new instance of BillingAccountPoliciesResponses for mocking. </summary>
+        protected BillingAccountPoliciesResponses()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionPolicy. </summary>
+        /// <summary> Initializes a new instance of BillingAccountPoliciesResponses. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal SubscriptionPolicy(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal BillingAccountPoliciesResponses(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,10 +41,12 @@ namespace Azure.ResourceManager.Subscription
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetPolicyForTenantRequest(RequestContext context)
+        internal HttpMessage CreateGetPolicyRequest(string billingAccountId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/providers/Microsoft.Subscription/policies/default", false);
             if (_apiVersion != null)
             {
@@ -55,25 +57,6 @@ namespace Azure.ResourceManager.Subscription
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateAddUpdatePolicyForTenantRequest(RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Subscription/policies/default", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
             return message;
         }
     }

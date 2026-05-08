@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="displayName"> The display name of the subscription. </param>
         /// <param name="tags"> Tags for the subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcceptOwnershipStatus(string subscriptionId, AcceptOwnershipState? acceptOwnershipState, AcceptOwnershipProvisioningState? provisioningState, string billingOwner, string subscriptionTenantId, string displayName, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcceptOwnershipStatus(string subscriptionId, AcceptOwnershipState? acceptOwnershipState, AcceptOwnershipProvisioningState? provisioningState, string billingOwner, Guid? subscriptionTenantId, string displayName, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             AcceptOwnershipState = acceptOwnershipState;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Subscription.Models
         public string BillingOwner { get; }
 
         /// <summary> Tenant Id of the subscription. </summary>
-        public string SubscriptionTenantId { get; }
+        public Guid? SubscriptionTenantId { get; }
 
         /// <summary> The display name of the subscription. </summary>
         public string DisplayName { get; }

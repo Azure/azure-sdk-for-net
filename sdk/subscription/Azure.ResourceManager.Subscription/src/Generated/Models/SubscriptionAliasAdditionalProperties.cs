@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="subscriptionOwnerId"> Owner Id of the subscription. </param>
         /// <param name="tags"> Tags for the subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionAliasAdditionalProperties(string managementGroupId, string subscriptionTenantId, string subscriptionOwnerId, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionAliasAdditionalProperties(string managementGroupId, Guid? subscriptionTenantId, string subscriptionOwnerId, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagementGroupId = managementGroupId;
             SubscriptionTenantId = subscriptionTenantId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Subscription.Models
         public string ManagementGroupId { get; set; }
 
         /// <summary> Tenant Id of the subscription. </summary>
-        public string SubscriptionTenantId { get; set; }
+        public Guid? SubscriptionTenantId { get; set; }
 
         /// <summary> Owner Id of the subscription. </summary>
         public string SubscriptionOwnerId { get; set; }
