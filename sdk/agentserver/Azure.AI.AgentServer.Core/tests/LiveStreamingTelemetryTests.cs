@@ -4,41 +4,45 @@
 #if NET8_0_OR_GREATER
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.AgentServer.Invocations;
+using Azure.AI.AgentServer.Responses;
+using Azure.AI.AgentServer.Responses.Models;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Logs;
 using Azure.Monitor.Query.Logs.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.Core.Tests
 {
     /// <summary>
-    /// Live E2E test that runs a real Invocations server — identical to the
-    /// HelloWorld BYO sample — sends a real HTTP request, stops the server,
-    /// then queries Application Insights to verify traces arrived with
-    /// correct parent-child hierarchy.
+    /// Live E2E test that runs a real Responses server (streaming SSE protocol),
+    /// sends a request, and verifies traces arrive in Application Insights with
+    /// correct parent-child hierarchy through the streaming pipeline.
+    ///
+    /// This specifically tests the SseResult span parenting fix — ensuring that
+    /// handler-created spans are children of the invoke_agent span even when
+    /// events are streamed via SSE.
     ///
     /// Required environment variables (provisioned by test-resources.bicep):
-    /// - AGENTSERVER_CONNECTION_STRING (or CONNECTION_STRING)
-    /// - AGENTSERVER_RESOURCE_ID (or RESOURCE_ID — App Insights resource ID for querying)
-    /// - Azure credentials (DefaultAzureCredential via test framework)
+    /// - AGENTSERVER_CONNECTION_STRING
+    /// - AGENTSERVER_RESOURCE_ID (App Insights resource ID for querying)
+    /// - Azure credentials (DefaultAzureCredential)
     ///
     /// Excluded from normal CI via [Category("Live")].
     /// </summary>
     [Category("Live")]
     [NonParallelizable]
-    public class LiveTelemetryTests
+    public class LiveStreamingTelemetryTests
     {
         // App Insights ingestion can take 2-5 minutes
         private static readonly TimeSpan s_maxIngestionWait = TimeSpan.FromMinutes(6);
@@ -48,18 +52,19 @@ namespace Azure.AI.AgentServer.Core.Tests
         private static readonly Lazy<AgentServerTestEnvironment> s_lazyEnv = new(() => new AgentServerTestEnvironment());
 
         /// <summary>
-        /// Runs InvocationsServer.Run exactly like the HelloWorld BYO sample,
-        /// sends a real HTTP request, then verifies traces in App Insights.
+        /// Runs ResponsesServer.Run with a streaming handler, sends a real HTTP request,
+        /// then verifies traces in App Insights have correct parent-child hierarchy
+        /// through the SSE streaming pipeline.
         /// </summary>
         [Test]
-        public async Task TracesAppearInAppInsightsWithCorrectHierarchy()
+        public async Task StreamingTracesAppearInAppInsightsWithCorrectHierarchy()
         {
             string uniqueMarker = Guid.NewGuid().ToString("N");
-            TelemetryTestHandler.UniqueMarker = uniqueMarker;
-            TelemetryTestHandler.CapturedTraceId = null;
+            StreamingTelemetryTestHandler.UniqueMarker = uniqueMarker;
+            StreamingTelemetryTestHandler.CapturedTraceId = null;
 
             // ── Environment setup (same as a real deployed container) ──
-            int port = Random.Shared.Next(19000, 19999);
+            int port = Random.Shared.Next(20000, 20999);
             Environment.SetEnvironmentVariable("PORT", port.ToString());
             Environment.SetEnvironmentVariable(
                 "APPLICATIONINSIGHTS_CONNECTION_STRING",
@@ -73,21 +78,17 @@ namespace Azure.AI.AgentServer.Core.Tests
             try
             {
                 // Start the server on a background thread — exactly as a user would
-                // run `dotnet run` which calls InvocationsServer.Run<T>().
-                // InvocationsServer.Run blocks forever, so we run it on a thread.
+                // run `dotnet run` which calls ResponsesServer.Run<T>().
                 Exception? serverError = null;
                 var serverThread = new Thread(() =>
                 {
                     try
                     {
-                        InvocationsServer.Run<TelemetryTestHandler>(
+                        ResponsesServer.Run<StreamingTelemetryTestHandler>(
                             configure: builder =>
                             {
-                                // Register the handler's custom ActivitySource so its spans
-                                // are exported — this is the pattern real developers use to
-                                // add their own tracing alongside the built-in agent spans.
                                 builder.ConfigureTracing(tracing =>
-                                    tracing.AddSource("AgentServer.Test.Handler"));
+                                    tracing.AddSource("AgentServer.Test.StreamingHandler"));
                             });
                     }
                     catch (Exception ex)
@@ -97,11 +98,11 @@ namespace Azure.AI.AgentServer.Core.Tests
                 })
                 {
                     IsBackground = true,
-                    Name = "InvocationsServer"
+                    Name = "ResponsesServer"
                 };
                 serverThread.Start();
 
-                // Wait for server to start listening — poll until it accepts connections
+                // Wait for server to start listening
                 using var httpClient = new HttpClient();
                 var startDeadline = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(30);
                 bool serverReady = false;
@@ -115,7 +116,7 @@ namespace Azure.AI.AgentServer.Core.Tests
 
                     try
                     {
-                        using var probe = await httpClient.GetAsync($"http://localhost:{port}/health");
+                        using var probe = await httpClient.GetAsync($"http://localhost:{port}/readiness");
                         serverReady = true;
                         break;
                     }
@@ -125,7 +126,6 @@ namespace Azure.AI.AgentServer.Core.Tests
                     }
                 }
 
-                // Final check — the server thread may have failed after the last iteration
                 if (serverError != null)
                 {
                     Assert.Fail($"Server failed to start: {serverError}");
@@ -134,18 +134,24 @@ namespace Azure.AI.AgentServer.Core.Tests
                 Assert.That(serverReady, Is.True,
                     $"Server did not start within 30 seconds on port {port}");
 
-                // ── Send a real HTTP request ──
+                // ── Send a real HTTP request (streaming SSE) ──
                 var requestBody = new StringContent(
-                    JsonSerializer.Serialize(new { message = "Hello from test" }),
+                    JsonSerializer.Serialize(new { model = "test-streaming", stream = true }),
                     Encoding.UTF8,
                     "application/json");
 
                 var response = await httpClient.PostAsync(
-                    $"http://localhost:{port}/invocations", requestBody);
+                    $"http://localhost:{port}/responses", requestBody);
 
                 Assert.That((int)response.StatusCode, Is.LessThan(500),
-                    "Invocation endpoint should not return a server error");
-                Assert.That(TelemetryTestHandler.CapturedTraceId, Is.Not.Null,
+                    "Responses endpoint should not return a server error");
+
+                // Read the SSE stream to completion (ensures handler runs fully)
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Assert.That(responseContent, Does.Contain("response.completed"),
+                    "SSE stream should contain the response.completed event");
+
+                Assert.That(StreamingTelemetryTestHandler.CapturedTraceId, Is.Not.Null,
                     "Handler should have captured a trace ID");
             }
             finally
@@ -158,9 +164,6 @@ namespace Azure.AI.AgentServer.Core.Tests
             await Task.Delay(TimeSpan.FromSeconds(5));
 
             // ── Query Application Insights ──
-            // Use DefaultAzureCredential which chains through available credentials.
-            // In CI this uses EnvironmentCredential (service principal); locally uses
-            // AzureCliCredential or VisualStudioCredential.
             var credential = new Azure.Identity.DefaultAzureCredential(
                 new Azure.Identity.DefaultAzureCredentialOptions
                 {
@@ -168,15 +171,15 @@ namespace Azure.AI.AgentServer.Core.Tests
                     TenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID"),
                 });
             var logsClient = new LogsQueryClient(credential);
-            var traceId = TelemetryTestHandler.CapturedTraceId!;
+            var traceId = StreamingTelemetryTestHandler.CapturedTraceId!;
             var resourceId = new ResourceIdentifier(TestEnvironment.ApplicationInsightsResourceId);
 
-            // Query for all spans in the trace — requests table has Server spans,
-            // dependencies table has Internal/Client spans.
+            // Query for all spans in the trace
             string kql = $@"
                 union requests, dependencies
                 | where operation_Id == '{traceId}'
-                | project name, id, operation_ParentId, type
+                | extend genAiOp = tostring(customDimensions['gen_ai.operation.name'])
+                | project name, id, operation_ParentId, type, genAiOp
                 | order by name asc";
 
             var deadline = DateTimeOffset.UtcNow + s_maxIngestionWait;
@@ -192,8 +195,7 @@ namespace Azure.AI.AgentServer.Core.Tests
 
                 var logsTable = result.Value.Table;
 
-                // We expect at least 3 spans: HTTP request, invoke_agent, HandleInvocation
-                // (plus possibly outgoing HTTP dependency from in-process HttpClient)
+                // We expect at least 3 spans: HTTP request, invoke_agent, HandleStreaming
                 if (logsTable.Rows.Count >= 3)
                 {
                     var rows = logsTable.Rows;
@@ -202,27 +204,31 @@ namespace Azure.AI.AgentServer.Core.Tests
                     int nameIdx = columns.ToList().FindIndex(c => c.Name == "name");
                     int idIdx = columns.ToList().FindIndex(c => c.Name == "id");
                     int parentIdx = columns.ToList().FindIndex(c => c.Name == "operation_ParentId");
+                    int genAiOpIdx = columns.ToList().FindIndex(c => c.Name == "genAiOp");
 
-                    // invoke_agent span (Server span from InvocationsActivitySource)
+                    // invoke_agent span — identified by gen_ai.operation.name custom dimension
                     var invokeAgentRow = rows.FirstOrDefault(r =>
-                        r[nameIdx]?.ToString() == "invoke_agent");
+                        r[genAiOpIdx]?.ToString() == "invoke_agent");
 
                     Assert.That(invokeAgentRow, Is.Not.Null,
                         "invoke_agent span not found in App Insights. " +
-                        $"Found spans: {string.Join(", ", rows.Select(r => r[nameIdx]?.ToString()))}");
+                        $"Found spans: {string.Join(", ", rows.Select(r => $"{r[nameIdx]} (genAiOp={r[genAiOpIdx]})"))}");
 
-                    // HandleInvocation span (child of invoke_agent)
+                    // HandleStreaming span (child of invoke_agent — created inside handler during SSE streaming)
                     var handlerRow = rows.FirstOrDefault(r =>
-                        r[nameIdx]?.ToString() == "HandleInvocation");
+                        r[nameIdx]?.ToString() == "HandleStreaming");
 
                     Assert.That(handlerRow, Is.Not.Null,
-                        "HandleInvocation child span not found in App Insights. " +
+                        "HandleStreaming child span not found in App Insights. " +
                         $"Found spans: {string.Join(", ", rows.Select(r => r[nameIdx]?.ToString()))}");
 
-                    // Verify parent-child: HandleInvocation's parent == invoke_agent's id
+                    // Verify parent-child: HandleStreaming's parent == invoke_agent's id
+                    // This confirms the SseResult span parenting fix is working — that
+                    // Activity.Current is restored before iterating handler events.
                     Assert.That(handlerRow![parentIdx]?.ToString(),
                         Is.EqualTo(invokeAgentRow![idIdx]?.ToString()),
-                        "HandleInvocation should be a child of invoke_agent");
+                        "HandleStreaming should be a child of invoke_agent. " +
+                        "If this fails, the SseResult Activity.Current fix is not propagating correctly.");
 
                     return;
                 }
@@ -230,53 +236,47 @@ namespace Azure.AI.AgentServer.Core.Tests
 
             Assert.Fail($"Traces for operation_Id '{traceId}' did not appear in " +
                         $"App Insights within {s_maxIngestionWait.TotalMinutes} minutes. " +
-                        "Expected at least 3 spans (HTTP request + invoke_agent + HandleInvocation).");
+                        "Expected at least 3 spans (HTTP request + invoke_agent + HandleStreaming).");
         }
 
         // ═══════════════════════════════════════════════════════════════════════
-        // Test handler — same structure as HelloWorldHandler from the sample
+        // Test handler — streaming ResponseHandler that creates a child span
         // ═══════════════════════════════════════════════════════════════════════
 
         /// <summary>
-        /// Minimal handler that captures the trace ID and returns a simple SSE response.
-        /// Same structure as HelloWorldHandler but without a real model call.
+        /// Streaming handler that creates a child span during SSE event generation.
+        /// This verifies that the SseResult span parenting fix works — the child span
+        /// should be nested under invoke_agent, not under the HTTP request.
         /// </summary>
-        public sealed class TelemetryTestHandler(ILogger<TelemetryTestHandler> logger) : InvocationHandler
+        public sealed class StreamingTelemetryTestHandler : ResponseHandler
         {
             internal static string? UniqueMarker { get; set; }
             internal static string? CapturedTraceId { get; set; }
 
-            private static readonly ActivitySource s_activitySource = new("AgentServer.Test.Handler");
+            private static readonly ActivitySource s_activitySource = new("AgentServer.Test.StreamingHandler");
 
-            public override async Task HandleAsync(
-                HttpRequest request,
-                HttpResponse response,
-                InvocationContext context,
-                CancellationToken cancellationToken)
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+                CreateResponse request,
+                ResponseContext context,
+                [EnumeratorCancellation] CancellationToken cancellationToken)
             {
+                // Capture trace ID from the current activity (set by invoke_agent span)
                 CapturedTraceId = Activity.Current?.TraceId.ToString();
 
-                logger.LogInformation(
-                    "Processing invocation {InvocationId} (session {SessionId}), marker={Marker}",
-                    context.InvocationId, context.SessionId, UniqueMarker);
-
-                // Simulate agent work — child span like a model call
-                using var activity = s_activitySource.StartActivity("HandleInvocation");
+                // Create a child span — this should be a child of invoke_agent
+                using var activity = s_activitySource.StartActivity("HandleStreaming");
                 activity?.SetTag("test.marker", UniqueMarker);
 
-                // Return SSE response — same format as HelloWorldHandler
-                response.ContentType = "text/event-stream";
-                response.Headers.CacheControl = "no-cache";
+                // Yield response.created
+                var response = new ResponseObject(context.ResponseId, request.Model ?? "test-streaming");
+                yield return new ResponseCreatedEvent(0, response);
 
-                var doneEvent = JsonSerializer.Serialize(new
-                {
-                    type = "done",
-                    invocation_id = context.InvocationId,
-                    session_id = context.SessionId,
-                    full_text = "Hello from test handler!",
-                });
-                await response.WriteAsync($"data: {doneEvent}\n\n", cancellationToken);
-                await response.Body.FlushAsync(cancellationToken);
+                // Simulate async streaming work
+                await Task.Yield();
+
+                // Mark response as completed and yield response.completed
+                response.Status = ResponseStatus.Completed;
+                yield return new ResponseCompletedEvent(1, response);
             }
         }
     }
