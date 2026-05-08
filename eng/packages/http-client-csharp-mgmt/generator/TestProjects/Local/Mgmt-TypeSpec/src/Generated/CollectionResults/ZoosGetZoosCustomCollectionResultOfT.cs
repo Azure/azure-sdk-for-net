@@ -14,19 +14,19 @@ using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class ZoosGetBySubscriptionCollectionResultOfT : Pageable<ZooData>
+    internal partial class ZoosGetZoosCustomCollectionResultOfT : Pageable<ZooData>
     {
         private readonly Zoos _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ZoosGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ZoosGetZoosCustomCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Zoos client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ZoosGetBySubscriptionCollectionResultOfT(Zoos client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ZoosGetZoosCustomCollectionResultOfT(Zoos client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -34,10 +34,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ZoosGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ZoosGetZoosCustomCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ZoosGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ZoosGetZoosCustomCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ZooData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -63,7 +63,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetZoosCustomRequest(nextLink, _subscriptionId, _context) : _client.CreateGetZoosCustomRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

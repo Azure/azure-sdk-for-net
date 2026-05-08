@@ -114,6 +114,13 @@ export const armProviderSchema =
 export const flattenPropertyDecorator =
   "Azure.ResourceManager.@flattenProperty";
 
+// Synthetic decorator stamped onto InputModelType.Decorators when the user has applied
+// a @@clientName override (csharp scope or all scopes) to the underlying TypeSpec model.
+// Consumed by Azure.Generator.Management's NameVisitor to suppress automatic renaming
+// of resource update models when the user has explicitly chosen a name.
+export const hasClientNameOverrideDecorator =
+  "Azure.ResourceManager.@hasClientNameOverride";
+
 // https://azure.github.io/typespec-azure/docs/libraries/typespec-client-generator-core/reference/decorators#@Azure.ClientGenerator.Core.clientOption
 // Propagated onto InputModelType.Decorators so the management generator can read
 // per-model opt-outs (e.g. "disable-safe-flatten") that aren't consumed during

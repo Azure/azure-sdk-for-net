@@ -8,10 +8,15 @@ import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { emitAzureCodeModel } from "@azure-typespec/http-client-csharp";
 import {
   azureSDKContextOptions,
-  flattenPropertyDecorator
+  flattenPropertyDecorator,
+  hasClientNameOverrideDecorator
 } from "./sdk-context-options.js";
 import { updateClients } from "./resource-detection.js";
-import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
+import { getAllSdkClients } from "./sdk-client-utils.js";
+import {
+  DecoratorInfo,
+  getClientNameOverride
+} from "@azure-tools/typespec-client-generator-core";
 import {
   AzureMgmtEmitterOptions,
   filterSuppressedDiagnostics
@@ -50,6 +55,7 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
 
     updateClients(codeModel, sdkContext, context.options);
     setFlattenProperty(codeModel, sdkContext);
+    setHasClientNameOverride(codeModel, sdkContext);
     return codeModel;
   }
 }
@@ -67,6 +73,69 @@ function setFlattenProperty(
         };
         property.decorators.push(flattenPropertyMetadataDecorator);
       }
+    }
+  }
+}
+
+/**
+ * Stamps a marker decorator onto every InputModelType whose underlying TypeSpec model
+ * carries a user-supplied `@@clientName` override (csharp scope or unscoped). The
+ * management generator's NameVisitor reads this marker to suppress its automatic
+ * resource-update-model renaming so user-chosen names are preserved.
+ *
+ * The base C# emitter copies `decorators` into InputModelType via `getAllModelDecorators`,
+ * which produces a fresh array, so we must mutate `codeModel.models[].decorators`
+ * directly rather than `sdkPackage.models[].decorators`.
+ */
+function setHasClientNameOverride(
+  codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext
+): void {
+  // Models: must mutate codeModel.models[].decorators directly because
+  // fromSdkModelType builds a fresh decorator array via getAllModelDecorators.
+  const sdkModelByKey = new Map<string, (typeof sdkContext.sdkPackage.models)[number]>();
+  for (const sdkModel of sdkContext.sdkPackage.models) {
+    sdkModelByKey.set(`${sdkModel.namespace}.${sdkModel.name}`, sdkModel);
+  }
+  for (const inputModel of codeModel.models) {
+    const sdkModel = sdkModelByKey.get(
+      `${inputModel.namespace}.${inputModel.name}`
+    );
+    const raw = sdkModel?.__raw;
+    if (!raw) {
+      continue;
+    }
+    const override = getClientNameOverride(sdkContext, raw, "csharp");
+    if (override === undefined) {
+      continue;
+    }
+    inputModel.decorators ??= [];
+    inputModel.decorators.push({
+      name: hasClientNameOverrideDecorator,
+      arguments: {}
+    });
+  }
+
+  // Service methods: fromSdkServiceMethodOperation copies SdkServiceMethod.decorators
+  // by reference into InputOperation.decorators (operation-converter.js line ~95), so
+  // pushing onto sdkMethod.decorators surfaces the marker on
+  // InputServiceMethod.Operation.Decorators in the C# generator.
+  // (InputServiceMethod itself has no Decorators property.)
+  for (const sdkClient of getAllSdkClients(sdkContext)) {
+    for (const sdkMethod of sdkClient.methods) {
+      const raw = sdkMethod.__raw;
+      if (!raw) {
+        continue;
+      }
+      const override = getClientNameOverride(sdkContext, raw, "csharp");
+      if (override === undefined) {
+        continue;
+      }
+      sdkMethod.decorators ??= [];
+      sdkMethod.decorators.push({
+        name: hasClientNameOverrideDecorator,
+        arguments: {}
+      });
     }
   }
 }
