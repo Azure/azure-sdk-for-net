@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
-        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.RelayUpdateParameters"/> instance for mocking. </returns>
+        public static RelayUpdateParameters RelayUpdateParameters(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RelayNamespacePatch(
+            return new RelayUpdateParameters(
                 id,
                 name,
                 resourceType,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Relay.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RelayNetworkRuleSetData RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayNetworkRuleSetDefaultAction? defaultAction, RelayPublicNetworkAccess? publicNetworkAccess, IEnumerable<RelayNetworkRuleSetIPRule> ipRules)
         {
-            return RelayNetworkRuleSetData(id, name, resourceType, systemData, trustedServiceAccessEnabled: default, defaultAction, publicNetworkAccess, ipRules);
+            return RelayNetworkRuleSetData(id: id, name: name, resourceType: resourceType, systemData: systemData, trustedServiceAccessEnabled: default, defaultAction: defaultAction, publicNetworkAccess: publicNetworkAccess, ipRules: ipRules);
         }
     }
 }
