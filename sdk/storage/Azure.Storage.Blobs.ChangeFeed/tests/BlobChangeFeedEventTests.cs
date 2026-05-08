@@ -434,7 +434,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             // Assert
             Assert.AreEqual(
-                5,
+                7,
                 changeFeedEvent.SchemaVersion);
             Assert.AreEqual(
                 "/subscriptions/dd40261b-437d-43d0-86cf-ef222b78fd15/resourceGroups/haambaga/providers/Microsoft.Storage/storageAccounts/HAAMBAGA-DEV",

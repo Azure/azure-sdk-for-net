@@ -1,5 +1,5 @@
 {
-    "schemaVersion": 5,
+    "schemaVersion": 7,
     "topic": "/subscriptions/dd40261b-437d-43d0-86cf-ef222b78fd15/resourceGroups/haambaga/providers/Microsoft.Storage/storageAccounts/HAAMBAGA-DEV",
     "subject": "/blobServices/default/containers/apitestcontainerver/blobs/20220217_131202494_Blob_oaG6iu7ImEB1cX8M",
     "eventType": "BlobCreated",
