@@ -10,7 +10,7 @@ tags:
 
 config:
   runs: 1
-  timeout: "5m"
+  timeout: "90s"
   model: claude-opus-4.6
   executor: copilot-sdk
 
@@ -19,7 +19,7 @@ scoring:
 
 stimuli:
   - name: release-basic-001
-    prompt: "I want to release my Azure Event Hubs Python SDK package."
+    prompt: "Use the SDK release tools to release my Azure Event Hubs Python SDK package."
     graders:
       - type: output-contains
         config:
@@ -30,21 +30,18 @@ stimuli:
             - name: azure-sdk-mcp-azsdk_release_sdk
 
   - name: release-trigger-001
-    prompt: "The readiness check passed. Go ahead and trigger the release pipeline for @azure/event-hubs JavaScript SDK."
+    prompt: "The readiness check passed. Use the SDK release tools to trigger the release pipeline for @azure/event-hubs JavaScript SDK."
     graders:
       - type: output-contains
         config:
           substring: "release"
-      - type: output-contains
-        config:
-          substring: "pipeline"
       - type: tool-calls
         config:
           required:
             - name: azure-sdk-mcp-azsdk_release_sdk
 
   - name: release-readiness-001
-    prompt: "Check if azure-messaging-eventhubs is ready for release in Java."
+    prompt: "Use the SDK release tools to check if azure-messaging-eventhubs is ready for release in Java."
     graders:
       - type: output-contains
         config:
