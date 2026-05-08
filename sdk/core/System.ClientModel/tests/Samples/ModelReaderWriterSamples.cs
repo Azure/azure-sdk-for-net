@@ -87,9 +87,58 @@ internal class ModelReaderWriterSamples
         #endregion
     }
 
+    public void Read_Proxy_Chain()
+    {
+        string json = @"{
+              ""x"": 1,
+              ""y"": 2,
+              ""z"": 3
+            }";
+
+        #region Snippet:Readme_Proxy_Chain
+        ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+
+        // Base library registers a proxy
+        options.AddProxy(new OutputModelProxy());
+
+        // Consumer registers a higher-priority proxy — this one is used
+        options.AddProxy(new OutputModelProxyOverride());
+
+        OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
+        #endregion
+    }
+
     #region Snippet:Readme_Read_Proxy_ClassStub
     public class OutputModelProxy : IJsonModel<OutputModel>
     #endregion
+    {
+        void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        OutputModel IJsonModel<OutputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        BinaryData IPersistableModel<OutputModel>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        OutputModel IPersistableModel<OutputModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IPersistableModel<OutputModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class OutputModelProxyOverride : IJsonModel<OutputModel>
     {
         void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

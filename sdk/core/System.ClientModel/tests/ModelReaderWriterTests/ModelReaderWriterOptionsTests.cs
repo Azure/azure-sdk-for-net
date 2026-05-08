@@ -177,6 +177,138 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             }
         }
 
+        [Test]
+        public void AddProxy_MultipleProxiesForSameType_FormChain()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new JsonModelProxy();
+            var proxy2 = new JsonModelProxy();
+
+            options.AddProxy<JsonModel>(proxy1);
+            options.AddProxy<JsonModel>(proxy2);
+
+            // Last registered should be returned (highest priority)
+            Assert.IsTrue(options.TryGetProxy<JsonModel>(out IPersistableModel<JsonModel>? resolved));
+            Assert.AreSame(proxy2, resolved);
+
+            Assert.IsTrue(options.TryGetProxy<JsonModel>(out IJsonModel<JsonModel>? jsonResolved));
+            Assert.AreSame(proxy2, jsonResolved);
+        }
+
+        [Test]
+        public void ResolveProxy_ReturnsLastRegistered()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new JsonModelProxy();
+            var proxy2 = new JsonModelProxy();
+
+            options.AddProxy<JsonModel>(proxy1);
+            options.AddProxy<JsonModel>(proxy2);
+
+            var model = new JsonModel();
+            var resolved = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
+            Assert.AreSame(proxy2, resolved);
+            Assert.AreSame(model, options.ProxiedModel);
+        }
+
+        [Test]
+        public void ResolveProxy_IJsonModel_ReturnsLastRegistered()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new JsonModelProxy();
+            var proxy2 = new JsonModelProxy();
+
+            options.AddProxy<JsonModel>(proxy1);
+            options.AddProxy<JsonModel>(proxy2);
+
+            var model = new JsonModel();
+            var resolved = options.ResolveProxy<JsonModel>((IJsonModel<JsonModel>)model);
+            Assert.AreSame(proxy2, resolved);
+            Assert.AreSame(model, options.ProxiedModel);
+        }
+
+        [Test]
+        public void ResolveProxy_NoProxies_ReturnsSelf()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var model = new JsonModel();
+
+            var resolved = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
+            Assert.AreSame(model, resolved);
+        }
+
+        [Test]
+        public void AddProxy_SingleProxy_BehavesLikeBefore()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy = new JsonModelProxy();
+
+            options.AddProxy<JsonModel>(proxy);
+
+            Assert.IsTrue(options.TryGetProxy<JsonModel>(out IPersistableModel<JsonModel>? resolved));
+            Assert.AreSame(proxy, resolved);
+
+            var model = new JsonModel();
+            var resolvedFromModel = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
+            Assert.AreSame(proxy, resolvedFromModel);
+        }
+
+        [Test]
+        public void TryGetProxy_NoProxies_ReturnsFalse()
+        {
+            var options = new ModelReaderWriterOptions("J");
+
+            Assert.IsFalse(options.TryGetProxy<JsonModel>(out IPersistableModel<JsonModel>? _));
+            Assert.IsFalse(options.TryGetProxy<JsonModel>(out IJsonModel<JsonModel>? _));
+        }
+
+        [Test]
+        public void AddProxy_ChainSharedBetweenCopiedOptions()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy1 = new JsonModelProxy();
+            var proxy2 = new JsonModelProxy();
+
+            options.AddProxy<JsonModel>(proxy1);
+            options.AddProxy<JsonModel>(proxy2);
+
+            // Internal copy shares the same proxy chain
+            var copied = new ModelReaderWriterOptions(options);
+            Assert.IsTrue(copied.HasProxies);
+            Assert.IsTrue(copied.TryGetProxy<JsonModel>(out IPersistableModel<JsonModel>? resolved));
+            Assert.AreSame(proxy2, resolved);
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void Write_WithMultipleProxies_UsesLastRegistered(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var proxy1 = new JsonModelProxy();
+            var proxy2 = new JsonModelProxy();
+
+            options.AddProxy<JsonModel>(proxy1);
+            options.AddProxy<JsonModel>(proxy2);
+
+            _optionsMap.Add(proxy2, options);
+            ModelReaderWriter.Write(proxy2, options);
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void Read_WithMultipleProxies_UsesLastRegistered(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var proxy1 = new JsonModelProxy();
+            var proxy2 = new JsonModelProxy();
+
+            options.AddProxy<JsonModel>(proxy1);
+            options.AddProxy<JsonModel>(proxy2);
+
+            _optionsMap.Add(proxy2, options);
+            ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, options);
+        }
+
         private class JsonModel : IJsonModel<JsonModel>
         {
             JsonModel IJsonModel<JsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

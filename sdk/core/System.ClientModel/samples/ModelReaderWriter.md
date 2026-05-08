@@ -98,3 +98,21 @@ options.AddProxy(new InputModelProxy());
 
 BinaryData data = ModelReaderWriter.Write(model, options);
 ```
+
+### Proxy Chain of Responsibility
+
+Multiple proxies can be registered for the same model type to form a chain of responsibility.
+When multiple proxies are registered, the most recently registered proxy has the highest priority and is consulted first.
+If a library registers a base proxy and a consumer registers a more specific one, the consumer's proxy takes precedence.
+
+```C# Snippet:Readme_Proxy_Chain
+ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+
+// Base library registers a proxy
+options.AddProxy(new OutputModelProxy());
+
+// Consumer registers a higher-priority proxy — this one is used
+options.AddProxy(new OutputModelProxyOverride());
+
+OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
+```
