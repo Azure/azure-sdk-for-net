@@ -5,3 +5,4 @@ extends:
   parameters:
     ServiceDirectory: voicelive
     SupportedClouds: 'Public'
+    Location: 'eastus2'
