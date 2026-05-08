@@ -60,6 +60,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Description of the response of the verification code. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="name"> Name of certificate. </param>
+        /// <param name="eTag"> Request etag. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.CertificateVerificationCodeResult"/> instance for mocking. </returns>
+        public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, ETag? eTag = default, CertificateVerificationCodeProperties properties = default)
+        {
+            return new CertificateVerificationCodeResult(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                name,
+                eTag,
+                properties);
+        }
+
         /// <summary> The CertificateVerificationCodeProperties. </summary>
         /// <param name="verificationCode"> Verification code. </param>
         /// <param name="subject"> Certificate subject. </param>
@@ -84,20 +104,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The description of the provisioning service. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="etag"> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
+        /// <param name="eTag"> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>
         /// <param name="subscriptionId"> The subscription id of the resource. </param>
         /// <param name="properties"> Service specific properties for a provisioning service. </param>
         /// <param name="sku"> Sku info for a provisioning Service. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/> instance for mocking. </returns>
-        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, string resourceGroup = default, string subscriptionId = default, DeviceProvisioningServiceProperties properties = default, DeviceProvisioningServicesSkuInfo sku = default, ManagedServiceIdentity identity = default)
+        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? eTag = default, string resourceGroup = default, string subscriptionId = default, DeviceProvisioningServiceProperties properties = default, DeviceProvisioningServicesSkuInfo sku = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -109,7 +130,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                etag,
+                eTag,
                 resourceGroup,
                 subscriptionId,
                 properties,
@@ -288,7 +309,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku)
         {
-            return DeviceProvisioningServiceData(id, name, resourceType, systemData, tags, location, etag, resourceGroup: default, subscriptionId: default, properties, sku, identity: default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeviceProvisioningServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                default,
+                default,
+                properties,
+                sku,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServiceProperties"/>. </summary>
@@ -311,7 +347,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IEnumerable<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled)
         {
-            return DeviceProvisioningServiceProperties(state, publicNetworkAccess, ipFilterRules, privateEndpointConnections, provisioningState, iotHubs, deviceRegistryNamespace: default, allocationPolicy, serviceOperationsHostName, deviceProvisioningHostName, idScope, authorizationPolicies, isDataResidencyEnabled, portalOperationsHostName: default);
+            return DeviceProvisioningServiceProperties(state: state, publicNetworkAccess: publicNetworkAccess, ipFilterRules: ipFilterRules, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, iotHubs: iotHubs, deviceRegistryNamespace: default, allocationPolicy: allocationPolicy, serviceOperationsHostName: serviceOperationsHostName, deviceProvisioningHostName: deviceProvisioningHostName, idScope: idScope, authorizationPolicies: authorizationPolicies, isDataResidencyEnabled: isDataResidencyEnabled, portalOperationsHostName: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeResult"/>. </summary>
@@ -322,7 +358,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="etag"> Request etag. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.CertificateVerificationCodeResult"/> instance for mocking. </returns>
-        public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, CertificateVerificationCodeProperties properties = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, CertificateVerificationCodeProperties properties)
         {
             return new CertificateVerificationCodeResult(
                 id,

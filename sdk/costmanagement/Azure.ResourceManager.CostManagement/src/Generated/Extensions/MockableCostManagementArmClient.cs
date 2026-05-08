@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         private ScheduledActions _scheduledActionsRestClient;
         private ClientDiagnostics _generateCostDetailsReportClientDiagnostics;
         private GenerateCostDetailsReport _generateCostDetailsReportRestClient;
+        private ClientDiagnostics _costAllocationRulesClientDiagnostics;
+        private CostAllocationRules _costAllocationRulesRestClient;
         private ClientDiagnostics _benefitRecommendationsClientDiagnostics;
         private BenefitRecommendations _benefitRecommendationsRestClient;
         private ClientDiagnostics _benefitUtilizationSummariesClientDiagnostics;
@@ -62,6 +64,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         private ClientDiagnostics GenerateCostDetailsReportClientDiagnostics => _generateCostDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private GenerateCostDetailsReport GenerateCostDetailsReportRestClient => _generateCostDetailsReportRestClient ??= new GenerateCostDetailsReport(GenerateCostDetailsReportClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics CostAllocationRulesClientDiagnostics => _costAllocationRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CostAllocationRules CostAllocationRulesRestClient => _costAllocationRulesRestClient ??= new CostAllocationRules(CostAllocationRulesClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
 
         private ClientDiagnostics BenefitRecommendationsClientDiagnostics => _benefitRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -840,6 +846,106 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks availability and correctness of a name for a cost allocation rule
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CostAllocationRulesOperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Cost allocation rule to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CostAllocationRuleCheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = CostAllocationRulesClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckNameAvailability");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityRequest.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CostAllocationRuleCheckNameAvailabilityResponse> response = Response.FromValue(CostAllocationRuleCheckNameAvailabilityResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks availability and correctness of a name for a cost allocation rule
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CostAllocationRulesOperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Cost allocation rule to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<CostAllocationRuleCheckNameAvailabilityResponse> CheckNameAvailability(ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = CostAllocationRulesClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckNameAvailability");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityRequest.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CostAllocationRuleCheckNameAvailabilityResponse> response = Response.FromValue(CostAllocationRuleCheckNameAvailabilityResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
