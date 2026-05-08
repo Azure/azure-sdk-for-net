@@ -10,6 +10,21 @@ param baseName string = resourceGroup().name
 @description('The location of the resource. By default, this is the same as the resource group.')
 param location string = resourceGroup().location
 
+@description('The name of the model to deploy.')
+param modelName string = 'gpt-realtime'
+
+@description('The format of the model to deploy.')
+param modelFormat string = 'OpenAI'
+
+@description('The version of the model to deploy.')
+param modelVersion string = '2025-08-28'
+
+@description('The SKU name for the model deployment.')
+param modelSkuName string = 'GlobalStandard'
+
+@description('The capacity of the model deployment.')
+param modelCapacity int = 1
+
 var aiServicesName = '${baseName}-ai'
 var cognitiveServicesUserRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a97b65f3-24c7-4388-baec-2e87135dc908')
 
@@ -28,16 +43,16 @@ resource aiServices 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = 
 
 resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
   parent: aiServices
-  name: 'gpt-realtime'
+  name: modelName
   sku: {
-    name: 'GlobalStandard'
-    capacity: 1
+    name: modelSkuName
+    capacity: modelCapacity
   }
   properties: {
     model: {
-      name: 'gpt-realtime'
-      format: 'OpenAI'
-      version: '2025-08-28'
+      name: modelName
+      format: modelFormat
+      version: modelVersion
     }
   }
 }
