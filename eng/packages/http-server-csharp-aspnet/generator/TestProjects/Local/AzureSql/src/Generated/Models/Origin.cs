@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CommonTypes
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Origin other && Equals(other);
+        public override bool Equals(object obj) => obj is Origin other && this.Equals(other);
 
         /// <inheritdoc/>
         public bool Equals(Origin other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);

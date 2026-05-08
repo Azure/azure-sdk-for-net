@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -79,7 +80,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
                 : new XmlDocProvider(new XmlDocSummaryStatement([$"{doc}"]), [], [], null, null);
 
             var signature = new MethodSignature(
-                Name: $"{NameUtilities.ToPascalCase(method.Name)}Async",
+                Name: $"{method.Name.ToIdentifierName()}Async",
                 Description: null!,
                 Modifiers: MethodSignatureModifiers.Public | MethodSignatureModifiers.Abstract,
                 ReturnType: returnType,

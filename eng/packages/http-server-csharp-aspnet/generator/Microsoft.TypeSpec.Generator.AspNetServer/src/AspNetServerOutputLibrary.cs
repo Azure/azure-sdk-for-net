@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.TypeSpec.Generator.AspNetServer.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -22,7 +23,15 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
             var inputLibrary = CodeModelGenerator.Instance.InputLibrary;
             var typeFactory = (AspNetServerTypeFactory)CodeModelGenerator.Instance.TypeFactory;
 
-            var providers = new List<TypeProvider>();
+            // Pull in framework helper definitions (ArgumentDefinition,
+            // ChangeTrackingListDefinition, etc.) from the base implementation
+            // so they get emitted alongside our providers. ArgumentDefinition
+            // in particular is required by the extensible-enum template.
+            // We exclude ModelFactoryProvider because we emit POCOs without
+            // the additionalBinaryDataProperties parameter the framework's
+            // model factory expects.
+            var providers = new List<TypeProvider>(
+                base.BuildTypeProviders().Where(p => p is not ModelFactoryProvider));
             foreach (var model in inputLibrary.InputNamespace.Models)
             {
                 if (model.IsPropertyBag)
@@ -51,15 +60,6 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
                 providers.Add(new ControllerProvider(client));
             }
             providers.AddRange(typeFactory.GetCachedEnums());
-            if (typeFactory.GetCachedEnums().Count > 0)
-            {
-                // ArgumentDefinition is internal to the generator framework but
-                // is required by the extensible-enum template (Argument.AssertNotNull).
-                // Instantiate it reflectively so the helper class is emitted.
-                var argDefType = typeof(TypeProvider).Assembly.GetType(
-                    "Microsoft.TypeSpec.Generator.Providers.ArgumentDefinition", throwOnError: true)!;
-                providers.Add((TypeProvider)System.Activator.CreateInstance(argDefType)!);
-            }
             return providers.ToArray();
         }
 

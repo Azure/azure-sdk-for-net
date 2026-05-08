@@ -58,7 +58,7 @@ namespace Azure.ResourceManager
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResourceProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is ResourceProvisioningState other && this.Equals(other);
 
         /// <inheritdoc/>
         public bool Equals(ResourceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);

@@ -6,6 +6,7 @@ using System.IO;
 using System.Text.Json.Serialization;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -78,7 +79,7 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
                     csharpType = csharpType.WithNullable(true);
                 }
 
-                var propName = NameUtilities.ToPascalCase(prop.Name);
+                var propName = prop.Name.ToIdentifierName();
                 var description = !string.IsNullOrEmpty(prop.Doc) ? prop.Doc : prop.Summary ?? string.Empty;
 
                 var attributes = new List<AttributeStatement>
